@@ -29,8 +29,18 @@ button{user-select:none}
 .glass:hover{background:rgba(255,255,255,.09);transform:translateY(-1px)}
 .stagehint{position:absolute;z-index:8;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:end;pointer-events:none}
 .hint{background:rgba(4,10,18,.62);border:1px solid rgba(255,255,255,.09);padding:9px 12px;border-radius:13px;color:#c8d4e1;font-size:12px;line-height:1.6;backdrop-filter:blur(10px)}
-.change-toast{position:absolute;z-index:10;top:75px;left:50%;transform:translate(-50%,-12px);width:min(620px,88%);background:rgba(6,17,29,.92);border:1px solid rgba(84,200,255,.22);box-shadow:0 18px 45px rgba(0,0,0,.34);padding:12px 15px;border-radius:14px;color:#dff5ff;opacity:0;pointer-events:none;transition:.3s}
-.change-toast.show{opacity:1;transform:translate(-50%,0)}
+.change-toast{
+  position:fixed;z-index:100000;top:22px;left:50%;
+  transform:translate(-50%,-18px) scale(.96);
+  width:min(660px,92vw);
+  background:linear-gradient(135deg,rgba(6,17,29,.98),rgba(14,37,57,.98));
+  border:1px solid rgba(84,200,255,.38);
+  box-shadow:0 24px 80px rgba(0,0,0,.48),0 0 35px rgba(67,217,255,.12);
+  padding:13px 16px;border-radius:15px;color:#dff5ff;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .32s cubic-bezier(.2,.9,.3,1.2)
+}
+.change-toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
 .change-toast b{color:#63dcff}
 
 .side{direction:rtl;padding:23px;max-height:calc(100vh - 36px);overflow:auto;background:linear-gradient(180deg,rgba(12,24,38,.97),rgba(7,14,23,.99))}
@@ -163,11 +173,35 @@ button:not(:disabled):hover{filter:brightness(1.08)}
 button:not(:disabled):active{transform:scale(.955)!important}
 button.ui-pop{animation:uiPop .34s cubic-bezier(.2,.9,.3,1.25)}
 @keyframes uiPop{
-  0%{transform:scale(1)}
-  35%{transform:scale(.92)}
-  72%{transform:scale(1.045)}
-  100%{transform:scale(1)}
+  0%{transform:scale(1);filter:brightness(1)}
+  28%{transform:scale(.88) rotate(-1deg);filter:brightness(1.22)}
+  60%{transform:scale(1.075) rotate(.7deg);filter:brightness(1.14)}
+  82%{transform:scale(.985)}
+  100%{transform:scale(1);filter:brightness(1)}
 }
+button:not(:disabled)::after{
+  content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
+  opacity:0;box-shadow:0 0 0 0 rgba(67,217,255,.0)
+}
+button.ui-pop::after{animation:buttonGlow .48s ease-out}
+@keyframes buttonGlow{
+  0%{opacity:.9;box-shadow:0 0 0 0 rgba(67,217,255,.55)}
+  100%{opacity:0;box-shadow:0 0 0 14px rgba(67,217,255,0)}
+}
+.modal.open .modalbox{animation:modalBlast .42s cubic-bezier(.16,.9,.24,1.15)}
+@keyframes modalBlast{
+  0%{opacity:0;transform:translateY(26px) scale(.94);filter:blur(4px)}
+  65%{opacity:1;transform:translateY(-4px) scale(1.015);filter:blur(0)}
+  100%{transform:translateY(0) scale(1)}
+}
+.exam-q{animation:questionIn .42s both}
+.exam-q:nth-child(2){animation-delay:.04s}.exam-q:nth-child(3){animation-delay:.08s}
+.exam-q:nth-child(4){animation-delay:.12s}.exam-q:nth-child(5){animation-delay:.16s}
+@keyframes questionIn{
+  from{opacity:0;transform:translateY(18px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
 .btn-ripple{
   position:absolute;z-index:99;border-radius:50%;pointer-events:none;
   background:rgba(255,255,255,.27);transform:scale(0);animation:ripple .58s ease-out forwards
@@ -299,6 +333,42 @@ body.light .voice-toolbar select{background:white;color:#193047;border-color:#d4
 .builder-grid{display:grid;grid-template-columns:1fr 130px 120px;gap:8px;margin-bottom:8px}
 .builder-card textarea{min-height:65px;resize:vertical}
 .builder-help{font-size:11px;color:#8192a7;line-height:1.6;margin-top:5px}
+.builder-option-list{display:grid;gap:7px;margin-top:8px}
+.builder-option-row{
+  display:grid;grid-template-columns:auto 1fr auto;gap:7px;align-items:center;
+  padding:7px;border:1px solid rgba(255,255,255,.08);border-radius:10px;
+  background:rgba(255,255,255,.025)
+}
+.builder-option-row input[type="radio"]{width:18px;height:18px;margin:0;accent-color:#43d9ff}
+.builder-option-row .option-text{height:40px;font-size:14px}
+.builder-option-row .remove-option{
+  width:38px;height:38px;padding:0;border:1px solid rgba(255,105,105,.18);
+  background:rgba(255,90,90,.07);color:#ff9e9e;border-radius:9px;cursor:pointer
+}
+.add-option-btn{
+  margin-top:8px;width:100%;border:1px dashed rgba(67,217,255,.35);
+  background:rgba(67,217,255,.06);color:#9ceaff;border-radius:10px;
+  padding:9px;cursor:pointer;font-weight:850
+}
+.builder-error{
+  display:none;margin:10px 0;padding:11px 12px;border-radius:11px;
+  background:rgba(255,98,98,.09);border:1px solid rgba(255,98,98,.22);
+  color:#ffb8b8;font-size:13px;line-height:1.6
+}
+.builder-error.show{display:block;animation:errorShake .38s}
+@keyframes errorShake{0%,100%{transform:translateX(0)}25%{transform:translateX(6px)}50%{transform:translateX(-6px)}75%{transform:translateX(3px)}}
+.msg.bot{padding-bottom:30px;position:relative}
+.msg-speak{
+  position:absolute!important;left:7px;bottom:5px;width:25px;height:22px;padding:0!important;
+  border:0!important;border-radius:7px!important;background:rgba(67,217,255,.10)!important;
+  color:#79e5ff!important;font-size:12px!important;cursor:pointer
+}
+.msg-speak.speaking{animation:aiVoicePulse .8s ease-in-out infinite alternate}
+@keyframes aiVoicePulse{to{box-shadow:0 0 14px rgba(67,217,255,.45);transform:scale(1.08)}}
+body.light .builder-option-row{background:#f6f9fb;border-color:#d8e2ea}
+body.light .add-option-btn{background:#edf9fd;color:#17637d;border-color:#8ed4eb}
+body.light .builder-error{background:#fff1f1;color:#8b2f2f;border-color:#efb8b8}
+
 .builder-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .builder-actions button{flex:1;min-width:150px}
 .hidden{display:none!important}
@@ -494,7 +564,7 @@ body.light .ai-card .dictnote{color:#718196}
       <button id="speechPlay">🔊 اقرأ الشرح</button>
       <button id="speechPause">⏸ إيقاف مؤقت</button>
       <button id="speechStop">⏹ إيقاف</button>
-      <span class="voice-label">السرعة</span>
+      <span class="voice-label">أفضل صوت عربي متوفر • السرعة</span>
       <select id="speechRate" aria-label="سرعة القراءة">
         <option value="0.8">هادئ</option>
         <option value="1" selected>عادي</option>
@@ -586,6 +656,7 @@ body.light .ai-card .dictnote{color:#718196}
         </select>
       </div>
       <div class="builder-help">للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.</div>
+      <div class="builder-error" id="builderError"></div>
       <div id="builderQuestions"></div>
       <div class="builder-actions">
         <button class="exam-secondary" id="addBuilderQuestion">＋ أضف سؤال</button>
@@ -1144,7 +1215,12 @@ function updateProof(now){
 let toastTimer;
 function showToast(text){
   const el=document.getElementById("toast");
-  el.innerHTML=text;el.classList.add("show");
+  if(!el)return;
+  if(el.parentElement!==document.body)document.body.appendChild(el);
+  el.innerHTML=text;
+  el.classList.remove("show");
+  void el.offsetWidth;
+  el.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>el.classList.remove("show"),5200);
 }
@@ -1254,30 +1330,95 @@ document.addEventListener("click",e=>{
 });
 
 /* -------------------- ARABIC VOICE EXPLANATION -------------------- */
-const speechState={sections:[],index:0,reading:false,paused:false,current:null};
+const speechState={
+  sections:[],sectionIndex:0,chunks:[],chunkIndex:0,
+  reading:false,paused:false,current:null,mode:"explain",
+  watchdog:null,onDone:null
+};
 
 function arabicVoice(){
   const voices=speechSynthesis.getVoices();
-  return voices.find(v=>/^ar(-|$)/i.test(v.lang) && /sa|Saudi|Hamed|Maged|Tarik/i.test(v.name))
-    || voices.find(v=>/^ar(-|$)/i.test(v.lang))
-    || null;
+  const ar=voices.filter(v=>/^ar(-|$)/i.test(v.lang));
+  const preferred=[
+    /Microsoft.*Hamed/i,/Microsoft.*Maged/i,/Microsoft.*Salma/i,
+    /Google.*العربية/i,/Google.*Arabic/i,
+    /Majed/i,/Maged/i,/Tarik/i,/Hamed/i,/Arabic/i
+  ];
+  for(const rx of preferred){
+    const v=ar.find(x=>rx.test(x.name));
+    if(v)return v;
+  }
+  return ar[0]||null;
 }
 
+function cleanSpeechRaw(t){
+  return String(t||"").replace(/\s+/g," ").trim()
+    .replace(/a²/g,"ألف تربيع").replace(/b²/g,"باء تربيع").replace(/c²/g,"جيم تربيع")
+    .replace(/\ba\b/g,"ألف").replace(/\bb\b/g,"باء").replace(/\bc\b/g,"جيم")
+    .replace(/√/g,"الجذر التربيعي لـ ")
+    .replace(/=/g," يساوي ").replace(/\+/g," زائد ").replace(/−|-/g," ناقص ");
+}
 function cleanSpeechText(el){
   const t=el.textContent.replace(/\s+/g," ").trim();
   if(t==="a² + b² = c²")return "ألف تربيع زائد باء تربيع يساوي جيم تربيع.";
   if(t.includes("3² + 4²"))return "ثلاثة تربيع زائد أربعة تربيع، يساوي تسعة زائد ستة عشر، يساوي خمسة وعشرين، يساوي خمسة تربيع.";
   if(t.includes("a = √(c² − b²)"))return "لحساب ألف: الجذر التربيعي لجيم تربيع ناقص باء تربيع. ولحساب باء: الجذر التربيعي لجيم تربيع ناقص ألف تربيع.";
-  return t.replace(/a²/g,"ألف تربيع").replace(/b²/g,"باء تربيع").replace(/c²/g,"جيم تربيع")
-          .replace(/\ba\b/g,"ألف").replace(/\bb\b/g,"باء").replace(/\bc\b/g,"جيم");
+  return cleanSpeechRaw(t);
 }
-
+function speechChunks(text,max=145){
+  const s=cleanSpeechRaw(text);
+  const sentenceParts=s.split(/(?<=[.!؟،؛:])\s+/).filter(Boolean);
+  const out=[];
+  for(const part of sentenceParts.length?sentenceParts:[s]){
+    if(part.length<=max){out.push(part);continue}
+    const words=part.split(/\s+/);let cur="";
+    for(const w of words){
+      if((cur+" "+w).trim().length>max && cur){out.push(cur.trim());cur=w}
+      else cur=(cur+" "+w).trim();
+    }
+    if(cur)out.push(cur);
+  }
+  return out.filter(Boolean);
+}
+function clearSpeechWatchdog(){
+  if(speechState.watchdog){clearInterval(speechState.watchdog);speechState.watchdog=null}
+}
+function startSpeechWatchdog(){
+  clearSpeechWatchdog();
+  speechState.watchdog=setInterval(()=>{
+    if(speechState.reading&&!speechState.paused&&speechSynthesis.speaking){
+      // Keeps Chrome/Edge speech synthesis alive on long Arabic readings.
+      speechSynthesis.resume();
+    }
+  },7000);
+}
 function stopSpeech(){
-  speechSynthesis.cancel();
-  speechState.reading=false;speechState.paused=false;speechState.index=0;speechState.current=null;
+  if("speechSynthesis" in window)speechSynthesis.cancel();
+  clearSpeechWatchdog();
+  speechState.reading=false;speechState.paused=false;
+  speechState.sectionIndex=0;speechState.chunkIndex=0;speechState.current=null;
   document.getElementById("voiceWave")?.classList.remove("playing");
   document.querySelectorAll("#explainContent .speaking").forEach(x=>x.classList.remove("speaking"));
+  document.querySelectorAll(".msg-speak.speaking").forEach(x=>x.classList.remove("speaking"));
   const p=document.getElementById("speechPause");if(p)p.textContent="⏸ إيقاف مؤقت";
+}
+function makeUtterance(text,onEnd){
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="ar-SA";
+  u.rate=parseFloat(document.getElementById("speechRate")?.value)||0.96;
+  u.pitch=1.02;u.volume=1;
+  const v=arabicVoice();if(v)u.voice=v;
+  let finished=false;
+  const done=()=>{
+    if(finished)return;finished=true;
+    setTimeout(onEnd,28);
+  };
+  u.onend=done;
+  u.onerror=e=>{
+    if(e.error==="canceled"||e.error==="interrupted")return;
+    done();
+  };
+  return u;
 }
 
 function speakExplanationFrom(index=0){
@@ -1285,33 +1426,68 @@ function speakExplanationFrom(index=0){
     showToast("هذا المتصفح لا يدعم القراءة الصوتية.");
     return;
   }
-  speechSynthesis.cancel();
+  stopSpeech();
+  speechState.mode="explain";
   speechState.sections=[...document.querySelectorAll("#explainContent > p,#explainContent > h3,#explainContent > .eq")];
-  speechState.index=index;
-  speechState.reading=true;speechState.paused=false;
-  document.getElementById("voiceWave").classList.add("playing");
+  speechState.sectionIndex=index;
+  speechState.reading=true;
+  document.getElementById("voiceWave")?.classList.add("playing");
+  startSpeechWatchdog();
 
-  const next=()=>{
+  const nextSection=()=>{
     document.querySelectorAll("#explainContent .speaking").forEach(x=>x.classList.remove("speaking"));
-    if(!speechState.reading || speechState.index>=speechState.sections.length){
-      stopSpeech();
-      return;
+    if(!speechState.reading||speechState.sectionIndex>=speechState.sections.length){
+      stopSpeech();return;
     }
-    const el=speechState.sections[speechState.index];
+    const el=speechState.sections[speechState.sectionIndex];
     el.classList.add("speaking");
     el.scrollIntoView({behavior:"smooth",block:"center"});
-    const u=new SpeechSynthesisUtterance(cleanSpeechText(el));
-    u.lang="ar-SA";
-    u.rate=parseFloat(document.getElementById("speechRate").value)||1;
-    u.pitch=1;
-    const v=arabicVoice();if(v)u.voice=v;
+    speechState.chunks=speechChunks(cleanSpeechText(el));
+    speechState.chunkIndex=0;
+    nextChunk();
+  };
+  const nextChunk=()=>{
+    if(!speechState.reading)return;
+    if(speechState.chunkIndex>=speechState.chunks.length){
+      speechState.sectionIndex++;
+      nextSection();return;
+    }
+    const u=makeUtterance(speechState.chunks[speechState.chunkIndex],()=>{
+      if(speechState.reading){speechState.chunkIndex++;nextChunk()}
+    });
     speechState.current=u;
-    u.onend=()=>{if(speechState.reading){speechState.index++;next()}};
-    u.onerror=()=>{if(speechState.reading){speechState.index++;next()}};
+    speechSynthesis.speak(u);
+  };
+  nextSection();
+}
+
+function speakAIText(text,button=null){
+  if(!("speechSynthesis" in window)){
+    showToast("هذا المتصفح لا يدعم القراءة الصوتية.");
+    return;
+  }
+  stopSpeech();
+  speechState.mode="ai";
+  speechState.reading=true;
+  speechState.chunks=speechChunks(text,125);
+  speechState.chunkIndex=0;
+  if(button)button.classList.add("speaking");
+  startSpeechWatchdog();
+  const next=()=>{
+    if(!speechState.reading)return;
+    if(speechState.chunkIndex>=speechState.chunks.length){
+      if(button)button.classList.remove("speaking");
+      stopSpeech();return;
+    }
+    const u=makeUtterance(speechState.chunks[speechState.chunkIndex],()=>{
+      if(speechState.reading){speechState.chunkIndex++;next()}
+    });
+    speechState.current=u;
     speechSynthesis.speak(u);
   };
   next();
 }
+
 document.getElementById("speechPlay").addEventListener("click",()=>{
   if(speechState.paused){
     speechSynthesis.resume();speechState.paused=false;
@@ -1333,8 +1509,11 @@ document.getElementById("speechPause").addEventListener("click",()=>{
 });
 document.getElementById("speechStop").addEventListener("click",stopSpeech);
 document.getElementById("speechRate").addEventListener("change",()=>{
-  if(speechState.reading){const i=speechState.index;stopSpeech();speakExplanationFrom(i)}
+  if(speechState.reading&&speechState.mode==="explain"){
+    const i=speechState.sectionIndex;stopSpeech();speakExplanationFrom(i);
+  }
 });
+speechSynthesis?.addEventListener?.("voiceschanged",()=>arabicVoice());
 
 /* -------------------- EXAM SYSTEM -------------------- */
 const examModal=document.getElementById("examModal");
@@ -1547,6 +1726,7 @@ function launchConfetti(){
 /* ---- custom exam builder ---- */
 function openBuilder(){
   showExamView("examBuilder");
+  const err=document.getElementById("builderError");if(err){err.classList.remove("show");err.textContent=""}
   document.getElementById("examModalTitle").textContent="🛠️ صمّم امتحانك";
   if(!document.getElementById("builderQuestions").children.length){
     addBuilderQuestion("mcq");addBuilderQuestion("number");addBuilderQuestion("open");
@@ -1558,9 +1738,11 @@ document.getElementById("addBuilderQuestion").addEventListener("click",()=>addBu
 
 function addBuilderQuestion(type="mcq",data={}){
   const host=document.getElementById("builderQuestions");
-  if(host.children.length>=10){showToast("الحد الأقصى 10 أسئلة.");return}
+  if(host.children.length>=10){builderMessage("الحد الأقصى 10 أسئلة.");return}
   builderCounter++;
-  const d=document.createElement("div");d.className="builder-card";d.dataset.builderId=builderCounter;
+  const d=document.createElement("div");
+  d.className="builder-card";
+  d.dataset.builderId=builderCounter;
   d.innerHTML=`
     <div class="builder-grid">
       <select class="b-type">
@@ -1569,57 +1751,151 @@ function addBuilderQuestion(type="mcq",data={}){
         <option value="open" ${type==="open"?"selected":""}>سؤال مفتوح</option>
       </select>
       <input class="b-points" type="number" min="1" max="100" value="${data.points||10}" placeholder="العلامة">
-      <button class="exam-secondary b-remove" type="button">حذف</button>
+      <button class="exam-secondary b-remove" type="button">🗑 حذف</button>
     </div>
     <textarea class="b-prompt" placeholder="اكتب السؤال">${escapeHtml(data.prompt||"")}</textarea>
     <div class="b-extra"></div>
   `;
   host.appendChild(d);
+
   const typeEl=d.querySelector(".b-type");
+
+  function addOptionRow(text="",checked=false){
+    const list=d.querySelector(".builder-option-list");
+    if(!list)return;
+    if(list.children.length>=8){builderMessage("الحد الأقصى 8 خيارات للسؤال الواحد.",d);return}
+    const row=document.createElement("div");
+    row.className="builder-option-row";
+    const radioName=`correct_${d.dataset.builderId}`;
+    row.innerHTML=`
+      <input type="radio" name="${radioName}" class="correct-option" ${checked?"checked":""} title="الإجابة الصحيحة">
+      <input class="option-text" value="${escapeHtml(text)}" placeholder="اكتب الخيار">
+      <button type="button" class="remove-option" title="حذف الخيار">×</button>
+    `;
+    row.querySelector(".remove-option").addEventListener("click",()=>{
+      if(list.children.length<=2){builderMessage("السؤال الأمريكي لازم يضل فيه خيارين على الأقل.",d);return}
+      row.remove();
+    });
+    list.appendChild(row);
+  }
+
   const renderExtra=()=>{
     const x=d.querySelector(".b-extra"),v=typeEl.value;
     if(v==="mcq"){
-      x.innerHTML=`<input class="b-options" value="${escapeHtml((data.options||["","","",""]).join("|"))}" placeholder="الخيارات مفصولة بـ | مثال: 5|10|13|15">
-      <input class="b-answer" value="${escapeHtml(data.answer||"")}" placeholder="الإجابة الصحيحة كما هي في الخيارات">`;
+      x.innerHTML=`
+        <div class="builder-help">حدد الدائرة بجانب الإجابة الصحيحة. تقدر تضيف لحد 8 خيارات.</div>
+        <div class="builder-option-list"></div>
+        <button type="button" class="add-option-btn">＋ إضافة خيار</button>
+      `;
+      const opts=(data.options&&data.options.length?data.options:["","","",""]);
+      opts.forEach((opt,i)=>addOptionRow(opt,normExam(opt)===normExam(data.answer||"") && opt!==""));
+      if(!d.querySelector(".correct-option:checked")){
+        const first=d.querySelector(".correct-option");if(first)first.checked=true;
+      }
+      x.querySelector(".add-option-btn").addEventListener("click",()=>addOptionRow("",false));
     }else if(v==="number"){
       x.innerHTML=`<input class="b-answer" type="number" step="0.01" value="${escapeHtml(data.answer??"")}" placeholder="الإجابة الرقمية الصحيحة">`;
     }else{
       x.innerHTML=`<input class="b-answer" value="${escapeHtml((data.keywords||[]).join("|"))}" placeholder="كلمات الإجابة الأساسية مفصولة بـ |">`;
     }
   };
+
   renderExtra();
   typeEl.addEventListener("change",()=>{data={};renderExtra()});
   d.querySelector(".b-remove").addEventListener("click",()=>d.remove());
 }
 
+function builderMessage(message,card=null){
+  const box=document.getElementById("builderError");
+  box.textContent=message;
+  box.classList.remove("show");void box.offsetWidth;box.classList.add("show");
+  showToast("⚠️ "+message);
+  if(card){
+    card.scrollIntoView({behavior:"smooth",block:"center"});
+    card.animate(
+      [{boxShadow:"0 0 0 0 rgba(255,90,90,0)"},{boxShadow:"0 0 0 4px rgba(255,90,90,.34)"},{boxShadow:"0 0 0 0 rgba(255,90,90,0)"}],
+      {duration:900}
+    );
+  }
+}
+
 function examFromBuilder(){
   const title=document.getElementById("builderTitle").value.trim()||"امتحاني";
   const cards=[...document.querySelectorAll("#builderQuestions .builder-card")];
-  if(!cards.length){showToast("أضف سؤال واحد على الأقل.");return null}
+  const err=document.getElementById("builderError");
+  err.classList.remove("show");err.textContent="";
+  if(!cards.length){builderMessage("أضف سؤال واحد على الأقل.");return null}
+
   const qs=[];
   for(let i=0;i<cards.length;i++){
-    const c=cards[i],type=c.querySelector(".b-type").value,prompt=c.querySelector(".b-prompt").value.trim();
+    const c=cards[i];
+    const type=c.querySelector(".b-type").value;
+    const prompt=c.querySelector(".b-prompt").value.trim();
     const points=Math.max(1,parseInt(c.querySelector(".b-points").value)||10);
-    const ans=c.querySelector(".b-answer")?.value.trim()||"";
-    if(!prompt || !ans){showToast(`كمّل السؤال رقم ${i+1} والإجابة الصحيحة.`);return null}
+
+    if(!prompt){
+      builderMessage(`السؤال رقم ${i+1}: اكتب نص السؤال أولًا.`,c);
+      c.querySelector(".b-prompt").focus();
+      return null;
+    }
+
     if(type==="mcq"){
-      const options=c.querySelector(".b-options").value.split("|").map(x=>x.trim()).filter(Boolean);
-      if(options.length<2 || !options.some(x=>normExam(x)===normExam(ans))){
-        showToast(`السؤال ${i+1}: لازم خيارين على الأقل والإجابة تكون واحدة من الخيارات.`);return null
+      const rows=[...c.querySelectorAll(".builder-option-row")];
+      const options=rows.map(r=>r.querySelector(".option-text").value.trim()).filter(Boolean);
+      const checked=c.querySelector(".correct-option:checked");
+      const answer=checked?.closest(".builder-option-row")?.querySelector(".option-text").value.trim()||"";
+
+      if(options.length<2){
+        builderMessage(`السؤال رقم ${i+1}: أضف خيارين مكتوبين على الأقل.`,c);return null;
       }
-      qs.push({type,prompt,points,options,answer:ans,explanation:`الإجابة الصحيحة: ${ans}`});
+      if(!answer){
+        builderMessage(`السؤال رقم ${i+1}: اختر الإجابة الصحيحة من الدائرة بجانب أحد الخيارات.`,c);return null;
+      }
+      if(new Set(options.map(normExam)).size!==options.length){
+        builderMessage(`السؤال رقم ${i+1}: في خيارات مكررة، غيّرها.`,c);return null;
+      }
+      qs.push({type,prompt,points,options,answer,explanation:`الإجابة الصحيحة: ${answer}`});
+
     }else if(type==="number"){
+      const ans=c.querySelector(".b-answer")?.value.trim()||"";
+      if(ans===""||!Number.isFinite(parseFloat(ans))){
+        builderMessage(`السؤال رقم ${i+1}: اكتب الإجابة الرقمية الصحيحة.`,c);return null;
+      }
       qs.push({type,prompt,points,answer:parseFloat(ans),explanation:`الإجابة الصحيحة: ${ans}`});
+
     }else{
+      const ans=c.querySelector(".b-answer")?.value.trim()||"";
       const keywords=ans.split("|").map(x=>x.trim()).filter(Boolean);
-      qs.push({type,prompt,points,keywords,answerText:`الكلمات الأساسية: ${keywords.join("، ")}`,explanation:"يُصحح السؤال المفتوح حسب الكلمات الأساسية التي حددها منشئ الامتحان."});
+      if(!keywords.length){
+        builderMessage(`السؤال رقم ${i+1}: اكتب كلمة أساسية واحدة على الأقل للإجابة المفتوحة.`,c);return null;
+      }
+      qs.push({
+        type,prompt,points,keywords,
+        answerText:`الكلمات الأساسية: ${keywords.join("، ")}`,
+        explanation:"يُصحح السؤال المفتوح حسب الكلمات الأساسية التي حددها منشئ الامتحان."
+      });
     }
   }
+
   const total=qs.reduce((s,q)=>s+q.points,0);
+  if(total<=0){builderMessage("مجموع العلامات لازم يكون أكبر من صفر.");return null}
   return {title,questions:qs,total,surprise:false};
 }
 document.getElementById("startCustomExam").addEventListener("click",()=>{
-  const e=examFromBuilder();if(e)startExam(e);
+  const btn=document.getElementById("startCustomExam");
+  btn.disabled=true;btn.textContent="⏳ تجهيز الامتحان...";
+  try{
+    const e=examFromBuilder();
+    if(e){
+      startExam(e);
+      showToast(`✅ بدأ الامتحان: ${e.questions.length} أسئلة • ${e.total} علامة`);
+    }
+  }catch(err){
+    console.error(err);
+    builderMessage("صار خطأ أثناء تجهيز الامتحان. راجع الأسئلة وحاول مرة ثانية.");
+  }finally{
+    btn.disabled=false;btn.textContent="▶ ابدأ هذا الامتحان";
+  }
 });
 document.getElementById("saveBuilderExam").addEventListener("click",()=>{
   const e=examFromBuilder();if(!e)return;
@@ -1913,15 +2189,31 @@ function pythagorasiAnswer(raw){
 }
 
 const chat=document.getElementById("chat"),q=document.getElementById("question");
+function attachSpeaker(d,text){
+  if(!d||d.querySelector(".msg-speak"))return;
+  const b=document.createElement("button");
+  b.className="msg-speak";b.type="button";b.title="اقرأ الرد بصوت";
+  b.textContent="🔊";
+  b.addEventListener("click",e=>{
+    e.stopPropagation();
+    if(b.classList.contains("speaking")){stopSpeech();return}
+    speakAIText(text,b);
+  });
+  d.appendChild(b);
+}
 function addMsg(text,who="bot",html=false){
   const d=document.createElement("div");d.className=`msg ${who}`;
   if(html)d.innerHTML=text;else d.textContent=text;
+  if(who==="bot"&&!d.classList.contains("typing"))attachSpeaker(d,d.textContent||text);
   chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
 }
+// Add a speaker to the welcome message that already exists in the HTML.
+document.querySelectorAll("#chat .msg.bot").forEach(d=>attachSpeaker(d,d.textContent));
+
 function sendQuestion(forced=null){
   const raw=(forced??q.value).trim();if(!raw)return;
   addMsg(raw,"user");q.value="";
-  const typing=addMsg("فيثاغورسي يفكّر…","bot");typing.classList.add("typing");
+  const typing=document.createElement("div");typing.className="msg bot typing";typing.textContent="فيثاغورسي يفكّر…";chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
   setTimeout(()=>{
     typing.remove();
     addMsg(pythagorasiAnswer(raw),"bot");
