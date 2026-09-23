@@ -151,6 +151,185 @@ body.light .challenge-actions button{background:#eef4f8;color:#193047;border-col
 .suggestions button:hover{border-color:#168dff;color:white}
 .dictnote{font-size:10px;color:#75869a;padding:0 12px 10px}
 
+
+/* ---------- universal button animation ---------- */
+button{
+  position:relative;
+  overflow:hidden;
+  transform:translateZ(0);
+  transition:transform .16s ease,filter .16s ease,box-shadow .16s ease!important
+}
+button:not(:disabled):hover{filter:brightness(1.08)}
+button:not(:disabled):active{transform:scale(.955)!important}
+button.ui-pop{animation:uiPop .34s cubic-bezier(.2,.9,.3,1.25)}
+@keyframes uiPop{
+  0%{transform:scale(1)}
+  35%{transform:scale(.92)}
+  72%{transform:scale(1.045)}
+  100%{transform:scale(1)}
+}
+.btn-ripple{
+  position:absolute;z-index:99;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,.27);transform:scale(0);animation:ripple .58s ease-out forwards
+}
+@keyframes ripple{to{transform:scale(4.2);opacity:0}}
+
+/* ---------- explanation voice ---------- */
+.voice-toolbar{
+  position:sticky;top:57px;z-index:4;
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  margin:0 0 17px;padding:10px;
+  border:1px solid rgba(67,217,255,.16);
+  background:rgba(7,17,30,.92);backdrop-filter:blur(12px);
+  border-radius:14px
+}
+.voice-toolbar button{
+  border:1px solid rgba(255,255,255,.12);background:#14263a;color:white;
+  border-radius:10px;padding:9px 11px;cursor:pointer;font-weight:800
+}
+.voice-toolbar select{
+  height:38px;border-radius:9px;border:1px solid rgba(255,255,255,.12);
+  background:#0b1725;color:white;padding:0 7px;outline:none
+}
+.voice-label{font-size:12px;color:#aebed0}
+.voice-wave{display:flex;align-items:center;gap:3px;height:22px;margin-inline-start:auto;opacity:.35}
+.voice-wave i{display:block;width:3px;height:6px;border-radius:999px;background:#50dfff}
+.voice-wave.playing{opacity:1}
+.voice-wave.playing i:nth-child(1){animation:wave .62s ease-in-out infinite}
+.voice-wave.playing i:nth-child(2){animation:wave .62s ease-in-out .11s infinite}
+.voice-wave.playing i:nth-child(3){animation:wave .62s ease-in-out .22s infinite}
+.voice-wave.playing i:nth-child(4){animation:wave .62s ease-in-out .33s infinite}
+.voice-wave.playing i:nth-child(5){animation:wave .62s ease-in-out .44s infinite}
+@keyframes wave{0%,100%{height:5px}50%{height:20px}}
+.explain > *.speaking{
+  outline:2px solid rgba(67,217,255,.55);
+  background:rgba(67,217,255,.08);
+  border-radius:10px;
+  padding:7px 9px;
+  transition:.25s
+}
+body.light .voice-toolbar{background:rgba(247,251,254,.95);border-color:#cce8f4}
+body.light .voice-toolbar button{background:#e9f3f8;color:#193047;border-color:#d4e0e8}
+body.light .voice-toolbar select{background:white;color:#193047;border-color:#d4e0e8}
+
+/* ---------- exam ---------- */
+.exam-launch{
+  grid-column:1/-1;
+  background:linear-gradient(90deg,#7928ca,#ff3cac)!important;
+  border-color:rgba(255,105,220,.32)!important;
+  box-shadow:0 10px 28px rgba(167,51,215,.18)!important
+}
+.exam-modalbox{width:min(1040px,97vw);max-height:92vh}
+.exam-home{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.exam-choice{
+  border:1px solid rgba(255,255,255,.11);border-radius:17px;padding:18px;
+  background:linear-gradient(145deg,rgba(121,40,202,.10),rgba(22,141,255,.05))
+}
+.exam-choice h3{font-size:22px;margin:0 0 7px}
+.exam-choice p{color:#b7c5d5;line-height:1.7;font-size:13px;min-height:66px}
+.exam-choice button{
+  width:100%;border:0;border-radius:12px;padding:12px;color:white;font-weight:900;cursor:pointer;
+  background:linear-gradient(90deg,#7928ca,#a84be2)
+}
+.exam-choice.custom button{background:linear-gradient(90deg,#087bf1,#27b4ef)}
+.exam-toolbar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin:0 0 13px;padding:10px;border-radius:13px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)
+}
+.exam-pill{
+  border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;
+  background:#12243a;border:1px solid rgba(255,255,255,.09);color:#cde1f5
+}
+.exam-progress{flex:1;min-width:150px;height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+.exam-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#7928ca,#ff3cac);transition:.25s}
+.exam-questions{display:grid;gap:11px}
+.exam-q{
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.025);
+  border-radius:15px;padding:14px
+}
+.exam-q-head{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.exam-q-title{font-weight:900;line-height:1.75}
+.exam-points{white-space:nowrap;color:#79dcff;font-size:12px;font-weight:800}
+.exam-options{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.exam-option{
+  display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.08);background:#0d1a2a;cursor:pointer
+}
+.exam-option:hover{border-color:#7a52dc}
+.exam-option input{width:auto;height:auto;box-shadow:none}
+.exam-textarea{
+  width:100%;min-height:78px;margin-top:9px;resize:vertical;
+  border-radius:11px;border:1px solid rgba(255,255,255,.11);
+  background:#081421;color:white;padding:10px;outline:none
+}
+.exam-number{margin-top:9px;max-width:270px}
+.exam-submit{
+  width:100%;margin-top:13px;border:0;border-radius:13px;padding:13px;
+  background:linear-gradient(90deg,#18a66f,#55e3a7);color:#062519;font-weight:950;cursor:pointer;font-size:17px
+}
+.exam-secondary{
+  border:1px solid rgba(255,255,255,.12);background:#142439;color:white;
+  border-radius:10px;padding:9px 11px;cursor:pointer;font-weight:800
+}
+.exam-result-card{
+  text-align:center;padding:22px;border-radius:19px;
+  background:radial-gradient(circle at 50% 0,rgba(121,40,202,.18),transparent 50%),rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.10)
+}
+.exam-score{font-size:62px;font-weight:950;letter-spacing:-2px;margin:3px 0}
+.exam-score small{font-size:20px;color:#9db0c3}
+.exam-grade{font-size:20px;font-weight:900;color:#6df0b5}
+.exam-review{display:grid;gap:9px;margin-top:14px;text-align:right}
+.review-item{padding:11px;border-radius:11px;border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.65}
+.review-item.ok{background:rgba(76,225,161,.07);border-color:rgba(76,225,161,.16)}
+.review-item.no{background:rgba(255,120,91,.06);border-color:rgba(255,120,91,.15)}
+.review-item b{color:#f8fbff}
+.builder-top{
+  display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:11px
+}
+.builder-top input,.builder-top select,.builder-card input,.builder-card select,.builder-card textarea{
+  width:100%;border-radius:10px;border:1px solid rgba(255,255,255,.11);
+  background:#091523;color:white;padding:9px;outline:none
+}
+.builder-card{
+  border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:12px;margin:10px 0;
+  background:rgba(255,255,255,.025)
+}
+.builder-grid{display:grid;grid-template-columns:1fr 130px 120px;gap:8px;margin-bottom:8px}
+.builder-card textarea{min-height:65px;resize:vertical}
+.builder-help{font-size:11px;color:#8192a7;line-height:1.6;margin-top:5px}
+.builder-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.builder-actions button{flex:1;min-width:150px}
+.hidden{display:none!important}
+.exam-empty{padding:18px;text-align:center;color:#93a5b9}
+.exam-timer{font-variant-numeric:tabular-nums}
+.confetti-piece{
+  position:fixed;z-index:9999;top:-20px;width:9px;height:14px;border-radius:2px;
+  animation:confettiFall var(--d) linear forwards;transform:rotate(var(--r))
+}
+@keyframes confettiFall{
+  to{transform:translate(var(--x),110vh) rotate(720deg);opacity:.95}
+}
+body.light .exam-choice,body.light .exam-q,body.light .exam-result-card,body.light .builder-card{
+  background:white;border-color:#d8e2ea;color:#173047
+}
+body.light .exam-choice p{color:#64778a}
+body.light .exam-option{background:#edf4f8;color:#173047;border-color:#d8e2ea}
+body.light .exam-textarea,body.light .builder-top input,body.light .builder-top select,
+body.light .builder-card input,body.light .builder-card select,body.light .builder-card textarea{
+  background:#f6f9fb;color:#173047;border-color:#d3dee7
+}
+body.light .exam-secondary{background:#eaf2f7;color:#173047;border-color:#d5e0e8}
+body.light .exam-pill{background:#edf4f8;color:#173047;border-color:#d8e2ea}
+
+@media(max-width:700px){
+  .exam-home{grid-template-columns:1fr}
+  .exam-options{grid-template-columns:1fr}
+  .builder-top,.builder-grid{grid-template-columns:1fr}
+  .voice-wave{display:none}
+}
+
 /* modal */
 .modal{position:fixed;z-index:50;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(9px)}
 .modal.open{display:flex}
@@ -254,6 +433,7 @@ body.light .ai-card .dictnote{color:#718196}
     <section class="card">
       <div class="actions">
         <button class="secondary proof-btn" id="proofBtn">▶ شغّل البرهان الحي بالرمل</button>
+        <button class="secondary exam-launch" id="examBtn">🎓 امتحان مفاجئ</button>
         <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
         <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
       </div>
@@ -310,7 +490,19 @@ body.light .ai-card .dictnote{color:#718196}
       <h2>شرح دقيق لنظرية فيثاغورس</h2>
       <button class="close" id="closeModal">×</button>
     </div>
-    <div class="explain">
+    <div class="voice-toolbar">
+      <button id="speechPlay">🔊 اقرأ الشرح</button>
+      <button id="speechPause">⏸ إيقاف مؤقت</button>
+      <button id="speechStop">⏹ إيقاف</button>
+      <span class="voice-label">السرعة</span>
+      <select id="speechRate" aria-label="سرعة القراءة">
+        <option value="0.8">هادئ</option>
+        <option value="1" selected>عادي</option>
+        <option value="1.15">سريع</option>
+      </select>
+      <div class="voice-wave" id="voiceWave" title="الصوت يعمل"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="explain" id="explainContent">
       <p><b>نظرية فيثاغورس</b> تنطبق على <b>المثلث القائم الزاوية فقط</b>. إذا سمّينا الضلعين اللذين يصنعان الزاوية القائمة بـ <b>a</b> و <b>b</b>، وسمّينا الضلع المقابل للزاوية القائمة — وهو أطول ضلع — بـ <b>c</b>، فإن:</p>
       <div class="eq">a² + b² = c²</div>
 
@@ -333,6 +525,75 @@ body.light .ai-card .dictnote{color:#718196}
 
       <h3>ملاحظة مهمة</h3>
       <p>لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="examModal">
+  <div class="modalbox exam-modalbox">
+    <div class="modalhead">
+      <h2 id="examModalTitle">🎓 مركز الامتحانات</h2>
+      <button class="close" id="closeExamModal">×</button>
+    </div>
+
+    <div id="examHome">
+      <div class="exam-home">
+        <div class="exam-choice">
+          <h3>⚡ الامتحان المفاجئ</h3>
+          <p>أقسى اختبار: 10 أسئلة متغيّرة عن فيثاغورس، حسابات، فهم، عكس النظرية، مسافات ومساحات. العلامة من 100.</p>
+          <button id="startSurpriseExam">ابدأ الامتحان المفاجئ</button>
+        </div>
+        <div class="exam-choice custom">
+          <h3>🛠️ صمّم امتحانك</h3>
+          <p>اختَر الأسئلة والعلامات ونوع السؤال: أمريكي، رقمي أو مفتوح. حتى 10 أسئلة، ويحفظ الامتحان على الجهاز.</p>
+          <button id="openExamBuilder">صمّم امتحان جديد</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="examRunner" class="hidden">
+      <div class="exam-toolbar">
+        <span class="exam-pill" id="examNamePill">امتحان</span>
+        <span class="exam-pill" id="examCountPill">10 أسئلة</span>
+        <span class="exam-pill exam-timer" id="examTimer">00:00</span>
+        <div class="exam-progress"><span id="examProgress"></span></div>
+        <button class="exam-secondary" id="changeExamBtn">🔄 غيّر الامتحان</button>
+      </div>
+      <div class="exam-questions" id="examQuestions"></div>
+      <button class="exam-submit" id="submitExam">سلّم الامتحان وشوف العلامة</button>
+    </div>
+
+    <div id="examResult" class="hidden">
+      <div class="exam-result-card">
+        <div>نتيجتك</div>
+        <div class="exam-score"><span id="examScoreNumber">0</span><small id="examScoreMax">/100</small></div>
+        <div class="exam-grade" id="examGradeText"></div>
+        <div id="examResultSummary" style="margin-top:7px;color:#aebfd0"></div>
+      </div>
+      <div class="exam-review" id="examReview"></div>
+      <div class="builder-actions">
+        <button class="exam-secondary" id="retryExam">↻ امتحان جديد</button>
+        <button class="exam-secondary" id="backExamHome">⌂ مركز الامتحانات</button>
+      </div>
+    </div>
+
+    <div id="examBuilder" class="hidden">
+      <div class="builder-top">
+        <input id="builderTitle" value="امتحاني في نظرية فيثاغورس" placeholder="اسم الامتحان">
+        <select id="builderMode">
+          <option value="auto">تصحيح تلقائي</option>
+        </select>
+      </div>
+      <div class="builder-help">للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.</div>
+      <div id="builderQuestions"></div>
+      <div class="builder-actions">
+        <button class="exam-secondary" id="addBuilderQuestion">＋ أضف سؤال</button>
+        <button class="exam-secondary" id="saveBuilderExam">💾 حفظ الامتحان</button>
+        <button class="exam-secondary" id="loadBuilderExam">📂 تحميل المحفوظ</button>
+        <button class="apply" id="startCustomExam" style="margin:0">▶ ابدأ هذا الامتحان</button>
+        <button class="exam-secondary" id="builderBack">رجوع</button>
+      </div>
     </div>
   </div>
 </div>
@@ -959,9 +1220,423 @@ document.getElementById("fullBtn").addEventListener("click",()=>{
 /* -------------------- EXPLANATION MODAL -------------------- */
 const modal=document.getElementById("modal");
 document.getElementById("explainBtn").addEventListener("click",()=>modal.classList.add("open"));
-document.getElementById("closeModal").addEventListener("click",()=>modal.classList.remove("open"));
-modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("open")});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remove("open")});
+document.getElementById("closeModal").addEventListener("click",()=>{modal.classList.remove("open");stopSpeech()});
+modal.addEventListener("click",e=>{if(e.target===modal){modal.classList.remove("open");stopSpeech()}});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    modal.classList.remove("open");stopSpeech();
+    examModal?.classList.remove("open");stopExamTimer();
+  }
+});
+
+
+/* -------------------- UNIVERSAL BUTTON ANIMATION -------------------- */
+document.addEventListener("pointerdown",e=>{
+  const btn=e.target.closest("button");
+  if(!btn || btn.disabled)return;
+  const rect=btn.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height)*.55;
+  const r=document.createElement("span");
+  r.className="btn-ripple";
+  r.style.width=r.style.height=`${size}px`;
+  r.style.left=`${e.clientX-rect.left-size/2}px`;
+  r.style.top=`${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(),620);
+});
+document.addEventListener("click",e=>{
+  const btn=e.target.closest("button");
+  if(!btn || btn.disabled)return;
+  btn.classList.remove("ui-pop");
+  void btn.offsetWidth;
+  btn.classList.add("ui-pop");
+  setTimeout(()=>btn.classList.remove("ui-pop"),380);
+});
+
+/* -------------------- ARABIC VOICE EXPLANATION -------------------- */
+const speechState={sections:[],index:0,reading:false,paused:false,current:null};
+
+function arabicVoice(){
+  const voices=speechSynthesis.getVoices();
+  return voices.find(v=>/^ar(-|$)/i.test(v.lang) && /sa|Saudi|Hamed|Maged|Tarik/i.test(v.name))
+    || voices.find(v=>/^ar(-|$)/i.test(v.lang))
+    || null;
+}
+
+function cleanSpeechText(el){
+  const t=el.textContent.replace(/\s+/g," ").trim();
+  if(t==="a² + b² = c²")return "ألف تربيع زائد باء تربيع يساوي جيم تربيع.";
+  if(t.includes("3² + 4²"))return "ثلاثة تربيع زائد أربعة تربيع، يساوي تسعة زائد ستة عشر، يساوي خمسة وعشرين، يساوي خمسة تربيع.";
+  if(t.includes("a = √(c² − b²)"))return "لحساب ألف: الجذر التربيعي لجيم تربيع ناقص باء تربيع. ولحساب باء: الجذر التربيعي لجيم تربيع ناقص ألف تربيع.";
+  return t.replace(/a²/g,"ألف تربيع").replace(/b²/g,"باء تربيع").replace(/c²/g,"جيم تربيع")
+          .replace(/\ba\b/g,"ألف").replace(/\bb\b/g,"باء").replace(/\bc\b/g,"جيم");
+}
+
+function stopSpeech(){
+  speechSynthesis.cancel();
+  speechState.reading=false;speechState.paused=false;speechState.index=0;speechState.current=null;
+  document.getElementById("voiceWave")?.classList.remove("playing");
+  document.querySelectorAll("#explainContent .speaking").forEach(x=>x.classList.remove("speaking"));
+  const p=document.getElementById("speechPause");if(p)p.textContent="⏸ إيقاف مؤقت";
+}
+
+function speakExplanationFrom(index=0){
+  if(!("speechSynthesis" in window)){
+    showToast("هذا المتصفح لا يدعم القراءة الصوتية.");
+    return;
+  }
+  speechSynthesis.cancel();
+  speechState.sections=[...document.querySelectorAll("#explainContent > p,#explainContent > h3,#explainContent > .eq")];
+  speechState.index=index;
+  speechState.reading=true;speechState.paused=false;
+  document.getElementById("voiceWave").classList.add("playing");
+
+  const next=()=>{
+    document.querySelectorAll("#explainContent .speaking").forEach(x=>x.classList.remove("speaking"));
+    if(!speechState.reading || speechState.index>=speechState.sections.length){
+      stopSpeech();
+      return;
+    }
+    const el=speechState.sections[speechState.index];
+    el.classList.add("speaking");
+    el.scrollIntoView({behavior:"smooth",block:"center"});
+    const u=new SpeechSynthesisUtterance(cleanSpeechText(el));
+    u.lang="ar-SA";
+    u.rate=parseFloat(document.getElementById("speechRate").value)||1;
+    u.pitch=1;
+    const v=arabicVoice();if(v)u.voice=v;
+    speechState.current=u;
+    u.onend=()=>{if(speechState.reading){speechState.index++;next()}};
+    u.onerror=()=>{if(speechState.reading){speechState.index++;next()}};
+    speechSynthesis.speak(u);
+  };
+  next();
+}
+document.getElementById("speechPlay").addEventListener("click",()=>{
+  if(speechState.paused){
+    speechSynthesis.resume();speechState.paused=false;
+    document.getElementById("speechPause").textContent="⏸ إيقاف مؤقت";
+    document.getElementById("voiceWave").classList.add("playing");
+  }else speakExplanationFrom(0);
+});
+document.getElementById("speechPause").addEventListener("click",()=>{
+  if(!speechState.reading)return;
+  if(speechState.paused){
+    speechSynthesis.resume();speechState.paused=false;
+    document.getElementById("speechPause").textContent="⏸ إيقاف مؤقت";
+    document.getElementById("voiceWave").classList.add("playing");
+  }else{
+    speechSynthesis.pause();speechState.paused=true;
+    document.getElementById("speechPause").textContent="▶ متابعة";
+    document.getElementById("voiceWave").classList.remove("playing");
+  }
+});
+document.getElementById("speechStop").addEventListener("click",stopSpeech);
+document.getElementById("speechRate").addEventListener("change",()=>{
+  if(speechState.reading){const i=speechState.index;stopSpeech();speakExplanationFrom(i)}
+});
+
+/* -------------------- EXAM SYSTEM -------------------- */
+const examModal=document.getElementById("examModal");
+let activeExam=null;
+let examStartTime=0;
+let examTimerHandle=null;
+let builderCounter=0;
+
+function normExam(s){
+  return String(s??"").toLowerCase()
+    .replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي")
+    .replace(/[ًٌٍَُِّْـ]/g,"").replace(/[^\w\u0600-\u06FF.\- ]/g," ")
+    .replace(/\s+/g," ").trim();
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a;
+}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+const triples=[[3,4,5],[5,12,13],[6,8,10],[7,24,25],[8,15,17],[9,40,41],[12,35,37],[20,21,29],[28,45,53]];
+
+function hardQuestionPool(){
+  const t1=pick(triples),t2=pick(triples.filter(x=>x!==t1)),t3=pick(triples.filter(x=>x!==t1&&x!==t2));
+  const coord=pick([[5,12,13],[8,15,17],[7,24,25],[9,40,41]]);
+  const notRight=pick([[7,8,12],[10,12,17],[8,10,15],[9,12,17]]);
+  return [
+    {type:"number",prompt:`مثلث قائم ضلعاه القائمان ${t1[0]} و ${t1[1]}. احسب طول الوتر c.`,answer:t1[2],points:10,explanation:`c = √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
+    {type:"number",prompt:`في مثلث قائم، الوتر c = ${t2[2]} والضلع a = ${t2[0]}. احسب b.`,answer:t2[1],points:10,explanation:`b = √(${t2[2]}² − ${t2[0]}²) = ${t2[1]}.`},
+    {type:"mcq",prompt:`هل الأطوال ${t3[0]}، ${t3[1]}، ${t3[2]} تكوّن مثلثًا قائمًا؟`,options:["نعم","لا","لا يمكن تحديد ذلك","فقط إذا كانت الزاوية 60°"],answer:"نعم",points:10,explanation:`لأن ${t3[0]}² + ${t3[1]}² = ${t3[2]}².`},
+    {type:"number",prompt:`مستطيل طوله ${t1[1]} وعرضه ${t1[0]}. كم طول قطره؟`,answer:t1[2],points:10,explanation:`القطر هو وتر مثلث قائم: √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
+    {type:"mcq",prompt:"أي عبارة تصف عكس نظرية فيثاغورس بشكل صحيح؟",options:[
+      "إذا كان a² + b² = c² فإن المثلث قائم الزاوية",
+      "كل مثلث يحقق a + b = c يكون قائمًا",
+      "النظرية تنطبق فقط على المثلث المتساوي الأضلاع",
+      "إذا كان c أصغر ضلع فالمثلث قائم"
+    ],answer:"إذا كان a² + b² = c² فإن المثلث قائم الزاوية",points:10,explanation:"إذا تحقق مجموع مربعي الضلعين الأصغر مساويًا لمربع الأطول، فالمثلث قائم."},
+    {type:"number",prompt:`نقطتان فرق الإحداثي السيني بينهما ${coord[0]} وفرق الإحداثي الصادي ${coord[1]}. ما المسافة المستقيمة بينهما؟`,answer:coord[2],points:10,explanation:`المسافة = √(${coord[0]}² + ${coord[1]}²) = ${coord[2]}.`},
+    {type:"mcq",prompt:"إذا ضاعفنا طولي a و b ثلاث مرات، ماذا يحدث للوتر c؟",options:["يتضاعف مرتين","يتضاعف 3 مرات","يتضاعف 6 مرات","لا يتغير"],answer:"يتضاعف 3 مرات",points:10,explanation:"عند تكبير المثلث بمعامل 3، كل الأطوال ومنها الوتر تتضاعف 3 مرات."},
+    {type:"number",prompt:`إذا كان a = ${t3[0]} و b = ${t3[1]}، فما مساحة المربع المبني على الوتر c؟`,answer:t3[2]*t3[2],points:10,explanation:`c² = a² + b² = ${t3[0]**2} + ${t3[1]**2} = ${t3[2]**2}.`},
+    {type:"mcq",prompt:`هل الأطوال ${notRight[0]}، ${notRight[1]}، ${notRight[2]} تحقق نظرية فيثاغورس؟`,options:["نعم","لا"],answer:"لا",points:10,explanation:`${notRight[0]}² + ${notRight[1]}² لا يساوي ${notRight[2]}².`},
+    {type:"open",prompt:"اشرح لماذا لا نستخدم a² + b² = c² مباشرة مع أي مثلث غير قائم.",keywords:["قائم","90","زاويه"],answerText:"لأن نظرية فيثاغورس تنطبق على المثلث القائم الذي يحتوي زاوية 90°.",points:10,explanation:"النظرية تخص المثلث القائم؛ للمثلث غير القائم نحتاج علاقة أخرى مثل قانون جيب التمام."},
+    {type:"open",prompt:"اشرح فكرة البرهان بالرمل في المجسم بكلماتك.",keywords:["مساح","مجموع","رمل","c","وتر"],answerText:"الرمل يمثل المساحات، ومجموع مساحة/رمل a² و b² يساوي مساحة/رمل c².",points:10,explanation:"المقصود بصريًا أن مساحتي مربعي a و b معًا تساويان مساحة مربع الوتر c."},
+    {type:"mcq",prompt:"أي ضلع هو الوتر في المثلث القائم؟",options:["الضلع المقابل لزاوية 90°","أقصر ضلع دائمًا","أي ضلع نختاره","الضلع المجاور فقط للزاوية 90°"],answer:"الضلع المقابل لزاوية 90°",points:10,explanation:"الوتر يقابل الزاوية القائمة وهو أطول ضلع."},
+    {type:"number",prompt:"إذا كانت مساحة مربع a تساوي 81 ومساحة مربع b تساوي 144، فما طول c؟",answer:15,points:10,explanation:"c² = 81 + 144 = 225، إذن c = 15."},
+    {type:"mcq",prompt:"ما التفسير الأدق للمعادلة a² + b² = c² في نموذج المربعات؟",options:[
+      "مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر",
+      "محيط مربع c يساوي مجموع محيطي المربعين الآخرين",
+      "كل المربعات لها نفس المساحة",
+      "c يساوي a + b دائمًا"
+    ],answer:"مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر",points:10,explanation:"الأس 2 يمثل مساحة مربع مبني على كل ضلع."},
+    {type:"number",prompt:"شاشة مستطيلة عرضها 16 وحدة وارتفاعها 30 وحدة. ما طول القطر؟",answer:34,points:10,explanation:"القطر = √(16² + 30²) = √1156 = 34."},
+    {type:"mcq",prompt:"إذا كان c² = 400 و a² = 144، فما قيمة b²؟",options:["256","544","16","20"],answer:"256",points:10,explanation:"b² = c² − a² = 400 − 144 = 256."}
+  ];
+}
+
+function createSurpriseExam(){
+  const qs=shuffle(hardQuestionPool()).slice(0,10).map((q,i)=>({...q,id:`s${Date.now()}_${i}`,points:10}));
+  return {title:"⚡ الامتحان المفاجئ — مستوى صعب جدًا",questions:qs,total:100,surprise:true};
+}
+
+function showExamView(which){
+  for(const id of ["examHome","examRunner","examResult","examBuilder"])
+    document.getElementById(id).classList.toggle("hidden",id!==which);
+}
+function openExamCenter(){
+  stopSpeech();
+  examModal.classList.add("open");
+  showExamView("examHome");
+  document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
+}
+document.getElementById("examBtn").addEventListener("click",openExamCenter);
+document.getElementById("closeExamModal").addEventListener("click",()=>{examModal.classList.remove("open");stopExamTimer()});
+examModal.addEventListener("click",e=>{if(e.target===examModal){examModal.classList.remove("open");stopExamTimer()}});
+
+function startExam(exam){
+  activeExam=exam;
+  showExamView("examRunner");
+  document.getElementById("examModalTitle").textContent=exam.title;
+  document.getElementById("examNamePill").textContent=exam.title;
+  document.getElementById("examCountPill").textContent=`${exam.questions.length} أسئلة • ${exam.total} علامة`;
+  renderExamQuestions();
+  startExamTimer();
+  updateExamProgress();
+}
+
+function renderExamQuestions(){
+  const host=document.getElementById("examQuestions");
+  host.innerHTML="";
+  activeExam.questions.forEach((q,i)=>{
+    const card=document.createElement("div");card.className="exam-q";card.dataset.index=i;
+    let input="";
+    if(q.type==="mcq"){
+      input=`<div class="exam-options">${q.options.map((o,j)=>`
+        <label class="exam-option"><input type="radio" name="exam_${i}" value="${escapeHtml(o)}"> <span>${escapeHtml(o)}</span></label>
+      `).join("")}</div>`;
+    }else if(q.type==="number"){
+      input=`<input class="exam-number" type="number" step="0.01" data-answer-index="${i}" placeholder="اكتب الرقم">`;
+    }else{
+      input=`<textarea class="exam-textarea" data-answer-index="${i}" placeholder="اكتب إجابتك..."></textarea>`;
+    }
+    card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${escapeHtml(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}`;
+    host.appendChild(card);
+  });
+  host.querySelectorAll("input,textarea").forEach(el=>el.addEventListener("input",updateExamProgress));
+  host.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener("change",updateExamProgress));
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function getExamAnswer(i,q){
+  const card=document.querySelector(`.exam-q[data-index="${i}"]`);
+  if(q.type==="mcq")return card.querySelector(`input[name="exam_${i}"]:checked`)?.value || "";
+  return card.querySelector("[data-answer-index]")?.value.trim() || "";
+}
+function updateExamProgress(){
+  if(!activeExam)return;
+  let done=0;
+  activeExam.questions.forEach((q,i)=>{if(getExamAnswer(i,q)!=="")done++});
+  document.getElementById("examProgress").style.width=`${(done/activeExam.questions.length)*100}%`;
+}
+function gradeOne(q,ans){
+  if(q.type==="mcq"){
+    const ok=normExam(ans)===normExam(q.answer);
+    return {score:ok?q.points:0,ok};
+  }
+  if(q.type==="number"){
+    const x=parseFloat(ans),y=parseFloat(q.answer);
+    const tol=Math.max(.02,Math.abs(y)*.002);
+    const ok=Number.isFinite(x)&&Math.abs(x-y)<=tol;
+    return {score:ok?q.points:0,ok};
+  }
+  const a=normExam(ans);
+  if(!a)return {score:0,ok:false};
+  const keys=(q.keywords||String(q.answerText||q.answer||"").split("|")).map(normExam).filter(Boolean);
+  if(!keys.length){
+    const ok=a.includes(normExam(q.answerText||q.answer||""));
+    return {score:ok?q.points:0,ok};
+  }
+  const hits=keys.filter(k=>a.includes(k)).length;
+  const ratio=hits/keys.length;
+  const score=ratio>=.66?q.points:ratio>=.34?Math.round(q.points*.5):0;
+  return {score,ok:score>=q.points*.66};
+}
+function submitCurrentExam(){
+  if(!activeExam)return;
+  stopExamTimer();
+  let score=0,answered=0;
+  const review=[];
+  activeExam.questions.forEach((q,i)=>{
+    const ans=getExamAnswer(i,q);if(ans)answered++;
+    const g=gradeOne(q,ans);score+=g.score;
+    review.push({q,ans,g});
+  });
+  showExamView("examResult");
+  document.getElementById("examScoreNumber").textContent=score;
+  document.getElementById("examScoreMax").textContent=`/${activeExam.total}`;
+  const pct=activeExam.total?Math.round(score/activeExam.total*100):0;
+  const label=pct>=95?"أسطوري 🔥":pct>=85?"ممتاز جدًا 🌟":pct>=70?"ممتاز 👏":pct>=55?"جيد — كمل تدريب 💪":"بدها مراجعة شوي 📘";
+  document.getElementById("examGradeText").textContent=label;
+  document.getElementById("examResultSummary").textContent=`جاوبت ${answered} من ${activeExam.questions.length} • النسبة ${pct}% • الوقت ${document.getElementById("examTimer").textContent}`;
+  const host=document.getElementById("examReview");host.innerHTML="";
+  review.forEach((r,i)=>{
+    const d=document.createElement("div");d.className=`review-item ${r.g.ok?"ok":"no"}`;
+    const correct=r.q.type==="open"?(r.q.answerText||r.q.explanation):(r.q.answer);
+    d.innerHTML=`<b>${i+1}. ${escapeHtml(r.q.prompt)}</b><br>
+      إجابتك: ${escapeHtml(r.ans||"—")} • العلامة: ${r.g.score}/${r.q.points}<br>
+      <span style="color:#9fb3c8">الإجابة/الشرح: ${escapeHtml(String(correct))}. ${escapeHtml(r.q.explanation||"")}</span>`;
+    host.appendChild(d);
+  });
+  if(pct>=80)launchConfetti();
+}
+document.getElementById("submitExam").addEventListener("click",submitCurrentExam);
+document.getElementById("startSurpriseExam").addEventListener("click",()=>startExam(createSurpriseExam()));
+document.getElementById("changeExamBtn").addEventListener("click",()=>{
+  if(activeExam?.surprise)startExam(createSurpriseExam());
+  else showExamView("examBuilder");
+});
+document.getElementById("retryExam").addEventListener("click",()=>{
+  if(activeExam?.surprise)startExam(createSurpriseExam());else startExam(activeExam);
+});
+document.getElementById("backExamHome").addEventListener("click",()=>{stopExamTimer();showExamView("examHome");document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات"});
+
+function startExamTimer(){
+  stopExamTimer();examStartTime=Date.now();
+  document.getElementById("examTimer").textContent="00:00";
+  examTimerHandle=setInterval(()=>{
+    const sec=Math.floor((Date.now()-examStartTime)/1000);
+    const m=String(Math.floor(sec/60)).padStart(2,"0"),s=String(sec%60).padStart(2,"0");
+    document.getElementById("examTimer").textContent=`${m}:${s}`;
+  },1000);
+}
+function stopExamTimer(){if(examTimerHandle){clearInterval(examTimerHandle);examTimerHandle=null}}
+
+function launchConfetti(){
+  const hues=["#43d9ff","#ff3cac","#e8b64b","#4ce1a1","#8d66ff"];
+  for(let i=0;i<55;i++){
+    const p=document.createElement("div");p.className="confetti-piece";
+    p.style.left=`${Math.random()*100}vw`;
+    p.style.background=pick(hues);
+    p.style.setProperty("--d",`${2.5+Math.random()*2}s`);
+    p.style.setProperty("--x",`${(Math.random()-.5)*260}px`);
+    p.style.setProperty("--r",`${Math.random()*360}deg`);
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),5000);
+  }
+}
+
+/* ---- custom exam builder ---- */
+function openBuilder(){
+  showExamView("examBuilder");
+  document.getElementById("examModalTitle").textContent="🛠️ صمّم امتحانك";
+  if(!document.getElementById("builderQuestions").children.length){
+    addBuilderQuestion("mcq");addBuilderQuestion("number");addBuilderQuestion("open");
+  }
+}
+document.getElementById("openExamBuilder").addEventListener("click",openBuilder);
+document.getElementById("builderBack").addEventListener("click",()=>showExamView("examHome"));
+document.getElementById("addBuilderQuestion").addEventListener("click",()=>addBuilderQuestion("mcq"));
+
+function addBuilderQuestion(type="mcq",data={}){
+  const host=document.getElementById("builderQuestions");
+  if(host.children.length>=10){showToast("الحد الأقصى 10 أسئلة.");return}
+  builderCounter++;
+  const d=document.createElement("div");d.className="builder-card";d.dataset.builderId=builderCounter;
+  d.innerHTML=`
+    <div class="builder-grid">
+      <select class="b-type">
+        <option value="mcq" ${type==="mcq"?"selected":""}>سؤال أمريكي</option>
+        <option value="number" ${type==="number"?"selected":""}>سؤال رقمي</option>
+        <option value="open" ${type==="open"?"selected":""}>سؤال مفتوح</option>
+      </select>
+      <input class="b-points" type="number" min="1" max="100" value="${data.points||10}" placeholder="العلامة">
+      <button class="exam-secondary b-remove" type="button">حذف</button>
+    </div>
+    <textarea class="b-prompt" placeholder="اكتب السؤال">${escapeHtml(data.prompt||"")}</textarea>
+    <div class="b-extra"></div>
+  `;
+  host.appendChild(d);
+  const typeEl=d.querySelector(".b-type");
+  const renderExtra=()=>{
+    const x=d.querySelector(".b-extra"),v=typeEl.value;
+    if(v==="mcq"){
+      x.innerHTML=`<input class="b-options" value="${escapeHtml((data.options||["","","",""]).join("|"))}" placeholder="الخيارات مفصولة بـ | مثال: 5|10|13|15">
+      <input class="b-answer" value="${escapeHtml(data.answer||"")}" placeholder="الإجابة الصحيحة كما هي في الخيارات">`;
+    }else if(v==="number"){
+      x.innerHTML=`<input class="b-answer" type="number" step="0.01" value="${escapeHtml(data.answer??"")}" placeholder="الإجابة الرقمية الصحيحة">`;
+    }else{
+      x.innerHTML=`<input class="b-answer" value="${escapeHtml((data.keywords||[]).join("|"))}" placeholder="كلمات الإجابة الأساسية مفصولة بـ |">`;
+    }
+  };
+  renderExtra();
+  typeEl.addEventListener("change",()=>{data={};renderExtra()});
+  d.querySelector(".b-remove").addEventListener("click",()=>d.remove());
+}
+
+function examFromBuilder(){
+  const title=document.getElementById("builderTitle").value.trim()||"امتحاني";
+  const cards=[...document.querySelectorAll("#builderQuestions .builder-card")];
+  if(!cards.length){showToast("أضف سؤال واحد على الأقل.");return null}
+  const qs=[];
+  for(let i=0;i<cards.length;i++){
+    const c=cards[i],type=c.querySelector(".b-type").value,prompt=c.querySelector(".b-prompt").value.trim();
+    const points=Math.max(1,parseInt(c.querySelector(".b-points").value)||10);
+    const ans=c.querySelector(".b-answer")?.value.trim()||"";
+    if(!prompt || !ans){showToast(`كمّل السؤال رقم ${i+1} والإجابة الصحيحة.`);return null}
+    if(type==="mcq"){
+      const options=c.querySelector(".b-options").value.split("|").map(x=>x.trim()).filter(Boolean);
+      if(options.length<2 || !options.some(x=>normExam(x)===normExam(ans))){
+        showToast(`السؤال ${i+1}: لازم خيارين على الأقل والإجابة تكون واحدة من الخيارات.`);return null
+      }
+      qs.push({type,prompt,points,options,answer:ans,explanation:`الإجابة الصحيحة: ${ans}`});
+    }else if(type==="number"){
+      qs.push({type,prompt,points,answer:parseFloat(ans),explanation:`الإجابة الصحيحة: ${ans}`});
+    }else{
+      const keywords=ans.split("|").map(x=>x.trim()).filter(Boolean);
+      qs.push({type,prompt,points,keywords,answerText:`الكلمات الأساسية: ${keywords.join("، ")}`,explanation:"يُصحح السؤال المفتوح حسب الكلمات الأساسية التي حددها منشئ الامتحان."});
+    }
+  }
+  const total=qs.reduce((s,q)=>s+q.points,0);
+  return {title,questions:qs,total,surprise:false};
+}
+document.getElementById("startCustomExam").addEventListener("click",()=>{
+  const e=examFromBuilder();if(e)startExam(e);
+});
+document.getElementById("saveBuilderExam").addEventListener("click",()=>{
+  const e=examFromBuilder();if(!e)return;
+  localStorage.setItem("pythagorasi_custom_exam",JSON.stringify(e));
+  showToast("💾 تم حفظ الامتحان على هذا الجهاز.");
+});
+document.getElementById("loadBuilderExam").addEventListener("click",()=>{
+  const raw=localStorage.getItem("pythagorasi_custom_exam");
+  if(!raw){showToast("ما في امتحان محفوظ على هذا الجهاز.");return}
+  try{
+    const e=JSON.parse(raw);
+    document.getElementById("builderTitle").value=e.title||"امتحاني";
+    const host=document.getElementById("builderQuestions");host.innerHTML="";
+    (e.questions||[]).slice(0,10).forEach(q=>addBuilderQuestion(q.type,q));
+    showToast("📂 تم تحميل الامتحان المحفوظ.");
+  }catch{showToast("تعذر تحميل الامتحان المحفوظ.")}
+});
 
 /* -------------------- PYTHAGORASI AI -------------------- */
 /* Normalize Arabic spelling */
@@ -993,7 +1668,7 @@ const roots=[
 "مثلث","ضلع","وتر","زاويه","قائم","مربع","مساحه","طول","رقم","عدد","قانون","قاعده","نظريه","هندسه","رياضيات",
 "جذر","تربيع","معادله","نتيجه","مثال","برهان","اثبات","مسافه","اتجاه","قطر","خريطه","بناء","تصميم","نقطه",
 "خط","مستقيم","محور","احداثي","شكل","مجسم","رمل","حبيبه","قيمه","معلوم","مجهول","حل","صحيح","خطا",
-"مدرسه","طالب","معلم","سؤال","جواب","فكره","طريقه","سبب","استخدام","تطبيق","مقارنه","مجموع","فرق","علاقه"
+"مدرسه","طالب","معلم","سؤال","جواب","فكره","طريقه","سبب","استخدام","تطبيق","مقارنه","مجموع","فرق","علاقه","امتحان","اختبار","علامه","درجه","صوت","اقرا","قراءه","اسمع","تصميم","امريكي","مفتوح"
 ];
 const prefixes=["","ال","و","ف","ب","ك","لل","بال","وال","فال","كال","لل"];
 const suffixes=["","ه","ها","هم","نا","ي","ك","ات","ين","ان","ون","يه","يا","كم","هما","تان","تين","يه"];
@@ -1172,6 +1847,10 @@ function pythagorasiAnswer(raw){
 
   if(has(t,"شو هيا","شو هي","شو هاد","شو هذا","ايش هذا","ايش هاد","شو النموذج","شو المجسم")){
     return prefix + remember("intro","هذا نموذج تفاعلي لنظرية فيثاغورس: مثلث قائم في الوسط، وحول كل ضلع مربع شفاف فيه رمل. لما تغيّر a أو b، يتغيّر شكل المثلث وحجم المربعات وكمية الرمل، وبنحسب c من القانون a² + b² = c².");
+  }
+
+  if(has(t,"الامتحان","امتحان مفاجئ","اختبار","الاختبار")){
+    return prefix + remember("exam","في الموقع امتحان مفاجئ من 10 أسئلة صعبة ومتغيّرة وعلامته من 100. وفيك كمان تدخل «صمّم امتحانك» وتحدد لحد 10 أسئلة، نوع كل سؤال وعلامته وإجابته الصحيحة.");
   }
 
   const numeric=solveNumeric(raw,t);
