@@ -54,6 +54,37 @@ input:focus{border-color:#168dff;box-shadow:0 0 0 3px rgba(22,141,255,.14)}
 .answer{direction:ltr;text-align:center;margin-top:9px;border:1px solid rgba(76,225,161,.21);background:rgba(76,225,161,.10);color:#59edb0;border-radius:12px;padding:9px;font-size:27px;font-weight:900}
 .change-log{margin-top:9px;padding:10px 11px;border-radius:12px;background:rgba(67,217,255,.07);border:1px solid rgba(67,217,255,.13);color:#bfeeff;font-size:13px;line-height:1.7}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proof-btn{
+  grid-column:1/-1;
+  border:1px solid rgba(255,210,79,.30)!important;
+  background:linear-gradient(90deg,rgba(232,182,75,.20),rgba(255,116,68,.17))!important;
+  color:#fff4c8!important;
+  position:relative;overflow:hidden
+}
+.proof-btn:before{
+  content:"";position:absolute;inset:0;transform:translateX(-120%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)
+}
+.proof-btn.running:before{animation:proofShine 1.15s linear infinite}
+.proof-btn:disabled{opacity:.68;cursor:wait}
+@keyframes proofShine{to{transform:translateX(120%)}}
+.proof-status{
+  display:none;margin-top:10px;padding:10px 12px;border-radius:12px;
+  background:linear-gradient(90deg,rgba(232,182,75,.08),rgba(233,74,74,.07));
+  border:1px solid rgba(255,211,104,.14);color:#ffe6a6;font-size:13px;line-height:1.7
+}
+.proof-status.show{display:block}
+.proof-meter{
+  height:7px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:8px
+}
+.proof-meter span{
+  display:block;height:100%;width:0;border-radius:inherit;
+  background:linear-gradient(90deg,#e8b64b,#2f91ee 50%,#e94a4a);
+  transition:width .08s linear
+}
+body.light .proof-btn{color:#633b00!important}
+body.light .proof-status{color:#714600;background:#fff9e8;border-color:#f2d891}
+
 .secondary{border:1px solid rgba(255,255,255,.13);background:#122134;color:white;border-radius:11px;padding:11px;cursor:pointer;font-weight:800}
 .secondary:hover{background:#172b42}
 .sandstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
@@ -222,8 +253,13 @@ body.light .ai-card .dictnote{color:#718196}
 
     <section class="card">
       <div class="actions">
+        <button class="secondary proof-btn" id="proofBtn">▶ شغّل البرهان الحي بالرمل</button>
         <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
         <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
+      </div>
+      <div class="proof-status" id="proofStatus">
+        <div id="proofText">جاهز: سننقل كمية الرمل من a² و b² إلى c² لنرى تساوي المساحات.</div>
+        <div class="proof-meter"><span id="proofMeter"></span></div>
       </div>
     </section>
 
@@ -405,6 +441,14 @@ function seedRand(n){
 }
 
 const activeSand=[];
+let proofTrays=null;
+let proofRunning=false;
+let proofStart=0;
+let proofDuration=4700;
+let proofFX=[];
+const proofFXGroup=new THREE.Group();
+scene.add(proofFXGroup);
+
 
 function makeTray(side,frameColor,label,sandBase,seed=1){
   const g=new THREE.Group();
@@ -565,6 +609,7 @@ let lastBotTopic="intro";
 let lastBotAnswer="";
 
 function buildModel(a,b,animateSand=true){
+  cancelProof(false);
   clearDynamic();
   const c=Math.sqrt(a*a+b*b);
   const max=Math.max(a,b,c);
@@ -620,10 +665,12 @@ function buildModel(a,b,animateSand=true){
   const density=Math.min(10.2,1060/totalArea);
   const nA=Math.round(a*a*density);
   const nB=Math.round(b*b*density);
-  const nC=Math.round(c*c*density);
+  // Exact visual proof: grains in c² = grains in a² + grains in b²
+  const nC=nA+nB;
   launchSand(A.sand,nA,animateSand);
   launchSand(B.sand,nB,animateSand);
   launchSand(C.sand,nC,animateSand);
+  proofTrays={A,B,C,nA,nB,nC};
 
   /* center entire theorem on circular board */
   const box=new THREE.Box3().setFromObject(dynamic);
@@ -635,7 +682,202 @@ function buildModel(a,b,animateSand=true){
 }
 
 function shakeSand(){
-  for(const s of activeSand) launchSand(s,s.mesh.count,true);
+  if(proofRunning)return;
+  if(proofTrays){
+    launchSand(proofTrays.A.sand,proofTrays.nA,true);
+    launchSand(proofTrays.B.sand,proofTrays.nB,true);
+    launchSand(proofTrays.C.sand,proofTrays.nC,true);
+  }else{
+    for(const s of activeSand) launchSand(s,s.mesh.count,true);
+  }
+}
+
+function settleSandNow(sand){
+  const dummy=new THREE.Object3D();
+  for(let i=0;i<sand.particles.length;i++){
+    const p=sand.particles[i];
+    if(!p)continue;
+    p.pos.copy(p.target);
+    p.vel.set(0,0,0);
+    p.settled=true;
+    dummy.position.copy(p.pos);
+    dummy.rotation.set(p.rot.x,p.rot.y,p.rot.z);
+    dummy.scale.setScalar(p.scale);
+    dummy.updateMatrix();
+    sand.mesh.setMatrixAt(i,dummy.matrix);
+  }
+  sand.mesh.instanceMatrix.needsUpdate=true;
+}
+
+function clearProofFX(){
+  for(const fx of proofFX){
+    proofFXGroup.remove(fx.mesh);
+    fx.mesh.geometry?.dispose?.();
+    fx.mesh.material?.dispose?.();
+  }
+  proofFX=[];
+}
+
+function cancelProof(resetStatus=true){
+  proofRunning=false;
+  clearProofFX();
+  const btn=document.getElementById("proofBtn");
+  if(btn){
+    btn.disabled=false;
+    btn.classList.remove("running");
+    btn.textContent="▶ شغّل البرهان الحي بالرمل";
+  }
+  if(resetStatus){
+    const meter=document.getElementById("proofMeter");
+    if(meter)meter.style.width="0%";
+  }
+}
+
+function makeProofBeads(start,end,color,count,offsetSeed=0){
+  const geo=new THREE.IcosahedronGeometry(.055,1);
+  const mat=new THREE.MeshStandardMaterial({
+    color,roughness:.72,metalness:.02,emissive:color,emissiveIntensity:.08
+  });
+  for(let i=0;i<count;i++){
+    const mesh=new THREE.Mesh(geo.clone(),mat.clone());
+    mesh.castShadow=true;
+    proofFXGroup.add(mesh);
+
+    const r1=seedRand(i*4.1+offsetSeed)-.5;
+    const r2=seedRand(i*7.7+offsetSeed)-.5;
+    const s=start.clone().add(new THREE.Vector3(r1*.45,r2*.45,.42+Math.abs(r1)*.22));
+    const e=end.clone().add(new THREE.Vector3(
+      (seedRand(i*9.3+offsetSeed)-.5)*.85,
+      (seedRand(i*11.1+offsetSeed)-.5)*.85,
+      .55+(seedRand(i*13.9+offsetSeed)-.5)*.15
+    ));
+    const mid=s.clone().lerp(e,.5);
+    mid.y+=1.45+seedRand(i*5.9+offsetSeed)*.70;
+    mid.z+=.55+seedRand(i*8.8+offsetSeed)*.45;
+    proofFX.push({
+      mesh,start:s,end:e,mid,
+      delay:(i/count)*.64+seedRand(i*2.2+offsetSeed)*.08,
+      spin:(seedRand(i*17.3+offsetSeed)-.5)*.16
+    });
+  }
+}
+
+function bezier3(a,b,c,t,out){
+  const u=1-t;
+  out.set(
+    u*u*a.x+2*u*t*b.x+t*t*c.x,
+    u*u*a.y+2*u*t*b.y+t*t*c.y,
+    u*u*a.z+2*u*t*b.z+t*t*c.z
+  );
+  return out;
+}
+
+function startProof(){
+  if(!proofTrays || proofRunning)return;
+
+  clearProofFX();
+  const {A,B,C,nA,nB,nC}=proofTrays;
+
+  // Freeze existing sand into neat settled positions first.
+  settleSandNow(A.sand);settleSandNow(B.sand);settleSandNow(C.sand);
+  A.sand.mesh.count=nA;
+  B.sand.mesh.count=nB;
+  C.sand.mesh.count=0;
+
+  scene.updateMatrixWorld(true);
+  const startA=A.group.getWorldPosition(new THREE.Vector3());
+  const startB=B.group.getWorldPosition(new THREE.Vector3());
+  const endC=C.group.getWorldPosition(new THREE.Vector3());
+
+  // Visible travelling grains; mesh counts still represent the full mathematical quantity.
+  makeProofBeads(startA,endC,0xe8b64b,34,21);
+  makeProofBeads(startB,endC,0x2f91ee,46,57);
+
+  proofRunning=true;
+  proofStart=performance.now();
+
+  const btn=document.getElementById("proofBtn");
+  btn.disabled=true;
+  btn.classList.add("running");
+  btn.textContent="⏳ البرهان شغّال الآن...";
+
+  const status=document.getElementById("proofStatus");
+  status.classList.add("show");
+  document.getElementById("proofMeter").style.width="0%";
+  document.getElementById("proofText").innerHTML=
+    `بدأنا من <b>a² = ${pretty(currentA*currentA)}</b> و <b>b² = ${pretty(currentB*currentB)}</b>. الآن الرمل ينتقل إلى مربع <b>c²</b>.`;
+
+  showToast("▶ بدأ البرهان الحي: نجمع الرمل من a² و b² داخل c².");
+}
+
+function updateProof(now){
+  if(!proofRunning || !proofTrays)return;
+
+  const {A,B,C,nA,nB,nC}=proofTrays;
+  const raw=(now-proofStart)/proofDuration;
+  const t=Math.max(0,Math.min(1,raw));
+  // Ease for smoother transfer.
+  const e=t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+
+  A.sand.mesh.count=Math.max(0,Math.round(nA*(1-e)));
+  B.sand.mesh.count=Math.max(0,Math.round(nB*(1-e)));
+  C.sand.mesh.count=Math.min(nC,Math.round(nC*e));
+
+  const pos=new THREE.Vector3();
+  for(const fx of proofFX){
+    const local=(t-fx.delay)/.36;
+    if(local<=0){
+      fx.mesh.visible=false;
+      continue;
+    }
+    if(local>=1){
+      fx.mesh.visible=false;
+      continue;
+    }
+    fx.mesh.visible=true;
+    const q=local<.5 ? 2*local*local : 1-Math.pow(-2*local+2,2)/2;
+    bezier3(fx.start,fx.mid,fx.end,q,pos);
+    fx.mesh.position.copy(pos);
+    fx.mesh.rotation.x+=fx.spin;
+    fx.mesh.rotation.y+=fx.spin*.8;
+    const pulse=.72+Math.sin(local*Math.PI)*.55;
+    fx.mesh.scale.setScalar(pulse);
+  }
+
+  document.getElementById("proofMeter").style.width=`${Math.round(t*100)}%`;
+
+  if(t<.33){
+    document.getElementById("proofText").innerHTML=
+      `المرحلة 1/3: نفرّغ الرمل من <b>a²</b> و <b>b²</b> ونبدأ جمع المساحتين.`;
+  }else if(t<.78){
+    document.getElementById("proofText").innerHTML=
+      `المرحلة 2/3: الرملان الذهبي والأزرق ينتقلان إلى مربع الوتر <b>c²</b>.`;
+  }else{
+    document.getElementById("proofText").innerHTML=
+      `المرحلة 3/3: مربع <b>c²</b> يمتلئ بمجموع الكميتين تمامًا.`;
+  }
+
+  if(t>=1){
+    proofRunning=false;
+    A.sand.mesh.count=0;
+    B.sand.mesh.count=0;
+    C.sand.mesh.count=nC;
+    clearProofFX();
+
+    const btn=document.getElementById("proofBtn");
+    btn.disabled=false;
+    btn.classList.remove("running");
+    btn.textContent="↻ شغّل البرهان مرة ثانية";
+
+    document.getElementById("proofMeter").style.width="100%";
+    document.getElementById("proofText").innerHTML=
+      `✅ اكتمل البرهان: <b>${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}</b>، لذلك <b>a² + b² = c²</b>. كمية الرمل وصلت تمامًا إلى مساحة مربع الوتر.`;
+
+    lastBotTopic="proof";
+    lastBotAnswer=`شغّلنا البرهان الحي: نقلنا الرمل من مربعي a² و b² إلى c²، وامتلأ مربع c² بالمجموع تمامًا لأن ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}.`;
+
+    showToast(`✅ البرهان اكتمل: ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}.`);
+  }
 }
 
 let toastTimer;
@@ -655,6 +897,8 @@ function readValues(){
 }
 
 function applyChange(){
+  document.getElementById("proofStatus").classList.remove("show");
+  document.getElementById("proofMeter").style.width="0%";
   const[a,b]=readValues();
   const oldA=currentA,oldB=currentB,oldC=currentC;
   const {c}=buildModel(a,b,true);
@@ -689,6 +933,9 @@ document.querySelectorAll(".preset").forEach(btn=>btn.addEventListener("click",(
 }));
 document.getElementById("shakeBtn").addEventListener("click",()=>{
   shakeSand();showToast("⏳ تم تحريك الرمل من جديد، والحبيبات تسقط وتستقر داخل كل مربع حسب مساحته.");
+});
+document.getElementById("proofBtn").addEventListener("click",()=>{
+  startProof();
 });
 
 /* scene controls */
@@ -732,7 +979,7 @@ function normalizeArabic(t){
 const coreWords=[
 "فيثاغورس","فيثاغورسي","نظريه","نظرية","مثلث","المثلث","قائم","قائمه","زاويه","الزاويه","وتر","الوتر",
 "ضلع","الضلع","اضلاع","القائمين","مربع","مربعات","مساحه","مساحة","طول","اطوال","احسب","حساب","احسبلي",
-"اثبات","برهان","ليش","لماذا","كيف","متي","اين","وين","استخدام","استخدامات","هندسه","بناء","خرائط","مسافه",
+"اثبات","برهان","البرهان","حي","شغل","شغّل","انتقل","ينتقل","نقلنا","ليش","لماذا","كيف","متي","اين","وين","استخدام","استخدامات","هندسه","بناء","خرائط","مسافه",
 "المجهول","قانون","معادله","جذر","تربيع","يساوي","مجموع","طرح","اكبر","اصغر","صحيح","صح","خطا","غلط",
 "السلام","عليكم","مرحبا","اهلا","هلا","هاي","اهلين","هيو","hello","hi","صباح","مساء","الخير","شكرا","يسلمو","يعطيك","العافيه","باي","شو","يعني","هيك","هيا","هي","هاد","هذا","هاذا","ايش","اشرحلي","اشرح","عملنا","هسا","هلأ","الان","صار","تغير","التغيير","المجسم","النموذج","القيم","الرمل","طيب","ماشي","تمام","اوكي","أوكي","اوك","اها","آها","فهمت","فاهم","بلايك","اكيد","أكيد","دائما","دايما","شكرا","مشكور","حلو","ممتاز","تماما","واضح","مش","مو","مافهمت","فاهمش","فهمني","وضحلي","وضح","بالزبط","بالضبط",
 "مين","هو","هي","شو","ما","ماهي","ماهو","مثال","امثله","ببساطه","بسيط","شرح","اشرح","فسر","التطبيق",
@@ -948,8 +1195,11 @@ function pythagorasiAnswer(raw){
   if(has(t,"ضلع مجهول","احسب ضلع","المجهول"))
     return prefix + remember("calculation","إذا كان الوتر c معلومًا وأحد الضلعين معلومًا، نطرح المربعات:\na = √(c² − b²)\nأو\nb = √(c² − a²).");
 
+  if(has(t,"شو عمل البرهان","شو صار بالبرهان","اشرح البرهان الحي","الرمل وين راح"))
+    return prefix + remember("proof",`بالبرهان الحي أخذنا الرمل الموجود في مربعي a² و b² ونقلناه بصريًا إلى مربع c². لأن ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}، كمية الرمل الناتجة تملأ مساحة c² تمامًا.`);
+
   if(has(t,"ليش","لماذا","اثبات","برهان","صحيحه","صحيحة"))
-    return prefix + remember("proof","فكرة الإثبات البصري: ابنِ مربعًا على كل ضلع من أضلاع المثلث القائم. مساحة مربع الوتر c² تساوي مجموع مساحتي a² و b². في مجسمنا الرمل يمثل هذه المساحات، لذلك كمية الرمل في a² + كمية الرمل في b² تقابل كمية الرمل في c².");
+    return prefix + remember("proof","فكرة الإثبات البصري: ابنِ مربعًا على كل ضلع من أضلاع المثلث القائم. مساحة مربع الوتر c² تساوي مجموع مساحتي a² و b². في مجسمنا الرمل يمثل هذه المساحات، وتقدر تضغط زر «شغّل البرهان الحي بالرمل» وتشوف الرمل ينتقل فعليًا من a² و b² إلى c².");
 
   if(has(t,"استخدام","وين","اين","نستخدم"))
     return prefix + remember("theory","تُستخدم في قياس المسافات القطرية، البناء والتأكد من الزوايا القائمة، الخرائط والإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والهندسة عمومًا.");
@@ -1069,6 +1319,7 @@ function animate(now){
   requestAnimationFrame(animate);
   const dt=Math.min(2.2,(now-last)/16.67);last=now;
   updateSandPhysics(dt);
+  updateProof(now);
   controls.update();
   renderer.render(scene,camera);
 }
