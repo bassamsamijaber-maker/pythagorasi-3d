@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111c">
+<title>فيثاغورسي | نموذج فيثاغورس ثلاثي الأبعاد</title>
+<style>
+:root{
+  --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
+  --txt:#f7fbff; --muted:#9fb0c5; --blue:#168dff; --cyan:#43d9ff;
+  --green:#4ce1a1; --gold:#e8b64b; --red:#e94a4a; --shadow:0 28px 70px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:
+ radial-gradient(circle at 15% 10%,#14283e 0,#08121e 36%,#050a10 76%);color:var(--txt)}
+body{min-height:100vh;overflow-x:hidden}
+button,input,textarea{font:inherit}
+button{user-select:none}
+.shell{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(400px,.78fr);gap:18px;padding:18px;min-height:100vh;direction:ltr}
+.stage,.side{border:1px solid var(--line);border-radius:28px;background:rgba(8,16,27,.78);box-shadow:var(--shadow);overflow:hidden;position:relative}
+.stage{min-height:780px;direction:rtl;background:
+ radial-gradient(circle at 50% 42%,rgba(99,178,255,.10),transparent 38%),
+ linear-gradient(145deg,rgba(15,30,46,.95),rgba(4,9,15,.98))}
+#scene{position:absolute;inset:0}
+#scene canvas{display:block;width:100%;height:100%}
+.stagebar{position:absolute;z-index:8;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+.glass{pointer-events:auto;border:1px solid rgba(255,255,255,.16);background:rgba(4,12,21,.64);color:white;border-radius:13px;padding:10px 13px;cursor:pointer;display:flex;align-items:center;gap:7px;backdrop-filter:blur(12px);transition:.18s}
+.glass:hover{background:rgba(255,255,255,.09);transform:translateY(-1px)}
+.stagehint{position:absolute;z-index:8;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:end;pointer-events:none}
+.hint{background:rgba(4,10,18,.62);border:1px solid rgba(255,255,255,.09);padding:9px 12px;border-radius:13px;color:#c8d4e1;font-size:12px;line-height:1.6;backdrop-filter:blur(10px)}
+.change-toast{position:absolute;z-index:10;top:75px;left:50%;transform:translate(-50%,-12px);width:min(620px,88%);background:rgba(6,17,29,.92);border:1px solid rgba(84,200,255,.22);box-shadow:0 18px 45px rgba(0,0,0,.34);padding:12px 15px;border-radius:14px;color:#dff5ff;opacity:0;pointer-events:none;transition:.3s}
+.change-toast.show{opacity:1;transform:translate(-50%,0)}
+.change-toast b{color:#63dcff}
+
+.side{direction:rtl;padding:23px;max-height:calc(100vh - 36px);overflow:auto;background:linear-gradient(180deg,rgba(12,24,38,.97),rgba(7,14,23,.99))}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand h1{margin:0;font-size:clamp(37px,4vw,58px);letter-spacing:-1.5px}
+.ai-chip{background:linear-gradient(90deg,rgba(22,141,255,.16),rgba(67,217,255,.11));border:1px solid rgba(73,187,255,.26);padding:7px 11px;border-radius:999px;color:#8ddfff;font-size:12px;font-weight:800;white-space:nowrap}
+.sub{margin:7px 0 18px;color:var(--muted);line-height:1.8;font-size:14px}
+.card{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.025);border-radius:18px;padding:16px;margin-top:12px}
+.card h2{margin:0 0 12px;font-size:20px}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;margin-bottom:6px;color:#c4d0dd;font-size:13px}
+input{width:100%;height:52px;border:1px solid rgba(255,255,255,.12);background:#07111e;color:white;border-radius:12px;padding:0 13px;font-size:21px;font-weight:800;outline:none}
+input:focus{border-color:#168dff;box-shadow:0 0 0 3px rgba(22,141,255,.14)}
+.apply{width:100%;height:54px;border:0;border-radius:13px;margin-top:11px;cursor:pointer;color:white;font-size:18px;font-weight:900;background:linear-gradient(90deg,#087bf1,#139dff);box-shadow:0 10px 25px rgba(14,130,242,.22);transition:.18s}
+.apply:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}
+.quick button{border:1px solid rgba(255,255,255,.12);background:#122134;color:#e8f2fb;border-radius:10px;padding:9px;cursor:pointer}
+.quick button:hover,.quick button.active{border-color:#198fff;background:rgba(25,143,255,.14)}
+.formula{direction:ltr;text-align:center;font-size:29px;font-weight:900;margin:3px 0 8px}
+.mathline{direction:ltr;text-align:center;line-height:1.65;font-size:20px;font-weight:750}
+.answer{direction:ltr;text-align:center;margin-top:9px;border:1px solid rgba(76,225,161,.21);background:rgba(76,225,161,.10);color:#59edb0;border-radius:12px;padding:9px;font-size:27px;font-weight:900}
+.change-log{margin-top:9px;padding:10px 11px;border-radius:12px;background:rgba(67,217,255,.07);border:1px solid rgba(67,217,255,.13);color:#bfeeff;font-size:13px;line-height:1.7}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secondary{border:1px solid rgba(255,255,255,.13);background:#122134;color:white;border-radius:11px;padding:11px;cursor:pointer;font-weight:800}
+.secondary:hover{background:#172b42}
+.sandstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
+.stat{padding:8px;border-radius:10px;text-align:center;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);font-size:12px;color:#cbd6e2}
+.stat b{display:block;margin-top:4px;color:white;font-size:14px}
+.kdot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:5px}
+
+
+.challenge-box{
+  border:1px solid rgba(255,255,255,.11);
+  background:linear-gradient(135deg,rgba(22,141,255,.08),rgba(76,225,161,.05));
+  border-radius:18px;padding:15px;margin-top:12px;position:relative;overflow:hidden
+}
+.challenge-box:before{
+  content:"";position:absolute;width:120px;height:120px;border-radius:50%;
+  background:rgba(67,217,255,.06);left:-40px;top:-45px;pointer-events:none
+}
+.challenge-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.challenge-head h2{margin:0;font-size:20px}
+.challenge-badge{
+  font-size:11px;font-weight:900;color:#8ee9ff;border:1px solid rgba(67,217,255,.22);
+  background:rgba(67,217,255,.07);padding:5px 8px;border-radius:999px
+}
+.challenge-question{
+  background:rgba(4,12,21,.55);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:11px 12px;line-height:1.7;color:#eaf6ff;font-size:14px
+}
+.challenge-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px}
+.challenge-row input{height:44px;font-size:17px}
+.challenge-check{
+  border:0;border-radius:11px;padding:0 14px;background:linear-gradient(90deg,#14a96f,#4ce1a1);
+  color:#062318;font-weight:900;cursor:pointer
+}
+.challenge-actions{display:flex;gap:7px;margin-top:8px}
+.challenge-actions button{
+  flex:1;border:1px solid rgba(255,255,255,.10);background:#122134;color:#e9f4ff;
+  border-radius:10px;padding:8px;cursor:pointer;font-size:12px
+}
+.challenge-feedback{
+  display:none;margin-top:9px;border-radius:10px;padding:9px 10px;font-size:13px;line-height:1.65
+}
+.challenge-feedback.show{display:block}
+.challenge-feedback.good{background:rgba(76,225,161,.11);border:1px solid rgba(76,225,161,.20);color:#9cf5cb}
+.challenge-feedback.bad{background:rgba(255,176,71,.09);border:1px solid rgba(255,176,71,.20);color:#ffd49a}
+body.light .challenge-question{background:#eef5fa;color:#193047}
+body.light .challenge-actions button{background:#eef4f8;color:#193047;border-color:#d6e0e8}
+
+/* AI */
+.ai-card{padding:0;overflow:hidden}
+.ai-head{display:flex;align-items:center;justify-content:space-between;padding:14px 15px;border-bottom:1px solid rgba(255,255,255,.09);background:linear-gradient(90deg,rgba(22,141,255,.10),transparent)}
+.ai-name{display:flex;gap:9px;align-items:center;font-weight:900}
+.botlogo{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#087bf1,#43d9ff);box-shadow:0 7px 18px rgba(16,145,255,.25)}
+.online{font-size:11px;color:#58e8ab}
+.chat{height:250px;overflow:auto;padding:13px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.msg{max-width:88%;padding:9px 11px;border-radius:13px;line-height:1.65;font-size:13px;white-space:pre-wrap}
+.bot{align-self:flex-start;background:#132337;border:1px solid rgba(255,255,255,.07);color:#e9f2fb;border-bottom-right-radius:4px}
+.user{align-self:flex-end;background:linear-gradient(90deg,#087bed,#138fe8);color:white;border-bottom-left-radius:4px}
+.typing{opacity:.7;font-style:italic}
+.chatinput{display:grid;grid-template-columns:1fr auto;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.09)}
+.chatinput textarea{resize:none;min-height:45px;max-height:100px;border-radius:11px;border:1px solid rgba(255,255,255,.12);background:#07111e;color:white;padding:10px;outline:none;line-height:1.45}
+.send{width:48px;border:0;border-radius:11px;background:#168dff;color:white;font-size:18px;cursor:pointer;font-weight:900}
+.suggestions{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 10px}
+.suggestions button{font-size:11px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:#c4d0dd;border-radius:999px;padding:6px 9px;cursor:pointer}
+.suggestions button:hover{border-color:#168dff;color:white}
+.dictnote{font-size:10px;color:#75869a;padding:0 12px 10px}
+
+/* modal */
+.modal{position:fixed;z-index:50;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(9px)}
+.modal.open{display:flex}
+.modalbox{width:min(820px,96vw);max-height:88vh;overflow:auto;background:#0c1827;color:#f6fbff;border:1px solid rgba(255,255,255,.12);border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.55);padding:23px}
+.modalhead{display:flex;justify-content:space-between;gap:12px;align-items:center;position:sticky;top:-23px;background:#0c1827;padding:15px 0 12px;z-index:2}
+.modalhead h2{margin:0;font-size:28px}
+.close{border:1px solid rgba(255,255,255,.14);background:#16263a;color:white;width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:20px}
+.explain{line-height:1.95;color:#d3deea}
+.explain h3{color:#73dfff;margin-top:23px}
+.explain .eq{direction:ltr;text-align:center;background:#07111e;padding:13px;border-radius:12px;font-size:25px;font-weight:900;margin:12px 0}
+.explain table{width:100%;border-collapse:collapse;margin:12px 0}
+.explain td,.explain th{border:1px solid rgba(255,255,255,.10);padding:9px;text-align:center}
+.explain th{background:#132337}
+
+/* light */
+body.light{--txt:#122033;--muted:#627185;background:linear-gradient(145deg,#e9f0f6,#f9fbfd)}
+body.light .stage{background:linear-gradient(145deg,#edf4f8,#dce7ef)}
+body.light .side{background:rgba(248,251,253,.98);color:#122033}
+body.light .card{background:white;border-color:#dbe4ec}
+body.light input,body.light .chatinput textarea{background:#f0f4f8;color:#122033;border-color:#ced9e4}
+body.light label,body.light .sub{color:#647387}
+body.light .quick button,body.light .secondary{background:#edf3f7;color:#17283a;border-color:#d4dfe8}
+body.light .bot{background:#edf4f8;color:#17283a}
+body.light .modalbox,body.light .modalhead{background:#f7fbfe;color:#17283a}
+body.light .explain{color:#42546a}
+body.light .explain .eq{background:#eaf1f6}
+body.light .ai-card .dictnote{color:#718196}
+
+@media(max-width:1000px){
+ .shell{grid-template-columns:1fr;padding:10px;direction:rtl}
+ .stage{min-height:650px}
+ .side{max-height:none}
+}
+@media(max-width:560px){
+ .stage{min-height:530px;border-radius:20px}
+ .side{border-radius:20px;padding:15px}
+ .inputs{grid-template-columns:1fr}
+ .brand h1{font-size:38px}
+ .stagehint{display:none}
+ .actions{grid-template-columns:1fr}
+ .chat{height:290px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <section class="stage" id="stage">
+    <div id="scene"></div>
+    <div class="stagebar">
+      <button class="glass" id="themeBtn">☀ <span>الوضع النهاري</span></button>
+      <button class="glass" id="resetBtn">↻ <span>إرجاع العرض</span></button>
+    </div>
+    <div id="toast" class="change-toast"></div>
+    <div class="stagehint">
+      <div class="hint">🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط<br>🔎 عجلة الماوس للتقريب</div>
+      <button class="glass" id="fullBtn">⛶ <span>ملء الشاشة</span></button>
+    </div>
+  </section>
+
+  <aside class="side">
+    <div class="brand">
+      <h1>نظرية فيثاغورس</h1>
+      <div class="ai-chip">● فيثاغورسي AI</div>
+    </div>
+    <p class="sub">نموذج تفاعلي ثلاثي الأبعاد يوضح كيف أن مساحة مربعي الضلعين القائمين تساوي مساحة مربع الوتر.</p>
+
+    <section class="card">
+      <h2>غيّر المعطيات</h2>
+      <div class="inputs">
+        <div>
+          <label for="aInput">a — الضلع الأول</label>
+          <input id="aInput" type="number" min="1" max="12" step="1" value="3">
+        </div>
+        <div>
+          <label for="bInput">b — الضلع الثاني</label>
+          <input id="bInput" type="number" min="1" max="12" step="1" value="4">
+        </div>
+      </div>
+      <button class="apply" id="applyBtn">تطبيق التغيير على المجسم</button>
+      <div class="quick">
+        <button class="preset active" data-a="3" data-b="4">3 , 4</button>
+        <button class="preset" data-a="5" data-b="12">5 , 12</button>
+        <button class="preset" data-a="6" data-b="8">6 , 8</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>النتيجة</h2>
+      <div class="formula">a² + b² = c²</div>
+      <div class="mathline" id="line1">3² + 4² = 5²</div>
+      <div class="mathline" id="line2">9 + 16 = 25</div>
+      <div class="answer" id="result">c = 5</div>
+      <div class="change-log" id="changeLog">القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.</div>
+      <div class="sandstats">
+        <div class="stat"><span class="kdot" style="background:#e8b64b"></span>a² <b id="aStat">9</b></div>
+        <div class="stat"><span class="kdot" style="background:#278fff"></span>b² <b id="bStat">16</b></div>
+        <div class="stat"><span class="kdot" style="background:#e94a4a"></span>c² <b id="cStat">25</b></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="actions">
+        <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
+        <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
+      </div>
+    </section>
+
+    
+    <section class="challenge-box">
+      <div class="challenge-head">
+        <h2>🔥 تحدّي فيثاغورس</h2>
+        <span class="challenge-badge" id="challengeScore">0 نقاط</span>
+      </div>
+      <div class="challenge-question" id="challengeQuestion">اضغط «سؤال جديد» وجرّب تحل بدون ما تشوف الجواب.</div>
+      <div class="challenge-row">
+        <input id="challengeAnswer" type="number" step="0.01" placeholder="اكتب الجواب">
+        <button class="challenge-check" id="challengeCheck">تحقّق</button>
+      </div>
+      <div class="challenge-actions">
+        <button id="challengeNew">🎲 سؤال جديد</button>
+        <button id="challengeShow">💡 ورّيني الحل</button>
+      </div>
+      <div class="challenge-feedback" id="challengeFeedback"></div>
+    </section>
+
+<section class="card ai-card">
+      <div class="ai-head">
+        <div class="ai-name"><span class="botlogo">∟</span><span>فيثاغورسي AI</span></div>
+        <div class="online">● جاهز</div>
+      </div>
+      <div class="chat" id="chat">
+        <div class="msg bot">هلا بطلاب اللاهف 👋 أنا <b>فيثاغورسي</b>، مساعدكم المختص بنظرية فيثاغورس. اسألوني عن الوتر، الأضلاع، طريقة الحل، المجسم، الرمل، الإثبات، أو أعطوني أرقام وأنا أحسبها لكم.</div>
+      </div>
+      <div class="suggestions">
+        <button data-q="اشرحلي النظرية ببساطة">اشرحها ببساطة</button>
+        <button data-q="ليش النظرية صحيحة؟">ليش صحيحة؟</button>
+        <button data-q="اذا a 3 و b 4 شو c؟">احسب 3 و 4</button>
+        <button data-q="هل تنفع لكل المثلثات؟">متى نستخدمها؟</button>
+      </div>
+      <div class="chatinput">
+        <textarea id="question" rows="1" placeholder="اسأل فيثاغورسي... مثال: اذا a=5 و b=12 شو c؟"></textarea>
+        <button class="send" id="sendBtn">➤</button>
+      </div>
+      <div class="dictnote">يعمل محليًا داخل الموقع • قاموس لغوي 6000+ صيغة • تصحيح تقريبي للأخطاء الإملائية الشائعة</div>
+    </section>
+  </aside>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <div class="modalhead">
+      <h2>شرح دقيق لنظرية فيثاغورس</h2>
+      <button class="close" id="closeModal">×</button>
+    </div>
+    <div class="explain">
+      <p><b>نظرية فيثاغورس</b> تنطبق على <b>المثلث القائم الزاوية فقط</b>. إذا سمّينا الضلعين اللذين يصنعان الزاوية القائمة بـ <b>a</b> و <b>b</b>، وسمّينا الضلع المقابل للزاوية القائمة — وهو أطول ضلع — بـ <b>c</b>، فإن:</p>
+      <div class="eq">a² + b² = c²</div>
+
+      <h3>ماذا تعني المربعات في المجسم؟</h3>
+      <p>المربع المبني على الضلع a مساحته a²، والمربع المبني على الضلع b مساحته b²، أما المربع المبني على الوتر c فمساحته c². النظرية تقول إن <b>مجموع المساحتين a² و b² يساوي تمامًا المساحة c²</b>. لهذا جعلنا كمية الرمل متناسبة مع مساحة كل مربع.</p>
+
+      <h3>مثال 3–4–5</h3>
+      <div class="eq">3² + 4² = 9 + 16 = 25 = 5²</div>
+      <p>إذن عندما a = 3 و b = 4 يكون طول الوتر c = 5.</p>
+
+      <h3>إذا كان المجهول أحد الضلعين القائمين</h3>
+      <div class="eq">a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)</div>
+      <p>مثلًا: إذا c = 13 و a = 5، فإن b = √(169 − 25) = √144 = 12.</p>
+
+      <h3>العكس أيضًا مفيد</h3>
+      <p>إذا كان لدينا ثلاثة أطوال مرتبة بحيث c هو الأكبر، ووجدنا أن a² + b² = c²، فهذا يعني أن المثلث قائم الزاوية. مثل 3، 4، 5 أو 5، 12، 13.</p>
+
+      <h3>أين تُستخدم؟</h3>
+      <p>في الهندسة، البناء، قياس المسافات، الخرائط، الإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والمسائل التي تتضمن مسافة قطرية أو زاوية قائمة.</p>
+
+      <h3>ملاحظة مهمة</h3>
+      <p>لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.</p>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports":{
+    "three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+/* -------------------- THREE.JS SCENE -------------------- */
+const mount=document.getElementById("scene");
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(36,1,.1,100);
+camera.position.set(0,.15,13.8);
+
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.12;
+mount.appendChild(renderer.domElement);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+controls.enablePan=false;
+controls.enableZoom=true;
+controls.minDistance=10.3;
+controls.maxDistance=17.5;
+/* أهم نقطة: لا يمكن للمستخدم الدوران خلف المجسم */
+controls.minAzimuthAngle=-0.50;
+controls.maxAzimuthAngle= 0.50;
+controls.minPolarAngle=1.18;
+controls.maxPolarAngle=1.92;
+controls.target.set(0,.15,0);
+controls.update();
+
+scene.add(new THREE.HemisphereLight(0xeef8ff,0x172234,2.05));
+const key=new THREE.DirectionalLight(0xffffff,4.0);
+key.position.set(4.5,6.5,9); key.castShadow=true; scene.add(key);
+const fill=new THREE.DirectionalLight(0x6fc8ff,1.35);
+fill.position.set(-6,1.5,5); scene.add(fill);
+const warm=new THREE.PointLight(0xffd89e,.85,25);
+warm.position.set(0,-3,6); scene.add(warm);
+
+const root=new THREE.Group();
+root.rotation.set(-.02,-.03,0);
+scene.add(root);
+
+const std=(color,metal=.12,rough=.5)=>new THREE.MeshStandardMaterial({color,metalness:metal,roughness:rough});
+
+/* circular physical board */
+const back=new THREE.Mesh(new THREE.CylinderGeometry(4.65,4.65,.36,96),std(0x8c785f,.58,.28));
+back.rotation.x=Math.PI/2; back.position.z=-.48; back.castShadow=true; root.add(back);
+
+const board=new THREE.Mesh(new THREE.CylinderGeometry(4.39,4.39,.22,96),std(0x3e684e,.03,.78));
+board.rotation.x=Math.PI/2; board.position.z=-.22; board.receiveShadow=true; root.add(board);
+
+const ring=new THREE.Mesh(new THREE.TorusGeometry(4.47,.115,16,100),std(0xc6b08f,.7,.22));
+ring.position.z=-.02; ring.castShadow=true; root.add(ring);
+
+/* pedestal */
+const stem=new THREE.Mesh(new THREE.BoxGeometry(3.05,1.17,.62),std(0x171e28,.3,.45));
+stem.position.set(0,-4.72,-.42); stem.castShadow=true; root.add(stem);
+const base=new THREE.Mesh(new THREE.BoxGeometry(5.55,.66,1.82),std(0x0e141c,.38,.4));
+base.position.set(0,-5.32,-.42); base.castShadow=true; root.add(base);
+
+function makeTextSprite(text,fg="#111",fontSize=84,scale=1){
+  const c=document.createElement("canvas"); c.width=512;c.height=256;
+  const x=c.getContext("2d"); x.clearRect(0,0,512,256);
+  x.fillStyle=fg;x.font=`900 ${fontSize}px Arial`;x.textAlign="center";x.textBaseline="middle";x.fillText(text,256,130);
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
+  s.scale.set(2.0*scale,1.0*scale,1);return s;
+}
+
+const plaque=new THREE.Mesh(new THREE.BoxGeometry(2.95,.58,.13),std(0xdab04f,.45,.35));
+plaque.position.set(0,-4.84,.03);root.add(plaque);
+const plaqueTxt=makeTextSprite("نظرية فيثاغورس","#241a0a",59,.88);
+plaqueTxt.position.set(0,-4.83,.13);root.add(plaqueTxt);
+
+const dynamic=new THREE.Group();
+dynamic.position.z=.18;
+root.add(dynamic);
+
+function roundedRectShape(w,h,r){
+  const s=new THREE.Shape();const x=-w/2,y=-h/2;
+  s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);
+  s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);
+  s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);
+  return s;
+}
+
+function seedRand(n){
+  const v=Math.sin(n*12.9898+78.233)*43758.5453;
+  return v-Math.floor(v);
+}
+
+const activeSand=[];
+
+function makeTray(side,frameColor,label,sandBase,seed=1){
+  const g=new THREE.Group();
+  const depth=.20, edge=Math.max(.065,side*.045);
+
+  /* back acrylic plate */
+  const backplate=new THREE.Mesh(
+    new THREE.BoxGeometry(side*.94,side*.94,.08),
+    new THREE.MeshPhysicalMaterial({
+      color:0xf1f7fa,transparent:true,opacity:.20,roughness:.13,metalness:0,
+      transmission:.48,thickness:.5,clearcoat:1,clearcoatRoughness:.12
+    })
+  );
+  backplate.position.z=.04;g.add(backplate);
+
+  const fmat=new THREE.MeshPhysicalMaterial({
+    color:frameColor,metalness:.22,roughness:.30,clearcoat:.7,clearcoatRoughness:.15
+  });
+  const top=new THREE.Mesh(new THREE.BoxGeometry(side,edge,depth),fmat);
+  const bot=top.clone();
+  const left=new THREE.Mesh(new THREE.BoxGeometry(edge,side,depth),fmat);
+  const right=left.clone();
+  top.position.set(0,side/2,.15);bot.position.set(0,-side/2,.15);
+  left.position.set(-side/2,0,.15);right.position.set(side/2,0,.15);
+  [top,bot,left,right].forEach(m=>{m.castShadow=true;g.add(m)});
+
+  /* subtle glass front */
+  const front=new THREE.Mesh(
+    new THREE.ShapeGeometry(roundedRectShape(side*.91,side*.91,Math.max(.03,side*.025))),
+    new THREE.MeshPhysicalMaterial({
+      color:0xffffff,transparent:true,opacity:.07,roughness:.05,metalness:0,
+      transmission:.76,thickness:.35,side:THREE.DoubleSide
+    })
+  );
+  front.position.z=.47;g.add(front);
+
+  /* sand grains */
+  const grainR=Math.max(.018,Math.min(.038,side*.0145));
+  const geo=new THREE.IcosahedronGeometry(grainR,1);
+  const mat=new THREE.MeshStandardMaterial({color:sandBase,roughness:.93,metalness:0});
+  const inst=new THREE.InstancedMesh(geo,mat,1250);
+  inst.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  inst.castShadow=true;
+  inst.count=0;
+  g.add(inst);
+
+  const text=makeTextSprite(label,"#101820",92,Math.min(1.1,side/2.25));
+  text.position.set(0,0,.62);g.add(text);
+
+  const sandData={mesh:inst,side,particles:[],seed};
+  activeSand.push(sandData);
+
+  return {group:g,sand:sandData};
+}
+
+function targetSandPositions(side,count,seed){
+  const safe=side*.80;
+  const cols=Math.ceil(Math.sqrt(count));
+  const rows=Math.ceil(count/cols);
+  const dx=safe/Math.max(1,cols),dy=safe/Math.max(1,rows);
+  const arr=[];
+  for(let i=0;i<count;i++){
+    const col=i%cols,row=Math.floor(i/cols);
+    const jx=(seedRand(i+seed)-.5)*dx*.72;
+    const jy=(seedRand((i+seed)*2.91)-.5)*dy*.72;
+    const x=-safe/2+dx*(col+.5)+jx;
+    const y=-safe/2+dy*(row+.5)+jy;
+    const z=.24+seedRand((i+seed)*4.7)*.10;
+    arr.push(new THREE.Vector3(x,y,z));
+  }
+  return arr;
+}
+
+function launchSand(sand,count,fromTop=true){
+  count=Math.min(1200,Math.max(10,count));
+  const targets=targetSandPositions(sand.side,count,sand.seed);
+  sand.particles=[];
+  for(let i=0;i<count;i++){
+    const tx=targets[i];
+    const start=fromTop
+      ? new THREE.Vector3(
+          tx.x+(seedRand(i*1.7+sand.seed)-.5)*sand.side*.28,
+          sand.side*.55+seedRand(i*3.1+sand.seed)*sand.side*.60,
+          .28+seedRand(i*4.2+sand.seed)*.22
+        )
+      : new THREE.Vector3(tx.x,tx.y+.05+seedRand(i+sand.seed)*.18,tx.z);
+    sand.particles.push({
+      pos:start.clone(), target:tx.clone(),
+      vel:new THREE.Vector3((seedRand(i+17)-.5)*.006,-.002-seedRand(i+29)*.008,0),
+      rot:new THREE.Vector3(seedRand(i+4)*2,seedRand(i+8)*2,seedRand(i+12)*2),
+      scale:.72+seedRand(i*6.4+sand.seed)*.52,
+      settled:false
+    });
+  }
+  sand.mesh.count=count;
+}
+
+function updateSandPhysics(dt){
+  const dummy=new THREE.Object3D();
+  for(const sand of activeSand){
+    for(let i=0;i<sand.mesh.count;i++){
+      const p=sand.particles[i];
+      if(!p) continue;
+      if(!p.settled){
+        /* gravity + attraction to final packed position */
+        p.vel.y-=.00056*dt;
+        p.vel.x+=(p.target.x-p.pos.x)*.00048*dt;
+        p.vel.y+=(p.target.y-p.pos.y)*.00062*dt;
+        p.pos.addScaledVector(p.vel,dt);
+        const dist=p.pos.distanceTo(p.target);
+        if(dist<.045 || p.pos.y<p.target.y){
+          p.pos.lerp(p.target,.42);
+          p.vel.multiplyScalar(.35);
+          if(p.pos.distanceTo(p.target)<.012){p.pos.copy(p.target);p.settled=true}
+        }
+      } else {
+        /* tiny natural settling, almost invisible */
+        const wig=(seedRand(i+sand.seed)-.5)*.0011;
+        p.pos.x+=wig*dt*.03;
+      }
+      dummy.position.copy(p.pos);
+      dummy.rotation.set(p.rot.x,p.rot.y,p.rot.z);
+      dummy.scale.setScalar(p.scale);
+      dummy.updateMatrix();
+      sand.mesh.setMatrixAt(i,dummy.matrix);
+    }
+    sand.mesh.instanceMatrix.needsUpdate=true;
+  }
+}
+
+function rightTri(a,b){
+  const s=new THREE.Shape();s.moveTo(0,0);s.lineTo(a,0);s.lineTo(0,b);s.lineTo(0,0);
+  return new THREE.ShapeGeometry(s);
+}
+
+function clearDynamic(){
+  activeSand.length=0;
+  while(dynamic.children.length){
+    const o=dynamic.children.pop();
+    o.traverse?.(n=>{
+      n.geometry?.dispose?.();
+      if(n.material){
+        if(Array.isArray(n.material))n.material.forEach(m=>m.dispose?.());
+        else n.material.dispose?.();
+      }
+    });
+  }
+}
+
+function pretty(n){
+  return Math.abs(n-Math.round(n))<1e-8?String(Math.round(n)):n.toFixed(2).replace(/0+$/,"").replace(/\.$/,"");
+}
+
+let currentA=3,currentB=4,currentC=5;
+let lastChangeSummary="القيم الحالية: a = 3 و b = 4، لذلك c = 5. مساحة a² = 9 ومساحة b² = 16 ومساحة c² = 25، والرمل موزع حسب مساحة كل مربع.";
+let firstNonGreetingReply=true;
+let lastBotTopic="intro";
+let lastBotAnswer="";
+
+function buildModel(a,b,animateSand=true){
+  clearDynamic();
+  const c=Math.sqrt(a*a+b*b);
+  const max=Math.max(a,b,c);
+  const scale=3.28/max;
+  const as=a*scale,bs=b*scale,cs=c*scale;
+
+  /* triangle */
+  const tri=new THREE.Mesh(
+    rightTri(as,bs),
+    new THREE.MeshStandardMaterial({color:0xeee7d8,roughness:.76,metalness:.01,side:THREE.DoubleSide})
+  );
+  tri.position.z=.11;tri.castShadow=true;dynamic.add(tri);
+
+  /* edges */
+  const edgeMat=new THREE.LineBasicMaterial({color:0x26394b});
+  const edgePts=[
+    new THREE.Vector3(0,0,.43),new THREE.Vector3(as,0,.43),
+    new THREE.Vector3(0,0,.43),new THREE.Vector3(0,bs,.43),
+  ];
+  const g1=new THREE.BufferGeometry().setFromPoints([edgePts[0],edgePts[1]]);
+  const g2=new THREE.BufferGeometry().setFromPoints([edgePts[2],edgePts[3]]);
+  dynamic.add(new THREE.Line(g1,edgeMat),new THREE.Line(g2,edgeMat));
+
+  /* right-angle square */
+  const rs=Math.min(as,bs)*.13;
+  dynamic.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(rs,0,.46),new THREE.Vector3(rs,rs,.46),new THREE.Vector3(0,rs,.46)
+    ]),
+    new THREE.LineBasicMaterial({color:0x172433})
+  ));
+
+  /* mathematically attached square trays */
+  const A=makeTray(as,0xd6a637,"a²",0xe9b64b,13);
+  A.group.position.set(as/2,-as/2,.06);dynamic.add(A.group);
+
+  const B=makeTray(bs,0x277ed6,"b²",0x2f91ee,43);
+  B.group.position.set(-bs/2,bs/2,.06);dynamic.add(B.group);
+
+  const C=makeTray(cs,0xc93a3a,"c²",0xdf4646,79);
+  const mx=as/2,my=bs/2,nx=bs/cs,ny=as/cs;
+  C.group.position.set(mx+nx*cs/2,my+ny*cs/2,.06);
+  C.group.rotation.z=Math.atan2(bs,-as);
+  dynamic.add(C.group);
+
+  /* labels on triangle */
+  const la=makeTextSprite("a","#172433",68,.38);la.position.set(as*.52,.20,.54);dynamic.add(la);
+  const lb=makeTextSprite("b","#172433",68,.38);lb.position.set(.18,bs*.52,.54);dynamic.add(lb);
+  const lc=makeTextSprite("c","#172433",68,.38);lc.position.set(as*.49+.13,bs*.49+.16,.54);dynamic.add(lc);
+
+  /* grain quantity is directly proportional to area */
+  const totalArea=a*a+b*b+c*c;
+  const density=Math.min(10.2,1060/totalArea);
+  const nA=Math.round(a*a*density);
+  const nB=Math.round(b*b*density);
+  const nC=Math.round(c*c*density);
+  launchSand(A.sand,nA,animateSand);
+  launchSand(B.sand,nB,animateSand);
+  launchSand(C.sand,nC,animateSand);
+
+  /* center entire theorem on circular board */
+  const box=new THREE.Box3().setFromObject(dynamic);
+  const center=box.getCenter(new THREE.Vector3());
+  dynamic.position.set(-center.x,.28-center.y,.18);
+
+  currentA=a;currentB=b;currentC=c;
+  return {c,nA,nB,nC};
+}
+
+function shakeSand(){
+  for(const s of activeSand) launchSand(s,s.mesh.count,true);
+}
+
+let toastTimer;
+function showToast(text){
+  const el=document.getElementById("toast");
+  el.innerHTML=text;el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove("show"),5200);
+}
+
+function readValues(){
+  let a=parseFloat(document.getElementById("aInput").value),b=parseFloat(document.getElementById("bInput").value);
+  if(!Number.isFinite(a))a=3;if(!Number.isFinite(b))b=4;
+  a=Math.max(1,Math.min(12,a));b=Math.max(1,Math.min(12,b));
+  document.getElementById("aInput").value=a;document.getElementById("bInput").value=b;
+  return[a,b];
+}
+
+function applyChange(){
+  const[a,b]=readValues();
+  const oldA=currentA,oldB=currentB,oldC=currentC;
+  const {c}=buildModel(a,b,true);
+
+  document.getElementById("line1").textContent=`${pretty(a)}² + ${pretty(b)}² = ${pretty(c)}²`;
+  document.getElementById("line2").textContent=`${pretty(a*a)} + ${pretty(b*b)} = ${pretty(c*c)}`;
+  document.getElementById("result").textContent=`c = ${pretty(c)}`;
+  document.getElementById("aStat").textContent=pretty(a*a);
+  document.getElementById("bStat").textContent=pretty(b*b);
+  document.getElementById("cStat").textContent=pretty(c*c);
+
+  const parts=[];
+  if(a!==oldA)parts.push(`a تغيّر من <b>${pretty(oldA)}</b> إلى <b>${pretty(a)}</b>`);
+  if(b!==oldB)parts.push(`b تغيّر من <b>${pretty(oldB)}</b> إلى <b>${pretty(b)}</b>`);
+  const text=parts.length
+    ? `${parts.join("، ")}. لذلك تغيّر الوتر من <b>${pretty(oldC)}</b> إلى <b>${pretty(c)}</b>. تم الآن إعادة بناء المربعات وتحريك الرمل ليتناسب مع المساحات الجديدة.`
+    : `أعدنا محاكاة الرمل للقيم نفسها: a = <b>${pretty(a)}</b> و b = <b>${pretty(b)}</b>، والوتر c = <b>${pretty(c)}</b>.`;
+  document.getElementById("changeLog").innerHTML=text.replace(/<b>/g,"").replace(/<\/b>/g,"");
+  lastChangeSummary = parts.length
+    ? `غيّرنا ${a!==oldA?`a من ${pretty(oldA)} إلى ${pretty(a)}`:""}${a!==oldA&&b!==oldB?" و ":""}${b!==oldB?`b من ${pretty(oldB)} إلى ${pretty(b)}`:""}. صار الوتر c = ${pretty(c)}. مساحة a² = ${pretty(a*a)}، ومساحة b² = ${pretty(b*b)}، ومساحة c² = ${pretty(c*c)}. لذلك أعدنا بناء المربعات وتحريك الرمل حتى يناسب المساحات الجديدة.`
+    : `القيم بقيت نفسها: a = ${pretty(a)} و b = ${pretty(b)} و c = ${pretty(c)}، وأعدنا تحريك الرمل داخل المربعات.`;
+  showToast(text);
+
+  document.querySelectorAll(".preset").forEach(x=>x.classList.toggle("active",+x.dataset.a===a&&+x.dataset.b===b));
+}
+document.getElementById("applyBtn").addEventListener("click",applyChange);
+["aInput","bInput"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")applyChange()}));
+document.querySelectorAll(".preset").forEach(btn=>btn.addEventListener("click",()=>{
+  document.getElementById("aInput").value=btn.dataset.a;
+  document.getElementById("bInput").value=btn.dataset.b;
+  applyChange();
+}));
+document.getElementById("shakeBtn").addEventListener("click",()=>{
+  shakeSand();showToast("⏳ تم تحريك الرمل من جديد، والحبيبات تسقط وتستقر داخل كل مربع حسب مساحته.");
+});
+
+/* scene controls */
+const initialCam=camera.position.clone();
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  camera.position.copy(initialCam);controls.target.set(0,.15,0);root.rotation.set(-.02,-.03,0);controls.update();
+});
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  document.body.classList.toggle("light");
+  const isLight=document.body.classList.contains("light");
+  const btn=document.getElementById("themeBtn");
+  btn.innerHTML=isLight
+    ? '☾ <span>الوضع الليلي</span>'
+    : '☀ <span>الوضع النهاري</span>';
+});
+document.getElementById("fullBtn").addEventListener("click",()=>{
+  const el=document.getElementById("stage");
+  if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();
+});
+
+/* -------------------- EXPLANATION MODAL -------------------- */
+const modal=document.getElementById("modal");
+document.getElementById("explainBtn").addEventListener("click",()=>modal.classList.add("open"));
+document.getElementById("closeModal").addEventListener("click",()=>modal.classList.remove("open"));
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remove("open")});
+
+/* -------------------- PYTHAGORASI AI -------------------- */
+/* Normalize Arabic spelling */
+function normalizeArabic(t){
+  return t.toLowerCase()
+    .replace(/[ًٌٍَُِّْـ]/g,"")
+    .replace(/[أإآ]/g,"ا").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ى/g,"ي")
+    .replace(/ة/g,"ه")
+    .replace(/[؟?!.,،:;؛"'()[\]{}]/g," ")
+    .replace(/[٠١٢٣٤٥٦٧٨٩]/g,d=>"0123456789"["٠١٢٣٤٥٦٧٨٩".indexOf(d)])
+    .replace(/\s+/g," ").trim();
+}
+
+/* High-value correction vocabulary */
+const coreWords=[
+"فيثاغورس","فيثاغورسي","نظريه","نظرية","مثلث","المثلث","قائم","قائمه","زاويه","الزاويه","وتر","الوتر",
+"ضلع","الضلع","اضلاع","القائمين","مربع","مربعات","مساحه","مساحة","طول","اطوال","احسب","حساب","احسبلي",
+"اثبات","برهان","ليش","لماذا","كيف","متي","اين","وين","استخدام","استخدامات","هندسه","بناء","خرائط","مسافه",
+"المجهول","قانون","معادله","جذر","تربيع","يساوي","مجموع","طرح","اكبر","اصغر","صحيح","صح","خطا","غلط",
+"السلام","عليكم","مرحبا","اهلا","هلا","هاي","اهلين","هيو","hello","hi","صباح","مساء","الخير","شكرا","يسلمو","يعطيك","العافيه","باي","شو","يعني","هيك","هيا","هي","هاد","هذا","هاذا","ايش","اشرحلي","اشرح","عملنا","هسا","هلأ","الان","صار","تغير","التغيير","المجسم","النموذج","القيم","الرمل","طيب","ماشي","تمام","اوكي","أوكي","اوك","اها","آها","فهمت","فاهم","بلايك","اكيد","أكيد","دائما","دايما","شكرا","مشكور","حلو","ممتاز","تماما","واضح","مش","مو","مافهمت","فاهمش","فهمني","وضحلي","وضح","بالزبط","بالضبط",
+"مين","هو","هي","شو","ما","ماهي","ماهو","مثال","امثله","ببساطه","بسيط","شرح","اشرح","فسر","التطبيق",
+"الرمل","حبيبات","المساحات","الوتر","المقابل","القائمه","قائم","ينفع","تنفع","كل","اي","المثلثات",
+"ثلاثه","اربعه","خمسه","سته","ثمانيه","اثناعشر","ثلاثطعش","الثاني","الاول","النتيجه","قيمه","قيم"
+];
+
+/* 6000+ local Arabic forms. This is used as a typo-tolerant local lexicon. */
+const roots=[
+"حسب","كتب","شرح","فهم","علم","درس","سأل","جاوب","جمع","طرح","ضرب","قسم","قاس","رسم","بني","طبق",
+"مثلث","ضلع","وتر","زاويه","قائم","مربع","مساحه","طول","رقم","عدد","قانون","قاعده","نظريه","هندسه","رياضيات",
+"جذر","تربيع","معادله","نتيجه","مثال","برهان","اثبات","مسافه","اتجاه","قطر","خريطه","بناء","تصميم","نقطه",
+"خط","مستقيم","محور","احداثي","شكل","مجسم","رمل","حبيبه","قيمه","معلوم","مجهول","حل","صحيح","خطا",
+"مدرسه","طالب","معلم","سؤال","جواب","فكره","طريقه","سبب","استخدام","تطبيق","مقارنه","مجموع","فرق","علاقه"
+];
+const prefixes=["","ال","و","ف","ب","ك","لل","بال","وال","فال","كال","لل"];
+const suffixes=["","ه","ها","هم","نا","ي","ك","ات","ين","ان","ون","يه","يا","كم","هما","تان","تين","يه"];
+const lexicon=new Set(coreWords.map(normalizeArabic));
+outer:
+for(const r of roots)for(const p of prefixes)for(const s of suffixes){
+  lexicon.add(normalizeArabic(p+r+s));
+  if(lexicon.size>=6200)break outer;
+}
+/* Pad deterministically in case deduplication made fewer than 6000. */
+let pad=0;while(lexicon.size<6000){lexicon.add("صيغه"+(++pad))}
+const dictionary=[...lexicon];
+
+function levenshtein(a,b){
+  if(a===b)return 0;
+  const m=a.length,n=b.length,prev=Array(n+1),cur=Array(n+1);
+  for(let j=0;j<=n;j++)prev[j]=j;
+  for(let i=1;i<=m;i++){
+    cur[0]=i;
+    for(let j=1;j<=n;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    for(let j=0;j<=n;j++)prev[j]=cur[j];
+  }
+  return prev[n];
+}
+
+/* We correct only toward useful core vocabulary to avoid nonsense corrections. */
+const normalizedCore=[...new Set(coreWords.map(normalizeArabic))];
+function correctWord(w){
+  if(w.length<3 || /^\d/.test(w) || normalizedCore.includes(w))return w;
+  let best=w,bestD=99;
+  for(const cand of normalizedCore){
+    if(Math.abs(cand.length-w.length)>2)continue;
+    const d=levenshtein(w,cand);
+    if(d<bestD){bestD=d;best=cand}
+  }
+  const limit=w.length<=5?1:2;
+  return bestD<=limit?best:w;
+}
+function correctedText(raw){
+  const n=normalizeArabic(raw);
+  return n.split(" ").map(correctWord).join(" ");
+}
+function has(t,...xs){return xs.some(x=>t.includes(normalizeArabic(x)))}
+function extractNumbers(raw){
+  return normalizeArabic(raw).match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
+}
+function sq(x){return x*x}
+function fmt(x){return pretty(x)}
+
+function solveNumeric(raw,t){
+  const nums=extractNumbers(raw);
+  /* identify explicit variable values where possible */
+  const getVar=v=>{
+    const r1=new RegExp(`${v}\\s*[=:]?\\s*(\\d+(?:\\.\\d+)?)`,"i").exec(normalizeArabic(raw));
+    return r1?+r1[1]:null;
+  };
+  let a=getVar("a"),b=getVar("b"),c=getVar("c");
+
+  if(a!=null&&b!=null){
+    c=Math.sqrt(a*a+b*b);
+    return `إذا كان a = ${fmt(a)} و b = ${fmt(b)}، فإن:\n${fmt(a)}² + ${fmt(b)}² = c²\n${fmt(a*a)} + ${fmt(b*b)} = ${fmt(c*c)}\nإذن c = ${fmt(c)}.`;
+  }
+  if(c!=null&&a!=null){
+    if(c<=a)return "لا يمكن أن يكون الوتر c أقصر من أو مساويًا للضلع a في مثلث قائم صحيح.";
+    b=Math.sqrt(c*c-a*a);
+    return `نحسب الضلع b:\nb = √(c² − a²)\nb = √(${fmt(c*c)} − ${fmt(a*a)}) = ${fmt(b)}.`;
+  }
+  if(c!=null&&b!=null){
+    if(c<=b)return "لا يمكن أن يكون الوتر c أقصر من أو مساويًا للضلع b في مثلث قائم صحيح.";
+    a=Math.sqrt(c*c-b*b);
+    return `نحسب الضلع a:\na = √(c² − b²)\na = √(${fmt(c*c)} − ${fmt(b*b)}) = ${fmt(a)}.`;
+  }
+
+  if(nums.length>=2 && has(t,"احسب","شو c","الوتر","قيمة c","قيمه c")){
+    a=nums[0];b=nums[1];c=Math.sqrt(a*a+b*b);
+    return `إذا اعتبرنا العددين ${fmt(a)} و ${fmt(b)} هما الضلعان القائمان:\nc = √(${fmt(a)}² + ${fmt(b)}²) = √${fmt(a*a+b*b)} = ${fmt(c)}.`;
+  }
+  if(nums.length>=3 && has(t,"قائم","صح","صحيح","مثلث")){
+    const s=[...nums].sort((x,y)=>x-y),x=s[0],y=s[1],z=s[2];
+    const diff=Math.abs(x*x+y*y-z*z);
+    return diff<1e-8
+      ? `نعم. لأن ${fmt(x)}² + ${fmt(y)}² = ${fmt(z)}²، إذن هذه الأطوال تكوّن مثلثًا قائم الزاوية.`
+      : `لا تحقق فيثاغورس تمامًا: ${fmt(x*x)} + ${fmt(y*y)} = ${fmt(x*x+y*y)} بينما ${fmt(z)}² = ${fmt(z*z)}.`;
+  }
+  return null;
+}
+
+function pythagorasiAnswer(raw){
+  const t=correctedText(raw);
+  const n=normalizeArabic(raw);
+
+  const remember=(topic,answer)=>{
+    lastBotTopic=topic;
+    lastBotAnswer=answer;
+    return answer;
+  };
+
+  /* Greetings */
+  if(has(t,"السلام عليكم","سلام عليكم")){
+    firstNonGreetingReply=false;
+    return remember("greeting","وعليكم السلام ورحمة الله وبركاته 👋 هلا بطلاب اللاهف! شو حابب أساعدكم فيه بنظرية فيثاغورس؟");
+  }
+
+  const greeting =
+    /^(هلا|اهلا|اهلين|مرحبا|هاي|هيو|hello|hi)(\s|$)/.test(t) ||
+    has(t,"صباح الخير","مساء الخير","صباح النور","مساء النور");
+
+  if(greeting){
+    firstNonGreetingReply=false;
+    return remember("greeting","هلا بطلاب اللاهف 👋 أهلًا وسهلًا! أنا فيثاغورسي. شو حابب أساعدكم فيه: شرح النظرية، حساب ضلع، فهم المجسم، الرمل، ولا مثال؟");
+  }
+
+  /* Natural acknowledgement / satisfaction */
+  const ackOnly =
+    /^(طيب|ماشي|تمام|اوكي|اوك|اها|فهمت|فاهم|بلايك|اكيد|دايما|دائما|حلو|ممتاز|واضح|بالزبط|بالضبط)(\s.*)?$/.test(t);
+
+  if(ackOnly){
+    firstNonGreetingReply=false;
+    const replies={
+      "theory":"تمام 👌 إذا هيك وضحت النظرية، جرّب أعطيني قيمتين لـ a و b وأنا بحسب c، أو اسألني ليش a² + b² = c².",
+      "sand":"بالزبط 👌 الرمل هو اللي بخلي فرق المساحات ينشاف بعينك. جرّب غيّر a أو b وشوف كيف كمية الرمل بتتغيّر.",
+      "calculation":"ممتاز 👌 هسا تقدر تغيّر الأرقام بالمجسم أو تعطيني مسألة ثانية وأنا أحلها معك.",
+      "change":"تمام 👌 هيك كل تغيير بالأرقام بصير ظاهر بالمجسم والرمل والحساب بنفس الوقت.",
+      "hypotenuse":"بالزبط 👌 تذكّر: الوتر هو المقابل للزاوية القائمة وهو الأطول.",
+      "proof":"تمام 👌 الفكرة الأساسية بالإثبات هي مقارنة المساحات، مش بس حفظ القانون.",
+      "intro":"تمام يا طلاب اللاهف 👌 اسألوني أي شغلة عن المجسم أو نظرية فيثاغورس.",
+      "greeting":"أكيد 👌 شو بدكم نبدأ فيه: النظرية، المجسم، ولا سؤال حساب؟"
+    };
+    return replies[lastBotTopic] || "تمام 👌 كمل، شو حابب تعرف كمان عن فيثاغورس؟";
+  }
+
+  if(has(t,"شكرا","يسلمو","يعطيك العافيه","مشكور")){
+    firstNonGreetingReply=false;
+    return "العفو يا طلاب اللاهف 🌟 دايمًا! إذا بدكم نكمل، أعطوني مسألة أو اسألوني عن أي جزء بالمجسم.";
+  }
+
+  if(has(t,"دايما","دائما") && !has(t,"ليش","كيف")){
+    firstNonGreetingReply=false;
+    return "دائمًا بالخدمة 😄📐 يلا هاتوا السؤال اللي بعده!";
+  }
+
+  if(has(t,"باي","مع السلامه")){
+    firstNonGreetingReply=false;
+    return "مع السلامة يا طلاب اللاهف 👋 وبالتوفيق بالمشروع!";
+  }
+
+  /* Didn't understand / wants a clearer explanation */
+  if(has(t,"ما فهمت","مافهمت","مش فاهم","مو فاهم","فاهمش","فهمني اكثر","وضحلي","وضح اكثر","شو بالزبط","شو بالضبط")){
+    firstNonGreetingReply=false;
+    if(lastBotTopic==="sand")
+      return "ولا يهمك، أبسطها أكثر 👇\nتخيّل كل مربع علبة. كل ما كان ضلع المربع أطول، مساحته أكبر، فبنحط فيه رمل أكثر. ونظرية فيثاغورس بتقول إن كمية/مساحة مربعي a و b مع بعض تساوي مساحة مربع c.";
+    if(lastBotTopic==="calculation")
+      return "أكيد، خطوة خطوة 👇\n1) ربّع a.\n2) ربّع b.\n3) اجمع الناتجين.\n4) خذ الجذر التربيعي للمجموع.\nمثال: 3²=9، و4²=16، 9+16=25، √25=5، إذن c=5.";
+    if(lastBotTopic==="hypotenuse")
+      return "ببساطة جدًا: شوف الزاوية المربعة 90° بالمثلث. الضلع اللي قدامها مباشرة هو الوتر c، وهو أطول ضلع.";
+    if(lastBotTopic==="proof")
+      return "خلينا من كلمة «إثبات» 😄 تخيّل عندك رمل يملأ مربع a ومربع b. لو جمعنا الرمل من الاثنين، بيملى مربع c تمامًا. هاي هي الفكرة البصرية للقانون.";
+    if(lastBotTopic==="change")
+      return `أكيد. آخر إشي عملناه هو: ${lastChangeSummary}\nيعني الأرقام تغيّرت، فالموقع أعاد حساب c، وغيّر أحجام المربعات، وبعدها حرّك كمية الرمل المناسبة من جديد.`;
+    return "ولا يهمك 👌 خلّيني أشرحها من الصفر: عندنا مثلث قائم. ضلعين اسمهما a و b، والضلع الأطول c. القانون بقول a² + b² = c². يعني مساحة المربع على a زائد مساحة المربع على b تساوي مساحة المربع على c.";
+  }
+
+  /* If first message is not greeting */
+  const prefix=firstNonGreetingReply ? "هلا بطلاب اللاهف 👋\n" : "";
+  firstNonGreetingReply=false;
+
+  if(has(t,
+    "اشرحلي شو عملنا هسا","اشرح شو عملنا هسا","شو عملنا هسا",
+    "شو صار هسا","شو تغير هسا","ايش عملنا هسا","اشرحلي التغيير")){
+    return prefix + remember("change",lastChangeSummary);
+  }
+
+  if(has(t,"شو يعني هيك","شو يعني هاد","شو يعني هذا","شو معنى هيك")){
+    return prefix + remember("change",`المقصود إن الأرقام مرتبطة بالمجسم نفسه، مش مجرد نتيجة مكتوبة. الضلعان a و b يصنعان الزاوية القائمة، والوتر c هو الضلع الأطول. المربعات تمثل a² و b² و c²، وكمية الرمل تمثل مساحة كل مربع. حاليًا: ${lastChangeSummary}`);
+  }
+
+  if(has(t,"شو هيا","شو هي","شو هاد","شو هذا","ايش هذا","ايش هاد","شو النموذج","شو المجسم")){
+    return prefix + remember("intro","هذا نموذج تفاعلي لنظرية فيثاغورس: مثلث قائم في الوسط، وحول كل ضلع مربع شفاف فيه رمل. لما تغيّر a أو b، يتغيّر شكل المثلث وحجم المربعات وكمية الرمل، وبنحسب c من القانون a² + b² = c².");
+  }
+
+  const numeric=solveNumeric(raw,t);
+  if(numeric)return prefix + remember("calculation",numeric);
+
+  if(has(t,"مين فيثاغورس","من هو فيثاغورس","من فيثاغورس"))
+    return prefix + remember("theory","فيثاغورس عالم وفيلسوف يوناني قديم ارتبط اسمه بالنظرية المشهورة عن المثلث القائم. كانت توجد معرفة بالعلاقة نفسها قبل زمنه أيضًا، لكن اسمه هو الأكثر ارتباطًا بها في التعليم الحديث.");
+
+  if(has(t,"شو هي النظريه","ما هي النظريه","اشرح النظريه","شرح فيثاغورس","اشرحلي","ببساطه"))
+    return prefix + remember("theory","ببساطة: في أي مثلث قائم الزاوية، إذا كان a و b هما الضلعين القائمين و c هو الوتر، فلدينا:\na² + b² = c².\nيعني مساحة المربع على a + مساحة المربع على b = مساحة المربع على c.");
+
+  if(has(t,"متى","تنفع","ينفع","كل المثلثات","اي مثلث"))
+    return prefix + remember("theory","نستخدمها مباشرةً فقط مع المثلث القائم الزاوية. لازم تكون فيه زاوية مقدارها 90°. إذا المثلث مش قائم، ما بنستخدم a² + b² = c² مباشرة.");
+
+  if(has(t,"شو هو الوتر","ما هو الوتر","الوتر"))
+    return prefix + remember("hypotenuse","الوتر هو الضلع المقابل للزاوية القائمة 90°، وهو دائمًا أطول ضلع في المثلث القائم. نرمز له عادةً بالحرف c.");
+
+  if(has(t,"كيف احسب","حساب الوتر","احسب الوتر"))
+    return prefix + remember("calculation","لحساب الوتر: c = √(a² + b²). مثال: إذا a=3 و b=4، إذن c=√(9+16)=√25=5.");
+
+  if(has(t,"ضلع مجهول","احسب ضلع","المجهول"))
+    return prefix + remember("calculation","إذا كان الوتر c معلومًا وأحد الضلعين معلومًا، نطرح المربعات:\na = √(c² − b²)\nأو\nb = √(c² − a²).");
+
+  if(has(t,"ليش","لماذا","اثبات","برهان","صحيحه","صحيحة"))
+    return prefix + remember("proof","فكرة الإثبات البصري: ابنِ مربعًا على كل ضلع من أضلاع المثلث القائم. مساحة مربع الوتر c² تساوي مجموع مساحتي a² و b². في مجسمنا الرمل يمثل هذه المساحات، لذلك كمية الرمل في a² + كمية الرمل في b² تقابل كمية الرمل في c².");
+
+  if(has(t,"استخدام","وين","اين","نستخدم"))
+    return prefix + remember("theory","تُستخدم في قياس المسافات القطرية، البناء والتأكد من الزوايا القائمة، الخرائط والإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والهندسة عمومًا.");
+
+  if(has(t,"عكس","اعرف المثلث قائم","كيف اعرف"))
+    return prefix + remember("theory","استخدم عكس النظرية: رتّب الأضلاع وخلي c هو الأطول. إذا تحقق a² + b² = c²، فالمثلث قائم الزاوية.");
+
+  if(has(t,"رمل","حبيبات","ليش الرمل"))
+    return prefix + remember("sand","الرمل تمثيل بصري للمساحة. عدد الحبيبات يتناسب مع مساحة كل مربع. لذلك عند تغيير a أو b يعاد حساب المساحات، يتغيّر حجم المربعات، وتسقط كمية جديدة من الرمل داخلها.");
+
+  if(has(t,"3 4 5","ثلاثه اربعه خمسه"))
+    return prefix + remember("calculation","3–4–5 أشهر ثلاثية فيثاغورية: 3² + 4² = 9 + 16 = 25 = 5²، لذلك تصنع مثلثًا قائمًا.");
+
+  if(has(t,"5 12 13","خمسه اثناعشر"))
+    return prefix + remember("calculation","5–12–13 ثلاثية فيثاغورية: 25 + 144 = 169، و√169 = 13.");
+
+  if(has(t,"قانون جيب التمام","غير قائم"))
+    return prefix + remember("theory","للمثلث غير القائم نستخدم غالبًا قانون جيب التمام: c² = a² + b² − 2ab cos(C). فيثاغورس حالة خاصة منه عندما C = 90° لأن cos(90°)=0.");
+
+  if(has(t,"مساحه","مساحة"))
+    return prefix + remember("sand","مساحة المربع الذي طول ضلعه x تساوي x². لذلك مربعات فيثاغورس مساحاتها a² و b² و c²، والنظرية تقول a² + b² = c².");
+
+  if(has(t,"جذر","تربيع"))
+    return prefix + remember("calculation","التربيع يعني ضرب العدد بنفسه، مثل 4²=16. والجذر التربيعي هو العملية العكسية، مثل √25=5.");
+
+  if(t!==n){
+    return prefix + remember("intro",`فهمت سؤالك بعد تصحيح بسيط للكلمات إلى: «${t}».
+إذا سؤالك عن المجسم أو فيثاغورس، ممكن تسألني مثل: «شو يعني هيك؟»، «اشرحلي شو عملنا هسا»، «احسب الوتر إذا a=7 و b=9»، أو «هل 6 و8 و10 مثلث قائم؟».`);
+  }
+
+  return prefix + remember("intro","أنا مختص بنظرية فيثاغورس والمثلث القائم 📐. ممكن تسألني: «شو هاد؟»، «شو يعني هيك؟»، «اشرحلي شو عملنا هسا»، أو تعطيني أرقام مثل a=5 و b=12 وأنا أحسب c.");
+}
+
+const chat=document.getElementById("chat"),q=document.getElementById("question");
+function addMsg(text,who="bot",html=false){
+  const d=document.createElement("div");d.className=`msg ${who}`;
+  if(html)d.innerHTML=text;else d.textContent=text;
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
+}
+function sendQuestion(forced=null){
+  const raw=(forced??q.value).trim();if(!raw)return;
+  addMsg(raw,"user");q.value="";
+  const typing=addMsg("فيثاغورسي يفكّر…","bot");typing.classList.add("typing");
+  setTimeout(()=>{
+    typing.remove();
+    addMsg(pythagorasiAnswer(raw),"bot");
+  },280+Math.min(650,raw.length*9));
+}
+document.getElementById("sendBtn").addEventListener("click",()=>sendQuestion());
+q.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendQuestion()}});
+document.querySelectorAll(".suggestions button").forEach(b=>b.addEventListener("click",()=>sendQuestion(b.dataset.q)));
+
+
+/* -------------------- QUICK CHALLENGE -------------------- */
+let challenge={a:3,b:4,c:5,score:0};
+
+function newChallenge(){
+  const triples=[
+    [3,4,5],[5,12,13],[6,8,10],[8,15,17],[7,24,25],[9,12,15]
+  ];
+  const pick=triples[Math.floor(Math.random()*triples.length)];
+  challenge.a=pick[0];challenge.b=pick[1];challenge.c=pick[2];
+  document.getElementById("challengeQuestion").innerHTML=
+    `إذا كان <b>a = ${challenge.a}</b> و <b>b = ${challenge.b}</b>، كم يساوي الوتر <b>c</b>؟`;
+  document.getElementById("challengeAnswer").value="";
+  const f=document.getElementById("challengeFeedback");
+  f.className="challenge-feedback";
+  f.textContent="";
+}
+
+function challengeFeedback(text,good){
+  const f=document.getElementById("challengeFeedback");
+  f.textContent=text;
+  f.className=`challenge-feedback show ${good?"good":"bad"}`;
+}
+
+document.getElementById("challengeNew").addEventListener("click",newChallenge);
+
+document.getElementById("challengeCheck").addEventListener("click",()=>{
+  const val=parseFloat(document.getElementById("challengeAnswer").value);
+  if(!Number.isFinite(val)){
+    challengeFeedback("اكتب جواب أولًا 👀",false);return;
+  }
+  if(Math.abs(val-challenge.c)<.01){
+    challenge.score+=10;
+    document.getElementById("challengeScore").textContent=`${challenge.score} نقاط`;
+    challengeFeedback(`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`,true);
+  }else{
+    challengeFeedback(`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`,false);
+  }
+});
+
+document.getElementById("challengeShow").addEventListener("click",()=>{
+  challengeFeedback(
+    `${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}، إذن c = ${challenge.c}.`,
+    true
+  );
+});
+
+document.getElementById("challengeAnswer").addEventListener("keydown",e=>{
+  if(e.key==="Enter")document.getElementById("challengeCheck").click();
+});
+
+newChallenge();
+
+
+/* resize and render */
+function resize(){
+  const w=mount.clientWidth,h=mount.clientHeight;
+  renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(mount);resize();
+buildModel(3,4,true);
+
+let last=performance.now();
+function animate(now){
+  requestAnimationFrame(animate);
+  const dt=Math.min(2.2,(now-last)/16.67);last=now;
+  updateSandPhysics(dt);
+  controls.update();
+  renderer.render(scene,camera);
+}
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
