@@ -704,6 +704,131 @@ body.light .brand h1{
   background:none;-webkit-background-clip:initial;background-clip:initial;color:#183047;
 }
 
+
+/* ================= CLASSROOM LIVE + AI VOICE ================= */
+.classroom-btn{
+  grid-column:1/-1!important;
+  background:linear-gradient(90deg,rgba(129,61,255,.22),rgba(255,55,155,.16))!important;
+  border-color:rgba(185,102,255,.30)!important;
+  color:#f4ddff!important
+}
+.cloud-home-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.cloud-card{
+  border:1px solid rgba(255,255,255,.10);border-radius:15px;padding:14px;
+  background:rgba(255,255,255,.025)
+}
+.cloud-card h3{margin:0 0 6px;font-size:18px}
+.cloud-card p{margin:0 0 10px;color:#97aabd;font-size:13px;line-height:1.6}
+.cloud-row{display:grid;grid-template-columns:1fr auto;gap:7px}
+.cloud-row input{text-transform:uppercase;letter-spacing:2px}
+.teacher-results-list{display:grid;gap:11px}
+.teacher-exam-card{
+  border:1px solid rgba(255,255,255,.10);border-radius:15px;padding:13px;
+  background:rgba(255,255,255,.025)
+}
+.teacher-exam-head{display:flex;justify-content:space-between;gap:9px;align-items:center;flex-wrap:wrap}
+.teacher-exam-code{font-weight:950;letter-spacing:2px;color:#8de8ff}
+.attempt-table{width:100%;border-collapse:collapse;margin-top:9px;font-size:13px}
+.attempt-table th,.attempt-table td{
+  padding:8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right
+}
+.attempt-table th{color:#91a8bd;font-weight:800}
+.cloud-note{
+  border:1px solid rgba(80,204,255,.14);background:rgba(80,204,255,.055);
+  padding:9px 10px;border-radius:10px;color:#bdeeff;font-size:12px;line-height:1.6
+}
+.live-modalbox{width:min(900px,96vw);max-height:91vh}
+.live-hero{text-align:center;padding:8px 0 17px}
+.live-hero h3{font-size:28px;margin:0 0 5px}
+.live-hero p{color:#97aabd;margin:0}
+.live-home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.live-card{
+  border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:17px;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015))
+}
+.live-card h3{margin:0 0 7px}
+.live-card p{color:#9bafc2;line-height:1.65;font-size:13px}
+.live-field{display:grid;gap:6px;margin-top:9px}
+.live-field select{width:100%;height:48px;border-radius:11px;border:1px solid rgba(255,255,255,.11);background:#07111e;color:white;padding:0 10px}
+.live-code{
+  font-size:42px;font-weight:950;letter-spacing:8px;text-align:center;direction:ltr;
+  color:#fff2a8;text-shadow:0 0 25px rgba(255,226,94,.20);margin:8px 0
+}
+.live-status{text-align:center;color:#9eb2c4;font-size:13px}
+.live-teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.live-team{
+  border-radius:15px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.09)
+}
+.live-team.a{background:rgba(36,142,255,.10)}
+.live-team.b{background:rgba(255,64,136,.10)}
+.live-team b{display:block;font-size:27px;margin-top:3px}
+.live-players{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}
+.live-player{
+  display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)
+}
+.live-player .teamA{color:#6bc1ff}.live-player .teamB{color:#ff83b1}
+.live-question{
+  font-size:25px;font-weight:900;line-height:1.55;text-align:center;
+  border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:18px;
+  background:rgba(4,12,21,.54);margin:12px 0
+}
+.live-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.live-option{
+  min-height:74px;border-radius:14px;border:1px solid rgba(255,255,255,.10);
+  color:white;font-weight:900;font-size:17px;cursor:pointer;padding:12px;
+  background:linear-gradient(145deg,#152a40,#0d1d2d)
+}
+.live-option:hover{transform:translateY(-2px);border-color:#51baff}
+.live-option:disabled{opacity:.58;cursor:default;transform:none}
+.live-option.selected{border-color:#ffd25c;box-shadow:0 0 0 2px rgba(255,210,92,.13)}
+.live-option.correct{background:rgba(49,205,131,.18);border-color:#55e2a1}
+.live-option.wrong{background:rgba(255,72,91,.15);border-color:#ff7c8b}
+.live-answer-status{text-align:center;min-height:26px;margin-top:9px;color:#bed0df}
+.live-host-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:11px 0}
+.live-leaderboard{display:grid;gap:6px;margin-top:10px}
+.live-rank{
+  display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;
+  border-radius:11px;padding:8px 10px;background:rgba(255,255,255,.035)
+}
+.live-rank .rank{font-size:20px;font-weight:950;text-align:center;color:#ffd970}
+.live-rank .score{font-weight:950}
+.live-finished{text-align:center;padding:18px}
+.live-finished h3{font-size:32px;margin:5px 0}
+.chatinput{grid-template-columns:auto 1fr auto!important}
+.mic{
+  border:1px solid rgba(255,255,255,.12);background:#122337;color:#e7f4ff;
+  width:46px;border-radius:12px;cursor:pointer;font-size:19px
+}
+.mic.listening{
+  background:rgba(255,62,107,.18);border-color:#ff587b;
+  animation:micPulse 1s ease-in-out infinite
+}
+@keyframes micPulse{50%{box-shadow:0 0 0 7px rgba(255,73,114,.10)}}
+.ai-voicebar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px;align-items:center;
+  margin-top:8px;padding:8px;border-radius:11px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07)
+}
+.ai-voicebar select{
+  min-width:0;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.10);
+  background:#0a1724;color:#dceaf5;padding:0 7px;font-size:12px
+}
+.ai-auto{
+  display:flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px;color:#aabccc
+}
+.ai-auto input{width:auto;height:auto}
+.ai-memory{font-size:10px;color:#6f879b;margin-top:5px;text-align:center}
+body.light .live-field select,body.light .ai-voicebar select{background:white;color:#183047;border-color:#d8e3ea}
+body.light .live-card,body.light .teacher-exam-card,body.light .cloud-card{background:#f8fbfd;border-color:#dce6ec}
+body.light .live-player,body.light .live-rank{background:#f2f7fa}
+@media(max-width:700px){
+  .cloud-home-grid,.live-home-grid,.live-options{grid-template-columns:1fr}
+  .live-players{grid-template-columns:1fr}
+  .ai-voicebar{grid-template-columns:1fr 1fr}
+  .ai-auto{grid-column:1/-1}
+}
+
 </style>
 </head>
 <body>
@@ -835,6 +960,7 @@ body.light .brand h1{
         <button class="secondary exam-launch" id="examBtn">🎓 امتحان مفاجئ</button>
         <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
         <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
+        <button class="secondary classroom-btn" id="competitionBtn">🏆 مسابقة مباشرة — مثل Kahoot</button>
       </div>
       <div class="proof-status" id="proofStatus">
         <div id="proofText">جاهز: سننقل كمية الرمل من a² و b² إلى c² لنرى تساوي المساحات.</div>
@@ -875,10 +1001,21 @@ body.light .brand h1{
         <button data-q="هل تنفع لكل المثلثات؟">متى نستخدمها؟</button>
       </div>
       <div class="chatinput">
-        <textarea id="question" rows="1" placeholder="اسأل فيثاغورسي... مثال: اذا a=5 و b=12 شو c؟"></textarea>
+        <button class="mic" id="micBtn" type="button" title="احكي مع فيثاغورسي">🎤</button>
+        <textarea id="question" rows="1" placeholder="اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟"></textarea>
         <button class="send" id="sendBtn">➤</button>
       </div>
-      <div class="dictnote">يعمل محليًا داخل الموقع • قاموس لغوي 6000+ صيغة • تصحيح تقريبي للأخطاء الإملائية الشائعة</div>
+      <div class="ai-voicebar">
+        <select id="aiVoiceSelect" aria-label="صوت فيثاغورسي"><option value="">أفضل صوت عربي تلقائي</option></select>
+        <select id="aiVoiceRate" aria-label="سرعة صوت فيثاغورسي">
+          <option value="0.88">هادئ</option>
+          <option value="0.98" selected>طبيعي</option>
+          <option value="1.10">سريع</option>
+        </select>
+        <label class="ai-auto"><input id="aiAutoSpeak" type="checkbox"> 🔊 اقرأ الرد تلقائيًا</label>
+      </div>
+      <div class="dictnote">فيثاغورسي محلي • يفهم الصوت على Chrome عند توفره • يحفظ آخر المحادثات على جهازك</div>
+      <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
     </section>
   </aside>
 </div>
@@ -965,6 +1102,23 @@ body.light .brand h1{
           <button id="openExamBuilder">صمّم امتحان جديد</button>
         </div>
       </div>
+
+      <div class="cloud-home-grid">
+        <div class="cloud-card">
+          <h3>🔑 ادخل امتحان بكود</h3>
+          <p>اكتب الكود اللي أعطاك إياه المعلم، والامتحان بينفتح من Firebase على أي جهاز.</p>
+          <div class="cloud-row">
+            <input id="examJoinCode" maxlength="8" placeholder="مثال: AB12CD">
+            <button class="exam-secondary" id="joinCloudExam">دخول</button>
+          </div>
+          <div class="cloud-note" id="examJoinStatus" style="margin-top:8px">الإجابات تنحفظ باسمك عند التسليم.</div>
+        </div>
+        <div class="cloud-card">
+          <h3>📊 نتائج المعلم</h3>
+          <p>إذا كنت داخل بحساب Google، شوف امتحاناتك والطلاب اللي سلموا وحساب العلامة.</p>
+          <button class="exam-secondary" id="openTeacherResults" style="width:100%">فتح لوحة النتائج</button>
+        </div>
+      </div>
     </div>
 
     <div id="examRunner" class="hidden">
@@ -991,6 +1145,15 @@ body.light .brand h1{
         <button class="exam-secondary" id="retryExam">↻ امتحان جديد</button>
         <button class="exam-secondary" id="backExamHome">⌂ مركز الامتحانات</button>
       </div>
+    </div>
+
+    <div id="teacherResults" class="hidden">
+      <div class="builder-actions" style="margin-bottom:10px">
+        <button class="exam-secondary" id="refreshTeacherResults">↻ تحديث النتائج</button>
+        <button class="exam-secondary" id="teacherResultsBack">رجوع</button>
+      </div>
+      <div class="cloud-note" style="margin-bottom:10px">العلامة تُحسب عند المعلم من مفتاح الإجابة الخاص، لذلك الطالب ما بيشوف الإجابات الصحيحة داخل ملف الامتحان.</div>
+      <div class="teacher-results-list" id="teacherResultsList"></div>
     </div>
 
     <div id="examBuilder" class="hidden">
@@ -1023,6 +1186,97 @@ body.light .brand h1{
   </div>
 </div>
 
+
+<div class="modal" id="competitionModal">
+  <div class="modalbox live-modalbox">
+    <div class="modalhead">
+      <h2 id="competitionModalTitle">🏆 المسابقة المباشرة</h2>
+      <button class="close" id="closeCompetitionModal">×</button>
+    </div>
+    <div id="competitionHome">
+      <div class="live-hero">
+        <h3>مسابقة صف مباشرة ⚡</h3>
+        <p>غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.</p>
+      </div>
+      <div class="live-home-grid">
+        <div class="live-card">
+          <h3>🎒 انضم كطالب</h3>
+          <p>اكتب اسمك وكود الغرفة واختار فريقك.</p>
+          <div class="live-field">
+            <input id="compJoinName" maxlength="40" placeholder="اسم الطالب">
+            <input id="compJoinCode" maxlength="8" placeholder="كود الغرفة">
+            <select id="compJoinTeam">
+              <option value="A">🔵 الفريق A</option>
+              <option value="B">🔴 الفريق B</option>
+            </select>
+            <button class="apply" id="compJoinBtn">دخول الغرفة</button>
+          </div>
+          <div id="compJoinStatus" class="cloud-note" style="margin-top:9px">كل طالب يدخل من جهازه بنفس الكود.</div>
+        </div>
+        <div class="live-card">
+          <h3>👨‍🏫 إنشاء مسابقة</h3>
+          <p>للمعلم: أنشئ 8 أسئلة تلقائيًا عن فيثاغورس، وبعد دخول الطلاب ابدأ الجولة.</p>
+          <button class="apply" id="compCreateBtn">＋ إنشاء غرفة جديدة</button>
+          <div class="cloud-note" style="margin-top:9px">إنشاء الغرفة يحتاج دخول المعلم بحساب Google.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="competitionLobby" class="hidden">
+      <div class="live-status" id="compLobbyRole">غرفة الانتظار</div>
+      <div class="live-code" id="compRoomCode">------</div>
+      <div class="live-status">شارك هذا الكود مع الصف</div>
+      <div class="live-teams">
+        <div class="live-team a">🔵 الفريق A <b id="compLobbyACount">0</b></div>
+        <div class="live-team b">🔴 الفريق B <b id="compLobbyBCount">0</b></div>
+      </div>
+      <div class="live-players" id="compPlayersList"></div>
+      <div class="live-host-controls">
+        <button class="exam-secondary" id="compCopyCode">نسخ الكود</button>
+        <button class="apply hidden" id="compStartBtn" style="margin:0">▶ ابدأ المسابقة</button>
+        <button class="exam-secondary" id="compLeaveBtn">خروج</button>
+      </div>
+    </div>
+
+    <div id="competitionGame" class="hidden">
+      <div class="exam-toolbar">
+        <span class="exam-pill" id="compGameCode">------</span>
+        <span class="exam-pill" id="compQuestionNo">سؤال 1</span>
+        <span class="exam-pill" id="compGameState">مباشر</span>
+      </div>
+      <div class="live-teams">
+        <div class="live-team a">🔵 A <b id="compScoreA">0</b></div>
+        <div class="live-team b">🔴 B <b id="compScoreB">0</b></div>
+      </div>
+      <div class="live-question" id="compQuestionText">السؤال</div>
+      <div class="live-options" id="compOptions"></div>
+      <div class="live-answer-status" id="compAnswerStatus"></div>
+      <div class="live-host-controls" id="compHostControls">
+        <button class="exam-secondary" id="compRevealBtn">✓ اقفل السؤال واحسب النقاط</button>
+        <button class="apply hidden" id="compNextBtn" style="margin:0">السؤال التالي ➜</button>
+      </div>
+      <h3 style="margin:16px 0 7px">🏅 الترتيب</h3>
+      <div class="live-leaderboard" id="compLeaderboard"></div>
+    </div>
+
+    <div id="competitionFinished" class="hidden">
+      <div class="live-finished">
+        <div style="font-size:48px">🏆</div>
+        <h3>انتهت المسابقة!</h3>
+        <div class="live-teams">
+          <div class="live-team a">🔵 الفريق A <b id="compFinalA">0</b></div>
+          <div class="live-team b">🔴 الفريق B <b id="compFinalB">0</b></div>
+        </div>
+        <div id="compWinnerText" style="font-size:20px;font-weight:900"></div>
+      </div>
+      <div class="live-leaderboard" id="compFinalLeaderboard"></div>
+      <div class="live-host-controls">
+        <button class="exam-secondary" id="compFinishedClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="importmap">
 {
   "imports":{
@@ -1041,7 +1295,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
-  query, where, serverTimestamp, updateDoc
+  query, where, serverTimestamp, updateDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
@@ -1143,6 +1397,11 @@ function finishAuthIntent(){
   authPendingAction=null;
   if(action==="exam"){
     setTimeout(()=>openExamCenter(),80);
+  }else if(action==="competitionHost"){
+    setTimeout(()=>{
+      openCompetitionModal();
+      createLiveCompetition();
+    },100);
   }
 }
 
@@ -2425,9 +2684,21 @@ function stopSpeech(){
 function makeUtterance(text,onEnd){
   const u=new SpeechSynthesisUtterance(text);
   u.lang="ar-SA";
-  u.rate=parseFloat(document.getElementById("speechRate")?.value)||0.96;
+  const aiMode=speechState.mode==="ai";
+  u.rate=aiMode
+    ? (parseFloat(document.getElementById("aiVoiceRate")?.value)||0.98)
+    : (parseFloat(document.getElementById("speechRate")?.value)||0.96);
   u.pitch=1.02;u.volume=1;
-  const v=arabicVoice();if(v)u.voice=v;
+  let v=null;
+  if(aiMode){
+    const selected=document.getElementById("aiVoiceSelect")?.value||"";
+    if(selected){
+      const [name,lang]=selected.split("|||");
+      v=speechSynthesis.getVoices().find(x=>x.name===name&&x.lang===lang)||null;
+    }
+  }
+  if(!v)v=arabicVoice();
+  if(v){u.voice=v;u.lang=v.lang||"ar-SA";}
   let finished=false;
   const done=()=>{
     if(finished)return;finished=true;
@@ -2612,7 +2883,7 @@ function createSurpriseExam(){
   return {title:`⚡ الامتحان المفاجئ — ${titleMap[examDifficulty]}`,questions:qs,total:100,surprise:true,level:examDifficulty};
 }
 function showExamView(which){
-  for(const id of ["examHome","examRunner","examResult","examBuilder"])
+  for(const id of ["examHome","examRunner","examResult","examBuilder","teacherResults"])
     document.getElementById(id).classList.toggle("hidden",id!==which);
 }
 const levelDescriptions={
@@ -2731,7 +3002,7 @@ function renderExamQuestions(){
       input=`<textarea class="exam-textarea" data-answer-index="${i}" placeholder="اكتب إجابتك..."></textarea>`;
     }
     card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${escapeHtml(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}
-      <div class="question-actions">
+      <div class="question-actions" ${activeExam?.cloud?'style="display:none"':''}>
         <button type="button" class="check-one-btn" data-check-index="${i}">✓ فحص السؤال</button>
       </div>
       <div class="question-feedback" id="qFeedback_${i}"></div>`;
@@ -2799,8 +3070,69 @@ function gradeOne(q,ans){
   const score=ratio>=.66?q.points:ratio>=.34?Math.round(q.points*.5):0;
   return {score,ok:score>=q.points*.66};
 }
+function saveLocalExamHistory(record){
+  try{
+    const arr=JSON.parse(localStorage.getItem("pythagorasi_exam_history")||"[]");
+    arr.unshift(record);
+    localStorage.setItem("pythagorasi_exam_history",JSON.stringify(arr.slice(0,40)));
+  }catch{}
+}
+
+async function submitCloudExam(){
+  if(!activeExam?.cloud)return;
+  stopExamTimer();
+  clearSavedAttempt();
+
+  const user=auth.currentUser;
+  if(!user || !window.PythagorasiUser || window.PythagorasiUser.localOnly){
+    showToast("⚠️ لازم يكون Firebase متصل حتى نحفظ امتحان الكود عند المعلم.");
+    return;
+  }
+
+  const answers=activeExam.questions.map((q,i)=>({
+    questionId:q.cloudId||String(i+1),
+    answer:getExamAnswer(i,q)
+  }));
+  const answered=answers.filter(x=>String(x.answer).trim()!=="").length;
+  const durationSeconds=Math.max(0,Math.floor((Date.now()-examStartTime)/1000));
+
+  try{
+    await addDoc(collection(db,"attempts"),{
+      examId:activeExam.examId,
+      examCode:activeExam.code||"",
+      studentUid:user.uid,
+      studentName:window.PythagorasiUser.displayName||"طالب",
+      answers,
+      answered,
+      questionCount:activeExam.questions.length,
+      durationSeconds,
+      submittedAt:serverTimestamp()
+    });
+
+    showExamView("examResult");
+    document.getElementById("examScoreNumber").textContent="✓";
+    document.getElementById("examScoreMax").textContent="";
+    document.getElementById("examGradeText").textContent="تم تسليم الامتحان للمعلم ☁️";
+    document.getElementById("examResultSummary").textContent=`انحفظت ${answered} إجابة من ${activeExam.questions.length}. المعلم يقدر يشوف النتيجة من لوحة النتائج.`;
+    document.getElementById("examReview").innerHTML='<div class="cloud-note">🔒 مفتاح الإجابة محفوظ عند المعلم، لذلك ما منعرض الإجابات الصحيحة للطالب من Firebase.</div>';
+
+    saveLocalExamHistory({
+      title:activeExam.title,cloud:true,submittedAt:Date.now(),answered,
+      totalQuestions:activeExam.questions.length
+    });
+  }catch(err){
+    console.error("cloud submit",err);
+    showToast("تعذر حفظ التسليم في Firebase. جرّب مرة ثانية.");
+  }
+}
+
 function submitCurrentExam(){
   if(!activeExam)return;
+  if(activeExam.cloud){
+    submitCloudExam();
+    return;
+  }
+
   stopExamTimer();
   clearSavedAttempt();
   let score=0,answered=0;
@@ -2826,12 +3158,20 @@ function submitCurrentExam(){
       <span style="color:#9fb3c8">الإجابة/الشرح: ${escapeHtml(String(correct))}. ${escapeHtml(r.q.explanation||"")}</span>`;
     host.appendChild(d);
   });
+  saveLocalExamHistory({
+    title:activeExam.title,score,total:activeExam.total,pct,
+    answered,totalQuestions:activeExam.questions.length,submittedAt:Date.now()
+  });
   if(pct>=80)launchConfetti();
 }
 document.getElementById("submitExam").addEventListener("click",submitCurrentExam);
 document.getElementById("startSurpriseExam").addEventListener("click",()=>startExam(createSurpriseExam()));
 document.getElementById("changeExamBtn").addEventListener("click",()=>{
-  if(activeExam?.surprise)startExam(createSurpriseExam());
+  if(activeExam?.cloud){
+    stopExamTimer();
+    showExamView("examHome");
+    document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
+  }else if(activeExam?.surprise)startExam(createSurpriseExam());
   else showExamView("examBuilder");
 });
 document.getElementById("retryExam").addEventListener("click",()=>{
@@ -2863,6 +3203,135 @@ function launchConfetti(){
     setTimeout(()=>p.remove(),5000);
   }
 }
+
+
+/* -------------------- CLOUD EXAMS / TEACHER RESULTS -------------------- */
+async function joinCloudExamByCode(){
+  const code=(document.getElementById("examJoinCode").value||"").trim().toUpperCase();
+  const status=document.getElementById("examJoinStatus");
+  if(code.length<4){status.textContent="اكتب كود الامتحان أولًا.";return}
+  if(!auth.currentUser || !window.PythagorasiUser || window.PythagorasiUser.localOnly){
+    status.textContent="Firebase مش متصل بحساب الطالب. اخرج من مركز الامتحانات وادخل كطالب مرة ثانية.";
+    return;
+  }
+  status.textContent="⏳ جاري البحث عن الامتحان...";
+  try{
+    const snap=await getDocs(query(collection(db,"exams"),where("code","==",code)));
+    const found=snap.docs.find(d=>d.data().published===true);
+    if(!found){status.textContent="❌ ما لقينا امتحان منشور بهذا الكود.";return}
+    const qSnap=await getDocs(collection(db,"exams",found.id,"questions"));
+    const questions=qSnap.docs
+      .sort((a,b)=>(parseInt(a.id)||0)-(parseInt(b.id)||0))
+      .map(d=>({cloudId:d.id,...d.data()}));
+    if(!questions.length){status.textContent="الامتحان موجود لكن ما فيه أسئلة.";return}
+    const data=found.data();
+    status.textContent="✅ تم تحميل الامتحان.";
+    startExam({
+      title:data.title||"امتحان المعلم",
+      questions,
+      total:data.total||questions.reduce((s,q)=>s+(q.points||10),0),
+      cloud:true,examId:found.id,code,surprise:false
+    });
+    document.getElementById("examModalTitle").textContent=`☁️ ${data.title||"امتحان المعلم"}`;
+  }catch(err){
+    console.error("joinCloudExam",err);
+    status.textContent="تعذر تحميل الامتحان. تأكد من الإنترنت وFirestore Rules.";
+  }
+}
+document.getElementById("joinCloudExam").addEventListener("click",joinCloudExamByCode);
+document.getElementById("examJoinCode").addEventListener("keydown",e=>{if(e.key==="Enter")joinCloudExamByCode()});
+
+function gradeTeacherAttempt(question,key,answer){
+  const full={...question,...key};
+  return gradeOne(full,answer);
+}
+
+async function loadTeacherResults(){
+  const list=document.getElementById("teacherResultsList");
+  list.innerHTML='<div class="cloud-note">⏳ جاري تحميل امتحاناتك ونتائج الطلاب...</div>';
+  if(!auth.currentUser || window.PythagorasiUser?.role!=="teacher"){
+    list.innerHTML='<div class="cloud-note">👨‍🏫 لازم تدخل بحساب Google كمعلم حتى تشوف النتائج.</div>';
+    return;
+  }
+  try{
+    const examsSnap=await getDocs(query(collection(db,"exams"),where("ownerId","==",auth.currentUser.uid)));
+    if(examsSnap.empty){
+      list.innerHTML='<div class="cloud-note">ما عندك امتحانات منشورة لسه. صمّم امتحان واضغط «حفظ وإنشاء كود».</div>';
+      return;
+    }
+    list.innerHTML="";
+    for(const examDoc of examsSnap.docs){
+      const e=examDoc.data();
+      const [attemptSnap,qSnap,keySnap]=await Promise.all([
+        getDocs(query(collection(db,"attempts"),where("examId","==",examDoc.id))),
+        getDocs(collection(db,"exams",examDoc.id,"questions")),
+        getDocs(collection(db,"exams",examDoc.id,"answerKey"))
+      ]);
+      const qMap=new Map(qSnap.docs.map(d=>[d.id,d.data()]));
+      const kMap=new Map(keySnap.docs.map(d=>[d.id,d.data()]));
+      const rows=[];
+      for(const aDoc of attemptSnap.docs){
+        const a=aDoc.data();
+        let score=0,total=0;
+        for(const item of (a.answers||[])){
+          const q=qMap.get(String(item.questionId))||{};
+          const k=kMap.get(String(item.questionId))||{};
+          const points=q.points||10;
+          total+=points;
+          score+=gradeTeacherAttempt(q,k,item.answer).score;
+        }
+        const pct=total?Math.round(score/total*100):0;
+        rows.push({
+          name:a.studentName||"طالب",score,total,pct,
+          answered:a.answered??(a.answers||[]).filter(x=>x.answer).length,
+          time:a.durationSeconds||0
+        });
+      }
+      rows.sort((a,b)=>b.pct-a.pct);
+      const card=document.createElement("div");
+      card.className="teacher-exam-card";
+      const table=rows.length?`
+        <table class="attempt-table">
+          <thead><tr><th>الطالب</th><th>العلامة</th><th>النسبة</th><th>الوقت</th></tr></thead>
+          <tbody>${rows.map(r=>`<tr>
+            <td>${escapeHtml(r.name)}</td>
+            <td>${r.score}/${r.total}</td>
+            <td>${r.pct}%</td>
+            <td>${Math.floor(r.time/60)}:${String(r.time%60).padStart(2,"0")}</td>
+          </tr>`).join("")}</tbody>
+        </table>`:'<div class="cloud-note" style="margin-top:8px">لسه ما في طالب سلّم هذا الامتحان.</div>';
+      card.innerHTML=`
+        <div class="teacher-exam-head">
+          <div><b>${escapeHtml(e.title||"امتحان")}</b><div style="font-size:12px;color:#8fa4b7">${e.questionCount||qMap.size} أسئلة</div></div>
+          <div class="teacher-exam-code">${escapeHtml(e.code||"------")}</div>
+        </div>
+        ${table}`;
+      list.appendChild(card);
+    }
+  }catch(err){
+    console.error("teacher results",err);
+    list.innerHTML='<div class="cloud-note">تعذر تحميل النتائج. تأكد من Firestore Rules ومن إنك داخل بنفس حساب المعلم.</div>';
+  }
+}
+
+document.getElementById("openTeacherResults").addEventListener("click",()=>{
+  if(window.PythagorasiUser?.role!=="teacher"){
+    authPendingAction=null;
+    authGate.classList.add("show");
+    showTeacherLogin();
+    setAuthError("ادخل بحساب Google كمعلم، وبعدها افتح لوحة النتائج.");
+    return;
+  }
+  showExamView("teacherResults");
+  document.getElementById("examModalTitle").textContent="📊 نتائج الطلاب";
+  loadTeacherResults();
+});
+document.getElementById("refreshTeacherResults").addEventListener("click",loadTeacherResults);
+document.getElementById("teacherResultsBack").addEventListener("click",()=>{
+  showExamView("examHome");
+  document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
+});
+
 
 /* ---- custom exam builder ---- */
 function openBuilder(){
@@ -3107,6 +3576,333 @@ document.getElementById("loadBuilderExam").addEventListener("click",()=>{
   }catch{showToast("تعذر تحميل الامتحان المحفوظ.")}
 });
 
+
+/* -------------------- LIVE CLASS COMPETITION -------------------- */
+const competitionModal=document.getElementById("competitionModal");
+let liveCompetitionId=null;
+let liveCompetitionRole=null;
+let liveCompetitionData=null;
+let livePlayers=[];
+let liveUnsubs=[];
+let liveAnsweredIndex=-1;
+
+function clearLiveSubscriptions(){
+  liveUnsubs.forEach(fn=>{try{fn()}catch{}});
+  liveUnsubs=[];
+}
+function showCompetitionView(id){
+  ["competitionHome","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
+    document.getElementById(x).classList.toggle("hidden",x!==id);
+  });
+}
+function openCompetitionModal(){
+  competitionModal.classList.add("open");
+  showCompetitionView("competitionHome");
+  document.getElementById("competitionModalTitle").textContent="🏆 المسابقة المباشرة";
+  const savedName=localStorage.getItem("pythagorasi_student_name")||"";
+  if(savedName&&!document.getElementById("compJoinName").value)document.getElementById("compJoinName").value=savedName;
+}
+document.getElementById("competitionBtn").addEventListener("click",openCompetitionModal);
+document.getElementById("closeCompetitionModal").addEventListener("click",()=>{
+  clearLiveSubscriptions();competitionModal.classList.remove("open");
+});
+competitionModal.addEventListener("click",e=>{
+  if(e.target===competitionModal){clearLiveSubscriptions();competitionModal.classList.remove("open")}
+});
+document.getElementById("compFinishedClose").addEventListener("click",()=>{
+  clearLiveSubscriptions();competitionModal.classList.remove("open");
+});
+
+function makeCompetitionCode(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out="";for(let i=0;i<6;i++)out+=chars[Math.floor(Math.random()*chars.length)];
+  return out;
+}
+function makeLiveQuestions(){
+  const pool=[
+    {prompt:"إذا كان a = 3 و b = 4، كم يساوي الوتر c؟",options:["5","6","7","8"],answer:"5"},
+    {prompt:"أي ضلع هو الوتر في المثلث القائم؟",options:["المقابل لزاوية 90°","أقصر ضلع","أي ضلع","المجاور فقط"],answer:"المقابل لزاوية 90°"},
+    {prompt:"إذا كان c = 13 و a = 5، كم يساوي b؟",options:["8","10","12","14"],answer:"12"},
+    {prompt:"أي قانون صحيح للمثلث القائم؟",options:["a² + b² = c²","a + b = c","a² = b² + c² دائمًا","a × b = c"],answer:"a² + b² = c²"},
+    {prompt:"هل 6، 8، 10 تكوّن مثلثًا قائمًا؟",options:["نعم","لا","فقط إذا c=8","لا يمكن"],answer:"نعم"},
+    {prompt:"مستطيل أبعاده 5 و12. كم طول قطره؟",options:["13","17","10","12"],answer:"13"},
+    {prompt:"إذا كانت a² = 9 و b² = 16، كم c²؟",options:["7","12","25","49"],answer:"25"},
+    {prompt:"نظرية فيثاغورس تنطبق مباشرة على...",options:["المثلث القائم","كل المثلثات","الدائرة فقط","المثلث المتساوي فقط"],answer:"المثلث القائم"},
+    {prompt:"إذا تضاعف a و b مرتين، ماذا يحدث لـ c؟",options:["يتضاعف مرتين","يتضاعف 4 مرات","لا يتغير","ينقص للنصف"],answer:"يتضاعف مرتين"},
+    {prompt:"ما مساحة مربع الوتر في مثلث 8-15-17؟",options:["17","225","289","64"],answer:"289"},
+    {prompt:"إذا c=10 و a=6، كم b؟",options:["4","8","12","16"],answer:"8"},
+    {prompt:"الوتر c يكون دائمًا...",options:["أطول ضلع","أقصر ضلع","يساوي a","يساوي b"],answer:"أطول ضلع"}
+  ];
+  return shuffle(pool).slice(0,8).map((q,i)=>({...q,index:i,points:1000}));
+}
+
+async function createLiveCompetition(){
+  if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
+    authPendingAction="competitionHost";
+    competitionModal.classList.remove("open");
+    authGate.classList.add("show");
+    showTeacherLogin();
+    setAuthError("سجّل دخول Google كمعلم لإنشاء غرفة المسابقة.");
+    return;
+  }
+  const btn=document.getElementById("compCreateBtn");
+  btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
+  try{
+    const code=makeCompetitionCode();
+    const questions=makeLiveQuestions();
+    const ref=await addDoc(collection(db,"competitions"),{
+      ownerId:auth.currentUser.uid,
+      ownerName:window.PythagorasiUser.displayName||"المعلم",
+      code,status:"lobby",currentIndex:-1,questionCount:questions.length,
+      teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,
+      createdAt:serverTimestamp()
+    });
+    for(let i=0;i<questions.length;i++){
+      await setDoc(doc(db,"competitions",ref.id,"questions",String(i)),questions[i]);
+    }
+    liveCompetitionId=ref.id;
+    liveCompetitionRole="host";
+    localStorage.setItem("pythagorasi_last_host_room",JSON.stringify({id:ref.id,code}));
+    subscribeCompetition(ref.id,"host");
+    showCompetitionView("competitionLobby");
+  }catch(err){
+    console.error("create competition",err);
+    document.getElementById("compJoinStatus").textContent="تعذر إنشاء الغرفة. لازم تنشر Firestore Rules الجديدة.";
+  }finally{
+    btn.disabled=false;btn.textContent="＋ إنشاء غرفة جديدة";
+  }
+}
+document.getElementById("compCreateBtn").addEventListener("click",createLiveCompetition);
+
+async function ensureAnonymousStudent(name){
+  let user=auth.currentUser;
+  const provider=user?.providerData?.[0]?.providerId;
+  if(provider==="google.com")throw new Error("teacher-account");
+  if(!user){
+    const cred=await signInAnonymously(auth);
+    user=cred.user;
+  }
+  localStorage.setItem("pythagorasi_student_name",name);
+  const profile={displayName:name,role:"student",provider:"anonymous"};
+  await saveUserProfile(user,profile);
+  paintUser(user,profile);
+  return user;
+}
+
+async function joinLiveCompetition(){
+  const name=(document.getElementById("compJoinName").value||"").trim().replace(/\s+/g," ");
+  const code=(document.getElementById("compJoinCode").value||"").trim().toUpperCase();
+  const team=document.getElementById("compJoinTeam").value;
+  const status=document.getElementById("compJoinStatus");
+  if(name.length<2){status.textContent="اكتب اسمك أولًا.";return}
+  if(code.length<4){status.textContent="اكتب كود الغرفة.";return}
+  status.textContent="⏳ جاري الدخول...";
+  try{
+    const user=await ensureAnonymousStudent(name);
+    const snap=await getDocs(query(collection(db,"competitions"),where("code","==",code)));
+    const room=snap.docs.find(d=>d.data().status!=="finished");
+    if(!room){status.textContent="❌ ما في غرفة مفتوحة بهذا الكود.";return}
+    const playerRef=doc(db,"competitions",room.id,"players",user.uid);
+    const existingPlayer=await getDoc(playerRef);
+    if(existingPlayer.exists()){
+      await setDoc(playerRef,{name,team},{merge:true});
+    }else{
+      await setDoc(playerRef,{uid:user.uid,name,team,score:0,joinedAt:serverTimestamp()});
+    }
+    liveCompetitionId=room.id;
+    liveCompetitionRole="player";
+    liveAnsweredIndex=-1;
+    localStorage.setItem("pythagorasi_last_competition",JSON.stringify({id:room.id,code,name,team}));
+    subscribeCompetition(room.id,"player");
+    showCompetitionView(room.data().status==="lobby"?"competitionLobby":"competitionGame");
+    status.textContent="✅ دخلت الغرفة.";
+  }catch(err){
+    console.error("join competition",err);
+    status.textContent=err.message==="teacher-account"
+      ?"أنت داخل كمعلم Google. اعمل تسجيل خروج إذا بدك تدخل كطالب."
+      :"تعذر الدخول. تأكد من Firestore Rules والإنترنت.";
+  }
+}
+document.getElementById("compJoinBtn").addEventListener("click",joinLiveCompetition);
+document.getElementById("compJoinCode").addEventListener("keydown",e=>{if(e.key==="Enter")joinLiveCompetition()});
+
+function subscribeCompetition(id,role){
+  clearLiveSubscriptions();
+  liveCompetitionId=id;liveCompetitionRole=role;
+  const roomRef=doc(db,"competitions",id);
+  liveUnsubs.push(onSnapshot(roomRef,snap=>{
+    if(!snap.exists())return;
+    liveCompetitionData={id:snap.id,...snap.data()};
+    renderLiveRoom();
+  }));
+  liveUnsubs.push(onSnapshot(collection(db,"competitions",id,"players"),snap=>{
+    livePlayers=snap.docs.map(d=>({uid:d.id,...d.data()})).sort((a,b)=>(b.score||0)-(a.score||0));
+    renderLivePlayers();
+    renderLiveLeaderboard();
+  }));
+}
+
+function renderLivePlayers(){
+  const host=document.getElementById("compPlayersList");
+  host.innerHTML="";
+  const a=livePlayers.filter(p=>p.team==="A").length,b=livePlayers.filter(p=>p.team==="B").length;
+  document.getElementById("compLobbyACount").textContent=a;
+  document.getElementById("compLobbyBCount").textContent=b;
+  livePlayers.forEach(p=>{
+    const d=document.createElement("div");d.className="live-player";
+    d.innerHTML=`<b>${escapeHtml(p.name||"طالب")}</b><span class="${p.team==="A"?"teamA":"teamB"}">${p.team==="A"?"🔵 A":"🔴 B"}</span>`;
+    host.appendChild(d);
+  });
+}
+function renderLiveLeaderboard(){
+  const rows=livePlayers.map((p,i)=>`
+    <div class="live-rank">
+      <div class="rank">${i+1}</div>
+      <div>${escapeHtml(p.name||"طالب")} <small style="color:#8399ac">• ${p.team==="A"?"🔵 A":"🔴 B"}</small></div>
+      <div class="score">${p.score||0}</div>
+    </div>`).join("");
+  document.getElementById("compLeaderboard").innerHTML=rows||'<div class="cloud-note">بانتظار الطلاب...</div>';
+  document.getElementById("compFinalLeaderboard").innerHTML=rows;
+}
+function renderLiveRoom(){
+  const r=liveCompetitionData;if(!r)return;
+  document.getElementById("compRoomCode").textContent=r.code||"------";
+  document.getElementById("compGameCode").textContent=r.code||"------";
+  document.getElementById("compLobbyRole").textContent=liveCompetitionRole==="host"?"👨‍🏫 غرفة المعلم — الطلاب يدخلون الآن":"🎒 أنت داخل الغرفة — انتظر المعلم";
+  document.getElementById("compStartBtn").classList.toggle("hidden",liveCompetitionRole!=="host");
+  document.getElementById("compScoreA").textContent=r.teamAScore||0;
+  document.getElementById("compScoreB").textContent=r.teamBScore||0;
+  document.getElementById("compFinalA").textContent=r.teamAScore||0;
+  document.getElementById("compFinalB").textContent=r.teamBScore||0;
+
+  if(r.status==="lobby"){showCompetitionView("competitionLobby");return}
+  if(r.status==="finished"){
+    showCompetitionView("competitionFinished");
+    const a=r.teamAScore||0,b=r.teamBScore||0;
+    document.getElementById("compWinnerText").textContent=a===b?"تعادل 🔥":a>b?"🔵 الفريق A فاز!":"🔴 الفريق B فاز!";
+    return;
+  }
+
+  showCompetitionView("competitionGame");
+  document.getElementById("compQuestionNo").textContent=`سؤال ${(r.currentIndex||0)+1} / ${r.questionCount||8}`;
+  document.getElementById("compGameState").textContent=r.status==="result"?"النتيجة":"مباشر";
+  document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||"جاري تحميل السؤال...";
+  document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
+  document.getElementById("compRevealBtn").classList.toggle("hidden",r.status!=="question");
+  document.getElementById("compNextBtn").classList.toggle("hidden",r.status!=="result");
+
+  const host=document.getElementById("compOptions");host.innerHTML="";
+  (r.currentQuestion?.options||[]).forEach(opt=>{
+    const b=document.createElement("button");b.className="live-option";b.textContent=opt;
+    if(liveCompetitionRole==="host")b.disabled=true;
+    if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)b.disabled=true;
+    if(r.status==="result"){
+      b.disabled=true;
+      if(normExam(opt)===normExam(r.correctAnswer||""))b.classList.add("correct");
+    }
+    b.addEventListener("click",()=>sendLiveAnswer(opt,b));
+    host.appendChild(b);
+  });
+
+  const st=document.getElementById("compAnswerStatus");
+  if(r.status==="result")st.textContent=`✅ الإجابة الصحيحة: ${r.correctAnswer||"—"}`;
+  else if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)st.textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+  else st.textContent=liveCompetitionRole==="host"?"استنى الإجابات، وبعدها اقفل السؤال واحسب النقاط.":"اختار جواب واحد.";
+}
+
+async function sendLiveAnswer(answer,button){
+  if(liveCompetitionRole!=="player"||!liveCompetitionData||liveCompetitionData.status!=="question")return;
+  const idx=liveCompetitionData.currentIndex;
+  if(liveAnsweredIndex===idx)return;
+  const user=auth.currentUser;if(!user)return;
+  const responseRef=doc(db,"competitions",liveCompetitionId,"responses",`${user.uid}_${idx}`);
+  try{
+    const existingResponse=await getDoc(responseRef);
+    if(existingResponse.exists()){
+      liveAnsweredIndex=idx;
+      document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=true);
+      document.getElementById("compAnswerStatus").textContent="أنت جاوبت هذا السؤال من قبل ✓";
+      return;
+    }
+  }catch{}
+  liveAnsweredIndex=idx;
+  document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=true);
+  button.classList.add("selected");
+  document.getElementById("compAnswerStatus").textContent="⏳ إرسال الإجابة...";
+  const me=livePlayers.find(p=>p.uid===user.uid);
+  try{
+    await setDoc(responseRef,{
+      studentUid:user.uid,
+      studentName:me?.name||window.PythagorasiUser?.displayName||"طالب",
+      team:me?.team||"A",questionIndex:idx,answer,
+      answeredAtMs:Date.now(),submittedAt:serverTimestamp()
+    });
+    document.getElementById("compAnswerStatus").textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+  }catch(err){
+    console.error("live answer",err);
+    liveAnsweredIndex=-1;
+    document.getElementById("compAnswerStatus").textContent="تعذر إرسال الإجابة.";
+    document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=false);
+  }
+}
+async function hostSetQuestion(index){
+  const qSnap=await getDoc(doc(db,"competitions",liveCompetitionId,"questions",String(index)));
+  if(!qSnap.exists())throw new Error("question missing");
+  const q=qSnap.data();
+  await updateDoc(doc(db,"competitions",liveCompetitionId),{
+    status:"question",currentIndex:index,
+    currentQuestion:{prompt:q.prompt,options:q.options},
+    correctAnswer:null,questionStartedAt:serverTimestamp()
+  });
+}
+document.getElementById("compStartBtn").addEventListener("click",async()=>{
+  if(liveCompetitionRole!=="host")return;
+  if(!livePlayers.length){showToast("خلي طالب واحد على الأقل يدخل الغرفة.");return}
+  try{await hostSetQuestion(0)}catch(err){console.error(err);showToast("تعذر بدء المسابقة.")}
+});
+document.getElementById("compRevealBtn").addEventListener("click",async()=>{
+  if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="question")return;
+  const btn=document.getElementById("compRevealBtn");btn.disabled=true;
+  try{
+    const idx=liveCompetitionData.currentIndex;
+    const qSnap=await getDoc(doc(db,"competitions",liveCompetitionId,"questions",String(idx)));
+    const q=qSnap.data();
+    const responses=await getDocs(collection(db,"competitions",liveCompetitionId,"responses"));
+    const thisResponses=responses.docs.map(d=>d.data()).filter(r=>r.questionIndex===idx);
+    let aScore=liveCompetitionData.teamAScore||0,bScore=liveCompetitionData.teamBScore||0;
+    for(const r of thisResponses){
+      if(normExam(r.answer)===normExam(q.answer)){
+        const points=q.points||1000;
+        if(r.team==="A")aScore+=points;else bScore+=points;
+        const p=livePlayers.find(x=>x.uid===r.studentUid);
+        await setDoc(doc(db,"competitions",liveCompetitionId,"players",r.studentUid),{score:(p?.score||0)+points},{merge:true});
+      }
+    }
+    await updateDoc(doc(db,"competitions",liveCompetitionId),{
+      status:"result",correctAnswer:q.answer,teamAScore:aScore,teamBScore:bScore
+    });
+  }catch(err){console.error("reveal",err);showToast("تعذر حساب نقاط الجولة.")}
+  finally{btn.disabled=false}
+});
+document.getElementById("compNextBtn").addEventListener("click",async()=>{
+  if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="result")return;
+  const next=(liveCompetitionData.currentIndex||0)+1;
+  try{
+    if(next>=liveCompetitionData.questionCount)await updateDoc(doc(db,"competitions",liveCompetitionId),{status:"finished"});
+    else await hostSetQuestion(next);
+  }catch(err){console.error(err);showToast("تعذر فتح السؤال التالي.")}
+});
+document.getElementById("compCopyCode").addEventListener("click",async()=>{
+  const code=document.getElementById("compRoomCode").textContent.trim();
+  try{await navigator.clipboard.writeText(code);showToast("تم نسخ كود المسابقة.");}
+  catch{showToast(`الكود: ${code}`)}
+});
+document.getElementById("compLeaveBtn").addEventListener("click",()=>{
+  clearLiveSubscriptions();liveCompetitionId=null;liveCompetitionData=null;livePlayers=[];
+  competitionModal.classList.remove("open");
+});
+
+
 /* -------------------- PYTHAGORASI AI -------------------- */
 /* Normalize Arabic spelling */
 function normalizeArabic(t){
@@ -3225,9 +4021,91 @@ function solveNumeric(raw,t){
   return null;
 }
 
+
+const aiContext={lastNumbers:[],lastIntent:"",lastQuestion:"",turns:0};
+
+function currentExamQuestion(){
+  if(!activeExam)return null;
+  const firstUnanswered=activeExam.questions.findIndex((q,i)=>getExamAnswer(i,q)==="");
+  const idx=firstUnanswered>=0?firstUnanswered:0;
+  return {q:activeExam.questions[idx],index:idx};
+}
+function advancedLocalMathAnswer(raw,t){
+  const nums=extractNumbers(raw);
+
+  if(has(t,"القيم الحاليه","القيم الحالية","شو القيم","الارقام الحاليه","الأرقام الحالية"))
+    return `حاليًا بالمجسم: a = ${pretty(currentA)}، b = ${pretty(currentB)}، و c = ${pretty(currentC)} وهو الوتر.`;
+
+  if(has(t,"ليش c الوتر","لماذا c الوتر","ليش c اكبر","لماذا الوتر اطول","ليش الوتر اطول"))
+    return "لأن c هو الضلع المقابل للزاوية القائمة 90°، ولذلك هو الوتر. وبالمثلث القائم الوتر هو دائمًا أطول ضلع.";
+
+  if(has(t,"مسافه بين نقطتين","المسافة بين نقطتين","احداثيات","إحداثيات")&&nums.length>=4){
+    const [x1,y1,x2,y2]=nums,dx=x2-x1,dy=y2-y1,d=Math.sqrt(dx*dx+dy*dy);
+    return `فرق x = ${pretty(dx)} وفرق y = ${pretty(dy)}، لذلك المسافة = √(${pretty(dx*dx)} + ${pretty(dy*dy)}) = ${pretty(d)}.`;
+  }
+  if(has(t,"قطر مستطيل","قطر المستطيل")&&nums.length>=2){
+    const [a,b]=nums,d=Math.sqrt(a*a+b*b);
+    return `قطر المستطيل يصير وتر مثلث قائم: √(${pretty(a)}² + ${pretty(b)}²) = ${pretty(d)}.`;
+  }
+  if(has(t,"مساحه مربع","مساحة مربع")&&nums.length>=1){
+    const x=nums[0];return `إذا طول ضلع المربع ${pretty(x)}، فمساحته = ${pretty(x)}² = ${pretty(x*x)}.`;
+  }
+  if(has(t,"محيط مربع","محيط المربع")&&nums.length>=1){
+    const x=nums[0];return `محيط المربع = 4 × ${pretty(x)} = ${pretty(4*x)}.`;
+  }
+  if(has(t,"ثلاثيه فيثاغورس","ثلاثية فيثاغورس","اعطيني ثلاثيات","هات ثلاثيات"))
+    return "أشهر الثلاثيات: 3–4–5، 5–12–13، 8–15–17، 7–24–25، 20–21–29. وأي مضاعف لنفس الثلاثية يبقى مثلثًا قائمًا.";
+
+  if(has(t,"ساعدني بالسؤال","ساعدني في السؤال","تلميح للسؤال","شو اعمل بالسؤال")){
+    const cur=currentExamQuestion();
+    if(!cur)return "افتح امتحان أولًا، وبعدها بقدر أعطيك تلميح للسؤال اللي واقف عنده.";
+    if(cur.q.type==="number")return `تلميح للسؤال ${cur.index+1}: حدّد الوتر c. إذا المطلوب c استخدم √(a²+b²)، وإذا المطلوب ضلع قائم استخدم √(c²−الضلع²).`;
+    if(cur.q.type==="mcq")return `تلميح للسؤال ${cur.index+1}: فتّش عن الخيار الذي يحافظ على شرط المثلث القائم والوتر المقابل لـ90°.`;
+    return `تلميح للسؤال ${cur.index+1}: اذكر المثلث القائم وعلاقة المساحات a² + b² = c².`;
+  }
+  if(has(t,"شو السؤال الحالي","السؤال الحالي")){
+    const cur=currentExamQuestion();
+    return cur?`السؤال الحالي رقم ${cur.index+1}: ${cur.q.prompt}`:"ما في امتحان مفتوح حاليًا.";
+  }
+
+  const n=normalizeArabic(raw);
+  const ma=/(?:^|\s)a\s*(?:=|صار|يكون)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+  const mb=/(?:^|\s)b\s*(?:=|صار|يكون)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+  const mc=/(?:^|\s)c\s*(?:=|صار|يكون)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+  if((has(t,"لو","اذا","إذا","صار","غيرنا","غير")||aiContext.lastIntent==="calculation")&&(ma||mb||mc)){
+    let a=ma?+ma[1]:null,b=mb?+mb[1]:null,c=mc?+mc[1]:null;
+    if(a!=null&&b==null&&c==null){
+      b=currentB;c=Math.sqrt(a*a+b*b);
+      return `إذا خلّينا a = ${pretty(a)} وحافظنا على b الحالية = ${pretty(b)}، بصير الوتر c = ${pretty(c)}.`;
+    }
+    if(b!=null&&a==null&&c==null){
+      a=currentA;c=Math.sqrt(a*a+b*b);
+      return `إذا خلّينا b = ${pretty(b)} وحافظنا على a الحالية = ${pretty(a)}، بصير الوتر c = ${pretty(c)}.`;
+    }
+    if(c!=null&&a!=null&&b==null&&c>a){
+      b=Math.sqrt(c*c-a*a);
+      return `إذا c = ${pretty(c)} و a = ${pretty(a)}، إذن b = √(${pretty(c*c)} − ${pretty(a*a)}) = ${pretty(b)}.`;
+    }
+    if(c!=null&&b!=null&&a==null&&c>b){
+      a=Math.sqrt(c*c-b*b);
+      return `إذا c = ${pretty(c)} و b = ${pretty(b)}، إذن a = √(${pretty(c*c)} − ${pretty(b*b)}) = ${pretty(a)}.`;
+    }
+  }
+  return null;
+}
+
 function pythagorasiAnswer(raw){
   const t=correctedText(raw);
   const n=normalizeArabic(raw);
+  aiContext.turns++;
+  aiContext.lastQuestion=raw;
+  const extracted=extractNumbers(raw);
+  if(extracted.length)aiContext.lastNumbers=extracted;
+  const advanced=advancedLocalMathAnswer(raw,t);
+  if(advanced){
+    aiContext.lastIntent="calculation";
+    return advanced;
+  }
 
   const remember=(topic,answer)=>{
     lastBotTopic=topic;
@@ -3323,7 +4201,7 @@ function pythagorasiAnswer(raw){
   }
 
   const numeric=solveNumeric(raw,t);
-  if(numeric)return prefix + remember("calculation",numeric);
+  if(numeric){aiContext.lastIntent="calculation";return prefix + remember("calculation",numeric);}
 
   if(has(t,"مين فيثاغورس","من هو فيثاغورس","من فيثاغورس"))
     return prefix + remember("theory","فيثاغورس عالم وفيلسوف يوناني قديم ارتبط اسمه بالنظرية المشهورة عن المثلث القائم. كانت توجد معرفة بالعلاقة نفسها قبل زمنه أيضًا، لكن اسمه هو الأكثر ارتباطًا بها في التعليم الحديث.");
@@ -3382,11 +4260,20 @@ function pythagorasiAnswer(raw){
 }
 
 const chat=document.getElementById("chat"),q=document.getElementById("question");
+function readAIHistory(){try{return JSON.parse(localStorage.getItem("pythagorasi_ai_history")||"[]")}catch{return[]}}
+function writeAIHistory(items){
+  try{
+    localStorage.setItem("pythagorasi_ai_history",JSON.stringify(items.slice(-40)));
+    document.getElementById("aiMemoryStatus").textContent=`محفوظ ${Math.min(items.length,40)} رسالة محليًا`;
+  }catch{}
+}
+function saveAIHistoryMessage(text,who){
+  const items=readAIHistory();items.push({text:String(text),who,at:Date.now()});writeAIHistory(items);
+}
 function attachSpeaker(d,text){
   if(!d||d.querySelector(".msg-speak"))return;
   const b=document.createElement("button");
-  b.className="msg-speak";b.type="button";b.title="اقرأ الرد بصوت";
-  b.textContent="🔊";
+  b.className="msg-speak";b.type="button";b.title="اقرأ الرد بصوت";b.textContent="🔊";
   b.addEventListener("click",e=>{
     e.stopPropagation();
     if(b.classList.contains("speaking")){stopSpeech();return}
@@ -3394,14 +4281,81 @@ function attachSpeaker(d,text){
   });
   d.appendChild(b);
 }
-function addMsg(text,who="bot",html=false){
+function addMsg(text,who="bot",html=false,persist=true){
   const d=document.createElement("div");d.className=`msg ${who}`;
   if(html)d.innerHTML=text;else d.textContent=text;
-  if(who==="bot"&&!d.classList.contains("typing"))attachSpeaker(d,d.textContent||text);
-  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
+  let speakButton=null;
+  if(who==="bot"&&!d.classList.contains("typing")){
+    attachSpeaker(d,d.textContent||text);speakButton=d.querySelector(".msg-speak");
+  }
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+  if(persist)saveAIHistoryMessage(d.textContent.replace("🔊","").trim()||text,who);
+  if(who==="bot"&&persist&&document.getElementById("aiAutoSpeak")?.checked){
+    setTimeout(()=>speakAIText(d.textContent.replace("🔊","").trim()||text,speakButton),90);
+  }
+  return d;
 }
-// Add a speaker to the welcome message that already exists in the HTML.
-document.querySelectorAll("#chat .msg.bot").forEach(d=>attachSpeaker(d,d.textContent));
+(function restoreAIHistory(){
+  const items=readAIHistory();
+  if(!items.length){
+    document.querySelectorAll("#chat .msg.bot").forEach(d=>attachSpeaker(d,d.textContent));
+    document.getElementById("aiMemoryStatus").textContent="الذاكرة المحلية جاهزة";
+    return;
+  }
+  chat.innerHTML="";
+  items.slice(-24).forEach(m=>addMsg(m.text,m.who||"bot",false,false));
+  document.getElementById("aiMemoryStatus").textContent=`رجّعنا آخر ${Math.min(items.length,24)} رسالة`;
+})();
+
+
+function populateAIVoices(){
+  if(!("speechSynthesis" in window))return;
+  const select=document.getElementById("aiVoiceSelect");
+  const current=select.value;
+  const voices=speechSynthesis.getVoices().filter(v=>/^ar(-|$)/i.test(v.lang)||/Arabic|العربية/i.test(v.name));
+  select.innerHTML='<option value="">أفضل صوت عربي تلقائي</option>';
+  voices.forEach(v=>{
+    const o=document.createElement("option");o.value=`${v.name}|||${v.lang}`;o.textContent=`${v.name} — ${v.lang}`;select.appendChild(o);
+  });
+  if([...select.options].some(o=>o.value===current))select.value=current;
+}
+populateAIVoices();
+speechSynthesis?.addEventListener?.("voiceschanged",populateAIVoices);
+
+const SpeechRecognitionCtor=window.SpeechRecognition||window.webkitSpeechRecognition;
+let aiRecognition=null,aiListening=false;
+if(SpeechRecognitionCtor){
+  aiRecognition=new SpeechRecognitionCtor();
+  aiRecognition.lang="ar-SA";aiRecognition.interimResults=true;aiRecognition.continuous=false;
+  aiRecognition.onstart=()=>{
+    aiListening=true;document.getElementById("micBtn").classList.add("listening");
+    document.getElementById("micBtn").textContent="⏹";q.placeholder="احكي هسا...";
+  };
+  aiRecognition.onresult=e=>{
+    let finalText="",interim="";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const txt=e.results[i][0].transcript;
+      if(e.results[i].isFinal)finalText+=txt;else interim+=txt;
+    }
+    q.value=(finalText||interim).trim();
+    if(finalText.trim())setTimeout(()=>sendQuestion(finalText.trim()),180);
+  };
+  aiRecognition.onerror=e=>{if(e.error!=="aborted")showToast(`🎤 تعذر فهم الصوت (${e.error}). جرّب تحكي أوضح.`)};
+  aiRecognition.onend=()=>{
+    aiListening=false;document.getElementById("micBtn").classList.remove("listening");
+    document.getElementById("micBtn").textContent="🎤";
+    q.placeholder="اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟";
+  };
+}else{
+  document.getElementById("micBtn").title="التعرف الصوتي غير مدعوم بهذا المتصفح";
+  document.getElementById("micBtn").style.opacity=".5";
+}
+document.getElementById("micBtn").addEventListener("click",()=>{
+  if(!aiRecognition){showToast("🎤 استخدم Chrome أو Edge لتجربة الإدخال الصوتي.");return}
+  if(aiListening){aiRecognition.stop();return}
+  try{aiRecognition.start()}catch{}
+});
+
 
 function sendQuestion(forced=null){
   const raw=(forced??q.value).trim();if(!raw)return;
