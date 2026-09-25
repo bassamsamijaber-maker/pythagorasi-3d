@@ -1147,6 +1147,72 @@ body.light .saved-comp-card,.subject-strip{ }
 .curriculum-status{font-size:10px;color:#75c79d;margin-top:5px}
 @media(max-width:760px){.topic-grid,.topic-layout{grid-template-columns:1fr}.custom-topic-add{grid-template-columns:1fr}.custom-topic-add textarea,.custom-topic-add button{grid-column:auto}.curriculum-topic-list{grid-template-columns:1fr}.topic-practice-options{grid-template-columns:1fr}}
 
+
+/* ================= PYTHAGORAS-ONLY LOBBY V12 ================= */
+.lobby-logout-btn{
+  height:48px;padding:0 14px;border-radius:14px;cursor:pointer;font-weight:900;
+  border:1px solid rgba(255,107,120,.16);background:rgba(255,84,98,.07);color:#ffbbc1
+}
+.lobby-logout-btn:hover{background:rgba(255,84,98,.13)}
+.pythag-lobby-hero{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding:28px;
+  border-radius:26px;border:1px solid rgba(255,255,255,.09);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(230,78,74,.12),transparent 35%),
+    linear-gradient(135deg,rgba(14,33,52,.9),rgba(6,17,29,.84));
+  box-shadow:0 30px 70px rgba(0,0,0,.25)
+}
+.pythag-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.pythag-hero-copy h1{font-size:44px;line-height:1.1;margin:10px 0 8px}
+.pythag-hero-copy p{color:#98aec0;line-height:1.8;max-width:650px}
+.pythag-formula{
+  direction:ltr;font-size:31px;font-weight:1000;letter-spacing:2px;margin:13px 0;
+  color:#ffdd83;text-shadow:0 0 25px rgba(255,205,80,.15)
+}
+.pythag-enter-lab{
+  padding:13px 18px;border:0;border-radius:13px;background:linear-gradient(135deg,#1c91ff,#7654ea);
+  color:white;font-weight:950;cursor:pointer;box-shadow:0 13px 30px rgba(42,125,255,.2)
+}
+.pythag-action-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pythag-action-card{
+  min-height:142px;border-radius:18px;padding:16px;text-align:right;cursor:pointer;color:white;
+  border:1px solid rgba(255,255,255,.085);background:rgba(255,255,255,.032)
+}
+.pythag-action-card:hover{transform:translateY(-4px);border-color:rgba(107,198,255,.32)}
+.pythag-action-card span{display:block;font-size:31px;margin-bottom:10px}
+.pythag-action-card b{display:block;font-size:17px}.pythag-action-card small{display:block;margin-top:5px;color:#8da4b7;line-height:1.5}
+.pythag-action-card.lab{background:linear-gradient(145deg,rgba(37,145,255,.13),rgba(255,255,255,.02))}
+.pythag-action-card.challenge{background:linear-gradient(145deg,rgba(255,116,56,.12),rgba(255,255,255,.02))}
+.pythag-action-card.questions{background:linear-gradient(145deg,rgba(56,196,156,.10),rgba(255,255,255,.02))}
+.pythag-action-card.exam{background:linear-gradient(145deg,rgba(151,82,238,.12),rgba(255,255,255,.02))}
+.pythag-action-card.competition{background:linear-gradient(145deg,rgba(255,201,65,.10),rgba(255,255,255,.02))}
+.compact-pythag-tools{grid-template-columns:repeat(2,1fr)}
+.pythag-question-modalbox{width:min(720px,95vw)}
+.quick-pythag-score{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px;color:#91a8ba;font-size:12px}
+.quick-pythag-score b{color:#ffd86a;font-size:17px}
+.quick-pythag-question{
+  padding:18px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);
+  font-size:18px;font-weight:900;line-height:1.7;margin-bottom:10px
+}
+.quick-pythag-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick-pythag-options button,.quick-pythag-options input{
+  min-height:46px;border-radius:11px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);color:white;padding:10px
+}
+.quick-pythag-options button{cursor:pointer;font-weight:800}
+.quick-pythag-options button.correct{border-color:#4bdba0;background:rgba(75,219,160,.1)}
+.quick-pythag-options button.wrong{border-color:#ff707c;background:rgba(255,112,124,.08)}
+@media(max-width:900px){
+  .pythag-lobby-hero{grid-template-columns:1fr}
+  .pythag-action-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .pythag-action-grid,.compact-pythag-tools{grid-template-columns:1fr}
+  .pythag-hero-copy h1{font-size:32px}
+  .lobby-logout-btn{padding:0 9px;font-size:11px}
+  .quick-pythag-options{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1228,26 +1294,30 @@ body.light .saved-comp-card,.subject-strip{ }
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
           <span id="lobbyProfileName">حسابي</span>
         </button>
+        <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
     </div>
 
-    <section class="lobby-hero">
-      <div class="lobby-hero-copy">
-        <span class="general-badge">منصة تعلّم شخصية</span>
-        <h2>شو بدك تتعلم اليوم؟</h2>
-        <p>اختار مادة، حل امتحان، ادخل مسابقة، أو احكي مع مساعدك الذكي.</p>
+    <section class="pythag-lobby-hero">
+      <div class="pythag-hero-copy">
+        <span class="general-badge">📐 موضوع المنصة</span>
+        <h1>نظرية فيثاغورس</h1>
+        <p>تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.</p>
+        <div class="pythag-formula">a² + b² = c²</div>
+        <button class="pythag-enter-lab" id="lobbyLabBtn">🚀 افتح مختبر فيثاغورس ثلاثي الأبعاد</button>
       </div>
-      <div class="lobby-ai-card">
+
+      <div class="lobby-ai-card pythag-ai-lobby">
         <div class="lobby-ai-head">
-          <div class="lobby-ai-orb">✦</div>
+          <div class="lobby-ai-orb">∟</div>
           <div>
-            <b id="lobbyAIName">نوفا</b>
-            <span>مساعد اللوبي</span>
+            <b id="lobbyAIName">فيثاغورسي</b>
+            <span>مساعد فيثاغورس</span>
           </div>
         </div>
-        <div class="lobby-ai-reply" id="lobbyAIReply">اسألني سؤال، اطلب امتحان، أو قلّي بأي مادة بدك تتدرّب.</div>
+        <div class="lobby-ai-reply" id="lobbyAIReply">اسألني عن الوتر، القانون، مثلث قائم، ثلاثيات فيثاغورس أو أعطيني أرقام وأنا أحسبها.</div>
         <div class="lobby-ai-input">
-          <input id="lobbyAIInput" placeholder="مثال: اعطيني سؤال علوم">
+          <input id="lobbyAIInput" placeholder="مثال: إذا a=5 و b=12 شو c؟">
           <button id="lobbyAISend">➤</button>
         </div>
       </div>
@@ -1256,53 +1326,70 @@ body.light .saved-comp-card,.subject-strip{ }
     <section class="lobby-section">
       <div class="lobby-section-head">
         <div>
-          <h3>📚 المواد</h3>
-          <p>كل مادة إلها مساعد باسم تختاره أنت.</p>
+          <h3>🔥 اختار النشاط</h3>
+          <p>كل النشاطات هون خاصة بنظرية فيثاغورس.</p>
         </div>
       </div>
-      <div class="subject-grid">
-        <button class="subject-card math" data-subject-open="math">
-          <span class="subject-ico">➗</span><b>رياضيات</b><small class="subject-ai-label" data-ai-label="math">أوريون</small>
+      <div class="pythag-action-grid">
+        <button class="pythag-action-card lab" id="lobbyLabCard">
+          <span>🧪</span><b>المختبر 3D</b><small>العجلة، الرمل، حساب الأضلاع والبرهان الحي</small>
         </button>
-        <button class="subject-card science" data-subject-open="science">
-          <span class="subject-ico">🧪</span><b>علوم</b><small class="subject-ai-label" data-ai-label="science">نيوتن</small>
+        <button class="pythag-action-card challenge" id="lobbyChallengeBtn">
+          <span>🔥</span><b>تحدّي فيثاغورس</b><small>حل بسرعة واجمع نقاط</small>
         </button>
-        <button class="subject-card arabic" data-subject-open="arabic">
-          <span class="subject-ico">ض</span><b>لغة عربية</b><small class="subject-ai-label" data-ai-label="arabic">بيان</small>
+        <button class="pythag-action-card questions" id="lobbyQuestionBtn">
+          <span>❓</span><b>أسئلة تدريب</b><small>أسئلة متغيرة مع تصحيح مباشر</small>
         </button>
-        <button class="subject-card hebrew" data-subject-open="hebrew">
-          <span class="subject-ico">א</span><b>עברית • عبري</b><small class="subject-ai-label" data-ai-label="hebrew">نوعام</small>
+        <button class="pythag-action-card exam" id="lobbyExamBtn">
+          <span>🎓</span><b>امتحانات</b><small>سهل، متوسط، صعب وخبير</small>
         </button>
-        <button class="subject-card english" data-subject-open="english">
-          <span class="subject-ico">A</span><b>English</b><small class="subject-ai-label" data-ai-label="english">Lingo</small>
-        </button>
-        <button class="subject-card geography" data-subject-open="geography">
-          <span class="subject-ico">🌍</span><b>جغرافيا</b><small class="subject-ai-label" data-ai-label="geography">أطلس</small>
+        <button class="pythag-action-card competition" id="competitionBtn">
+          <span>🏆</span><b>مسابقة مباشرة</b><small>كود غرفة، فرق وLeaderboard</small>
         </button>
       </div>
     </section>
 
     <section class="lobby-section">
-      <div class="lobby-section-head"><h3>⚡ نشاطات سريعة</h3></div>
-      <div class="lobby-action-grid">
-        <button class="lobby-action primary" id="lobbyExamBtn"><span>🎓</span><b>امتحان</b><small>اختار المادة والمستوى</small></button>
-        <button class="lobby-action competition" id="competitionBtn"><span>🏆</span><b>مسابقة مباشرة</b><small>إنشاء غرفة أو الدخول بكود</small></button>
-        <button class="lobby-action" id="lobbyJoinClassBtn"><span>🏫</span><b>انضم لصف</b><small>ادخل كود الصف</small></button>
-        <button class="lobby-action" id="lobbyProfileQuick"><span>👤</span><b>ملفي</b><small>XP، الشارات والتقدم</small></button>
+      <div class="lobby-action-grid compact-pythag-tools">
+        <button class="lobby-action" id="lobbyJoinClassBtn"><span>🏫</span><b>صفوفي</b><small>انضم لصف أو شوف الوظائف</small></button>
+        <button class="lobby-action" id="lobbyProfileQuick"><span>👤</span><b>ملفي</b><small>XP، المستوى والتقدم</small></button>
       </div>
     </section>
 
     <section class="lobby-section teacher-only-lobby hidden" id="teacherLobbyTools">
       <div class="lobby-section-head">
-        <div><h3>👨‍🏫 أدوات المعلم</h3><p>إدارة المحتوى والصفوف من مكان واحد.</p></div>
+        <div><h3>👨‍🏫 أدوات المعلم</h3><p>كل الأدوات مخصّصة لفيثاغورس.</p></div>
       </div>
       <div class="lobby-action-grid">
-        <button class="lobby-action" id="teacherQuestionBankBtn"><span>🗃️</span><b>بنك الأسئلة</b><small>احفظ وأعد استخدام أسئلتك</small></button>
-        <button class="lobby-action" id="teacherClassesBtn"><span>🏫</span><b>صفوفي</b><small>إنشاء صف ومتابعة الطلاب</small></button>
-        <button class="lobby-action" id="teacherResultsLobbyBtn"><span>📊</span><b>النتائج</b><small>نتائج الامتحانات</small></button>
+        <button class="lobby-action" id="teacherQuestionBankBtn"><span>🗃️</span><b>بنك أسئلة فيثاغورس</b><small>احفظ أسئلتك واستعملها لاحقًا</small></button>
+        <button class="lobby-action" id="teacherClassesBtn"><span>🏫</span><b>صفوفي</b><small>إدارة الطلاب والوظائف</small></button>
+        <button class="lobby-action" id="teacherResultsLobbyBtn"><span>📊</span><b>نتائج الامتحانات</b><small>علامات طلابك</small></button>
         <button class="lobby-action" id="teacherCompetitionsLobbyBtn"><span>🏆</span><b>مسابقاتي</b><small>المسابقات المحفوظة</small></button>
       </div>
     </section>
+  </div>
+</div>
+
+<div class="modal" id="pythagQuestionsModal">
+  <div class="modalbox pythag-question-modalbox">
+    <div class="modalhead">
+      <div>
+        <h2>❓ أسئلة فيثاغورس</h2>
+        <div class="subject-assistant-line">تدريب سريع وتصحيح مباشر.</div>
+      </div>
+      <button class="close" id="closePythagQuestionsModal">×</button>
+    </div>
+    <div class="quick-pythag-score">
+      <span>السؤال <b id="quickPythagNo">1</b></span>
+      <span>النقاط <b id="quickPythagScore">0</b></span>
+    </div>
+    <div class="quick-pythag-question" id="quickPythagQuestion">جاهز؟</div>
+    <div class="quick-pythag-options" id="quickPythagOptions"></div>
+    <div class="challenge-feedback" id="quickPythagFeedback"></div>
+    <div class="builder-actions">
+      <button class="exam-secondary" id="nextQuickPythagQuestion">🎲 سؤال جديد</button>
+      <button class="apply" id="quickPythagExamBtn" style="margin:0">🎓 افتح الامتحان</button>
+    </div>
   </div>
 </div>
 
@@ -1425,14 +1512,8 @@ body.light .saved-comp-card,.subject-strip{ }
     <div class="profile-card">
       <h3>🤖 أسماء المساعدين</h3>
       <div class="assistant-name-grid">
-        <label>اللوبي <input data-assistant-name="lobby"></label>
-        <label>رياضيات <input data-assistant-name="math"></label>
-        <label>علوم <input data-assistant-name="science"></label>
-        <label>عربي <input data-assistant-name="arabic"></label>
-        <label>عبري <input data-assistant-name="hebrew"></label>
-        <label>English <input data-assistant-name="english"></label>
-        <label>جغرافيا <input data-assistant-name="geography"></label>
-        <label>فيثاغورس <input data-assistant-name="pythagoras"></label>
+        <label>مساعد اللوبي <input data-assistant-name="lobby"></label>
+        <label>فيثاغورسي <input data-assistant-name="pythagoras"></label>
       </div>
       <button class="apply" id="saveAssistantNames">حفظ الأسماء</button>
     </div>
@@ -1513,14 +1594,8 @@ body.light .saved-comp-card,.subject-strip{ }
     </div>
     <div class="profile-card">
       <div class="builder-grid">
-        <select id="qbSubject">
-          <option value="math">رياضيات</option>
-          <option value="science">علوم</option>
-          <option value="arabic">عربي</option>
-          <option value="hebrew">عبري</option>
-          <option value="english">English</option>
-          <option value="geography">جغرافيا</option>
-          <option value="pythagoras">فيثاغورس</option>
+        <select id="qbSubject" class="hidden">
+          <option value="pythagoras" selected>فيثاغورس</option>
         </select>
         <input id="qbPrompt" placeholder="اكتب السؤال">
       </div>
@@ -1577,7 +1652,7 @@ body.light .saved-comp-card,.subject-strip{ }
       </div>
       <button class="auth-logout" id="authLogoutBtn">تسجيل خروج</button>
     </div>
-    <p class="sub">منصة تعلّم تفاعلية: مساعد ذكي، امتحانات، مسابقات، ومختبر فيثاغورس ثلاثي الأبعاد.</p>
+    <p class="sub">منصة تفاعلية كاملة لتعلّم نظرية فيثاغورس: مختبر 3D، تحديات، أسئلة، امتحانات ومسابقات.</p>
 
     <section class="card">
       <h2>📐 احسب أي ضلع</h2>
@@ -1640,7 +1715,7 @@ body.light .saved-comp-card,.subject-strip{ }
     </section>
 
     
-    <section class="challenge-box">
+    <section class="challenge-box" id="pythagChallengeBox">
       <div class="challenge-head">
         <h2>🔥 تحدّي فيثاغورس</h2>
         <span class="challenge-badge" id="challengeScore">0 نقاط</span>
@@ -1663,7 +1738,7 @@ body.light .saved-comp-card,.subject-strip{ }
         <div class="online">● جاهز</div>
       </div>
       <div class="chat" id="chat">
-        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>فيثاغورسي</b>، مساعد التعلّم بالموقع. اسألني رياضيات، علوم، عربي، جغرافيا، إنجليزي، أو خلّيني أتحكم بالمجسم والامتحانات والمسابقات.</div>
+        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>فيثاغورسي</b>. اسألني عن نظرية فيثاغورس، الوتر، المثلث القائم، الحسابات، المجسم أو الامتحانات والمسابقات.</div>
       </div>
       <div class="suggestions">
         <button data-q="اشرحلي النظرية ببساطة">اشرحها ببساطة</button>
@@ -1687,7 +1762,7 @@ body.light .saved-comp-card,.subject-strip{ }
       </div>
       <div class="dictnote">فيثاغورسي ذكي محليًا • فهم عربي موسّع ولهجات • يحفظ الاسم والسياق والمحادثات</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
-      <div class="ai-scope">يفهم العربية بمرونة ويحل كثيرًا من المسائل ويولّد أسئلة من بنك تعليمي محلي. إذا كان السؤال خارج المعرفة المحلية، يطلب تفاصيل بدل اختراع جواب.</div>
+      <div class="ai-scope">مخصص لنظرية فيثاغورس: يفهم أسئلتك عن الوتر، الأضلاع، المثلث القائم، الأمثلة والحسابات.</div>
     </section>
   </aside>
 </div>
@@ -1748,15 +1823,8 @@ body.light .saved-comp-card,.subject-strip{ }
     <div id="examHome">
     <div class="subject-strip">
       <label for="examSubject">📚 مادة الامتحان</label>
-      <select id="examSubject">
-        <option value="mixed" selected>مختلط — من عدة مواد</option>
-        <option value="math">رياضيات</option>
-        <option value="science">علوم</option>
-        <option value="arabic">لغة عربية</option>
-        <option value="hebrew">عبري</option>
-        <option value="geography">جغرافيا</option>
-        <option value="english">إنجليزي</option>
-        <option value="pythagoras">مختبر فيثاغورس</option>
+      <select id="examSubject" class="hidden">
+        <option value="pythagoras" selected>فيثاغورس</option>
       </select>
     </div>
     <div class="resume-box" id="resumeExamBox">
@@ -1880,7 +1948,7 @@ body.light .saved-comp-card,.subject-strip{ }
     </div>
     <div id="competitionHome">
       <div class="live-hero">
-        <h3>مسابقة صف مباشرة ⚡</h3>
+        <h3>مسابقة فيثاغورس مباشرة ⚡</h3>
         <p>غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.</p>
       </div>
       <div class="live-home-grid">
@@ -1900,17 +1968,10 @@ body.light .saved-comp-card,.subject-strip{ }
         </div>
         <div class="live-card">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>اعمل مسابقة سريعة بأي مادة، أو صمّم أسئلتك وإجاباتك بنفسك.</p>
+          <p>اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.</p>
           <div class="live-field">
-            <select id="compQuickSubject">
-              <option value="mixed">مختلط — عدة مواد</option>
-              <option value="math">رياضيات</option>
-              <option value="science">علوم</option>
-              <option value="arabic">لغة عربية</option>
-              <option value="hebrew">عبري</option>
-              <option value="geography">جغرافيا</option>
-              <option value="english">إنجليزي</option>
-              <option value="pythagoras">فيثاغورس</option>
+            <select id="compQuickSubject" class="hidden">
+              <option value="pythagoras" selected>فيثاغورس</option>
             </select>
             <button class="apply" id="compCreateBtn">⚡ إنشاء مسابقة سريعة</button>
             <button class="exam-secondary" id="compDesignBtn">🛠️ صمّم المسابقة بنفسك</button>
@@ -1936,10 +1997,10 @@ body.light .saved-comp-card,.subject-strip{ }
     <div id="competitionBuilder" class="hidden">
       <div class="live-hero">
         <h3>🛠️ صمّم المسابقة</h3>
-        <p>اكتب الأسئلة والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.</p>
+        <p>اكتب أسئلة فيثاغورس والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.</p>
       </div>
       <div class="live-field">
-        <input id="compBuilderTitle" maxlength="60" value="مسابقة تعليمية" placeholder="اسم المسابقة">
+        <input id="compBuilderTitle" maxlength="60" value="مسابقة فيثاغورس" placeholder="اسم المسابقة">
       </div>
       <div id="compBuilderError" class="builder-error"></div>
       <div id="compBuilderQuestions" style="display:grid;gap:10px;margin-top:12px"></div>
@@ -2048,7 +2109,7 @@ window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
 
 const defaultAssistantNames={
-  lobby:"نوفا",
+  lobby:"فيثاغورسي",
   math:"أوريون",
   science:"نيوتن",
   arabic:"بيان",
@@ -3847,7 +3908,7 @@ function baseTopicsForSubject(subject){return topicCatalog.filter(t=>t.subject==
 function topicById(id){return topicCatalog.find(t=>t.id===id)||null}
 function allCurriculumSubjects(){return ["math","science","arabic","hebrew","english","geography"]}
 
-let examSubject="mixed";
+let examSubject="pythagoras";
 
 function mathQuestionPool(){
   const a=2+Math.floor(Math.random()*10),b=2+Math.floor(Math.random()*10);
@@ -4028,7 +4089,8 @@ function makeTopicExam(topic){
 }
 
 function createSurpriseExam(){
-  const all=examSubject==="pythagoras"?hardQuestionPool():generalQuestionPool(examSubject);
+  examSubject="pythagoras";
+  const all=hardQuestionPool();
   let usable=[...all];
 
   if(examDifficulty==="easy"){
@@ -5250,20 +5312,13 @@ async function renderTeacherClassCard(host,c){
         <h4>📝 وظيفة جديدة</h4>
         <div class="assignment-create">
           <input class="assignment-title" placeholder="عنوان الوظيفة">
-          <select class="assignment-subject">
-            <option value="math">رياضيات</option><option value="science">علوم</option>
-            <option value="arabic">عربي</option><option value="hebrew">عبري</option><option value="english">English</option>
-            <option value="geography">جغرافيا</option><option value="pythagoras">فيثاغورس</option>
+          <select class="assignment-subject hidden">
+            <option value="pythagoras" selected>فيثاغورس</option>
           </select>
           <textarea class="assignment-description-input" placeholder="اكتب المطلوب من الطلاب..."></textarea>
           <input class="assignment-date" type="date">
           <button class="apply create-assignment-btn" style="margin:0">نشر الوظيفة</button>
         </div>
-      </div>
-
-      <div class="class-panel full">
-        <h4>📚 إدارة المنهاج والمواضيع</h4>
-        ${curriculumManagerHtml(c)}
       </div>
 
       <div class="class-panel full">
@@ -5276,8 +5331,6 @@ async function renderTeacherClassCard(host,c){
         <div class="activity-list">${actHtml}</div>
       </div>
     </div>`;
-
-  bindCurriculumManager(box,c);
 
   box.querySelector(".copy-class-code").addEventListener("click",async()=>{
     try{await navigator.clipboard.writeText(c.code);showToast("تم نسخ كود الصف.");}
@@ -5551,6 +5604,89 @@ async function refreshLobbySubjectVisibility(){
   }
 }
 
+
+/* -------------------- PYTHAGORAS-ONLY LOBBY V12 -------------------- */
+const pythagQuestionsModal=document.getElementById("pythagQuestionsModal");
+let quickPythagCurrent=null;
+let quickPythagScore=0;
+let quickPythagNo=0;
+
+function enterPythagorasLab(target="lab"){
+  hidePlatformLobby();
+  currentSubjectContext="pythagoras";
+  updateAssistantLabels();
+  setTimeout(()=>{
+    if(target==="challenge"){
+      newChallenge();
+      document.getElementById("pythagChallengeBox")?.scrollIntoView({behavior:"smooth",block:"center"});
+    }else{
+      document.getElementById("stage")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  },80);
+  logStudentActivity("subject_open",target==="challenge"?"فتح تحدّي فيثاغورس":"فتح مختبر فيثاغورس","pythagoras");
+}
+function openQuickPythagQuestions(){
+  pythagQuestionsModal.classList.add("open");
+  if(!quickPythagCurrent)nextQuickPythagQuestion();
+  logStudentActivity("subject_open","فتح أسئلة تدريب فيثاغورس","pythagoras");
+}
+function nextQuickPythagQuestion(){
+  const pool=hardQuestionPool().filter(q=>q.type==="mcq"||q.type==="number");
+  quickPythagCurrent=pick(pool);
+  quickPythagNo++;
+  document.getElementById("quickPythagNo").textContent=quickPythagNo;
+  document.getElementById("quickPythagScore").textContent=quickPythagScore;
+  document.getElementById("quickPythagQuestion").textContent=quickPythagCurrent.prompt;
+  const host=document.getElementById("quickPythagOptions");host.innerHTML="";
+  const feedback=document.getElementById("quickPythagFeedback");
+  feedback.textContent="";feedback.className="challenge-feedback";
+
+  if(quickPythagCurrent.type==="mcq"){
+    quickPythagCurrent.options.forEach(opt=>{
+      const b=document.createElement("button");b.textContent=opt;
+      b.addEventListener("click",()=>{
+        host.querySelectorAll("button").forEach(x=>x.disabled=true);
+        const ok=normExam(opt)===normExam(quickPythagCurrent.answer);
+        b.classList.add(ok?"correct":"wrong");
+        if(!ok){
+          const right=[...host.querySelectorAll("button")].find(x=>normExam(x.textContent)===normExam(quickPythagCurrent.answer));
+          if(right)right.classList.add("correct");
+        }
+        if(ok)quickPythagScore+=10;
+        document.getElementById("quickPythagScore").textContent=quickPythagScore;
+        feedback.textContent=ok?`✅ صح! ${quickPythagCurrent.explanation||""}`:`❌ الصحيح: ${quickPythagCurrent.answer}. ${quickPythagCurrent.explanation||""}`;
+        feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+      });
+      host.appendChild(b);
+    });
+  }else{
+    const input=document.createElement("input");input.type="number";input.step="0.01";input.placeholder="اكتب جوابك";
+    const check=document.createElement("button");check.textContent="تحقّق";
+    check.addEventListener("click",()=>{
+      const n=parseFloat(input.value);
+      const ok=Number.isFinite(n)&&Math.abs(n-Number(quickPythagCurrent.answer))<.011;
+      if(ok)quickPythagScore+=10;
+      document.getElementById("quickPythagScore").textContent=quickPythagScore;
+      feedback.textContent=ok?`✅ صح! ${quickPythagCurrent.explanation||""}`:`❌ الصحيح: ${quickPythagCurrent.answer}. ${quickPythagCurrent.explanation||""}`;
+      feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+    });
+    host.append(input,check);
+  }
+}
+document.getElementById("lobbyLabBtn").addEventListener("click",()=>enterPythagorasLab("lab"));
+document.getElementById("lobbyLabCard").addEventListener("click",()=>enterPythagorasLab("lab"));
+document.getElementById("lobbyChallengeBtn").addEventListener("click",()=>enterPythagorasLab("challenge"));
+document.getElementById("lobbyQuestionBtn").addEventListener("click",openQuickPythagQuestions);
+document.getElementById("closePythagQuestionsModal").addEventListener("click",()=>pythagQuestionsModal.classList.remove("open"));
+pythagQuestionsModal.addEventListener("click",e=>{if(e.target===pythagQuestionsModal)pythagQuestionsModal.classList.remove("open")});
+document.getElementById("nextQuickPythagQuestion").addEventListener("click",nextQuickPythagQuestion);
+document.getElementById("quickPythagExamBtn").addEventListener("click",()=>{
+  pythagQuestionsModal.classList.remove("open");
+  examSubject="pythagoras";
+  openExamWithIdentity();
+});
+document.getElementById("lobbyLogoutBtn").addEventListener("click",()=>document.getElementById("authLogoutBtn").click());
+
 /* -------------------- PLATFORM LOBBY -------------------- */
 const subjectModal=document.getElementById("subjectModal");
 const profileModal=document.getElementById("profileModal");
@@ -5752,7 +5888,7 @@ function sendLobbyAI(){
   input.value="";
   const reply=document.getElementById("lobbyAIReply");
   reply.textContent="يفكّر…";
-  setTimeout(()=>{reply.textContent=pythagorasiAnswer(raw)},170);
+  setTimeout(()=>{reply.textContent=pythagorasiAnswer(`${raw} فيثاغورس`)},170);
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
 document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
@@ -5818,7 +5954,7 @@ function makeCompetitionCode(){
 function makeLiveQuestions(subject="mixed"){
   return makeGeneralLiveQuestions(subject,8);
 }
-async function createLiveCompetition(customQuestions=null,customTitle="مسابقة تعليمية"){
+async function createLiveCompetition(customQuestions=null,customTitle="مسابقة فيثاغورس"){
   if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
@@ -5831,7 +5967,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{
     const code=await reserveUniqueCode("competition");
-    const quickSubject=document.getElementById("compQuickSubject")?.value||"mixed";
+    const quickSubject="pythagoras";
     const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject))
       .map((q,i)=>({...q,index:i,points:q.points||1000}));
     const ref=await addDoc(collection(db,"competitions"),{
@@ -5882,14 +6018,14 @@ async function loadCompetitionLibrary(){
       card.innerHTML=`
         <div class="saved-comp-top">
           <div>
-            <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة تعليمية")}</div>
+            <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة فيثاغورس")}</div>
             <div class="saved-comp-meta">${room.questionCount||0} أسئلة • ${escapeHtml(statusText)}</div>
           </div>
           <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
         </div>
         <div class="saved-comp-actions">
           ${room.status!=="finished"?`<button class="exam-secondary open-old-room" data-id="${room.id}">فتح الغرفة</button>`:""}
-          <button class="exam-secondary clone-old-room" data-id="${room.id}" data-title="${escapeHtml(room.title||"مسابقة تعليمية")}">نسخ وتشغيل من جديد</button>
+          <button class="exam-secondary clone-old-room" data-id="${room.id}" data-title="${escapeHtml(room.title||"مسابقة فيثاغورس")}">نسخ وتشغيل من جديد</button>
         </div>`;
       host.appendChild(card);
     }
@@ -5907,7 +6043,7 @@ async function loadCompetitionLibrary(){
           .sort((a,b)=>(parseInt(a.id)||0)-(parseInt(b.id)||0))
           .map(d=>d.data());
         if(!qs.length){showToast("المسابقة القديمة ما فيها أسئلة محفوظة.");return}
-        await createLiveCompetition(qs,btn.dataset.title||"مسابقة تعليمية");
+        await createLiveCompetition(qs,btn.dataset.title||"مسابقة فيثاغورس");
       }catch(err){
         console.error(err);showToast("تعذر نسخ المسابقة.");
       }finally{
@@ -6013,7 +6149,7 @@ document.getElementById("compBuilderAdd").addEventListener("click",()=>addCompet
 document.getElementById("compBuilderBack").addEventListener("click",()=>showCompetitionView("competitionHome"));
 document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
   const qs=competitionFromBuilder();if(!qs)return;
-  const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة تعليمية";
+  const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة فيثاغورس";
   const btn=document.getElementById("compBuilderCreate");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{await createLiveCompetition(qs,title)}
