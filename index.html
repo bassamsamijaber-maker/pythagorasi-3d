@@ -829,6 +829,23 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
   .ai-auto{grid-column:1/-1}
 }
 
+
+.comp-builder-card{
+  border:1px solid rgba(255,255,255,.10);border-radius:15px;padding:13px;
+  background:rgba(255,255,255,.025)
+}
+.comp-builder-head{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.comp-builder-options{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.comp-builder-option{display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:center}
+.comp-builder-option input[type="radio"]{width:18px;height:18px}
+.comp-builder-option input[type="text"]{height:44px;font-size:14px!important}
+.comp-builder-remove{
+  border:1px solid rgba(255,90,90,.18);background:rgba(255,90,90,.07);
+  color:#ffb2b2;border-radius:9px;padding:8px 10px;cursor:pointer
+}
+body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
+@media(max-width:650px){.comp-builder-options{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -837,7 +854,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="position:absolute;left:14px;top:14px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:white;font-size:22px;cursor:pointer">×</button>
     <div class="auth-logo">∟</div>
     <h2>قبل ما تبدأ الامتحان 🎓</h2>
-    <div class="auth-sub">اختار طريقة الدخول للامتحان. الطالب يكتب اسمه مرة واحدة وينحفظ، والمعلم يدخل بحساب Google لإدارة الامتحانات والنتائج.</div>
+    <div class="auth-sub">اختار طريقة الدخول للامتحان. الطالب يكتب اسمه مرة واحدة وينحفظ، والمعلم يدخل بحسابه لإدارة الامتحانات والنتائج.</div>
 
     <div id="authRoleChooser">
       <div class="auth-role-grid">
@@ -849,7 +866,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
         <button class="auth-role" id="chooseTeacher" type="button">
           <span class="ico">👨‍🏫</span>
           <b>أنا معلم</b>
-          <span>دخول آمن بحساب Google. امتحاناتك ونتائج طلابك ترتبط بحسابك.</span>
+          <span>دخول آمن للمعلم. امتحاناتك ونتائج طلابك ترتبط بحسابك.</span>
         </button>
       </div>
     </div>
@@ -864,14 +881,14 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
     </div>
 
     <div class="auth-form" id="teacherLoginForm">
-      <button class="auth-google" id="teacherGoogleBtn" type="button">G&nbsp;&nbsp; الدخول بحساب Google</button>
+      <button class="auth-google" id="teacherGoogleBtn" type="button">👨‍🏫 دخول المعلم</button>
       <div class="auth-form-actions">
         <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
       </div>
     </div>
 
     <div class="auth-error" id="authError"></div>
-    <div class="auth-foot" id="authStatusText">Firebase للحفظ السحابي • إذا تعطل، الطالب يقدر يكمل محليًا</div>
+    <div class="auth-foot" id="authStatusText">الحفظ السحابي مفعّل • وإذا انقطع الاتصال، الطالب يقدر يكمل محليًا</div>
   </div>
 </div>
 
@@ -960,7 +977,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
         <button class="secondary exam-launch" id="examBtn">🎓 امتحان مفاجئ</button>
         <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
         <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
-        <button class="secondary classroom-btn" id="competitionBtn">🏆 مسابقة مباشرة — مثل Kahoot</button>
+        <button class="secondary classroom-btn" id="competitionBtn">🏆 مسابقة مباشرة</button>
       </div>
       <div class="proof-status" id="proofStatus">
         <div id="proofText">جاهز: سننقل كمية الرمل من a² و b² إلى c² لنرى تساوي المساحات.</div>
@@ -1006,15 +1023,15 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
         <button class="send" id="sendBtn">➤</button>
       </div>
       <div class="ai-voicebar">
-        <select id="aiVoiceSelect" aria-label="صوت فيثاغورسي"><option value="">أفضل صوت عربي تلقائي</option></select>
-        <select id="aiVoiceRate" aria-label="سرعة صوت فيثاغورسي">
+        <select id="aiVoiceSelect" aria-label="الصوت"><option value="">صوت عربي طبيعي</option></select>
+        <select id="aiVoiceRate" aria-label="سرعة الصوت">
           <option value="0.88">هادئ</option>
           <option value="0.98" selected>طبيعي</option>
           <option value="1.10">سريع</option>
         </select>
         <label class="ai-auto"><input id="aiAutoSpeak" type="checkbox"> 🔊 اقرأ الرد تلقائيًا</label>
       </div>
-      <div class="dictnote">فيثاغورسي محلي • يفهم الصوت على Chrome عند توفره • يحفظ آخر المحادثات على جهازك</div>
+      <div class="dictnote">فيثاغورسي ذكي • يفهم الصوت عند توفره • يحفظ آخر المحادثات على جهازك</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
     </section>
   </aside>
@@ -1030,7 +1047,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
       <button id="speechPlay">🔊 اقرأ الشرح</button>
       <button id="speechPause">⏸ إيقاف مؤقت</button>
       <button id="speechStop">⏹ إيقاف</button>
-      <span class="voice-label">أفضل صوت عربي متوفر • السرعة</span>
+      <span class="voice-label">الصوت العربي • السرعة</span>
       <select id="speechRate" aria-label="سرعة القراءة">
         <option value="0.8">هادئ</option>
         <option value="1" selected>عادي</option>
@@ -1106,7 +1123,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
       <div class="cloud-home-grid">
         <div class="cloud-card">
           <h3>🔑 ادخل امتحان بكود</h3>
-          <p>اكتب الكود اللي أعطاك إياه المعلم، والامتحان بينفتح من Firebase على أي جهاز.</p>
+          <p>اكتب الكود اللي أعطاك إياه المعلم، والامتحان بينفتح على أي جهاز.</p>
           <div class="cloud-row">
             <input id="examJoinCode" maxlength="8" placeholder="مثال: AB12CD">
             <button class="exam-secondary" id="joinCloudExam">دخول</button>
@@ -1115,7 +1132,7 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
         </div>
         <div class="cloud-card">
           <h3>📊 نتائج المعلم</h3>
-          <p>إذا كنت داخل بحساب Google، شوف امتحاناتك والطلاب اللي سلموا وحساب العلامة.</p>
+          <p>إذا كنت داخل كمعلم، شوف امتحاناتك والطلاب اللي سلموا وحساب العلامة.</p>
           <button class="exam-secondary" id="openTeacherResults" style="width:100%">فتح لوحة النتائج</button>
         </div>
       </div>
@@ -1215,10 +1232,30 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
         </div>
         <div class="live-card">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>للمعلم: أنشئ 8 أسئلة تلقائيًا عن فيثاغورس، وبعد دخول الطلاب ابدأ الجولة.</p>
-          <button class="apply" id="compCreateBtn">＋ إنشاء غرفة جديدة</button>
-          <div class="cloud-note" style="margin-top:9px">إنشاء الغرفة يحتاج دخول المعلم بحساب Google.</div>
+          <p>اعمل مسابقة سريعة بأسئلة جاهزة، أو صمّم أسئلتك وإجاباتك بنفسك.</p>
+          <div class="live-field">
+            <button class="apply" id="compCreateBtn">⚡ إنشاء مسابقة سريعة</button>
+            <button class="exam-secondary" id="compDesignBtn">🛠️ صمّم المسابقة بنفسك</button>
+          </div>
+          <div class="cloud-note" style="margin-top:9px">إنشاء الغرفة يحتاج دخول المعلم أولًا.</div>
         </div>
+      </div>
+    </div>
+
+    <div id="competitionBuilder" class="hidden">
+      <div class="live-hero">
+        <h3>🛠️ صمّم المسابقة</h3>
+        <p>اكتب الأسئلة والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.</p>
+      </div>
+      <div class="live-field">
+        <input id="compBuilderTitle" maxlength="60" value="مسابقة فيثاغورس" placeholder="اسم المسابقة">
+      </div>
+      <div id="compBuilderError" class="builder-error"></div>
+      <div id="compBuilderQuestions" style="display:grid;gap:10px;margin-top:12px"></div>
+      <div class="live-host-controls">
+        <button class="exam-secondary" id="compBuilderAdd">＋ أضف سؤال</button>
+        <button class="apply" id="compBuilderCreate" style="margin:0">🏆 أنشئ الغرفة</button>
+        <button class="exam-secondary" id="compBuilderBack">رجوع</button>
       </div>
     </div>
 
@@ -1366,12 +1403,12 @@ function showTeacherLogin(){
 function friendlyAuthError(error){
   const code=error?.code||"unknown";
   if(code.includes("popup-closed"))return "سكّرت نافذة Google قبل ما يكتمل الدخول. جرّب مرة ثانية.";
-  if(code.includes("popup-blocked"))return "Chrome منع نافذة Google. رح نجرب تحويل صفحة تسجيل الدخول بدل النافذة.";
-  if(code.includes("unauthorized-domain"))return "Firebase رافض رابط الموقع. أضف bassamsamijaber-maker.github.io في Authentication → Settings → Authorized domains.";
+  if(code.includes("popup-blocked"))return "المتصفح منع نافذة تسجيل الدخول. رح نجرب طريقة دخول ثانية.";
+  if(code.includes("unauthorized-domain"))return "رابط الموقع غير مصرح له بتسجيل الدخول. راجع إعدادات النطاقات المسموحة.";
   if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
-  if(code.includes("operation-not-allowed"))return "طريقة الدخول المطلوبة مش مفعّلة في Firebase Authentication.";
-  if(code.includes("api-key-not-valid"))return "مفتاح Firebase غير صحيح داخل الموقع. تم تصحيحه في النسخة الجديدة.";
-  if(code.includes("permission-denied"))return "Firestore منع الحفظ. تأكد إن Rules منشورة.";
+  if(code.includes("operation-not-allowed"))return "طريقة الدخول المطلوبة مش مفعّلة.";
+  if(code.includes("api-key-not-valid"))return "إعدادات الاتصال غير صحيحة داخل الموقع.";
+  if(code.includes("permission-denied"))return "الحفظ السحابي منع العملية. تأكد من قواعد الحفظ.";
   if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
   if(code.includes("internal-error"))return "Firebase رجّع خطأ داخلي. حدّث الصفحة وجرب مرة ثانية.";
   return `صار خطأ بالدخول (${code}). إذا بتبعتلي هالكود بحددلك السبب فورًا.`;
@@ -1458,7 +1495,7 @@ async function resolveCurrentUser(user){
         authGate.classList.remove("show");
       }
     }
-    authStatusText.textContent="متصل بـ Firebase ✓";
+    authStatusText.textContent="متصل بالحفظ السحابي ✓";
   }catch(error){
     console.error("resolveCurrentUser",error);
     // Never block the normal website because Firebase had a problem.
@@ -1563,7 +1600,7 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
 
     if(error?.code==="auth/popup-blocked"){
       try{
-        authStatusText.textContent="Chrome منع النافذة؛ رح أحولك لصفحة Google…";
+        authStatusText.textContent="المتصفح منع النافذة؛ رح أحولك لصفحة تسجيل الدخول…";
         await signInWithRedirect(auth,googleProvider);
         return;
       }catch(redirectError){
@@ -3085,7 +3122,7 @@ async function submitCloudExam(){
 
   const user=auth.currentUser;
   if(!user || !window.PythagorasiUser || window.PythagorasiUser.localOnly){
-    showToast("⚠️ لازم يكون Firebase متصل حتى نحفظ امتحان الكود عند المعلم.");
+    showToast("⚠️ لازم يكون الحفظ السحابي متصل حتى نحفظ الامتحان عند المعلم.");
     return;
   }
 
@@ -3122,7 +3159,7 @@ async function submitCloudExam(){
     });
   }catch(err){
     console.error("cloud submit",err);
-    showToast("تعذر حفظ التسليم في Firebase. جرّب مرة ثانية.");
+    showToast("تعذر حفظ التسليم أونلاين. جرّب مرة ثانية.");
   }
 }
 
@@ -3211,7 +3248,7 @@ async function joinCloudExamByCode(){
   const status=document.getElementById("examJoinStatus");
   if(code.length<4){status.textContent="اكتب كود الامتحان أولًا.";return}
   if(!auth.currentUser || !window.PythagorasiUser || window.PythagorasiUser.localOnly){
-    status.textContent="Firebase مش متصل بحساب الطالب. اخرج من مركز الامتحانات وادخل كطالب مرة ثانية.";
+    status.textContent="الحفظ السحابي مش متصل بحساب الطالب. اخرج من مركز الامتحانات وادخل كطالب مرة ثانية.";
     return;
   }
   status.textContent="⏳ جاري البحث عن الامتحان...";
@@ -3235,7 +3272,7 @@ async function joinCloudExamByCode(){
     document.getElementById("examModalTitle").textContent=`☁️ ${data.title||"امتحان المعلم"}`;
   }catch(err){
     console.error("joinCloudExam",err);
-    status.textContent="تعذر تحميل الامتحان. تأكد من الإنترنت وFirestore Rules.";
+    status.textContent="تعذر تحميل الامتحان. تأكد من الإنترنت وصلاحيات الحفظ.";
   }
 }
 document.getElementById("joinCloudExam").addEventListener("click",joinCloudExamByCode);
@@ -3250,7 +3287,7 @@ async function loadTeacherResults(){
   const list=document.getElementById("teacherResultsList");
   list.innerHTML='<div class="cloud-note">⏳ جاري تحميل امتحاناتك ونتائج الطلاب...</div>';
   if(!auth.currentUser || window.PythagorasiUser?.role!=="teacher"){
-    list.innerHTML='<div class="cloud-note">👨‍🏫 لازم تدخل بحساب Google كمعلم حتى تشوف النتائج.</div>';
+    list.innerHTML='<div class="cloud-note">👨‍🏫 لازم تدخل كمعلم حتى تشوف النتائج.</div>';
     return;
   }
   try{
@@ -3319,7 +3356,7 @@ document.getElementById("openTeacherResults").addEventListener("click",()=>{
     authPendingAction=null;
     authGate.classList.add("show");
     showTeacherLogin();
-    setAuthError("ادخل بحساب Google كمعلم، وبعدها افتح لوحة النتائج.");
+    setAuthError("ادخل كمعلم، وبعدها افتح لوحة النتائج.");
     return;
   }
   showExamView("teacherResults");
@@ -3532,7 +3569,7 @@ document.getElementById("publishCloudExam")?.addEventListener("click",async()=>{
     showToast(`☁️ تم حفظ الامتحان. الكود: ${code}`);
   }catch(err){
     console.error(err);
-    builderMessage("تعذر حفظ الامتحان أونلاين. تأكد من Firestore Rules ودخول المعلم.");
+    builderMessage("تعذر حفظ الامتحان أونلاين. تأكد من صلاحيات الحفظ ودخول المعلم.");
   }finally{
     btn.disabled=false;btn.textContent="☁️ حفظ وإنشاء كود";
   }
@@ -3591,7 +3628,7 @@ function clearLiveSubscriptions(){
   liveUnsubs=[];
 }
 function showCompetitionView(id){
-  ["competitionHome","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
+  ["competitionHome","competitionBuilder","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
     document.getElementById(x).classList.toggle("hidden",x!==id);
   });
 }
@@ -3636,23 +3673,25 @@ function makeLiveQuestions(){
   return shuffle(pool).slice(0,8).map((q,i)=>({...q,index:i,points:1000}));
 }
 
-async function createLiveCompetition(){
+async function createLiveCompetition(customQuestions=null,customTitle="مسابقة فيثاغورس"){
   if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
     authGate.classList.add("show");
     showTeacherLogin();
-    setAuthError("سجّل دخول Google كمعلم لإنشاء غرفة المسابقة.");
+    setAuthError("سجّل دخول كمعلم لإنشاء غرفة المسابقة.");
     return;
   }
   const btn=document.getElementById("compCreateBtn");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{
     const code=makeCompetitionCode();
-    const questions=makeLiveQuestions();
+    const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions())
+      .map((q,i)=>({...q,index:i,points:q.points||1000}));
     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
+      title:customTitle||"مسابقة فيثاغورس",
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,
       createdAt:serverTimestamp()
@@ -3667,12 +3706,99 @@ async function createLiveCompetition(){
     showCompetitionView("competitionLobby");
   }catch(err){
     console.error("create competition",err);
-    document.getElementById("compJoinStatus").textContent="تعذر إنشاء الغرفة. لازم تنشر Firestore Rules الجديدة.";
+    document.getElementById("compJoinStatus").textContent="تعذر إنشاء الغرفة. تأكد من صلاحيات الحفظ الجديدة.";
   }finally{
     btn.disabled=false;btn.textContent="＋ إنشاء غرفة جديدة";
   }
 }
-document.getElementById("compCreateBtn").addEventListener("click",createLiveCompetition);
+document.getElementById("compCreateBtn").addEventListener("click",()=>createLiveCompetition());
+
+
+let compBuilderCounter=0;
+
+function compBuilderMessage(msg){
+  const e=document.getElementById("compBuilderError");
+  e.textContent=msg;e.classList.add("show");
+}
+function clearCompBuilderMessage(){
+  const e=document.getElementById("compBuilderError");
+  e.textContent="";e.classList.remove("show");
+}
+function addCompetitionQuestion(data={}){
+  const host=document.getElementById("compBuilderQuestions");
+  if(host.children.length>=15){compBuilderMessage("الحد الأقصى 15 سؤال.");return}
+  compBuilderCounter++;
+  const card=document.createElement("div");
+  card.className="comp-builder-card";
+  card.dataset.id=compBuilderCounter;
+  const opts=(data.options&&data.options.length?data.options:["","","",""]).slice(0,4);
+  while(opts.length<4)opts.push("");
+
+  card.innerHTML=`
+    <div class="comp-builder-head">
+      <input class="cb-prompt" value="${escapeHtml(data.prompt||"")}" placeholder="اكتب السؤال">
+      <button type="button" class="comp-builder-remove">🗑 حذف</button>
+    </div>
+    <div class="comp-builder-options">
+      ${opts.map((o,i)=>`
+        <label class="comp-builder-option">
+          <input type="radio" name="comp_correct_${compBuilderCounter}" class="cb-correct" ${normExam(o)===normExam(data.answer||"")&&o?"checked":(i===0&&!data.answer?"checked":"")}>
+          <input type="text" class="cb-option" value="${escapeHtml(o)}" placeholder="الخيار ${i+1}">
+        </label>
+      `).join("")}
+    </div>
+  `;
+  card.querySelector(".comp-builder-remove").addEventListener("click",()=>card.remove());
+  host.appendChild(card);
+}
+function openCompetitionBuilder(){
+  if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
+    authPendingAction="competitionHost";
+    competitionModal.classList.remove("open");
+    authGate.classList.add("show");
+    showTeacherLogin();
+    setAuthError("سجّل دخول كمعلم حتى تصمّم المسابقة.");
+    return;
+  }
+  showCompetitionView("competitionBuilder");
+  clearCompBuilderMessage();
+  const host=document.getElementById("compBuilderQuestions");
+  if(!host.children.length){
+    addCompetitionQuestion({prompt:"إذا كان a = 3 و b = 4، كم يساوي c؟",options:["5","6","7","8"],answer:"5"});
+    addCompetitionQuestion({prompt:"أي ضلع هو الوتر؟",options:["المقابل لزاوية 90°","أقصر ضلع","أي ضلع","الضلع الأفقي"],answer:"المقابل لزاوية 90°"});
+    addCompetitionQuestion();
+  }
+}
+function competitionFromBuilder(){
+  clearCompBuilderMessage();
+  const cards=[...document.querySelectorAll("#compBuilderQuestions .comp-builder-card")];
+  if(!cards.length){compBuilderMessage("أضف سؤال واحد على الأقل.");return null}
+  const out=[];
+  for(let i=0;i<cards.length;i++){
+    const card=cards[i],prompt=card.querySelector(".cb-prompt").value.trim();
+    const options=[...card.querySelectorAll(".cb-option")].map(x=>x.value.trim());
+    const checked=card.querySelector(".cb-correct:checked");
+    const answer=checked?.closest(".comp-builder-option")?.querySelector(".cb-option").value.trim()||"";
+    if(!prompt){compBuilderMessage(`السؤال ${i+1}: اكتب نص السؤال.`);return null}
+    if(options.some(x=>!x)){compBuilderMessage(`السؤال ${i+1}: اكتب الخيارات الأربعة.`);return null}
+    if(new Set(options.map(normExam)).size!==4){compBuilderMessage(`السؤال ${i+1}: في خيارات مكررة.`);return null}
+    if(!answer){compBuilderMessage(`السؤال ${i+1}: اختر الإجابة الصحيحة.`);return null}
+    out.push({prompt,options,answer,points:1000});
+  }
+  return out;
+}
+document.getElementById("compDesignBtn").addEventListener("click",openCompetitionBuilder);
+document.getElementById("compBuilderAdd").addEventListener("click",()=>addCompetitionQuestion());
+document.getElementById("compBuilderBack").addEventListener("click",()=>showCompetitionView("competitionHome"));
+document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
+  const qs=competitionFromBuilder();if(!qs)return;
+  const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة فيثاغورس";
+  const btn=document.getElementById("compBuilderCreate");
+  btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
+  try{await createLiveCompetition(qs,title)}
+  finally{btn.disabled=false;btn.textContent="🏆 أنشئ الغرفة"}
+});
+
 
 async function ensureAnonymousStudent(name){
   let user=auth.currentUser;
@@ -3719,8 +3845,8 @@ async function joinLiveCompetition(){
   }catch(err){
     console.error("join competition",err);
     status.textContent=err.message==="teacher-account"
-      ?"أنت داخل كمعلم Google. اعمل تسجيل خروج إذا بدك تدخل كطالب."
-      :"تعذر الدخول. تأكد من Firestore Rules والإنترنت.";
+      ?"أنت داخل كمعلم. اعمل تسجيل خروج إذا بدك تدخل كطالب."
+      :"تعذر الدخول. تأكد من الإنترنت وصلاحيات الحفظ.";
   }
 }
 document.getElementById("compJoinBtn").addEventListener("click",joinLiveCompetition);
@@ -4030,7 +4156,79 @@ function currentExamQuestion(){
   const idx=firstUnanswered>=0?firstUnanswered:0;
   return {q:activeExam.questions[idx],index:idx};
 }
+
+function executeSiteAction(raw,t){
+  /* change triangle values */
+  const n=normalizeArabic(raw);
+  const ma=/(?:^|\s)a\s*(?:=|صار|خليه|خليها|حط)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+  const mb=/(?:^|\s)b\s*(?:=|صار|خليه|خليها|حط)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+  const mc=/(?:^|\s)c\s*(?:=|صار|خليه|خليها|حط)?\s*(\d+(?:\.\d+)?)/i.exec(n);
+
+  if(has(t,"غير المجسم","غير القيم","غير a","غير b","خلي a","خلي b","حط a","حط b") && (ma||mb)){
+    if(ma)document.getElementById("aInput").value=ma[1];
+    if(mb)document.getElementById("bInput").value=mb[1];
+    unknownSide="c";syncUnknownUI();applyChange();
+    return `تم ✅ عدّلت المجسم. هسا a = ${pretty(currentA)}، b = ${pretty(currentB)}، والوتر c = ${pretty(currentC)}.`;
+  }
+
+  if(has(t,"شغل البرهان","شغّل البرهان","ابدأ البرهان","ورجيني البرهان")){
+    document.getElementById("proofBtn").click();
+    return "شغّلتلك البرهان الحي بالرمل ✅ راقب انتقال الرمل من مربعي a² و b² إلى مربع الوتر c².";
+  }
+
+  if(has(t,"حرك الرمل","حرّك الرمل","رج الرمل","نزل الرمل")){
+    document.getElementById("shakeBtn").click();
+    return "تم ✅ حرّكت الرمل من جديد.";
+  }
+
+  if(has(t,"افتح الامتحان","روح للامتحان","ابدأ امتحان","بدّي امتحان","بدي امتحان")){
+    openExamWithIdentity();
+    return "فتحتلك مركز الامتحانات ✅";
+  }
+
+  if(has(t,"افتح المسابقه","افتح المسابقة","روح للمسابقه","ابدأ مسابقه","ابدأ مسابقة")){
+    openCompetitionModal();
+    return "فتحتلك المسابقة المباشرة ✅";
+  }
+
+  if(has(t,"سؤال جديد","هات سؤال جديد","اعطيني تحدي","اعطيني تحدّي")){
+    document.getElementById("challengeNew").click();
+    return "جهزتلك سؤال تحدّي جديد 🔥";
+  }
+
+  if(has(t,"وريني الحل","ورّيني الحل","اعطيني الحل للتحدي","حل التحدي")){
+    document.getElementById("challengeShow").click();
+    return "طلعتلك الحل خطوة بخطوة تحت سؤال التحدي ✅";
+  }
+
+  if(has(t,"غير الوضع","الوضع النهاري","الوضع الليلي","حول للنهاري","حول لليلي")){
+    const wantLight=has(t,"نهاري");
+    const isLight=document.body.classList.contains("light");
+    if(wantLight!==isLight)document.getElementById("themeBtn").click();
+    else if(!has(t,"نهاري","ليلي"))document.getElementById("themeBtn").click();
+    return `تم ✅ الوضع صار ${document.body.classList.contains("light")?"نهاري":"ليلي"}.`;
+  }
+
+  if(has(t,"رجع العرض","ارجع العرض","صفر الكاميرا","رجع الكاميرا")){
+    document.getElementById("resetBtn").click();
+    return "رجعتلك العرض للوضع الأساسي ✅";
+  }
+
+  if(has(t,"اشرح المجسم","شو موجود بالمجسم","وصف المجسم")){
+    return `المجسم الحالي فيه مثلث قائم، a=${pretty(currentA)} و b=${pretty(currentB)}، والوتر c=${pretty(currentC)}. حول كل ضلع صندوق مساحة مليان رمل حسب a² و b² و c².`;
+  }
+
+  if(has(t,"شو وضعي","انا طالب ولا معلم","مين انا بالموقع")){
+    const p=window.PythagorasiUser;
+    return p?`أنت داخل حاليًا كـ${p.role==="teacher"?"معلم":"طالب"} باسم ${p.displayName||"مستخدم"}.`:"أنت مش مسجل دخول حاليًا.";
+  }
+
+  return null;
+}
+
 function advancedLocalMathAnswer(raw,t){
+  const action=executeSiteAction(raw,t);
+  if(action)return action;
   const nums=extractNumbers(raw);
 
   if(has(t,"القيم الحاليه","القيم الحالية","شو القيم","الارقام الحاليه","الأرقام الحالية"))
@@ -4256,7 +4454,15 @@ function pythagorasiAnswer(raw){
 إذا سؤالك عن المجسم أو فيثاغورس، ممكن تسألني مثل: «شو يعني هيك؟»، «اشرحلي شو عملنا هسا»، «احسب الوتر إذا a=7 و b=9»، أو «هل 6 و8 و10 مثلث قائم؟».`);
   }
 
-  return prefix + remember("intro","أنا مختص بنظرية فيثاغورس والمثلث القائم 📐. ممكن تسألني: «شو هاد؟»، «شو يعني هيك؟»، «اشرحلي شو عملنا هسا»، أو تعطيني أرقام مثل a=5 و b=12 وأنا أحسب c.");
+  return prefix + remember("intro",`أنا فاهم كل أجزاء الموقع تقريبًا 📐. فيك تحكيلي أو تكتبلي مثل:
+• «خلي a = 6 و b = 8»
+• «شغّل البرهان»
+• «حرّك الرمل»
+• «افتح الامتحان»
+• «افتح المسابقة»
+• «شو القيم الحالية؟»
+• أو ابعتلي أي مسألة فيثاغورس وأنا أحلها خطوة خطوة.
+إذا سؤالك مختلف، اكتبلي التفاصيل أو الأرقام وأنا بحاول أفهمه من السياق.`); 
 }
 
 const chat=document.getElementById("chat"),q=document.getElementById("question");
@@ -4313,7 +4519,7 @@ function populateAIVoices(){
   const select=document.getElementById("aiVoiceSelect");
   const current=select.value;
   const voices=speechSynthesis.getVoices().filter(v=>/^ar(-|$)/i.test(v.lang)||/Arabic|العربية/i.test(v.name));
-  select.innerHTML='<option value="">أفضل صوت عربي تلقائي</option>';
+  select.innerHTML='<option value="">صوت عربي طبيعي</option>';
   voices.forEach(v=>{
     const o=document.createElement("option");o.value=`${v.name}|||${v.lang}`;o.textContent=`${v.name} — ${v.lang}`;select.appendChild(o);
   });
@@ -4351,7 +4557,7 @@ if(SpeechRecognitionCtor){
   document.getElementById("micBtn").style.opacity=".5";
 }
 document.getElementById("micBtn").addEventListener("click",()=>{
-  if(!aiRecognition){showToast("🎤 استخدم Chrome أو Edge لتجربة الإدخال الصوتي.");return}
+  if(!aiRecognition){showToast("🎤 الإدخال الصوتي غير متوفر في هذا المتصفح.");return}
   if(aiListening){aiRecognition.stop();return}
   try{aiRecognition.start()}catch{}
 });
