@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07111c">
-<title>Pythagorean Theorem | 3D Interactive Model</title>
+<title>نظرية فيثاغورس | النموذج التفاعلي</title>
 <style>
 :root{
   --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
@@ -540,6 +540,170 @@ body.light .ai-card .dictnote{color:#718196}
  .actions{grid-template-columns:1fr}
  .chat{height:290px}
 }
+
+/* ================== V4 SCHOOL PLATFORM UPGRADES ================== */
+html{font-size:18px}
+body{font-size:18px}
+.side{font-size:18px}
+.brand h1{font-size:clamp(42px,4.4vw,64px)!important}
+.card h2{font-size:23px!important}
+label,.sub,.change-log,.dictnote,.challenge-question,.exam-q-title,.exam-option,.review-item{font-size:16px!important}
+button{font-size:15px}
+input,textarea,select{font-size:18px!important}
+.formula{font-size:34px!important}
+.mathline{font-size:23px!important}
+.answer{font-size:31px!important}
+
+.unknown-picker{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 12px
+}
+.unknown-picker button{
+  border:1px solid rgba(255,255,255,.12);background:#112237;color:#dceaf7;
+  border-radius:11px;padding:10px;cursor:pointer;font-weight:900
+}
+.unknown-picker button.active{
+  background:linear-gradient(90deg,#087bf1,#7f49da);border-color:#47b6ff;color:white;
+  box-shadow:0 8px 22px rgba(38,137,255,.20)
+}
+.calc-note{
+  margin-top:8px;padding:9px 10px;border-radius:10px;background:rgba(67,217,255,.06);
+  border:1px solid rgba(67,217,255,.12);font-size:13px;color:#bfeeff;line-height:1.6
+}
+
+.exam-levels{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+.exam-levels button{
+  border:1px solid rgba(255,255,255,.10);border-radius:11px;padding:10px;
+  background:#101f31;color:white;font-weight:900;cursor:pointer
+}
+.exam-levels button.active{background:linear-gradient(90deg,#5b2cc8,#e63ca8);border-color:#d77cff}
+.exam-level-desc{font-size:13px;color:#9eb1c4;margin-top:-4px;margin-bottom:10px}
+
+.question-actions{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.check-one-btn{
+  border:1px solid rgba(67,217,255,.22);background:rgba(67,217,255,.08);
+  color:#9ceaff;border-radius:9px;padding:8px 10px;font-weight:900;cursor:pointer
+}
+.check-one-btn.checked-ok{background:rgba(66,220,150,.12);border-color:rgba(66,220,150,.30);color:#85f0bd}
+.check-one-btn.checked-no{background:rgba(255,97,97,.10);border-color:rgba(255,97,97,.26);color:#ffb1b1}
+.question-feedback{
+  display:none;margin-top:8px;padding:9px 10px;border-radius:9px;font-size:13px;line-height:1.55
+}
+.question-feedback.show{display:block}
+.question-feedback.ok{background:rgba(68,225,160,.08);color:#9df1c8;border:1px solid rgba(68,225,160,.16)}
+.question-feedback.no{background:rgba(255,94,94,.08);color:#ffc0c0;border:1px solid rgba(255,94,94,.16)}
+
+.resume-box{
+  display:none;margin:0 0 12px;padding:12px;border-radius:13px;
+  border:1px solid rgba(255,210,79,.20);background:rgba(255,210,79,.06)
+}
+.resume-box.show{display:block}
+.resume-box b{display:block;margin-bottom:4px}
+.resume-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.resume-actions button{flex:1;min-width:120px}
+
+.teacher-cloud-box{
+  margin-top:12px;padding:12px;border:1px solid rgba(108,205,255,.15);
+  border-radius:13px;background:rgba(70,155,255,.05)
+}
+.teacher-cloud-box h4{margin:0 0 6px}
+.share-code{
+  direction:ltr;text-align:center;font-size:24px;font-weight:950;letter-spacing:3px;
+  padding:9px;border-radius:10px;background:#0b1928;border:1px solid rgba(255,255,255,.08)
+}
+
+.stage::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 44%,rgba(255,255,255,.035),transparent 28%),
+    radial-gradient(circle at 48% 48%,transparent 42%,rgba(0,0,0,.16) 74%,rgba(0,0,0,.35) 100%);
+  z-index:2
+}
+#scene canvas{filter:contrast(1.04) saturate(1.08)}
+.realism-badge{
+  position:absolute;z-index:9;top:16px;right:16px;padding:7px 9px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);background:rgba(5,15,26,.58);
+  backdrop-filter:blur(9px);font-size:11px;color:#cfe4f5
+}
+body.light .unknown-picker button{background:#eaf2f7;color:#173047;border-color:#d6e2ea}
+body.light .unknown-picker button.active{color:white}
+body.light .exam-levels button{background:#eef4f8;color:#173047;border-color:#d5e0e8}
+body.light .teacher-cloud-box{background:#f4fbff;border-color:#d1eaf6}
+body.light .share-code{background:white;color:#183047;border-color:#d7e2e9}
+@media(max-width:700px){
+  html{font-size:17px}
+  .exam-levels{grid-template-columns:1fr 1fr}
+}
+
+
+/* ===== V5 realism polish ===== */
+.brand h1{
+  letter-spacing:0 !important;
+  text-shadow:0 6px 30px rgba(43,179,255,.18), 0 2px 0 rgba(255,255,255,.03);
+}
+.stage{
+  background:
+    radial-gradient(circle at 50% 24%, rgba(52,109,84,.28), transparent 24%),
+    radial-gradient(circle at 50% 76%, rgba(255,220,160,.08), transparent 22%),
+    linear-gradient(180deg, rgba(5,16,23,.25), rgba(0,0,0,.12));
+}
+.stage::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.03), transparent 32%),
+    radial-gradient(circle at 50% 50%, transparent 62%, rgba(0,0,0,.22) 82%, rgba(0,0,0,.34) 100%);
+}
+.ai-chip{font-size:13px}
+.calc-note strong{color:#fff0b7}
+body.light .calc-note strong{color:#7a4f00}
+
+
+/* ================= FINAL MUSEUM EDITION ================= */
+.stage{
+  background:
+    radial-gradient(circle at 50% 25%,rgba(72,120,101,.28),transparent 23%),
+    radial-gradient(circle at 42% 55%,rgba(255,217,146,.07),transparent 26%),
+    radial-gradient(circle at 72% 37%,rgba(105,177,255,.05),transparent 24%),
+    linear-gradient(160deg,#07131b 0%,#040a0f 58%,#020609 100%)!important;
+}
+.stage::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(105deg,transparent 12%,rgba(255,255,255,.025) 34%,transparent 52%),
+    radial-gradient(circle at 50% 50%,transparent 52%,rgba(0,0,0,.22) 78%,rgba(0,0,0,.46) 100%);
+}
+#scene canvas{
+  filter:contrast(1.075) saturate(1.12) drop-shadow(0 24px 32px rgba(0,0,0,.30))!important;
+}
+.stagebar,.stagehint{z-index:12}
+.brand h1{
+  font-weight:950;
+  background:linear-gradient(180deg,#ffffff 15%,#dcecff 90%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 8px 22px rgba(31,158,255,.12));
+}
+.card,.challenge-box,.ai-card{
+  backdrop-filter:blur(14px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 30px rgba(0,0,0,.12);
+}
+.unknown-picker button.active{
+  box-shadow:0 8px 25px rgba(25,139,255,.25), inset 0 1px 0 rgba(255,255,255,.20);
+}
+.museum-tag{
+  position:absolute;z-index:11;right:18px;bottom:18px;
+  display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;
+  color:#c9d8e4;font-size:11px;font-weight:850;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(4,11,17,.48);backdrop-filter:blur(10px);
+  pointer-events:none;
+}
+.museum-tag i{
+  width:6px;height:6px;border-radius:50%;background:#76e8b6;
+  box-shadow:0 0 10px rgba(118,232,182,.6)
+}
+body.light .brand h1{
+  background:none;-webkit-background-clip:initial;background-clip:initial;color:#183047;
+}
+
 </style>
 </head>
 <body>
@@ -588,6 +752,8 @@ body.light .ai-card .dictnote{color:#718196}
 
 <div class="shell">
   <section class="stage" id="stage">
+    <div class="museum-tag"><i></i> نموذج تفاعلي واقعي</div>
+    
     <div id="scene"></div>
     <div class="stagebar">
       <button class="glass" id="themeBtn">☀ <span>الوضع النهاري</span></button>
@@ -602,7 +768,7 @@ body.light .ai-card .dictnote{color:#718196}
 
   <aside class="side">
     <div class="brand">
-      <h1 dir="ltr">Pythagorean Theorem</h1>
+      <h1>نظرية فيثاغورس ثلاثية الأبعاد</h1>
       <div class="ai-chip">● فيثاغورسي AI</div>
     </div>
     <div class="auth-userbar" id="authUserBar">
@@ -615,25 +781,37 @@ body.light .ai-card .dictnote{color:#718196}
       </div>
       <button class="auth-logout" id="authLogoutBtn">تسجيل خروج</button>
     </div>
-    <p class="sub">نموذج تفاعلي ثلاثي الأبعاد يوضح كيف أن مساحة مربعي الضلعين القائمين تساوي مساحة مربع الوتر.</p>
+    <p class="sub">نموذج تفاعلي واقعي يوضح نظرية فيثاغورس بالرمل والحركة والحساب المباشر.</p>
 
     <section class="card">
-      <h2>غيّر المعطيات</h2>
+      <h2>📐 احسب أي ضلع</h2>
+      <div class="calc-note">اختار الضلع المجهول، وبعدها اكتب الضلعين المعروفين. <strong>الضلع c هو الوتر دائمًا</strong>، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.</div>
+      <div class="unknown-picker">
+        <button type="button" data-unknown="a">المجهول a</button>
+        <button type="button" data-unknown="b">المجهول b</button>
+        <button type="button" class="active" data-unknown="c">المجهول c (الوتر)</button>
+      </div>
       <div class="inputs">
         <div>
           <label for="aInput">a — الضلع الأول</label>
-          <input id="aInput" type="number" min="1" max="12" step="1" value="3">
+          <input id="aInput" type="number" min="0.1" max="99" step="0.1" value="3">
         </div>
         <div>
           <label for="bInput">b — الضلع الثاني</label>
-          <input id="bInput" type="number" min="1" max="12" step="1" value="4">
+          <input id="bInput" type="number" min="0.1" max="99" step="0.1" value="4">
         </div>
       </div>
-      <button class="apply" id="applyBtn">تطبيق التغيير على المجسم</button>
+      <div class="inputs" style="margin-top:10px">
+        <div style="grid-column:1/-1">
+          <label for="cInput">c — الوتر دائمًا</label>
+          <input id="cInput" type="number" min="0.1" max="140" step="0.1" value="5" disabled>
+        </div>
+      </div>
+      <button class="apply" id="applyBtn">احسب وطبّق على المجسم</button>
       <div class="quick">
-        <button class="preset active" data-a="3" data-b="4">3 , 4</button>
-        <button class="preset" data-a="5" data-b="12">5 , 12</button>
-        <button class="preset" data-a="6" data-b="8">6 , 8</button>
+        <button class="preset active" data-a="3" data-b="4">3 , 4 , 5</button>
+        <button class="preset" data-a="5" data-b="12">5 , 12 , 13</button>
+        <button class="preset" data-a="8" data-b="15">8 , 15 , 17</button>
       </div>
     </section>
 
@@ -759,6 +937,22 @@ body.light .ai-card .dictnote{color:#718196}
     </div>
 
     <div id="examHome">
+    <div class="resume-box" id="resumeExamBox">
+      <b>📌 عندك امتحان غير مكتمل</b>
+      <span id="resumeExamText">في محاولة محفوظة على هذا الجهاز.</span>
+      <div class="resume-actions">
+        <button class="exam-secondary" id="continueSavedExam">كمل من وين وقفت</button>
+        <button class="exam-secondary" id="newExamInstead">ابدأ امتحان جديد</button>
+      </div>
+    </div>
+    <div class="exam-levels" id="examLevels">
+      <button class="active" data-level="easy">سهل</button>
+      <button data-level="medium">متوسط</button>
+      <button data-level="hard">صعب</button>
+      <button data-level="expert">خبير 🔥</button>
+    </div>
+    <div class="exam-level-desc" id="examLevelDesc">سهل: أسئلة مباشرة للتدريب على القانون.</div>
+    
       <div class="exam-home">
         <div class="exam-choice">
           <h3>⚡ الامتحان المفاجئ</h3>
@@ -809,6 +1003,15 @@ body.light .ai-card .dictnote{color:#718196}
       <div class="builder-help">للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.</div>
       <div class="builder-error" id="builderError"></div>
       <div id="builderQuestions"></div>
+      <div class="teacher-cloud-box" id="teacherCloudBox">
+        <h4>☁️ نشر الامتحان للطلاب</h4>
+        <div style="font-size:12px;color:#9db0c3;line-height:1.6">بعد ما تجهز الامتحان، تقدر تحفظه أونلاين وتعطي الطلاب كود دخول.</div>
+        <button class="exam-secondary" id="publishCloudExam" style="width:100%;margin-top:8px">☁️ حفظ وإنشاء كود</button>
+        <div id="cloudExamResult" class="hidden" style="margin-top:8px">
+          <div class="share-code" id="cloudExamCode">------</div>
+          <button class="exam-secondary" id="copyCloudExamCode" style="width:100%;margin-top:6px">نسخ الكود</button>
+        </div>
+      </div>
       <div class="builder-actions">
         <button class="exam-secondary" id="addBuilderQuestion">＋ أضف سؤال</button>
         <button class="exam-secondary" id="saveBuilderExam">💾 حفظ الامتحان</button>
@@ -837,7 +1040,8 @@ import {
   signInAnonymously, onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, setDoc, serverTimestamp
+  getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
+  query, where, serverTimestamp, updateDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
@@ -1144,23 +1348,24 @@ onAuthStateChanged(auth,async user=>{
 const mount=document.getElementById("scene");
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(36,1,.1,100);
-camera.position.set(0,.15,13.8);
+camera.position.set(0,.10,13.2);
 
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setPixelRatio(Math.min(devicePixelRatio,2.4));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.12;
+renderer.toneMappingExposure=1.22;
 mount.appendChild(renderer.domElement);
 
 const controls=new OrbitControls(camera,renderer.domElement);
 controls.enableDamping=true;
 controls.enablePan=false;
 controls.enableZoom=true;
-controls.minDistance=10.3;
-controls.maxDistance=17.5;
+controls.minDistance=10.8;
+controls.maxDistance=16.8;
 /* أهم نقطة: لا يمكن للمستخدم الدوران خلف المجسم */
 controls.minAzimuthAngle=-0.50;
 controls.maxAzimuthAngle= 0.50;
@@ -1169,35 +1374,171 @@ controls.maxPolarAngle=1.92;
 controls.target.set(0,.15,0);
 controls.update();
 
-scene.add(new THREE.HemisphereLight(0xeef8ff,0x172234,2.05));
-const key=new THREE.DirectionalLight(0xffffff,4.0);
-key.position.set(4.5,6.5,9); key.castShadow=true; scene.add(key);
-const fill=new THREE.DirectionalLight(0x6fc8ff,1.35);
-fill.position.set(-6,1.5,5); scene.add(fill);
-const warm=new THREE.PointLight(0xffd89e,.85,25);
-warm.position.set(0,-3,6); scene.add(warm);
+scene.add(new THREE.HemisphereLight(0xf4fbff,0x132234,2.2));
+const key=new THREE.DirectionalLight(0xffffff,4.4);
+key.position.set(4.5,6.8,9); key.castShadow=true; scene.add(key);
+const fill=new THREE.DirectionalLight(0x9ed8ff,1.15);
+fill.position.set(-5.2,3.8,4.2); scene.add(fill);
+const warm=new THREE.PointLight(0xffd38d,1.0,22,2);
+warm.position.set(0,4.8,2.6); scene.add(warm);
+
+/* soft photographic rim lights */
+const rimLight=new THREE.DirectionalLight(0xffe2b0,.72);
+rimLight.position.set(5,-2,6);
+scene.add(rimLight);
+
+const coolRim=new THREE.PointLight(0x66baff,.48,18,2);
+coolRim.position.set(-5.5,2.8,4.5);
+scene.add(coolRim);
 
 const root=new THREE.Group();
 root.rotation.set(-.02,-.03,0);
 scene.add(root);
 
-const std=(color,metal=.12,rough=.5)=>new THREE.MeshStandardMaterial({color,metalness:metal,roughness:rough});
+const std=(color,metal=.12,rough=.5)=>new THREE.MeshPhysicalMaterial({
+  color,metalness:metal,roughness:rough,clearcoat:metal>.35?.55:.14,
+  clearcoatRoughness:.22,envMapIntensity:.55
+});
 
-/* circular physical board */
-const back=new THREE.Mesh(new THREE.CylinderGeometry(4.65,4.65,.36,96),std(0x8c785f,.58,.28));
-back.rotation.x=Math.PI/2; back.position.z=-.48; back.castShadow=true; root.add(back);
+/* circular physical board — museum-grade layered apparatus */
+const brassMat=new THREE.MeshPhysicalMaterial({
+  color:0xc9a86b,metalness:.92,roughness:.18,clearcoat:.58,clearcoatRoughness:.12
+});
+const darkMetalMat=new THREE.MeshPhysicalMaterial({
+  color:0x182128,metalness:.86,roughness:.26,clearcoat:.35,clearcoatRoughness:.16
+});
+const blackSteelMat=new THREE.MeshPhysicalMaterial({
+  color:0x0d1318,metalness:.82,roughness:.31,clearcoat:.22,clearcoatRoughness:.20
+});
+const enamelMat=new THREE.MeshPhysicalMaterial({
+  color:0x28583f,metalness:.07,roughness:.44,clearcoat:.36,clearcoatRoughness:.23
+});
 
-const board=new THREE.Mesh(new THREE.CylinderGeometry(4.39,4.39,.22,96),std(0x3e684e,.03,.78));
-board.rotation.x=Math.PI/2; board.position.z=-.22; board.receiveShadow=true; root.add(board);
+/* thick rear housing */
+const rearHousing=new THREE.Mesh(
+  new THREE.CylinderGeometry(4.70,4.70,.46,192),
+  darkMetalMat
+);
+rearHousing.rotation.x=Math.PI/2;
+rearHousing.position.z=-.58;
+rearHousing.castShadow=true;
+rearHousing.receiveShadow=true;
+root.add(rearHousing);
 
-const ring=new THREE.Mesh(new THREE.TorusGeometry(4.47,.115,16,100),std(0xc6b08f,.7,.22));
-ring.position.z=-.02; ring.castShadow=true; root.add(ring);
+/* brass outer lip */
+const outerLip=new THREE.Mesh(new THREE.TorusGeometry(4.51,.155,32,220),brassMat);
+outerLip.position.z=-.05;
+outerLip.castShadow=true;
+root.add(outerLip);
 
-/* pedestal */
-const stem=new THREE.Mesh(new THREE.BoxGeometry(3.05,1.17,.62),std(0x171e28,.3,.45));
-stem.position.set(0,-4.72,-.42); stem.castShadow=true; root.add(stem);
-const base=new THREE.Mesh(new THREE.BoxGeometry(5.55,.66,1.82),std(0x0e141c,.38,.4));
-base.position.set(0,-5.32,-.42); base.castShadow=true; root.add(base);
+/* dark shadow groove just inside the brass */
+const outerGroove=new THREE.Mesh(new THREE.TorusGeometry(4.34,.055,18,200),blackSteelMat);
+outerGroove.position.z=-.015;
+root.add(outerGroove);
+
+/* enamel face disc */
+const board=new THREE.Mesh(
+  new THREE.CylinderGeometry(4.26,4.26,.25,192),
+  enamelMat
+);
+board.rotation.x=Math.PI/2;
+board.position.z=-.25;
+board.castShadow=true;
+board.receiveShadow=true;
+root.add(board);
+
+/* subtle inner brass trim */
+const innerTrim=new THREE.Mesh(new THREE.TorusGeometry(4.10,.035,14,180),brassMat);
+innerTrim.position.z=-.085;
+root.add(innerTrim);
+
+/* inset dark ring adds physical depth */
+const insetRing=new THREE.Mesh(new THREE.TorusGeometry(3.98,.030,12,180),blackSteelMat);
+insetRing.position.z=-.07;
+root.add(insetRing);
+
+/* screw heads around the apparatus */
+const screwMat=new THREE.MeshPhysicalMaterial({
+  color:0xd9d7cf,metalness:.95,roughness:.17,clearcoat:.35,clearcoatRoughness:.10
+});
+const screwSlotMat=new THREE.MeshBasicMaterial({color:0x30343a});
+for(let i=0;i<12;i++){
+  const ang=i*Math.PI*2/12;
+  const x=Math.cos(ang)*4.12,y=Math.sin(ang)*4.12;
+
+  const screw=new THREE.Mesh(new THREE.CylinderGeometry(.072,.072,.045,24),screwMat);
+  screw.rotation.x=Math.PI/2;
+  screw.position.set(x,y,.015);
+  screw.castShadow=true;
+  root.add(screw);
+
+  const slot=new THREE.Mesh(new THREE.BoxGeometry(.075,.012,.008),screwSlotMat);
+  slot.position.set(x,y,.043);
+  slot.rotation.z=ang*.37;
+  root.add(slot);
+}
+
+/* tiny radial engraved markers */
+const markerMat=new THREE.MeshPhysicalMaterial({
+  color:0xbba273,metalness:.68,roughness:.28
+});
+for(let i=0;i<24;i++){
+  const ang=i*Math.PI*2/24;
+  const major=i%3===0;
+  const marker=new THREE.Mesh(
+    new THREE.BoxGeometry(major?.045:.026,major?.20:.12,.018),
+    markerMat
+  );
+  marker.position.set(Math.cos(ang)*3.86,Math.sin(ang)*3.86,-.045);
+  marker.rotation.z=ang-Math.PI/2;
+  root.add(marker);
+}
+
+/* pedestal neck with metallic front cap */
+const stem=new THREE.Mesh(
+  new THREE.BoxGeometry(3.02,1.14,.70),
+  blackSteelMat
+);
+stem.position.set(0,-4.70,-.46);
+stem.castShadow=true;
+root.add(stem);
+
+const stemCap=new THREE.Mesh(
+  new THREE.BoxGeometry(2.70,.92,.74),
+  new THREE.MeshPhysicalMaterial({
+    color:0x222e36,metalness:.72,roughness:.24,clearcoat:.18
+  })
+);
+stemCap.position.set(0,-4.69,-.43);
+stemCap.castShadow=true;
+root.add(stemCap);
+
+/* heavy weighted base */
+const base=new THREE.Mesh(
+  new THREE.BoxGeometry(5.70,.70,1.95),
+  blackSteelMat
+);
+base.position.set(0,-5.34,-.48);
+base.castShadow=true;
+base.receiveShadow=true;
+root.add(base);
+
+const baseTop=new THREE.Mesh(
+  new THREE.BoxGeometry(5.35,.10,1.72),
+  brassMat
+);
+baseTop.position.set(0,-4.98,-.29);
+baseTop.castShadow=true;
+root.add(baseTop);
+
+/* rubber feet */
+const rubberMat=new THREE.MeshStandardMaterial({color:0x050708,roughness:.96,metalness:0});
+for(const x of [-2.18,2.18]){
+  const foot=new THREE.Mesh(new THREE.BoxGeometry(.62,.16,1.48),rubberMat);
+  foot.position.set(x,-5.77,-.47);
+  foot.castShadow=true;
+  root.add(foot);
+}
 
 function makeTextSprite(text,fg="#111",fontSize=84,scale=1){
   const c=document.createElement("canvas"); c.width=512;c.height=256;
@@ -1208,10 +1549,18 @@ function makeTextSprite(text,fg="#111",fontSize=84,scale=1){
   s.scale.set(2.0*scale,1.0*scale,1);return s;
 }
 
-const plaque=new THREE.Mesh(new THREE.BoxGeometry(2.95,.58,.13),std(0xdab04f,.45,.35));
-plaque.position.set(0,-4.84,.03);root.add(plaque);
-const plaqueTxt=makeTextSprite("نظرية فيثاغورس","#241a0a",59,.88);
-plaqueTxt.position.set(0,-4.83,.13);root.add(plaqueTxt);
+const plaqueShape=roundedRectShape(3.10,.64,.11);
+const plaqueGeo=new THREE.ExtrudeGeometry(plaqueShape,{
+  depth:.10,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.035,bevelThickness:.025
+});
+plaqueGeo.center();
+const plaque=new THREE.Mesh(plaqueGeo,brassMat);
+plaque.position.set(0,-4.70,.05);
+plaque.castShadow=true;
+root.add(plaque);
+const plaqueTxt=makeTextSprite("نظرية فيثاغورس","#241a0a",57,.90);
+plaqueTxt.position.set(0,-4.69,.16);
+root.add(plaqueTxt);
 
 const dynamic=new THREE.Group();
 dynamic.position.z=.18;
@@ -1243,97 +1592,203 @@ scene.add(proofFXGroup);
 
 function makeTray(side,frameColor,label,sandBase,seed=1){
   const g=new THREE.Group();
-  const depth=.20, edge=Math.max(.065,side*.045);
+  const depth=.24;
+  const edge=Math.max(.075,side*.047);
 
-  /* back acrylic plate */
+  /* deep back shadow to make the container feel physical */
+  const shadowPlate=new THREE.Mesh(
+    new THREE.BoxGeometry(side*.97,side*.97,.08),
+    new THREE.MeshStandardMaterial({color:0x071018,transparent:true,opacity:.28,roughness:.9})
+  );
+  shadowPlate.position.z=-.005;
+  g.add(shadowPlate);
+
+  /* frosted acrylic rear panel */
   const backplate=new THREE.Mesh(
-    new THREE.BoxGeometry(side*.94,side*.94,.08),
+    new THREE.BoxGeometry(side*.93,side*.93,.075),
     new THREE.MeshPhysicalMaterial({
-      color:0xf1f7fa,transparent:true,opacity:.20,roughness:.13,metalness:0,
-      transmission:.48,thickness:.5,clearcoat:1,clearcoatRoughness:.12
+      color:0xe9f3f7,transparent:true,opacity:.24,roughness:.18,metalness:0,
+      transmission:.44,thickness:.38,clearcoat:.85,clearcoatRoughness:.14,
+      ior:1.46
     })
   );
-  backplate.position.z=.04;g.add(backplate);
+  backplate.position.z=.055;
+  backplate.receiveShadow=true;
+  g.add(backplate);
 
+  /* colored anodized metal frame */
   const fmat=new THREE.MeshPhysicalMaterial({
-    color:frameColor,metalness:.22,roughness:.30,clearcoat:.7,clearcoatRoughness:.15
+    color:frameColor,metalness:.58,roughness:.23,clearcoat:.65,clearcoatRoughness:.12
   });
   const top=new THREE.Mesh(new THREE.BoxGeometry(side,edge,depth),fmat);
   const bot=top.clone();
   const left=new THREE.Mesh(new THREE.BoxGeometry(edge,side,depth),fmat);
   const right=left.clone();
-  top.position.set(0,side/2,.15);bot.position.set(0,-side/2,.15);
-  left.position.set(-side/2,0,.15);right.position.set(side/2,0,.15);
-  [top,bot,left,right].forEach(m=>{m.castShadow=true;g.add(m)});
+  top.position.set(0,side/2,.16);bot.position.set(0,-side/2,.16);
+  left.position.set(-side/2,0,.16);right.position.set(side/2,0,.16);
+  [top,bot,left,right].forEach(m=>{m.castShadow=true;m.receiveShadow=true;g.add(m)});
 
-  /* subtle glass front */
+  /* inner metallic trim creates a premium shadow line */
+  const trimMat=new THREE.MeshPhysicalMaterial({
+    color:0xe2e6e8,metalness:.88,roughness:.18,clearcoat:.30
+  });
+  const trim=.022;
+  const innerSide=side-edge*1.20;
+  const tt=new THREE.Mesh(new THREE.BoxGeometry(innerSide,trim,.055),trimMat);
+  const tb=tt.clone();
+  const tl=new THREE.Mesh(new THREE.BoxGeometry(trim,innerSide,.055),trimMat);
+  const tr=tl.clone();
+  tt.position.set(0,innerSide/2,.305);tb.position.set(0,-innerSide/2,.305);
+  tl.position.set(-innerSide/2,0,.305);tr.position.set(innerSide/2,0,.305);
+  [tt,tb,tl,tr].forEach(m=>g.add(m));
+
+  /* four tiny corner fasteners */
+  const boltMat=new THREE.MeshPhysicalMaterial({
+    color:0xe9e6dd,metalness:.95,roughness:.14,clearcoat:.35
+  });
+  const boltR=Math.max(.018,side*.012);
+  const inset=side/2-edge*.78;
+  for(const sx of [-1,1])for(const sy of [-1,1]){
+    const bolt=new THREE.Mesh(new THREE.CylinderGeometry(boltR,boltR,.025,18),boltMat);
+    bolt.rotation.x=Math.PI/2;
+    bolt.position.set(sx*inset,sy*inset,.315);
+    g.add(bolt);
+  }
+
+  /* thick clear glass front */
+  const glassShape=roundedRectShape(side*.91,side*.91,Math.max(.035,side*.028));
+  const glassGeo=new THREE.ExtrudeGeometry(glassShape,{
+    depth:.032,bevelEnabled:true,bevelSegments:2,steps:1,
+    bevelSize:.015,bevelThickness:.010
+  });
+  glassGeo.center();
   const front=new THREE.Mesh(
-    new THREE.ShapeGeometry(roundedRectShape(side*.91,side*.91,Math.max(.03,side*.025))),
+    glassGeo,
     new THREE.MeshPhysicalMaterial({
-      color:0xffffff,transparent:true,opacity:.07,roughness:.05,metalness:0,
-      transmission:.76,thickness:.35,side:THREE.DoubleSide
+      color:0xf8fdff,transparent:true,opacity:.12,roughness:.035,metalness:0,
+      transmission:.88,thickness:.62,ior:1.48,clearcoat:1,clearcoatRoughness:.035,
+      reflectivity:.52
     })
   );
-  front.position.z=.47;g.add(front);
+  front.position.z=.46;
+  g.add(front);
 
-  /* sand grains */
-  const grainR=Math.max(.018,Math.min(.038,side*.0145));
-  const geo=new THREE.IcosahedronGeometry(grainR,1);
-  const mat=new THREE.MeshStandardMaterial({color:sandBase,roughness:.93,metalness:0});
-  const inst=new THREE.InstancedMesh(geo,mat,1250);
+  /* narrow reflection stripe on the glass */
+  const shine=new THREE.Mesh(
+    new THREE.BoxGeometry(side*.035,side*.72,.006),
+    new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.10})
+  );
+  shine.position.set(-side*.32,side*.04,.485);
+  shine.rotation.z=-.10;
+  g.add(shine);
+
+  /* realistic sand grains */
+  const grainR=Math.max(.014,Math.min(.030,side*.0108));
+  const geo=new THREE.DodecahedronGeometry(grainR,0);
+  const mat=new THREE.MeshPhysicalMaterial({
+    color:0xffffff,roughness:.93,metalness:0,clearcoat:.015,reflectivity:.03
+  });
+  const inst=new THREE.InstancedMesh(geo,mat,1450);
   inst.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
   inst.castShadow=true;
+  inst.receiveShadow=true;
   inst.count=0;
   g.add(inst);
 
-  const text=makeTextSprite(label,"#101820",92,Math.min(1.1,side/2.25));
-  text.position.set(0,0,.62);g.add(text);
+  /* label on top of glass */
+  const text=makeTextSprite(label,"#0b1218",92,Math.min(1.08,side/2.3));
+  text.position.set(0,0,.64);
+  g.add(text);
 
-  const sandData={mesh:inst,side,particles:[],seed};
+  const sandData={
+    mesh:inst,side,particles:[],seed,
+    baseColor:new THREE.Color(sandBase)
+  };
   activeSand.push(sandData);
 
   return {group:g,sand:sandData};
 }
 
 function targetSandPositions(side,count,seed){
-  const safe=side*.80;
-  const cols=Math.ceil(Math.sqrt(count));
-  const rows=Math.ceil(count/cols);
-  const dx=safe/Math.max(1,cols),dy=safe/Math.max(1,rows);
+  const safe=side*.77;
+  const cols=Math.max(2,Math.ceil(Math.sqrt(count)));
+  const rows=Math.max(2,Math.ceil(count/cols));
+  const dx=safe/Math.max(1,cols);
+  const dy=safe/Math.max(1,rows);
   const arr=[];
+
   for(let i=0;i<count;i++){
-    const col=i%cols,row=Math.floor(i/cols);
-    const jx=(seedRand(i+seed)-.5)*dx*.72;
-    const jy=(seedRand((i+seed)*2.91)-.5)*dy*.72;
-    const x=-safe/2+dx*(col+.5)+jx;
+    const row=Math.floor(i/cols);
+    const col=i%cols;
+
+    /* staggered packing like real grains rather than a perfect grid */
+    const stagger=(row%2)*dx*.24;
+    const jx=(seedRand((i+seed)*1.73)-.5)*dx*.58;
+    const jy=(seedRand((i+seed)*2.91)-.5)*dy*.56;
+
+    let x=-safe/2+dx*(col+.5)+stagger+jx;
     const y=-safe/2+dy*(row+.5)+jy;
-    const z=.24+seedRand((i+seed)*4.7)*.10;
+
+    /* keep grains inside the transparent box */
+    const margin=safe*.48;
+    x=Math.max(-margin,Math.min(margin,x));
+
+    /* several tiny depth layers make the sand look volumetric */
+    const layer=i%3;
+    const z=.275+layer*.025+seedRand((i+seed)*4.7)*.018;
     arr.push(new THREE.Vector3(x,y,z));
   }
   return arr;
 }
 
 function launchSand(sand,count,fromTop=true){
-  count=Math.min(1200,Math.max(10,count));
+  count=Math.min(1400,Math.max(14,count));
   const targets=targetSandPositions(sand.side,count,sand.seed);
   sand.particles=[];
+
+  const base=sand.baseColor?.clone?.() || new THREE.Color(0xd7b56d);
   for(let i=0;i<count;i++){
     const tx=targets[i];
     const start=fromTop
       ? new THREE.Vector3(
-          tx.x+(seedRand(i*1.7+sand.seed)-.5)*sand.side*.28,
-          sand.side*.55+seedRand(i*3.1+sand.seed)*sand.side*.60,
-          .28+seedRand(i*4.2+sand.seed)*.22
+          tx.x+(seedRand(i*1.7+sand.seed)-.5)*sand.side*.22,
+          sand.side*.58+seedRand(i*3.1+sand.seed)*sand.side*.56,
+          .30+seedRand(i*4.2+sand.seed)*.18
         )
-      : new THREE.Vector3(tx.x,tx.y+.05+seedRand(i+sand.seed)*.18,tx.z);
+      : new THREE.Vector3(tx.x,tx.y+.04+seedRand(i+sand.seed)*.12,tx.z);
+
+    const scale=.58+seedRand(i*6.4+sand.seed)*.64;
     sand.particles.push({
-      pos:start.clone(), target:tx.clone(),
-      vel:new THREE.Vector3((seedRand(i+17)-.5)*.006,-.002-seedRand(i+29)*.008,0),
-      rot:new THREE.Vector3(seedRand(i+4)*2,seedRand(i+8)*2,seedRand(i+12)*2),
-      scale:.72+seedRand(i*6.4+sand.seed)*.52,
+      pos:start.clone(),target:tx.clone(),
+      vel:new THREE.Vector3(
+        (seedRand(i+17)-.5)*.0055,
+        -.0025-seedRand(i+29)*.007,
+        (seedRand(i+31)-.5)*.0008
+      ),
+      rot:new THREE.Vector3(
+        seedRand(i+4)*Math.PI*2,
+        seedRand(i+8)*Math.PI*2,
+        seedRand(i+12)*Math.PI*2
+      ),
+      spin:new THREE.Vector3(
+        (seedRand(i+42)-.5)*.045,
+        (seedRand(i+57)-.5)*.045,
+        (seedRand(i+63)-.5)*.035
+      ),
+      scale,
       settled:false
     });
+
+    /* natural small color variation */
+    const c=base.clone();
+    c.offsetHSL(
+      (seedRand(i*8.1+sand.seed)-.5)*.025,
+      (seedRand(i*3.7+sand.seed)-.5)*.10,
+      (seedRand(i*5.3+sand.seed)-.5)*.16
+    );
+    sand.mesh.setColorAt(i,c);
   }
+  if(sand.mesh.instanceColor)sand.mesh.instanceColor.needsUpdate=true;
   sand.mesh.count=count;
 }
 
@@ -1342,24 +1797,43 @@ function updateSandPhysics(dt){
   for(const sand of activeSand){
     for(let i=0;i<sand.mesh.count;i++){
       const p=sand.particles[i];
-      if(!p) continue;
+      if(!p)continue;
+
       if(!p.settled){
-        /* gravity + attraction to final packed position */
-        p.vel.y-=.00056*dt;
-        p.vel.x+=(p.target.x-p.pos.x)*.00048*dt;
-        p.vel.y+=(p.target.y-p.pos.y)*.00062*dt;
+        /* gravity */
+        p.vel.y-=.00062*dt;
+
+        /* soft pull to packed destination */
+        p.vel.x+=(p.target.x-p.pos.x)*.00042*dt;
+        p.vel.y+=(p.target.y-p.pos.y)*.00058*dt;
+        p.vel.z+=(p.target.z-p.pos.z)*.00034*dt;
+
+        /* air drag */
+        p.vel.multiplyScalar(Math.pow(.993,dt));
         p.pos.addScaledVector(p.vel,dt);
+
+        /* grains tumble while falling */
+        p.rot.x+=p.spin.x*dt;
+        p.rot.y+=p.spin.y*dt;
+        p.rot.z+=p.spin.z*dt;
+
         const dist=p.pos.distanceTo(p.target);
-        if(dist<.045 || p.pos.y<p.target.y){
-          p.pos.lerp(p.target,.42);
-          p.vel.multiplyScalar(.35);
-          if(p.pos.distanceTo(p.target)<.012){p.pos.copy(p.target);p.settled=true}
+        if(dist<.050 || p.pos.y<p.target.y+.012){
+          p.pos.lerp(p.target,.34);
+          p.vel.multiplyScalar(.26);
+          p.spin.multiplyScalar(.84);
+          if(p.pos.distanceTo(p.target)<.010){
+            p.pos.copy(p.target);
+            p.vel.set(0,0,0);
+            p.settled=true;
+          }
         }
-      } else {
-        /* tiny natural settling, almost invisible */
-        const wig=(seedRand(i+sand.seed)-.5)*.0011;
-        p.pos.x+=wig*dt*.03;
+      }else{
+        /* almost invisible micro-settling */
+        const wig=(seedRand(i+sand.seed)-.5)*.00045;
+        p.pos.x+=wig*dt*.018;
       }
+
       dummy.position.copy(p.pos);
       dummy.rotation.set(p.rot.x,p.rot.y,p.rot.z);
       dummy.scale.setScalar(p.scale);
@@ -1402,15 +1876,17 @@ let lastBotAnswer="";
 function buildModel(a,b,animateSand=true){
   cancelProof(false);
   clearDynamic();
+  dynamic.scale.set(1,1,1);
+  dynamic.position.set(0,.18,.18);
   const c=Math.sqrt(a*a+b*b);
   const max=Math.max(a,b,c);
-  const scale=3.28/max;
+  const scale=3.05/max;
   const as=a*scale,bs=b*scale,cs=c*scale;
 
   /* triangle */
   const tri=new THREE.Mesh(
     rightTri(as,bs),
-    new THREE.MeshStandardMaterial({color:0xeee7d8,roughness:.76,metalness:.01,side:THREE.DoubleSide})
+    new THREE.MeshPhysicalMaterial({color:0xf4ead9,roughness:.64,metalness:.03,clearcoat:.12,clearcoatRoughness:.35,side:THREE.DoubleSide})
   );
   tri.position.z=.11;tri.castShadow=true;dynamic.add(tri);
 
@@ -1423,6 +1899,17 @@ function buildModel(a,b,animateSand=true){
   const g1=new THREE.BufferGeometry().setFromPoints([edgePts[0],edgePts[1]]);
   const g2=new THREE.BufferGeometry().setFromPoints([edgePts[2],edgePts[3]]);
   dynamic.add(new THREE.Line(g1,edgeMat),new THREE.Line(g2,edgeMat));
+
+  /* polished right-angle corner marker */
+  const cornerSize=Math.min(as,bs)*.16;
+  const cornerPlate=new THREE.Mesh(
+    new THREE.BoxGeometry(cornerSize,cornerSize,.035),
+    new THREE.MeshPhysicalMaterial({
+      color:0xd8c38e,metalness:.74,roughness:.21,clearcoat:.28
+    })
+  );
+  cornerPlate.position.set(cornerSize/2,cornerSize/2,.28);
+  dynamic.add(cornerPlate);
 
   /* right-angle square */
   const rs=Math.min(as,bs)*.13;
@@ -1467,6 +1954,35 @@ function buildModel(a,b,animateSand=true){
   const box=new THREE.Box3().setFromObject(dynamic);
   const center=box.getCenter(new THREE.Vector3());
   dynamic.position.set(-center.x,.28-center.y,.18);
+
+  /* circular-fit guarantee: every corner stays inside the green disc */
+  dynamic.updateMatrixWorld(true);
+  let fitBox=new THREE.Box3().setFromObject(dynamic);
+  let fitCenter=fitBox.getCenter(new THREE.Vector3());
+
+  /* recenter first */
+  dynamic.position.x += -fitCenter.x;
+  dynamic.position.y += (.24-fitCenter.y);
+  dynamic.updateMatrixWorld(true);
+
+  fitBox=new THREE.Box3().setFromObject(dynamic);
+  const halfW=(fitBox.max.x-fitBox.min.x)/2;
+  const halfH=(fitBox.max.y-fitBox.min.y)/2;
+
+  /* using the bounding-box diagonal guarantees nothing can cross the circle */
+  const boundingRadius=Math.hypot(halfW,halfH);
+  const safeRadius=3.48;
+  if(boundingRadius>safeRadius){
+    const fitScale=safeRadius/boundingRadius;
+    dynamic.scale.multiplyScalar(fitScale);
+    dynamic.updateMatrixWorld(true);
+  }
+
+  /* final recenter after scaling */
+  const fitBox2=new THREE.Box3().setFromObject(dynamic);
+  const fitCenter2=fitBox2.getCenter(new THREE.Vector3());
+  dynamic.position.x += -fitCenter2.x;
+  dynamic.position.y += (.24-fitCenter2.y);
 
   currentA=a;currentB=b;currentC=c;
   return {c,nA,nB,nC};
@@ -1525,9 +2041,9 @@ function cancelProof(resetStatus=true){
 }
 
 function makeProofBeads(start,end,color,count,offsetSeed=0){
-  const geo=new THREE.IcosahedronGeometry(.055,1);
+  const geo=new THREE.DodecahedronGeometry(.034,0);
   const mat=new THREE.MeshStandardMaterial({
-    color,roughness:.72,metalness:.02,emissive:color,emissiveIntensity:.08
+    color,roughness:.91,metalness:0,emissive:color,emissiveIntensity:.025
   });
   for(let i=0;i<count;i++){
     const mesh=new THREE.Mesh(geo.clone(),mat.clone());
@@ -1642,7 +2158,7 @@ function updateProof(now){
       `المرحلة 1/3: نفرّغ الرمل من <b>a²</b> و <b>b²</b> ونبدأ جمع المساحتين.`;
   }else if(t<.78){
     document.getElementById("proofText").innerHTML=
-      `المرحلة 2/3: الرملان الذهبي والأزرق ينتقلان إلى مربع الوتر <b>c²</b>.`;
+      `المرحلة 2/3: كل رمل ينتقل <b>بنفس لونه</b>: الذهبي من a² والأزرق من b² إلى c².`;
   }else{
     document.getElementById("proofText").innerHTML=
       `المرحلة 3/3: مربع <b>c²</b> يمتلئ بمجموع الكميتين تمامًا.`;
@@ -1684,47 +2200,92 @@ function showToast(text){
   toastTimer=setTimeout(()=>el.classList.remove("show"),5200);
 }
 
-function readValues(){
-  let a=parseFloat(document.getElementById("aInput").value),b=parseFloat(document.getElementById("bInput").value);
-  if(!Number.isFinite(a))a=3;if(!Number.isFinite(b))b=4;
-  a=Math.max(1,Math.min(12,a));b=Math.max(1,Math.min(12,b));
-  document.getElementById("aInput").value=a;document.getElementById("bInput").value=b;
-  return[a,b];
+let unknownSide="c";
+
+function syncUnknownUI(){
+  document.querySelectorAll(".unknown-picker button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.unknown===unknownSide);
+  });
+  const a=document.getElementById("aInput"),b=document.getElementById("bInput"),c=document.getElementById("cInput");
+  a.disabled=unknownSide==="a";
+  b.disabled=unknownSide==="b";
+  c.disabled=unknownSide==="c";
+}
+
+document.querySelectorAll(".unknown-picker button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    unknownSide=btn.dataset.unknown;
+    syncUnknownUI();
+  });
+});
+syncUnknownUI();
+
+function readTriangleValues(){
+  let a=parseFloat(document.getElementById("aInput").value);
+  let b=parseFloat(document.getElementById("bInput").value);
+  let c=parseFloat(document.getElementById("cInput").value);
+
+  if(unknownSide==="c"){
+    if(!(a>0&&b>0))throw new Error("اكتب قيم صحيحة لـ a و b.");
+    c=Math.sqrt(a*a+b*b);
+  }else if(unknownSide==="a"){
+    if(!(b>0&&c>0))throw new Error("اكتب قيم صحيحة لـ b و c.");
+    if(c<=b)throw new Error("الوتر c لازم يكون أكبر من b.");
+    a=Math.sqrt(c*c-b*b);
+  }else{
+    if(!(a>0&&c>0))throw new Error("اكتب قيم صحيحة لـ a و c.");
+    if(c<=a)throw new Error("الوتر c لازم يكون أكبر من a.");
+    b=Math.sqrt(c*c-a*a);
+  }
+
+  document.getElementById("aInput").value=pretty(a);
+  document.getElementById("bInput").value=pretty(b);
+  document.getElementById("cInput").value=pretty(c);
+  return[a,b,c];
 }
 
 function applyChange(){
   document.getElementById("proofStatus").classList.remove("show");
   document.getElementById("proofMeter").style.width="0%";
-  const[a,b]=readValues();
+
+  let a,b,c;
+  try{
+    [a,b,c]=readTriangleValues();
+  }catch(err){
+    showToast("⚠️ "+err.message);
+    return;
+  }
+
   const oldA=currentA,oldB=currentB,oldC=currentC;
-  const {c}=buildModel(a,b,true);
+  buildModel(a,b,true);
 
   document.getElementById("line1").textContent=`${pretty(a)}² + ${pretty(b)}² = ${pretty(c)}²`;
   document.getElementById("line2").textContent=`${pretty(a*a)} + ${pretty(b*b)} = ${pretty(c*c)}`;
-  document.getElementById("result").textContent=`c = ${pretty(c)}`;
+  document.getElementById("result").textContent=`${unknownSide==="c" ? "الوتر c" : unknownSide} = ${pretty({a,b,c}[unknownSide])}`;
   document.getElementById("aStat").textContent=pretty(a*a);
   document.getElementById("bStat").textContent=pretty(b*b);
   document.getElementById("cStat").textContent=pretty(c*c);
 
-  const parts=[];
-  if(a!==oldA)parts.push(`a تغيّر من <b>${pretty(oldA)}</b> إلى <b>${pretty(a)}</b>`);
-  if(b!==oldB)parts.push(`b تغيّر من <b>${pretty(oldB)}</b> إلى <b>${pretty(b)}</b>`);
-  const text=parts.length
-    ? `${parts.join("، ")}. لذلك تغيّر الوتر من <b>${pretty(oldC)}</b> إلى <b>${pretty(c)}</b>. تم الآن إعادة بناء المربعات وتحريك الرمل ليتناسب مع المساحات الجديدة.`
-    : `أعدنا محاكاة الرمل للقيم نفسها: a = <b>${pretty(a)}</b> و b = <b>${pretty(b)}</b>، والوتر c = <b>${pretty(c)}</b>.`;
+  const solved={a,b,c}[unknownSide];
+  const roleText = unknownSide==="c" ? "الوتر c" : `الضلع ${unknownSide}`;
+  const text=`حسبنا <b>${roleText}</b> = <b>${pretty(solved)}</b>. القيم الآن: a = <b>${pretty(a)}</b>، b = <b>${pretty(b)}</b>، c = <b>${pretty(c)}</b> <b>(الوتر)</b>.`;
   document.getElementById("changeLog").innerHTML=text.replace(/<b>/g,"").replace(/<\/b>/g,"");
-  lastChangeSummary = parts.length
-    ? `غيّرنا ${a!==oldA?`a من ${pretty(oldA)} إلى ${pretty(a)}`:""}${a!==oldA&&b!==oldB?" و ":""}${b!==oldB?`b من ${pretty(oldB)} إلى ${pretty(b)}`:""}. صار الوتر c = ${pretty(c)}. مساحة a² = ${pretty(a*a)}، ومساحة b² = ${pretty(b*b)}، ومساحة c² = ${pretty(c*c)}. لذلك أعدنا بناء المربعات وتحريك الرمل حتى يناسب المساحات الجديدة.`
-    : `القيم بقيت نفسها: a = ${pretty(a)} و b = ${pretty(b)} و c = ${pretty(c)}، وأعدنا تحريك الرمل داخل المربعات.`;
+  lastChangeSummary=`حسبنا ${roleText} = ${pretty(solved)}. القيم الحالية: a=${pretty(a)}، b=${pretty(b)}، c=${pretty(c)} (الوتر).`;
   showToast(text);
 
-  document.querySelectorAll(".preset").forEach(x=>x.classList.toggle("active",+x.dataset.a===a&&+x.dataset.b===b));
+  document.querySelectorAll(".preset").forEach(x=>{
+    const pa=+x.dataset.a,pb=+x.dataset.b,pc=Math.sqrt(pa*pa+pb*pb);
+    x.classList.toggle("active",Math.abs(pa-a)<.01&&Math.abs(pb-b)<.01&&Math.abs(pc-c)<.01);
+  });
 }
 document.getElementById("applyBtn").addEventListener("click",applyChange);
-["aInput","bInput"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")applyChange()}));
+["aInput","bInput","cInput"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")applyChange()}));
 document.querySelectorAll(".preset").forEach(btn=>btn.addEventListener("click",()=>{
-  document.getElementById("aInput").value=btn.dataset.a;
-  document.getElementById("bInput").value=btn.dataset.b;
+  const a=+btn.dataset.a,b=+btn.dataset.b,c=Math.sqrt(a*a+b*b);
+  unknownSide="c";syncUnknownUI();
+  document.getElementById("aInput").value=a;
+  document.getElementById("bInput").value=b;
+  document.getElementById("cInput").value=pretty(c);
   applyChange();
 }));
 document.getElementById("shakeBtn").addEventListener("click",()=>{
@@ -1977,6 +2538,9 @@ speechSynthesis?.addEventListener?.("voiceschanged",()=>arabicVoice());
 /* -------------------- EXAM SYSTEM -------------------- */
 const examModal=document.getElementById("examModal");
 let activeExam=null;
+let examDifficulty="easy";
+let questionCheckState={};
+let loadedSavedAttempt=false;
 let examStartTime=0;
 let examTimerHandle=null;
 let builderCounter=0;
@@ -2030,17 +2594,86 @@ function hardQuestionPool(){
 }
 
 function createSurpriseExam(){
-  const qs=shuffle(hardQuestionPool()).slice(0,10).map((q,i)=>({...q,id:`s${Date.now()}_${i}`,points:10}));
-  return {title:"⚡ الامتحان المفاجئ — مستوى صعب جدًا",questions:qs,total:100,surprise:true};
+  const all=hardQuestionPool();
+  let qs;
+  if(examDifficulty==="easy"){
+    qs=all.filter(q=>q.type==="number"||q.type==="mcq").slice(0,10);
+    while(qs.length<10)qs.push(...shuffle(all.filter(q=>q.type!=="open")).slice(0,10-qs.length));
+  }else if(examDifficulty==="medium"){
+    qs=shuffle(all.filter(q=>q.type!=="open")).slice(0,10);
+  }else if(examDifficulty==="hard"){
+    qs=shuffle(all).slice(0,10);
+  }else{
+    const harder=shuffle(all);
+    qs=harder.slice(0,10);
+  }
+  qs=qs.slice(0,10).map((q,i)=>({...q,id:`s${Date.now()}_${i}`,points:10}));
+  const titleMap={easy:"سهل",medium:"متوسط",hard:"صعب",expert:"خبير 🔥"};
+  return {title:`⚡ الامتحان المفاجئ — ${titleMap[examDifficulty]}`,questions:qs,total:100,surprise:true,level:examDifficulty};
 }
-
 function showExamView(which){
   for(const id of ["examHome","examRunner","examResult","examBuilder"])
     document.getElementById(id).classList.toggle("hidden",id!==which);
 }
+const levelDescriptions={
+  easy:"سهل: أسئلة مباشرة للتدريب على القانون.",
+  medium:"متوسط: حسابات وعكس النظرية وتطبيقات.",
+  hard:"صعب: مزيج حساب وفهم وأسئلة مفتوحة.",
+  expert:"خبير 🔥: أصعب مزيج متوفر، مناسب للتحدي."
+};
+document.querySelectorAll("#examLevels button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    examDifficulty=btn.dataset.level;
+    document.querySelectorAll("#examLevels button").forEach(x=>x.classList.toggle("active",x===btn));
+    document.getElementById("examLevelDesc").textContent=levelDescriptions[examDifficulty];
+  });
+});
+
+function getSavedAttempt(){
+  try{return JSON.parse(localStorage.getItem("pythagorasi_saved_attempt")||"null")}catch{return null}
+}
+function saveAttemptLocal(){
+  if(!activeExam)return;
+  const answers=activeExam.questions.map((q,i)=>getExamAnswer(i,q));
+  localStorage.setItem("pythagorasi_saved_attempt",JSON.stringify({
+    exam:activeExam,answers,startedAt:examStartTime||Date.now(),savedAt:Date.now()
+  }));
+}
+function clearSavedAttempt(){localStorage.removeItem("pythagorasi_saved_attempt")}
+function refreshResumeBox(){
+  const saved=getSavedAttempt();
+  const box=document.getElementById("resumeExamBox");
+  if(saved?.exam?.questions?.length){
+    box.classList.add("show");
+    document.getElementById("resumeExamText").textContent=`${saved.exam.title} • ${saved.exam.questions.length} أسئلة`;
+  }else box.classList.remove("show");
+}
+document.getElementById("continueSavedExam").addEventListener("click",()=>{
+  const saved=getSavedAttempt();if(!saved)return;
+  startExam(saved.exam);
+  setTimeout(()=>{
+    saved.answers?.forEach((ans,i)=>{
+      const q=activeExam.questions[i],card=document.querySelector(`.exam-q[data-index="${i}"]`);
+      if(!card||!ans)return;
+      if(q.type==="mcq"){
+        const r=[...card.querySelectorAll(`input[name="exam_${i}"]`)].find(x=>x.value===ans);
+        if(r)r.checked=true;
+      }else{
+        const el=card.querySelector("[data-answer-index]");if(el)el.value=ans;
+      }
+    });
+    updateExamProgress();
+  },50);
+});
+document.getElementById("newExamInstead").addEventListener("click",()=>{
+  clearSavedAttempt();refreshResumeBox();
+  startExam(createSurpriseExam());
+});
+
 function openExamCenter(){
   stopSpeech();
   examModal.classList.add("open");
+  refreshResumeBox();
   showExamView("examHome");
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
 }
@@ -2071,6 +2704,7 @@ examModal.addEventListener("click",e=>{if(e.target===examModal){examModal.classL
 
 function startExam(exam){
   activeExam=exam;
+  questionCheckState={};
   showExamView("examRunner");
   document.getElementById("examModalTitle").textContent=exam.title;
   document.getElementById("examNamePill").textContent=exam.title;
@@ -2078,6 +2712,7 @@ function startExam(exam){
   renderExamQuestions();
   startExamTimer();
   updateExamProgress();
+  saveAttemptLocal();
 }
 
 function renderExamQuestions(){
@@ -2095,11 +2730,36 @@ function renderExamQuestions(){
     }else{
       input=`<textarea class="exam-textarea" data-answer-index="${i}" placeholder="اكتب إجابتك..."></textarea>`;
     }
-    card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${escapeHtml(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}`;
+    card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${escapeHtml(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}
+      <div class="question-actions">
+        <button type="button" class="check-one-btn" data-check-index="${i}">✓ فحص السؤال</button>
+      </div>
+      <div class="question-feedback" id="qFeedback_${i}"></div>`;
     host.appendChild(card);
   });
-  host.querySelectorAll("input,textarea").forEach(el=>el.addEventListener("input",updateExamProgress));
-  host.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener("change",updateExamProgress));
+  host.querySelectorAll("input,textarea").forEach(el=>el.addEventListener("input",()=>{updateExamProgress();saveAttemptLocal()}));
+  host.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener("change",()=>{updateExamProgress();saveAttemptLocal()}));
+  host.querySelectorAll(".check-one-btn").forEach(btn=>btn.addEventListener("click",()=>{
+    const i=+btn.dataset.checkIndex,q=activeExam.questions[i],ans=getExamAnswer(i,q);
+    const fb=document.getElementById(`qFeedback_${i}`);
+    if(!ans){
+      fb.textContent="اكتب/اختار جواب أولًا.";
+      fb.className="question-feedback show no";
+      return;
+    }
+    const g=gradeOne(q,ans);
+    questionCheckState[i]=g;
+    if(g.ok){
+      btn.classList.remove("checked-no");btn.classList.add("checked-ok");
+      fb.textContent=`✅ صحيح — ${g.score}/${q.points}`;
+      fb.className="question-feedback show ok";
+    }else{
+      btn.classList.remove("checked-ok");btn.classList.add("checked-no");
+      fb.textContent=`❌ مش صحيح — ${g.score}/${q.points}. جرّب مرة ثانية.`;
+      fb.className="question-feedback show no";
+    }
+    saveAttemptLocal();
+  }));
 }
 
 function escapeHtml(s){
@@ -2142,6 +2802,7 @@ function gradeOne(q,ans){
 function submitCurrentExam(){
   if(!activeExam)return;
   stopExamTimer();
+  clearSavedAttempt();
   let score=0,answered=0;
   const review=[];
   activeExam.questions.forEach((q,i)=>{
@@ -2361,6 +3022,58 @@ function examFromBuilder(){
   if(total<=0){builderMessage("مجموع العلامات لازم يكون أكبر من صفر.");return null}
   return {title,questions:qs,total,surprise:false};
 }
+function makeExamCode(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out="";for(let i=0;i<6;i++)out+=chars[Math.floor(Math.random()*chars.length)];
+  return out;
+}
+document.getElementById("publishCloudExam")?.addEventListener("click",async()=>{
+  const btn=document.getElementById("publishCloudExam");
+  if(!window.PythagorasiUser || window.PythagorasiUser.role!=="teacher"){
+    authPendingAction=null;
+    authGate.classList.add("show");
+    showTeacherLogin();
+    setAuthError("سجّل دخول كمعلم حتى تحفظ الامتحان أونلاين.");
+    return;
+  }
+  const exam=examFromBuilder();if(!exam)return;
+  btn.disabled=true;btn.textContent="⏳ جاري الحفظ...";
+  try{
+    const code=makeExamCode();
+    const examRef=await addDoc(collection(db,"exams"),{
+      title:exam.title,
+      ownerId:auth.currentUser.uid,
+      ownerName:window.PythagorasiUser.displayName||"Teacher",
+      published:true,
+      code,
+      total:exam.total,
+      questionCount:exam.questions.length,
+      createdAt:serverTimestamp()
+    });
+    for(let i=0;i<exam.questions.length;i++){
+      const q=exam.questions[i];
+      const publicQ={...q};delete publicQ.answer;delete publicQ.answerText;delete publicQ.keywords;delete publicQ.explanation;
+      await setDoc(doc(db,"exams",examRef.id,"questions",String(i+1)),publicQ);
+      await setDoc(doc(db,"exams",examRef.id,"answerKey",String(i+1)),{
+        answer:q.answer??null,answerText:q.answerText??null,keywords:q.keywords??null,explanation:q.explanation??""
+      });
+    }
+    document.getElementById("cloudExamCode").textContent=code;
+    document.getElementById("cloudExamResult").classList.remove("hidden");
+    showToast(`☁️ تم حفظ الامتحان. الكود: ${code}`);
+  }catch(err){
+    console.error(err);
+    builderMessage("تعذر حفظ الامتحان أونلاين. تأكد من Firestore Rules ودخول المعلم.");
+  }finally{
+    btn.disabled=false;btn.textContent="☁️ حفظ وإنشاء كود";
+  }
+});
+document.getElementById("copyCloudExamCode")?.addEventListener("click",async()=>{
+  const code=document.getElementById("cloudExamCode").textContent.trim();
+  try{await navigator.clipboard.writeText(code);showToast("تم نسخ كود الامتحان.");}
+  catch{showToast(`كود الامتحان: ${code}`)}
+});
+
 document.getElementById("startCustomExam").addEventListener("click",()=>{
   const btn=document.getElementById("startCustomExam");
   btn.disabled=true;btn.textContent="⏳ تجهيز الامتحان...";
