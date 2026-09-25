@@ -1319,6 +1319,142 @@ body.light .auth-name-note{
 }
 body.light .auth-setup-hint{color:#718595}
 
+
+/* ================= V14 SCHOOL PLUS ================= */
+html{font-size:17px}
+body{font-size:17px}
+button,input,textarea,select{font-size:1rem}
+label,.sub,.cloud-note,.settings-note{font-size:.88rem}
+.card h2,.profile-card h3,.class-panel h4{font-size:1.2rem}
+.lobby-brand{font-size:30px}
+.pyhag-large-copy{font-size:1.06rem}
+
+.account-name-preview{
+  padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);color:#cfe2ef
+}
+body.light .account-name-preview{background:#f2f7fa;color:#29465c;border-color:#d6e1e9}
+
+.live-countdown{
+  min-width:58px;text-align:center;font-size:20px!important;font-weight:1000!important;
+  color:#ffda6a!important;animation:timerPulse 1s infinite
+}
+.live-countdown.danger{color:#ff717c!important;animation:timerDanger .5s infinite}
+@keyframes timerPulse{50%{transform:scale(1.05)}}
+@keyframes timerDanger{50%{transform:scale(1.15);box-shadow:0 0 22px rgba(255,73,91,.35)}}
+
+.settings-modalbox{width:min(880px,96vw)}
+.settings-profile-row{
+  display:flex;gap:14px;align-items:center;padding:13px;border-radius:16px;
+  background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.07)
+}
+.settings-avatar{
+  width:82px;height:82px;border-radius:22px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#248dff,#8a55ec);font-size:30px;font-weight:1000;
+  background-size:cover;background-position:center;overflow:hidden
+}
+.settings-profile-info{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.settings-profile-info b{font-size:21px}.settings-profile-info span{font-size:11px;color:#8098aa}
+.settings-photo-btn{padding:7px 9px;border-radius:8px;background:rgba(255,255,255,.05);cursor:pointer}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.settings-card{
+  padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.075);
+  background:rgba(255,255,255,.025)
+}
+.settings-card h3{margin:0 0 9px}
+.settings-card input{height:44px;font-size:15px}
+.settings-note{color:#7f96a8;line-height:1.55;margin:7px 0}
+.settings-choice-row{display:flex;gap:8px}
+.settings-choice-row button{flex:1}
+.settings-toggle{display:flex;gap:8px;align-items:center;margin:9px 0;color:#c6d4df}
+.settings-toggle input{width:18px;height:18px}
+.settings-danger-zone{
+  margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;gap:8px;justify-content:space-between
+}
+.danger-action{
+  padding:10px 13px;border-radius:10px;border:1px solid rgba(255,90,102,.2);
+  background:rgba(255,80,95,.08);color:#ffadb4;font-weight:900;cursor:pointer
+}
+body.light .settings-profile-row,body.light .settings-card{background:#fff;border-color:#d8e3ea;color:#173047}
+body.light .settings-toggle{color:#435d71}
+body.light .settings-photo-btn{background:#eef4f8;color:#29465b}
+body.light .danger-action{background:#fff2f3;color:#a53b45;border-color:#efc7ca}
+
+.assignment-exam-builder{display:grid;gap:8px}
+.assignment-builder-toolbar{display:flex;gap:6px;flex-wrap:wrap}
+.assignment-question-builder{display:grid;gap:8px}
+.assignment-q-builder{
+  padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.075);
+  background:rgba(255,255,255,.025)
+}
+.assignment-q-head{display:grid;grid-template-columns:150px 90px auto;gap:6px;align-items:center}
+.assignment-q-builder textarea{min-height:58px;margin-top:7px}
+.assignment-q-extra{display:grid;gap:6px;margin-top:7px}
+.assignment-mcq-opt{display:grid;grid-template-columns:25px 1fr;gap:5px;align-items:center}
+.assignment-mcq-opt input[type="radio"]{width:18px;height:18px}
+.assignment-open-note{font-size:10px;color:#8299ac}
+.assignment-student-q{
+  margin-top:8px;padding:10px;border-radius:11px;background:rgba(255,255,255,.027);
+  border:1px solid rgba(255,255,255,.065)
+}
+.assignment-student-q b{display:block;margin-bottom:7px}
+.assignment-student-options{display:grid;gap:5px}
+.assignment-grade-row{
+  margin-top:7px;padding:8px;border-radius:9px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06)
+}
+.assignment-grade-row input{height:38px;font-size:14px}
+.submission-grade-summary{
+  margin-top:7px;padding:7px 9px;border-radius:9px;background:rgba(52,180,130,.07);
+  border:1px solid rgba(52,180,130,.12);font-size:12px
+}
+
+.member-avatar{
+  width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#258eff,#8853e9);
+  display:grid;place-items:center;background-size:cover;background-position:center;
+  font-weight:1000;flex:none
+}
+.class-student-row{gap:10px}
+.member-main{display:flex;gap:9px;align-items:center;min-width:0;flex:1}
+.member-info{min-width:0}
+.member-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.member-actions button,.member-actions label{
+  padding:6px 8px;border-radius:8px;border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.035);color:#cbdbe6;font-size:10px;cursor:pointer
+}
+.member-actions .kick-student{color:#ff9ca5;border-color:rgba(255,80,95,.15)}
+.student-leave-class{
+  padding:6px 8px;border-radius:8px;border:1px solid rgba(255,80,95,.13);
+  color:#ff9fa8;background:rgba(255,80,95,.055);cursor:pointer;font-size:10px
+}
+
+button,.subject-card,.lobby-action,.pythag-action-card,.card,.live-card,.exam-choice,.teacher-class-card{
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease
+}
+button:hover:not(:disabled){transform:translateY(-2px)}
+button:active:not(:disabled){transform:scale(.97)}
+.modal.open .modalbox{animation:modalIn .24s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+.fx-pop{animation:fxPop .35s ease}
+@keyframes fxPop{50%{transform:scale(1.06)}}
+.fx-win{animation:fxWin .7s ease}
+@keyframes fxWin{25%{transform:scale(1.05) rotate(-1deg)}55%{transform:scale(1.08) rotate(1deg)}}
+.fx-shake{animation:fxShake .35s ease}
+@keyframes fxShake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
+  animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;
+  scroll-behavior:auto!important
+}
+
+@media(max-width:760px){
+  html{font-size:16px}
+  .settings-grid{grid-template-columns:1fr}
+  .settings-danger-zone{flex-direction:column}
+  .assignment-q-head{grid-template-columns:1fr}
+  .member-actions{justify-content:flex-start}
+}
+
 </style>
 </head>
 <body>
@@ -1397,7 +1533,7 @@ body.light .auth-setup-hint{color:#718595}
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
-        <button class="site-theme-toggle lobby-theme-toggle" id="lobbyThemeBtn" type="button">☀️ نهار</button>
+        <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات">⚙️</button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
@@ -1592,9 +1728,7 @@ body.light .auth-setup-hint{color:#718595}
       <div>
         <h3 id="profileDisplayName">—</h3>
         <div id="profileRoleText">—</div>
-        <label class="profile-upload-btn">📷 تغيير الصورة
-          <input id="profilePhotoInput" type="file" accept="image/*" hidden>
-        </label>
+        <input id="profilePhotoInput" type="file" accept="image/*" hidden>
       </div>
     </div>
 
@@ -1618,7 +1752,7 @@ body.light .auth-setup-hint{color:#718595}
       </div>
     </div>
 
-    <div class="profile-card">
+    <div class="profile-card hidden" id="legacyAssistantSettings">
       <h3>🤖 أسماء المساعدين</h3>
       <div class="assistant-name-grid">
         <label>مساعد اللوبي <input data-assistant-name="lobby"></label>
@@ -1631,6 +1765,65 @@ body.light .auth-setup-hint{color:#718595}
       <h3>🕘 آخر الامتحانات</h3>
       <div id="profileExamHistory"></div>
     </div>
+  </div>
+</div>
+
+
+<div class="modal" id="settingsModal">
+  <div class="modalbox settings-modalbox">
+    <div class="modalhead">
+      <div>
+        <h2>⚙️ الإعدادات</h2>
+        <div class="subject-assistant-line">حسابك، الصورة، الصوت، المظهر والحركة من مكان واحد.</div>
+      </div>
+      <button class="close" id="closeSettingsModal">×</button>
+    </div>
+
+    <div class="settings-profile-row">
+      <div class="settings-avatar" id="settingsAvatar">؟</div>
+      <div class="settings-profile-info">
+        <b id="settingsCurrentName">—</b>
+        <span id="settingsLoginName">اسم الدخول: —</span>
+        <label class="settings-photo-btn">📷 تغيير الصورة
+          <input id="settingsPhotoInput" type="file" accept="image/*" hidden>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-grid">
+      <section class="settings-card">
+        <h3>👤 الاسم الظاهر</h3>
+        <input id="settingsDisplayName" maxlength="40" placeholder="الاسم الظاهر">
+        <div class="settings-note">هذا يغيّر الاسم الظاهر فقط. اسم الدخول الأصلي يبقى نفسه حتى ما يضيع حسابك.</div>
+        <button class="exam-secondary" id="saveDisplayNameBtn">حفظ الاسم</button>
+      </section>
+
+      <section class="settings-card">
+        <h3>🤖 اسم فيثاغورسي</h3>
+        <input id="settingsAIName" maxlength="24" placeholder="فيثاغورسي">
+        <button class="exam-secondary" id="saveAINameSettingsBtn">حفظ اسم المساعد</button>
+      </section>
+
+      <section class="settings-card">
+        <h3>🌓 المظهر</h3>
+        <div class="settings-choice-row">
+          <button class="exam-secondary" id="settingsDarkBtn">🌙 ليل</button>
+          <button class="exam-secondary" id="settingsLightBtn">☀️ نهار</button>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <h3>🔊 الصوت والحركة</h3>
+        <label class="settings-toggle"><input id="settingsSoundToggle" type="checkbox" checked> أصوات الأزرار والنتائج والتايمر</label>
+        <label class="settings-toggle"><input id="settingsMotionToggle" type="checkbox" checked> الأنيميشن والحركة</label>
+      </section>
+    </div>
+
+    <div class="settings-danger-zone">
+      <button class="exam-secondary" id="settingsLogoutBtn">↪ تسجيل خروج</button>
+      <button class="danger-action" id="deleteAccountBtn">🗑 حذف حسابي نهائيًا</button>
+    </div>
+    <div class="cloud-note" id="settingsStatus"></div>
   </div>
 </div>
 
@@ -1750,6 +1943,7 @@ body.light .auth-setup-hint{color:#718595}
       <h1>نظرية فيثاغورس ثلاثية الأبعاد</h1>
       <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
       <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
+      <button class="exam-secondary" id="labSettingsBtn" style="margin-top:7px;width:100%">⚙️ الإعدادات</button>
     </div>
     <div class="auth-userbar" id="authUserBar">
       <div class="auth-userinfo">
@@ -1952,30 +2146,30 @@ body.light .auth-setup-hint{color:#718595}
     </div>
     <div class="exam-level-desc" id="examLevelDesc">سهل: أسئلة مباشرة للتدريب على القانون.</div>
     
-      <div class="exam-home">
+      <div class="exam-home teacher-exam-tools" id="teacherExamCreateTools">
         <div class="exam-choice">
-          <h3>⚡ الامتحان المفاجئ</h3>
-          <p>10 أسئلة متغيّرة حسب المادة التي تختارها. العلامة من 100، والأسئلة تتغير من محاولة للثانية.</p>
+          <h3>⚡ معاينة امتحان فيثاغورس</h3>
+          <p>معاينة للمعلم: 10 أسئلة فيثاغورس متغيّرة، حتى يجرّب الامتحان قبل نشره.</p>
           <button id="startSurpriseExam">ابدأ الامتحان المفاجئ</button>
         </div>
         <div class="exam-choice custom">
           <h3>🛠️ صمّم امتحانك</h3>
-          <p>اختَر الأسئلة والعلامات ونوع السؤال: أمريكي، رقمي أو مفتوح. حتى 10 أسئلة، ويحفظ الامتحان على الجهاز.</p>
+          <p>للمعلم: صمّم أسئلة أمريكي، رقمي أو مفتوح، ثم انشر الامتحان وخذ كودًا واحدًا يقدر يدخل به 100 طالب وأكثر.</p>
           <button id="openExamBuilder">صمّم امتحان جديد</button>
         </div>
       </div>
 
       <div class="cloud-home-grid">
-        <div class="cloud-card">
+        <div class="cloud-card" id="studentExamJoinCard">
           <h3>🔑 ادخل امتحان بكود</h3>
-          <p>اكتب الكود اللي أعطاك إياه المعلم، والامتحان بينفتح على أي جهاز.</p>
+          <p>اكتب كود المعلم. نفس كود الامتحان يقدر يدخل عليه 100 طالب وأكثر، وكل طالب تسليمه مستقل.</p>
           <div class="cloud-row">
             <input id="examJoinCode" maxlength="8" placeholder="مثال: AB12CD">
             <button class="exam-secondary" id="joinCloudExam">دخول</button>
           </div>
           <div class="cloud-note" id="examJoinStatus" style="margin-top:8px">الإجابات تنحفظ باسمك عند التسليم.</div>
         </div>
-        <div class="cloud-card">
+        <div class="cloud-card" id="teacherExamResultsCard">
           <h3>📊 نتائج المعلم</h3>
           <p>إذا كنت داخل كمعلم، شوف امتحاناتك والطلاب اللي سلموا وحساب العلامة.</p>
           <button class="exam-secondary" id="openTeacherResults" style="width:100%">فتح لوحة النتائج</button>
@@ -2030,7 +2224,7 @@ body.light .auth-setup-hint{color:#718595}
       <div id="builderQuestions"></div>
       <div class="teacher-cloud-box" id="teacherCloudBox">
         <h4>☁️ نشر الامتحان للطلاب</h4>
-        <div style="font-size:12px;color:#9db0c3;line-height:1.6">بعد ما تجهز الامتحان، تقدر تحفظه أونلاين وتعطي الطلاب كود دخول.</div>
+        <div style="font-size:12px;color:#9db0c3;line-height:1.6">بعد ما تجهز الامتحان، انشره وخذ كود دخول واحد. نفس الكود يقدر يستخدمه كل طلاب الصف بنفس الوقت.</div>
         <button class="exam-secondary" id="publishCloudExam" style="width:100%;margin-top:8px">☁️ حفظ وإنشاء كود</button>
         <div id="cloudExamResult" class="hidden" style="margin-top:8px">
           <div class="share-code" id="cloudExamCode">------</div>
@@ -2061,11 +2255,11 @@ body.light .auth-setup-hint{color:#718595}
         <p>غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.</p>
       </div>
       <div class="live-home-grid">
-        <div class="live-card">
+        <div class="live-card" id="competitionStudentCard">
           <h3>🎒 انضم كطالب</h3>
-          <p>اكتب اسمك وكود الغرفة واختار فريقك.</p>
+          <p>اسمك يؤخذ تلقائيًا من حسابك. اكتب كود الغرفة واختار فريقك.</p>
           <div class="live-field">
-            <input id="compJoinName" maxlength="40" placeholder="اسم الطالب">
+            <div class="account-name-preview">👤 <b id="compAutoStudentName">اسم الحساب</b></div>
             <input id="compJoinCode" maxlength="8" placeholder="كود الغرفة">
             <select id="compJoinTeam">
               <option value="A">🔵 الفريق A</option>
@@ -2075,7 +2269,7 @@ body.light .auth-setup-hint{color:#718595}
           </div>
           <div id="compJoinStatus" class="cloud-note" style="margin-top:9px">كل طالب يدخل من جهازه بنفس الكود.</div>
         </div>
-        <div class="live-card">
+        <div class="live-card" id="competitionTeacherCard">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
           <p>اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.</p>
           <div class="live-field">
@@ -2141,6 +2335,7 @@ body.light .auth-setup-hint{color:#718595}
         <span class="exam-pill" id="compGameCode">------</span>
         <span class="exam-pill" id="compQuestionNo">سؤال 1</span>
         <span class="exam-pill" id="compGameState">مباشر</span>
+        <span class="exam-pill live-countdown" id="compQuestionTimer">20</span>
       </div>
       <div class="live-teams">
         <div class="live-team a">🔵 A <b id="compScoreA">0</b></div>
@@ -2292,6 +2487,10 @@ function showPlatformLobby(){
   document.getElementById("lobbyProfileName").textContent=name;
   applyAvatar(document.getElementById("lobbyAvatar"),p,name);
   document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",p.role!=="teacher");
+  const examSmall=document.querySelector("#lobbyExamBtn small");
+  const compSmall=document.querySelector("#competitionBtn small");
+  if(examSmall)examSmall.textContent=p.role==="teacher"?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
+  if(compSmall)compSmall.textContent=p.role==="teacher"?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
   updateAssistantLabels();
   setTimeout(refreshLobbySubjectVisibility,30);
 }
@@ -2575,7 +2774,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
 
         const classId=joinData.classId;
         const profile={
-          displayName,nameKey,role:"student",provider:"password",
+          displayName,loginName:displayName,nameKey,role:"student",provider:"password",
           assistantNames:{...defaultAssistantNames},
           xp:0,examCount:0,totalScorePct:0,subjectStats:{},
           classIds:[classId]
@@ -4282,7 +4481,7 @@ function clearSavedAttempt(){localStorage.removeItem("pythagorasi_saved_attempt"
 function refreshResumeBox(){
   const saved=getSavedAttempt();
   const box=document.getElementById("resumeExamBox");
-  if(saved?.exam?.questions?.length){
+  if(saved?.exam?.questions?.length && (window.PythagorasiUser?.role==="teacher" || saved.exam.cloud)){
     box.classList.add("show");
     document.getElementById("resumeExamText").textContent=`${saved.exam.title} • ${saved.exam.questions.length} أسئلة`;
   }else box.classList.remove("show");
@@ -4318,6 +4517,12 @@ function openExamCenter(){
   refreshResumeBox();
   showExamView("examHome");
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
+  const teacher=window.PythagorasiUser?.role==="teacher";
+  document.getElementById("teacherExamCreateTools").classList.toggle("hidden",!teacher);
+  document.getElementById("teacherExamResultsCard").classList.toggle("hidden",!teacher);
+  document.getElementById("studentExamJoinCard").classList.toggle("hidden",teacher);
+  document.getElementById("examLevels").classList.toggle("hidden",!teacher);
+  document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
 }
 function openExamWithIdentity(){
   if(window.PythagorasiUser&&auth.currentUser){
@@ -4386,10 +4591,12 @@ function renderExamQuestions(){
       btn.classList.remove("checked-no");btn.classList.add("checked-ok");
       fb.textContent=`✅ صحيح — ${g.score}/${q.points}`;
       fb.className="question-feedback show ok";
+      soundFx("correct");fxElement(card,"win");
     }else{
       btn.classList.remove("checked-ok");btn.classList.add("checked-no");
       fb.textContent=`❌ مش صحيح — ${g.score}/${q.points}. جرّب مرة ثانية.`;
       fb.className="question-feedback show no";
+      soundFx("wrong");fxElement(card,"shake");
     }
     saveAttemptLocal();
   }));
@@ -4527,10 +4734,21 @@ function submitCurrentExam(){
   });
   recordStudentPerformance(activeExam.subject||examSubject||"mixed",score,activeExam.total).then(syncStudentMemberStats);
   logStudentActivity("exam_submit",`سلّم امتحان: ${activeExam.title||"امتحان"} • النتيجة ${pct}%`,activeExam.subject||examSubject||"mixed");
-  if(pct>=80)launchConfetti();
+  if(pct>=80){
+    launchConfetti();soundFx("win");fxElement(document.getElementById("examResult"),"win");
+  }else{
+    soundFx(pct>=55?"correct":"lose");
+    fxElement(document.getElementById("examResult"),pct>=55?"pop":"shake");
+  }
 }
 document.getElementById("submitExam").addEventListener("click",submitCurrentExam);
-document.getElementById("startSurpriseExam").addEventListener("click",()=>startExam(createSurpriseExam()));
+document.getElementById("startSurpriseExam").addEventListener("click",()=>{
+  if(window.PythagorasiUser?.role!=="teacher"){
+    showToast("الطالب يدخل امتحان المعلم بالكود.");
+    soundFx("wrong");return;
+  }
+  startExam(createSurpriseExam());
+});
 document.getElementById("changeExamBtn").addEventListener("click",()=>{
   if(activeExam?.cloud){
     stopExamTimer();
@@ -4700,6 +4918,11 @@ document.getElementById("teacherResultsBack").addEventListener("click",()=>{
 
 /* ---- custom exam builder ---- */
 function openBuilder(){
+  if(window.PythagorasiUser?.role!=="teacher"){
+    showToast("إنشاء الامتحان للمعلم فقط.");
+    soundFx("wrong");
+    return;
+  }
   showExamView("examBuilder");
   const err=document.getElementById("builderError");if(err){err.classList.remove("show");err.textContent=""}
   document.getElementById("examModalTitle").textContent="🛠️ صمّم امتحانك";
@@ -5107,13 +5330,16 @@ async function joinClassForStudent(code,{duringSignup=false}={}){
   if(!joinSnap.exists()||!joinSnap.data().active)throw new Error("invalid-class-code");
   const data=joinSnap.data(),classId=data.classId;
   const current=window.PythagorasiUser.classIds||[];
-  if(current.includes(classId))return {already:true,classId,className:data.className};
+  const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
+  const existingMember=await getDoc(memberRef);
+  if(existingMember.exists())return {already:true,classId,className:data.className};
 
   const xp=window.PythagorasiUser.xp||0,exams=window.PythagorasiUser.examCount||0;
   const avg=exams?Math.round((window.PythagorasiUser.totalScorePct||0)/exams):0;
   await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
     uid:auth.currentUser.uid,
     displayName:window.PythagorasiUser.displayName||"طالب",
+    photoData:window.PythagorasiUser.photoData||"",
     joinCode:clean,xp,level:profileLevelFromXP(xp),examCount:exams,average:avg,
     joinedAt:serverTimestamp(),lastActiveAt:serverTimestamp()
   },{merge:true});
@@ -5146,8 +5372,12 @@ async function syncStudentMemberStats(){
   const xp=p.xp||0,exams=p.examCount||0,average=exams?Math.round((p.totalScorePct||0)/exams):0;
   for(const classId of (p.classIds||[])){
     try{
-      await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
+      const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
+      const memberSnap=await getDoc(memberRef);
+      if(!memberSnap.exists())continue;
+      await setDoc(memberRef,{
         uid:auth.currentUser.uid,displayName:p.displayName||"طالب",
+        photoData:p.photoData||"",
         xp,level:profileLevelFromXP(xp),examCount:exams,average,
         subjectStats:p.subjectStats||{},lastActiveAt:serverTimestamp()
       },{merge:true});
@@ -5172,6 +5402,79 @@ async function logStudentActivity(type,detail,subject=""){
   }
 }
 
+
+function assignmentHash(value){
+  let s=normExam(String(value??""));
+  if(/^-?\d+(?:\.\d+)?$/.test(s)){
+    const n=Number(s);
+    if(Number.isFinite(n))s=String(n);
+  }
+  let h=2166136261;
+  for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}
+  return (h>>>0).toString(36);
+}
+function assignmentPublicQuestion(q,index){
+  return {
+    id:q.id||`q_${index}_${Date.now()}`,
+    type:q.type,
+    prompt:q.prompt,
+    options:q.options||[],
+    points:Number(q.points)||10,
+    answerHash:q.answerHash||""
+  };
+}
+function gradeAssignmentAutoQuestions(questions,answers){
+  let score=0,max=0;
+  for(const q of questions){
+    if(q.type==="open")continue;
+    max+=Number(q.points)||0;
+    const ans=answers.find(a=>a.id===q.id)?.answer??"";
+    if(q.answerHash&&assignmentHash(ans)===q.answerHash)score+=Number(q.points)||0;
+  }
+  return {score,max};
+}
+function renderStudentAssignmentQuestions(card,a){
+  const host=card.querySelector(".assignment-student-questions");
+  host.innerHTML="";
+  (a.questions||[]).forEach((q,i)=>{
+    const wrap=document.createElement("div");wrap.className="assignment-student-q";wrap.dataset.qid=q.id;
+    let input="";
+    if(q.type==="mcq"){
+      input=`<div class="assignment-student-options">${(q.options||[]).map(opt=>`
+        <label class="exam-option"><input type="radio" name="assign_${a._id}_${i}" value="${escapeHtml(opt)}"> <span>${escapeHtml(opt)}</span></label>
+      `).join("")}</div>`;
+    }else if(q.type==="number"){
+      input='<input class="assignment-answer-input" type="number" step="0.01" placeholder="اكتب الرقم">';
+    }else{
+      input='<textarea class="assignment-answer-input" placeholder="اكتب إجابتك المفتوحة..."></textarea><div class="assignment-open-note">هذا السؤال يراجعه المعلم يدويًا.</div>';
+    }
+    wrap.innerHTML=`<b>${i+1}. ${escapeHtml(q.prompt||"")}</b><div class="exam-points">${q.points||0} علامات</div>${input}`;
+    host.appendChild(wrap);
+  });
+}
+function collectStudentAssignmentAnswers(card,a){
+  return (a.questions||[]).map((q,i)=>{
+    const wrap=card.querySelector(`.assignment-student-q[data-qid="${CSS.escape(q.id)}"]`);
+    let answer="";
+    if(q.type==="mcq")answer=wrap?.querySelector(`input[name="assign_${a._id}_${i}"]:checked`)?.value||"";
+    else answer=wrap?.querySelector(".assignment-answer-input")?.value.trim()||"";
+    return {id:q.id,type:q.type,answer};
+  });
+}
+
+async function leaveClassAsStudent(classId,className="الصف"){
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  if(!confirm(`متأكد بدك تطلع من «${className}»؟`))return;
+  try{
+    await deleteDoc(doc(db,"classes",classId,"members",auth.currentUser.uid));
+    const ids=(window.PythagorasiUser.classIds||[]).filter(x=>x!==classId);
+    await setDoc(doc(db,"users",auth.currentUser.uid),{classIds:ids,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,classIds:ids};
+    activeProfile=window.PythagorasiUser;
+    soundFx("submit");showToast("طلعت من الصف.");loadStudentClasses();
+  }catch(err){console.error(err);showToast("تعذر الخروج من الصف.");soundFx("wrong")}
+}
+
 async function loadStudentClasses(){
   const host=document.getElementById("studentClassesList");
   const assignHost=document.getElementById("studentAssignmentsList");
@@ -5180,54 +5483,103 @@ async function loadStudentClasses(){
   if(!auth.currentUser)return;
 
   const p=await refreshCurrentProfile();
-  const ids=p?.classIds||[];
-  if(!ids.length){host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';return}
+  const ids=[...(p?.classIds||[])];
+  if(!ids.length){
+    host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';
+    assignHost.innerHTML='<div class="cloud-note">ما عندك وظائف حاليًا 🎉</div>';
+    return;
+  }
   host.innerHTML="";
+  const validIds=[];
 
   for(const classId of ids){
     try{
+      const memberSnap=await getDoc(doc(db,"classes",classId,"members",auth.currentUser.uid));
+      if(!memberSnap.exists())continue;
       const cs=await getDoc(doc(db,"classes",classId));
       if(!cs.exists())continue;
+      validIds.push(classId);
       const c=cs.data();
+
       const row=document.createElement("div");row.className="class-row";
-      row.innerHTML=`<span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span><b>${escapeHtml(c.code||"")}</b>`;
+      row.innerHTML=`
+        <span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span>
+        <span style="display:flex;gap:7px;align-items:center"><b>${escapeHtml(c.code||"")}</b><button class="student-leave-class">خروج</button></span>`;
+      row.querySelector(".student-leave-class").addEventListener("click",()=>leaveClassAsStudent(classId,c.name||"الصف"));
       host.appendChild(row);
 
       const assignments=await getDocs(collection(db,"classes",classId,"assignments"));
-      for(const adoc of assignments.docs){
-        const a=adoc.data();
-        const sub=await getDoc(doc(db,"classes",classId,"assignments",adoc.id,"submissions",auth.currentUser.uid));
+      const assignmentDocs=assignments.docs
+        .map(d=>({id:d.id,...d.data()}))
+        .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+
+      for(const raw of assignmentDocs){
+        const a={...raw,_id:raw.id};
+        const sub=await getDoc(doc(db,"classes",classId,"assignments",a.id,"submissions",auth.currentUser.uid));
         const card=document.createElement("div");card.className="assignment-card";
+        const total=a.totalPoints||((a.questions||[]).reduce((s,q)=>s+(Number(q.points)||0),0));
+        const submitted=sub.exists()?sub.data():null;
+        let submitHtml="";
+        if(submitted){
+          const score=submitted.teacherReviewed?submitted.finalScore:submitted.autoScore;
+          const state=submitted.teacherReviewed
+            ? `✅ صحّحها المعلم • ${score??0}/${submitted.totalPoints||total}`
+            : `⏳ تم التسليم • التصحيح التلقائي ${submitted.autoScore||0}/${submitted.autoMax||0} • الأسئلة المفتوحة بانتظار المعلم`;
+          submitHtml=`<div class="submission-grade-summary">${escapeHtml(state)}</div>
+            ${submitted.teacherFeedback?`<div class="cloud-note">💬 ملاحظة المعلم: ${escapeHtml(submitted.teacherFeedback)}</div>`:""}`;
+        }else{
+          submitHtml=`<div class="assignment-student-questions"></div>
+            <button class="exam-secondary submit-assignment-btn">📤 تسليم الوظيفة</button>`;
+        }
         card.innerHTML=`
           <h5>${escapeHtml(a.title||"وظيفة")} • ${escapeHtml(c.name||"الصف")}</h5>
-          <div class="assignment-meta">${escapeHtml(subjectDisplayName(a.subject||"mixed"))}${a.dueDate?` • موعد: ${escapeHtml(a.dueDate)}`:""}</div>
+          <div class="assignment-meta">فيثاغورس${a.dueDate?` • موعد: ${escapeHtml(a.dueDate)}`:""} • ${total} علامة</div>
           <div class="assignment-description">${escapeHtml(a.description||"")}</div>
-          <div class="assignment-submission">
-            ${sub.exists()
-              ? `<div class="cloud-note">✅ تم التسليم: ${escapeHtml(sub.data().answer||"")}</div>`
-              : `<textarea class="student-assignment-answer" placeholder="اكتب تسليمك هنا..."></textarea>
-                 <button class="exam-secondary submit-assignment-btn">📤 تسليم الوظيفة</button>`}
-          </div>`;
-        if(!sub.exists()){
+          <div class="assignment-submission">${submitHtml}</div>`;
+
+        if(!submitted){
+          renderStudentAssignmentQuestions(card,a);
           card.querySelector(".submit-assignment-btn").addEventListener("click",async()=>{
-            const answer=card.querySelector(".student-assignment-answer").value.trim();
-            if(!answer){showToast("اكتب تسليمك أولًا.");return}
+            const answers=collectStudentAssignmentAnswers(card,a);
+            const unanswered=answers.filter(x=>!String(x.answer).trim()).length;
+            if(unanswered){
+              if(!confirm(`في ${unanswered} أسئلة بدون جواب. تسلّم الوظيفة هيك؟`))return;
+            }
+            const auto=gradeAssignmentAutoQuestions(a.questions||[],answers);
+            const manualMax=(a.questions||[]).filter(q=>q.type==="open").reduce((s,q)=>s+(Number(q.points)||0),0);
             try{
-              await setDoc(doc(db,"classes",classId,"assignments",adoc.id,"submissions",auth.currentUser.uid),{
-                studentUid:auth.currentUser.uid,studentName:p.displayName||"طالب",
-                answer,submittedAt:serverTimestamp()
+              await setDoc(doc(db,"classes",classId,"assignments",a.id,"submissions",auth.currentUser.uid),{
+                studentUid:auth.currentUser.uid,
+                studentName:p.displayName||"طالب",
+                answers,autoScore:auto.score,autoMax:auto.max,manualMax,
+                totalPoints:total,teacherReviewed:manualMax===0,
+                manualScore:0,finalScore:manualMax===0?auto.score:null,
+                submittedAt:serverTimestamp()
               });
-              await logStudentActivity("assignment_submit",`سلّم وظيفة: ${a.title||"وظيفة"}`,a.subject||"");
-              showToast("تم تسليم الوظيفة ✅");
+              await logStudentActivity("assignment_submit",`سلّم وظيفة: ${a.title||"وظيفة"}`,"pythagoras");
+              soundFx("submit");fxElement(card,"pop");
+              showToast(manualMax?`تم التسليم ✅ • التلقائي ${auto.score}/${auto.max} والباقي للمعلم`:`تم التسليم ✅ • العلامة ${auto.score}/${total}`);
               loadStudentClasses();
-            }catch(err){console.error(err);showToast("تعذر تسليم الوظيفة.")}
+            }catch(err){console.error(err);showToast("تعذر تسليم الوظيفة.");soundFx("wrong")}
           });
         }
         assignHost.appendChild(card);
       }
-    }catch(err){console.warn("student class",err)}
+    }catch(err){
+      console.warn("student class inaccessible",classId,err);
+    }
   }
-  if(!host.children.length)host.innerHTML='<div class="cloud-note">تعذر تحميل صفوفك.</div>';
+
+  // Clean stale class IDs after a teacher removes the student.
+  if(validIds.length!==ids.length){
+    try{
+      await setDoc(doc(db,"users",auth.currentUser.uid),{classIds:validIds,updatedAt:serverTimestamp()},{merge:true});
+      window.PythagorasiUser={...window.PythagorasiUser,classIds:validIds};
+      activeProfile=window.PythagorasiUser;
+    }catch{}
+  }
+
+  if(!host.children.length)host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';
   if(!assignHost.children.length)assignHost.innerHTML='<div class="cloud-note">ما عندك وظائف حاليًا 🎉</div>';
 }
 
@@ -5355,6 +5707,94 @@ function bindCurriculumManager(box,c){
   }));
 }
 
+
+function addAssignmentBuilderQuestion(container,type="mcq",data={}){
+  const row=document.createElement("div");
+  row.className="assignment-q-builder";
+  row.dataset.type=type;
+  const typeLabel=type==="mcq"?"اختيار من متعدد":type==="number"?"رقمي":"مفتوح — تصحيح المعلم";
+  row.innerHTML=`
+    <div class="assignment-q-head">
+      <strong>${typeLabel}</strong>
+      <input class="aq-points" type="number" min="1" max="100" value="${Number(data.points)||10}" title="العلامة">
+      <button type="button" class="exam-secondary aq-remove">🗑 حذف</button>
+    </div>
+    <textarea class="aq-prompt" placeholder="اكتب السؤال">${escapeHtml(data.prompt||"")}</textarea>
+    <div class="assignment-q-extra"></div>`;
+  const extra=row.querySelector(".assignment-q-extra");
+  if(type==="mcq"){
+    const opts=(data.options?.length?data.options:["","","",""]).slice(0,4);
+    while(opts.length<4)opts.push("");
+    extra.innerHTML=opts.map((opt,i)=>`
+      <label class="assignment-mcq-opt">
+        <input type="radio" name="aq_${Date.now()}_${Math.random()}" class="aq-correct" ${i===0?"checked":""}>
+        <input class="aq-option" value="${escapeHtml(opt)}" placeholder="الخيار ${i+1}">
+      </label>`).join("");
+    // radios above need same name
+    const radios=[...extra.querySelectorAll(".aq-correct")],radioName=`aq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    radios.forEach((r,i)=>{r.name=radioName;if(data.answer&&normExam(opts[i])===normExam(data.answer))r.checked=true});
+  }else if(type==="number"){
+    extra.innerHTML=`<input class="aq-answer" type="number" step="0.01" value="${escapeHtml(data.answer??"")}" placeholder="الإجابة الرقمية الصحيحة">`;
+  }else{
+    extra.innerHTML=`<textarea class="aq-open-guide" placeholder="ملاحظة/إجابة نموذجية للمعلم فقط — اختياري">${escapeHtml(data.guide||"")}</textarea>
+      <div class="assignment-open-note">هذا السؤال ما بينفحص تلقائيًا؛ المعلم يعطي علامته بعد التسليم.</div>`;
+  }
+  row.querySelector(".aq-remove").addEventListener("click",()=>row.remove());
+  container.appendChild(row);
+}
+function collectAssignmentBuilder(box){
+  const rows=[...box.querySelectorAll(".assignment-q-builder")];
+  if(!rows.length){showToast("أضف سؤال واحد على الأقل للوظيفة.");return null}
+  const questions=[],keys=[];
+  for(let i=0;i<rows.length;i++){
+    const row=rows[i],type=row.dataset.type;
+    const prompt=row.querySelector(".aq-prompt").value.trim();
+    const points=Math.max(1,Number(row.querySelector(".aq-points").value)||10);
+    if(!prompt){showToast(`السؤال ${i+1}: اكتب نص السؤال.`);return null}
+    const id=`q_${Date.now()}_${i}_${Math.random().toString(36).slice(2,6)}`;
+    if(type==="mcq"){
+      const options=[...row.querySelectorAll(".aq-option")].map(x=>x.value.trim());
+      if(options.some(x=>!x)){showToast(`السؤال ${i+1}: اكتب الخيارات الأربعة.`);return null}
+      if(new Set(options.map(normExam)).size!==options.length){showToast(`السؤال ${i+1}: في خيارات مكررة.`);return null}
+      const checked=row.querySelector(".aq-correct:checked");
+      const answer=checked?.closest(".assignment-mcq-opt")?.querySelector(".aq-option").value.trim()||"";
+      if(!answer){showToast(`السؤال ${i+1}: اختر الإجابة الصحيحة.`);return null}
+      questions.push({id,type,prompt,points,options,answerHash:assignmentHash(answer)});
+      keys.push({id,type,answer,points});
+    }else if(type==="number"){
+      const answer=row.querySelector(".aq-answer").value.trim();
+      if(answer===""||!Number.isFinite(Number(answer))){showToast(`السؤال ${i+1}: اكتب الإجابة الرقمية.`);return null}
+      questions.push({id,type,prompt,points,options:[],answerHash:assignmentHash(answer)});
+      keys.push({id,type,answer:String(answer),points});
+    }else{
+      const guide=row.querySelector(".aq-open-guide").value.trim();
+      questions.push({id,type,prompt,points,options:[],answerHash:""});
+      keys.push({id,type,answer:"",guide,points});
+    }
+  }
+  return {questions,keys,totalPoints:questions.reduce((s,q)=>s+q.points,0)};
+}
+function teacherAutoGradeAssignment(questions,keyMap,answers){
+  let score=0,max=0;
+  for(const q of questions||[]){
+    if(q.type==="open")continue;
+    max+=Number(q.points)||0;
+    const ans=answers.find(a=>a.id===q.id)?.answer??"";
+    const key=keyMap.get(q.id);
+    let ok=false;
+    if(key){
+      if(q.type==="number"){
+        const x=Number(ans),y=Number(key.answer);
+        ok=Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x-y)<=Math.max(.01,Math.abs(y)*.001);
+      }else ok=normExam(ans)===normExam(key.answer);
+    }
+    if(ok)score+=Number(q.points)||0;
+  }
+  return {score,max};
+}
+function memberVisibleName(m){return m.teacherNameOverride||m.displayName||"طالب"}
+function memberVisiblePhoto(m){return m.teacherPhotoOverride||m.photoData||""}
+
 async function renderTeacherClassCard(host,c){
   const isOwner=c.ownerId===auth.currentUser.uid;
   const [members,teachers,assignments,activities]=await Promise.all([
@@ -5364,19 +5804,32 @@ async function renderTeacherClassCard(host,c){
     getDocs(collection(db,"classes",c.id,"activity"))
   ]);
 
+  const memberRows=members.docs.map(d=>({uid:d.id,...d.data()}));
   const teacherRows=teachers.docs.map(d=>({uid:d.id,...d.data()}));
   const acts=activities.docs.map(d=>d.data())
     .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
-    .slice(0,40);
+    .slice(0,50);
 
   const box=document.createElement("div");
   box.className=`teacher-class-card ${isOwner?"owner":"co-teacher"}`;
 
-  const studentHtml=members.docs.map(mdoc=>{
-    const m=mdoc.data();
-    return `<div class="class-student-row">
-      <span><b>${escapeHtml(m.displayName||"طالب")}</b><small>${m.xp||0} XP • مستوى ${m.level||1} • معدل ${m.average??0}%</small><div class="student-last-active">آخر نشاط: ${classTimeText(m.lastActiveAt)}</div></span>
-      <span>${m.examCount||0} امتحانات</span>
+  const studentHtml=memberRows.map(m=>{
+    const visible=memberVisibleName(m);
+    return `<div class="class-student-row" data-member-uid="${m.uid}">
+      <div class="member-main">
+        <div class="member-avatar">${escapeHtml((visible[0]||"؟").toUpperCase())}</div>
+        <div class="member-info">
+          <b>${escapeHtml(visible)}</b>
+          ${m.teacherNameOverride?`<small>اسم الحساب: ${escapeHtml(m.displayName||"طالب")}</small>`:""}
+          <small>${m.xp||0} XP • مستوى ${m.level||1} • معدل ${m.average??0}%</small>
+          <div class="student-last-active">آخر نشاط: ${classTimeText(m.lastActiveAt)}</div>
+        </div>
+      </div>
+      <div class="member-actions">
+        <button type="button" class="edit-member-name" data-uid="${m.uid}">✏️ الاسم</button>
+        <label>📷 صورة<input type="file" accept="image/*" class="member-photo-input" data-uid="${m.uid}" hidden></label>
+        <button type="button" class="kick-student" data-uid="${m.uid}" data-name="${escapeHtml(visible)}">إخراج</button>
+      </div>
     </div>`;
   }).join("")||'<div class="empty-mini">لسه ما في طلاب.</div>';
 
@@ -5386,16 +5839,52 @@ async function renderTeacherClassCard(host,c){
   </div>`).join("")||'<div class="empty-mini">ما في معلمين مساعدين.</div>';
 
   let assignmentHtml="";
-  for(const adoc of assignments.docs){
-    const a=adoc.data();
-    const subs=await getDocs(collection(db,"classes",c.id,"assignments",adoc.id,"submissions"));
-    const submissionRows=subs.docs.map(s=>`<div class="history-row"><span>${escapeHtml(s.data().studentName||"طالب")}</span><b>${escapeHtml(s.data().answer||"")}</b></div>`).join("");
-    assignmentHtml+=`<div class="assignment-card">
+  const assignmentData=[];
+  const assignmentDocs=assignments.docs.map(d=>({id:d.id,...d.data()}))
+    .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+
+  for(const a of assignmentDocs){
+    const [subs,keySnap]=await Promise.all([
+      getDocs(collection(db,"classes",c.id,"assignments",a.id,"submissions")),
+      getDocs(collection(db,"classes",c.id,"assignments",a.id,"answerKey"))
+    ]);
+    const keyMap=new Map(keySnap.docs.map(d=>[d.id,d.data()]));
+    const total=a.totalPoints||((a.questions||[]).reduce((s,q)=>s+(Number(q.points)||0),0));
+    let submissionRows="";
+    for(const sdoc of subs.docs){
+      const sub=sdoc.data(),answers=sub.answers||[];
+      const auto=teacherAutoGradeAssignment(a.questions||[],keyMap,answers);
+      const openQs=(a.questions||[]).filter(q=>q.type==="open");
+      const openRows=openQs.map(q=>{
+        const ans=answers.find(x=>x.id===q.id)?.answer||"—";
+        const saved=Number(sub.manualByQuestion?.[q.id]??0);
+        const guide=keyMap.get(q.id)?.guide||"";
+        return `<div class="assignment-grade-row">
+          <b>${escapeHtml(q.prompt)}</b>
+          <div class="cloud-note">إجابة الطالب: ${escapeHtml(ans)}</div>
+          ${guide?`<div class="cloud-note">ملاحظة المعلم: ${escapeHtml(guide)}</div>`:""}
+          <label>علامة السؤال من ${q.points}
+            <input class="manual-q-score" data-qid="${q.id}" type="number" min="0" max="${q.points}" step="1" value="${saved}">
+          </label>
+        </div>`;
+      }).join("");
+      submissionRows+=`<div class="assignment-teacher-submission" data-assignment-id="${a.id}" data-student-id="${sdoc.id}">
+        <div class="history-row">
+          <span><b>${escapeHtml(sub.studentName||"طالب")}</b><small style="display:block;color:#8197a9">التلقائي ${auto.score}/${auto.max}</small></span>
+          <b>${sub.teacherReviewed?`${sub.finalScore||0}/${total}`:"بانتظار التصحيح"}</b>
+        </div>
+        ${openRows}
+        <textarea class="teacher-assignment-feedback" placeholder="ملاحظة للطالب — اختياري">${escapeHtml(sub.teacherFeedback||"")}</textarea>
+        <button class="exam-secondary grade-assignment-submission">✅ حفظ التصحيح</button>
+      </div>`;
+    }
+    assignmentHtml+=`<div class="assignment-card teacher-assignment-card" data-assignment-id="${a.id}">
       <h5>${escapeHtml(a.title||"وظيفة")}</h5>
-      <div class="assignment-meta">${escapeHtml(subjectDisplayName(a.subject||"mixed"))}${a.dueDate?` • ${escapeHtml(a.dueDate)}`:""} • ${subs.size} تسليم</div>
+      <div class="assignment-meta">فيثاغورس${a.dueDate?` • ${escapeHtml(a.dueDate)}`:""} • ${total} علامة • ${subs.size} تسليم</div>
       <div class="assignment-description">${escapeHtml(a.description||"")}</div>
-      ${submissionRows?`<details><summary>عرض التسليمات</summary>${submissionRows}</details>`:""}
+      ${submissionRows||'<div class="empty-mini">لسه ما في تسليمات.</div>'}
     </div>`;
+    assignmentData.push({a,keyMap,total});
   }
   if(!assignmentHtml)assignmentHtml='<div class="empty-mini">ما في وظائف بعد.</div>';
 
@@ -5435,26 +5924,29 @@ async function renderTeacherClassCard(host,c){
         <div>${teacherHtml}</div>
       </div>
 
-      <div class="class-panel">
-        <h4>👥 الطلاب</h4>
+      <div class="class-panel full">
+        <h4>👥 الطلاب — تعديل الاسم/الصورة أو إخراج طالب</h4>
         <div>${studentHtml}</div>
       </div>
 
-      <div class="class-panel">
-        <h4>📝 وظيفة جديدة</h4>
-        <div class="assignment-create">
+      <div class="class-panel full">
+        <h4>📝 وظيفة جديدة — مثل الامتحان</h4>
+        <div class="assignment-create assignment-exam-builder">
           <input class="assignment-title" placeholder="عنوان الوظيفة">
-          <select class="assignment-subject hidden">
-            <option value="pythagoras" selected>فيثاغورس</option>
-          </select>
-          <textarea class="assignment-description-input" placeholder="اكتب المطلوب من الطلاب..."></textarea>
           <input class="assignment-date" type="date">
-          <button class="apply create-assignment-btn" style="margin:0">نشر الوظيفة</button>
+          <textarea class="assignment-description-input" placeholder="تعليمات الوظيفة للطلاب..."></textarea>
+          <div class="assignment-builder-toolbar">
+            <button type="button" class="exam-secondary assignment-add-mcq">＋ اختيار من متعدد</button>
+            <button type="button" class="exam-secondary assignment-add-number">＋ سؤال رقمي</button>
+            <button type="button" class="exam-secondary assignment-add-open">＋ سؤال مفتوح</button>
+          </div>
+          <div class="assignment-question-builder"></div>
+          <button class="apply create-assignment-btn" style="margin:0">📤 نشر الوظيفة</button>
         </div>
       </div>
 
       <div class="class-panel full">
-        <h4>📚 الوظائف والتسليمات</h4>
+        <h4>📚 الوظائف والتسليمات والتصحيح</h4>
         <div>${assignmentHtml}</div>
       </div>
 
@@ -5464,6 +5956,106 @@ async function renderTeacherClassCard(host,c){
       </div>
     </div>`;
 
+  // Apply class-specific avatars after DOM creation.
+  for(const m of memberRows){
+    const row=box.querySelector(`.class-student-row[data-member-uid="${CSS.escape(m.uid)}"]`);
+    const avatar=row?.querySelector(".member-avatar"),photo=memberVisiblePhoto(m);
+    if(avatar&&photo){avatar.style.backgroundImage=`url("${photo}")`;avatar.textContent=""}
+  }
+
+  // Student management.
+  box.querySelectorAll(".edit-member-name").forEach(btn=>btn.addEventListener("click",async()=>{
+    const uid=btn.dataset.uid,m=memberRows.find(x=>x.uid===uid);if(!m)return;
+    const current=memberVisibleName(m);
+    const name=prompt("الاسم اللي بدك يظهر لهذا الطالب داخل الصف:",current);
+    if(name==null)return;
+    const clean=name.trim().replace(/\s+/g," ").slice(0,40);
+    if(clean.length<2){showToast("الاسم قصير.");return}
+    try{
+      await updateDoc(doc(db,"classes",c.id,"members",uid),{teacherNameOverride:clean,teacherEditedAt:serverTimestamp()});
+      showToast("تم تغيير اسم الطالب داخل الصف ✅");soundFx("correct");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر تعديل الاسم.")}
+  }));
+  box.querySelectorAll(".member-photo-input").forEach(input=>input.addEventListener("change",async()=>{
+    const file=input.files?.[0],uid=input.dataset.uid;if(!file)return;
+    try{
+      if(!file.type.startsWith("image/"))throw new Error("image");
+      if(file.size>8*1024*1024)throw new Error("size");
+      const photoData=await imageFileToDataURL(file);
+      await updateDoc(doc(db,"classes",c.id,"members",uid),{teacherPhotoOverride:photoData,teacherEditedAt:serverTimestamp()});
+      showToast("تم تغيير صورة الطالب داخل الصف ✅");soundFx("correct");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
+    finally{input.value=""}
+  }));
+  box.querySelectorAll(".kick-student").forEach(btn=>btn.addEventListener("click",async()=>{
+    const uid=btn.dataset.uid,name=btn.dataset.name||"الطالب";
+    if(!confirm(`إخراج ${name} من الصف؟`))return;
+    try{
+      await deleteDoc(doc(db,"classes",c.id,"members",uid));
+      showToast(`تم إخراج ${name} من الصف.`);soundFx("submit");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر إخراج الطالب.")}
+  }));
+
+  // Assignment builder.
+  const qHost=box.querySelector(".assignment-question-builder");
+  box.querySelector(".assignment-add-mcq").addEventListener("click",()=>addAssignmentBuilderQuestion(qHost,"mcq"));
+  box.querySelector(".assignment-add-number").addEventListener("click",()=>addAssignmentBuilderQuestion(qHost,"number"));
+  box.querySelector(".assignment-add-open").addEventListener("click",()=>addAssignmentBuilderQuestion(qHost,"open"));
+
+  box.querySelector(".create-assignment-btn").addEventListener("click",async()=>{
+    const title=box.querySelector(".assignment-title").value.trim();
+    const description=box.querySelector(".assignment-description-input").value.trim();
+    const dueDate=box.querySelector(".assignment-date").value;
+    if(title.length<2){showToast("اكتب عنوان الوظيفة.");return}
+    const built=collectAssignmentBuilder(box);if(!built)return;
+    const btn=box.querySelector(".create-assignment-btn");btn.disabled=true;btn.textContent="⏳ نشر...";
+    try{
+      const ref=await addDoc(collection(db,"classes",c.id,"assignments"),{
+        title,description,subject:"pythagoras",dueDate,
+        questions:built.questions,totalPoints:built.totalPoints,
+        createdBy:auth.currentUser.uid,
+        createdByName:window.PythagorasiUser.displayName||"معلم",
+        createdAt:serverTimestamp()
+      });
+      for(const key of built.keys){
+        await setDoc(doc(db,"classes",c.id,"assignments",ref.id,"answerKey",key.id),key);
+      }
+      showToast(`تم نشر الوظيفة • ${built.questions.length} أسئلة • ${built.totalPoints} علامة ✅`);
+      soundFx("submit");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر نشر الوظيفة.");soundFx("wrong")}
+    finally{btn.disabled=false;btn.textContent="📤 نشر الوظيفة"}
+  });
+
+  // Assignment grading.
+  box.querySelectorAll(".grade-assignment-submission").forEach(btn=>btn.addEventListener("click",async()=>{
+    const wrap=btn.closest(".assignment-teacher-submission");
+    const assignmentId=wrap.dataset.assignmentId,studentUid=wrap.dataset.studentId;
+    const info=assignmentData.find(x=>x.a.id===assignmentId);if(!info)return;
+    const subRef=doc(db,"classes",c.id,"assignments",assignmentId,"submissions",studentUid);
+    const subSnap=await getDoc(subRef);if(!subSnap.exists())return;
+    const sub=subSnap.data(),answers=sub.answers||[];
+    const auto=teacherAutoGradeAssignment(info.a.questions||[],info.keyMap,answers);
+    const manualByQuestion={};let manualScore=0;
+    wrap.querySelectorAll(".manual-q-score").forEach(input=>{
+      const q=(info.a.questions||[]).find(x=>x.id===input.dataset.qid);
+      const max=Number(q?.points)||0;
+      const val=Math.max(0,Math.min(max,Number(input.value)||0));
+      manualByQuestion[input.dataset.qid]=val;manualScore+=val;
+    });
+    const finalScore=auto.score+manualScore;
+    const feedback=wrap.querySelector(".teacher-assignment-feedback").value.trim();
+    try{
+      await updateDoc(subRef,{
+        autoScore:auto.score,autoMax:auto.max,manualScore,manualByQuestion,
+        finalScore,totalPoints:info.total,teacherReviewed:true,
+        teacherFeedback:feedback,gradedBy:auth.currentUser.uid,gradedAt:serverTimestamp()
+      });
+      showToast(`تم حفظ التصحيح • ${finalScore}/${info.total} ✅`);
+      soundFx("correct");fxElement(wrap,"win");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر حفظ التصحيح.")}
+  }));
+
+  // Existing class controls.
   box.querySelector(".copy-class-code").addEventListener("click",async()=>{
     try{await navigator.clipboard.writeText(c.code);showToast("تم نسخ كود الصف.");}
     catch{showToast(`كود الصف: ${c.code}`)}
@@ -5486,22 +6078,6 @@ async function renderTeacherClassCard(host,c){
       try{await updateDoc(doc(db,"classJoinCodes",c.code),{className:name})}catch{}
       showToast("تم تغيير اسم الصف ✅");loadTeacherClasses();
     }catch(err){console.error(err);showToast("تعذر تغيير الاسم.")}
-  });
-  box.querySelector(".create-assignment-btn").addEventListener("click",async()=>{
-    const title=box.querySelector(".assignment-title").value.trim();
-    const description=box.querySelector(".assignment-description-input").value.trim();
-    const subject=box.querySelector(".assignment-subject").value;
-    const dueDate=box.querySelector(".assignment-date").value;
-    if(title.length<2||description.length<2){showToast("اكتب عنوان ووصف الوظيفة.");return}
-    try{
-      await addDoc(collection(db,"classes",c.id,"assignments"),{
-        title,description,subject,dueDate,
-        createdBy:auth.currentUser.uid,
-        createdByName:window.PythagorasiUser.displayName||"معلم",
-        createdAt:serverTimestamp()
-      });
-      showToast("تم نشر الوظيفة ✅");loadTeacherClasses();
-    }catch(err){console.error(err);showToast("تعذر نشر الوظيفة.")}
   });
 
   box.querySelectorAll(".transfer-owner-btn").forEach(btn=>btn.addEventListener("click",async()=>{
@@ -5675,6 +6251,211 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
   }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
 });
 
+/* -------------------- V14 SETTINGS / SOUND / MOTION -------------------- */
+const settingsModal=document.getElementById("settingsModal");
+let soundEnabled=localStorage.getItem("pythagorasi_sound")!=="off";
+let motionEnabled=localStorage.getItem("pythagorasi_motion")!=="off";
+let audioCtx=null;
+let lastTypingSound=0;
+
+function getAudioCtx(){
+  if(!soundEnabled)return null;
+  if(!audioCtx){
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(C)audioCtx=new C();
+  }
+  if(audioCtx?.state==="suspended")audioCtx.resume().catch(()=>{});
+  return audioCtx;
+}
+function tone(freq=440,duration=.07,volume=.035,type="sine",delay=0){
+  const ctx=getAudioCtx();if(!ctx)return;
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(.0001,ctx.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(Math.max(.001,volume),ctx.currentTime+delay+.008);
+  g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+delay+duration);
+  o.connect(g);g.connect(ctx.destination);
+  o.start(ctx.currentTime+delay);o.stop(ctx.currentTime+delay+duration+.02);
+}
+function soundFx(type){
+  if(!soundEnabled)return;
+  if(type==="click")tone(360,.045,.018,"sine");
+  else if(type==="type")tone(720,.025,.009,"square");
+  else if(type==="tick")tone(870,.055,.025,"square");
+  else if(type==="correct"){tone(520,.08,.035,"sine");tone(700,.1,.035,"sine",.07);tone(880,.12,.035,"sine",.15)}
+  else if(type==="wrong"){tone(270,.11,.04,"sawtooth");tone(190,.15,.035,"sawtooth",.09)}
+  else if(type==="win"){tone(523,.12,.04,"triangle");tone(659,.12,.04,"triangle",.11);tone(784,.17,.045,"triangle",.22);tone(1046,.23,.045,"triangle",.36)}
+  else if(type==="lose"){tone(330,.13,.035,"triangle");tone(260,.16,.035,"triangle",.12);tone(196,.22,.04,"triangle",.27)}
+  else if(type==="submit"){tone(440,.07,.025,"sine");tone(660,.12,.03,"sine",.07)}
+}
+function fxElement(el,kind="pop"){
+  if(!el||!motionEnabled)return;
+  const cls=kind==="win"?"fx-win":kind==="shake"?"fx-shake":"fx-pop";
+  el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);
+  setTimeout(()=>el.classList.remove(cls),800);
+}
+function applyMotionSetting(){
+  document.body.classList.toggle("reduce-motion",!motionEnabled);
+}
+applyMotionSetting();
+
+document.addEventListener("click",e=>{
+  if(e.target.closest("button,.settings-photo-btn,.member-actions label"))soundFx("click");
+},true);
+document.addEventListener("keydown",e=>{
+  if(!soundEnabled||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!e.target.matches("input,textarea"))return;
+  const now=Date.now();if(now-lastTypingSound<55)return;
+  if(e.key.length===1||e.key==="Backspace"){lastTypingSound=now;soundFx("type")}
+},true);
+
+function refreshSettingsUI(){
+  const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
+  document.getElementById("settingsCurrentName").textContent=name;
+  document.getElementById("settingsDisplayName").value=name;
+  document.getElementById("settingsLoginName").textContent=`اسم الدخول: ${p.loginName||p.originalLoginName||p.nameKey||name}`;
+  document.getElementById("settingsAIName").value=assistantNameFor("pythagoras");
+  const avatar=document.getElementById("settingsAvatar");
+  applyAvatar(avatar,p,name);
+  document.getElementById("settingsSoundToggle").checked=soundEnabled;
+  document.getElementById("settingsMotionToggle").checked=motionEnabled;
+  document.getElementById("settingsStatus").textContent="";
+}
+function openSettingsModal(){
+  refreshSettingsUI();
+  settingsModal.classList.add("open");
+}
+function closeSettingsModal(){settingsModal.classList.remove("open")}
+document.getElementById("lobbySettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
+settingsModal.addEventListener("click",e=>{if(e.target===settingsModal)closeSettingsModal()});
+
+document.getElementById("settingsDarkBtn").addEventListener("click",()=>applySiteTheme("dark"));
+document.getElementById("settingsLightBtn").addEventListener("click",()=>applySiteTheme("light"));
+document.getElementById("settingsSoundToggle").addEventListener("change",e=>{
+  soundEnabled=e.target.checked;
+  localStorage.setItem("pythagorasi_sound",soundEnabled?"on":"off");
+  if(soundEnabled)soundFx("correct");
+});
+document.getElementById("settingsMotionToggle").addEventListener("change",e=>{
+  motionEnabled=e.target.checked;
+  localStorage.setItem("pythagorasi_motion",motionEnabled?"on":"off");
+  applyMotionSetting();
+});
+
+document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const name=document.getElementById("settingsDisplayName").value.trim().replace(/\s+/g," ");
+  const status=document.getElementById("settingsStatus");
+  if(name.length<2){status.textContent="اكتب اسمًا من حرفين على الأقل.";return}
+  try{
+    const originalLoginName=window.PythagorasiUser.loginName||window.PythagorasiUser.originalLoginName||window.PythagorasiUser.displayName||name;
+    await setDoc(doc(db,"users",auth.currentUser.uid),{displayName:name,originalLoginName,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,displayName:name,originalLoginName};
+    activeProfile=window.PythagorasiUser;
+    document.getElementById("authDisplayName").textContent=name;
+    document.getElementById("lobbyProfileName").textContent=name;
+    document.getElementById("lobbyGreeting").textContent=`أهلًا ${name.split(/\s+/)[0]} 👋`;
+    if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+    refreshAIWelcome();refreshSettingsUI();
+    status.textContent="تم حفظ الاسم الظاهر ✅";
+    soundFx("correct");
+  }catch(err){console.error(err);status.textContent="تعذر حفظ الاسم."}
+});
+
+document.getElementById("saveAINameSettingsBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser)return;
+  const ai=(document.getElementById("settingsAIName").value.trim()||"فيثاغورسي").slice(0,24);
+  const names={...assistantNames(),lobby:ai,pythagoras:ai};
+  try{
+    await setDoc(doc(db,"users",auth.currentUser.uid),{assistantNames:names,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,assistantNames:names};
+    activeProfile=window.PythagorasiUser;
+    updateAssistantLabels();refreshAIWelcome();
+    document.getElementById("settingsStatus").textContent="تم حفظ اسم المساعد ✅";
+    soundFx("correct");
+  }catch(err){console.error(err);document.getElementById("settingsStatus").textContent="تعذر حفظ اسم المساعد."}
+});
+
+async function saveOwnProfilePhoto(file){
+  if(!file||!auth.currentUser)return;
+  if(!file.type.startsWith("image/"))throw new Error("image-only");
+  if(file.size>8*1024*1024)throw new Error("image-too-large");
+  const photoData=await imageFileToDataURL(file);
+  await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,updatedAt:serverTimestamp()},{merge:true});
+  window.PythagorasiUser={...window.PythagorasiUser,photoData};
+  activeProfile=window.PythagorasiUser;
+  applyAvatar(document.getElementById("settingsAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+  applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+  applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+  const img=document.getElementById("profilePhotoPreview");
+  if(img){img.src=photoData;img.style.display="block"}
+  if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+}
+document.getElementById("settingsPhotoInput").addEventListener("change",async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  const status=document.getElementById("settingsStatus");
+  try{
+    await saveOwnProfilePhoto(file);
+    refreshSettingsUI();status.textContent="تم تغيير الصورة ✅";soundFx("correct");
+  }catch(err){
+    status.textContent=String(err?.message)==="image-too-large"?"الصورة أكبر من 8MB.":"تعذر حفظ الصورة.";
+  }finally{e.target.value=""}
+});
+
+document.getElementById("settingsLogoutBtn").addEventListener("click",()=>{
+  closeSettingsModal();document.getElementById("authLogoutBtn").click();
+});
+
+document.getElementById("deleteAccountBtn").addEventListener("click",async()=>{
+  const user=auth.currentUser,p=window.PythagorasiUser;
+  if(!user||!p)return;
+  const status=document.getElementById("settingsStatus");
+  if(p.role==="teacher"){
+    try{
+      const owned=await getDocs(query(collection(db,"classes"),where("ownerId","==",user.uid)));
+      if(!owned.empty){
+        status.textContent="قبل حذف حساب المعلم: انقل ملكية صفوفك أو احذفها أولًا.";
+        soundFx("wrong");return;
+      }
+    }catch{}
+  }
+  const lastSignInMs=new Date(user.metadata?.lastSignInTime||0).getTime();
+  if(!lastSignInMs || Date.now()-lastSignInMs>4*60*1000){
+    status.textContent="لأمان الحساب: اعمل تسجيل خروج، ادخل من جديد، وبعدها افتح الإعدادات واحذف الحساب.";
+    soundFx("wrong");return;
+  }
+  if(!confirm("متأكد بدك تحذف حسابك؟"))return;
+  if(!confirm("تأكيد أخير: الحساب رح ينحذف نهائيًا. أكمل؟"))return;
+  status.textContent="⏳ جاري حذف الحساب...";
+  try{
+    if(p.role==="student"){
+      for(const classId of (p.classIds||[])){
+        try{await deleteDoc(doc(db,"classes",classId,"members",user.uid))}catch{}
+      }
+    }else{
+      for(const classId of (p.teachingClassIds||[])){
+        try{await deleteDoc(doc(db,"classes",classId,"teachers",user.uid))}catch{}
+      }
+    }
+    try{await deleteDoc(doc(db,"users",user.uid))}catch{}
+    await deleteUser(user);
+    localStorage.removeItem("pythagorasi_ai_name");
+    localStorage.removeItem("learnsphere_ai_context");
+    closeSettingsModal();
+    showToast("تم حذف الحساب.");
+  }catch(err){
+    console.error("delete account",err);
+    status.textContent=String(err?.code||"").includes("requires-recent-login")
+      ?"لأمان الحساب: اعمل تسجيل خروج، ادخل من جديد، وبعدها احذف الحساب."
+      :"تعذر حذف الحساب الآن.";
+    soundFx("wrong");
+  }
+});
+
+
+
 
 let currentTopic=null;
 let currentVisibleTopics=[];
@@ -5788,6 +6569,7 @@ function nextQuickPythagQuestion(){
         document.getElementById("quickPythagScore").textContent=quickPythagScore;
         feedback.textContent=ok?`✅ صح! ${quickPythagCurrent.explanation||""}`:`❌ الصحيح: ${quickPythagCurrent.answer}. ${quickPythagCurrent.explanation||""}`;
         feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+        soundFx(ok?"correct":"wrong");fxElement(feedback,ok?"win":"shake");
       });
       host.appendChild(b);
     });
@@ -5801,6 +6583,7 @@ function nextQuickPythagQuestion(){
       document.getElementById("quickPythagScore").textContent=quickPythagScore;
       feedback.textContent=ok?`✅ صح! ${quickPythagCurrent.explanation||""}`:`❌ الصحيح: ${quickPythagCurrent.answer}. ${quickPythagCurrent.explanation||""}`;
       feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+      soundFx(ok?"correct":"wrong");fxElement(feedback,ok?"win":"shake");
     });
     host.append(input,check);
   }
@@ -6050,10 +6833,18 @@ let liveCompetitionData=null;
 let livePlayers=[];
 let liveUnsubs=[];
 let liveAnsweredIndex=-1;
+let liveCompetitionTimerHandle=null;
+let liveTimerKey="";
+let liveTimerLastSecond=null;
+let liveLastAnswerByIndex={};
+let liveLastRenderedStatus="";
+const LIVE_QUESTION_SECONDS=20;
 
 function clearLiveSubscriptions(){
   liveUnsubs.forEach(fn=>{try{fn()}catch{}});
   liveUnsubs=[];
+  if(liveCompetitionTimerHandle){clearInterval(liveCompetitionTimerHandle);liveCompetitionTimerHandle=null}
+  liveTimerKey="";liveTimerLastSecond=null;
 }
 function showCompetitionView(id){
   ["competitionHome","competitionLibrary","competitionBuilder","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
@@ -6061,11 +6852,20 @@ function showCompetitionView(id){
   });
 }
 function openCompetitionModal(){
+  if(!window.PythagorasiUser||!auth.currentUser){
+    authPendingAction=null;
+    authGate.classList.add("show");
+    showRoleChooser();
+    setAuthError("سجّل دخولك أولًا.");
+    return;
+  }
   competitionModal.classList.add("open");
   showCompetitionView("competitionHome");
   document.getElementById("competitionModalTitle").textContent="🏆 المسابقة المباشرة";
-  const savedName=localStorage.getItem("pythagorasi_student_name")||"";
-  if(savedName&&!document.getElementById("compJoinName").value)document.getElementById("compJoinName").value=savedName;
+  const teacher=window.PythagorasiUser.role==="teacher";
+  document.getElementById("competitionStudentCard").classList.toggle("hidden",teacher);
+  document.getElementById("competitionTeacherCard").classList.toggle("hidden",!teacher);
+  document.getElementById("compAutoStudentName").textContent=window.PythagorasiUser.displayName||"طالب";
 }
 document.getElementById("competitionBtn").addEventListener("click",openCompetitionModal);
 document.getElementById("closeCompetitionModal").addEventListener("click",()=>{
@@ -6296,11 +7096,13 @@ async function ensureAnonymousStudent(name){
   return user;
 }
 async function joinLiveCompetition(){
-  const name=(document.getElementById("compJoinName").value||"").trim().replace(/\s+/g," ");
+  const name=(window.PythagorasiUser?.displayName||"طالب").trim().replace(/\s+/g," ");
   const code=(document.getElementById("compJoinCode").value||"").trim().toUpperCase();
   const team=document.getElementById("compJoinTeam").value;
   const status=document.getElementById("compJoinStatus");
-  if(name.length<2){status.textContent="اكتب اسمك أولًا.";return}
+  if(window.PythagorasiUser?.role!=="student"){
+    status.textContent="الدخول كلاعب للطلاب فقط.";soundFx("wrong");return;
+  }
   if(code.length<4){status.textContent="اكتب كود الغرفة.";return}
   status.textContent="⏳ جاري الدخول...";
   try{
@@ -6373,6 +7175,53 @@ function renderLiveLeaderboard(){
   document.getElementById("compLeaderboard").innerHTML=rows||'<div class="cloud-note">بانتظار الطلاب...</div>';
   document.getElementById("compFinalLeaderboard").innerHTML=rows;
 }
+
+function liveTimestampMs(ts){
+  if(!ts)return Date.now();
+  if(typeof ts.toMillis==="function")return ts.toMillis();
+  if(ts.seconds)return ts.seconds*1000+(ts.nanoseconds||0)/1e6;
+  return Date.now();
+}
+function stopCompetitionCountdown(){
+  if(liveCompetitionTimerHandle){clearInterval(liveCompetitionTimerHandle);liveCompetitionTimerHandle=null}
+  const el=document.getElementById("compQuestionTimer");
+  if(el){el.textContent="—";el.classList.remove("danger")}
+  liveTimerKey="";liveTimerLastSecond=null;
+}
+function startCompetitionCountdown(room){
+  if(room.status!=="question"){stopCompetitionCountdown();return}
+  const key=`${room.id||liveCompetitionId}_${room.currentIndex}_${liveTimestampMs(room.questionStartedAt)}`;
+  if(liveTimerKey===key&&liveCompetitionTimerHandle)return;
+  stopCompetitionCountdown();
+  liveTimerKey=key;
+  const started=liveTimestampMs(room.questionStartedAt);
+  const el=document.getElementById("compQuestionTimer");
+
+  const tick=async()=>{
+    const elapsed=Math.max(0,(Date.now()-started)/1000);
+    const left=Math.max(0,Math.ceil(LIVE_QUESTION_SECONDS-elapsed));
+    if(el){
+      el.textContent=left;
+      el.classList.toggle("danger",left<=5);
+    }
+    if(left!==liveTimerLastSecond){
+      if(left<=5&&left>0)soundFx("tick");
+      liveTimerLastSecond=left;
+    }
+    if(left<=0){
+      if(liveCompetitionTimerHandle){clearInterval(liveCompetitionTimerHandle);liveCompetitionTimerHandle=null}
+      if(liveCompetitionRole==="player"){
+        document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=true);
+        document.getElementById("compAnswerStatus").textContent="⏱ انتهى الوقت — استنى النتيجة.";
+      }else if(liveCompetitionRole==="host"&&liveCompetitionData?.status==="question"){
+        document.getElementById("compRevealBtn")?.click();
+      }
+    }
+  };
+  tick();
+  liveCompetitionTimerHandle=setInterval(tick,250);
+}
+
 function renderLiveRoom(){
   const r=liveCompetitionData;if(!r)return;
   document.getElementById("compRoomCode").textContent=r.code||"------";
@@ -6384,15 +7233,31 @@ function renderLiveRoom(){
   document.getElementById("compFinalA").textContent=r.teamAScore||0;
   document.getElementById("compFinalB").textContent=r.teamBScore||0;
 
-  if(r.status==="lobby"){showCompetitionView("competitionLobby");return}
+  if(r.status==="lobby"){
+    stopCompetitionCountdown();
+    showCompetitionView("competitionLobby");
+    liveLastRenderedStatus="lobby";
+    return;
+  }
   if(r.status==="finished"){
+    stopCompetitionCountdown();
     showCompetitionView("competitionFinished");
     const a=r.teamAScore||0,b=r.teamBScore||0;
     document.getElementById("compWinnerText").textContent=a===b?"تعادل 🔥":a>b?"🔵 الفريق A فاز!":"🔴 الفريق B فاز!";
+    if(liveLastRenderedStatus!=="finished"){
+      if(liveCompetitionRole==="player"){
+        const me=livePlayers.find(p=>p.uid===auth.currentUser?.uid);
+        const won=a===b?null:(me?.team==="A"?a>b:b>a);
+        if(won===true){soundFx("win");fxElement(document.getElementById("competitionFinished"),"win")}
+        else if(won===false){soundFx("lose");fxElement(document.getElementById("competitionFinished"),"shake")}
+      }else{soundFx("win")}
+    }
+    liveLastRenderedStatus="finished";
     return;
   }
 
   showCompetitionView("competitionGame");
+  startCompetitionCountdown(r);
   document.getElementById("compQuestionNo").textContent=`سؤال ${(r.currentIndex||0)+1} / ${r.questionCount||8}`;
   document.getElementById("compGameState").textContent=r.status==="result"?"النتيجة":"مباشر";
   document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||"جاري تحميل السؤال...";
@@ -6414,9 +7279,17 @@ function renderLiveRoom(){
   });
 
   const st=document.getElementById("compAnswerStatus");
-  if(r.status==="result")st.textContent=`✅ الإجابة الصحيحة: ${r.correctAnswer||"—"}`;
-  else if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)st.textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
-  else st.textContent=liveCompetitionRole==="host"?"استنى الإجابات، وبعدها اقفل السؤال واحسب النقاط.":"اختار جواب واحد.";
+  if(r.status==="result"){
+    st.textContent=`✅ الإجابة الصحيحة: ${r.correctAnswer||"—"}`;
+    if(liveCompetitionRole==="player"&&liveLastRenderedStatus!=="result"){
+      const myAns=liveLastAnswerByIndex[r.currentIndex];
+      const ok=myAns!=null&&normExam(myAns)===normExam(r.correctAnswer||"");
+      soundFx(ok?"correct":"wrong");
+      fxElement(document.getElementById("competitionGame"),ok?"win":"shake");
+    }
+  }else if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)st.textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+  else st.textContent=liveCompetitionRole==="host"?"استنى الإجابات أو خلي التايمر يخلص تلقائيًا.":"اختار جواب واحد قبل انتهاء الوقت.";
+  liveLastRenderedStatus=r.status;
 }
 
 async function sendLiveAnswer(answer,button){
@@ -6446,6 +7319,8 @@ async function sendLiveAnswer(answer,button){
       team:me?.team||"A",questionIndex:idx,answer,
       answeredAtMs:Date.now(),submittedAt:serverTimestamp()
     });
+    liveLastAnswerByIndex[idx]=answer;
+    soundFx("submit");
     document.getElementById("compAnswerStatus").textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
     logStudentActivity("competition_answer",`أجاب على السؤال ${(idx||0)+1} في المسابقة`,"");
   }catch(err){
@@ -7440,8 +8315,10 @@ document.getElementById("challengeCheck").addEventListener("click",()=>{
     challenge.score+=10;
     document.getElementById("challengeScore").textContent=`${challenge.score} نقاط`;
     challengeFeedback(`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`,true);
+    soundFx("correct");fxElement(document.getElementById("pythagChallengeBox"),"win");
   }else{
     challengeFeedback(`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`,false);
+    soundFx("wrong");fxElement(document.getElementById("pythagChallengeBox"),"shake");
   }
 });
 
