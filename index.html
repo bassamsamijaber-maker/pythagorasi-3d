@@ -1109,6 +1109,44 @@ body.light .saved-comp-card,.subject-strip{ }
   .assignment-create textarea,.assignment-create button{grid-column:auto}
 }
 
+
+/* ===== Curriculum / Topics V11 ===== */
+.subject-card.hebrew{background:linear-gradient(145deg,rgba(38,178,255,.12),rgba(255,255,255,.02))}
+.topic-platform-box{width:min(1120px,97vw);max-height:92vh}
+.topic-searchbar{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}
+.topic-searchbar input{height:46px}
+.topic-browser-note{font-size:12px;color:#8198ab;margin-bottom:12px}
+.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic-card{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.028);border-radius:16px;padding:14px;color:white;text-align:right;cursor:pointer;min-height:130px}
+.topic-card:hover{transform:translateY(-3px);border-color:rgba(63,188,255,.3)}
+.topic-card-icon{font-size:28px;display:block;margin-bottom:8px}.topic-card b{display:block;font-size:16px;margin-bottom:4px}
+.topic-card p{margin:0;color:#8fa5b7;font-size:11px;line-height:1.55}.topic-card .special-topic{display:inline-block;margin-top:7px;font-size:9px;color:#ffd77a}
+.topic-lesson-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}
+.topic-hero-card{display:grid;grid-template-columns:82px 1fr;gap:14px;align-items:center;padding:18px;border-radius:19px;background:linear-gradient(135deg,rgba(29,137,255,.11),rgba(137,73,238,.08));border:1px solid rgba(255,255,255,.08)}
+.topic-icon-big{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;font-size:37px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08)}
+.topic-hero-card h2{margin:0 0 5px;font-size:27px}.topic-hero-card p{margin:0;color:#93a9bb;line-height:1.7}.topic-ai-name{font-size:11px;color:#7ebff3;margin-top:7px;font-weight:800}
+.topic-layout{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
+.topic-content-card{padding:15px;border-radius:16px;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.025)}
+.topic-content-card h3{margin:0 0 9px}.topic-explanation,.topic-example-text{font-size:13px;line-height:1.9;color:#d5e3ed;white-space:pre-wrap}
+.topic-tip{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,205,76,.06);border:1px solid rgba(255,205,76,.12);color:#efd98c;font-size:12px;line-height:1.7}
+.topic-visual{min-height:130px;border-radius:13px;background:#071522;border:1px solid rgba(255,255,255,.07);display:grid;place-items:center;padding:14px;margin-bottom:9px;overflow:hidden}
+.fraction-demo{width:min(320px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.fraction-demo span{height:58px;background:#173047;border-radius:6px}.fraction-demo span.on{background:linear-gradient(180deg,#2c99ff,#4367e9)}
+.equation-demo{font-size:27px;font-weight:1000;direction:ltr;padding:15px;border-radius:13px;background:rgba(39,142,255,.1)}
+.grammar-demo{font-size:25px;font-weight:900;line-height:1.8;text-align:center}.grammar-demo mark{background:rgba(255,196,64,.17);color:#ffd66c;padding:2px 5px;border-radius:6px}
+.hebrew-demo{direction:rtl;font-size:28px;font-weight:900;text-align:center;font-family:Arial,sans-serif}.hebrew-demo mark{background:rgba(48,173,255,.15);color:#8bd7ff;padding:2px 5px;border-radius:6px}
+.science-demo,.map-demo{font-size:25px;text-align:center;line-height:2}
+.topic-card-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.topic-practice-question{font-size:14px;font-weight:800;line-height:1.7;margin:7px 0}
+.topic-practice-options{display:grid;grid-template-columns:1fr 1fr;gap:7px}.topic-practice-options button{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:white;cursor:pointer}
+.topic-practice-options button.correct{border-color:#4dd99c;background:rgba(77,217,156,.1)}.topic-practice-options button.wrong{border-color:#ff707b;background:rgba(255,112,123,.08)}
+.topic-ai-chat{height:160px;overflow:auto;padding:8px;border-radius:11px;background:rgba(0,0,0,.14);margin-bottom:8px}.topic-ai-chat .msg{margin:6px 0;max-width:90%}
+.topic-bottom-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.topic-bottom-actions .apply{margin:0}
+.curriculum-manager{margin-top:10px}.curriculum-subject{margin-top:8px;border-radius:11px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.02)}
+.curriculum-subject summary{padding:10px;cursor:pointer;font-weight:900}.curriculum-topic-list{padding:0 10px 10px;display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+.curriculum-topic-toggle{display:flex;align-items:center;gap:7px;padding:7px;border-radius:8px;background:rgba(255,255,255,.025);font-size:11px}.curriculum-topic-toggle input{width:auto}.curriculum-topic-toggle button{margin-inline-start:auto}
+.custom-topic-add{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:140px 1fr 1fr;gap:7px}.custom-topic-add textarea{grid-column:1/-1;min-height:62px}.custom-topic-add button{grid-column:1/-1}
+.curriculum-status{font-size:10px;color:#75c79d;margin-top:5px}
+@media(max-width:760px){.topic-grid,.topic-layout{grid-template-columns:1fr}.custom-topic-add{grid-template-columns:1fr}.custom-topic-add textarea,.custom-topic-add button{grid-column:auto}.curriculum-topic-list{grid-template-columns:1fr}.topic-practice-options{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1232,14 +1270,14 @@ body.light .saved-comp-card,.subject-strip{ }
         <button class="subject-card arabic" data-subject-open="arabic">
           <span class="subject-ico">ض</span><b>لغة عربية</b><small class="subject-ai-label" data-ai-label="arabic">بيان</small>
         </button>
+        <button class="subject-card hebrew" data-subject-open="hebrew">
+          <span class="subject-ico">א</span><b>עברית • عبري</b><small class="subject-ai-label" data-ai-label="hebrew">نوعام</small>
+        </button>
         <button class="subject-card english" data-subject-open="english">
           <span class="subject-ico">A</span><b>English</b><small class="subject-ai-label" data-ai-label="english">Lingo</small>
         </button>
         <button class="subject-card geography" data-subject-open="geography">
           <span class="subject-ico">🌍</span><b>جغرافيا</b><small class="subject-ai-label" data-ai-label="geography">أطلس</small>
-        </button>
-        <button class="subject-card pythagoras" data-subject-open="pythagoras">
-          <span class="subject-ico">📐</span><b>مختبر فيثاغورس</b><small class="subject-ai-label" data-ai-label="pythagoras">فيثاغورسي</small>
         </button>
       </div>
     </section>
@@ -1269,7 +1307,7 @@ body.light .saved-comp-card,.subject-strip{ }
 </div>
 
 <div class="modal" id="subjectModal">
-  <div class="modalbox subject-modalbox">
+  <div class="modalbox subject-modalbox topic-platform-box">
     <div class="modalhead">
       <div>
         <h2 id="subjectModalTitle">المادة</h2>
@@ -1277,15 +1315,67 @@ body.light .saved-comp-card,.subject-strip{ }
       </div>
       <button class="close" id="closeSubjectModal">×</button>
     </div>
-    <div class="subject-workspace">
-      <div class="subject-side-actions">
-        <button class="apply" id="subjectGenerateQuestion">🎯 سؤال جديد</button>
-        <button class="exam-secondary" id="subjectOpenExam">🎓 امتحان بهذه المادة</button>
+
+    <div id="subjectTopicBrowser">
+      <div class="topic-searchbar">
+        <input id="topicSearchInput" placeholder="🔎 ابحث عن موضوع داخل المادة...">
+        <button class="exam-secondary" id="topicSearchBtn">بحث</button>
       </div>
-      <div class="subject-chat" id="subjectChat"></div>
-      <div class="subject-chat-input">
-        <input id="subjectQuestionInput" placeholder="اسأل أي سؤال بالمادة...">
-        <button id="subjectQuestionSend">➤</button>
+      <div class="topic-browser-note" id="topicBrowserNote">اختار موضوع حتى تفتح الشرح والأمثلة والتدريب.</div>
+      <div class="topic-grid" id="topicResults"></div>
+    </div>
+
+    <div id="topicLessonView" class="hidden">
+      <div class="topic-lesson-toolbar">
+        <button class="exam-secondary" id="backToTopicBrowser">← كل المواضيع</button>
+        <span class="general-badge" id="topicSubjectBadge">المادة</span>
+      </div>
+
+      <section class="topic-hero-card">
+        <div class="topic-icon-big" id="topicIconBig">📘</div>
+        <div>
+          <h2 id="topicLessonTitle">الموضوع</h2>
+          <p id="topicLessonSummary"></p>
+          <div class="topic-ai-name">🤖 <span id="topicAIName">المساعد</span></div>
+        </div>
+      </section>
+
+      <div class="topic-layout">
+        <section class="topic-content-card">
+          <h3>📖 الشرح</h3>
+          <div id="topicExplanation" class="topic-explanation"></div>
+          <div class="topic-tip" id="topicTip"></div>
+        </section>
+
+        <section class="topic-content-card">
+          <h3>💡 مثال</h3>
+          <div id="topicVisual" class="topic-visual"></div>
+          <div id="topicExampleText" class="topic-example-text"></div>
+        </section>
+
+        <section class="topic-content-card">
+          <div class="topic-card-heading">
+            <h3>🎯 تدريب سريع</h3>
+            <button class="exam-secondary" id="newTopicPractice">سؤال جديد</button>
+          </div>
+          <div id="topicPracticeQuestion" class="topic-practice-question"></div>
+          <div id="topicPracticeOptions" class="topic-practice-options"></div>
+          <div id="topicPracticeFeedback" class="challenge-feedback"></div>
+        </section>
+
+        <section class="topic-content-card">
+          <h3>🤖 اسأل مساعد الموضوع</h3>
+          <div class="topic-ai-chat" id="topicAIChat"></div>
+          <div class="subject-chat-input">
+            <input id="topicAIInput" placeholder="اسأل عن هذا الموضوع...">
+            <button id="topicAISend">➤</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="topic-bottom-actions">
+        <button class="apply" id="topicExamBtn">🎓 امتحان على هذا الموضوع</button>
+        <button class="exam-secondary" id="topicSearchOtherBtn">🔎 ابحث عن موضوع ثاني</button>
       </div>
     </div>
   </div>
@@ -1339,6 +1429,7 @@ body.light .saved-comp-card,.subject-strip{ }
         <label>رياضيات <input data-assistant-name="math"></label>
         <label>علوم <input data-assistant-name="science"></label>
         <label>عربي <input data-assistant-name="arabic"></label>
+        <label>عبري <input data-assistant-name="hebrew"></label>
         <label>English <input data-assistant-name="english"></label>
         <label>جغرافيا <input data-assistant-name="geography"></label>
         <label>فيثاغورس <input data-assistant-name="pythagoras"></label>
@@ -1426,6 +1517,7 @@ body.light .saved-comp-card,.subject-strip{ }
           <option value="math">رياضيات</option>
           <option value="science">علوم</option>
           <option value="arabic">عربي</option>
+          <option value="hebrew">عبري</option>
           <option value="english">English</option>
           <option value="geography">جغرافيا</option>
           <option value="pythagoras">فيثاغورس</option>
@@ -1661,6 +1753,7 @@ body.light .saved-comp-card,.subject-strip{ }
         <option value="math">رياضيات</option>
         <option value="science">علوم</option>
         <option value="arabic">لغة عربية</option>
+        <option value="hebrew">عبري</option>
         <option value="geography">جغرافيا</option>
         <option value="english">إنجليزي</option>
         <option value="pythagoras">مختبر فيثاغورس</option>
@@ -1814,6 +1907,7 @@ body.light .saved-comp-card,.subject-strip{ }
               <option value="math">رياضيات</option>
               <option value="science">علوم</option>
               <option value="arabic">لغة عربية</option>
+              <option value="hebrew">عبري</option>
               <option value="geography">جغرافيا</option>
               <option value="english">إنجليزي</option>
               <option value="pythagoras">فيثاغورس</option>
@@ -1958,6 +2052,7 @@ const defaultAssistantNames={
   math:"أوريون",
   science:"نيوتن",
   arabic:"بيان",
+  hebrew:"نوعام",
   english:"Lingo",
   geography:"أطلس",
   pythagoras:"فيثاغورسي"
@@ -2028,6 +2123,7 @@ function showPlatformLobby(){
   applyAvatar(document.getElementById("lobbyAvatar"),p,name);
   document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",p.role!=="teacher");
   updateAssistantLabels();
+  setTimeout(refreshLobbySubjectVisibility,30);
 }
 function hidePlatformLobby(){
   document.getElementById("platformLobby")?.classList.add("hidden");
@@ -3694,9 +3790,63 @@ function hardQuestionPool(){
 
 
 const subjectNames={
-  mixed:"مختلط",math:"رياضيات",science:"علوم",arabic:"لغة عربية",
+  mixed:"مختلط",math:"رياضيات",science:"علوم",arabic:"لغة عربية",hebrew:"عبري",
   geography:"جغرافيا",english:"إنجليزي",pythagoras:"فيثاغورس"
 };
+
+function T(id,subject,title,icon,summary,explanation,example,tip,keywords,visual="default",special=""){
+  return {id,subject,title,icon,summary,explanation,example,tip,keywords,visual,special};
+}
+const topicCatalog=[
+T("math_pythagoras","math","نظرية فيثاغورس","📐","المثلث القائم وعلاقة a² + b² = c².","في المثلث القائم مجموع مربعي الضلعين القائمين يساوي مربع الوتر. الوتر مقابل زاوية 90° وهو الأطول.","a=3 و b=4 → c=√(9+16)=5.","حدد الوتر أولًا، ثم اختار جمع أو طرح حسب المجهول.",["وتر","مثلث","قائم","90"],"pythagoras","pythagoras"),
+T("math_fractions","math","الكسور","🍕","البسط والمقام وتبسيط وجمع الكسور.","الكسر جزء من كل؛ البسط فوق الخط والمقام تحته. عند اختلاف المقامات نوحدها قبل الجمع.","1/4 + 2/4 = 3/4.","لا تجمع المقامات مباشرة؛ وحّد المقام.",["كسر","بسط","مقام"],"fraction"),
+T("math_equations","math","المعادلات","⚖️","إيجاد قيمة المجهول مع توازن الطرفين.","أي عملية نعملها على طرف لازم نعملها على الطرف الآخر حتى يبقى الميزان متساويًا.","2x+3=11 → 2x=8 → x=4.","اعكس العمليات بالترتيب.",["معادلة","مجهول","x"],"equation"),
+T("math_percentages","math","النسب المئوية","💯","حساب نسبة من كمية والتحويل من وإلى %.","النسبة المئوية تعني من كل 100. p% من عدد = العدد×p÷100.","25% من 200 = 50.","50%=نصف، 25%=ربع، 10%=عشر.",["نسبة","مئوية"],"percent"),
+T("math_angles","math","الهندسة والزوايا","📏","أنواع الزوايا ومجموع زوايا المثلث.","الحادة أقل من 90°، القائمة 90°، والمنفرجة بين 90° و180°. مجموع زوايا المثلث 180°.","50° + 60° + 70° = 180°.","استخدم مجموع زوايا الشكل ثم اطرح المعطى.",["زاوية","هندسة","180"],"geometry"),
+T("math_area","math","المساحة والمحيط","⬛","مساحة ومحيط المربع والمستطيل.","المساحة مقدار السطح داخل الشكل، والمحيط طول الحد حوله. للمستطيل: A=L×W و P=2(L+W).","مستطيل 8×3: المساحة 24 والمحيط 22.","داخل الشكل=مساحة، حوله=محيط.",["مساحة","محيط"],"area"),
+T("math_powers","math","القوى والجذور","√","الأسس والتربيع والجذر.","a² يعني a×a، والجذر التربيعي يعكس التربيع.","5²=25 و √81=9.","احفظ مربعات 1 إلى 15.",["جذر","تربيع","قوة"],"equation"),
+T("math_coordinates","math","الإحداثيات","📍","قراءة النقاط على المستوى ومحوري x وy.","النقطة تكتب (x,y): نتحرك على x أفقيًا ثم y عموديًا.","(3,2): ثلاث وحدات يمينًا ووحدتان للأعلى.","x أفقي وy عمودي.",["احداثيات","محور","x","y"],"coordinates"),
+T("math_ratios","math","النسبة والتناسب","🔢","مقارنة كميتين وحل التناسب.","إذا كانت نسبتان متساويتين نستخدم الضرب التبادلي لإيجاد المجهول.","2/3 = x/12 → 3x=24 → x=8.","رتب الوحدات بنفس الترتيب.",["نسبة","تناسب"],"equation"),
+
+T("science_matter","science","حالات المادة","🧊","صلب وسائل وغاز والتحولات بينها.","الحرارة أو فقدانها يسبب الانصهار والتجمد والتبخر والتكاثف.","ثلج → ماء → بخار.","تابع اتجاه الحرارة.",["مادة","صلب","سائل","غاز"],"science"),
+T("science_force","science","القوة والحركة","🚀","القوة والسرعة والمسافة والزمن.","القوة دفع أو سحب، والسرعة = المسافة ÷ الزمن.","100 متر خلال 20 ثانية = 5 م/ث.","اكتب الوحدات دائمًا.",["قوة","سرعة","مسافة"],"science"),
+T("science_atoms","science","الذرة والعناصر","⚛️","النواة والبروتونات والإلكترونات.","في مركز الذرة نواة فيها بروتونات ونيوترونات وحولها إلكترونات.","الهيدروجين لديه بروتون واحد.","عدد البروتونات يحدد العنصر.",["ذرة","نواة","بروتون"],"science"),
+T("science_photosynthesis","science","البناء الضوئي","🌱","كيف يصنع النبات غذاءه.","النبات يستخدم الضوء والماء وCO₂ لصنع الغذاء ويطلق الأكسجين.","ضوء + ماء + CO₂ → غذاء + O₂.","احفظ المدخلات والنواتج.",["نبات","بناء","ضوئي"],"science"),
+T("science_body","science","أجهزة جسم الإنسان","❤️","الدوري والتنفسي والهضمي.","القلب يضخ الدم، الرئتان تتبادلان الغازات والجهاز الهضمي يعالج الطعام.","الرئتان تدخلان الأكسجين والدم ينقله للخلايا.","اربط كل عضو بوظيفته.",["قلب","رئة","دم"],"science"),
+T("science_energy","science","الطاقة","⚡","أشكال الطاقة وتحولاتها.","الطاقة تتحول بين حركية وحرارية وكهربائية وكيميائية وغيرها.","المصباح يحول الكهرباء إلى ضوء وحرارة.","اسأل ما شكل الطاقة قبل وبعد.",["طاقة","حرارة","كهرباء"],"science"),
+
+T("arabic_naat","arabic","النعت","🟨","صفة تتبع المنعوت.","النعت يصف اسمًا قبله ويتبعه في التعريف والجنس والعدد والإعراب.","جاء الطالبُ المجتهدُ: المجتهد نعت.","ابحث عن اسم ثم كلمة تصفه وتوافقه.",["نعت","منعوت","صفة"],"grammar"),
+T("arabic_mubtada","arabic","المبتدأ والخبر","🧩","ركنا الجملة الاسمية.","المبتدأ ما نتحدث عنه والخبر يعطينا معلومة عنه، وكلاهما مرفوع في الأصل.","العلمُ نورٌ.","عن مين نحكي؟ مبتدأ. شو قلنا عنه؟ خبر.",["مبتدا","خبر"],"grammar"),
+T("arabic_subject_object","arabic","الفاعل والمفعول به","🎯","من قام بالفعل ومن وقع عليه.","الفاعل من قام بالفعل وهو مرفوع، والمفعول به وقع عليه الفعل وهو منصوب.","قرأ سامرٌ الكتابَ.","مين عمل؟ فاعل. على شو وقع؟ مفعول.",["فاعل","مفعول"],"grammar"),
+T("arabic_verbs","arabic","الماضي والمضارع والأمر","⏱️","تمييز زمن وصيغة الفعل.","الماضي حصل، المضارع يحصل أو سيحصل، والأمر طلب تنفيذ.","كتبَ، يكتبُ، اكتبْ.","جرّب كلمة الآن؛ إذا ناسبت غالبًا مضارع.",["ماضي","مضارع","امر"],"grammar"),
+T("arabic_hamza","arabic","همزة الوصل والقطع","أ","تمييز الهمزة في النطق.","همزة القطع تنطق دائمًا، وهمزة الوصل تسقط في الوصل.","أحمد قطع، ابن وصل.","صل الكلمة بما قبلها وانطق.",["همزة","وصل","قطع"],"grammar"),
+T("arabic_dual_plural","arabic","المثنى والجمع","👥","من المفرد إلى اثنين وأكثر.","المثنى يدل على اثنين والجمع على أكثر من اثنين، وقد يكون سالمًا أو تكسيرًا.","طالب → طالبان → طلاب.","انتبه للجنس والإعراب.",["مثنى","جمع","مفرد"],"grammar"),
+T("arabic_sentence","arabic","الجملة الاسمية والفعلية","📝","تمييز الجملة التي تبدأ باسم أو فعل.","الاسمية تبدأ باسم غالبًا، والفعلية تبدأ بفعل.","السماء صافية / طلعت الشمس.","انظر لأول كلمة ذات معنى.",["جملة","اسمية","فعلية"],"grammar"),
+
+T("hebrew_adjective","hebrew","שם תואר • الصفة","🟦","الصفة بالعبرية وتوافقها مع الاسم.","שם תואר מתאר שם עצם. الصفة تتوافق غالبًا مع الاسم في الجنس والعدد.","ילד טוב / ילדה טובה.","راقب טוב/טובה/טובים/טובות.",["שם תואר","صفة"],"hebrew"),
+T("hebrew_noun","hebrew","שם עצם • الاسم","📘","أسماء الأشخاص والأماكن والأشياء.","שם עצם هو اسم شخص أو مكان أو شيء أو فكرة.","בית=بيت، ילד=ولد، ספר=كتاب.","إذا تسمّي شيئًا فهي غالبًا اسم.",["שם עצם","اسم"],"hebrew"),
+T("hebrew_verb","hebrew","פועל • الفعل","🏃","الفعل وزمنه ومن يقوم به.","פועל يصف حدثًا أو حالة ويتغير حسب الزمن والشخص والجنس والعدد.","אני כותב / הוא כתב.","ابحث عن الحدث.",["פועל","فعل"],"hebrew"),
+T("hebrew_gender","hebrew","זכר ונקבה • مذكر ومؤنث","⚥","تمييز المذكر والمؤنث.","صفات وأفعال كثيرة تتغير حسب זכר أو נקבה.","ילד גדול / ילדה גדולה.","انتبه لنهاية الصفة.",["זכר","נקבה"],"hebrew"),
+T("hebrew_plural","hebrew","יחיד ורבים • مفرد وجمع","👫","المفرد والجمع ونهايات شائعة.","ים و־ות نهايات شائعة للجمع مع وجود استثناءات.","ילד → ילדים، ילדה → ילדות.","احفظ الكلمة مع جمعها.",["יחיד","רבים"],"hebrew"),
+T("hebrew_prepositions","hebrew","מילות יחס • حروف الجر","🔗","ב، ל، מ، עם وغيرها.","مילות יחס تربط الكلمات: ב=في، ל=إلى/لـ، מ=من، עם=مع.","אני בבית / אני הולך לבית הספר.","بعضها يلتصق بالكلمة.",["מילות יחס","ב","ל"],"hebrew"),
+T("hebrew_sentence","hebrew","בניית משפט • بناء الجملة","✍️","تركيب جملة عبرية بسيطة.","حدد الفاعل والفعل ثم المفعول أو المكان حسب الجملة.","התלמיד קורא ספר.","ابدأ بالفاعل والفعل.",["משפט","جملة"],"hebrew"),
+
+T("english_present","english","Present Simple","⏰","العادات والحقائق.","نستخدمه للعادات والحقائق، ومع he/she/it نضيف غالبًا s.","I play. She plays.","He/She/It → verb+s غالبًا.",["present","simple"],"english"),
+T("english_past","english","Past Simple","⏪","أحداث انتهت في الماضي.","الأفعال المنتظمة غالبًا -ed وغير المنتظمة لها شكل خاص.","I played / I went.","احفظ go→went وsee→saw.",["past","went"],"english"),
+T("english_adjectives","english","Adjectives","🌟","الكلمات التي تصف الأسماء.","An adjective describes a noun.","The red car is fast.","الصفة غالبًا قبل الاسم أو بعد be.",["adjective"],"english"),
+T("english_pronouns","english","Pronouns","👤","I, you, he, she, it, we, they.","الضمير يحل محل الاسم لتجنب التكرار.","Sara studies. She studies.","اختار الضمير حسب الشخص والعدد.",["pronoun","he","she"],"english"),
+T("english_vocab","english","Vocabulary","🔤","مفردات ومعانيها واستخدامها.","الأفضل تعلم الكلمة داخل جملة لا كترجمة منفردة.","book=كتاب، school=مدرسة.","اكتب جملة لكل كلمة.",["vocabulary","word"],"english"),
+
+T("geography_continents","geography","القارات والمحيطات","🌎","مواقع القارات وأكبر المحيطات.","العالم يقسم دراسيًا إلى سبع قارات وتحيط بها محيطات كبيرة.","آسيا أكبر قارة والهادئ أكبر محيط.","اربط كل قارة بموقعها.",["قارة","محيط"],"map"),
+T("geography_capitals","geography","الدول والعواصم","🏙️","ربط الدولة بعاصمتها.","العاصمة مدينة مركزية للحكومة والإدارة.","فرنسا→باريس، اليابان→طوكيو.","احفظ حسب القارة.",["دولة","عاصمة"],"map"),
+T("geography_climate","geography","المناخ والطقس","🌦️","الفرق بين حالة قصيرة ونمط طويل.","الطقس قصير المدى، المناخ نمط معتاد على سنوات.","مطر اليوم طقس، شتاء ممطر عادةً مناخ.","قصير=طقس، طويل=مناخ.",["مناخ","طقس"],"map"),
+T("geography_maps","geography","مهارات الخريطة","🗺️","الاتجاهات والمقياس والرموز.","الخريطة تستعمل مفتاحًا ومقياسًا واتجاهات لتمثيل الواقع.","1 سم=10 كم، إذن 3 سم=30 كم.","ابدأ بالمفتاح والمقياس.",["خريطة","مقياس"],"map"),
+T("geography_landforms","geography","الأنهار والجبال والتضاريس","⛰️","أشكال سطح الأرض.","التضاريس تشمل الجبال والسهول والهضاب والأودية، والأنهار مجاري مائية.","إيفرست في الهيمالايا والنيل في أفريقيا.","اربط التضاريس بمكانها.",["جبل","نهر","تضاريس"],"map")
+];
+function baseTopicsForSubject(subject){return topicCatalog.filter(t=>t.subject===subject)}
+function topicById(id){return topicCatalog.find(t=>t.id===id)||null}
+function allCurriculumSubjects(){return ["math","science","arabic","hebrew","english","geography"]}
+
 let examSubject="mixed";
 
 function mathQuestionPool(){
@@ -3782,16 +3932,34 @@ function englishQuestionPool(){
     {type:"mcq",prompt:"ما معنى tomorrow؟",options:["غدًا","أمس","اليوم","الآن"],answer:"غدًا",explanation:"tomorrow = غدًا."}
   ];
 }
+
+function hebrewQuestionPool(){
+  return [
+    {type:"mcq",prompt:"מה פירוש המילה ספר؟",options:["كتاب","بيت","ولد","مدرسة"],answer:"كتاب",explanation:"ספר = كتاب."},
+    {type:"mcq",prompt:"ما معنى בית؟",options:["بيت","كتاب","ماء","شارع"],answer:"بيت",explanation:"בית = بيت."},
+    {type:"mcq",prompt:"أي كلمة تعني «ولد»؟",options:["ילד","ילדה","ספר","מים"],answer:"ילד",explanation:"ילד = ولد."},
+    {type:"mcq",prompt:"جمع ילד هو...",options:["ילדים","ילדות","ילד","ילדון"],answer:"ילדים",explanation:"ילד → ילדים."},
+    {type:"mcq",prompt:"المؤنث من טוב هو...",options:["טובה","טובים","טובות","טוב"],answer:"טובה",explanation:"טוב للمذكر وטובה للمؤنث."},
+    {type:"mcq",prompt:"אני בבית تعني...",options:["أنا في البيت","أنا في المدرسة","هو في البيت","أنا أكتب"],answer:"أنا في البيت",explanation:"אני=أنا، ב=في، בית=بيت."},
+    {type:"mcq",prompt:"أي كلمة هي فعل؟",options:["כותב","ספר","בית","גדול"],answer:"כותב",explanation:"כותב فعل بمعنى يكتب في هذا السياق."},
+    {type:"mcq",prompt:"ילדה גדולה تعني...",options:["بنت كبيرة","ولد كبير","بنت صغيرة","كتاب كبير"],answer:"بنت كبيرة",explanation:"ילדה=بنت، גדולה=كبيرة."},
+    {type:"mcq",prompt:"מילת היחס ל تعني غالبًا...",options:["إلى/لـ","من","مع","فوق"],answer:"إلى/لـ",explanation:"ל تستخدم بمعنى إلى أو لـ."},
+    {type:"mcq",prompt:"ما معنى מים؟",options:["ماء","طعام","هواء","نار"],answer:"ماء",explanation:"מים = ماء."},
+    {type:"mcq",prompt:"«هو كتب» بالعبرية الأقرب هو...",options:["הוא כתב","היא כתבה","אני כותב","הם כותבים"],answer:"הוא כתב",explanation:"הוא=هو، כתב=كتب."},
+    {type:"mcq",prompt:"שם תואר يعني...",options:["صفة","فعل","اسم علم","حرف جر"],answer:"صفة",explanation:"שם תואר = صفة."}
+  ];
+}
+
 function pythagorasQuestionPool(){
   return hardQuestionPool();
 }
 function generalQuestionPool(subject="mixed"){
   const banks={
     math:mathQuestionPool(),science:scienceQuestionPool(),arabic:arabicQuestionPool(),
-    geography:geographyQuestionPool(),english:englishQuestionPool(),pythagoras:pythagorasQuestionPool()
+    hebrew:hebrewQuestionPool(),geography:geographyQuestionPool(),english:englishQuestionPool(),pythagoras:pythagorasQuestionPool()
   };
   if(subject==="mixed"){
-    const each=["math","science","arabic","geography","english","pythagoras"]
+    const each=["math","science","arabic","hebrew","geography","english","pythagoras"]
       .flatMap(s=>shuffle(banks[s]).slice(0,3));
     return shuffle(each);
   }
@@ -3810,6 +3978,53 @@ function makeGeneralLiveQuestions(subject="mixed",count=8){
   let pool=generalQuestionPool(subject).map(liveQuestionFromExam).filter(Boolean);
   if(pool.length<count)pool=pool.concat(generalQuestionPool("mixed").map(liveQuestionFromExam).filter(Boolean));
   return shuffle(pool).slice(0,count).map((q,i)=>({...q,index:i}));
+}
+
+
+function topicDistractors(topic,field,count=3){
+  return shuffle(topicCatalog.filter(t=>t.subject===topic.subject&&t.id!==topic.id)
+    .map(t=>String(t[field]||"")).filter(Boolean)).slice(0,count);
+}
+function topicQuestionPool(topic){
+  const subjectLabel=subjectDisplayName(topic.subject);
+  if(topic.id==="math_fractions")return [
+    {type:"mcq",prompt:"في الكسر 3/5، ما البسط؟",options:["3","5","8","2"],answer:"3",points:20,explanation:"البسط هو العدد فوق خط الكسر."},
+    {type:"mcq",prompt:"1/4 + 2/4 = ؟",options:["3/4","3/8","2/8","1/2"],answer:"3/4",points:20,explanation:"المقامات متساوية فنجمع البسطين."},
+    {type:"mcq",prompt:"أي كسر يساوي 1/2؟",options:["2/4","1/3","3/4","2/3"],answer:"2/4",points:20,explanation:"2/4 تبسط إلى 1/2."},
+    {type:"mcq",prompt:"1/2 + 1/4: ما المقام المشترك المناسب؟",options:["4","2","6","8 فقط"],answer:"4",points:20,explanation:"1/2 = 2/4."},
+    {type:"mcq",prompt:"أي كسر أكبر؟",options:["3/4","1/4","1/2","2/5"],answer:"3/4",points:20,explanation:"3/4 = 0.75."}
+  ];
+  if(topic.id==="math_equations")return [
+    {type:"number",prompt:"حل: x + 5 = 12",answer:7,points:20,explanation:"نطرح 5."},
+    {type:"number",prompt:"حل: 3x = 21",answer:7,points:20,explanation:"نقسم على 3."},
+    {type:"number",prompt:"حل: 2x + 3 = 11",answer:4,points:20,explanation:"2x=8 ثم x=4."},
+    {type:"mcq",prompt:"إذا طرحنا 4 من طرف معادلة، ماذا نفعل بالطرف الآخر؟",options:["نطرح 4","نضيف 4","نضرب 4","لا شيء"],answer:"نطرح 4",points:20,explanation:"نحافظ على التوازن."},
+    {type:"number",prompt:"حل: 5x - 10 = 15",answer:5,points:20,explanation:"5x=25 ثم x=5."}
+  ];
+  if(topic.id==="arabic_naat")return [
+    {type:"mcq",prompt:"في «جاء الطالبُ المجتهدُ»، النعت هو...",options:["جاء","الطالب","المجتهد","لا يوجد"],answer:"المجتهد",points:20,explanation:"المجتهد وصف الطالب."},
+    {type:"mcq",prompt:"المنعوت في «رأيتُ زهرةً جميلةً» هو...",options:["زهرة","جميلة","رأيت","أنا"],answer:"زهرة",points:20,explanation:"جميلة صفة لزهرة."},
+    {type:"mcq",prompt:"النعت يتبع المنعوت في...",options:["التعريف والجنس والعدد والإعراب","الزمن فقط","الفعل فقط","لا يتبعه"],answer:"التعريف والجنس والعدد والإعراب",points:20,explanation:"هاي أهم المطابقات."},
+    {type:"mcq",prompt:"اختر تركيبًا صحيحًا:",options:["الطالبة المجتهدة","الطالبة المجتهد","الطالب المجتهدة","طالب المجتهدة"],answer:"الطالبة المجتهدة",points:20,explanation:"الصفة وافقت الاسم."},
+    {type:"mcq",prompt:"في «قرأتُ كتابًا مفيدًا»، مفيدًا هي...",options:["نعت","فاعل","فعل","مبتدأ"],answer:"نعت",points:20,explanation:"مفيدًا تصف كتابًا."}
+  ];
+  if(topic.id==="hebrew_adjective")return [
+    {type:"mcq",prompt:"שם תואר يعني...",options:["صفة","فعل","اسم","حرف جر"],answer:"صفة",points:20,explanation:"שם תואר = صفة."},
+    {type:"mcq",prompt:"أكمل: ילד ___",options:["טוב","טובה","טובות","טובים"],answer:"טוב",points:20,explanation:"ילד مذكر مفرد."},
+    {type:"mcq",prompt:"أكمل: ילדה ___",options:["טובה","טוב","טובים","טובות"],answer:"טובה",points:20,explanation:"ילדה مؤنث مفرد."},
+    {type:"mcq",prompt:"ילדים טובים تعني...",options:["أولاد جيدون","بنت جيدة","كتاب جيد","بنات جيدات"],answer:"أولاد جيدون",points:20,explanation:"ילדים=أولاد، טובים=جيدون."},
+    {type:"mcq",prompt:"الصفة بالعبرية غالبًا توافق الاسم في...",options:["الجنس والعدد","اللون فقط","الزمن فقط","لا شيء"],answer:"الجنس والعدد",points:20,explanation:"التوافق مهم في שם תואר."}
+  ];
+  return [
+    {type:"mcq",prompt:`أي شرح يطابق «${topic.title}»؟`,options:shuffle([topic.summary,...topicDistractors(topic,"summary")]),answer:topic.summary,points:20,explanation:topic.explanation},
+    {type:"mcq",prompt:`أي مثال مرتبط أكثر بـ«${topic.title}»؟`,options:shuffle([topic.example,...topicDistractors(topic,"example")]),answer:topic.example,points:20,explanation:topic.example},
+    {type:"mcq",prompt:`ما النصيحة الأنسب لـ«${topic.title}»؟`,options:shuffle([topic.tip,...topicDistractors(topic,"tip")]),answer:topic.tip,points:20,explanation:topic.tip},
+    {type:"mcq",prompt:`الوصف «${topic.summary}» يعود لأي موضوع؟`,options:shuffle([topic.title,...topicDistractors(topic,"title")]),answer:topic.title,points:20,explanation:`الموضوع هو ${topic.title}.`},
+    {type:"mcq",prompt:`«${topic.title}» موجود تحت أي مادة؟`,options:shuffle([subjectLabel,...shuffle(allCurriculumSubjects().filter(s=>s!==topic.subject).map(subjectDisplayName)).slice(0,3)]),answer:subjectLabel,points:20,explanation:`ضمن مادة ${subjectLabel}.`}
+  ];
+}
+function makeTopicExam(topic){
+  return {title:`🎓 ${topic.title}`,questions:topicQuestionPool(topic).map((q,i)=>({...q,id:`topic_${topic.id}_${Date.now()}_${i}`})),total:100,surprise:false,topicExam:true,subject:topic.subject,topicId:topic.id};
 }
 
 function createSurpriseExam(){
@@ -4644,7 +4859,8 @@ async function createClassForTeacher(name,{silent=false}={}){
   const ref=await addDoc(collection(db,"classes"),{
     name:clean,code,ownerId:auth.currentUser.uid,
     ownerName:window.PythagorasiUser.displayName||"المعلم",
-    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),active:true
+    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),active:true,
+    hiddenTopicIds:[],customTopics:[]
   });
   await setDoc(doc(db,"classJoinCodes",code),{
     code,classId:ref.id,className:clean,ownerId:auth.currentUser.uid,active:true,createdAt:serverTimestamp()
@@ -4876,6 +5092,75 @@ async function loadTeacherClasses(){
   }
 }
 
+
+function curriculumManagerHtml(c){
+  const hidden=new Set(c.hiddenTopicIds||[]);
+  const customs=(c.customTopics||[]).map(t=>normalizeCustomTopic(t,c.id));
+  const sections=allCurriculumSubjects().map(subject=>{
+    const items=[...baseTopicsForSubject(subject),...customs.filter(t=>t.subject===subject)];
+    const rows=items.map(t=>`
+      <label class="curriculum-topic-toggle">
+        <input type="checkbox" class="curriculum-visibility" data-topic-id="${escapeHtml(t.id)}" ${hidden.has(t.id)?"":"checked"}>
+        <span>${t.icon||"📘"} ${escapeHtml(t.title)}</span>
+        ${t.custom?`<button type="button" class="delete-custom-topic" data-topic-id="${escapeHtml(t.id)}">×</button>`:""}
+      </label>`).join("");
+    return `<details class="curriculum-subject">
+      <summary>${escapeHtml(subjectDisplayName(subject))} • ${items.filter(t=>!hidden.has(t.id)).length}/${items.length} ظاهر</summary>
+      <div class="curriculum-topic-list">${rows}</div>
+    </details>`;
+  }).join("");
+  return `
+    <div class="curriculum-manager" data-class-id="${escapeHtml(c.id)}">
+      <div class="cloud-note">✓ يعني الموضوع ظاهر لطلاب الصف. شيل العلامة لإخفائه.</div>
+      ${sections}
+      <div class="custom-topic-add">
+        <select class="custom-topic-subject">
+          <option value="math">رياضيات</option><option value="science">علوم</option>
+          <option value="arabic">عربي</option><option value="hebrew">عبري</option>
+          <option value="english">English</option><option value="geography">جغرافيا</option>
+        </select>
+        <input class="custom-topic-title" placeholder="اسم الموضوع الجديد">
+        <input class="custom-topic-example" placeholder="مثال قصير">
+        <textarea class="custom-topic-explanation" placeholder="اكتب شرح الموضوع اللي رح يظهر للطلاب..."></textarea>
+        <button class="exam-secondary add-custom-topic">＋ إضافة الموضوع للصف</button>
+      </div>
+      <div class="curriculum-status"></div>
+    </div>`;
+}
+async function saveClassHiddenTopics(classId,hiddenTopicIds){
+  await updateDoc(doc(db,"classes",classId),{hiddenTopicIds:[...new Set(hiddenTopicIds)],updatedAt:serverTimestamp()});
+}
+function bindCurriculumManager(box,c){
+  const manager=box.querySelector(".curriculum-manager");if(!manager)return;
+  let hidden=[...(c.hiddenTopicIds||[])];
+  manager.querySelectorAll(".curriculum-visibility").forEach(input=>input.addEventListener("change",async()=>{
+    const id=input.dataset.topicId;
+    if(input.checked)hidden=hidden.filter(x=>x!==id);
+    else if(!hidden.includes(id))hidden.push(id);
+    const status=manager.querySelector(".curriculum-status");status.textContent="⏳ حفظ...";
+    try{await saveClassHiddenTopics(c.id,hidden);status.textContent="تم حفظ ظهور المواضيع ✅"}
+    catch(err){console.error(err);status.textContent="تعذر الحفظ.";input.checked=!input.checked}
+  }));
+  manager.querySelector(".add-custom-topic").addEventListener("click",async()=>{
+    const subject=manager.querySelector(".custom-topic-subject").value;
+    const title=manager.querySelector(".custom-topic-title").value.trim();
+    const example=manager.querySelector(".custom-topic-example").value.trim();
+    const explanation=manager.querySelector(".custom-topic-explanation").value.trim();
+    if(title.length<2||explanation.length<5){showToast("اكتب اسم الموضوع وشرح واضح.");return}
+    const custom=[...(c.customTopics||[])];
+    custom.push({id:`custom_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,subject,title,summary:explanation.slice(0,120),explanation,example:example||`مثال على ${title}`,tip:`راجع شرح المعلم وطبّق المثال على ${title}.`,icon:"📘",createdBy:auth.currentUser.uid,createdAtMs:Date.now()});
+    try{await updateDoc(doc(db,"classes",c.id),{customTopics:custom,updatedAt:serverTimestamp()});showToast(`تمت إضافة «${title}» ✅`);loadTeacherClasses()}
+    catch(err){console.error(err);showToast("تعذر إضافة الموضوع.")}
+  });
+  manager.querySelectorAll(".delete-custom-topic").forEach(btn=>btn.addEventListener("click",async e=>{
+    e.preventDefault();e.stopPropagation();
+    const id=btn.dataset.topicId;if(!confirm("تحذف الموضوع المخصص من الصف؟"))return;
+    const custom=(c.customTopics||[]).filter(t=>t.id!==id);hidden=hidden.filter(x=>x!==id);
+    try{await updateDoc(doc(db,"classes",c.id),{customTopics:custom,hiddenTopicIds:hidden,updatedAt:serverTimestamp()});showToast("تم حذف الموضوع.");loadTeacherClasses()}
+    catch(err){console.error(err);showToast("تعذر حذف الموضوع.")}
+  }));
+}
+
 async function renderTeacherClassCard(host,c){
   const isOwner=c.ownerId===auth.currentUser.uid;
   const [members,teachers,assignments,activities]=await Promise.all([
@@ -4967,13 +5252,18 @@ async function renderTeacherClassCard(host,c){
           <input class="assignment-title" placeholder="عنوان الوظيفة">
           <select class="assignment-subject">
             <option value="math">رياضيات</option><option value="science">علوم</option>
-            <option value="arabic">عربي</option><option value="english">English</option>
+            <option value="arabic">عربي</option><option value="hebrew">عبري</option><option value="english">English</option>
             <option value="geography">جغرافيا</option><option value="pythagoras">فيثاغورس</option>
           </select>
           <textarea class="assignment-description-input" placeholder="اكتب المطلوب من الطلاب..."></textarea>
           <input class="assignment-date" type="date">
           <button class="apply create-assignment-btn" style="margin:0">نشر الوظيفة</button>
         </div>
+      </div>
+
+      <div class="class-panel full">
+        <h4>📚 إدارة المنهاج والمواضيع</h4>
+        ${curriculumManagerHtml(c)}
       </div>
 
       <div class="class-panel full">
@@ -4986,6 +5276,8 @@ async function renderTeacherClassCard(host,c){
         <div class="activity-list">${actHtml}</div>
       </div>
     </div>`;
+
+  bindCurriculumManager(box,c);
 
   box.querySelector(".copy-class-code").addEventListener("click",async()=>{
     try{await navigator.clipboard.writeText(c.code);showToast("تم نسخ كود الصف.");}
@@ -5198,6 +5490,67 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
   }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
 });
 
+
+let currentTopic=null;
+let currentVisibleTopics=[];
+let currentTopicPractice=null;
+
+async function classDocsForCurrentUser(){
+  const p=window.PythagorasiUser||{},docs=[];
+  if(p.role==="student"){
+    for(const id of (p.classIds||[])){
+      try{
+        const s=await getDoc(doc(db,"classes",id));
+        if(s.exists())docs.push({id:s.id,...s.data()});
+      }catch{}
+    }
+  }else if(p.role==="teacher"){
+    try{docs.push(...await getManagedClasses())}catch{}
+  }
+  return docs;
+}
+function normalizeCustomTopic(raw,classId=""){
+  return {
+    id:raw.id||`custom_${Date.now()}`,
+    subject:raw.subject||"math",title:raw.title||"موضوع جديد",icon:raw.icon||"📘",
+    summary:raw.summary||raw.explanation||"موضوع أضافه المعلم.",
+    explanation:raw.explanation||raw.summary||"راجع شرح المعلم.",
+    example:raw.example||"أضف مثالًا من الدرس.",
+    tip:raw.tip||"ركّز على الفكرة والمثال.",
+    keywords:Array.isArray(raw.keywords)?raw.keywords:[raw.title||""],
+    visual:raw.visual||"default",custom:true,classId
+  };
+}
+async function visibleTopicsForSubject(subject){
+  const base=baseTopicsForSubject(subject),p=window.PythagorasiUser||{};
+  const docs=await classDocsForCurrentUser();
+  if(p.role!=="student"){
+    const customs=docs.flatMap(c=>(c.customTopics||[]).filter(t=>t.subject===subject).map(t=>normalizeCustomTopic(t,c.id)));
+    const seen=new Set();
+    return [...base,...customs].filter(t=>!seen.has(t.id)&&seen.add(t.id));
+  }
+  if(!docs.length)return base;
+  const allowed=new Map();
+  for(const c of docs){
+    const hidden=new Set(c.hiddenTopicIds||[]);
+    for(const t of base)if(!hidden.has(t.id))allowed.set(t.id,t);
+    for(const raw of (c.customTopics||[])){
+      if(raw.subject!==subject||hidden.has(raw.id))continue;
+      const t=normalizeCustomTopic(raw,c.id);allowed.set(t.id,t);
+    }
+  }
+  return [...allowed.values()];
+}
+async function refreshLobbySubjectVisibility(){
+  const p=window.PythagorasiUser||{};
+  const buttons=[...document.querySelectorAll("[data-subject-open]")];
+  if(p.role!=="student"){buttons.forEach(b=>b.style.display="");return}
+  for(const b of buttons){
+    try{b.style.display=(await visibleTopicsForSubject(b.dataset.subjectOpen)).length?"":"none"}
+    catch{b.style.display=""}
+  }
+}
+
 /* -------------------- PLATFORM LOBBY -------------------- */
 const subjectModal=document.getElementById("subjectModal");
 const profileModal=document.getElementById("profileModal");
@@ -5210,46 +5563,188 @@ function subjectDisplayName(subject){
     geography:"جغرافيا",pythagoras:"مختبر فيثاغورس"
   }[subject]||"المادة");
 }
-function openSubject(subject){
+async function openSubject(subject){
   currentSubjectContext=subject;
-  logStudentActivity("subject_open",`فتح مادة ${subjectDisplayName(subject)}`,subject);
-  if(subject==="pythagoras"){
-    hidePlatformLobby();
-    updateAssistantLabels();
-    return;
-  }
   document.getElementById("subjectModalTitle").textContent=subjectDisplayName(subject);
   document.getElementById("subjectAssistantName").textContent=assistantNameFor(subject);
-  const chat=document.getElementById("subjectChat");
-  chat.innerHTML=`<div class="msg bot">هلا! أنا ${escapeHtml(assistantNameFor(subject))} 👋 مساعدك في ${escapeHtml(subjectDisplayName(subject))}. اسألني أو خلّيني أعطيك سؤال تدريب.</div>`;
+  document.getElementById("topicSearchInput").value="";
+  document.getElementById("subjectTopicBrowser").classList.remove("hidden");
+  document.getElementById("topicLessonView").classList.add("hidden");
+  document.getElementById("topicResults").innerHTML='<div class="cloud-note">⏳ جاري تحميل المواضيع...</div>';
   subjectModal.classList.add("open");
+  logStudentActivity("subject_open",`فتح مادة ${subjectDisplayName(subject)}`,subject);
+  try{
+    currentVisibleTopics=await visibleTopicsForSubject(subject);
+    renderTopicBrowser(currentVisibleTopics);
+  }catch(err){
+    console.error("topics",err);
+    currentVisibleTopics=baseTopicsForSubject(subject);
+    renderTopicBrowser(currentVisibleTopics);
+  }
 }
 document.querySelectorAll("[data-subject-open]").forEach(btn=>btn.addEventListener("click",()=>openSubject(btn.dataset.subjectOpen)));
 document.getElementById("returnLobbyBtn").addEventListener("click",showPlatformLobby);
 document.getElementById("closeSubjectModal").addEventListener("click",()=>subjectModal.classList.remove("open"));
 
-function appendSubjectMessage(text,who="bot"){
-  const d=document.createElement("div");d.className=`msg ${who}`;d.textContent=text;
-  const chat=document.getElementById("subjectChat");chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+function renderTopicBrowser(topics){
+  const host=document.getElementById("topicResults");
+  host.innerHTML="";
+  const q=normalizeArabic(document.getElementById("topicSearchInput").value||"");
+  const list=topics.filter(t=>{
+    if(!q)return true;
+    const hay=normalizeArabic(`${t.title} ${t.summary} ${(t.keywords||[]).join(" ")}`);
+    return hay.includes(q)||q.split(" ").every(x=>hay.includes(x));
+  });
+  document.getElementById("topicBrowserNote").textContent=list.length
+    ? `${list.length} مواضيع ظاهرة إلك في ${subjectDisplayName(currentSubjectContext)}.`
+    : "ما لقينا موضوع مطابق، أو المعلم مخفي المواضيع بهذا الصف.";
+  list.forEach(topic=>{
+    const card=document.createElement("button");card.className="topic-card";
+    card.innerHTML=`
+      <span class="topic-card-icon">${topic.icon||"📘"}</span>
+      <b>${escapeHtml(topic.title)}</b>
+      <p>${escapeHtml(topic.summary||"")}</p>
+      ${topic.special==="pythagoras"?'<span class="special-topic">يفتح المختبر ثلاثي الأبعاد ↗</span>':topic.custom?'<span class="special-topic">موضوع أضافه المعلم</span>':""}`;
+    card.addEventListener("click",()=>openTopicLesson(topic));
+    host.appendChild(card);
+  });
+  if(!list.length)host.innerHTML='<div class="cloud-note">ما في مواضيع مطابقة.</div>';
 }
-function sendSubjectQuestion(){
-  const input=document.getElementById("subjectQuestionInput");
-  const raw=input.value.trim();if(!raw)return;
-  appendSubjectMessage(raw,"user");input.value="";
-  logStudentActivity("ai_use",`استخدم مساعد مادة ${subjectDisplayName(currentSubjectContext)}`,currentSubjectContext);
-  const subjectHint=` ${subjectDisplayName(currentSubjectContext)}`;
-  setTimeout(()=>appendSubjectMessage(pythagorasiAnswer(raw+subjectHint),"bot"),180);
+function searchCurrentTopics(){renderTopicBrowser(currentVisibleTopics)}
+document.getElementById("topicSearchBtn").addEventListener("click",searchCurrentTopics);
+document.getElementById("topicSearchInput").addEventListener("input",searchCurrentTopics);
+document.getElementById("topicSearchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchCurrentTopics()});
+
+function renderTopicVisual(topic){
+  const host=document.getElementById("topicVisual"),type=topic.visual||"default";
+  if(type==="fraction"){
+    host.innerHTML='<div><div class="fraction-demo"><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div><div style="text-align:center;margin-top:8px;font-weight:900">3 / 4</div></div>';
+  }else if(type==="equation"){
+    host.innerHTML='<div class="equation-demo">2x + 3 = 11 &nbsp;→&nbsp; x = 4</div>';
+  }else if(type==="grammar"){
+    const ex=escapeHtml(topic.example).replace(/(المجتهد|جميلة|نور|سامر|الكتاب|كتب|يكتب|اكتب|أحمد|طالبان|طلعت)/g,'<mark>$1</mark>');
+    host.innerHTML=`<div class="grammar-demo">${ex}</div>`;
+  }else if(type==="hebrew"){
+    host.innerHTML=`<div class="hebrew-demo">${escapeHtml(topic.example).replace(/(טוב|טובה|ילד|ילדה|כותב|כתב|ילדים|ילדות|בבית|התלמיד)/g,'<mark>$1</mark>')}</div>`;
+  }else if(type==="science"){
+    host.innerHTML='<div class="science-demo">🔎 → 🧠 → 💡<br><small>اربط السبب بالنتيجة وطبّق المثال</small></div>';
+  }else if(type==="map"){
+    host.innerHTML='<div class="map-demo">🧭 شمال ↑<br>🌍 🗺️ 📍<br><small>المكان + الاتجاه + المقياس</small></div>';
+  }else{
+    host.innerHTML=`<div class="equation-demo" style="font-size:18px">${escapeHtml(topic.example)}</div>`;
+  }
 }
-document.getElementById("subjectQuestionSend").addEventListener("click",sendSubjectQuestion);
-document.getElementById("subjectQuestionInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendSubjectQuestion()}});
-document.getElementById("subjectGenerateQuestion").addEventListener("click",()=>{
-  appendSubjectMessage(generateStudyQuestion(currentSubjectContext),"bot");
+
+function makeTopicPractice(topic){
+  const full=topicQuestionPool(topic),pool=full.filter(q=>q.type==="mcq");
+  currentTopicPractice=pick(pool.length?pool:full);
+  document.getElementById("topicPracticeQuestion").textContent=currentTopicPractice.prompt;
+  const feedback=document.getElementById("topicPracticeFeedback");
+  feedback.className="challenge-feedback";feedback.textContent="";
+  const host=document.getElementById("topicPracticeOptions");host.innerHTML="";
+  if(currentTopicPractice.type==="mcq"){
+    currentTopicPractice.options.forEach(opt=>{
+      const b=document.createElement("button");b.textContent=opt;
+      b.addEventListener("click",()=>{
+        host.querySelectorAll("button").forEach(x=>x.disabled=true);
+        const ok=normExam(opt)===normExam(currentTopicPractice.answer);
+        b.classList.add(ok?"correct":"wrong");
+        if(!ok){
+          const correct=[...host.querySelectorAll("button")].find(x=>normExam(x.textContent)===normExam(currentTopicPractice.answer));
+          if(correct)correct.classList.add("correct");
+        }
+        feedback.textContent=ok?`✅ صح! ${currentTopicPractice.explanation||""}`:`❌ الجواب الصحيح: ${currentTopicPractice.answer}. ${currentTopicPractice.explanation||""}`;
+        feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+      });
+      host.appendChild(b);
+    });
+  }else{
+    const input=document.createElement("input");input.type="number";input.placeholder="اكتب الجواب";
+    const check=document.createElement("button");check.textContent="تحقق";
+    check.addEventListener("click",()=>{
+      const ok=Math.abs(parseFloat(input.value)-Number(currentTopicPractice.answer))<.001;
+      feedback.textContent=ok?`✅ صحيح! ${currentTopicPractice.explanation||""}`:`❌ الجواب: ${currentTopicPractice.answer}. ${currentTopicPractice.explanation||""}`;
+      feedback.className=`challenge-feedback show ${ok?"good":"bad"}`;
+    });
+    host.append(input,check);
+  }
+}
+function openTopicLesson(topic){
+  currentTopic=topic;
+  if(topic.special==="pythagoras"){
+    subjectModal.classList.remove("open");
+    currentSubjectContext="pythagoras";
+    hidePlatformLobby();
+    updateAssistantLabels();
+    logStudentActivity("subject_open","فتح موضوع نظرية فيثاغورس","math");
+    return;
+  }
+  document.getElementById("subjectTopicBrowser").classList.add("hidden");
+  document.getElementById("topicLessonView").classList.remove("hidden");
+  document.getElementById("topicSubjectBadge").textContent=subjectDisplayName(topic.subject);
+  document.getElementById("topicIconBig").textContent=topic.icon||"📘";
+  document.getElementById("topicLessonTitle").textContent=topic.title;
+  document.getElementById("topicLessonSummary").textContent=topic.summary||"";
+  document.getElementById("topicAIName").textContent=`${assistantNameFor(topic.subject)} • ${topic.title}`;
+  document.getElementById("topicExplanation").textContent=topic.explanation||"";
+  document.getElementById("topicTip").textContent=`💡 تذكّر: ${topic.tip||"ركّز على الفكرة والمثال."}`;
+  document.getElementById("topicExampleText").textContent=topic.example||"";
+  renderTopicVisual(topic);
+  makeTopicPractice(topic);
+  document.getElementById("topicAIChat").innerHTML=`<div class="msg bot">هلا 👋 أنا ${escapeHtml(assistantNameFor(topic.subject))}. هسا مركزين على «${escapeHtml(topic.title)}». اسألني عن الشرح أو المثال أو اطلب سؤال تدريب.</div>`;
+  logStudentActivity("subject_open",`فتح موضوع ${topic.title}`,topic.subject);
+}
+document.getElementById("backToTopicBrowser").addEventListener("click",()=>{
+  document.getElementById("topicLessonView").classList.add("hidden");
+  document.getElementById("subjectTopicBrowser").classList.remove("hidden");
 });
-document.getElementById("subjectOpenExam").addEventListener("click",()=>{
+document.getElementById("topicSearchOtherBtn").addEventListener("click",()=>{
+  document.getElementById("topicLessonView").classList.add("hidden");
+  document.getElementById("subjectTopicBrowser").classList.remove("hidden");
+  document.getElementById("topicSearchInput").focus();
+});
+document.getElementById("newTopicPractice").addEventListener("click",()=>{if(currentTopic)makeTopicPractice(currentTopic)});
+
+function generateTopicAIQuestion(topic){
+  const q=pick(topicQuestionPool(topic).filter(x=>x.type==="mcq"));
+  aiGeneratedQuestion=q;
+  return `${q.prompt}\n${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`;
+}
+function topicAssistantAnswer(raw,topic){
+  const t=normalizeArabic(raw);
+  const glossary=subjectGlossaryAnswer(raw,topic.subject);
+  if(glossary)return glossary;
+  const heb=topic.subject==="hebrew"?hebrewKnowledgeAnswer(raw):null;
+  if(heb)return heb;
+  if(has(t,"اشرح","شرح","شو يعني","ما معنى","فهمني"))return topic.explanation;
+  if(has(t,"مثال","اعطيني مثال","هات مثال"))return `مثال: ${topic.example}`;
+  if(has(t,"قاعده","قاعدة","تذكر","نصيحه","نصيحة"))return topic.tip;
+  if(has(t,"سؤال","اسالني","اسألني","تدريب"))return generateTopicAIQuestion(topic);
+  const general=generalKnowledgeAnswer(raw,t);
+  if(general)return general;
+  return `بهذا الموضوع «${topic.title}»: ${topic.summary}\nاسألني عن الشرح أو المثال أو اطلب سؤال تدريب.`;
+}
+function appendTopicAI(text,who="bot"){
+  const d=document.createElement("div");d.className=`msg ${who}`;d.textContent=text;
+  const chat=document.getElementById("topicAIChat");chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+}
+function sendTopicAI(){
+  if(!currentTopic)return;
+  const input=document.getElementById("topicAIInput"),raw=input.value.trim();if(!raw)return;
+  input.value="";appendTopicAI(raw,"user");
+  logStudentActivity("ai_use",`استخدم مساعد موضوع ${currentTopic.title}`,currentTopic.subject);
+  setTimeout(()=>{
+    const graded=gradeGeneratedAIAnswer(raw);
+    appendTopicAI(graded||topicAssistantAnswer(raw,currentTopic),"bot");
+  },160);
+}
+document.getElementById("topicAISend").addEventListener("click",sendTopicAI);
+document.getElementById("topicAIInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendTopicAI()}});
+document.getElementById("topicExamBtn").addEventListener("click",()=>{
+  if(!currentTopic)return;
   subjectModal.classList.remove("open");
-  examSubject=currentSubjectContext;
-  const sel=document.getElementById("examSubject");if(sel)sel.value=examSubject;
-  openExamWithIdentity();
+  examModal.classList.add("open");
+  startExam(makeTopicExam(currentTopic));
 });
 
 function sendLobbyAI(){
@@ -5785,7 +6280,9 @@ const roots=[
 "عربي","لغة","نحو","صرف","فاعل","مفعول","مبتدا","خبر","فعل","اسم","حرف","جمع","مثنى","مفرد","مرادف","ضد","همزة","جملة",
 "جغرافيا","دولة","عاصمة","قارة","محيط","بحر","نهر","جبل","صحراء","خريطة","مدينة","بلد",
 "انجليزي","ترجمة","كلمة","معنى","ماضي","مضارع","ضمير","جملة","مفردات",
-"نسبة","مئوية","كسر","محيط","حجم","متوسط","اولى","اول","احتمال","متغير","سين","س","اكس",
+"نسبة","مئوية","كسر","كسور","بسط","مقام","محيط","حجم","متوسط","اولى","اول","احتمال","متغير","سين","س","اكس",
+"نعت","منعوت","مثنى","جمع","همزة","وصل","قطع","عبري","عبرية","ترجمة","صفة","مذكر","مؤنث","مفرد",
+"שם","תואר","עצם","פועל","זכר","נקבה","יחיד","רבים","משפט","עברית",
 "اسمك","اسمي","ناديني","تذكر","احفظ","موضوع","مادة","مسابقة","غرفة","كود","نتائج","تاريخ","معلومات","عام"
 ];
 const prefixes=["","ال","و","ف","ب","ك","لل","بال","وال","فال","كال","لل"];
@@ -6107,6 +6604,79 @@ function executeSiteAction(raw,t){
 }
 
 
+
+
+const subjectGlossaries={
+  math:{
+    "كسر":"عدد يمثل جزءًا من كل ويتكون من بسط ومقام.","بسط":"العدد الموجود أعلى خط الكسر.","مقام":"العدد الموجود أسفل خط الكسر.",
+    "معادله":"جملة رياضية فيها مساواة ونبحث أحيانًا عن قيمة مجهول.","محيط":"طول الحدود الخارجية للشكل.","مساحه":"مقدار السطح داخل الشكل.",
+    "زاويه":"شكل ناتج عن التقاء شعاعين في نقطة.","وتر":"أطول ضلع في المثلث القائم ويقابل زاوية 90°.","جذر":"عملية عكسية للتربيع.",
+    "نسبه":"مقارنة بين كميتين.","تناسب":"مساواة بين نسبتين."
+  },
+  science:{
+    "ذره":"وحدة أساسية للمادة تتكون من نواة وإلكترونات.","نواه":"مركز الذرة ويحتوي بروتونات ونيوترونات.","طاقه":"القدرة على إحداث تغيير أو إنجاز شغل.",
+    "قوه":"دفع أو سحب يمكن أن يغير حركة جسم.","سرعه":"المسافة المقطوعة مقسومة على الزمن.","تبخر":"تحول السائل إلى غاز.",
+    "تكاثف":"تحول الغاز إلى سائل.","بناء ضوئي":"عملية يصنع فيها النبات غذاءه باستخدام الضوء.","خليه":"وحدة بنائية ووظيفية أساسية في الكائن الحي."
+  },
+  arabic:{
+    "نعت":"كلمة تصف اسمًا قبلها يسمى المنعوت وتتبعُه في صفات نحوية مهمة.","منعوت":"الاسم الذي يصفه النعت.","فاعل":"من قام بالفعل ويكون مرفوعًا.",
+    "مفعول به":"ما وقع عليه الفعل ويكون منصوبًا.","مبتدا":"الاسم الذي نبدأ به الجملة الاسمية غالبًا.","خبر":"المعلومة التي نخبر بها عن المبتدأ.",
+    "مثنى":"صيغة تدل على اثنين أو اثنتين.","جمع":"صيغة تدل على أكثر من اثنين.","همزه وصل":"همزة تنطق في بدء الكلام وتسقط في الوصل.",
+    "همزه قطع":"همزة تنطق في البدء والوصل.","فعل ماضي":"فعل يدل على حدث وقع قبل زمن الكلام.","فعل مضارع":"فعل يدل على حدث يقع الآن أو مستقبلًا حسب السياق."
+  },
+  english:{
+    "noun":"اسم يدل على شخص أو مكان أو شيء أو فكرة.","verb":"فعل يدل على حدث أو حالة.","adjective":"صفة تصف اسمًا.","pronoun":"ضمير يحل محل الاسم.",
+    "present simple":"زمن للعادات والحقائق العامة.","past simple":"زمن لأحداث انتهت في الماضي.","plural":"صيغة الجمع.","singular":"صيغة المفرد.",
+    "subject":"الفاعل أو العنصر الذي نتحدث عنه في الجملة.","object":"المفعول أو العنصر الذي يقع عليه الفعل."
+  },
+  hebrew:{
+    "שם עצם":"اسم: شخص أو مكان أو شيء أو فكرة.","שם תואר":"صفة تصف الاسم.","פועל":"فعل يدل على حدث أو حالة.","זכר":"مذكر.",
+    "נקבה":"مؤنث.","יחיד":"مفرد.","רבים":"جمع.","מילות יחס":"حروف/كلمات جر تربط الكلمات.","משפט":"جملة.","נושא":"فاعل/موضوع الجملة حسب السياق."
+  },
+  geography:{
+    "قاره":"كتلة يابسة كبيرة جدًا من سطح الأرض.","محيط":"مسطح مائي مالح ضخم يفصل بين القارات.","عاصمه":"مدينة مركزية للحكومة والإدارة في الدولة.",
+    "مناخ":"نمط الطقس المعتاد في منطقة خلال مدة طويلة.","طقس":"حالة الجو في وقت ومكان محددين.","مقياس رسم":"العلاقة بين المسافة على الخريطة والمسافة الحقيقية.",
+    "تضاريس":"أشكال سطح الأرض مثل الجبال والسهول والهضاب.","خط الاستواء":"خط عرض 0° يقسم الأرض إلى نصفين شمالي وجنوبي."
+  }
+};
+function subjectGlossaryAnswer(raw,subject){
+  const n=normalizeArabic(raw),dict=subjectGlossaries[subject]||{};
+  const asksMeaning=has(n,"شو يعني","ما معنى","معنى","اشرح","تعريف")||subject==="hebrew"||subject==="english";
+  if(!asksMeaning)return null;
+  for(const [term,def] of Object.entries(dict)){
+    if(n.includes(normalizeArabic(term))||String(raw).includes(term))return `${term}: ${def}`;
+  }
+  return null;
+}
+
+const hebrewMiniDictionary={
+  "שלום":"مرحبا / سلام","תודה":"شكرا","בבקשה":"من فضلك / على الرحب","כן":"نعم","לא":"لا",
+  "בית":"بيت","ספר":"كتاب","ילד":"ولد","ילדה":"بنت","מורה":"معلم/معلمة","תלמיד":"طالب","תלמידה":"طالبة",
+  "מים":"ماء","בית ספר":"مدرسة","כיתה":"صف","חבר":"صديق","חברה":"صديقة",
+  "גדול":"كبير","גדולה":"كبيرة","קטן":"صغير","קטנה":"صغيرة","טוב":"جيد","טובה":"جيدة","יפה":"جميل/جميلة",
+  "כותב":"يكتب","קורא":"يقرأ","לומד":"يتعلم/يدرس","הולך":"يذهب/يمشي",
+  "אני":"أنا","אתה":"أنتَ","את":"أنتِ","הוא":"هو","היא":"هي","אנחנו":"نحن","הם":"هم","הן":"هن",
+  "עם":"مع","של":"لـ / خاص بـ","על":"على","מתחת":"تحت","בתוך":"داخل","ליד":"بجانب",
+  "היום":"اليوم","מחר":"غدًا","אתמול":"أمس","עכשיו":"الآن","בוקר":"صباح","ערב":"مساء"
+};
+const arabicToHebrewMini={
+  "كتاب":"ספר","بيت":"בית","ولد":"ילד","بنت":"ילדה","معلم":"מורה","طالب":"תלמיד",
+  "ماء":"מים","مدرسة":"בית ספר","صف":"כיתה","صديق":"חבר","كبير":"גדול","صغير":"קטן",
+  "جيد":"טוב","جميل":"יפה","انا":"אני","هو":"הוא","هي":"היא","نحن":"אנחנו",
+  "اليوم":"היום","غدا":"מחר","امس":"אתמול","مع":"עם","على":"על"
+};
+function hebrewKnowledgeAnswer(raw){
+  const text=String(raw||"").trim(), n=normalizeArabic(text);
+  for(const [h,a] of Object.entries(hebrewMiniDictionary))if(text.includes(h))return `${h} = ${a}.`;
+  for(const [a,h] of Object.entries(arabicToHebrewMini)){
+    if(n.includes(normalizeArabic(a))&&(n.includes("عبري")||n.includes("بالعبر")||n.includes("ترجم")))return `${a} = ${h}.`;
+  }
+  if(text.includes("שם תואר")||has(n,"صفة بالعبر","نعت بالعبر"))return "שם תואר يعني صفة. مثال: ילד טוב = ولد جيد، ילדה טובה = بنت جيدة.";
+  if(text.includes("שם עצם"))return "שם עצם يعني اسم: شخص أو مكان أو شيء أو فكرة. أمثلة: ילד، בית، ספר.";
+  if(text.includes("פועל"))return "פועל يعني فعل. أمثلة: כותב = يكتب، קורא = يقرأ، הולך = يذهب.";
+  return null;
+}
+
 let aiGeneratedQuestion=null;
 
 const localFacts=[
@@ -6135,6 +6705,7 @@ function detectStudySubject(t){
   if(has(t,"فيثاغورس","وتر","مثلث قائم"))return "pythagoras";
   if(has(t,"علوم","فيزياء","كيمياء","احياء","أحياء","فضاء","كوكب"))return "science";
   if(has(t,"عربي","نحو","فاعل","مفعول","مبتدا","خبر","لغة عربية"))return "arabic";
+  if(has(t,"عبري","عبرية","עברית","שם תואר","שם עצם","פועל"))return "hebrew";
   if(has(t,"جغرافيا","عاصمه","عاصمة","قاره","قارة","دوله","دولة"))return "geography";
   if(has(t,"انجليزي","إنجليزي","english","ترجمه","ترجمة"))return "english";
   if(has(t,"رياضيات","معادله","معادلة","حساب","جذر","نسبه","نسبة"))return "math";
@@ -6173,6 +6744,11 @@ function gradeGeneratedAIAnswer(raw){
   return ok?`صح ✅ ممتاز! ${exp}`:`مش صحيح. الجواب الصحيح هو ${answer}. ${exp}`;
 }
 function generalKnowledgeAnswer(raw,t){
+  const guessed=detectStudySubject(t);
+  const glossary=subjectGlossaryAnswer(raw,guessed);
+  if(glossary)return glossary;
+  const heb=hebrewKnowledgeAnswer(raw);
+  if(heb)return heb;
   const math=solveGeneralMath(raw,t);
   if(math)return math;
   for(const f of localFacts){
