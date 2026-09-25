@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07111c">
-<title>نظرية فيثاغورس | النموذج التفاعلي</title>
+<title>LearnSphere | Interactive Learning Lab</title>
 <style>
 :root{
   --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
@@ -846,36 +846,320 @@ body.light .live-player,body.light .live-rank{background:#f2f7fa}
 body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
 @media(max-width:650px){.comp-builder-options{grid-template-columns:1fr}}
 
+
+/* ================= GENERAL LEARNING V8 ================= */
+.subject-strip{
+  display:grid;grid-template-columns:auto minmax(160px,1fr);gap:9px;align-items:center;
+  margin:10px 0;padding:10px 12px;border-radius:13px;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025)
+}
+.subject-strip label{font-weight:900;color:#bfd0df;font-size:13px}
+.subject-strip select{
+  width:100%;height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.10);
+  background:#081522;color:#e9f4fc;padding:0 10px;font-weight:800
+}
+.general-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;
+  font-size:11px;font-weight:900;border:1px solid rgba(95,209,255,.16);
+  background:rgba(95,209,255,.06);color:#bfefff
+}
+.saved-comp-list{display:grid;gap:10px;margin-top:12px}
+.saved-comp-card{
+  padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.025)
+}
+.saved-comp-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.saved-comp-title{font-weight:950;font-size:17px}
+.saved-comp-meta{font-size:12px;color:#91a8bb;margin-top:4px}
+.saved-comp-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.saved-comp-code{font-weight:950;letter-spacing:2px;color:#ffdc79}
+.ai-scope{
+  margin-top:7px;padding:8px 10px;border-radius:10px;
+  background:rgba(92,194,255,.045);border:1px solid rgba(92,194,255,.09);
+  color:#8faac0;font-size:10px;line-height:1.5
+}
+body.light .subject-strip select{background:white;color:#173047;border-color:#d7e2ea}
+body.light .saved-comp-card,.subject-strip{ }
+@media(max-width:650px){
+  .subject-strip{grid-template-columns:1fr}
+}
+
+
+/* ================= PLATFORM LOBBY V9 ================= */
+.platform-lobby{
+  position:fixed;inset:0;z-index:40;overflow:auto;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(30,152,255,.19),transparent 35%),
+    radial-gradient(circle at 92% 90%,rgba(143,67,244,.17),transparent 34%),
+    linear-gradient(145deg,#06101a,#030810 72%);
+  color:#f4f9fd;padding:22px;
+}
+.platform-lobby.hidden{display:none}
+.lobby-shell{width:min(1180px,100%);margin:auto}
+.lobby-topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.lobby-brand{font-size:28px;font-weight:1000;letter-spacing:-1px}
+.lobby-sub{color:#91a6b9;font-size:13px;margin-top:2px}
+.lobby-top-actions{display:flex;align-items:center;gap:9px}
+.lobby-icon-btn,.lobby-profile-btn{
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:white;border-radius:14px;cursor:pointer
+}
+.lobby-icon-btn{width:48px;height:48px;font-size:20px}
+.lobby-profile-btn{display:flex;align-items:center;gap:9px;padding:6px 11px 6px 7px;font-weight:900}
+.lobby-avatar{
+  width:37px;height:37px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(135deg,#248dff,#9251eb);font-weight:1000;background-size:cover;background-position:center
+}
+.lobby-hero{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:18px;
+  padding:26px;border-radius:25px;border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(135deg,rgba(13,32,50,.83),rgba(7,18,31,.78));
+  box-shadow:0 30px 70px rgba(0,0,0,.24)
+}
+.lobby-hero-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.lobby-hero h2{font-size:40px;line-height:1.15;margin:10px 0 8px}
+.lobby-hero p{color:#97adbf;font-size:15px;line-height:1.8;margin:0}
+.lobby-ai-card{
+  padding:16px;border-radius:19px;border:1px solid rgba(88,190,255,.15);
+  background:rgba(7,20,33,.76)
+}
+.lobby-ai-head{display:flex;align-items:center;gap:10px}
+.lobby-ai-orb{
+  width:45px;height:45px;border-radius:14px;display:grid;place-items:center;font-size:23px;
+  background:linear-gradient(135deg,#258eff,#8c52e8);box-shadow:0 10px 28px rgba(71,129,255,.23)
+}
+.lobby-ai-head b{display:block;font-size:18px}.lobby-ai-head span{color:#829aaf;font-size:11px}
+.lobby-ai-reply{
+  min-height:62px;margin:12px 0;padding:11px;border-radius:12px;
+  background:rgba(255,255,255,.035);color:#d7e7f3;line-height:1.65;font-size:13px
+}
+.lobby-ai-input{display:grid;grid-template-columns:1fr 44px;gap:7px}
+.lobby-ai-input input,.subject-chat-input input{
+  height:44px;border-radius:11px;border:1px solid rgba(255,255,255,.09);
+  background:#091624;color:white;padding:0 11px
+}
+.lobby-ai-input button,.subject-chat-input button{
+  border:0;border-radius:11px;background:#168cff;color:white;font-size:18px;cursor:pointer
+}
+.lobby-section{margin-top:24px}
+.lobby-section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:11px}
+.lobby-section-head h3{margin:0;font-size:21px}.lobby-section-head p{margin:3px 0 0;color:#8298ab;font-size:12px}
+.subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.subject-card{
+  min-height:128px;padding:17px;border-radius:18px;text-align:right;color:white;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035)
+}
+.subject-card:hover{transform:translateY(-4px);border-color:rgba(93,196,255,.38)}
+.subject-card .subject-ico{font-size:32px;display:block;margin-bottom:10px}
+.subject-card b{display:block;font-size:18px}.subject-card small{color:#93a9bb;display:block;margin-top:5px}
+.subject-card.math{background:linear-gradient(145deg,rgba(36,132,255,.14),rgba(255,255,255,.02))}
+.subject-card.science{background:linear-gradient(145deg,rgba(39,205,139,.12),rgba(255,255,255,.02))}
+.subject-card.arabic{background:linear-gradient(145deg,rgba(255,167,47,.11),rgba(255,255,255,.02))}
+.subject-card.english{background:linear-gradient(145deg,rgba(152,82,245,.13),rgba(255,255,255,.02))}
+.subject-card.geography{background:linear-gradient(145deg,rgba(42,190,209,.12),rgba(255,255,255,.02))}
+.subject-card.pythagoras{background:linear-gradient(145deg,rgba(232,69,77,.11),rgba(255,255,255,.02))}
+.lobby-action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lobby-action{
+  min-height:102px;border-radius:17px;padding:14px;text-align:right;cursor:pointer;color:white;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035)
+}
+.lobby-action span{font-size:25px;display:block}.lobby-action b{font-size:16px;display:block;margin:6px 0 2px}
+.lobby-action small{color:#88a0b4}.lobby-action.primary{background:rgba(30,138,255,.13)}
+.lobby-action.competition{background:rgba(151,70,240,.14)}
+.teacher-only-lobby.hidden{display:none!important}
+
+/* student auth */
+.student-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.student-auth-tabs button{
+  padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);color:#afc1d1;font-weight:900;cursor:pointer
+}
+.student-auth-tabs button.active{background:#168cff;color:white;border-color:#168cff}
+.auth-form label{display:block;margin:8px 0 5px}
+.auth-form .hidden{display:none!important}
+
+/* subject */
+.subject-assistant-line{font-size:12px;color:#91a5b6;margin-top:3px}
+.subject-workspace{display:grid;gap:12px}
+.subject-side-actions{display:flex;gap:8px;flex-wrap:wrap}
+.subject-chat{height:360px;overflow:auto;padding:12px;border-radius:15px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07)}
+.subject-chat .msg{margin:7px 0;max-width:88%}
+.subject-chat-input{display:grid;grid-template-columns:1fr 48px;gap:7px}
+
+/* profile */
+.profile-modalbox{width:min(850px,96vw)}
+.profile-hero{display:flex;align-items:center;gap:16px;padding:13px 0}
+.profile-photo-wrap{width:92px;height:92px;border-radius:25px;overflow:hidden;position:relative;background:#122539}
+.profile-photo-fallback{position:absolute;inset:0;display:grid;place-items:center;font-size:34px;font-weight:1000;background:linear-gradient(135deg,#258eff,#8c52e8)}
+#profilePhotoPreview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.profile-upload-btn{display:inline-block;margin-top:7px;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.06);font-size:12px;cursor:pointer}
+.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}
+.profile-stats>div{padding:12px;border-radius:13px;background:rgba(255,255,255,.035);text-align:center}
+.profile-stats span{display:block;color:#8298ac;font-size:11px}.profile-stats b{font-size:23px}
+.profile-card{padding:14px;border-radius:15px;background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.07);margin-top:10px}
+.profile-card h3{margin:0 0 10px}
+.badge-list{display:flex;gap:7px;flex-wrap:wrap}
+.achievement-badge{padding:7px 9px;border-radius:999px;background:rgba(255,203,65,.09);border:1px solid rgba(255,203,65,.18);font-size:12px}
+.assistant-name-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.assistant-name-grid label{font-size:12px;color:#9fb1c2}
+.assistant-name-grid input{margin-top:4px}
+.history-row,.class-row,.qb-row{
+  padding:9px 10px;margin-top:6px;border-radius:10px;background:rgba(255,255,255,.035);
+  display:flex;justify-content:space-between;gap:8px;align-items:center
+}
+.qb-options{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0}
+#qbCorrect{width:100%;height:43px;margin-bottom:8px}
+
+/* profile image in main bar */
+.auth-avatar.has-photo{background-size:cover;background-position:center;color:transparent}
+
+@media(max-width:850px){
+  .lobby-hero{grid-template-columns:1fr}
+  .subject-grid{grid-template-columns:repeat(2,1fr)}
+  .lobby-action-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .platform-lobby{padding:13px}
+  .lobby-hero{padding:17px}.lobby-hero h2{font-size:30px}
+  .subject-grid{grid-template-columns:1fr}
+  .profile-stats{grid-template-columns:1fr 1fr}
+  .assistant-name-grid,.qb-options{grid-template-columns:1fr}
+  .lobby-profile-btn span{display:none}
+}
+
+
+.auth-name-note{
+  margin-top:9px;padding:8px 10px;border-radius:9px;
+  color:#8398aa;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);
+  font-size:11px;line-height:1.6
+}
+
+
+/* ================= SCHOOL CLASS SYSTEM V10 ================= */
+.class-manager-modal{width:min(1080px,97vw);max-height:92vh}
+.class-manager-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.teacher-class-heading{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.teacher-classes-grid{display:grid;gap:13px;margin-top:12px}
+.teacher-class-card{
+  padding:15px;border-radius:17px;border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.018))
+}
+.teacher-class-card.owner{border-color:rgba(58,178,255,.18)}
+.teacher-class-card.co-teacher{border-color:rgba(165,105,255,.17)}
+.class-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.class-card-head h3{margin:0;font-size:20px}
+.class-role-badge{
+  display:inline-block;margin-top:5px;padding:4px 7px;border-radius:999px;
+  font-size:10px;font-weight:900;background:rgba(255,255,255,.05);color:#9fb2c3
+}
+.class-code-big{font-size:22px;font-weight:1000;letter-spacing:3px;color:#ffda70;direction:ltr}
+.class-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.class-tools button{
+  padding:8px 10px;border-radius:9px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#dce9f3;cursor:pointer;font-weight:800;font-size:11px
+}
+.class-tools button.danger{border-color:rgba(255,84,98,.18);color:#ffadb5;background:rgba(255,84,98,.06)}
+.class-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.class-panel{
+  border:1px solid rgba(255,255,255,.07);background:rgba(5,15,25,.33);
+  border-radius:13px;padding:11px;min-width:0
+}
+.class-panel.full{grid-column:1/-1}
+.class-panel h4{margin:0 0 8px;font-size:14px}
+.class-student-row,.co-teacher-row,.assignment-card,.activity-row{
+  padding:9px;margin-top:6px;border-radius:10px;background:rgba(255,255,255,.035)
+}
+.class-student-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.class-student-row small{color:#8198ab}
+.student-last-active{font-size:10px;color:#70879a;margin-top:2px}
+.co-teacher-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.co-teacher-row button{font-size:10px}
+.class-edit-row{display:grid;grid-template-columns:1fr auto;gap:7px}
+.assignment-create{
+  display:grid;grid-template-columns:1fr 150px;gap:7px
+}
+.assignment-create textarea{grid-column:1/-1;min-height:70px}
+.assignment-create .assignment-date{min-width:0}
+.assignment-create button{grid-column:1/-1}
+.assignment-card h5{margin:0 0 4px;font-size:14px}
+.assignment-meta{color:#8097aa;font-size:10px;margin-bottom:5px}
+.assignment-description{font-size:12px;line-height:1.65;color:#c9d8e4;white-space:pre-wrap}
+.assignment-submission{
+  margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06)
+}
+.assignment-submission textarea{width:100%;min-height:65px;margin-top:5px}
+.assignment-list{display:grid;gap:8px;margin-top:12px}
+.activity-list{max-height:280px;overflow:auto}
+.activity-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}
+.activity-icon{font-size:17px}.activity-time{font-size:9px;color:#71879a;white-space:nowrap}
+.activity-detail b{display:block;font-size:12px}.activity-detail span{font-size:11px;color:#93a7b9}
+.teacher-invite-box{
+  margin-top:8px;padding:9px;border-radius:10px;background:rgba(137,79,237,.07);
+  border:1px solid rgba(137,79,237,.14);display:none
+}
+.teacher-invite-box.show{display:block}
+.teacher-invite-code{font-size:21px;font-weight:1000;letter-spacing:3px;color:#d7b6ff;direction:ltr}
+.danger-confirm{color:#ff9aa5;font-size:10px;margin-top:5px}
+.empty-mini{font-size:11px;color:#758ca0;padding:6px}
+@media(max-width:800px){
+  .class-manager-toolbar,.class-detail-grid{grid-template-columns:1fr}
+  .class-panel.full{grid-column:auto}
+  .assignment-create{grid-template-columns:1fr}
+  .assignment-create textarea,.assignment-create button{grid-column:auto}
+}
+
 </style>
 </head>
 <body>
-<div class="auth-gate" id="authGate" aria-modal="true" role="dialog">
+<div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
-    <button id="authCloseBtn" type="button" aria-label="إغلاق" style="position:absolute;left:14px;top:14px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:white;font-size:22px;cursor:pointer">×</button>
-    <div class="auth-logo">∟</div>
-    <h2>قبل ما تبدأ الامتحان 🎓</h2>
-    <div class="auth-sub">اختار طريقة الدخول للامتحان. الطالب يكتب اسمه مرة واحدة وينحفظ، والمعلم يدخل بحسابه لإدارة الامتحانات والنتائج.</div>
+    <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
+    <div class="auth-logo">L</div>
+    <h2>أهلًا في LearnSphere 👋</h2>
+    <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
 
     <div id="authRoleChooser">
       <div class="auth-role-grid">
         <button class="auth-role" id="chooseStudent" type="button">
           <span class="ico">🎒</span>
-          <b>أنا طالب</b>
-          <span>اكتب اسمك وادخل مباشرة. ما بدك إيميل ولا كلمة سر.</span>
+          <b>طالب</b>
+          <span>دخول بالاسم وكلمة السر، أو إنشاء حساب جديد.</span>
         </button>
         <button class="auth-role" id="chooseTeacher" type="button">
           <span class="ico">👨‍🏫</span>
-          <b>أنا معلم</b>
-          <span>دخول آمن للمعلم. امتحاناتك ونتائج طلابك ترتبط بحسابك.</span>
+          <b>معلم</b>
+          <span>دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.</span>
         </button>
       </div>
     </div>
 
     <div class="auth-form" id="studentLoginForm">
-      <label for="studentNameInput">شو اسمك؟</label>
+      <div class="student-auth-tabs">
+        <button type="button" class="active" id="studentModeLogin">دخول</button>
+        <button type="button" id="studentModeCreate">حساب جديد</button>
+      </div>
+
+      <label for="studentNameInput">الاسم</label>
       <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
+
+      <label for="studentPasswordInput">كلمة السر</label>
+      <input id="studentPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="6 خانات أو أكثر">
+
+      <div id="studentConfirmWrap" class="hidden">
+        <label for="studentPasswordConfirm">تأكيد كلمة السر</label>
+        <input id="studentPasswordConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="اكتب كلمة السر مرة ثانية">
+      </div>
+
+      <div id="studentClassCodeWrap" class="hidden">
+        <label for="studentClassCodeInput">كود الصف</label>
+        <input id="studentClassCodeInput" maxlength="8" autocomplete="off" placeholder="الكود اللي أعطاك إياه المعلم">
+      </div>
+
+      <div class="auth-name-note">عند إنشاء الحساب لازم تدخل كود صف صحيح. بعدين بتقدر تنضم لصفوف إضافية من اللوبي.</div>
+
       <div class="auth-form-actions">
-        <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول كطالب</button>
+        <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
         <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
       </div>
     </div>
@@ -888,7 +1172,284 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
     </div>
 
     <div class="auth-error" id="authError"></div>
-    <div class="auth-foot" id="authStatusText">الحفظ السحابي مفعّل • وإذا انقطع الاتصال، الطالب يقدر يكمل محليًا</div>
+    <div class="auth-foot" id="authStatusText">حسابك يحفظ تقدمك وإعداداتك على أجهزتك.</div>
+  </div>
+</div>
+
+
+<div class="platform-lobby" id="platformLobby">
+  <div class="lobby-shell">
+    <div class="lobby-topbar">
+      <div>
+        <div class="lobby-brand">LearnSphere</div>
+        <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
+      </div>
+      <div class="lobby-top-actions">
+        <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
+        <button class="lobby-profile-btn" id="lobbyProfileBtn">
+          <div class="lobby-avatar" id="lobbyAvatar">؟</div>
+          <span id="lobbyProfileName">حسابي</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="lobby-hero">
+      <div class="lobby-hero-copy">
+        <span class="general-badge">منصة تعلّم شخصية</span>
+        <h2>شو بدك تتعلم اليوم؟</h2>
+        <p>اختار مادة، حل امتحان، ادخل مسابقة، أو احكي مع مساعدك الذكي.</p>
+      </div>
+      <div class="lobby-ai-card">
+        <div class="lobby-ai-head">
+          <div class="lobby-ai-orb">✦</div>
+          <div>
+            <b id="lobbyAIName">نوفا</b>
+            <span>مساعد اللوبي</span>
+          </div>
+        </div>
+        <div class="lobby-ai-reply" id="lobbyAIReply">اسألني سؤال، اطلب امتحان، أو قلّي بأي مادة بدك تتدرّب.</div>
+        <div class="lobby-ai-input">
+          <input id="lobbyAIInput" placeholder="مثال: اعطيني سؤال علوم">
+          <button id="lobbyAISend">➤</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="lobby-section">
+      <div class="lobby-section-head">
+        <div>
+          <h3>📚 المواد</h3>
+          <p>كل مادة إلها مساعد باسم تختاره أنت.</p>
+        </div>
+      </div>
+      <div class="subject-grid">
+        <button class="subject-card math" data-subject-open="math">
+          <span class="subject-ico">➗</span><b>رياضيات</b><small class="subject-ai-label" data-ai-label="math">أوريون</small>
+        </button>
+        <button class="subject-card science" data-subject-open="science">
+          <span class="subject-ico">🧪</span><b>علوم</b><small class="subject-ai-label" data-ai-label="science">نيوتن</small>
+        </button>
+        <button class="subject-card arabic" data-subject-open="arabic">
+          <span class="subject-ico">ض</span><b>لغة عربية</b><small class="subject-ai-label" data-ai-label="arabic">بيان</small>
+        </button>
+        <button class="subject-card english" data-subject-open="english">
+          <span class="subject-ico">A</span><b>English</b><small class="subject-ai-label" data-ai-label="english">Lingo</small>
+        </button>
+        <button class="subject-card geography" data-subject-open="geography">
+          <span class="subject-ico">🌍</span><b>جغرافيا</b><small class="subject-ai-label" data-ai-label="geography">أطلس</small>
+        </button>
+        <button class="subject-card pythagoras" data-subject-open="pythagoras">
+          <span class="subject-ico">📐</span><b>مختبر فيثاغورس</b><small class="subject-ai-label" data-ai-label="pythagoras">فيثاغورسي</small>
+        </button>
+      </div>
+    </section>
+
+    <section class="lobby-section">
+      <div class="lobby-section-head"><h3>⚡ نشاطات سريعة</h3></div>
+      <div class="lobby-action-grid">
+        <button class="lobby-action primary" id="lobbyExamBtn"><span>🎓</span><b>امتحان</b><small>اختار المادة والمستوى</small></button>
+        <button class="lobby-action competition" id="competitionBtn"><span>🏆</span><b>مسابقة مباشرة</b><small>إنشاء غرفة أو الدخول بكود</small></button>
+        <button class="lobby-action" id="lobbyJoinClassBtn"><span>🏫</span><b>انضم لصف</b><small>ادخل كود الصف</small></button>
+        <button class="lobby-action" id="lobbyProfileQuick"><span>👤</span><b>ملفي</b><small>XP، الشارات والتقدم</small></button>
+      </div>
+    </section>
+
+    <section class="lobby-section teacher-only-lobby hidden" id="teacherLobbyTools">
+      <div class="lobby-section-head">
+        <div><h3>👨‍🏫 أدوات المعلم</h3><p>إدارة المحتوى والصفوف من مكان واحد.</p></div>
+      </div>
+      <div class="lobby-action-grid">
+        <button class="lobby-action" id="teacherQuestionBankBtn"><span>🗃️</span><b>بنك الأسئلة</b><small>احفظ وأعد استخدام أسئلتك</small></button>
+        <button class="lobby-action" id="teacherClassesBtn"><span>🏫</span><b>صفوفي</b><small>إنشاء صف ومتابعة الطلاب</small></button>
+        <button class="lobby-action" id="teacherResultsLobbyBtn"><span>📊</span><b>النتائج</b><small>نتائج الامتحانات</small></button>
+        <button class="lobby-action" id="teacherCompetitionsLobbyBtn"><span>🏆</span><b>مسابقاتي</b><small>المسابقات المحفوظة</small></button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="modal" id="subjectModal">
+  <div class="modalbox subject-modalbox">
+    <div class="modalhead">
+      <div>
+        <h2 id="subjectModalTitle">المادة</h2>
+        <div class="subject-assistant-line">المساعد: <b id="subjectAssistantName">—</b></div>
+      </div>
+      <button class="close" id="closeSubjectModal">×</button>
+    </div>
+    <div class="subject-workspace">
+      <div class="subject-side-actions">
+        <button class="apply" id="subjectGenerateQuestion">🎯 سؤال جديد</button>
+        <button class="exam-secondary" id="subjectOpenExam">🎓 امتحان بهذه المادة</button>
+      </div>
+      <div class="subject-chat" id="subjectChat"></div>
+      <div class="subject-chat-input">
+        <input id="subjectQuestionInput" placeholder="اسأل أي سؤال بالمادة...">
+        <button id="subjectQuestionSend">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="profileModal">
+  <div class="modalbox profile-modalbox">
+    <div class="modalhead">
+      <h2>👤 ملفي الشخصي</h2>
+      <button class="close" id="closeProfileModal">×</button>
+    </div>
+
+    <div class="profile-hero">
+      <div class="profile-photo-wrap">
+        <div class="profile-photo-fallback" id="profilePhotoFallback">؟</div>
+        <img id="profilePhotoPreview" alt="صورة البروفايل">
+      </div>
+      <div>
+        <h3 id="profileDisplayName">—</h3>
+        <div id="profileRoleText">—</div>
+        <label class="profile-upload-btn">📷 تغيير الصورة
+          <input id="profilePhotoInput" type="file" accept="image/*" hidden>
+        </label>
+      </div>
+    </div>
+
+    <div class="profile-stats">
+      <div><span>XP</span><b id="profileXP">0</b></div>
+      <div><span>المستوى</span><b id="profileLevel">1</b></div>
+      <div><span>الامتحانات</span><b id="profileExamCount">0</b></div>
+      <div><span>المعدل</span><b id="profileAverage">—</b></div>
+    </div>
+
+    <div class="profile-card">
+      <h3>🏅 الشارات</h3>
+      <div class="badge-list" id="profileBadges"></div>
+    </div>
+
+    <div class="profile-card">
+      <h3>📈 المواد</h3>
+      <div class="profile-strengths">
+        <div>أقوى مادة: <b id="profileStrongSubject">—</b></div>
+        <div>بدها تدريب: <b id="profileWeakSubject">—</b></div>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <h3>🤖 أسماء المساعدين</h3>
+      <div class="assistant-name-grid">
+        <label>اللوبي <input data-assistant-name="lobby"></label>
+        <label>رياضيات <input data-assistant-name="math"></label>
+        <label>علوم <input data-assistant-name="science"></label>
+        <label>عربي <input data-assistant-name="arabic"></label>
+        <label>English <input data-assistant-name="english"></label>
+        <label>جغرافيا <input data-assistant-name="geography"></label>
+        <label>فيثاغورس <input data-assistant-name="pythagoras"></label>
+      </div>
+      <button class="apply" id="saveAssistantNames">حفظ الأسماء</button>
+    </div>
+
+    <div class="profile-card">
+      <h3>🕘 آخر الامتحانات</h3>
+      <div id="profileExamHistory"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="classModal">
+  <div class="modalbox class-manager-modal">
+    <div class="modalhead">
+      <div>
+        <h2>🏫 إدارة الصفوف</h2>
+        <div class="subject-assistant-line">صفوف، طلاب، وظائف، سجل نشاط ومربيّو الصف.</div>
+      </div>
+      <button class="close" id="closeClassModal">×</button>
+    </div>
+
+    <div id="studentClassSection">
+      <div class="profile-card">
+        <h3>➕ انضم لصف إضافي</h3>
+        <div class="cloud-row">
+          <input id="joinClassCode" maxlength="8" placeholder="كود الصف">
+          <button class="exam-secondary" id="joinClassBtn">انضمام</button>
+        </div>
+        <div class="cloud-note" id="joinClassStatus" style="margin-top:8px">خذ الكود من المعلم.</div>
+      </div>
+
+      <div class="profile-card">
+        <h3>📚 صفوفي ووظائفي</h3>
+        <div id="studentClassesList"></div>
+        <div id="studentAssignmentsList" class="assignment-list"></div>
+      </div>
+    </div>
+
+    <div id="teacherClassSection" class="hidden">
+      <div class="class-manager-toolbar">
+        <div class="profile-card">
+          <h3>➕ صف جديد</h3>
+          <div class="cloud-row">
+            <input id="newClassName" maxlength="50" placeholder="مثال: ثامن 6">
+            <button class="apply" id="createClassBtn" style="margin:0">إنشاء</button>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <h3>🤝 انضم كمعلّم مساعد</h3>
+          <div class="cloud-row">
+            <input id="teacherInviteJoinCode" maxlength="8" placeholder="كود دعوة المعلم">
+            <button class="exam-secondary" id="joinTeacherInviteBtn">انضمام</button>
+          </div>
+          <div id="teacherInviteJoinStatus" class="cloud-note" style="margin-top:8px">اطلب كود الدعوة من مالك الصف.</div>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="teacher-class-heading">
+          <div>
+            <h3>📋 كل الصفوف اللي بتديرها</h3>
+            <div class="subject-assistant-line">بتقدر تكون مالك لعدة صفوف ومعلّم مساعد بصفوف ثانية.</div>
+          </div>
+          <button class="exam-secondary" id="refreshClassesBtn">↻ تحديث</button>
+        </div>
+        <div id="teacherClassesList" class="teacher-classes-grid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="questionBankModal">
+  <div class="modalbox">
+    <div class="modalhead">
+      <h2>🗃️ بنك الأسئلة</h2>
+      <button class="close" id="closeQuestionBankModal">×</button>
+    </div>
+    <div class="profile-card">
+      <div class="builder-grid">
+        <select id="qbSubject">
+          <option value="math">رياضيات</option>
+          <option value="science">علوم</option>
+          <option value="arabic">عربي</option>
+          <option value="english">English</option>
+          <option value="geography">جغرافيا</option>
+          <option value="pythagoras">فيثاغورس</option>
+        </select>
+        <input id="qbPrompt" placeholder="اكتب السؤال">
+      </div>
+      <div class="qb-options">
+        <input class="qb-option" placeholder="الخيار 1">
+        <input class="qb-option" placeholder="الخيار 2">
+        <input class="qb-option" placeholder="الخيار 3">
+        <input class="qb-option" placeholder="الخيار 4">
+      </div>
+      <select id="qbCorrect">
+        <option value="0">الخيار 1 هو الصحيح</option>
+        <option value="1">الخيار 2 هو الصحيح</option>
+        <option value="2">الخيار 3 هو الصحيح</option>
+        <option value="3">الخيار 4 هو الصحيح</option>
+      </select>
+      <button class="apply" id="qbSaveBtn">💾 حفظ السؤال</button>
+    </div>
+    <div class="profile-card">
+      <h3>الأسئلة المحفوظة</h3>
+      <div id="qbList"></div>
+    </div>
   </div>
 </div>
 
@@ -910,8 +1471,9 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
 
   <aside class="side">
     <div class="brand">
-      <h1>نظرية فيثاغورس ثلاثية الأبعاد</h1>
-      <div class="ai-chip">● فيثاغورسي AI</div>
+      <h1>LearnSphere</h1>
+      <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
+      <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
     </div>
     <div class="auth-userbar" id="authUserBar">
       <div class="auth-userinfo">
@@ -923,7 +1485,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
       </div>
       <button class="auth-logout" id="authLogoutBtn">تسجيل خروج</button>
     </div>
-    <p class="sub">نموذج تفاعلي واقعي يوضح نظرية فيثاغورس بالرمل والحركة والحساب المباشر.</p>
+    <p class="sub">منصة تعلّم تفاعلية: مساعد ذكي، امتحانات، مسابقات، ومختبر فيثاغورس ثلاثي الأبعاد.</p>
 
     <section class="card">
       <h2>📐 احسب أي ضلع</h2>
@@ -977,7 +1539,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
         <button class="secondary exam-launch" id="examBtn">🎓 امتحان مفاجئ</button>
         <button class="secondary" id="explainBtn">📘 شرح النظرية بالتفصيل</button>
         <button class="secondary" id="shakeBtn">⏳ حرّك الرمل من جديد</button>
-        <button class="secondary classroom-btn" id="competitionBtn">🏆 مسابقة مباشرة</button>
+        
       </div>
       <div class="proof-status" id="proofStatus">
         <div id="proofText">جاهز: سننقل كمية الرمل من a² و b² إلى c² لنرى تساوي المساحات.</div>
@@ -1009,7 +1571,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
         <div class="online">● جاهز</div>
       </div>
       <div class="chat" id="chat">
-        <div class="msg bot">هلا بطلاب اللاهف 👋 أنا <b>فيثاغورسي</b>، مساعدكم المختص بنظرية فيثاغورس. اسألوني عن الوتر، الأضلاع، طريقة الحل، المجسم، الرمل، الإثبات، أو أعطوني أرقام وأنا أحسبها لكم.</div>
+        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>فيثاغورسي</b>، مساعد التعلّم بالموقع. اسألني رياضيات، علوم، عربي، جغرافيا، إنجليزي، أو خلّيني أتحكم بالمجسم والامتحانات والمسابقات.</div>
       </div>
       <div class="suggestions">
         <button data-q="اشرحلي النظرية ببساطة">اشرحها ببساطة</button>
@@ -1031,8 +1593,9 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
         </select>
         <label class="ai-auto"><input id="aiAutoSpeak" type="checkbox"> 🔊 اقرأ الرد تلقائيًا</label>
       </div>
-      <div class="dictnote">فيثاغورسي ذكي • يفهم الصوت عند توفره • يحفظ آخر المحادثات على جهازك</div>
+      <div class="dictnote">فيثاغورسي ذكي محليًا • فهم عربي موسّع ولهجات • يحفظ الاسم والسياق والمحادثات</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
+      <div class="ai-scope">يفهم العربية بمرونة ويحل كثيرًا من المسائل ويولّد أسئلة من بنك تعليمي محلي. إذا كان السؤال خارج المعرفة المحلية، يطلب تفاصيل بدل اختراع جواب.</div>
     </section>
   </aside>
 </div>
@@ -1091,6 +1654,18 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
     </div>
 
     <div id="examHome">
+    <div class="subject-strip">
+      <label for="examSubject">📚 مادة الامتحان</label>
+      <select id="examSubject">
+        <option value="mixed" selected>مختلط — من عدة مواد</option>
+        <option value="math">رياضيات</option>
+        <option value="science">علوم</option>
+        <option value="arabic">لغة عربية</option>
+        <option value="geography">جغرافيا</option>
+        <option value="english">إنجليزي</option>
+        <option value="pythagoras">مختبر فيثاغورس</option>
+      </select>
+    </div>
     <div class="resume-box" id="resumeExamBox">
       <b>📌 عندك امتحان غير مكتمل</b>
       <span id="resumeExamText">في محاولة محفوظة على هذا الجهاز.</span>
@@ -1110,7 +1685,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
       <div class="exam-home">
         <div class="exam-choice">
           <h3>⚡ الامتحان المفاجئ</h3>
-          <p>أقسى اختبار: 10 أسئلة متغيّرة عن فيثاغورس، حسابات، فهم، عكس النظرية، مسافات ومساحات. العلامة من 100.</p>
+          <p>10 أسئلة متغيّرة حسب المادة التي تختارها. العلامة من 100، والأسئلة تتغير من محاولة للثانية.</p>
           <button id="startSurpriseExam">ابدأ الامتحان المفاجئ</button>
         </div>
         <div class="exam-choice custom">
@@ -1175,7 +1750,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
 
     <div id="examBuilder" class="hidden">
       <div class="builder-top">
-        <input id="builderTitle" value="امتحاني في نظرية فيثاغورس" placeholder="اسم الامتحان">
+        <input id="builderTitle" value="امتحاني" placeholder="اسم الامتحان">
         <select id="builderMode">
           <option value="auto">تصحيح تلقائي</option>
         </select>
@@ -1232,14 +1807,36 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
         </div>
         <div class="live-card">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>اعمل مسابقة سريعة بأسئلة جاهزة، أو صمّم أسئلتك وإجاباتك بنفسك.</p>
+          <p>اعمل مسابقة سريعة بأي مادة، أو صمّم أسئلتك وإجاباتك بنفسك.</p>
           <div class="live-field">
+            <select id="compQuickSubject">
+              <option value="mixed">مختلط — عدة مواد</option>
+              <option value="math">رياضيات</option>
+              <option value="science">علوم</option>
+              <option value="arabic">لغة عربية</option>
+              <option value="geography">جغرافيا</option>
+              <option value="english">إنجليزي</option>
+              <option value="pythagoras">فيثاغورس</option>
+            </select>
             <button class="apply" id="compCreateBtn">⚡ إنشاء مسابقة سريعة</button>
             <button class="exam-secondary" id="compDesignBtn">🛠️ صمّم المسابقة بنفسك</button>
+            <button class="exam-secondary" id="compMyBtn">📚 مسابقاتي المحفوظة</button>
           </div>
           <div class="cloud-note" style="margin-top:9px">إنشاء الغرفة يحتاج دخول المعلم أولًا.</div>
         </div>
       </div>
+    </div>
+
+    <div id="competitionLibrary" class="hidden">
+      <div class="live-hero">
+        <h3>📚 مسابقاتي</h3>
+        <p>كل المسابقات اللي أنشأتها محفوظة. افتح غرفة لسه شغالة أو انسخ مسابقة قديمة وشغّلها من جديد بكود جديد.</p>
+      </div>
+      <div class="live-host-controls">
+        <button class="exam-secondary" id="compLibraryRefresh">↻ تحديث</button>
+        <button class="exam-secondary" id="compLibraryBack">رجوع</button>
+      </div>
+      <div class="saved-comp-list" id="compLibraryList"></div>
     </div>
 
     <div id="competitionBuilder" class="hidden">
@@ -1248,7 +1845,7 @@ body.light .comp-builder-card{background:#f8fbfd;border-color:#dce6ec}
         <p>اكتب الأسئلة والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.</p>
       </div>
       <div class="live-field">
-        <input id="compBuilderTitle" maxlength="60" value="مسابقة فيثاغورس" placeholder="اسم المسابقة">
+        <input id="compBuilderTitle" maxlength="60" value="مسابقة تعليمية" placeholder="اسم المسابقة">
       </div>
       <div id="compBuilderError" class="builder-error"></div>
       <div id="compBuilderQuestions" style="display:grid;gap:10px;margin-top:12px"></div>
@@ -1328,11 +1925,12 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
-  signInAnonymously, onAuthStateChanged, signOut
+  signInAnonymously, onAuthStateChanged, signOut,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
-  query, where, serverTimestamp, updateDoc, onSnapshot
+  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
@@ -1354,6 +1952,123 @@ googleProvider.setCustomParameters({prompt:"select_account"});
 
 window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
+
+const defaultAssistantNames={
+  lobby:"نوفا",
+  math:"أوريون",
+  science:"نيوتن",
+  arabic:"بيان",
+  english:"Lingo",
+  geography:"أطلس",
+  pythagoras:"فيثاغورسي"
+};
+let currentSubjectContext="mixed";
+
+function normalizeStudentNameKey(value){
+  return String(value||"").trim().toLowerCase()
+    .replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه")
+    .replace(/[ًٌٍَُِّْـ]/g,"")
+    .replace(/\s+/g," ")
+    .replace(/[^\w\u0600-\u06FF ._-]/g,"")
+    .trim()
+    .slice(0,40);
+}
+function studentNameHash64(str){
+  let h1=0x811c9dc5,h2=0x9e3779b9;
+  for(let i=0;i<str.length;i++){
+    const c=str.charCodeAt(i);
+    h1=Math.imul(h1^c,0x01000193);
+    h2=Math.imul(h2^(c+i),0x85ebca6b);
+  }
+  return `${(h1>>>0).toString(36)}${(h2>>>0).toString(36)}`;
+}
+function studentEmailFromName(name){
+  const key=normalizeStudentNameKey(name);
+  return `n${studentNameHash64(key)}@students.learnsphere.app`;
+}
+function assistantNames(){
+  return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
+}
+function assistantNameFor(subject){
+  return assistantNames()[subject]||defaultAssistantNames[subject]||"مساعدي";
+}
+function applyAvatar(el,profile,name){
+  if(!el)return;
+  const photo=profile?.photoData||profile?.photoURL||"";
+  if(photo){
+    el.style.backgroundImage=`url("${photo}")`;
+    el.classList.add("has-photo");
+    el.textContent="";
+  }else{
+    el.style.backgroundImage="";
+    el.classList.remove("has-photo");
+    el.textContent=(String(name||"؟").trim()[0]||"؟").toUpperCase();
+  }
+}
+function updateAssistantLabels(){
+  const names=assistantNames();
+  document.getElementById("lobbyAIName")?.replaceChildren(document.createTextNode(names.lobby));
+  document.querySelectorAll("[data-ai-label]").forEach(el=>{
+    el.textContent=names[el.dataset.aiLabel]||defaultAssistantNames[el.dataset.aiLabel]||"مساعد";
+  });
+  const chip=document.getElementById("pythagAIChip");
+  if(chip)chip.textContent=`● ${names.pythagoras}`;
+  if(currentSubjectContext&&currentSubjectContext!=="mixed"){
+    const sa=document.getElementById("subjectAssistantName");
+    if(sa)sa.textContent=names[currentSubjectContext]||"مساعد";
+  }
+}
+function showPlatformLobby(){
+  document.getElementById("platformLobby")?.classList.remove("hidden");
+  const p=window.PythagorasiUser||{};
+  const name=p.displayName||"مستخدم";
+  const first=name.split(/\s+/)[0]||name;
+  document.getElementById("lobbyGreeting").textContent=`أهلًا ${first} 👋`;
+  document.getElementById("lobbyProfileName").textContent=name;
+  applyAvatar(document.getElementById("lobbyAvatar"),p,name);
+  document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",p.role!=="teacher");
+  updateAssistantLabels();
+}
+function hidePlatformLobby(){
+  document.getElementById("platformLobby")?.classList.add("hidden");
+}
+
+
+
+/* -------------------- PERMANENT UNIQUE ACCESS CODES -------------------- */
+function randomAccessCode(length=6){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out="";
+  for(let i=0;i<length;i++)out+=chars[Math.floor(Math.random()*chars.length)];
+  return out;
+}
+async function reserveUniqueCode(kind){
+  if(!auth.currentUser)throw new Error("login-required");
+  for(let attempt=0;attempt<20;attempt++){
+    const code=randomAccessCode(6);
+    const codeRef=doc(db,"codes",code);
+    try{
+      const reserved=await runTransaction(db,async tx=>{
+        const snap=await tx.get(codeRef);
+        if(snap.exists())return false;
+        tx.set(codeRef,{
+          code,kind,
+          ownerId:auth.currentUser.uid,
+          reservedAt:serverTimestamp()
+        });
+        return true;
+      });
+      if(reserved)return code;
+    }catch(err){
+      console.warn("reserve code retry",err);
+      if(String(err?.code||"").includes("permission"))throw err;
+    }
+  }
+  throw new Error("unique-code-failed");
+}
+
+
+
 const authGate=document.getElementById("authGate");
 const authPanel=document.getElementById("authPanel");
 const authError=document.getElementById("authError");
@@ -1362,6 +2077,12 @@ const roleChooser=document.getElementById("authRoleChooser");
 const studentForm=document.getElementById("studentLoginForm");
 const teacherForm=document.getElementById("teacherLoginForm");
 const studentNameInput=document.getElementById("studentNameInput");
+const studentPasswordInput=document.getElementById("studentPasswordInput");
+const studentPasswordConfirm=document.getElementById("studentPasswordConfirm");
+const studentClassCodeInput=document.getElementById("studentClassCodeInput");
+let studentAuthMode="login";
+let studentAccountCreationInProgress=false;
+
 const authUserBar=document.getElementById("authUserBar");
 
 let activeProfile=null;
@@ -1385,11 +2106,26 @@ function showRoleChooser(){
   setAuthError("");
 }
 
+
+function setStudentAuthMode(mode){
+  studentAuthMode=mode==="create"?"create":"login";
+  document.getElementById("studentModeLogin").classList.toggle("active",studentAuthMode==="login");
+  document.getElementById("studentModeCreate").classList.toggle("active",studentAuthMode==="create");
+  document.getElementById("studentConfirmWrap").classList.toggle("hidden",studentAuthMode!=="create");
+  document.getElementById("studentClassCodeWrap").classList.toggle("hidden",studentAuthMode!=="create");
+  studentPasswordInput.autocomplete=studentAuthMode==="create"?"new-password":"current-password";
+  document.getElementById("studentLoginBtn").textContent=studentAuthMode==="create"?"✨ إنشاء الحساب":"🚀 دخول";
+  setAuthError("");
+}
+document.getElementById("studentModeLogin").addEventListener("click",()=>setStudentAuthMode("login"));
+document.getElementById("studentModeCreate").addEventListener("click",()=>setStudentAuthMode("create"));
+
 function showStudentLogin(){
   roleChooser.style.display="none";
   teacherForm.classList.remove("show");
   studentForm.classList.add("show");
   setAuthError("");
+  setStudentAuthMode(studentAuthMode);
   setTimeout(()=>studentNameInput.focus(),80);
 }
 
@@ -1406,7 +2142,10 @@ function friendlyAuthError(error){
   if(code.includes("popup-blocked"))return "المتصفح منع نافذة تسجيل الدخول. رح نجرب طريقة دخول ثانية.";
   if(code.includes("unauthorized-domain"))return "رابط الموقع غير مصرح له بتسجيل الدخول. راجع إعدادات النطاقات المسموحة.";
   if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
-  if(code.includes("operation-not-allowed"))return "طريقة الدخول المطلوبة مش مفعّلة.";
+  if(code.includes("operation-not-allowed"))return "دخول الطالب بكلمة سر مش مفعّل في إعدادات المشروع.";
+  if(code.includes("email-already-in-use"))return "في حساب موجود بهذا الاسم.";
+  if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "الاسم أو كلمة السر غير صحيحة.";
+  if(code.includes("weak-password"))return "كلمة السر لازم تكون 6 خانات أو أكثر.";
   if(code.includes("api-key-not-valid"))return "إعدادات الاتصال غير صحيحة داخل الموقع.";
   if(code.includes("permission-denied"))return "الحفظ السحابي منع العملية. تأكد من قواعد الحفظ.";
   if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
@@ -1416,17 +2155,20 @@ function friendlyAuthError(error){
 async function saveUserProfile(user,profile){
   const ref=doc(db,"users",user.uid);
   const existing=await getDoc(ref);
+  const clean={...profile};
+  delete clean.uid;
   const base={
+    ...clean,
     displayName:profile.displayName||user.displayName||"بدون اسم",
     role:profile.role,
     provider:profile.provider,
     updatedAt:serverTimestamp()
   };
   if(user.email)base.email=user.email;
-  if(user.photoURL)base.photoURL=user.photoURL;
+  if(user.photoURL&&!base.photoData)base.photoURL=user.photoURL;
   if(!existing.exists())base.createdAt=serverTimestamp();
   await setDoc(ref,base,{merge:true});
-  return {...(existing.exists()?existing.data():{}),...base};
+  return {...(existing.exists()?existing.data():{}),...clean,...base};
 }
 
 function finishAuthIntent(){
@@ -1447,61 +2189,69 @@ function paintUser(user,profile){
   const name=profile?.displayName||user?.displayName||"مستخدم";
   const teacher=profile?.role==="teacher";
   document.getElementById("authDisplayName").textContent=name;
-  document.getElementById("authRoleText").textContent=teacher?"👨‍🏫 معلم • Google":"🎒 طالب";
-  document.getElementById("authAvatar").textContent=(name.trim()[0]||"؟").toUpperCase();
+  document.getElementById("authRoleText").textContent=teacher?"👨‍🏫 معلم":"🎒 طالب";
+  applyAvatar(document.getElementById("authAvatar"),profile,name);
   authUserBar.classList.add("show");
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
+  activeProfile=window.PythagorasiUser;
+  setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
+  if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
+
+  const pending=authPendingAction;
+  if(!pending)showPlatformLobby();
   finishAuthIntent();
 }
 
 async function resolveCurrentUser(user){
   if(!user){
     activeProfile=null;
-    authUserBar.classList.remove("show");
     window.PythagorasiUser=null;
-    authGate.classList.remove("show");
-    authStatusText.textContent="جاهز";
+    authUserBar.classList.remove("show");
+    hidePlatformLobby();
+    authGate.classList.add("show");
+    showRoleChooser();
+    authStatusText.textContent="سجّل دخولك أو أنشئ حساب طالب جديد";
+    setTimeout(refreshAIWelcome,0);
     return;
   }
 
   authBusy(true,"جاري تحميل حسابك…");
   try{
     const provider=user.providerData?.[0]?.providerId;
+    const snap=await getDoc(doc(db,"users",user.uid));
+    let profile=snap.exists()?snap.data():null;
+
     if(provider==="google.com"){
-      const profile={
-        displayName:user.displayName||"المعلم",
+      const base={
+        displayName:profile?.displayName||user.displayName||"المعلم",
         role:"teacher",
         provider:"google.com",
         email:user.email||""
       };
-      await saveUserProfile(user,profile);
-      paintUser(user,profile);
+      profile=await saveUserProfile(user,{...profile,...base});
     }else{
-      const savedName=(localStorage.getItem("pythagorasi_student_name")||"").trim();
-      const snap=await getDoc(doc(db,"users",user.uid));
-      const dbName=snap.exists()?(snap.data().displayName||""):"";
-      const name=savedName||dbName;
-
-      if(name){
-        const profile={displayName:name,role:"student",provider:"anonymous"};
-        await saveUserProfile(user,profile);
-        paintUser(user,profile);
-      }else{
-        // Keep the normal website open. We ask for the name only when an exam is opened.
-        activeProfile=null;
-        authUserBar.classList.remove("show");
-        authGate.classList.remove("show");
+      if(!profile){
+        if(studentAccountCreationInProgress){
+          authGate.classList.add("show");
+          return;
+        }
+        await signOut(auth);
+        throw new Error("student-profile-missing");
       }
+      profile={...profile,role:"student"};
     }
-    authStatusText.textContent="متصل بالحفظ السحابي ✓";
+    paintUser(user,profile);
+    authStatusText.textContent="تم الدخول ✓";
   }catch(error){
     console.error("resolveCurrentUser",error);
-    // Never block the normal website because Firebase had a problem.
-    authGate.classList.remove("show");
-    authUserBar.classList.remove("show");
-    console.warn(friendlyAuthError(error));
+    if(String(error?.message||"")==="student-profile-missing"){
+      setAuthError("الحساب ناقص بياناته. أنشئ حساب جديد.");
+    }else{
+      setAuthError(friendlyAuthError(error));
+    }
+    authGate.classList.add("show");
   }finally{
     authBusy(false);
   }
@@ -1518,67 +2268,106 @@ document.getElementById("studentBackBtn").addEventListener("click",showRoleChoos
 document.getElementById("teacherBackBtn").addEventListener("click",showRoleChooser);
 
 document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
-  const name=studentNameInput.value.trim().replace(/\s+/g," ");
-  if(name.length<2){
+  const displayName=studentNameInput.value.trim().replace(/\s+/g," ");
+  const nameKey=normalizeStudentNameKey(displayName);
+  const password=studentPasswordInput.value;
+  const classCode=(studentClassCodeInput.value||"").trim().toUpperCase();
+
+  if(displayName.length<2 || nameKey.length<2){
     setAuthError("اكتب اسمك أولًا — حرفين على الأقل.");
-    studentNameInput.focus();
-    return;
+    studentNameInput.focus();return;
   }
-  authBusy(true,"جاري دخول الطالب…");
+  if(password.length<6){
+    setAuthError("كلمة السر لازم تكون 6 خانات أو أكثر.");
+    studentPasswordInput.focus();return;
+  }
+  if(studentAuthMode==="create"&&classCode.length<4){
+    setAuthError("اكتب كود الصف اللي أعطاك إياه المعلم.");
+    studentClassCodeInput.focus();return;
+  }
+
+  authBusy(true,studentAuthMode==="create"?"جاري إنشاء الحساب والانضمام للصف…":"جاري الدخول…");
   setAuthError("");
+
   try{
-    let user=auth.currentUser;
-    const provider=user?.providerData?.[0]?.providerId;
-    if(!user || provider==="google.com"){
-      if(user)await signOut(auth);
-      const cred=await signInAnonymously(auth);
-      user=cred.user;
+    const email=studentEmailFromName(displayName);
+
+    if(studentAuthMode==="create"){
+      if(password!==studentPasswordConfirm.value){
+        setAuthError("كلمتا السر مش نفس بعض.");return;
+      }
+
+      if(auth.currentUser)await signOut(auth);
+      studentAccountCreationInProgress=true;
+      const cred=await createUserWithEmailAndPassword(auth,email,password);
+
+      try{
+        const joinSnap=await getDoc(doc(db,"classJoinCodes",classCode));
+        if(!joinSnap.exists())throw new Error("invalid-class-code");
+        const joinData=joinSnap.data();
+        if(!joinData.active)throw new Error("invalid-class-code");
+
+        const classId=joinData.classId;
+        const profile={
+          displayName,nameKey,role:"student",provider:"password",
+          assistantNames:{...defaultAssistantNames},
+          xp:0,examCount:0,totalScorePct:0,subjectStats:{},
+          classIds:[classId]
+        };
+
+        const saved=await saveUserProfile(cred.user,profile);
+        await setDoc(doc(db,"classes",classId,"members",cred.user.uid),{
+          uid:cred.user.uid,
+          displayName,
+          joinCode:classCode,
+          xp:0,level:1,examCount:0,average:0,
+          joinedAt:serverTimestamp(),lastActiveAt:serverTimestamp()
+        });
+        studentAccountCreationInProgress=false;
+        paintUser(cred.user,saved);
+        await logStudentActivity("account_created",`أنشأ الحساب وانضم إلى صف ${joinData.className||""}`,"");
+        showToast(`👋 أهلًا ${displayName}! انضممت إلى ${joinData.className||"الصف"}.`);
+      }catch(joinErr){
+        console.error("class join during signup",joinErr);
+        try{await deleteUser(cred.user)}catch{}
+        studentAccountCreationInProgress=false;
+        if(String(joinErr?.message||"")==="invalid-class-code"){
+          setAuthError("كود الصف غير صحيح. تأكد من المعلم وجرب مرة ثانية.");
+        }else{
+          setAuthError("تعذر الانضمام للصف. جرّب مرة ثانية.");
+        }
+        return;
+      }
+    }else{
+      if(auth.currentUser)await signOut(auth);
+      const cred=await signInWithEmailAndPassword(auth,email,password);
+      const snap=await getDoc(doc(db,"users",cred.user.uid));
+      if(!snap.exists())throw new Error("student-profile-missing");
+      const profile=snap.data();
+
+      if(profile.nameKey && profile.nameKey!==nameKey){
+        await signOut(auth);throw new Error("name-mismatch");
+      }
+      paintUser(cred.user,profile);
+      setTimeout(()=>logStudentActivity("login","سجّل دخول للمنصة",""),250);
+      showToast(`👋 أهلًا ${profile.displayName||displayName}!`);
     }
-    localStorage.setItem("pythagorasi_student_name",name);
-    const profile={displayName:name,role:"student",provider:"anonymous"};
-    await saveUserProfile(user,profile);
-    paintUser(user,profile);
-    showToast(`👋 أهلًا ${name}! تم حفظ دخولك كطالب.`);
   }catch(error){
-    console.error("student login",error);
-
-    // الطالب لا ينحرم من الامتحان لو Firebase تعطّل.
-    // نحفظ الاسم محليًا ونكمل، لكن النتائج السحابية تحتاج Firebase شغال.
-    localStorage.setItem("pythagorasi_student_name",name);
-    const localProfile={
-      displayName:name,
-      role:"student",
-      provider:"local-fallback",
-      localOnly:true
-    };
-    activeProfile=localProfile;
-    window.PythagorasiUser={
-      uid:`local-${Date.now()}`,
-      ...localProfile
-    };
-
-    document.getElementById("authDisplayName").textContent=name;
-    document.getElementById("authRoleText").textContent="🎒 طالب • حفظ محلي";
-    document.getElementById("authAvatar").textContent=(name.trim()[0]||"؟").toUpperCase();
-    authUserBar.classList.add("show");
-    authGate.classList.remove("show");
-
-    const action=authPendingAction;
-    authPendingAction=null;
-    if(action==="exam")setTimeout(()=>openExamCenter(),80);
-
-    showToast(`👋 أهلًا ${name}! دخلت للامتحان. الحفظ حاليًا محلي لأن Firebase غير متصل.`);
+    console.error(error);
+    if(error?.code==="auth/email-already-in-use"){
+      setAuthError("في حساب موجود بهذا الاسم. إذا هو حسابك اختار «دخول».");
+    }else if(String(error?.message||"")==="name-mismatch"){
+      setAuthError("الاسم أو كلمة السر غير صحيحة.");
+    }else{
+      setAuthError(friendlyAuthError(error));
+    }
   }finally{
+    studentAccountCreationInProgress=false;
     authBusy(false);
   }
 });
-
-studentNameInput.addEventListener("keydown",e=>{
-  if(e.key==="Enter")document.getElementById("studentLoginBtn").click();
-});
-
 document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
-  authBusy(true,"جاري فتح Google…");
+  authBusy(true,"جاري فتح تسجيل الدخول…");
   setAuthError("");
   try{
     const currentProvider=auth.currentUser?.providerData?.[0]?.providerId;
@@ -1617,11 +2406,12 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
 document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
   try{
     await signOut(auth);
-    localStorage.removeItem("pythagorasi_student_name");
     activeProfile=null;
+    hidePlatformLobby();
     authUserBar.classList.remove("show");
     authGate.classList.add("show");
     showRoleChooser();
+    setTimeout(refreshAIWelcome,0);
     showToast("تم تسجيل الخروج.");
   }catch(error){
     console.error(error);
@@ -1630,7 +2420,7 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
 });
 
 getRedirectResult(auth).catch(error=>{
-  console.error("Google redirect result",error);
+  console.error("teacher redirect result",error);
   console.warn(friendlyAuthError(error));
 });
 
@@ -2849,6 +3639,7 @@ let activeExam=null;
 let examDifficulty="easy";
 let questionCheckState={};
 let loadedSavedAttempt=false;
+let restoringSavedAttempt=false;
 let examStartTime=0;
 let examTimerHandle=null;
 let builderCounter=0;
@@ -2901,23 +3692,148 @@ function hardQuestionPool(){
   ];
 }
 
+
+const subjectNames={
+  mixed:"مختلط",math:"رياضيات",science:"علوم",arabic:"لغة عربية",
+  geography:"جغرافيا",english:"إنجليزي",pythagoras:"فيثاغورس"
+};
+let examSubject="mixed";
+
+function mathQuestionPool(){
+  const a=2+Math.floor(Math.random()*10),b=2+Math.floor(Math.random()*10);
+  const x=2+Math.floor(Math.random()*9),m=2+Math.floor(Math.random()*6),k=1+Math.floor(Math.random()*10);
+  const rhs=m*x+k;
+  return [
+    {type:"number",prompt:`احسب: ${a} × ${b}`,answer:a*b,explanation:`${a} × ${b} = ${a*b}`},
+    {type:"number",prompt:`احسب: ${a*a} ÷ ${a}`,answer:a,explanation:`${a*a} ÷ ${a} = ${a}`},
+    {type:"number",prompt:`حل المعادلة: ${m}x + ${k} = ${rhs}`,answer:x,explanation:`نطرح ${k} ثم نقسم على ${m}، إذن x = ${x}.`},
+    {type:"mcq",prompt:"ما ناتج 25% من 200؟",options:["25","50","75","100"],answer:"50",explanation:"25% تعني الربع، وربع 200 هو 50."},
+    {type:"mcq",prompt:"أي عدد أولي؟",options:["21","29","33","39"],answer:"29",explanation:"29 لا يقبل القسمة إلا على 1 و29."},
+    {type:"mcq",prompt:"مجموع زوايا المثلث يساوي...",options:["90°","180°","270°","360°"],answer:"180°",explanation:"مجموع الزوايا الداخلية لأي مثلث يساوي 180°."},
+    {type:"number",prompt:"ما الجذر التربيعي للعدد 144؟",answer:12,explanation:"12 × 12 = 144."},
+    {type:"mcq",prompt:"إذا كان محيط مربع 24، فما طول ضلعه؟",options:["4","6","8","12"],answer:"6",explanation:"طول الضلع = 24 ÷ 4 = 6."},
+    {type:"number",prompt:"مستطيل طوله 9 وعرضه 4. ما مساحته؟",answer:36,explanation:"المساحة = 9 × 4 = 36."},
+    {type:"mcq",prompt:"الكسر 1/2 يساوي...",options:["25%","40%","50%","75%"],answer:"50%",explanation:"النصف يساوي 50%."},
+    {type:"number",prompt:"إذا كان 3x = 27، فما x؟",answer:9,explanation:"x = 27 ÷ 3 = 9."},
+    {type:"mcq",prompt:"أي قيمة أكبر؟",options:["0.5","0.75","0.25","0.1"],answer:"0.75",explanation:"0.75 هي الأكبر بين القيم."}
+  ];
+}
+function scienceQuestionPool(){
+  return [
+    {type:"mcq",prompt:"ما الكوكب المعروف بالكوكب الأحمر؟",options:["الأرض","المريخ","الزهرة","المشتري"],answer:"المريخ",explanation:"يظهر المريخ بلون مائل للأحمر بسبب أكاسيد الحديد على سطحه."},
+    {type:"mcq",prompt:"ما الصيغة الكيميائية للماء؟",options:["CO₂","O₂","H₂O","NaCl"],answer:"H₂O",explanation:"جزيء الماء يتكون من ذرتي هيدروجين وذرة أكسجين."},
+    {type:"mcq",prompt:"أي عضو يضخ الدم في الجسم؟",options:["الرئة","المعدة","القلب","الكبد"],answer:"القلب",explanation:"القلب يضخ الدم عبر الأوعية."},
+    {type:"mcq",prompt:"العملية التي تصنع فيها النباتات غذاءها تسمى...",options:["التنفس","البناء الضوئي","التبخر","الهضم"],answer:"البناء الضوئي",explanation:"النبات يستخدم الضوء والماء وثاني أكسيد الكربون لصنع الغذاء."},
+    {type:"mcq",prompt:"وحدة قياس القوة هي...",options:["واط","نيوتن","متر","ثانية"],answer:"نيوتن",explanation:"القوة تقاس بالنيوتن."},
+    {type:"mcq",prompt:"أي غاز نحتاجه للتنفس؟",options:["الأكسجين","الهيليوم","النيون","الأرجون"],answer:"الأكسجين",explanation:"الجسم يستخدم الأكسجين في التنفس الخلوي."},
+    {type:"mcq",prompt:"تحول السائل إلى غاز يسمى...",options:["تجمد","تكاثف","تبخر","انصهار"],answer:"تبخر",explanation:"التبخر هو انتقال المادة من الحالة السائلة إلى الغازية."},
+    {type:"mcq",prompt:"أكبر كوكب في المجموعة الشمسية هو...",options:["الأرض","زحل","المشتري","نبتون"],answer:"المشتري",explanation:"المشتري أكبر كواكب المجموعة الشمسية."},
+    {type:"mcq",prompt:"مركز الذرة يحتوي على...",options:["نواة","ماء","خلايا","ضوء"],answer:"نواة",explanation:"النواة تقع في مركز الذرة."},
+    {type:"mcq",prompt:"ما مصدر الطاقة الأساسي للأرض؟",options:["القمر","الشمس","الرياح","البحار"],answer:"الشمس",explanation:"الشمس هي المصدر الأساسي للطاقة التي تصل الأرض."},
+    {type:"mcq",prompt:"أي من التالي حيوان فقاري؟",options:["دودة الأرض","قنديل البحر","سمكة","أخطبوط"],answer:"سمكة",explanation:"السمكة لديها عمود فقري."},
+    {type:"mcq",prompt:"سرعة جسم تعني...",options:["المسافة ÷ الزمن","الزمن ÷ المسافة","الكتلة × الحجم","القوة ÷ المساحة"],answer:"المسافة ÷ الزمن",explanation:"السرعة = المسافة المقطوعة ÷ الزمن."}
+  ];
+}
+function arabicQuestionPool(){
+  return [
+    {type:"mcq",prompt:"في الجملة «كتبَ الطالبُ الدرسَ»، الفاعل هو...",options:["كتب","الطالب","الدرس","لا يوجد"],answer:"الطالب",explanation:"الطالب هو من قام بالفعل."},
+    {type:"mcq",prompt:"أي كلمة اسم؟",options:["يكتب","كتاب","اكتب","لن"],answer:"كتاب",explanation:"كتاب اسم يدل على شيء."},
+    {type:"mcq",prompt:"جمع كلمة «قلم» هو...",options:["أقلام","قلمان","قلمات","قلمين"],answer:"أقلام",explanation:"جمع قلم: أقلام."},
+    {type:"mcq",prompt:"ضد كلمة «كبير» هو...",options:["طويل","صغير","جميل","واسع"],answer:"صغير",explanation:"صغير هو عكس كبير."},
+    {type:"mcq",prompt:"في «الطلابُ مجتهدون»، كلمة الطلاب هي...",options:["مبتدأ","خبر","فعل","مفعول به"],answer:"مبتدأ",explanation:"الجملة اسمية بدأت بالطلاب، فهو مبتدأ."},
+    {type:"mcq",prompt:"أي جملة فعلية؟",options:["العلم نور","السماء صافية","ذهبَ أحمدُ إلى المدرسة","البيت كبير"],answer:"ذهبَ أحمدُ إلى المدرسة",explanation:"الجملة الفعلية تبدأ بفعل."},
+    {type:"mcq",prompt:"المثنى من «طالب» هو...",options:["طلاب","طالبان","طالبات","طالبون"],answer:"طالبان",explanation:"طالبان صيغة المثنى في حالة الرفع."},
+    {type:"mcq",prompt:"أي كلمة فيها همزة قطع؟",options:["ابن","اسم","أحمد","اثنان"],answer:"أحمد",explanation:"همزة أحمد همزة قطع."},
+    {type:"mcq",prompt:"الخبر في «الجو جميل» هو...",options:["الجو","جميل","هو","لا يوجد"],answer:"جميل",explanation:"جميل يخبرنا عن المبتدأ الجو."},
+    {type:"mcq",prompt:"أي علامة تنهي السؤال؟",options:[".","؟","!","،"],answer:"؟",explanation:"علامة الاستفهام تستخدم في نهاية السؤال."},
+    {type:"mcq",prompt:"الفعل الماضي من «يكتب» هو...",options:["كتب","اكتب","كاتب","مكتوب"],answer:"كتب",explanation:"كتب هو الماضي من يكتب."},
+    {type:"mcq",prompt:"مرادف كلمة «سعيد» هو...",options:["فرح","حزين","غاضب","متعب"],answer:"فرح",explanation:"فرح قريب في المعنى من سعيد."}
+  ];
+}
+function geographyQuestionPool(){
+  return [
+    {type:"mcq",prompt:"ما أكبر قارة من حيث المساحة؟",options:["آسيا","أفريقيا","أوروبا","أستراليا"],answer:"آسيا",explanation:"آسيا هي أكبر قارات العالم مساحةً."},
+    {type:"mcq",prompt:"ما عاصمة فرنسا؟",options:["باريس","روما","مدريد","برلين"],answer:"باريس",explanation:"باريس عاصمة فرنسا."},
+    {type:"mcq",prompt:"نهر النيل يقع في قارة...",options:["أفريقيا","آسيا","أوروبا","أمريكا الجنوبية"],answer:"أفريقيا",explanation:"النيل من أشهر أنهار أفريقيا."},
+    {type:"mcq",prompt:"أكبر محيط في العالم هو...",options:["الهادئ","الأطلسي","الهندي","المتجمد الشمالي"],answer:"الهادئ",explanation:"المحيط الهادئ هو الأكبر."},
+    {type:"mcq",prompt:"ما عاصمة اليابان؟",options:["طوكيو","سيول","بكين","بانكوك"],answer:"طوكيو",explanation:"طوكيو عاصمة اليابان."},
+    {type:"mcq",prompt:"الصحراء الكبرى تقع أساسًا في...",options:["أفريقيا","أوروبا","آسيا","أستراليا"],answer:"أفريقيا",explanation:"الصحراء الكبرى تمتد عبر شمال أفريقيا."},
+    {type:"mcq",prompt:"أي دولة تقع في أمريكا الجنوبية؟",options:["البرازيل","إسبانيا","الهند","كندا"],answer:"البرازيل",explanation:"البرازيل أكبر دول أمريكا الجنوبية مساحة."},
+    {type:"mcq",prompt:"ما عاصمة إيطاليا؟",options:["روما","ميلانو","أثينا","لشبونة"],answer:"روما",explanation:"روما عاصمة إيطاليا."},
+    {type:"mcq",prompt:"أي قارة تقع فيها مصر؟",options:["أفريقيا","أوروبا","أمريكا الشمالية","أستراليا"],answer:"أفريقيا",explanation:"معظم أراضي مصر في شمال شرق أفريقيا."},
+    {type:"mcq",prompt:"جبل إيفرست جزء من جبال...",options:["الهيمالايا","الألب","الأنديز","الأطلس"],answer:"الهيمالايا",explanation:"إيفرست يقع ضمن سلسلة الهيمالايا."},
+    {type:"mcq",prompt:"ما عاصمة المملكة المتحدة؟",options:["لندن","دبلن","باريس","أمستردام"],answer:"لندن",explanation:"لندن هي العاصمة."},
+    {type:"mcq",prompt:"خط الاستواء يقسم الأرض إلى...",options:["نصف شمالي ونصف جنوبي","شرق وغرب فقط","يابسة وماء","أربع قارات"],answer:"نصف شمالي ونصف جنوبي",explanation:"خط الاستواء هو خط عرض 0°."}
+  ];
+}
+function englishQuestionPool(){
+  return [
+    {type:"mcq",prompt:"ما معنى كلمة book؟",options:["كتاب","باب","قلم","مدرسة"],answer:"كتاب",explanation:"book = كتاب."},
+    {type:"mcq",prompt:"ما ترجمة «ماء» إلى الإنجليزية؟",options:["Water","Fire","Air","Food"],answer:"Water",explanation:"ماء = Water."},
+    {type:"mcq",prompt:"أي كلمة تعني «سريع»؟",options:["Fast","Slow","Small","Cold"],answer:"Fast",explanation:"Fast تعني سريع."},
+    {type:"mcq",prompt:"جمع كلمة child هو...",options:["children","childs","childes","child"],answer:"children",explanation:"جمع child غير منتظم: children."},
+    {type:"mcq",prompt:"الماضي من go هو...",options:["went","goed","gone","goes"],answer:"went",explanation:"Past tense of go is went."},
+    {type:"mcq",prompt:"ما معنى beautiful؟",options:["جميل","سريع","قديم","صعب"],answer:"جميل",explanation:"beautiful = جميل."},
+    {type:"mcq",prompt:"اختر الجملة الصحيحة:",options:["I am a student.","I is a student.","I are student.","Me am student."],answer:"I am a student.",explanation:"مع I نستخدم am."},
+    {type:"mcq",prompt:"أي كلمة عكس hot؟",options:["cold","warm","fast","big"],answer:"cold",explanation:"cold عكس hot."},
+    {type:"mcq",prompt:"ما ترجمة «مدرسة»؟",options:["School","House","Street","Room"],answer:"School",explanation:"مدرسة = School."},
+    {type:"mcq",prompt:"أي كلمة فعل؟",options:["run","blue","table","happy"],answer:"run",explanation:"run فعل بمعنى يركض."},
+    {type:"mcq",prompt:"She ___ happy.",options:["is","are","am","be"],answer:"is",explanation:"مع She نستخدم is."},
+    {type:"mcq",prompt:"ما معنى tomorrow؟",options:["غدًا","أمس","اليوم","الآن"],answer:"غدًا",explanation:"tomorrow = غدًا."}
+  ];
+}
+function pythagorasQuestionPool(){
+  return hardQuestionPool();
+}
+function generalQuestionPool(subject="mixed"){
+  const banks={
+    math:mathQuestionPool(),science:scienceQuestionPool(),arabic:arabicQuestionPool(),
+    geography:geographyQuestionPool(),english:englishQuestionPool(),pythagoras:pythagorasQuestionPool()
+  };
+  if(subject==="mixed"){
+    const each=["math","science","arabic","geography","english","pythagoras"]
+      .flatMap(s=>shuffle(banks[s]).slice(0,3));
+    return shuffle(each);
+  }
+  return shuffle(banks[subject]||banks.math);
+}
+function liveQuestionFromExam(q){
+  if(q.type==="mcq")return {prompt:q.prompt,options:shuffle(q.options),answer:String(q.answer),points:1000};
+  if(q.type==="number"){
+    const ans=Number(q.answer);
+    const vals=[ans,ans+1,ans-1,ans+2].map(v=>String(Number.isInteger(v)?v:+v.toFixed(2)));
+    return {prompt:q.prompt,options:shuffle([...new Set(vals)]).slice(0,4),answer:String(ans),points:1000};
+  }
+  return null;
+}
+function makeGeneralLiveQuestions(subject="mixed",count=8){
+  let pool=generalQuestionPool(subject).map(liveQuestionFromExam).filter(Boolean);
+  if(pool.length<count)pool=pool.concat(generalQuestionPool("mixed").map(liveQuestionFromExam).filter(Boolean));
+  return shuffle(pool).slice(0,count).map((q,i)=>({...q,index:i}));
+}
+
 function createSurpriseExam(){
-  const all=hardQuestionPool();
-  let qs;
+  const all=examSubject==="pythagoras"?hardQuestionPool():generalQuestionPool(examSubject);
+  let usable=[...all];
+
   if(examDifficulty==="easy"){
-    qs=all.filter(q=>q.type==="number"||q.type==="mcq").slice(0,10);
-    while(qs.length<10)qs.push(...shuffle(all.filter(q=>q.type!=="open")).slice(0,10-qs.length));
+    usable=usable.filter(q=>q.type!=="open");
   }else if(examDifficulty==="medium"){
-    qs=shuffle(all.filter(q=>q.type!=="open")).slice(0,10);
-  }else if(examDifficulty==="hard"){
-    qs=shuffle(all).slice(0,10);
-  }else{
-    const harder=shuffle(all);
-    qs=harder.slice(0,10);
+    usable=usable.filter(q=>q.type!=="open"||Math.random()>.65);
+  }
+
+  let qs=shuffle(usable).slice(0,10);
+  while(qs.length<10){
+    qs.push(...shuffle(all).slice(0,Math.min(10-qs.length,all.length)));
   }
   qs=qs.slice(0,10).map((q,i)=>({...q,id:`s${Date.now()}_${i}`,points:10}));
+
   const titleMap={easy:"سهل",medium:"متوسط",hard:"صعب",expert:"خبير 🔥"};
-  return {title:`⚡ الامتحان المفاجئ — ${titleMap[examDifficulty]}`,questions:qs,total:100,surprise:true,level:examDifficulty};
+  const subjectTitle=subjectNames[examSubject]||"مختلط";
+  return {
+    title:`⚡ ${subjectTitle} — ${titleMap[examDifficulty]}`,
+    questions:qs,total:100,surprise:true,level:examDifficulty,subject:examSubject
+  };
 }
 function showExamView(which){
   for(const id of ["examHome","examRunner","examResult","examBuilder","teacherResults"])
@@ -2936,12 +3852,18 @@ document.querySelectorAll("#examLevels button").forEach(btn=>{
     document.getElementById("examLevelDesc").textContent=levelDescriptions[examDifficulty];
   });
 });
+document.getElementById("examSubject").addEventListener("change",e=>{
+  examSubject=e.target.value;
+  const name=subjectNames[examSubject]||"مختلط";
+  document.getElementById("examLevelDesc").textContent=`${name} • ${levelDescriptions[examDifficulty]}`;
+});
+
 
 function getSavedAttempt(){
   try{return JSON.parse(localStorage.getItem("pythagorasi_saved_attempt")||"null")}catch{return null}
 }
 function saveAttemptLocal(){
-  if(!activeExam)return;
+  if(!activeExam||restoringSavedAttempt)return;
   const answers=activeExam.questions.map((q,i)=>getExamAnswer(i,q));
   localStorage.setItem("pythagorasi_saved_attempt",JSON.stringify({
     exam:activeExam,answers,startedAt:examStartTime||Date.now(),savedAt:Date.now()
@@ -2958,6 +3880,7 @@ function refreshResumeBox(){
 }
 document.getElementById("continueSavedExam").addEventListener("click",()=>{
   const saved=getSavedAttempt();if(!saved)return;
+  restoringSavedAttempt=true;
   startExam(saved.exam);
   setTimeout(()=>{
     saved.answers?.forEach((ans,i)=>{
@@ -2971,6 +3894,8 @@ document.getElementById("continueSavedExam").addEventListener("click",()=>{
       }
     });
     updateExamProgress();
+    restoringSavedAttempt=false;
+    saveAttemptLocal();
   },50);
 });
 document.getElementById("newExamInstead").addEventListener("click",()=>{
@@ -2986,32 +3911,23 @@ function openExamCenter(){
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
 }
 function openExamWithIdentity(){
-  if(activeProfile || window.PythagorasiUser){
+  if(window.PythagorasiUser&&auth.currentUser){
+    hidePlatformLobby();
     openExamCenter();
     return;
   }
-
-  const savedName=(localStorage.getItem("pythagorasi_student_name")||"").trim();
-  if(auth.currentUser && savedName){
-    const profile={displayName:savedName,role:"student",provider:"anonymous"};
-    activeProfile=profile;
-    window.PythagorasiUser={uid:auth.currentUser.uid,...profile};
-    openExamCenter();
-    return;
-  }
-
   authPendingAction="exam";
   authGate.classList.add("show");
   showRoleChooser();
-  authStatusText.textContent="اختار طالب أو معلم حتى نفتح الامتحان";
+  authStatusText.textContent="سجّل دخولك حتى نفتح الامتحان";
 }
-
 document.getElementById("examBtn").addEventListener("click",openExamWithIdentity);
-document.getElementById("closeExamModal").addEventListener("click",()=>{examModal.classList.remove("open");stopExamTimer()});
-examModal.addEventListener("click",e=>{if(e.target===examModal){examModal.classList.remove("open");stopExamTimer()}});
+document.getElementById("closeExamModal").addEventListener("click",()=>{examModal.classList.remove("open");stopExamTimer();showPlatformLobby()});
+examModal.addEventListener("click",e=>{if(e.target===examModal){examModal.classList.remove("open");stopExamTimer();showPlatformLobby()}});
 
 function startExam(exam){
   activeExam=exam;
+  logStudentActivity("exam_start",`بدأ امتحان: ${exam.title||"امتحان"}`,exam.subject||examSubject||"mixed");
   questionCheckState={};
   showExamView("examRunner");
   document.getElementById("examModalTitle").textContent=exam.title;
@@ -3157,6 +4073,7 @@ async function submitCloudExam(){
       title:activeExam.title,cloud:true,submittedAt:Date.now(),answered,
       totalQuestions:activeExam.questions.length
     });
+    logStudentActivity("exam_submit",`سلّم امتحان: ${activeExam.title||"امتحان"} • أجاب ${answered}/${activeExam.questions.length}`,activeExam.subject||"mixed");
   }catch(err){
     console.error("cloud submit",err);
     showToast("تعذر حفظ التسليم أونلاين. جرّب مرة ثانية.");
@@ -3199,6 +4116,8 @@ function submitCurrentExam(){
     title:activeExam.title,score,total:activeExam.total,pct,
     answered,totalQuestions:activeExam.questions.length,submittedAt:Date.now()
   });
+  recordStudentPerformance(activeExam.subject||examSubject||"mixed",score,activeExam.total).then(syncStudentMemberStats);
+  logStudentActivity("exam_submit",`سلّم امتحان: ${activeExam.title||"امتحان"} • النتيجة ${pct}%`,activeExam.subject||examSubject||"mixed");
   if(pct>=80)launchConfetti();
 }
 document.getElementById("submitExam").addEventListener("click",submitCurrentExam);
@@ -3545,7 +4464,7 @@ document.getElementById("publishCloudExam")?.addEventListener("click",async()=>{
   const exam=examFromBuilder();if(!exam)return;
   btn.disabled=true;btn.textContent="⏳ جاري الحفظ...";
   try{
-    const code=makeExamCode();
+    const code=await reserveUniqueCode("exam");
     const examRef=await addDoc(collection(db,"exams"),{
       title:exam.title,
       ownerId:auth.currentUser.uid,
@@ -3614,6 +4533,752 @@ document.getElementById("loadBuilderExam").addEventListener("click",()=>{
 });
 
 
+
+
+
+
+/* -------------------- TEACHER QUESTION BANK -------------------- */
+function openQuestionBank(){
+  if(window.PythagorasiUser?.role!=="teacher"){showToast("هاي الأداة للمعلم.");return}
+  questionBankModal.classList.add("open");loadQuestionBank();
+}
+document.getElementById("closeQuestionBankModal").addEventListener("click",()=>questionBankModal.classList.remove("open"));
+
+document.getElementById("qbSaveBtn").addEventListener("click",async()=>{
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  const prompt=document.getElementById("qbPrompt").value.trim();
+  const options=[...document.querySelectorAll(".qb-option")].map(x=>x.value.trim());
+  const idx=+document.getElementById("qbCorrect").value;
+  const subject=document.getElementById("qbSubject").value;
+  if(!prompt||options.some(x=>!x)){showToast("اكتب السؤال والخيارات الأربعة.");return}
+  if(new Set(options.map(normExam)).size!==4){showToast("في خيارات مكررة.");return}
+  try{
+    await addDoc(collection(db,"questionBanks",auth.currentUser.uid,"questions"),{
+      prompt,options,answer:options[idx],subject,createdAt:serverTimestamp()
+    });
+    document.getElementById("qbPrompt").value="";
+    document.querySelectorAll(".qb-option").forEach(x=>x.value="");
+    loadQuestionBank();showToast("تم حفظ السؤال ✅");
+  }catch(err){console.error(err);showToast("تعذر حفظ السؤال.")}
+});
+
+async function loadQuestionBank(){
+  const host=document.getElementById("qbList");
+  host.innerHTML='<div class="cloud-note">⏳ جاري التحميل...</div>';
+  try{
+    const snap=await getDocs(collection(db,"questionBanks",auth.currentUser.uid,"questions"));
+    host.innerHTML="";
+    if(snap.empty){host.innerHTML='<div class="cloud-note">بنك الأسئلة فاضي.</div>';return}
+    snap.docs.forEach(qdoc=>{
+      const q=qdoc.data();
+      const row=document.createElement("div");row.className="qb-row";
+      row.style.display="block";
+      row.innerHTML=`
+        <b>${escapeHtml(q.prompt||"")}</b>
+        <div style="font-size:11px;color:#89a0b3;margin:4px 0">${escapeHtml(subjectDisplayName(q.subject||"mixed"))} • الصحيح: ${escapeHtml(q.answer||"")}</div>
+        <div class="saved-comp-actions">
+          <button class="exam-secondary qb-to-exam">للإمتحان</button>
+          <button class="exam-secondary qb-to-comp">للمسابقة</button>
+          <button class="exam-secondary qb-delete">حذف</button>
+        </div>`;
+      row.querySelector(".qb-to-exam").addEventListener("click",()=>{
+        questionBankModal.classList.remove("open");
+        openExamCenter();openBuilder();
+        addBuilderQuestion("mcq",{prompt:q.prompt,options:q.options,answer:q.answer,points:10});
+      });
+      row.querySelector(".qb-to-comp").addEventListener("click",()=>{
+        questionBankModal.classList.remove("open");
+        openCompetitionModal();openCompetitionBuilder();
+        addCompetitionQuestion({prompt:q.prompt,options:q.options,answer:q.answer});
+      });
+      row.querySelector(".qb-delete").addEventListener("click",async()=>{
+        await deleteDoc(doc(db,"questionBanks",auth.currentUser.uid,"questions",qdoc.id));
+        loadQuestionBank();
+      });
+      host.appendChild(row);
+    });
+  }catch(err){console.error(err);host.innerHTML='<div class="cloud-note">تعذر تحميل بنك الأسئلة.</div>'}
+}
+
+/* -------------------- SCHOOL / CLASSES V10 -------------------- */
+let teacherStarterCheckedFor="";
+let currentTeacherClasses=[];
+
+function classTimeText(ts){
+  try{
+    const d=ts?.toDate?ts.toDate():ts instanceof Date?ts:null;
+    if(!d)return "—";
+    return d.toLocaleString("ar",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
+  }catch{return "—"}
+}
+function activityIcon(type){
+  return ({
+    login:"🔑",account_created:"✨",subject_open:"📚",exam_start:"🎓",exam_submit:"✅",
+    competition_join:"🏆",competition_answer:"⚡",assignment_submit:"📝",class_join:"🏫",
+    ai_use:"🤖"
+  })[type]||"•";
+}
+async function getOwnedClasses(uid){
+  const snap=await getDocs(query(collection(db,"classes"),where("ownerId","==",uid)));
+  return snap.docs.map(d=>({id:d.id,...d.data(),role:"owner"}));
+}
+async function getManagedClasses(){
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return [];
+  const owned=await getOwnedClasses(auth.currentUser.uid);
+  const ids=new Set(owned.map(x=>x.id));
+  const teachingIds=window.PythagorasiUser.teachingClassIds||[];
+  const extra=[];
+  for(const id of teachingIds){
+    if(ids.has(id))continue;
+    try{
+      const snap=await getDoc(doc(db,"classes",id));
+      if(snap.exists())extra.push({id:snap.id,...snap.data(),role:"coTeacher"});
+    }catch{}
+  }
+  return [...owned,...extra].filter(x=>x.active!==false);
+}
+async function createClassForTeacher(name,{silent=false}={}){
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)throw new Error("teacher-required");
+  const clean=(name||"صفي").trim().slice(0,50)||"صفي";
+  const code=await reserveUniqueCode("class");
+  const ref=await addDoc(collection(db,"classes"),{
+    name:clean,code,ownerId:auth.currentUser.uid,
+    ownerName:window.PythagorasiUser.displayName||"المعلم",
+    createdAt:serverTimestamp(),updatedAt:serverTimestamp(),active:true
+  });
+  await setDoc(doc(db,"classJoinCodes",code),{
+    code,classId:ref.id,className:clean,ownerId:auth.currentUser.uid,active:true,createdAt:serverTimestamp()
+  });
+  if(!silent)showToast(`تم إنشاء ${clean} • الكود ${code}`);
+  return {id:ref.id,name:clean,code};
+}
+async function ensureTeacherStarterClass(){
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  if(teacherStarterCheckedFor===auth.currentUser.uid)return;
+  teacherStarterCheckedFor=auth.currentUser.uid;
+  try{
+    const owned=await getOwnedClasses(auth.currentUser.uid);
+    if(owned.length)return;
+    const first=(window.PythagorasiUser.displayName||"المعلم").split(/\s+/)[0];
+    const created=await createClassForTeacher(`صف ${first}`,{silent:true});
+    showToast(`🏫 عملنالك صفك الأول تلقائيًا • الكود ${created.code}`);
+  }catch(err){
+    console.warn("starter class",err);
+    teacherStarterCheckedFor="";
+  }
+}
+
+async function openClassModal(){
+  const teacher=window.PythagorasiUser?.role==="teacher";
+  document.getElementById("teacherClassSection").classList.toggle("hidden",!teacher);
+  document.getElementById("studentClassSection").classList.toggle("hidden",teacher);
+  classModal.classList.add("open");
+  if(teacher)await loadTeacherClasses();else await loadStudentClasses();
+}
+document.getElementById("closeClassModal").addEventListener("click",()=>classModal.classList.remove("open"));
+document.getElementById("refreshClassesBtn").addEventListener("click",loadTeacherClasses);
+
+document.getElementById("createClassBtn").addEventListener("click",async()=>{
+  const name=document.getElementById("newClassName").value.trim();
+  if(name.length<2){showToast("اكتب اسم الصف.");return}
+  const btn=document.getElementById("createClassBtn");btn.disabled=true;
+  try{
+    await createClassForTeacher(name);
+    document.getElementById("newClassName").value="";
+    await loadTeacherClasses();
+  }catch(err){console.error(err);showToast("تعذر إنشاء الصف.")}
+  finally{btn.disabled=false}
+});
+
+async function joinClassForStudent(code,{duringSignup=false}={}){
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)throw new Error("student-required");
+  const clean=String(code||"").trim().toUpperCase();
+  const joinSnap=await getDoc(doc(db,"classJoinCodes",clean));
+  if(!joinSnap.exists()||!joinSnap.data().active)throw new Error("invalid-class-code");
+  const data=joinSnap.data(),classId=data.classId;
+  const current=window.PythagorasiUser.classIds||[];
+  if(current.includes(classId))return {already:true,classId,className:data.className};
+
+  const xp=window.PythagorasiUser.xp||0,exams=window.PythagorasiUser.examCount||0;
+  const avg=exams?Math.round((window.PythagorasiUser.totalScorePct||0)/exams):0;
+  await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
+    uid:auth.currentUser.uid,
+    displayName:window.PythagorasiUser.displayName||"طالب",
+    joinCode:clean,xp,level:profileLevelFromXP(xp),examCount:exams,average:avg,
+    joinedAt:serverTimestamp(),lastActiveAt:serverTimestamp()
+  },{merge:true});
+  const classIds=[...new Set([...current,classId])];
+  await setDoc(doc(db,"users",auth.currentUser.uid),{classIds,updatedAt:serverTimestamp()},{merge:true});
+  window.PythagorasiUser={...window.PythagorasiUser,classIds};
+  activeProfile=window.PythagorasiUser;
+  await logStudentActivity("class_join",`انضم إلى صف ${data.className||""}`,"");
+  return {classId,className:data.className};
+}
+
+document.getElementById("joinClassBtn").addEventListener("click",async()=>{
+  const code=(document.getElementById("joinClassCode").value||"").trim().toUpperCase();
+  const status=document.getElementById("joinClassStatus");
+  if(code.length<4){status.textContent="اكتب الكود أولًا.";return}
+  status.textContent="⏳ جاري البحث...";
+  try{
+    const r=await joinClassForStudent(code);
+    status.textContent=r.already?`أنت بالصف أصلًا ✅`:`✅ انضممت إلى ${r.className||"الصف"}`;
+    await loadStudentClasses();
+  }catch(err){
+    console.error(err);
+    status.textContent=String(err?.message||"")==="invalid-class-code"?"الكود غير صحيح.":"تعذر الانضمام للصف.";
+  }
+});
+
+async function syncStudentMemberStats(){
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  const p=window.PythagorasiUser;
+  const xp=p.xp||0,exams=p.examCount||0,average=exams?Math.round((p.totalScorePct||0)/exams):0;
+  for(const classId of (p.classIds||[])){
+    try{
+      await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
+        uid:auth.currentUser.uid,displayName:p.displayName||"طالب",
+        xp,level:profileLevelFromXP(xp),examCount:exams,average,
+        subjectStats:p.subjectStats||{},lastActiveAt:serverTimestamp()
+      },{merge:true});
+    }catch{}
+  }
+}
+async function logStudentActivity(type,detail,subject=""){
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  const classIds=window.PythagorasiUser.classIds||[];
+  for(const classId of classIds){
+    try{
+      await addDoc(collection(db,"classes",classId,"activity"),{
+        studentUid:auth.currentUser.uid,
+        studentName:window.PythagorasiUser.displayName||"طالب",
+        type,detail:String(detail||"").slice(0,240),subject:subject||"",
+        createdAt:serverTimestamp()
+      });
+      await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
+        lastActiveAt:serverTimestamp()
+      },{merge:true});
+    }catch(err){console.warn("activity",err)}
+  }
+}
+
+async function loadStudentClasses(){
+  const host=document.getElementById("studentClassesList");
+  const assignHost=document.getElementById("studentAssignmentsList");
+  host.innerHTML='<div class="cloud-note">⏳ جاري تحميل صفوفك...</div>';
+  assignHost.innerHTML="";
+  if(!auth.currentUser)return;
+
+  const p=await refreshCurrentProfile();
+  const ids=p?.classIds||[];
+  if(!ids.length){host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';return}
+  host.innerHTML="";
+
+  for(const classId of ids){
+    try{
+      const cs=await getDoc(doc(db,"classes",classId));
+      if(!cs.exists())continue;
+      const c=cs.data();
+      const row=document.createElement("div");row.className="class-row";
+      row.innerHTML=`<span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span><b>${escapeHtml(c.code||"")}</b>`;
+      host.appendChild(row);
+
+      const assignments=await getDocs(collection(db,"classes",classId,"assignments"));
+      for(const adoc of assignments.docs){
+        const a=adoc.data();
+        const sub=await getDoc(doc(db,"classes",classId,"assignments",adoc.id,"submissions",auth.currentUser.uid));
+        const card=document.createElement("div");card.className="assignment-card";
+        card.innerHTML=`
+          <h5>${escapeHtml(a.title||"وظيفة")} • ${escapeHtml(c.name||"الصف")}</h5>
+          <div class="assignment-meta">${escapeHtml(subjectDisplayName(a.subject||"mixed"))}${a.dueDate?` • موعد: ${escapeHtml(a.dueDate)}`:""}</div>
+          <div class="assignment-description">${escapeHtml(a.description||"")}</div>
+          <div class="assignment-submission">
+            ${sub.exists()
+              ? `<div class="cloud-note">✅ تم التسليم: ${escapeHtml(sub.data().answer||"")}</div>`
+              : `<textarea class="student-assignment-answer" placeholder="اكتب تسليمك هنا..."></textarea>
+                 <button class="exam-secondary submit-assignment-btn">📤 تسليم الوظيفة</button>`}
+          </div>`;
+        if(!sub.exists()){
+          card.querySelector(".submit-assignment-btn").addEventListener("click",async()=>{
+            const answer=card.querySelector(".student-assignment-answer").value.trim();
+            if(!answer){showToast("اكتب تسليمك أولًا.");return}
+            try{
+              await setDoc(doc(db,"classes",classId,"assignments",adoc.id,"submissions",auth.currentUser.uid),{
+                studentUid:auth.currentUser.uid,studentName:p.displayName||"طالب",
+                answer,submittedAt:serverTimestamp()
+              });
+              await logStudentActivity("assignment_submit",`سلّم وظيفة: ${a.title||"وظيفة"}`,a.subject||"");
+              showToast("تم تسليم الوظيفة ✅");
+              loadStudentClasses();
+            }catch(err){console.error(err);showToast("تعذر تسليم الوظيفة.")}
+          });
+        }
+        assignHost.appendChild(card);
+      }
+    }catch(err){console.warn("student class",err)}
+  }
+  if(!host.children.length)host.innerHTML='<div class="cloud-note">تعذر تحميل صفوفك.</div>';
+  if(!assignHost.children.length)assignHost.innerHTML='<div class="cloud-note">ما عندك وظائف حاليًا 🎉</div>';
+}
+
+async function createTeacherInvite(classId,className){
+  const code=await reserveUniqueCode("teacher_invite");
+  await setDoc(doc(db,"teacherInvites",code),{
+    code,classId,className,createdBy:auth.currentUser.uid,
+    createdByName:window.PythagorasiUser.displayName||"معلم",
+    active:true,createdAt:serverTimestamp()
+  });
+  return code;
+}
+document.getElementById("joinTeacherInviteBtn").addEventListener("click",async()=>{
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  const code=(document.getElementById("teacherInviteJoinCode").value||"").trim().toUpperCase();
+  const status=document.getElementById("teacherInviteJoinStatus");
+  if(code.length<4){status.textContent="اكتب كود الدعوة.";return}
+  status.textContent="⏳ جاري الانضمام...";
+  try{
+    const inv=await getDoc(doc(db,"teacherInvites",code));
+    if(!inv.exists()||!inv.data().active)throw new Error("bad-invite");
+    const data=inv.data(),classId=data.classId;
+    await setDoc(doc(db,"classes",classId,"teachers",auth.currentUser.uid),{
+      uid:auth.currentUser.uid,displayName:window.PythagorasiUser.displayName||"معلم",
+      inviteCode:code,joinedAt:serverTimestamp()
+    });
+    const ids=[...new Set([...(window.PythagorasiUser.teachingClassIds||[]),classId])];
+    await setDoc(doc(db,"users",auth.currentUser.uid),{teachingClassIds:ids,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,teachingClassIds:ids};
+    activeProfile=window.PythagorasiUser;
+    try{await deleteDoc(doc(db,"teacherInvites",code))}catch{}
+    status.textContent=`✅ صرت معلّم مساعد في ${data.className||"الصف"}`;
+    document.getElementById("teacherInviteJoinCode").value="";
+    loadTeacherClasses();
+  }catch(err){
+    console.error(err);status.textContent="كود الدعوة غير صحيح أو انتهى.";
+  }
+});
+
+async function loadTeacherClasses(){
+  const host=document.getElementById("teacherClassesList");
+  host.innerHTML='<div class="cloud-note">⏳ جاري تحميل الصفوف...</div>';
+  if(!auth.currentUser)return;
+  try{
+    currentTeacherClasses=await getManagedClasses();
+    host.innerHTML="";
+    if(!currentTeacherClasses.length){
+      host.innerHTML='<div class="cloud-note">ما عندك صفوف.</div>';return;
+    }
+    for(const c of currentTeacherClasses){
+      await renderTeacherClassCard(host,c);
+    }
+  }catch(err){
+    console.error("teacher classes",err);
+    host.innerHTML='<div class="cloud-note">تعذر تحميل الصفوف.</div>';
+  }
+}
+
+async function renderTeacherClassCard(host,c){
+  const isOwner=c.ownerId===auth.currentUser.uid;
+  const [members,teachers,assignments,activities]=await Promise.all([
+    getDocs(collection(db,"classes",c.id,"members")),
+    getDocs(collection(db,"classes",c.id,"teachers")),
+    getDocs(collection(db,"classes",c.id,"assignments")),
+    getDocs(collection(db,"classes",c.id,"activity"))
+  ]);
+
+  const teacherRows=teachers.docs.map(d=>({uid:d.id,...d.data()}));
+  const acts=activities.docs.map(d=>d.data())
+    .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
+    .slice(0,40);
+
+  const box=document.createElement("div");
+  box.className=`teacher-class-card ${isOwner?"owner":"co-teacher"}`;
+
+  const studentHtml=members.docs.map(mdoc=>{
+    const m=mdoc.data();
+    return `<div class="class-student-row">
+      <span><b>${escapeHtml(m.displayName||"طالب")}</b><small>${m.xp||0} XP • مستوى ${m.level||1} • معدل ${m.average??0}%</small><div class="student-last-active">آخر نشاط: ${classTimeText(m.lastActiveAt)}</div></span>
+      <span>${m.examCount||0} امتحانات</span>
+    </div>`;
+  }).join("")||'<div class="empty-mini">لسه ما في طلاب.</div>';
+
+  const teacherHtml=teacherRows.map(t=>`<div class="co-teacher-row">
+    <span>👨‍🏫 ${escapeHtml(t.displayName||"معلم مساعد")}</span>
+    ${isOwner&&t.uid!==auth.currentUser.uid?`<button class="exam-secondary transfer-owner-btn" data-uid="${t.uid}" data-name="${escapeHtml(t.displayName||"المعلم")}">نقل الملكية</button>`:""}
+  </div>`).join("")||'<div class="empty-mini">ما في معلمين مساعدين.</div>';
+
+  let assignmentHtml="";
+  for(const adoc of assignments.docs){
+    const a=adoc.data();
+    const subs=await getDocs(collection(db,"classes",c.id,"assignments",adoc.id,"submissions"));
+    const submissionRows=subs.docs.map(s=>`<div class="history-row"><span>${escapeHtml(s.data().studentName||"طالب")}</span><b>${escapeHtml(s.data().answer||"")}</b></div>`).join("");
+    assignmentHtml+=`<div class="assignment-card">
+      <h5>${escapeHtml(a.title||"وظيفة")}</h5>
+      <div class="assignment-meta">${escapeHtml(subjectDisplayName(a.subject||"mixed"))}${a.dueDate?` • ${escapeHtml(a.dueDate)}`:""} • ${subs.size} تسليم</div>
+      <div class="assignment-description">${escapeHtml(a.description||"")}</div>
+      ${submissionRows?`<details><summary>عرض التسليمات</summary>${submissionRows}</details>`:""}
+    </div>`;
+  }
+  if(!assignmentHtml)assignmentHtml='<div class="empty-mini">ما في وظائف بعد.</div>';
+
+  const actHtml=acts.map(a=>`<div class="activity-row">
+    <div class="activity-icon">${activityIcon(a.type)}</div>
+    <div class="activity-detail"><b>${escapeHtml(a.studentName||"طالب")}</b><span>${escapeHtml(a.detail||"نشاط")}</span></div>
+    <div class="activity-time">${classTimeText(a.createdAt)}</div>
+  </div>`).join("")||'<div class="empty-mini">لسه ما في نشاط مسجل.</div>';
+
+  box.innerHTML=`
+    <div class="class-card-head">
+      <div>
+        <h3>${escapeHtml(c.name||"صف")}</h3>
+        <span class="class-role-badge">${isOwner?"مالك الصف":"معلم مساعد"} • ${members.size} طلاب</span>
+      </div>
+      <div class="class-code-big">${escapeHtml(c.code||"------")}</div>
+    </div>
+
+    <div class="class-tools">
+      <button class="copy-class-code">نسخ كود الصف</button>
+      <button class="make-teacher-invite">دعوة معلم</button>
+      ${isOwner?'<button class="danger delete-class-btn">حذف الصف</button>':""}
+    </div>
+    <div class="teacher-invite-box"><span>كود دعوة المعلم:</span> <b class="teacher-invite-code">------</b></div>
+
+    <div class="class-detail-grid">
+      <div class="class-panel">
+        <h4>⚙️ اسم الصف</h4>
+        <div class="class-edit-row">
+          <input class="class-rename-input" value="${escapeHtml(c.name||"صف")}">
+          <button class="exam-secondary rename-class-btn">حفظ</button>
+        </div>
+      </div>
+
+      <div class="class-panel">
+        <h4>👨‍🏫 مربيّو / معلمو الصف</h4>
+        <div>${teacherHtml}</div>
+      </div>
+
+      <div class="class-panel">
+        <h4>👥 الطلاب</h4>
+        <div>${studentHtml}</div>
+      </div>
+
+      <div class="class-panel">
+        <h4>📝 وظيفة جديدة</h4>
+        <div class="assignment-create">
+          <input class="assignment-title" placeholder="عنوان الوظيفة">
+          <select class="assignment-subject">
+            <option value="math">رياضيات</option><option value="science">علوم</option>
+            <option value="arabic">عربي</option><option value="english">English</option>
+            <option value="geography">جغرافيا</option><option value="pythagoras">فيثاغورس</option>
+          </select>
+          <textarea class="assignment-description-input" placeholder="اكتب المطلوب من الطلاب..."></textarea>
+          <input class="assignment-date" type="date">
+          <button class="apply create-assignment-btn" style="margin:0">نشر الوظيفة</button>
+        </div>
+      </div>
+
+      <div class="class-panel full">
+        <h4>📚 الوظائف والتسليمات</h4>
+        <div>${assignmentHtml}</div>
+      </div>
+
+      <div class="class-panel full">
+        <h4>🕘 سجل نشاط الطلاب</h4>
+        <div class="activity-list">${actHtml}</div>
+      </div>
+    </div>`;
+
+  box.querySelector(".copy-class-code").addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(c.code);showToast("تم نسخ كود الصف.");}
+    catch{showToast(`كود الصف: ${c.code}`)}
+  });
+  box.querySelector(".make-teacher-invite").addEventListener("click",async e=>{
+    const btn=e.currentTarget;btn.disabled=true;
+    try{
+      const code=await createTeacherInvite(c.id,c.name);
+      const inviteBox=box.querySelector(".teacher-invite-box");
+      inviteBox.classList.add("show");
+      inviteBox.querySelector(".teacher-invite-code").textContent=code;
+    }catch(err){console.error(err);showToast("تعذر إنشاء دعوة المعلم.")}
+    finally{btn.disabled=false}
+  });
+  box.querySelector(".rename-class-btn").addEventListener("click",async()=>{
+    const name=box.querySelector(".class-rename-input").value.trim();
+    if(name.length<2){showToast("اكتب اسم صالح.");return}
+    try{
+      await updateDoc(doc(db,"classes",c.id),{name,updatedAt:serverTimestamp()});
+      try{await updateDoc(doc(db,"classJoinCodes",c.code),{className:name})}catch{}
+      showToast("تم تغيير اسم الصف ✅");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر تغيير الاسم.")}
+  });
+  box.querySelector(".create-assignment-btn").addEventListener("click",async()=>{
+    const title=box.querySelector(".assignment-title").value.trim();
+    const description=box.querySelector(".assignment-description-input").value.trim();
+    const subject=box.querySelector(".assignment-subject").value;
+    const dueDate=box.querySelector(".assignment-date").value;
+    if(title.length<2||description.length<2){showToast("اكتب عنوان ووصف الوظيفة.");return}
+    try{
+      await addDoc(collection(db,"classes",c.id,"assignments"),{
+        title,description,subject,dueDate,
+        createdBy:auth.currentUser.uid,
+        createdByName:window.PythagorasiUser.displayName||"معلم",
+        createdAt:serverTimestamp()
+      });
+      showToast("تم نشر الوظيفة ✅");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر نشر الوظيفة.")}
+  });
+
+  box.querySelectorAll(".transfer-owner-btn").forEach(btn=>btn.addEventListener("click",async()=>{
+    if(!isOwner)return;
+    const uid=btn.dataset.uid,name=btn.dataset.name||"المعلم";
+    if(!confirm(`تنقل ملكية «${c.name}» إلى ${name}؟ أنت رح تضل معلم مساعد بالصف.`))return;
+    try{
+      await setDoc(doc(db,"classes",c.id,"teachers",auth.currentUser.uid),{
+        uid:auth.currentUser.uid,displayName:window.PythagorasiUser.displayName||"معلم",
+        transferredOwner:true,joinedAt:serverTimestamp()
+      },{merge:true});
+      const mine=[...new Set([...(window.PythagorasiUser.teachingClassIds||[]),c.id])];
+      await setDoc(doc(db,"users",auth.currentUser.uid),{teachingClassIds:mine,updatedAt:serverTimestamp()},{merge:true});
+      window.PythagorasiUser={...window.PythagorasiUser,teachingClassIds:mine};
+      await updateDoc(doc(db,"classes",c.id),{ownerId:uid,ownerName:name,updatedAt:serverTimestamp()});
+      try{await updateDoc(doc(db,"classJoinCodes",c.code),{ownerId:uid})}catch{}
+      showToast(`تم نقل الملكية إلى ${name} ✅`);
+      loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر نقل الملكية.")}
+  }));
+
+  const del=box.querySelector(".delete-class-btn");
+  if(del)del.addEventListener("click",async()=>{
+    if(!confirm(`حذف صف «${c.name}»؟ هذا الإجراء لا يمكن التراجع عنه.`))return;
+    if(!confirm("تأكيد أخير: احذف الصف نهائيًا؟"))return;
+    try{
+      try{await deleteDoc(doc(db,"classJoinCodes",c.code))}catch{}
+      await deleteDoc(doc(db,"classes",c.id));
+      showToast("تم حذف الصف.");loadTeacherClasses();
+    }catch(err){console.error(err);showToast("تعذر حذف الصف.")}
+  });
+
+  host.appendChild(box);
+}
+
+/* activity hooks */
+/* -------------------- PROFILE / XP -------------------- */
+function profileLevelFromXP(xp){
+  return Math.max(1,Math.floor(Math.sqrt(Math.max(0,xp)/120))+1);
+}
+function subjectAverage(stats){
+  if(!stats||!stats.attempts)return 0;
+  return stats.totalPct/stats.attempts;
+}
+function profileBadges(profile){
+  const out=[];
+  const exams=profile.examCount||0,xp=profile.xp||0;
+  const subjects=Object.values(profile.subjectStats||{}).filter(x=>x?.attempts>0);
+  const avg=exams?(profile.totalScorePct||0)/exams:0;
+  if(exams>=1)out.push("🌱 أول امتحان");
+  if(exams>=5)out.push("🔥 مستمر");
+  if(exams>=10)out.push("🏅 عشر امتحانات");
+  if(avg>=85&&exams>=3)out.push("🌟 متفوّق");
+  if(subjects.length>=3)out.push("🌈 متعدد المواد");
+  if(xp>=1000)out.push("⚡ 1000 XP");
+  return out;
+}
+async function refreshCurrentProfile(){
+  if(!auth.currentUser)return window.PythagorasiUser;
+  const snap=await getDoc(doc(db,"users",auth.currentUser.uid));
+  if(snap.exists()){
+    window.PythagorasiUser={uid:auth.currentUser.uid,...snap.data()};
+    activeProfile=window.PythagorasiUser;
+  }
+  return window.PythagorasiUser;
+}
+async function recordStudentPerformance(subject,score,total){
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser||!total)return;
+  const pct=Math.max(0,Math.min(100,Math.round(score/total*100)));
+  try{
+    const ref=doc(db,"users",auth.currentUser.uid);
+    const snap=await getDoc(ref);
+    const data=snap.exists()?snap.data():{};
+    const subjectStats={...(data.subjectStats||{})};
+    const old=subjectStats[subject]||{attempts:0,totalPct:0,best:0};
+    subjectStats[subject]={
+      attempts:(old.attempts||0)+1,
+      totalPct:(old.totalPct||0)+pct,
+      best:Math.max(old.best||0,pct)
+    };
+    const examCount=(data.examCount||0)+1;
+    const xp=(data.xp||0)+Math.max(10,Math.round(pct*1.5));
+    const totalScorePct=(data.totalScorePct||0)+pct;
+    await setDoc(ref,{xp,examCount,totalScorePct,subjectStats,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,xp,examCount,totalScorePct,subjectStats};
+    activeProfile=window.PythagorasiUser;
+  }catch(err){console.warn("stats save",err)}
+}
+async function openProfileModal(){
+  await refreshCurrentProfile();
+  const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
+  document.getElementById("profileDisplayName").textContent=name;
+  document.getElementById("profileRoleText").textContent=p.role==="teacher"?"معلم":"طالب";
+  document.getElementById("profilePhotoFallback").textContent=(name[0]||"؟").toUpperCase();
+  const img=document.getElementById("profilePhotoPreview");
+  if(p.photoData||p.photoURL){img.src=p.photoData||p.photoURL;img.style.display="block"}
+  else{img.removeAttribute("src");img.style.display="none"}
+
+  const xp=p.xp||0,exams=p.examCount||0,avg=exams?Math.round((p.totalScorePct||0)/exams):0;
+  document.getElementById("profileXP").textContent=xp;
+  document.getElementById("profileLevel").textContent=profileLevelFromXP(xp);
+  document.getElementById("profileExamCount").textContent=exams;
+  document.getElementById("profileAverage").textContent=exams?`${avg}%`:"—";
+
+  const badgeHost=document.getElementById("profileBadges");
+  const badges=profileBadges(p);badgeHost.innerHTML="";
+  (badges.length?badges:["ابدأ أول امتحان لتحصل على شارة"]).forEach(x=>{
+    const b=document.createElement("span");b.className="achievement-badge";b.textContent=x;badgeHost.appendChild(b);
+  });
+
+  const stats=Object.entries(p.subjectStats||{}).filter(([,v])=>v?.attempts>0);
+  stats.sort((a,b)=>subjectAverage(b[1])-subjectAverage(a[1]));
+  document.getElementById("profileStrongSubject").textContent=stats.length?subjectDisplayName(stats[0][0]):"—";
+  document.getElementById("profileWeakSubject").textContent=stats.length>1?subjectDisplayName(stats[stats.length-1][0]):"—";
+
+  const names=assistantNames();
+  document.querySelectorAll("[data-assistant-name]").forEach(input=>{
+    input.value=names[input.dataset.assistantName]||"";
+  });
+
+  const history=document.getElementById("profileExamHistory");history.innerHTML="";
+  let arr=[];try{arr=JSON.parse(localStorage.getItem("pythagorasi_exam_history")||"[]")}catch{}
+  if(!arr.length)history.innerHTML='<div class="cloud-note">لسه ما في امتحانات بهذا الجهاز.</div>';
+  arr.slice(0,8).forEach(r=>{
+    const d=document.createElement("div");d.className="history-row";
+    d.innerHTML=`<span>${escapeHtml(r.title||"امتحان")}</span><b>${r.pct!=null?r.pct+"%":r.cloud?"تم التسليم":"—"}</b>`;
+    history.appendChild(d);
+  });
+  profileModal.classList.add("open");
+}
+document.getElementById("closeProfileModal").addEventListener("click",()=>profileModal.classList.remove("open"));
+
+document.getElementById("saveAssistantNames").addEventListener("click",async()=>{
+  if(!auth.currentUser)return;
+  const names={};
+  document.querySelectorAll("[data-assistant-name]").forEach(input=>{
+    names[input.dataset.assistantName]=(input.value.trim()||defaultAssistantNames[input.dataset.assistantName]).slice(0,24);
+  });
+  try{
+    await setDoc(doc(db,"users",auth.currentUser.uid),{assistantNames:names,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,assistantNames:names};
+    activeProfile=window.PythagorasiUser;
+    updateAssistantLabels();refreshAIWelcome();
+    showToast("تم حفظ أسماء المساعدين ✅");
+  }catch(err){console.error(err);showToast("تعذر حفظ الأسماء.")}
+});
+
+async function imageFileToDataURL(file){
+  const bitmap=await createImageBitmap(file);
+  const size=180,canvas=document.createElement("canvas");canvas.width=size;canvas.height=size;
+  const ctx=canvas.getContext("2d");
+  const scale=Math.max(size/bitmap.width,size/bitmap.height);
+  const w=bitmap.width*scale,h=bitmap.height*scale;
+  ctx.drawImage(bitmap,(size-w)/2,(size-h)/2,w,h);
+  return canvas.toDataURL("image/jpeg",.78);
+}
+document.getElementById("profilePhotoInput").addEventListener("change",async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  if(!file.type.startsWith("image/")){showToast("اختار صورة فقط.");return}
+  if(file.size>8*1024*1024){showToast("الصورة كبيرة جدًا. اختار صورة أقل من 8MB.");return}
+  try{
+    const photoData=await imageFileToDataURL(file);
+    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,photoData};
+    activeProfile=window.PythagorasiUser;
+    document.getElementById("profilePhotoPreview").src=photoData;
+    document.getElementById("profilePhotoPreview").style.display="block";
+    applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+    applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+    showToast("تم حفظ صورة البروفايل ✅");
+  }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
+});
+
+/* -------------------- PLATFORM LOBBY -------------------- */
+const subjectModal=document.getElementById("subjectModal");
+const profileModal=document.getElementById("profileModal");
+const classModal=document.getElementById("classModal");
+const questionBankModal=document.getElementById("questionBankModal");
+
+function subjectDisplayName(subject){
+  return subjectNames[subject]||({
+    math:"رياضيات",science:"علوم",arabic:"لغة عربية",english:"English",
+    geography:"جغرافيا",pythagoras:"مختبر فيثاغورس"
+  }[subject]||"المادة");
+}
+function openSubject(subject){
+  currentSubjectContext=subject;
+  logStudentActivity("subject_open",`فتح مادة ${subjectDisplayName(subject)}`,subject);
+  if(subject==="pythagoras"){
+    hidePlatformLobby();
+    updateAssistantLabels();
+    return;
+  }
+  document.getElementById("subjectModalTitle").textContent=subjectDisplayName(subject);
+  document.getElementById("subjectAssistantName").textContent=assistantNameFor(subject);
+  const chat=document.getElementById("subjectChat");
+  chat.innerHTML=`<div class="msg bot">هلا! أنا ${escapeHtml(assistantNameFor(subject))} 👋 مساعدك في ${escapeHtml(subjectDisplayName(subject))}. اسألني أو خلّيني أعطيك سؤال تدريب.</div>`;
+  subjectModal.classList.add("open");
+}
+document.querySelectorAll("[data-subject-open]").forEach(btn=>btn.addEventListener("click",()=>openSubject(btn.dataset.subjectOpen)));
+document.getElementById("returnLobbyBtn").addEventListener("click",showPlatformLobby);
+document.getElementById("closeSubjectModal").addEventListener("click",()=>subjectModal.classList.remove("open"));
+
+function appendSubjectMessage(text,who="bot"){
+  const d=document.createElement("div");d.className=`msg ${who}`;d.textContent=text;
+  const chat=document.getElementById("subjectChat");chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+}
+function sendSubjectQuestion(){
+  const input=document.getElementById("subjectQuestionInput");
+  const raw=input.value.trim();if(!raw)return;
+  appendSubjectMessage(raw,"user");input.value="";
+  logStudentActivity("ai_use",`استخدم مساعد مادة ${subjectDisplayName(currentSubjectContext)}`,currentSubjectContext);
+  const subjectHint=` ${subjectDisplayName(currentSubjectContext)}`;
+  setTimeout(()=>appendSubjectMessage(pythagorasiAnswer(raw+subjectHint),"bot"),180);
+}
+document.getElementById("subjectQuestionSend").addEventListener("click",sendSubjectQuestion);
+document.getElementById("subjectQuestionInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendSubjectQuestion()}});
+document.getElementById("subjectGenerateQuestion").addEventListener("click",()=>{
+  appendSubjectMessage(generateStudyQuestion(currentSubjectContext),"bot");
+});
+document.getElementById("subjectOpenExam").addEventListener("click",()=>{
+  subjectModal.classList.remove("open");
+  examSubject=currentSubjectContext;
+  const sel=document.getElementById("examSubject");if(sel)sel.value=examSubject;
+  openExamWithIdentity();
+});
+
+function sendLobbyAI(){
+  const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
+  input.value="";
+  const reply=document.getElementById("lobbyAIReply");
+  reply.textContent="يفكّر…";
+  setTimeout(()=>{reply.textContent=pythagorasiAnswer(raw)},170);
+}
+document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
+document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
+
+document.getElementById("lobbyExamBtn").addEventListener("click",openExamWithIdentity);
+document.getElementById("lobbyProfileBtn").addEventListener("click",openProfileModal);
+document.getElementById("lobbyProfileQuick").addEventListener("click",openProfileModal);
+document.getElementById("lobbyClassBtn").addEventListener("click",openClassModal);
+document.getElementById("lobbyJoinClassBtn").addEventListener("click",openClassModal);
+
+document.getElementById("teacherQuestionBankBtn").addEventListener("click",openQuestionBank);
+document.getElementById("teacherClassesBtn").addEventListener("click",openClassModal);
+document.getElementById("teacherResultsLobbyBtn").addEventListener("click",()=>{
+  hidePlatformLobby();openExamCenter();showExamView("teacherResults");
+  document.getElementById("examModalTitle").textContent="📊 نتائج الطلاب";loadTeacherResults();
+});
+document.getElementById("teacherCompetitionsLobbyBtn").addEventListener("click",()=>{
+  openCompetitionModal();openCompetitionLibrary();
+});
+
+
 /* -------------------- LIVE CLASS COMPETITION -------------------- */
 const competitionModal=document.getElementById("competitionModal");
 let liveCompetitionId=null;
@@ -3628,7 +5293,7 @@ function clearLiveSubscriptions(){
   liveUnsubs=[];
 }
 function showCompetitionView(id){
-  ["competitionHome","competitionBuilder","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
+  ["competitionHome","competitionLibrary","competitionBuilder","competitionLobby","competitionGame","competitionFinished"].forEach(x=>{
     document.getElementById(x).classList.toggle("hidden",x!==id);
   });
 }
@@ -3641,7 +5306,7 @@ function openCompetitionModal(){
 }
 document.getElementById("competitionBtn").addEventListener("click",openCompetitionModal);
 document.getElementById("closeCompetitionModal").addEventListener("click",()=>{
-  clearLiveSubscriptions();competitionModal.classList.remove("open");
+  clearLiveSubscriptions();competitionModal.classList.remove("open");showPlatformLobby();
 });
 competitionModal.addEventListener("click",e=>{
   if(e.target===competitionModal){clearLiveSubscriptions();competitionModal.classList.remove("open")}
@@ -3655,25 +5320,10 @@ function makeCompetitionCode(){
   let out="";for(let i=0;i<6;i++)out+=chars[Math.floor(Math.random()*chars.length)];
   return out;
 }
-function makeLiveQuestions(){
-  const pool=[
-    {prompt:"إذا كان a = 3 و b = 4، كم يساوي الوتر c؟",options:["5","6","7","8"],answer:"5"},
-    {prompt:"أي ضلع هو الوتر في المثلث القائم؟",options:["المقابل لزاوية 90°","أقصر ضلع","أي ضلع","المجاور فقط"],answer:"المقابل لزاوية 90°"},
-    {prompt:"إذا كان c = 13 و a = 5، كم يساوي b؟",options:["8","10","12","14"],answer:"12"},
-    {prompt:"أي قانون صحيح للمثلث القائم؟",options:["a² + b² = c²","a + b = c","a² = b² + c² دائمًا","a × b = c"],answer:"a² + b² = c²"},
-    {prompt:"هل 6، 8، 10 تكوّن مثلثًا قائمًا؟",options:["نعم","لا","فقط إذا c=8","لا يمكن"],answer:"نعم"},
-    {prompt:"مستطيل أبعاده 5 و12. كم طول قطره؟",options:["13","17","10","12"],answer:"13"},
-    {prompt:"إذا كانت a² = 9 و b² = 16، كم c²؟",options:["7","12","25","49"],answer:"25"},
-    {prompt:"نظرية فيثاغورس تنطبق مباشرة على...",options:["المثلث القائم","كل المثلثات","الدائرة فقط","المثلث المتساوي فقط"],answer:"المثلث القائم"},
-    {prompt:"إذا تضاعف a و b مرتين، ماذا يحدث لـ c؟",options:["يتضاعف مرتين","يتضاعف 4 مرات","لا يتغير","ينقص للنصف"],answer:"يتضاعف مرتين"},
-    {prompt:"ما مساحة مربع الوتر في مثلث 8-15-17؟",options:["17","225","289","64"],answer:"289"},
-    {prompt:"إذا c=10 و a=6، كم b؟",options:["4","8","12","16"],answer:"8"},
-    {prompt:"الوتر c يكون دائمًا...",options:["أطول ضلع","أقصر ضلع","يساوي a","يساوي b"],answer:"أطول ضلع"}
-  ];
-  return shuffle(pool).slice(0,8).map((q,i)=>({...q,index:i,points:1000}));
+function makeLiveQuestions(subject="mixed"){
+  return makeGeneralLiveQuestions(subject,8);
 }
-
-async function createLiveCompetition(customQuestions=null,customTitle="مسابقة فيثاغورس"){
+async function createLiveCompetition(customQuestions=null,customTitle="مسابقة تعليمية"){
   if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
@@ -3685,13 +5335,14 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
   const btn=document.getElementById("compCreateBtn");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{
-    const code=makeCompetitionCode();
-    const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions())
+    const code=await reserveUniqueCode("competition");
+    const quickSubject=document.getElementById("compQuickSubject")?.value||"mixed";
+    const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject))
       .map((q,i)=>({...q,index:i,points:q.points||1000}));
     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
-      title:customTitle||"مسابقة فيثاغورس",
+      title:customTitle||`مسابقة ${subjectNames[quickSubject]||"تعليمية"}`,
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,
       createdAt:serverTimestamp()
@@ -3712,6 +5363,81 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
   }
 }
 document.getElementById("compCreateBtn").addEventListener("click",()=>createLiveCompetition());
+
+
+
+async function loadCompetitionLibrary(){
+  const host=document.getElementById("compLibraryList");
+  host.innerHTML='<div class="cloud-note">⏳ جاري تحميل مسابقاتك...</div>';
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser){
+    host.innerHTML='<div class="cloud-note">لازم تدخل كمعلم حتى تشوف مسابقاتك.</div>';
+    return;
+  }
+  try{
+    const snap=await getDocs(query(collection(db,"competitions"),where("ownerId","==",auth.currentUser.uid)));
+    const rooms=snap.docs.map(d=>({id:d.id,...d.data()}));
+    rooms.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    if(!rooms.length){
+      host.innerHTML='<div class="cloud-note">ما عندك مسابقات محفوظة لسه.</div>';return;
+    }
+    host.innerHTML="";
+    for(const room of rooms){
+      const card=document.createElement("div");card.className="saved-comp-card";
+      const statusText=room.status==="finished"?"منتهية":room.status==="lobby"?"بانتظار الطلاب":"قيد التشغيل";
+      card.innerHTML=`
+        <div class="saved-comp-top">
+          <div>
+            <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة تعليمية")}</div>
+            <div class="saved-comp-meta">${room.questionCount||0} أسئلة • ${escapeHtml(statusText)}</div>
+          </div>
+          <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
+        </div>
+        <div class="saved-comp-actions">
+          ${room.status!=="finished"?`<button class="exam-secondary open-old-room" data-id="${room.id}">فتح الغرفة</button>`:""}
+          <button class="exam-secondary clone-old-room" data-id="${room.id}" data-title="${escapeHtml(room.title||"مسابقة تعليمية")}">نسخ وتشغيل من جديد</button>
+        </div>`;
+      host.appendChild(card);
+    }
+
+    host.querySelectorAll(".open-old-room").forEach(btn=>btn.addEventListener("click",()=>{
+      liveCompetitionId=btn.dataset.id;liveCompetitionRole="host";
+      subscribeCompetition(btn.dataset.id,"host");
+      showCompetitionView("competitionLobby");
+    }));
+    host.querySelectorAll(".clone-old-room").forEach(btn=>btn.addEventListener("click",async()=>{
+      btn.disabled=true;btn.textContent="⏳ تجهيز نسخة...";
+      try{
+        const qSnap=await getDocs(collection(db,"competitions",btn.dataset.id,"questions"));
+        const qs=qSnap.docs
+          .sort((a,b)=>(parseInt(a.id)||0)-(parseInt(b.id)||0))
+          .map(d=>d.data());
+        if(!qs.length){showToast("المسابقة القديمة ما فيها أسئلة محفوظة.");return}
+        await createLiveCompetition(qs,btn.dataset.title||"مسابقة تعليمية");
+      }catch(err){
+        console.error(err);showToast("تعذر نسخ المسابقة.");
+      }finally{
+        btn.disabled=false;btn.textContent="نسخ وتشغيل من جديد";
+      }
+    }));
+  }catch(err){
+    console.error(err);
+    host.innerHTML='<div class="cloud-note">تعذر تحميل المسابقات المحفوظة.</div>';
+  }
+}
+function openCompetitionLibrary(){
+  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser){
+    competitionModal.classList.remove("open");
+    authPendingAction="competitionHost";
+    authGate.classList.add("show");showTeacherLogin();
+    setAuthError("سجّل دخول كمعلم حتى تشوف مسابقاتك.");
+    return;
+  }
+  showCompetitionView("competitionLibrary");
+  loadCompetitionLibrary();
+}
+document.getElementById("compMyBtn").addEventListener("click",openCompetitionLibrary);
+document.getElementById("compLibraryRefresh").addEventListener("click",loadCompetitionLibrary);
+document.getElementById("compLibraryBack").addEventListener("click",()=>showCompetitionView("competitionHome"));
 
 
 let compBuilderCounter=0;
@@ -3792,7 +5518,7 @@ document.getElementById("compBuilderAdd").addEventListener("click",()=>addCompet
 document.getElementById("compBuilderBack").addEventListener("click",()=>showCompetitionView("competitionHome"));
 document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
   const qs=competitionFromBuilder();if(!qs)return;
-  const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة فيثاغورس";
+  const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة تعليمية";
   const btn=document.getElementById("compBuilderCreate");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{await createLiveCompetition(qs,title)}
@@ -3801,20 +5527,11 @@ document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
 
 
 async function ensureAnonymousStudent(name){
-  let user=auth.currentUser;
-  const provider=user?.providerData?.[0]?.providerId;
-  if(provider==="google.com")throw new Error("teacher-account");
-  if(!user){
-    const cred=await signInAnonymously(auth);
-    user=cred.user;
-  }
-  localStorage.setItem("pythagorasi_student_name",name);
-  const profile={displayName:name,role:"student",provider:"anonymous"};
-  await saveUserProfile(user,profile);
-  paintUser(user,profile);
+  const user=auth.currentUser;
+  if(!user || !window.PythagorasiUser)throw new Error("login-required");
+  if(window.PythagorasiUser.role==="teacher")throw new Error("teacher-account");
   return user;
 }
-
 async function joinLiveCompetition(){
   const name=(document.getElementById("compJoinName").value||"").trim().replace(/\s+/g," ");
   const code=(document.getElementById("compJoinCode").value||"").trim().toUpperCase();
@@ -3842,11 +5559,14 @@ async function joinLiveCompetition(){
     subscribeCompetition(room.id,"player");
     showCompetitionView(room.data().status==="lobby"?"competitionLobby":"competitionGame");
     status.textContent="✅ دخلت الغرفة.";
+    logStudentActivity("competition_join",`دخل مسابقة: ${room.data().title||"مسابقة"}`,"");
   }catch(err){
     console.error("join competition",err);
     status.textContent=err.message==="teacher-account"
       ?"أنت داخل كمعلم. اعمل تسجيل خروج إذا بدك تدخل كطالب."
-      :"تعذر الدخول. تأكد من الإنترنت وصلاحيات الحفظ.";
+      :err.message==="login-required"
+        ?"سجّل دخول كطالب أولًا."
+        :"تعذر الدخول. تأكد من الإنترنت وصلاحيات الحفظ.";
   }
 }
 document.getElementById("compJoinBtn").addEventListener("click",joinLiveCompetition);
@@ -3964,6 +5684,7 @@ async function sendLiveAnswer(answer,button){
       answeredAtMs:Date.now(),submittedAt:serverTimestamp()
     });
     document.getElementById("compAnswerStatus").textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+    logStudentActivity("competition_answer",`أجاب على السؤال ${(idx||0)+1} في المسابقة`,"");
   }catch(err){
     console.error("live answer",err);
     liveAnsweredIndex=-1;
@@ -4059,7 +5780,13 @@ const roots=[
 "مثلث","ضلع","وتر","زاويه","قائم","مربع","مساحه","طول","رقم","عدد","قانون","قاعده","نظريه","هندسه","رياضيات",
 "جذر","تربيع","معادله","نتيجه","مثال","برهان","اثبات","مسافه","اتجاه","قطر","خريطه","بناء","تصميم","نقطه",
 "خط","مستقيم","محور","احداثي","شكل","مجسم","رمل","حبيبه","قيمه","معلوم","مجهول","حل","صحيح","خطا",
-"مدرسه","طالب","معلم","سؤال","جواب","فكره","طريقه","سبب","استخدام","تطبيق","مقارنه","مجموع","فرق","علاقه","امتحان","اختبار","علامه","درجه","صوت","اقرا","قراءه","اسمع","تصميم","امريكي","مفتوح"
+"مدرسه","طالب","معلم","سؤال","جواب","فكره","طريقه","سبب","استخدام","تطبيق","مقارنه","مجموع","فرق","علاقه","امتحان","اختبار","علامه","درجه","صوت","اقرا","قراءه","اسمع","تصميم","امريكي","مفتوح",
+"علوم","فيزياء","كيمياء","احياء","خلية","نبات","حيوان","جسم","دم","قلب","رئة","ماء","هواء","غاز","طاقة","قوة","سرعة","حرارة","ذرة","نواة","كوكب","شمس","قمر","فضاء",
+"عربي","لغة","نحو","صرف","فاعل","مفعول","مبتدا","خبر","فعل","اسم","حرف","جمع","مثنى","مفرد","مرادف","ضد","همزة","جملة",
+"جغرافيا","دولة","عاصمة","قارة","محيط","بحر","نهر","جبل","صحراء","خريطة","مدينة","بلد",
+"انجليزي","ترجمة","كلمة","معنى","ماضي","مضارع","ضمير","جملة","مفردات",
+"نسبة","مئوية","كسر","محيط","حجم","متوسط","اولى","اول","احتمال","متغير","سين","س","اكس",
+"اسمك","اسمي","ناديني","تذكر","احفظ","موضوع","مادة","مسابقة","غرفة","كود","نتائج","تاريخ","معلومات","عام"
 ];
 const prefixes=["","ال","و","ف","ب","ك","لل","بال","وال","فال","كال","لل"];
 const suffixes=["","ه","ها","هم","نا","ي","ك","ات","ين","ان","ون","يه","يا","كم","هما","تان","تين","يه"];
@@ -4067,10 +5794,10 @@ const lexicon=new Set(coreWords.map(normalizeArabic));
 outer:
 for(const r of roots)for(const p of prefixes)for(const s of suffixes){
   lexicon.add(normalizeArabic(p+r+s));
-  if(lexicon.size>=6200)break outer;
+  if(lexicon.size>=18000)break outer;
 }
 /* Pad deterministically in case deduplication made fewer than 6000. */
-let pad=0;while(lexicon.size<6000){lexicon.add("صيغه"+(++pad))}
+let pad=0;while(lexicon.size<16000){lexicon.add("صيغه"+(++pad))}
 const dictionary=[...lexicon];
 
 function levenshtein(a,b){
@@ -4102,7 +5829,27 @@ function correctedText(raw){
   const n=normalizeArabic(raw);
   return n.split(" ").map(correctWord).join(" ");
 }
-function has(t,...xs){return xs.some(x=>t.includes(normalizeArabic(x)))}
+function stemArabicWord(word){
+  let w=normalizeArabic(word);
+  const pref=["وال","فال","بال","كال","لل","ال","و","ف","ب","ك","ل"];
+  const suff=["يات","ات","ون","ين","ان","تين","تان","يه","ية","ها","هم","هن","نا","كم","كن","ه","ي"];
+  for(const p of pref)if(w.length-p.length>=3&&w.startsWith(p)){w=w.slice(p.length);break}
+  for(const s of suff)if(w.length-s.length>=3&&w.endsWith(s)){w=w.slice(0,-s.length);break}
+  return w;
+}
+function semanticTokens(text){
+  return normalizeArabic(text).split(/\s+/).filter(Boolean).map(stemArabicWord);
+}
+function has(t,...xs){
+  const nt=normalizeArabic(t);
+  const tokens=semanticTokens(nt);
+  return xs.some(x=>{
+    const nx=normalizeArabic(x);
+    if(nt.includes(nx))return true;
+    const wanted=semanticTokens(nx);
+    return wanted.length>0&&wanted.every(w=>tokens.some(tok=>tok===w||(w.length>=4&&levenshtein(tok,w)<=1)));
+  });
+}
 function extractNumbers(raw){
   return normalizeArabic(raw).match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
 }
@@ -4150,11 +5897,144 @@ function solveNumeric(raw,t){
 
 const aiContext={lastNumbers:[],lastIntent:"",lastQuestion:"",turns:0};
 
+
+function savedAIName(){
+  const logged=(window.PythagorasiUser?.displayName||"").trim();
+  if(logged)return logged;
+  return (localStorage.getItem("learnsphere_ai_name")||"").trim();
+}
+function firstAIName(){
+  return savedAIName().split(/\s+/).filter(Boolean)[0]||"";
+}
+function helloForUser(){
+  const name=firstAIName();
+  return name?`هلا ${name} 👋`:"هلا فيك 👋";
+}
+function saveAIName(name){
+  const clean=String(name||"").trim().replace(/\s+/g," ").slice(0,40);
+  if(clean.length<2)return false;
+  localStorage.setItem("learnsphere_ai_name",clean);
+  try{
+    const p=JSON.parse(localStorage.getItem("learnsphere_ai_profile")||"{}");
+    p.name=clean;p.updatedAt=Date.now();
+    localStorage.setItem("learnsphere_ai_profile",JSON.stringify(p));
+  }catch{}
+  refreshAIWelcome();
+  return true;
+}
+function refreshAIWelcome(){
+  const el=document.getElementById("aiWelcome");
+  if(!el)return;
+  el.innerHTML=`${helloForUser()} أنا <b>${escapeHtml(assistantNameFor("pythagoras"))}</b>، مساعد مختبر فيثاغورس. اسألني، أعطيني معادلة، أو اطلب مني أتحكم بالمجسم.`;
+}
+function persistAIContext(){
+  try{
+    localStorage.setItem("learnsphere_ai_context",JSON.stringify({
+      ...aiContext,
+      savedAt:Date.now(),
+      displayName:savedAIName()
+    }));
+  }catch{}
+}
+function loadAIContext(){
+  try{
+    const s=JSON.parse(localStorage.getItem("learnsphere_ai_context")||"null");
+    if(s){
+      aiContext.lastNumbers=Array.isArray(s.lastNumbers)?s.lastNumbers:[];
+      aiContext.lastIntent=s.lastIntent||"";
+      aiContext.lastQuestion=s.lastQuestion||"";
+      aiContext.turns=Number(s.turns)||0;
+    }
+  }catch{}
+}
+
+loadAIContext();
+setTimeout(refreshAIWelcome,0);
+
 function currentExamQuestion(){
   if(!activeExam)return null;
   const firstUnanswered=activeExam.questions.findIndex((q,i)=>getExamAnswer(i,q)==="");
   const idx=firstUnanswered>=0?firstUnanswered:0;
   return {q:activeExam.questions[idx],index:idx};
+}
+
+
+function safeMathEval(expr,xValue=0){
+  let s=normalizeArabic(expr)
+    .replace(/[×·]/g,"*").replace(/÷/g,"/")
+    .replace(/²/g,"**2").replace(/\^/g,"**").replace(/س/g,"x")
+    .replace(/(\d)\s*x/g,"$1*x").replace(/x\s*(\d)/g,"x*$1")
+    .replace(/\s+/g,"");
+  if(!/^[0-9x+\-*/().*]+$/i.test(s))return null;
+  s=s.replace(/x/gi,`(${Number(xValue)})`);
+  try{
+    const v=Function(`"use strict";return (${s})`)();
+    return Number.isFinite(v)?v:null;
+  }catch{return null}
+}
+function solveEquationLocal(raw){
+  const n=normalizeArabic(raw).replace(/س/g,"x").replace(/[×·]/g,"*").replace(/÷/g,"/");
+  if(!n.includes("=")||!/[x]/i.test(n))return null;
+  const parts=n.split("=");
+  if(parts.length!==2)return null;
+  const diff=x=>{
+    const l=safeMathEval(parts[0],x),r=safeMathEval(parts[1],x);
+    return l==null||r==null?null:l-r;
+  };
+  const f0=diff(0),f1=diff(1),fm1=diff(-1),f2=diff(2);
+  if([f0,f1,fm1].some(v=>v==null))return null;
+
+  const c=f0;
+  const b=(f1-fm1)/2;
+  const a=(f1+fm1)/2-c;
+
+  if(Math.abs(a)<1e-9){
+    if(Math.abs(b)<1e-9)return Math.abs(c)<1e-9?"المعادلة صحيحة لأي قيمة.":"المعادلة ما إلها حل.";
+    const x=-c/b;
+    return `حل المعادلة: x = ${fmt(x)}.`;
+  }
+
+  // Verify the expression behaves quadratically at x=2.
+  if(f2!=null){
+    const predicted=4*a+2*b+c;
+    if(Math.abs(predicted-f2)>1e-6)return null;
+  }
+  const disc=b*b-4*a*c;
+  if(disc<0)return "المعادلة التربيعية ما إلها حلول حقيقية.";
+  if(Math.abs(disc)<1e-9){
+    const x=-b/(2*a);return `للمعادلة حل حقيقي مكرر: x = ${fmt(x)}.`;
+  }
+  const x1=(-b+Math.sqrt(disc))/(2*a),x2=(-b-Math.sqrt(disc))/(2*a);
+  return `حلول المعادلة: x₁ = ${fmt(x1)} و x₂ = ${fmt(x2)}.`;
+}
+function solveGeneralMath(raw,t){
+  const eq=solveEquationLocal(raw);
+  if(eq)return eq;
+
+  const nums=extractNumbers(raw);
+  if(has(t,"بالمئه من","بالمية من","بالمائه من","نسبه من","نسبة من")&&nums.length>=2){
+    const [pct,total]=nums;
+    return `${fmt(pct)}% من ${fmt(total)} = ${fmt(total*pct/100)}.`;
+  }
+  if(has(t,"جذر","الجذر")&&nums.length>=1){
+    const x=nums[0];
+    if(x<0)return "الجذر التربيعي الحقيقي يحتاج عددًا غير سالب.";
+    return `√${fmt(x)} = ${fmt(Math.sqrt(x))}.`;
+  }
+  if(has(t,"متوسط","المعدل")&&nums.length>=2){
+    const avg=nums.reduce((a,b)=>a+b,0)/nums.length;
+    return `المتوسط = ${fmt(avg)}.`;
+  }
+
+  let expr=normalizeArabic(raw)
+    .replace(/كم يساوي|احسبلي|احسب|ناتج|شو بساوي|ما يساوي/g," ")
+    .replace(/[×·]/g,"*").replace(/÷/g,"/")
+    .trim();
+  if(/\d/.test(expr)&&/[+\-*/^]/.test(expr)&&!/[a-z\u0600-\u06FF]/i.test(expr.replace(/[xس]/g,""))){
+    const value=safeMathEval(expr,0);
+    if(value!=null)return `الناتج = ${fmt(value)}.`;
+  }
+  return null;
 }
 
 function executeSiteAction(raw,t){
@@ -4226,9 +6106,92 @@ function executeSiteAction(raw,t){
   return null;
 }
 
+
+let aiGeneratedQuestion=null;
+
+const localFacts=[
+  {keys:["عاصمه فرنسا","عاصمة فرنسا"],answer:"عاصمة فرنسا هي باريس."},
+  {keys:["عاصمه اليابان","عاصمة اليابان"],answer:"عاصمة اليابان هي طوكيو."},
+  {keys:["عاصمه ايطاليا","عاصمة ايطاليا"],answer:"عاصمة إيطاليا هي روما."},
+  {keys:["اكبر قاره","أكبر قارة"],answer:"أكبر قارة من حيث المساحة هي آسيا."},
+  {keys:["اكبر محيط","أكبر محيط"],answer:"أكبر محيط في العالم هو المحيط الهادئ."},
+  {keys:["الكوكب الاحمر","الكوكب الأحمر"],answer:"الكوكب الأحمر هو المريخ."},
+  {keys:["اكبر كوكب","أكبر كوكب"],answer:"أكبر كوكب في المجموعة الشمسية هو المشتري."},
+  {keys:["صيغه الماء","صيغة الماء"],answer:"الصيغة الكيميائية للماء هي H₂O."},
+  {keys:["غاز التنفس","نتنفس اي غاز","اي غاز نتنفس"],answer:"الغاز الأساسي الذي يحتاجه جسمنا للتنفس هو الأكسجين."},
+  {keys:["يضخ الدم","عضو يضخ الدم"],answer:"القلب هو العضو الذي يضخ الدم في الجسم."},
+  {keys:["البناء الضوئي","كيف النبات يصنع غذاءه"],answer:"النبات يصنع غذاءه بعملية البناء الضوئي باستخدام الضوء والماء وثاني أكسيد الكربون."},
+  {keys:["مجموع زوايا المثلث"],answer:"مجموع الزوايا الداخلية للمثلث يساوي 180 درجة."},
+  {keys:["عدد القارات","كم قاره","كم قارة"],answer:"المتعارف عليه دراسيًا أن العالم يتكون من 7 قارات."},
+  {keys:["فاعل","شو الفاعل","ما هو الفاعل"],answer:"الفاعل هو الاسم الذي يدل على من قام بالفعل، وغالبًا يكون مرفوعًا."},
+  {keys:["مبتدا","مبتدأ"],answer:"المبتدأ اسم مرفوع يأتي غالبًا في بداية الجملة الاسمية ونتحدث عنه بالخبر."},
+  {keys:["جمع child"],answer:"جمع child هو children."},
+  {keys:["ماضي go","past go"],answer:"الماضي من go هو went."},
+  {keys:["معنى beautiful"],answer:"beautiful تعني «جميل» أو «جميلة» حسب السياق."},
+  {keys:["معنى tomorrow"],answer:"tomorrow تعني «غدًا»."}
+];
+
+function detectStudySubject(t){
+  if(has(t,"فيثاغورس","وتر","مثلث قائم"))return "pythagoras";
+  if(has(t,"علوم","فيزياء","كيمياء","احياء","أحياء","فضاء","كوكب"))return "science";
+  if(has(t,"عربي","نحو","فاعل","مفعول","مبتدا","خبر","لغة عربية"))return "arabic";
+  if(has(t,"جغرافيا","عاصمه","عاصمة","قاره","قارة","دوله","دولة"))return "geography";
+  if(has(t,"انجليزي","إنجليزي","english","ترجمه","ترجمة"))return "english";
+  if(has(t,"رياضيات","معادله","معادلة","حساب","جذر","نسبه","نسبة"))return "math";
+  return "mixed";
+}
+function generateStudyQuestion(subject="mixed"){
+  const q=shuffle(generalQuestionPool(subject)).find(x=>x.type==="mcq"||x.type==="number")||generalQuestionPool("mixed")[0];
+  aiGeneratedQuestion=q;
+  const options=q.type==="mcq"?`\nالخيارات: ${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`:"";
+  return `سؤال ${subjectNames[subject]||"مختلط"} 🎯\n${q.prompt}${options}\nجاوبني وأنا بفحصلك.`;
+}
+function gradeGeneratedAIAnswer(raw){
+  if(!aiGeneratedQuestion)return null;
+  const t=normalizeArabic(raw);
+  if(has(t,"شو الجواب","اعطيني الجواب","الحل","وريني الجواب")){
+    const ans=aiGeneratedQuestion.answer;
+    const exp=aiGeneratedQuestion.explanation||"";
+    aiGeneratedQuestion=null;
+    return `الجواب: ${ans}. ${exp}`;
+  }
+  if(raw.length>60||/[؟?]/.test(raw))return null;
+
+  const q=aiGeneratedQuestion;
+  let ok=false;
+  if(q.type==="number"){
+    const n=extractNumbers(raw)[0];
+    ok=Number.isFinite(n)&&Math.abs(n-Number(q.answer))<.001;
+  }else{
+    const nr=normExam(raw);
+    const idx=parseInt(nr,10);
+    if(Number.isInteger(idx)&&idx>=1&&idx<=q.options.length)ok=normExam(q.options[idx-1])===normExam(q.answer);
+    else ok=nr===normExam(q.answer)||nr.includes(normExam(q.answer));
+  }
+  const answer=q.answer,exp=q.explanation||"";
+  aiGeneratedQuestion=null;
+  return ok?`صح ✅ ممتاز! ${exp}`:`مش صحيح. الجواب الصحيح هو ${answer}. ${exp}`;
+}
+function generalKnowledgeAnswer(raw,t){
+  const math=solveGeneralMath(raw,t);
+  if(math)return math;
+  for(const f of localFacts){
+    if(has(t,...f.keys))return f.answer;
+  }
+  return null;
+}
+
 function advancedLocalMathAnswer(raw,t){
   const action=executeSiteAction(raw,t);
   if(action)return action;
+
+  if(has(t,"هات سؤال","اعطيني سؤال","اعطني سؤال","اسالني","اسألني","ولد سؤال","ولّد سؤال")){
+    return generateStudyQuestion(detectStudySubject(t));
+  }
+
+  const general=generalKnowledgeAnswer(raw,t);
+  if(general)return general;
+
   const nums=extractNumbers(raw);
 
   if(has(t,"القيم الحاليه","القيم الحالية","شو القيم","الارقام الحاليه","الأرقام الحالية"))
@@ -4295,6 +6258,20 @@ function advancedLocalMathAnswer(raw,t){
 function pythagorasiAnswer(raw){
   const t=correctedText(raw);
   const n=normalizeArabic(raw);
+
+  const generatedGrade=gradeGeneratedAIAnswer(raw);
+  if(generatedGrade)return generatedGrade;
+
+  const nameMatch=String(raw).trim().match(/(?:^|\s)(?:اسمي|أنا اسمي|انا اسمي|ناديني)\s+([^\r\n،,.!?؟]{2,40})/i);
+  if(nameMatch){
+    const name=nameMatch[1].trim().replace(/\s+/g," ");
+    if(saveAIName(name))return `تشرفنا ${name} 👋 حفظت اسمك على هذا الجهاز.`;
+  }
+  if(has(t,"شو اسمي","ما اسمي","بتعرف اسمي","تتذكر اسمي")){
+    const n=savedAIName();
+    return n?`اسمك المحفوظ عندي هو ${n} 😊`:"لسه ما عندي اسم محفوظ إلك. اكتب: «اسمي ...» وبحفظه.";
+  }
+
   aiContext.turns++;
   aiContext.lastQuestion=raw;
   const extracted=extractNumbers(raw);
@@ -4314,7 +6291,7 @@ function pythagorasiAnswer(raw){
   /* Greetings */
   if(has(t,"السلام عليكم","سلام عليكم")){
     firstNonGreetingReply=false;
-    return remember("greeting","وعليكم السلام ورحمة الله وبركاته 👋 هلا بطلاب اللاهف! شو حابب أساعدكم فيه بنظرية فيثاغورس؟");
+    return remember("greeting",`وعليكم السلام ورحمة الله وبركاته 👋 ${helloForUser()} شو حابب نشتغل اليوم؟`);
   }
 
   const greeting =
@@ -4323,7 +6300,7 @@ function pythagorasiAnswer(raw){
 
   if(greeting){
     firstNonGreetingReply=false;
-    return remember("greeting","هلا بطلاب اللاهف 👋 أهلًا وسهلًا! أنا فيثاغورسي. شو حابب أساعدكم فيه: شرح النظرية، حساب ضلع، فهم المجسم، الرمل، ولا مثال؟");
+    return remember("greeting",`${helloForUser()} أهلًا وسهلًا! أنا فيثاغورسي. اسألني بأي مادة بعرفها، أو أعطيني مسألة، أو اطلب مني أتحكم بالموقع.`);
   }
 
   /* Natural acknowledgement / satisfaction */
@@ -4339,25 +6316,25 @@ function pythagorasiAnswer(raw){
       "change":"تمام 👌 هيك كل تغيير بالأرقام بصير ظاهر بالمجسم والرمل والحساب بنفس الوقت.",
       "hypotenuse":"بالزبط 👌 تذكّر: الوتر هو المقابل للزاوية القائمة وهو الأطول.",
       "proof":"تمام 👌 الفكرة الأساسية بالإثبات هي مقارنة المساحات، مش بس حفظ القانون.",
-      "intro":"تمام يا طلاب اللاهف 👌 اسألوني أي شغلة عن المجسم أو نظرية فيثاغورس.",
-      "greeting":"أكيد 👌 شو بدكم نبدأ فيه: النظرية، المجسم، ولا سؤال حساب؟"
+      "intro":"تمام 👌 اسألني أي شغلة تعليمية أو عن أجزاء الموقع.",
+      "greeting":"أكيد 👌 شو بدك نبدأ فيه؟ سؤال، معادلة، امتحان، مسابقة، ولا مختبر فيثاغورس؟"
     };
-    return replies[lastBotTopic] || "تمام 👌 كمل، شو حابب تعرف كمان عن فيثاغورس؟";
+    return replies[lastBotTopic] || "تمام 👌 كمل، شو حابب تعرف كمان؟";
   }
 
   if(has(t,"شكرا","يسلمو","يعطيك العافيه","مشكور")){
     firstNonGreetingReply=false;
-    return "العفو يا طلاب اللاهف 🌟 دايمًا! إذا بدكم نكمل، أعطوني مسألة أو اسألوني عن أي جزء بالمجسم.";
+    return "العفو 🌟 دايمًا! إذا بدك نكمل، أعطيني مسألة أو أي سؤال ثاني.";
   }
 
   if(has(t,"دايما","دائما") && !has(t,"ليش","كيف")){
     firstNonGreetingReply=false;
-    return "دائمًا بالخدمة 😄📐 يلا هاتوا السؤال اللي بعده!";
+    return "دائمًا بالخدمة 😄 يلا هات السؤال اللي بعده!";
   }
 
   if(has(t,"باي","مع السلامه")){
     firstNonGreetingReply=false;
-    return "مع السلامة يا طلاب اللاهف 👋 وبالتوفيق بالمشروع!";
+    return "مع السلامة 👋 وبالتوفيق!";
   }
 
   /* Didn't understand / wants a clearer explanation */
@@ -4377,7 +6354,7 @@ function pythagorasiAnswer(raw){
   }
 
   /* If first message is not greeting */
-  const prefix=firstNonGreetingReply ? "هلا بطلاب اللاهف 👋\n" : "";
+  const prefix=firstNonGreetingReply ? `${helloForUser()}\n` : "";
   firstNonGreetingReply=false;
 
   if(has(t,
@@ -4509,7 +6486,13 @@ function addMsg(text,who="bot",html=false,persist=true){
     return;
   }
   chat.innerHTML="";
-  items.slice(-24).forEach(m=>addMsg(m.text,m.who||"bot",false,false));
+  items.slice(-24).forEach(m=>{
+    let txt=String(m.text||"")
+      .replace(/هلا بطلاب اللاهف/gi,helloForUser())
+      .replace(/يا طلاب اللاهف/gi,firstAIName()||"")
+      .replace(/طلاب اللاهف/gi,firstAIName()||"");
+    addMsg(txt,m.who||"bot",false,false);
+  });
   document.getElementById("aiMemoryStatus").textContent=`رجّعنا آخر ${Math.min(items.length,24)} رسالة`;
 })();
 
@@ -4566,10 +6549,12 @@ document.getElementById("micBtn").addEventListener("click",()=>{
 function sendQuestion(forced=null){
   const raw=(forced??q.value).trim();if(!raw)return;
   addMsg(raw,"user");q.value="";
-  const typing=document.createElement("div");typing.className="msg bot typing";typing.textContent="فيثاغورسي يفكّر…";chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
+  const typing=document.createElement("div");typing.className="msg bot typing";typing.textContent=`${assistantNameFor("pythagoras")} يفكّر…`;chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
   setTimeout(()=>{
     typing.remove();
-    addMsg(pythagorasiAnswer(raw),"bot");
+    const answer=pythagorasiAnswer(raw);
+    addMsg(answer,"bot");
+    persistAIContext();
   },280+Math.min(650,raw.length*9));
 }
 document.getElementById("sendBtn").addEventListener("click",()=>sendQuestion());
