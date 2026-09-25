@@ -45,6 +45,104 @@ button{user-select:none}
 
 .side{direction:rtl;padding:23px;max-height:calc(100vh - 36px);overflow:auto;background:linear-gradient(180deg,rgba(12,24,38,.97),rgba(7,14,23,.99))}
 .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.auth-userbar{
+  display:none;align-items:center;justify-content:space-between;gap:10px;
+  margin:10px 0 4px;padding:10px 12px;border-radius:13px;
+  background:linear-gradient(90deg,rgba(67,217,255,.08),rgba(121,40,202,.07));
+  border:1px solid rgba(67,217,255,.13)
+}
+.auth-userbar.show{display:flex}
+.auth-userinfo{display:flex;align-items:center;gap:9px;min-width:0}
+.auth-avatar{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#168dff,#8f4be8);font-weight:950;color:white;
+  box-shadow:0 5px 16px rgba(19,141,255,.22)
+}
+.auth-usertext{min-width:0}
+.auth-usertext b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.auth-usertext span{font-size:11px;color:#92a9bd}
+.auth-logout{
+  flex:0 0 auto;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.04);
+  color:#cfe1ef;border-radius:9px;padding:7px 9px;font-size:11px;font-weight:850;cursor:pointer
+}
+
+.auth-gate{
+  position:fixed;inset:0;z-index:200000;display:none;place-items:center;padding:18px;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(21,145,255,.20),transparent 34%),
+    radial-gradient(circle at 85% 80%,rgba(130,57,225,.19),transparent 38%),
+    rgba(3,9,16,.91);
+  backdrop-filter:blur(18px)
+}
+.auth-gate.show{display:grid;animation:authFade .28s ease}
+@keyframes authFade{from{opacity:0}to{opacity:1}}
+.auth-panel{
+  width:min(720px,96vw);border-radius:24px;padding:24px;
+  background:linear-gradient(145deg,rgba(13,27,43,.98),rgba(6,13,22,.99));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 100px rgba(0,0,0,.56),0 0 65px rgba(43,159,255,.08);
+  animation:authPanelIn .42s cubic-bezier(.16,.9,.25,1.12)
+}
+@keyframes authPanelIn{
+  from{opacity:0;transform:translateY(24px) scale(.95)}
+  to{opacity:1;transform:none}
+}
+.auth-logo{
+  width:58px;height:58px;border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;
+  font-size:29px;font-weight:950;background:linear-gradient(135deg,#087bf1,#8a45df);
+  box-shadow:0 12px 30px rgba(25,130,242,.25)
+}
+.auth-panel h2{text-align:center;margin:0;font-size:27px}
+.auth-panel .auth-sub{text-align:center;color:#98aabd;line-height:1.8;margin:7px auto 17px;max-width:540px;font-size:13px}
+.auth-role-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.auth-role{
+  border:1px solid rgba(255,255,255,.10);border-radius:17px;padding:17px;text-align:right;
+  background:rgba(255,255,255,.025);cursor:pointer;color:white
+}
+.auth-role:hover{border-color:rgba(67,217,255,.35);transform:translateY(-2px)!important}
+.auth-role .ico{font-size:30px;display:block;margin-bottom:8px}
+.auth-role b{display:block;font-size:18px;margin-bottom:4px}
+.auth-role span{color:#93a8bb;font-size:12px;line-height:1.6}
+.auth-form{display:none;margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}
+.auth-form.show{display:block;animation:questionIn .3s ease}
+.auth-form label{font-size:13px}
+.auth-form input{font-size:17px}
+.auth-form-actions{display:flex;gap:8px;margin-top:9px}
+.auth-primary{
+  flex:1;border:0;border-radius:11px;padding:12px 14px;background:linear-gradient(90deg,#087bf1,#17a9f5);
+  color:white;font-weight:950;cursor:pointer
+}
+.auth-google{
+  width:100%;margin-top:11px;border:1px solid rgba(255,255,255,.12);border-radius:12px;
+  padding:12px 14px;background:white;color:#1f2c38;font-weight:900;cursor:pointer
+}
+.auth-back{
+  border:1px solid rgba(255,255,255,.10);border-radius:11px;padding:11px 13px;
+  background:#132337;color:#d8e7f3;font-weight:850;cursor:pointer
+}
+.auth-error{
+  display:none;margin-top:10px;padding:9px 11px;border-radius:10px;
+  color:#ffbcbc;background:rgba(255,86,86,.08);border:1px solid rgba(255,86,86,.16);
+  font-size:12px;line-height:1.6
+}
+.auth-error.show{display:block}
+.auth-loading{opacity:.65;pointer-events:none}
+.auth-foot{text-align:center;color:#73869a;font-size:10px;margin-top:13px;line-height:1.6}
+
+body.light .auth-userbar{background:#f2f8fb;border-color:#d6e6ef}
+body.light .auth-usertext span{color:#698093}
+body.light .auth-logout{background:white;color:#244158;border-color:#d8e4eb}
+body.light .auth-gate{background:rgba(225,236,244,.88)}
+body.light .auth-panel{background:linear-gradient(145deg,#ffffff,#eff6fa);color:#163047;border-color:#d4e1e9}
+body.light .auth-role{background:#f7fafc;color:#163047;border-color:#d9e4eb}
+body.light .auth-role span{color:#687f91}
+body.light .auth-back{background:#eaf1f6;color:#29485f;border-color:#d7e1e8}
+
+@media(max-width:620px){
+  .auth-role-grid{grid-template-columns:1fr}
+  .auth-panel{padding:18px}
+}
+
 .brand h1{margin:0;font-size:clamp(37px,4vw,58px);letter-spacing:-1.5px}
 .ai-chip{background:linear-gradient(90deg,rgba(22,141,255,.16),rgba(67,217,255,.11));border:1px solid rgba(73,187,255,.26);padding:7px 11px;border-radius:999px;color:#8ddfff;font-size:12px;font-weight:800;white-space:nowrap}
 .sub{margin:7px 0 18px;color:var(--muted);line-height:1.8;font-size:14px}
@@ -445,6 +543,48 @@ body.light .ai-card .dictnote{color:#718196}
 </style>
 </head>
 <body>
+<div class="auth-gate" id="authGate" aria-modal="true" role="dialog">
+  <div class="auth-panel" id="authPanel">
+    <div class="auth-logo">∟</div>
+    <h2>أهلًا في Pythagorasi School 👋</h2>
+    <div class="auth-sub">اختار كيف بدك تدخل. الطالب بدخل باسمه بدون إيميل، والمعلم بدخل بحساب Google عشان لاحقًا يقدر يعمل امتحانات ويشوف النتائج.</div>
+
+    <div id="authRoleChooser">
+      <div class="auth-role-grid">
+        <button class="auth-role" id="chooseStudent" type="button">
+          <span class="ico">🎒</span>
+          <b>أنا طالب</b>
+          <span>اكتب اسمك وادخل مباشرة. ما بدك إيميل ولا كلمة سر.</span>
+        </button>
+        <button class="auth-role" id="chooseTeacher" type="button">
+          <span class="ico">👨‍🏫</span>
+          <b>أنا معلم</b>
+          <span>دخول آمن بحساب Google. امتحاناتك ونتائج طلابك ترتبط بحسابك.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="auth-form" id="studentLoginForm">
+      <label for="studentNameInput">شو اسمك؟</label>
+      <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
+      <div class="auth-form-actions">
+        <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول كطالب</button>
+        <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
+      </div>
+    </div>
+
+    <div class="auth-form" id="teacherLoginForm">
+      <button class="auth-google" id="teacherGoogleBtn" type="button">G&nbsp;&nbsp; الدخول بحساب Google</button>
+      <div class="auth-form-actions">
+        <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
+      </div>
+    </div>
+
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-foot" id="authStatusText">جاري الاتصال بـ Firebase…</div>
+  </div>
+</div>
+
 <div class="shell">
   <section class="stage" id="stage">
     <div id="scene"></div>
@@ -463,6 +603,16 @@ body.light .ai-card .dictnote{color:#718196}
     <div class="brand">
       <h1 dir="ltr">Pythagorean Theorem</h1>
       <div class="ai-chip">● فيثاغورسي AI</div>
+    </div>
+    <div class="auth-userbar" id="authUserBar">
+      <div class="auth-userinfo">
+        <div class="auth-avatar" id="authAvatar">؟</div>
+        <div class="auth-usertext">
+          <b id="authDisplayName">—</b>
+          <span id="authRoleText">—</span>
+        </div>
+      </div>
+      <button class="auth-logout" id="authLogoutBtn">تسجيل خروج</button>
     </div>
     <p class="sub">نموذج تفاعلي ثلاثي الأبعاد يوضح كيف أن مساحة مربعي الضلعين القائمين تساوي مساحة مربع الوتر.</p>
 
@@ -680,6 +830,250 @@ body.light .ai-card .dictnote{color:#718196}
 <script type="module">
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInAnonymously,
+  onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+/* -------------------- FIREBASE / LOGIN -------------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyAj970o6iQ9mK0Va6gYivsvnicN14LUYN0",
+  authDomain: "pythagorasi-school.firebaseapp.com",
+  projectId: "pythagorasi-school",
+  storageBucket: "pythagorasi-school.firebasestorage.app",
+  messagingSenderId: "349960442962",
+  appId: "1:349960442962:web:53d13a319dfdc096187b8b",
+  measurementId: "G-PFBVKDZ7CP"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:"select_account"});
+
+window.PythagorasiFirebase = { app:firebaseApp, db, auth };
+
+const authGate=document.getElementById("authGate");
+const authPanel=document.getElementById("authPanel");
+const authError=document.getElementById("authError");
+const authStatusText=document.getElementById("authStatusText");
+const roleChooser=document.getElementById("authRoleChooser");
+const studentForm=document.getElementById("studentLoginForm");
+const teacherForm=document.getElementById("teacherLoginForm");
+const studentNameInput=document.getElementById("studentNameInput");
+const authUserBar=document.getElementById("authUserBar");
+
+let activeProfile=null;
+let authResolved=false;
+
+function setAuthError(message=""){
+  authError.textContent=message;
+  authError.classList.toggle("show",!!message);
+}
+
+function authBusy(busy,text=""){
+  authPanel.classList.toggle("auth-loading",busy);
+  if(text)authStatusText.textContent=text;
+}
+
+function showRoleChooser(){
+  roleChooser.style.display="";
+  studentForm.classList.remove("show");
+  teacherForm.classList.remove("show");
+  setAuthError("");
+}
+
+function showStudentLogin(){
+  roleChooser.style.display="none";
+  teacherForm.classList.remove("show");
+  studentForm.classList.add("show");
+  setAuthError("");
+  setTimeout(()=>studentNameInput.focus(),80);
+}
+
+function showTeacherLogin(){
+  roleChooser.style.display="none";
+  studentForm.classList.remove("show");
+  teacherForm.classList.add("show");
+  setAuthError("");
+}
+
+function friendlyAuthError(error){
+  const code=error?.code||"";
+  if(code.includes("popup-closed"))return "سكّرت نافذة Google قبل ما يكتمل الدخول.";
+  if(code.includes("popup-blocked"))return "المتصفح منع نافذة Google. اسمح بالنوافذ المنبثقة وجرب مرة ثانية.";
+  if(code.includes("unauthorized-domain"))return "لازم تضيف bassamsamijaber-maker.github.io في Authentication → Settings → Authorized domains.";
+  if(code.includes("network"))return "في مشكلة بالإنترنت. افحص الاتصال وجرب مرة ثانية.";
+  if(code.includes("operation-not-allowed"))return "طريقة الدخول مش مفعلة في Firebase Authentication.";
+  if(code.includes("permission-denied"))return "Firestore منع الحفظ. تأكد إن Rules منشورة.";
+  return "صار خطأ بالدخول. جرّب مرة ثانية.";
+}
+
+async function saveUserProfile(user,profile){
+  const ref=doc(db,"users",user.uid);
+  const existing=await getDoc(ref);
+  const base={
+    displayName:profile.displayName||user.displayName||"بدون اسم",
+    role:profile.role,
+    provider:profile.provider,
+    updatedAt:serverTimestamp()
+  };
+  if(user.email)base.email=user.email;
+  if(user.photoURL)base.photoURL=user.photoURL;
+  if(!existing.exists())base.createdAt=serverTimestamp();
+  await setDoc(ref,base,{merge:true});
+  return {...(existing.exists()?existing.data():{}),...base};
+}
+
+function paintUser(user,profile){
+  activeProfile=profile;
+  const name=profile?.displayName||user?.displayName||"مستخدم";
+  const teacher=profile?.role==="teacher";
+  document.getElementById("authDisplayName").textContent=name;
+  document.getElementById("authRoleText").textContent=teacher?"👨‍🏫 معلم • Google":"🎒 طالب";
+  document.getElementById("authAvatar").textContent=(name.trim()[0]||"؟").toUpperCase();
+  authUserBar.classList.add("show");
+  authGate.classList.remove("show");
+  document.body.dataset.userRole=profile?.role||"";
+  window.PythagorasiUser={uid:user.uid,...profile};
+}
+
+async function resolveCurrentUser(user){
+  if(!user){
+    activeProfile=null;
+    authUserBar.classList.remove("show");
+    window.PythagorasiUser=null;
+    authGate.classList.add("show");
+    authStatusText.textContent="جاهز للدخول";
+    showRoleChooser();
+    return;
+  }
+
+  authBusy(true,"جاري تحميل حسابك…");
+  try{
+    const provider=user.providerData?.[0]?.providerId;
+    if(provider==="google.com"){
+      const profile={
+        displayName:user.displayName||"المعلم",
+        role:"teacher",
+        provider:"google.com",
+        email:user.email||""
+      };
+      await saveUserProfile(user,profile);
+      paintUser(user,profile);
+    }else{
+      const savedName=(localStorage.getItem("pythagorasi_student_name")||"").trim();
+      const snap=await getDoc(doc(db,"users",user.uid));
+      const dbName=snap.exists()?(snap.data().displayName||""):"";
+      const name=savedName||dbName;
+      if(!name){
+        authGate.classList.add("show");
+        showStudentLogin();
+        authStatusText.textContent="اكتب اسمك حتى نكمل دخول الطالب";
+        return;
+      }
+      const profile={displayName:name,role:"student",provider:"anonymous"};
+      await saveUserProfile(user,profile);
+      paintUser(user,profile);
+    }
+    authStatusText.textContent="متصل بـ Firebase ✓";
+  }catch(error){
+    console.error("resolveCurrentUser",error);
+    authGate.classList.add("show");
+    setAuthError(friendlyAuthError(error));
+  }finally{
+    authBusy(false);
+  }
+}
+
+document.getElementById("chooseStudent").addEventListener("click",showStudentLogin);
+document.getElementById("chooseTeacher").addEventListener("click",showTeacherLogin);
+document.getElementById("studentBackBtn").addEventListener("click",showRoleChooser);
+document.getElementById("teacherBackBtn").addEventListener("click",showRoleChooser);
+
+document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
+  const name=studentNameInput.value.trim().replace(/\s+/g," ");
+  if(name.length<2){
+    setAuthError("اكتب اسمك أولًا — حرفين على الأقل.");
+    studentNameInput.focus();
+    return;
+  }
+  authBusy(true,"جاري دخول الطالب…");
+  setAuthError("");
+  try{
+    let user=auth.currentUser;
+    const provider=user?.providerData?.[0]?.providerId;
+    if(!user || provider==="google.com"){
+      if(user)await signOut(auth);
+      const cred=await signInAnonymously(auth);
+      user=cred.user;
+    }
+    localStorage.setItem("pythagorasi_student_name",name);
+    const profile={displayName:name,role:"student",provider:"anonymous"};
+    await saveUserProfile(user,profile);
+    paintUser(user,profile);
+    showToast(`👋 أهلًا ${name}! تم حفظ دخولك كطالب.`);
+  }catch(error){
+    console.error("student login",error);
+    setAuthError(friendlyAuthError(error));
+  }finally{
+    authBusy(false);
+  }
+});
+
+studentNameInput.addEventListener("keydown",e=>{
+  if(e.key==="Enter")document.getElementById("studentLoginBtn").click();
+});
+
+document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
+  authBusy(true,"جاري فتح Google…");
+  setAuthError("");
+  try{
+    if(auth.currentUser)await signOut(auth);
+    const cred=await signInWithPopup(auth,googleProvider);
+    const user=cred.user;
+    const profile={
+      displayName:user.displayName||"المعلم",
+      role:"teacher",
+      provider:"google.com",
+      email:user.email||""
+    };
+    await saveUserProfile(user,profile);
+    paintUser(user,profile);
+    showToast(`👨‍🏫 أهلًا ${profile.displayName}! دخلت كمعلم.`);
+  }catch(error){
+    console.error("teacher login",error);
+    setAuthError(friendlyAuthError(error));
+  }finally{
+    authBusy(false);
+  }
+});
+
+document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
+  try{
+    await signOut(auth);
+    localStorage.removeItem("pythagorasi_student_name");
+    activeProfile=null;
+    authUserBar.classList.remove("show");
+    authGate.classList.add("show");
+    showRoleChooser();
+    showToast("تم تسجيل الخروج.");
+  }catch(error){
+    console.error(error);
+    showToast("تعذر تسجيل الخروج.");
+  }
+});
+
+onAuthStateChanged(auth,async user=>{
+  authResolved=true;
+  await resolveCurrentUser(user);
+});
+
 
 /* -------------------- THREE.JS SCENE -------------------- */
 const mount=document.getElementById("scene");
