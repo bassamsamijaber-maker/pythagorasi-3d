@@ -544,10 +544,11 @@ body.light .ai-card .dictnote{color:#718196}
 </head>
 <body>
 <div class="auth-gate" id="authGate" aria-modal="true" role="dialog">
-  <div class="auth-panel" id="authPanel">
+  <div class="auth-panel" id="authPanel" style="position:relative">
+    <button id="authCloseBtn" type="button" aria-label="إغلاق" style="position:absolute;left:14px;top:14px;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:white;font-size:22px;cursor:pointer">×</button>
     <div class="auth-logo">∟</div>
-    <h2>أهلًا في Pythagorasi School 👋</h2>
-    <div class="auth-sub">اختار كيف بدك تدخل. الطالب بدخل باسمه بدون إيميل، والمعلم بدخل بحساب Google عشان لاحقًا يقدر يعمل امتحانات ويشوف النتائج.</div>
+    <h2>قبل ما تبدأ الامتحان 🎓</h2>
+    <div class="auth-sub">اختار طريقة الدخول للامتحان. الطالب يكتب اسمه مرة واحدة وينحفظ، والمعلم يدخل بحساب Google لإدارة الامتحانات والنتائج.</div>
 
     <div id="authRoleChooser">
       <div class="auth-role-grid">
@@ -832,8 +833,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup, signInAnonymously,
-  onAuthStateChanged, signOut
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
+  signInAnonymously, onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, serverTimestamp
@@ -870,6 +871,7 @@ const authUserBar=document.getElementById("authUserBar");
 
 let activeProfile=null;
 let authResolved=false;
+let authPendingAction=null;
 
 function setAuthError(message=""){
   authError.textContent=message;
@@ -904,16 +906,17 @@ function showTeacherLogin(){
 }
 
 function friendlyAuthError(error){
-  const code=error?.code||"";
-  if(code.includes("popup-closed"))return "سكّرت نافذة Google قبل ما يكتمل الدخول.";
-  if(code.includes("popup-blocked"))return "المتصفح منع نافذة Google. اسمح بالنوافذ المنبثقة وجرب مرة ثانية.";
-  if(code.includes("unauthorized-domain"))return "لازم تضيف bassamsamijaber-maker.github.io في Authentication → Settings → Authorized domains.";
-  if(code.includes("network"))return "في مشكلة بالإنترنت. افحص الاتصال وجرب مرة ثانية.";
-  if(code.includes("operation-not-allowed"))return "طريقة الدخول مش مفعلة في Firebase Authentication.";
+  const code=error?.code||"unknown";
+  if(code.includes("popup-closed"))return "سكّرت نافذة Google قبل ما يكتمل الدخول. جرّب مرة ثانية.";
+  if(code.includes("popup-blocked"))return "Chrome منع نافذة Google. رح نجرب تحويل صفحة تسجيل الدخول بدل النافذة.";
+  if(code.includes("unauthorized-domain"))return "Firebase رافض رابط الموقع. أضف bassamsamijaber-maker.github.io في Authentication → Settings → Authorized domains.";
+  if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
+  if(code.includes("operation-not-allowed"))return "تسجيل Google غير مفعّل في Firebase Authentication.";
   if(code.includes("permission-denied"))return "Firestore منع الحفظ. تأكد إن Rules منشورة.";
-  return "صار خطأ بالدخول. جرّب مرة ثانية.";
+  if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
+  if(code.includes("internal-error"))return "Firebase رجّع خطأ داخلي. حدّث الصفحة وجرب مرة ثانية.";
+  return `صار خطأ بالدخول (${code}). إذا بتبعتلي هالكود بحددلك السبب فورًا.`;
 }
-
 async function saveUserProfile(user,profile){
   const ref=doc(db,"users",user.uid);
   const existing=await getDoc(ref);
@@ -930,6 +933,14 @@ async function saveUserProfile(user,profile){
   return {...(existing.exists()?existing.data():{}),...base};
 }
 
+function finishAuthIntent(){
+  const action=authPendingAction;
+  authPendingAction=null;
+  if(action==="exam"){
+    setTimeout(()=>openExamCenter(),80);
+  }
+}
+
 function paintUser(user,profile){
   activeProfile=profile;
   const name=profile?.displayName||user?.displayName||"مستخدم";
@@ -941,6 +952,7 @@ function paintUser(user,profile){
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
+  finishAuthIntent();
 }
 
 async function resolveCurrentUser(user){
@@ -948,9 +960,8 @@ async function resolveCurrentUser(user){
     activeProfile=null;
     authUserBar.classList.remove("show");
     window.PythagorasiUser=null;
-    authGate.classList.add("show");
-    authStatusText.textContent="جاهز للدخول";
-    showRoleChooser();
+    authGate.classList.remove("show");
+    authStatusText.textContent="جاهز";
     return;
   }
 
@@ -971,26 +982,35 @@ async function resolveCurrentUser(user){
       const snap=await getDoc(doc(db,"users",user.uid));
       const dbName=snap.exists()?(snap.data().displayName||""):"";
       const name=savedName||dbName;
-      if(!name){
-        authGate.classList.add("show");
-        showStudentLogin();
-        authStatusText.textContent="اكتب اسمك حتى نكمل دخول الطالب";
-        return;
+
+      if(name){
+        const profile={displayName:name,role:"student",provider:"anonymous"};
+        await saveUserProfile(user,profile);
+        paintUser(user,profile);
+      }else{
+        // Keep the normal website open. We ask for the name only when an exam is opened.
+        activeProfile=null;
+        authUserBar.classList.remove("show");
+        authGate.classList.remove("show");
       }
-      const profile={displayName:name,role:"student",provider:"anonymous"};
-      await saveUserProfile(user,profile);
-      paintUser(user,profile);
     }
     authStatusText.textContent="متصل بـ Firebase ✓";
   }catch(error){
     console.error("resolveCurrentUser",error);
-    authGate.classList.add("show");
-    setAuthError(friendlyAuthError(error));
+    // Never block the normal website because Firebase had a problem.
+    authGate.classList.remove("show");
+    authUserBar.classList.remove("show");
+    console.warn(friendlyAuthError(error));
   }finally{
     authBusy(false);
   }
 }
-
+document.getElementById("authCloseBtn").addEventListener("click",()=>{
+  authPendingAction=null;
+  authGate.classList.remove("show");
+  setAuthError("");
+  showRoleChooser();
+});
 document.getElementById("chooseStudent").addEventListener("click",showStudentLogin);
 document.getElementById("chooseTeacher").addEventListener("click",showTeacherLogin);
 document.getElementById("studentBackBtn").addEventListener("click",showRoleChooser);
@@ -1034,7 +1054,9 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
   authBusy(true,"جاري فتح Google…");
   setAuthError("");
   try{
-    if(auth.currentUser)await signOut(auth);
+    const currentProvider=auth.currentUser?.providerData?.[0]?.providerId;
+    if(auth.currentUser && currentProvider!=="google.com")await signOut(auth);
+
     const cred=await signInWithPopup(auth,googleProvider);
     const user=cred.user;
     const profile={
@@ -1048,12 +1070,23 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
     showToast(`👨‍🏫 أهلًا ${profile.displayName}! دخلت كمعلم.`);
   }catch(error){
     console.error("teacher login",error);
-    setAuthError(friendlyAuthError(error));
+
+    if(error?.code==="auth/popup-blocked"){
+      try{
+        authStatusText.textContent="Chrome منع النافذة؛ رح أحولك لصفحة Google…";
+        await signInWithRedirect(auth,googleProvider);
+        return;
+      }catch(redirectError){
+        console.error("redirect login",redirectError);
+        setAuthError(friendlyAuthError(redirectError));
+      }
+    }else{
+      setAuthError(friendlyAuthError(error));
+    }
   }finally{
     authBusy(false);
   }
 });
-
 document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
   try{
     await signOut(auth);
@@ -1067,6 +1100,11 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
     console.error(error);
     showToast("تعذر تسجيل الخروج.");
   }
+});
+
+getRedirectResult(auth).catch(error=>{
+  console.error("Google redirect result",error);
+  console.warn(friendlyAuthError(error));
 });
 
 onAuthStateChanged(auth,async user=>{
@@ -1979,7 +2017,28 @@ function openExamCenter(){
   showExamView("examHome");
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
 }
-document.getElementById("examBtn").addEventListener("click",openExamCenter);
+function openExamWithIdentity(){
+  if(activeProfile || window.PythagorasiUser){
+    openExamCenter();
+    return;
+  }
+
+  const savedName=(localStorage.getItem("pythagorasi_student_name")||"").trim();
+  if(auth.currentUser && savedName){
+    const profile={displayName:savedName,role:"student",provider:"anonymous"};
+    activeProfile=profile;
+    window.PythagorasiUser={uid:auth.currentUser.uid,...profile};
+    openExamCenter();
+    return;
+  }
+
+  authPendingAction="exam";
+  authGate.classList.add("show");
+  showRoleChooser();
+  authStatusText.textContent="اختار طالب أو معلم حتى نفتح الامتحان";
+}
+
+document.getElementById("examBtn").addEventListener("click",openExamWithIdentity);
 document.getElementById("closeExamModal").addEventListener("click",()=>{examModal.classList.remove("open");stopExamTimer()});
 examModal.addEventListener("click",e=>{if(e.target===examModal){examModal.classList.remove("open");stopExamTimer()}});
 
