@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07111c">
-<title>نظرية فيثاغورس ثلاثية الأبعاد</title>
+<title>Pythagoras 3D</title>
 <style>
 :root{
   --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
@@ -1455,6 +1455,94 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
   .member-actions{justify-content:flex-start}
 }
 
+
+/* ================= V15 BILINGUAL / STRONG MOTION ================= */
+#lobbyProfileBtn,#lobbyProfileQuick,#lobbyLogoutBtn,#themeBtn,#authThemeBtn,#authLogoutBtn{
+  display:none!important;
+}
+.settings-photo-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}
+.settings-photo-actions .settings-photo-btn{border:1px solid rgba(255,255,255,.08);color:inherit}
+.remove-photo-btn{font:inherit}
+
+/* Dates/numbers are visually LTR and Latin in both languages. */
+input[type="date"],.assignment-date,.activity-time,.class-code-big,.live-code,.exam-code{
+  direction:ltr!important;text-align:left!important;font-variant-numeric:tabular-nums!important;
+}
+.numeric-latin{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+
+/* English language direction and alignment. */
+body.lang-en{direction:ltr}
+body.lang-en .modalbox,body.lang-en .auth-panel,body.lang-en .lobby-shell,
+body.lang-en .card,body.lang-en .profile-card,body.lang-en .class-panel,
+body.lang-en .teacher-class-card,body.lang-en .live-card,body.lang-en .exam-choice,
+body.lang-en .settings-card{text-align:left}
+body.lang-en input,body.lang-en textarea,body.lang-en select{text-align:left}
+body.lang-en .lobby-ai-input input,body.lang-en .subject-chat-input input{text-align:left}
+body.lang-en .class-code-big,body.lang-en .pythag-formula{text-align:center}
+
+/* Much stronger motion. */
+@keyframes lobbyRevealStrong{
+  0%{opacity:0;transform:translateY(34px) scale(.94);filter:blur(10px)}
+  65%{opacity:1;transform:translateY(-5px) scale(1.015);filter:blur(0)}
+  100%{transform:none}
+}
+@keyframes modalSpringStrong{
+  0%{opacity:0;transform:translateY(48px) scale(.88) rotateX(8deg);filter:blur(8px)}
+  62%{opacity:1;transform:translateY(-8px) scale(1.025) rotateX(0);filter:none}
+  82%{transform:translateY(3px) scale(.992)}
+  100%{transform:none}
+}
+@keyframes cardLiftStrong{
+  0%{opacity:0;transform:translateY(28px) scale(.91)}
+  70%{opacity:1;transform:translateY(-5px) scale(1.02)}
+  100%{transform:none}
+}
+@keyframes superPress{
+  0%{transform:scale(1)}35%{transform:scale(.88) rotate(-1deg)}70%{transform:scale(1.07) rotate(1deg)}100%{transform:scale(1)}
+}
+@keyframes langSwitchFlash{
+  0%{opacity:.45;transform:scale(.985)}100%{opacity:1;transform:none}
+}
+@keyframes rippleBlast{
+  from{opacity:.55;transform:translate(-50%,-50%) scale(.05)}
+  to{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
+.platform-lobby:not(.hidden) .lobby-topbar,
+.platform-lobby:not(.hidden) .pythag-lobby-hero,
+.platform-lobby:not(.hidden) .lobby-section{animation:lobbyRevealStrong .62s cubic-bezier(.18,.89,.32,1.28) both}
+.platform-lobby:not(.hidden) .lobby-section:nth-of-type(2){animation-delay:.09s}
+.platform-lobby:not(.hidden) .lobby-section:nth-of-type(3){animation-delay:.16s}
+.platform-lobby:not(.hidden) .lobby-section:nth-of-type(4){animation-delay:.23s}
+.modal.open .modalbox{animation:modalSpringStrong .46s cubic-bezier(.18,.89,.32,1.35)!important}
+.pythag-action-card,.lobby-action,.exam-choice,.live-card,.profile-card,.teacher-class-card{
+  animation:cardLiftStrong .52s cubic-bezier(.18,.89,.32,1.24) both;
+}
+button,.settings-photo-btn{will-change:transform,filter,box-shadow}
+button:hover:not(:disabled),.settings-photo-btn:hover{
+  transform:translateY(-4px) scale(1.035)!important;
+  filter:brightness(1.12);box-shadow:0 14px 32px rgba(20,100,190,.18)
+}
+button.super-press,.settings-photo-btn.super-press{animation:superPress .34s ease!important}
+input:focus,textarea:focus,select:focus{
+  transform:scale(1.012);box-shadow:0 0 0 3px rgba(45,153,255,.13),0 12px 28px rgba(15,80,150,.09)!important;
+}
+.language-switching{animation:langSwitchFlash .28s ease}
+.global-click-ripple{
+  position:fixed;width:130px;height:130px;border-radius:999px;z-index:99999;pointer-events:none;
+  border:3px solid rgba(85,181,255,.7);box-shadow:0 0 32px rgba(85,181,255,.42);
+  animation:rippleBlast .55s ease-out forwards;
+}
+body.light .global-click-ripple{border-color:rgba(54,126,220,.58);box-shadow:0 0 30px rgba(54,126,220,.3)}
+body.reduce-motion .global-click-ripple{display:none!important}
+body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{animation:none!important}
+
+@media(max-width:640px){
+  body.lang-en .lobby-top-actions{justify-content:flex-end}
+  .settings-photo-actions{flex-direction:column;align-items:stretch}
+}
+
+
+.settings-choice-row .active{background:#168cff!important;color:white!important;border-color:#168cff!important;box-shadow:0 8px 22px rgba(22,140,255,.22)}
 </style>
 </head>
 <body>
@@ -1463,7 +1551,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
     <div class="auth-logo">∟</div>
-    <h2>أهلًا في نظرية فيثاغورس ثلاثية الأبعاد 👋</h2>
+    <h2>أهلًا في Pythagoras 3D 👋</h2>
     <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
 
     <div id="authRoleChooser">
@@ -1529,7 +1617,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
   <div class="lobby-shell">
     <div class="lobby-topbar">
       <div>
-        <div class="lobby-brand">نظرية فيثاغورس ثلاثية الأبعاد</div>
+        <div class="lobby-brand">Pythagoras 3D</div>
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
@@ -1546,7 +1634,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
     <section class="pythag-lobby-hero">
       <div class="pythag-hero-copy">
         <span class="general-badge">📐 موضوع المنصة</span>
-        <h1>نظرية فيثاغورس</h1>
+        <h1 id="lobbyHeroTitle">نظرية فيثاغورس</h1>
         <p>تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.</p>
         <div class="pythag-formula">a² + b² = c²</div>
         <button class="pythag-enter-lab" id="lobbyLabBtn">🚀 افتح مختبر فيثاغورس ثلاثي الأبعاد</button>
@@ -1784,9 +1872,12 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
       <div class="settings-profile-info">
         <b id="settingsCurrentName">—</b>
         <span id="settingsLoginName">اسم الدخول: —</span>
-        <label class="settings-photo-btn">📷 تغيير الصورة
-          <input id="settingsPhotoInput" type="file" accept="image/*" hidden>
-        </label>
+        <div class="settings-photo-actions">
+          <label class="settings-photo-btn">📷 تغيير الصورة
+            <input id="settingsPhotoInput" type="file" accept="image/*" hidden>
+          </label>
+          <button class="settings-photo-btn remove-photo-btn" id="settingsRemovePhotoBtn" type="button">🗑 حذف الصورة</button>
+        </div>
       </div>
     </div>
 
@@ -1805,11 +1896,25 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
       </section>
 
       <section class="settings-card">
-        <h3>🌓 المظهر</h3>
+        <h3 id="settingsAppearanceTitle">🌓 المظهر</h3>
         <div class="settings-choice-row">
           <button class="exam-secondary" id="settingsDarkBtn">🌙 ليل</button>
           <button class="exam-secondary" id="settingsLightBtn">☀️ نهار</button>
         </div>
+      </section>
+
+      <section class="settings-card">
+        <h3 id="settingsLanguageTitle">🌐 اللغة / Language</h3>
+        <div class="settings-choice-row">
+          <button class="exam-secondary" id="settingsArabicBtn">العربية</button>
+          <button class="exam-secondary" id="settingsEnglishBtn">English</button>
+        </div>
+        <div class="settings-note" id="settingsLanguageNote">التواريخ والأرقام تظل بالإنجليزية في اللغتين.</div>
+      </section>
+
+      <section class="settings-card">
+        <h3 id="settingsProfileTitle">👤 الملف الشخصي</h3>
+        <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
       <section class="settings-card">
@@ -1940,7 +2045,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{
 
   <aside class="side">
     <div class="brand">
-      <h1>نظرية فيثاغورس ثلاثية الأبعاد</h1>
+      <h1>Pythagoras 3D</h1>
       <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
       <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
       <button class="exam-secondary" id="labSettingsBtn" style="margin-top:7px;width:100%">⚙️ الإعدادات</button>
@@ -5236,11 +5341,23 @@ async function loadQuestionBank(){
 let teacherStarterCheckedFor="";
 let currentTeacherClasses=[];
 
+function latinDigits(value){
+  return String(value??"")
+    .replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d))
+    .replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+}
+function formatStoredDate(value){
+  if(!value)return "";
+  const m=String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m)return latinDigits(value);
+  const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+  return d.toLocaleDateString("en-US",{year:"numeric",month:"short",day:"2-digit"});
+}
 function classTimeText(ts){
   try{
     const d=ts?.toDate?ts.toDate():ts instanceof Date?ts:null;
     if(!d)return "—";
-    return d.toLocaleString("ar",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
+    return latinDigits(d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}));
   }catch{return "—"}
 }
 function activityIcon(type){
@@ -5533,7 +5650,7 @@ async function loadStudentClasses(){
         }
         card.innerHTML=`
           <h5>${escapeHtml(a.title||"وظيفة")} • ${escapeHtml(c.name||"الصف")}</h5>
-          <div class="assignment-meta">فيثاغورس${a.dueDate?` • موعد: ${escapeHtml(a.dueDate)}`:""} • ${total} علامة</div>
+          <div class="assignment-meta">فيثاغورس${a.dueDate?` • ${currentUILanguage==="en"?"Due":"موعد"}: ${escapeHtml(formatStoredDate(a.dueDate))}`:""} • ${total} علامة</div>
           <div class="assignment-description">${escapeHtml(a.description||"")}</div>
           <div class="assignment-submission">${submitHtml}</div>`;
 
@@ -5880,7 +5997,7 @@ async function renderTeacherClassCard(host,c){
     }
     assignmentHtml+=`<div class="assignment-card teacher-assignment-card" data-assignment-id="${a.id}">
       <h5>${escapeHtml(a.title||"وظيفة")}</h5>
-      <div class="assignment-meta">فيثاغورس${a.dueDate?` • ${escapeHtml(a.dueDate)}`:""} • ${total} علامة • ${subs.size} تسليم</div>
+      <div class="assignment-meta">فيثاغورس${a.dueDate?` • ${currentUILanguage==="en"?"Due":"موعد"}: ${escapeHtml(formatStoredDate(a.dueDate))}`:""} • ${total} علامة • ${subs.size} تسليم</div>
       <div class="assignment-description">${escapeHtml(a.description||"")}</div>
       ${submissionRows||'<div class="empty-mini">لسه ما في تسليمات.</div>'}
     </div>`;
@@ -5933,7 +6050,7 @@ async function renderTeacherClassCard(host,c){
         <h4>📝 وظيفة جديدة — مثل الامتحان</h4>
         <div class="assignment-create assignment-exam-builder">
           <input class="assignment-title" placeholder="عنوان الوظيفة">
-          <input class="assignment-date" type="date">
+          <input class="assignment-date" type="date" lang="en-US" dir="ltr">
           <textarea class="assignment-description-input" placeholder="تعليمات الوظيفة للطلاب..."></textarea>
           <div class="assignment-builder-toolbar">
             <button type="button" class="exam-secondary assignment-add-mcq">＋ اختيار من متعدد</button>
@@ -6251,6 +6368,191 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
   }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
 });
 
+
+/* -------------------- V15 BILINGUAL UI -------------------- */
+let currentUILanguage=localStorage.getItem("pythagorasi_language")==="en"?"en":"ar";
+
+const uiExactTranslations=new Map([
+  ["أهلًا في Pythagoras 3D 👋","Welcome to Pythagoras 3D 👋"],
+  ["نظرية فيثاغورس","Pythagorean Theorem"],
+  ["📐 موضوع المنصة","📐 Platform Topic"],
+  ["تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.","Learn the theorem with the 3D model, sand proof, examples, challenges, practice, exams and live competitions."],
+  ["🚀 افتح مختبر فيثاغورس ثلاثي الأبعاد","🚀 Open the 3D Pythagoras Lab"],
+  ["مساعد فيثاغورس","Pythagoras Assistant"],
+  ["اسألني عن الوتر، القانون، مثلث قائم، ثلاثيات فيثاغورس أو أعطيني أرقام وأنا أحسبها.","Ask me about the hypotenuse, the formula, right triangles, Pythagorean triples, or give me values to calculate."],
+  ["🔥 اختار النشاط","🔥 Choose an Activity"],
+  ["كل النشاطات هون خاصة بنظرية فيثاغورس.","All activities here are focused on the Pythagorean theorem."],
+  ["ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.","Sign in to save your progress, points, exams, competitions and settings."],
+  ["دخول بالاسم وكلمة السر، أو إنشاء حساب جديد.","Sign in with your name and password, or create a new account."],
+  ["دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.","Teacher sign-in for classes, exams, competitions and the question bank."],
+  ["عند إنشاء الحساب لازم تدخل كود صف صحيح. بعدين بتقدر تنضم لصفوف إضافية من اللوبي.","A valid class code is required when creating an account. You can join more classes later."],
+  ["حسابك يحفظ تقدمك وإعداداتك على أجهزتك.","Your account saves your progress and settings across devices."],
+  ["إذا ظهر خطأ إن كلمة السر غير مفعلة: لازم المعلم/صاحب المشروع يفعّل Email/Password مرة واحدة من إعدادات Authentication.","If password sign-in is disabled, the project owner must enable Email/Password once in Authentication settings."],
+  ["العجلة، الرمل، حساب الأضلاع والبرهان الحي","Wheel, sand, side calculations and live proof"],
+  ["حل بسرعة واجمع نقاط","Solve quickly and collect points"],
+  ["أسئلة متغيرة مع تصحيح مباشر","Changing questions with instant checking"],
+  ["سهل، متوسط، صعب وخبير","Easy, medium, hard and expert"],
+  ["كود غرفة، فرق وLeaderboard","Room code, teams and leaderboard"],
+  ["انضم لصف أو شوف الوظائف","Join a class or view assignments"],
+  ["XP، المستوى والتقدم","XP, level and progress"],
+  ["كل الأدوات مخصّصة لفيثاغورس.","All teacher tools are focused on Pythagoras."],
+  ["احفظ أسئلتك واستعملها لاحقًا","Save your questions and reuse them later"],
+  ["إدارة الطلاب والوظائف","Manage students and assignments"],
+  ["علامات طلابك","Your students’ grades"],
+  ["المسابقات المحفوظة","Saved competitions"],
+  ["تدريب سريع وتصحيح مباشر.","Quick practice with instant checking."],
+  ["جاهز؟","Ready?"],
+  ["حسابك، الصورة، الصوت، المظهر والحركة من مكان واحد.","Account, photo, sound, appearance and motion in one place."],
+  ["📷 تغيير الصورة","📷 Change photo"],["🗑 حذف الصورة","🗑 Remove photo"],
+  ["هذا يغيّر الاسم الظاهر فقط. اسم الدخول الأصلي يبقى نفسه حتى ما يضيع حسابك.","This changes only the display name. Your original login name stays unchanged."],
+  ["التواريخ والأرقام تظل بالإنجليزية في اللغتين.","Dates and numbers stay in English format in both languages."],
+  ["صفوف، طلاب، وظائف، سجل نشاط ومربيّو الصف.","Classes, students, assignments, activity log and co-teachers."],
+  ["خذ الكود من المعلم.","Get the code from your teacher."],
+  ["اطلب كود الدعوة من مالك الصف.","Ask the class owner for the teacher invitation code."],
+  ["بتقدر تكون مالك لعدة صفوف ومعلّم مساعد بصفوف ثانية.","You can own several classes and be a co-teacher in others."],
+  ["🗃️ بنك الأسئلة","🗃️ Question Bank"],["💾 حفظ السؤال","💾 Save question"],["الأسئلة المحفوظة","Saved questions"],
+  ["نموذج تفاعلي واقعي","Realistic interactive model"],["إرجاع العرض","Reset view"],["ملء الشاشة","Fullscreen"],
+  ["⌂ الرجوع للّوبي","⌂ Back to lobby"],
+  ["منصة تفاعلية كاملة لتعلّم نظرية فيثاغورس: مختبر 3D، تحديات، أسئلة، امتحانات ومسابقات.","A complete interactive platform for the Pythagorean theorem: 3D lab, challenges, practice, exams and competitions."],
+  ["📐 احسب أي ضلع","📐 Calculate any side"],
+  ["اختار الضلع المجهول، وبعدها اكتب الضلعين المعروفين.","Choose the unknown side, then enter the two known sides."],
+  ["الضلع c هو الوتر دائمًا","Side c is always the hypotenuse"],
+  ["المجهول a","Unknown a"],["المجهول b","Unknown b"],["المجهول c (الوتر)","Unknown c (hypotenuse)"],
+  ["a — الضلع الأول","a — first leg"],["b — الضلع الثاني","b — second leg"],["c — الوتر دائمًا","c — always the hypotenuse"],
+  ["احسب وطبّق على المجسم","Calculate & apply to model"],["النتيجة","Result"],
+  ["▶ شغّل البرهان الحي بالرمل","▶ Run the live sand proof"],["🎓 امتحان مفاجئ","🎓 Surprise exam"],
+  ["📘 شرح النظرية بالتفصيل","📘 Detailed theorem explanation"],["⏳ حرّك الرمل من جديد","⏳ Move the sand again"],
+  ["جاهز: سننقل كمية الرمل من a² و b² إلى c² لنرى تساوي المساحات.","Ready: we will move the sand from a² and b² into c² to show that the areas are equal."],
+  ["اضغط «سؤال جديد» وجرّب تحل بدون ما تشوف الجواب.","Press “New question” and try to solve it before seeing the answer."],
+  ["تحقّق","Check"],["💡 ورّيني الحل","💡 Show solution"],["● جاهز","● Ready"],
+  ["اشرحها ببساطة","Explain simply"],["ليش صحيحة؟","Why is it true?"],["احسب 3 و 4","Calculate 3 and 4"],["متى نستخدمها؟","When do we use it?"],
+  ["صوت عربي طبيعي","Natural Arabic voice"],["هادئ","Slow"],["طبيعي","Normal"],["سريع","Fast"],["🔊 اقرأ الرد تلقائيًا","🔊 Auto-read replies"],
+  ["الذاكرة المحلية جاهزة","Local memory ready"],["شرح دقيق لنظرية فيثاغورس","Detailed Pythagorean theorem explanation"],
+  ["🔊 اقرأ الشرح","🔊 Read explanation"],["⏸ إيقاف مؤقت","⏸ Pause"],["⏹ إيقاف","⏹ Stop"],
+  ["تنطبق على","Applies to"],["المثلث القائم الزاوية فقط","right triangles only"],["ماذا تعني المربعات في المجسم؟","What do the squares in the model mean?"],
+  ["مثال 3–4–5","3–4–5 Example"],["إذا كان المجهول أحد الضلعين القائمين","If one of the legs is unknown"],
+  ["العكس أيضًا مفيد","The converse is useful too"],["أين تُستخدم؟","Where is it used?"],["ملاحظة مهمة","Important note"],
+  ["📚 مادة الامتحان","📚 Exam subject"],["📌 عندك امتحان غير مكتمل","📌 You have an unfinished exam"],["في محاولة محفوظة على هذا الجهاز.","A saved attempt exists on this device."],
+  ["كمل من وين وقفت","Continue where you stopped"],["ابدأ امتحان جديد","Start a new exam"],["سهل","Easy"],["متوسط","Medium"],["صعب","Hard"],["خبير 🔥","Expert 🔥"],
+  ["سهل: أسئلة مباشرة للتدريب على القانون.","Easy: direct questions to practice the formula."],
+  ["⚡ معاينة امتحان فيثاغورس","⚡ Preview Pythagoras Exam"],
+  ["معاينة للمعلم: 10 أسئلة فيثاغورس متغيّرة، حتى يجرّب الامتحان قبل نشره.","Teacher preview: 10 changing Pythagoras questions before publishing."],
+  ["ابدأ الامتحان المفاجئ","Start surprise exam"],["🛠️ صمّم امتحانك","🛠️ Build your exam"],
+  ["للمعلم: صمّم أسئلة أمريكي، رقمي أو مفتوح، ثم انشر الامتحان وخذ كودًا واحدًا يقدر يدخل به 100 طالب وأكثر.","Teacher: build multiple-choice, numeric or open questions, then publish one code that 100+ students can use."],
+  ["طالب","Student"],["معلم","Teacher"],["دخول","Login"],["حساب جديد","New account"],["رجوع","Back"],
+  ["الاسم","Name"],["كلمة السر","Password"],["تأكيد كلمة السر","Confirm password"],["كود الصف","Class code"],
+  ["👨‍🏫 دخول المعلم","👨‍🏫 Teacher login"],["🚀 دخول","🚀 Login"],["✨ إنشاء الحساب","✨ Create account"],
+  ["⚙️ الإعدادات","⚙️ Settings"],["👤 الاسم الظاهر","👤 Display name"],["🤖 اسم فيثاغورسي","🤖 Pythagorasi name"],
+  ["🌓 المظهر","🌓 Appearance"],["🌙 ليل","🌙 Dark"],["☀️ نهار","☀️ Light"],
+  ["🔊 الصوت والحركة","🔊 Sound & motion"],["أصوات الأزرار والنتائج والتايمر","Button, result & timer sounds"],
+  ["الأنيميشن والحركة","Animations & motion"],["حفظ الاسم","Save name"],["حفظ اسم المساعد","Save assistant name"],
+  ["↪ تسجيل خروج","↪ Log out"],["🗑 حذف حسابي نهائيًا","🗑 Delete my account"],
+  ["👤 الملف الشخصي","👤 Profile"],["فتح الملف الشخصي والإحصائيات","Open profile & statistics"],
+  ["🏫 إدارة الصفوف","🏫 Class management"],["➕ انضم لصف إضافي","➕ Join another class"],["انضمام","Join"],
+  ["📚 صفوفي ووظائفي","📚 My classes & assignments"],["➕ صف جديد","➕ New class"],["إنشاء","Create"],
+  ["🤝 انضم كمعلّم مساعد","🤝 Join as co-teacher"],["انضمام","Join"],["↻ تحديث","↻ Refresh"],
+  ["📋 كل الصفوف اللي بتديرها","📋 Classes you manage"],["نسخ كود الصف","Copy class code"],["دعوة معلم","Invite teacher"],
+  ["حذف الصف","Delete class"],["حفظ","Save"],["👥 الطلاب — تعديل الاسم/الصورة أو إخراج طالب","👥 Students — edit name/photo or remove"],
+  ["📝 وظيفة جديدة — مثل الامتحان","📝 New assignment — exam style"],["＋ اختيار من متعدد","＋ Multiple choice"],
+  ["＋ سؤال رقمي","＋ Numeric question"],["＋ سؤال مفتوح","＋ Open question"],["📤 نشر الوظيفة","📤 Publish assignment"],
+  ["📚 الوظائف والتسليمات والتصحيح","📚 Assignments, submissions & grading"],["🕘 سجل نشاط الطلاب","🕘 Student activity"],
+  ["🏆 المسابقة المباشرة","🏆 Live competition"],["🎒 انضم كطالب","🎒 Join as student"],["👨‍🏫 إنشاء مسابقة","👨‍🏫 Create competition"],
+  ["إنشاء غرفة سريعة","Create quick room"],["صمّم المسابقة بنفسك","Design competition"],["مسابقاتي المحفوظة","Saved competitions"],
+  ["🎓 مركز الامتحانات","🎓 Exam center"],["🔑 ادخل امتحان بكود","🔑 Join exam with code"],["📊 نتائج المعلم","📊 Teacher results"],
+  ["نشر الامتحان والحصول على كود","Publish exam & get code"],["التالي","Next"],["السابق","Previous"],["تسليم الامتحان","Submit exam"],
+  ["🧪 المختبر 3D","🧪 3D Lab"],["🔥 تحدّي فيثاغورس","🔥 Pythagoras Challenge"],["❓ أسئلة تدريب","❓ Practice Questions"],
+  ["🎓 امتحانات","🎓 Exams"],["🏆 مسابقة مباشرة","🏆 Live Competition"],["🏫 صفوفي","🏫 My Classes"],
+  ["👨‍🏫 أدوات المعلم","👨‍🏫 Teacher Tools"],["🗃️ بنك أسئلة فيثاغورس","🗃️ Pythagoras Question Bank"],
+  ["📊 نتائج الامتحانات","📊 Exam Results"],["🏆 مسابقاتي","🏆 My Competitions"],["❓ أسئلة فيثاغورس","❓ Pythagoras Questions"],
+  ["سؤال جديد","New question"],["🎲 سؤال جديد","🎲 New question"],["🎓 افتح الامتحان","🎓 Open exam"],
+  ["ملفي الشخصي","My Profile"],["🏅 الشارات","🏅 Badges"],["📈 المواد","📈 Progress"],["🕘 آخر الامتحانات","🕘 Recent Exams"],
+  ["المستوى","Level"],["الامتحانات","Exams"],["المعدل","Average"],["أقوى مادة:","Strongest:"],["بدها تدريب:","Needs practice:"],
+  ["إغلاق","Close"],["الإعدادات","Settings"],["صفوفي","My Classes"],["حسابي","My Account"]
+]);
+
+const uiPlaceholderTranslations=new Map([
+  ["اكتب اسمك","Enter your name"],["اكتب جوابك هنا...","Enter your answer..."],["اكتب سؤالك لفيثاغورسي...","Ask Pythagorasi..."],
+  ["مثال: بسام جابر","Example: Bassam Jaber"],["6 خانات أو أكثر","6 characters or more"],
+  ["اكتب كلمة السر مرة ثانية","Enter the password again"],["الكود اللي أعطاك إياه المعلم","Code given by your teacher"],
+  ["الاسم الظاهر","Display name"],["فيثاغورسي","Pythagorasi"],["كود الصف","Class code"],
+  ["مثال: ثامن 6","Example: Grade 8 - Class 6"],["كود دعوة المعلم","Teacher invite code"],
+  ["عنوان الوظيفة","Assignment title"],["تعليمات الوظيفة للطلاب...","Assignment instructions..."],
+  ["اكتب السؤال","Write the question"],["اكتب الرقم","Enter a number"],["اكتب إجابتك المفتوحة...","Write your open answer..."],
+  ["مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?"],["كود الغرفة","Room code"],
+  ["كود الامتحان","Exam code"],["اسم الطالب","Student name"]
+]);
+
+function uiDynamicEnglish(text){
+  let s=latinDigits(text);
+  s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
+  s=s.replace(/^اسم الدخول:\s*/u,"Login name: ");
+  s=s.replace(/^سؤال\s+(\d+)\s*\/\s*(\d+)/u,"Question $1 / $2");
+  s=s.replace(/^النقاط\s*/u,"Score ");
+  s=s.replace(/موعد:\s*/gu,"Due: ");
+  s=s.replace(/علامة/gu,"pts");
+  s=s.replace(/امتحانات/gu,"exams");
+  s=s.replace(/آخر نشاط:\s*/gu,"Last activity: ");
+  return s;
+}
+function translateTextValue(arText){
+  const raw=latinDigits(arText);
+  if(currentUILanguage!=="en")return raw;
+  return uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw);
+}
+function translateElementNode(el){
+  if(!(el instanceof Element))return;
+  if(el.matches('script,style'))return;
+  for(const node of [...el.childNodes]){
+    if(node.nodeType===Node.TEXT_NODE){
+      const original=node.__arOriginal??node.nodeValue;
+      if(node.__arOriginal==null)node.__arOriginal=latinDigits(original);
+      const lead=(original.match(/^\\s*/)||[''])[0],trail=(original.match(/\\s*$/)||[''])[0];
+      const core=latinDigits(original).trim();
+      const next=core?lead+translateTextValue(core)+trail:original;
+      if(node.nodeValue!==next)node.nodeValue=next;
+    }
+  }
+  if('placeholder' in el && el.placeholder){
+    if(!el.dataset.arPlaceholder)el.dataset.arPlaceholder=latinDigits(el.placeholder);
+    el.placeholder=currentUILanguage==='en'
+      ?(uiPlaceholderTranslations.get(el.dataset.arPlaceholder)||uiDynamicEnglish(el.dataset.arPlaceholder))
+      :el.dataset.arPlaceholder;
+  }
+  if(el.hasAttribute('title')){
+    if(!el.dataset.arTitle)el.dataset.arTitle=latinDigits(el.getAttribute('title')||'');
+    el.setAttribute('title',currentUILanguage==='en'?(uiExactTranslations.get(el.dataset.arTitle)||uiDynamicEnglish(el.dataset.arTitle)):el.dataset.arTitle);
+  }
+  if(el.matches('input[type="date"]')){el.lang='en-US';el.dir='ltr'}
+}
+function translateSubtree(root=document.body){
+  translateElementNode(root);
+  root.querySelectorAll?.('*').forEach(translateElementNode);
+}
+function applySiteLanguage(lang,save=true){
+  currentUILanguage=lang==='en'?'en':'ar';
+  document.documentElement.lang=currentUILanguage;
+  document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
+  document.body.classList.toggle('lang-en',currentUILanguage==='en');
+  document.title='Pythagoras 3D';
+  if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
+  document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
+  translateSubtree(document.body);
+  setTimeout(()=>document.body.classList.remove('language-switching'),350);
+}
+const bilingualObserver=new MutationObserver(records=>{
+  for(const record of records){
+    record.addedNodes.forEach(n=>{
+      if(n.nodeType===Node.ELEMENT_NODE)translateSubtree(n);
+      else if(n.nodeType===Node.TEXT_NODE&&n.parentElement)translateElementNode(n.parentElement);
+    });
+    if(record.type==='characterData'&&record.target.parentElement)translateElementNode(record.target.parentElement);
+  }
+});
+setTimeout(()=>{
+  applySiteLanguage(currentUILanguage,false);
+  bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
+},0);
+
 /* -------------------- V14 SETTINGS / SOUND / MOTION -------------------- */
 const settingsModal=document.getElementById("settingsModal");
 let soundEnabled=localStorage.getItem("pythagorasi_sound")!=="off";
@@ -6300,7 +6602,17 @@ function applyMotionSetting(){
 applyMotionSetting();
 
 document.addEventListener("click",e=>{
-  if(e.target.closest("button,.settings-photo-btn,.member-actions label"))soundFx("click");
+  const clickable=e.target.closest("button,.settings-photo-btn,.member-actions label,.lobby-action,.pythag-action-card");
+  if(clickable){
+    soundFx("click");
+    if(motionEnabled){
+      clickable.classList.remove("super-press");void clickable.offsetWidth;clickable.classList.add("super-press");
+      setTimeout(()=>clickable.classList.remove("super-press"),420);
+      const ripple=document.createElement("span");ripple.className="global-click-ripple";
+      ripple.style.left=`${e.clientX}px`;ripple.style.top=`${e.clientY}px`;
+      document.body.appendChild(ripple);setTimeout(()=>ripple.remove(),650);
+    }
+  }
 },true);
 document.addEventListener("keydown",e=>{
   if(!soundEnabled||e.ctrlKey||e.metaKey||e.altKey)return;
@@ -6319,6 +6631,11 @@ function refreshSettingsUI(){
   applyAvatar(avatar,p,name);
   document.getElementById("settingsSoundToggle").checked=soundEnabled;
   document.getElementById("settingsMotionToggle").checked=motionEnabled;
+  document.getElementById("settingsArabicBtn").classList.toggle("active",currentUILanguage==="ar");
+  document.getElementById("settingsEnglishBtn").classList.toggle("active",currentUILanguage==="en");
+  const isLight=document.body.classList.contains("light");
+  document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
+  document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
 }
 function openSettingsModal(){
@@ -6331,8 +6648,11 @@ document.getElementById("labSettingsBtn").addEventListener("click",openSettingsM
 document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
 settingsModal.addEventListener("click",e=>{if(e.target===settingsModal)closeSettingsModal()});
 
-document.getElementById("settingsDarkBtn").addEventListener("click",()=>applySiteTheme("dark"));
-document.getElementById("settingsLightBtn").addEventListener("click",()=>applySiteTheme("light"));
+document.getElementById("settingsDarkBtn").addEventListener("click",()=>{applySiteTheme("dark");refreshSettingsUI()});
+document.getElementById("settingsLightBtn").addEventListener("click",()=>{applySiteTheme("light");refreshSettingsUI()});
+document.getElementById("settingsArabicBtn").addEventListener("click",()=>{applySiteLanguage("ar");refreshSettingsUI()});
+document.getElementById("settingsEnglishBtn").addEventListener("click",()=>{applySiteLanguage("en");refreshSettingsUI()});
+document.getElementById("settingsOpenProfileBtn").addEventListener("click",()=>{closeSettingsModal();openProfileModal()});
 document.getElementById("settingsSoundToggle").addEventListener("change",e=>{
   soundEnabled=e.target.checked;
   localStorage.setItem("pythagorasi_sound",soundEnabled?"on":"off");
@@ -6402,6 +6722,29 @@ document.getElementById("settingsPhotoInput").addEventListener("change",async e=
   }catch(err){
     status.textContent=String(err?.message)==="image-too-large"?"الصورة أكبر من 8MB.":"تعذر حفظ الصورة.";
   }finally{e.target.value=""}
+});
+
+
+document.getElementById("settingsRemovePhotoBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const status=document.getElementById("settingsStatus");
+  if(!window.PythagorasiUser.photoData&&!window.PythagorasiUser.photoURL){
+    status.textContent=currentUILanguage==="en"?"You do not have a profile photo.":"ما عندك صورة بروفايل أصلًا.";
+    return;
+  }
+  if(!confirm(currentUILanguage==="en"?"Remove your profile photo?":"تحذف صورة البروفايل؟"))return;
+  try{
+    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:"",photoURL:"",updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,photoData:"",photoURL:""};
+    activeProfile=window.PythagorasiUser;
+    applyAvatar(document.getElementById("settingsAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+    applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+    applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+    const img=document.getElementById("profilePhotoPreview");if(img){img.removeAttribute("src");img.style.display="none"}
+    if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+    status.textContent=currentUILanguage==="en"?"Profile photo removed ✅":"تم حذف صورة البروفايل ✅";
+    soundFx("submit");fxElement(document.getElementById("settingsAvatar"),"pop");
+  }catch(err){console.error(err);status.textContent=currentUILanguage==="en"?"Could not remove the photo.":"تعذر حذف الصورة.";soundFx("wrong")}
 });
 
 document.getElementById("settingsLogoutBtn").addEventListener("click",()=>{
@@ -8354,6 +8697,26 @@ function animate(now){
   renderer.render(scene,camera);
 }
 requestAnimationFrame(animate);
+
+function normalizeVisibleDigits(root=document.body){
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  let n;while(n=walker.nextNode()){
+    if(n.parentElement?.closest('script,style'))continue;
+    const converted=latinDigits(n.nodeValue);
+    if(converted!==n.nodeValue)n.nodeValue=converted;
+  }
+}
+const digitObserver=new MutationObserver(records=>{
+  for(const r of records){
+    r.addedNodes.forEach(n=>{
+      if(n.nodeType===1)normalizeVisibleDigits(n);
+      else if(n.nodeType===3){const v=latinDigits(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v}
+    });
+    if(r.type==='characterData'){const v=latinDigits(r.target.nodeValue);if(v!==r.target.nodeValue)r.target.nodeValue=v}
+  }
+});
+setTimeout(()=>{normalizeVisibleDigits();digitObserver.observe(document.body,{subtree:true,childList:true,characterData:true})},20);
+
 </script>
 </body>
 </html>
