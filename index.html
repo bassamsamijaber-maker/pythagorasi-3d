@@ -582,7 +582,7 @@ body.light .ai-card .dictnote{color:#718196}
     </div>
 
     <div class="auth-error" id="authError"></div>
-    <div class="auth-foot" id="authStatusText">جاري الاتصال بـ Firebase…</div>
+    <div class="auth-foot" id="authStatusText">Firebase للحفظ السحابي • إذا تعطل، الطالب يقدر يكمل محليًا</div>
   </div>
 </div>
 
@@ -842,7 +842,7 @@ import {
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
-  apiKey: "AIzaSyAj970o6iQ9mK0Va6gYivsvnicN14LUYN0",
+  apiKey: "AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",
   authDomain: "pythagorasi-school.firebaseapp.com",
   projectId: "pythagorasi-school",
   storageBucket: "pythagorasi-school.firebasestorage.app",
@@ -911,7 +911,8 @@ function friendlyAuthError(error){
   if(code.includes("popup-blocked"))return "Chrome منع نافذة Google. رح نجرب تحويل صفحة تسجيل الدخول بدل النافذة.";
   if(code.includes("unauthorized-domain"))return "Firebase رافض رابط الموقع. أضف bassamsamijaber-maker.github.io في Authentication → Settings → Authorized domains.";
   if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
-  if(code.includes("operation-not-allowed"))return "تسجيل Google غير مفعّل في Firebase Authentication.";
+  if(code.includes("operation-not-allowed"))return "طريقة الدخول المطلوبة مش مفعّلة في Firebase Authentication.";
+  if(code.includes("api-key-not-valid"))return "مفتاح Firebase غير صحيح داخل الموقع. تم تصحيحه في النسخة الجديدة.";
   if(code.includes("permission-denied"))return "Firestore منع الحفظ. تأكد إن Rules منشورة.";
   if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
   if(code.includes("internal-error"))return "Firebase رجّع خطأ داخلي. حدّث الصفحة وجرب مرة ثانية.";
@@ -1040,7 +1041,33 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
     showToast(`👋 أهلًا ${name}! تم حفظ دخولك كطالب.`);
   }catch(error){
     console.error("student login",error);
-    setAuthError(friendlyAuthError(error));
+
+    // الطالب لا ينحرم من الامتحان لو Firebase تعطّل.
+    // نحفظ الاسم محليًا ونكمل، لكن النتائج السحابية تحتاج Firebase شغال.
+    localStorage.setItem("pythagorasi_student_name",name);
+    const localProfile={
+      displayName:name,
+      role:"student",
+      provider:"local-fallback",
+      localOnly:true
+    };
+    activeProfile=localProfile;
+    window.PythagorasiUser={
+      uid:`local-${Date.now()}`,
+      ...localProfile
+    };
+
+    document.getElementById("authDisplayName").textContent=name;
+    document.getElementById("authRoleText").textContent="🎒 طالب • حفظ محلي";
+    document.getElementById("authAvatar").textContent=(name.trim()[0]||"؟").toUpperCase();
+    authUserBar.classList.add("show");
+    authGate.classList.remove("show");
+
+    const action=authPendingAction;
+    authPendingAction=null;
+    if(action==="exam")setTimeout(()=>openExamCenter(),80);
+
+    showToast(`👋 أهلًا ${name}! دخلت للامتحان. الحفظ حاليًا محلي لأن Firebase غير متصل.`);
   }finally{
     authBusy(false);
   }
