@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07111c">
-<title>LearnSphere | Interactive Learning Lab</title>
+<title>نظرية فيثاغورس ثلاثية الأبعاد</title>
 <style>
 :root{
   --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
@@ -1213,14 +1213,121 @@ body.light .saved-comp-card,.subject-strip{ }
   .quick-pythag-options{grid-template-columns:1fr}
 }
 
+
+/* ================= GLOBAL DAY / NIGHT V13 ================= */
+.site-theme-toggle{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.045);
+  color:#eaf5ff;
+  border-radius:12px;
+  height:42px;
+  padding:0 12px;
+  cursor:pointer;
+  font-weight:900;
+  white-space:nowrap;
+}
+.site-theme-toggle:hover{background:rgba(255,255,255,.09)}
+.auth-theme-toggle{
+  position:absolute;
+  top:16px;
+  left:16px;
+  z-index:3;
+}
+.lobby-theme-toggle{height:48px}
+
+body.light .site-theme-toggle{
+  background:white;
+  color:#173047;
+  border-color:#d5e1e9;
+}
+body.light .platform-lobby{
+  background:
+    radial-gradient(circle at 10% 0%,rgba(72,158,255,.12),transparent 35%),
+    radial-gradient(circle at 92% 90%,rgba(149,100,232,.10),transparent 34%),
+    linear-gradient(145deg,#edf4f9,#f9fbfd 72%);
+  color:#183047;
+}
+body.light .lobby-brand{color:#173047}
+body.light .lobby-sub,
+body.light .lobby-section-head p,
+body.light .pythag-hero-copy p,
+body.light .lobby-ai-head span,
+body.light .pythag-action-card small,
+body.light .lobby-action small{color:#697f91}
+body.light .lobby-icon-btn,
+body.light .lobby-profile-btn,
+body.light .pythag-lobby-hero,
+body.light .lobby-ai-card,
+body.light .pythag-action-card,
+body.light .lobby-action{
+  background:#ffffff;
+  color:#173047;
+  border-color:#d9e4eb;
+  box-shadow:0 16px 40px rgba(54,77,96,.08);
+}
+body.light .lobby-ai-reply{
+  background:#eef5f9;
+  color:#29455a;
+}
+body.light .lobby-ai-input input{
+  background:#f2f7fa;
+  color:#173047;
+  border-color:#d7e2ea;
+}
+body.light .lobby-logout-btn{
+  background:#fff3f4;
+  color:#a23844;
+  border-color:#efc9cd;
+}
+body.light .pythag-formula{color:#8b6200;text-shadow:none}
+body.light .general-badge{
+  background:#edf7ff;
+  color:#17608d;
+  border-color:#cae6f7;
+}
+body.light .auth-sub,
+body.light .auth-foot,
+body.light .auth-name-note{color:#6d8293}
+body.light .student-auth-tabs button{
+  background:#f2f6f9;
+  color:#587083;
+  border-color:#d9e3ea;
+}
+body.light .student-auth-tabs button.active{background:#168cff;color:white;border-color:#168cff}
+body.light .auth-form input{
+  background:#f6f9fb;
+  color:#173047;
+  border-color:#d6e1e9;
+}
+body.light .auth-form label{color:#40596d}
+body.light .auth-name-note{
+  background:#f3f7f9;
+  border-color:#dce5eb;
+}
+@media(max-width:620px){
+  .auth-theme-toggle{top:10px;left:10px;height:38px;padding:0 9px;font-size:11px}
+  .lobby-theme-toggle{height:42px;padding:0 9px;font-size:11px}
+}
+
+
+.auth-setup-hint{
+  margin-top:9px;
+  color:#73899b;
+  font-size:10px;
+  line-height:1.6;
+  text-align:center;
+}
+body.light .auth-setup-hint{color:#718595}
+
 </style>
 </head>
 <body>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
+    <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
-    <div class="auth-logo">L</div>
-    <h2>أهلًا في LearnSphere 👋</h2>
+    <div class="auth-logo">∟</div>
+    <h2>أهلًا في نظرية فيثاغورس ثلاثية الأبعاد 👋</h2>
     <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
 
     <div id="authRoleChooser">
@@ -1277,6 +1384,7 @@ body.light .saved-comp-card,.subject-strip{ }
 
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText">حسابك يحفظ تقدمك وإعداداتك على أجهزتك.</div>
+    <div class="auth-setup-hint">إذا ظهر خطأ إن كلمة السر غير مفعلة: لازم المعلم/صاحب المشروع يفعّل Email/Password مرة واحدة من إعدادات Authentication.</div>
   </div>
 </div>
 
@@ -1285,10 +1393,11 @@ body.light .saved-comp-card,.subject-strip{ }
   <div class="lobby-shell">
     <div class="lobby-topbar">
       <div>
-        <div class="lobby-brand">LearnSphere</div>
+        <div class="lobby-brand">نظرية فيثاغورس ثلاثية الأبعاد</div>
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
+        <button class="site-theme-toggle lobby-theme-toggle" id="lobbyThemeBtn" type="button">☀️ نهار</button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
@@ -1638,7 +1747,7 @@ body.light .saved-comp-card,.subject-strip{ }
 
   <aside class="side">
     <div class="brand">
-      <h1>LearnSphere</h1>
+      <h1>نظرية فيثاغورس ثلاثية الأبعاد</h1>
       <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
       <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
     </div>
@@ -2299,7 +2408,7 @@ function friendlyAuthError(error){
   if(code.includes("popup-blocked"))return "المتصفح منع نافذة تسجيل الدخول. رح نجرب طريقة دخول ثانية.";
   if(code.includes("unauthorized-domain"))return "رابط الموقع غير مصرح له بتسجيل الدخول. راجع إعدادات النطاقات المسموحة.";
   if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
-  if(code.includes("operation-not-allowed"))return "دخول الطالب بكلمة سر مش مفعّل في إعدادات المشروع.";
+  if(code.includes("operation-not-allowed"))return "دخول الطالب بالاسم وكلمة السر غير مفعّل بعد. فعّل Email/Password من Authentication → Sign-in method ثم جرّب مرة ثانية.";
   if(code.includes("email-already-in-use"))return "في حساب موجود بهذا الاسم.";
   if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "الاسم أو كلمة السر غير صحيحة.";
   if(code.includes("weak-password"))return "كلمة السر لازم تكون 6 خانات أو أكثر.";
@@ -3543,14 +3652,37 @@ const initialCam=camera.position.clone();
 document.getElementById("resetBtn").addEventListener("click",()=>{
   camera.position.copy(initialCam);controls.target.set(0,.15,0);root.rotation.set(-.02,-.03,0);controls.update();
 });
-document.getElementById("themeBtn").addEventListener("click",()=>{
-  document.body.classList.toggle("light");
-  const isLight=document.body.classList.contains("light");
-  const btn=document.getElementById("themeBtn");
-  btn.innerHTML=isLight
-    ? '☾ <span>الوضع الليلي</span>'
-    : '☀ <span>الوضع النهاري</span>';
-});
+function applySiteTheme(mode,save=true){
+  const isLight=mode==="light";
+  document.body.classList.toggle("light",isLight);
+
+  const labBtn=document.getElementById("themeBtn");
+  if(labBtn){
+    labBtn.innerHTML=isLight
+      ? '🌙 <span>الوضع الليلي</span>'
+      : '☀️ <span>الوضع النهاري</span>';
+  }
+
+  const authBtn=document.getElementById("authThemeBtn");
+  if(authBtn)authBtn.textContent=isLight?"🌙 ليل":"☀️ نهار";
+
+  const lobbyBtn=document.getElementById("lobbyThemeBtn");
+  if(lobbyBtn)lobbyBtn.textContent=isLight?"🌙 ليل":"☀️ نهار";
+
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.setAttribute("content",isLight?"#edf4f9":"#07111c");
+
+  if(save)localStorage.setItem("pythagorasi_theme",isLight?"light":"dark");
+}
+function toggleSiteTheme(){
+  applySiteTheme(document.body.classList.contains("light")?"dark":"light");
+}
+const savedSiteTheme=localStorage.getItem("pythagorasi_theme");
+applySiteTheme(savedSiteTheme==="light"?"light":"dark",false);
+
+document.getElementById("themeBtn")?.addEventListener("click",toggleSiteTheme);
+document.getElementById("authThemeBtn")?.addEventListener("click",toggleSiteTheme);
+document.getElementById("lobbyThemeBtn")?.addEventListener("click",toggleSiteTheme);
 document.getElementById("fullBtn").addEventListener("click",()=>{
   const el=document.getElementById("stage");
   if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();
