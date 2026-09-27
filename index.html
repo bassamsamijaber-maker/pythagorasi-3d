@@ -2363,6 +2363,114 @@ body.light .admin-content-card,.body.light .admin-content-status-note{
   .admin-content-card-head{flex-direction:column}
 }
 
+
+/* ================= V33 UPCOMING EVENT TIMERS ================= */
+.admin-upcoming-scheduler{
+  padding:13px;border-radius:16px;margin-bottom:10px;
+  background:
+    radial-gradient(circle at 94% 6%,rgba(120,93,238,.085),transparent 28%),
+    linear-gradient(145deg,rgba(68,111,214,.055),rgba(117,77,220,.035));
+  border:1px solid rgba(118,104,238,.12)
+}
+.admin-upcoming-form{
+  display:grid;
+  grid-template-columns:minmax(145px,.7fr) minmax(220px,1.3fr) repeat(3,minmax(80px,.42fr)) minmax(145px,.7fr);
+  gap:7px;align-items:end;margin-top:9px
+}
+.admin-upcoming-form label{display:grid;gap:4px;font-size:9px;color:#7d96a8;margin:0}
+.admin-upcoming-form input,.admin-upcoming-form select{width:100%}
+.admin-upcoming-current-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.045)
+}
+.admin-upcoming-current-head b{font-size:11px}
+.admin-upcoming-current-head span{
+  min-width:27px;text-align:center;padding:4px 7px;border-radius:999px;
+  font-size:9px;font-weight:1000;background:rgba(115,95,235,.08);
+  border:1px solid rgba(115,95,235,.13);color:#b6a9ff
+}
+.admin-upcoming-current-list{display:grid;gap:7px;margin-top:8px}
+.admin-upcoming-item{
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;
+  padding:9px;border-radius:11px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.045)
+}
+.admin-upcoming-item b{display:block;font-size:11px}
+.admin-upcoming-item small{display:block;margin-top:3px;color:#7890a2;font-size:8px}
+.admin-upcoming-countdown{
+  min-width:115px;text-align:center;padding:6px 8px;border-radius:9px;
+  background:rgba(111,88,231,.075);border:1px solid rgba(111,88,231,.13);
+  color:#baaeff;font-size:10px;font-weight:1000;font-variant-numeric:tabular-nums
+}
+.admin-upcoming-delete{
+  width:36px;height:36px;border-radius:9px;cursor:pointer;
+  border:1px solid rgba(255,95,112,.15);background:rgba(255,95,112,.055);
+  color:#ffacb5;font-size:15px
+}
+
+/* Student "coming up" countdowns */
+.student-upcoming-events{
+  margin-top:12px;padding:14px;border-radius:19px;
+  background:
+    radial-gradient(circle at 96% 6%,rgba(116,92,238,.10),transparent 28%),
+    linear-gradient(145deg,rgba(59,104,209,.055),rgba(115,78,225,.04));
+  border:1px solid rgba(118,102,238,.14);
+  box-shadow:0 14px 35px rgba(0,0,0,.09)
+}
+.student-upcoming-events.hidden{display:none!important}
+.student-upcoming-head h3{margin:4px 0 2px;font-size:16px}
+.student-upcoming-head p{margin:0;color:#849cad;font-size:10px;line-height:1.5}
+.student-upcoming-kicker{
+  font-size:8px;font-weight:1000;letter-spacing:.12em;color:#b9abff
+}
+.student-upcoming-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px
+}
+.student-upcoming-card{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px;border-radius:13px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.05)
+}
+.student-upcoming-card.started{
+  border-color:rgba(75,195,144,.13);background:rgba(75,195,144,.035)
+}
+.student-upcoming-main{min-width:0}
+.student-upcoming-main b{display:block;font-size:12px}
+.student-upcoming-main small{display:block;margin-top:3px;color:#7d96a8;font-size:9px}
+.student-upcoming-countdown{
+  flex:none;min-width:120px;padding:7px 9px;border-radius:10px;text-align:center;
+  background:rgba(111,88,231,.075);border:1px solid rgba(111,88,231,.13);
+  color:#c0b5ff;font-size:11px;font-weight:1000;font-variant-numeric:tabular-nums
+}
+.student-upcoming-card.started .student-upcoming-countdown{
+  color:#91ddb9;background:rgba(73,193,144,.065);border-color:rgba(73,193,144,.13)
+}
+body.light .admin-upcoming-scheduler,
+body.light .admin-upcoming-item,
+body.light .student-upcoming-events,
+body.light .student-upcoming-card{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+body.light .admin-upcoming-countdown,
+body.light .student-upcoming-countdown{
+  background:#f5f2ff;border-color:#e1dcf6;color:#5d50a5
+}
+@media(max-width:950px){
+  .admin-upcoming-form{grid-template-columns:1fr 1.4fr 1fr 1fr 1fr}
+  .admin-upcoming-form>button{grid-column:1/-1}
+}
+@media(max-width:680px){
+  .admin-upcoming-form{grid-template-columns:1fr 1fr 1fr}
+  .admin-upcoming-form>label:first-child,
+  .admin-upcoming-title-field,
+  .admin-upcoming-form>button{grid-column:1/-1}
+  .student-upcoming-list{grid-template-columns:1fr}
+  .student-upcoming-card{align-items:flex-start}
+  .admin-upcoming-item{grid-template-columns:1fr auto}
+  .admin-upcoming-countdown{grid-column:1/2;grid-row:2}
+  .admin-upcoming-delete{grid-column:2;grid-row:1/3}
+}
+
 </style>
 </head>
 <body>
@@ -2447,6 +2555,17 @@ body.light .admin-content-card,.body.light .admin-content-status-note{
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
     </div>
+
+    <section class="student-upcoming-events hidden" id="studentUpcomingEvents">
+      <div class="student-upcoming-head">
+        <div>
+          <span class="student-upcoming-kicker">COMING UP</span>
+          <h3 id="studentUpcomingTitle">⏳ أشياء جاية قريب</h3>
+          <p id="studentUpcomingSub">امتحانات، مسابقات ووظائف قادمة مع عدّ تنازلي مباشر.</p>
+        </div>
+      </div>
+      <div class="student-upcoming-list" id="studentUpcomingList"></div>
+    </section>
 
     <section class="student-active-timers hidden" id="studentActiveTimers">
       <div class="student-active-timers-head">
@@ -2813,6 +2932,57 @@ body.light .admin-content-card,.body.light .admin-content-status-note{
           <button class="danger" id="adminPauseAllBtn">⏸ إيقاف كل شيء الآن</button>
           <button class="exam-secondary" id="adminResumeAllBtn">▶ تشغيل كل شيء</button>
         </div>
+      </section>
+
+      <section class="admin-upcoming-scheduler">
+        <div class="admin-control-card-head">
+          <div>
+            <b id="adminUpcomingSchedulerTitle">📅 موعد شي جاي</b>
+            <small id="adminUpcomingSchedulerSub">اعمل عدّ تنازلي لامتحان، مسابقة أو وظيفة.</small>
+          </div>
+        </div>
+
+        <div class="admin-upcoming-form">
+          <label>
+            <span id="adminUpcomingTypeLabel">النوع</span>
+            <select id="adminUpcomingType">
+              <option value="competition">🏆 مسابقة</option>
+              <option value="exam">🎓 امتحان</option>
+              <option value="assignment">📝 وظيفة</option>
+              <option value="other">⏳ شيء آخر</option>
+            </select>
+          </label>
+
+          <label class="admin-upcoming-title-field">
+            <span id="adminUpcomingNameLabel">العنوان</span>
+            <input id="adminUpcomingName" maxlength="80" placeholder="مثال: امتحان فيثاغورس">
+          </label>
+
+          <label>
+            <span id="adminUpcomingDaysLabel">أيام</span>
+            <input id="adminUpcomingDays" type="number" min="0" max="365" value="0">
+          </label>
+
+          <label>
+            <span id="adminUpcomingHoursLabel">ساعات</span>
+            <input id="adminUpcomingHours" type="number" min="0" max="23" value="0">
+          </label>
+
+          <label>
+            <span id="adminUpcomingMinutesLabel">دقائق</span>
+            <input id="adminUpcomingMinutes" type="number" min="0" max="59" value="15">
+          </label>
+
+          <button class="apply" id="adminAddUpcomingBtn">＋ أضف الموعد</button>
+        </div>
+
+        <div class="cloud-note" id="adminUpcomingStatus"></div>
+
+        <div class="admin-upcoming-current-head">
+          <b id="adminUpcomingCurrentTitle">المواعيد الحالية</b>
+          <span id="adminUpcomingCurrentCount">0</span>
+        </div>
+        <div class="admin-upcoming-current-list" id="adminUpcomingCurrentList"></div>
       </section>
 
       <section class="admin-control-timer-card">
@@ -9452,6 +9622,26 @@ function applyAdminLanguage(){
 
   set("adminControlTitle","🎛️ مركز التحكم الكامل","🎛️ Full Control Center");
   set("adminControlSub","وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.","Pause one feature, set an end time, or pause all student activities at once.");
+  set("adminUpcomingSchedulerTitle","📅 موعد شي جاي","📅 Upcoming event");
+  set("adminUpcomingSchedulerSub","اعمل عدّ تنازلي لامتحان، مسابقة أو وظيفة.","Create a countdown for an exam, competition, assignment, or another event.");
+  set("adminUpcomingTypeLabel","النوع","Type");
+  set("adminUpcomingNameLabel","العنوان","Title");
+  set("adminUpcomingDaysLabel","أيام","Days");
+  set("adminUpcomingHoursLabel","ساعات","Hours");
+  set("adminUpcomingMinutesLabel","دقائق","Minutes");
+  set("adminUpcomingCurrentTitle","المواعيد الحالية","Current timers");
+  set("studentUpcomingTitle","⏳ أشياء جاية قريب","⏳ Coming up");
+  set("studentUpcomingSub","امتحانات، مسابقات ووظائف قادمة مع عدّ تنازلي مباشر.","Upcoming exams, competitions and assignments with a live countdown.");
+  ph("adminUpcomingName","مثال: امتحان فيثاغورس","Example: Pythagoras exam");
+
+  const upcomingType=document.getElementById("adminUpcomingType");
+  if(upcomingType){
+    const labels=en?["🏆 Competition","🎓 Exam","📝 Assignment","⏳ Other"]:["🏆 مسابقة","🎓 امتحان","📝 وظيفة","⏳ شيء آخر"];
+    [...upcomingType.options].forEach((o,i)=>o.textContent=labels[i]||o.textContent);
+  }
+  const addUpcoming=document.getElementById("adminAddUpcomingBtn");
+  if(addUpcoming)addUpcoming.textContent=en?"＋ Add event":"＋ أضف الموعد";
+
   set("adminQuickTimerTitle","⏱ تايمر سريع","⏱ Quick timer");
   set("adminTimerDaysLabel","أيام","Days");
   set("adminTimerHoursLabel","ساعات","Hours");
@@ -9490,6 +9680,8 @@ function applyAdminLanguage(){
       adminSyncFeatureToggleButtons();
       adminRenderControlLiveStatus();
       renderStudentActiveTimers();
+      renderStudentUpcomingEvents();
+      renderAdminUpcomingEvents();
     }
   }catch{}
   set("myClassesHeroTitle","صفوفي","My Classes");
@@ -11295,6 +11487,251 @@ function setControlField(id,key){
 }
 
 
+
+function upcomingEventIcon(type){
+  return type==="competition"?"🏆":type==="exam"?"🎓":type==="assignment"?"📝":"⏳";
+}
+
+function upcomingEventTypeLabel(type){
+  const ar={competition:"مسابقة",exam:"امتحان",assignment:"وظيفة",other:"موعد"};
+  const en={competition:"Competition",exam:"Exam",assignment:"Assignment",other:"Event"};
+  return currentUILanguage==="en"?(en[type]||"Event"):(ar[type]||"موعد");
+}
+
+function normalizedScheduledEvents(){
+  const rows=Array.isArray(siteControlsCache?.scheduledEvents)?siteControlsCache.scheduledEvents:[];
+  return rows
+    .filter(x=>x&&x.id&&Number(x.startAt)>0)
+    .map(x=>({...x,startAt:Number(x.startAt),createdAtMs:Number(x.createdAtMs||0)}))
+    .sort((a,b)=>a.startAt-b.startAt);
+}
+
+function upcomingCountdownText(startAt){
+  const diff=Number(startAt)-Date.now();
+  if(diff<=0){
+    const elapsed=Math.abs(diff);
+    if(elapsed<60*60*1000)return adminLang("بدأ الآن","Started now");
+    return adminLang("بدأ","Started");
+  }
+
+  let sec=Math.floor(diff/1000);
+  const days=Math.floor(sec/86400);sec%=86400;
+  const hours=Math.floor(sec/3600);sec%=3600;
+  const minutes=Math.floor(sec/60);sec%=60;
+  const two=n=>String(n).padStart(2,"0");
+
+  if(days>0)return `${days}d ${two(hours)}:${two(minutes)}:${two(sec)}`;
+  return `${two(hours)}:${two(minutes)}:${two(sec)}`;
+}
+
+function upcomingAbsoluteText(startAt){
+  try{
+    return new Date(Number(startAt)).toLocaleString("en-GB",{
+      day:"2-digit",month:"short",year:"numeric",
+      hour:"2-digit",minute:"2-digit",hour12:false
+    });
+  }catch{return ""}
+}
+
+function upcomingCompositeDuration(){
+  const days=Math.max(0,Math.min(365,Number(document.getElementById("adminUpcomingDays").value)||0));
+  const hours=Math.max(0,Math.min(23,Number(document.getElementById("adminUpcomingHours").value)||0));
+  const minutes=Math.max(0,Math.min(59,Number(document.getElementById("adminUpcomingMinutes").value)||0));
+  return {
+    days,hours,minutes,
+    totalMs:((days*24*60)+(hours*60)+minutes)*60*1000
+  };
+}
+
+function renderStudentUpcomingEvents(){
+  const section=document.getElementById("studentUpcomingEvents");
+  const host=document.getElementById("studentUpcomingList");
+  if(!section||!host)return;
+
+  if(!window.PythagorasiUser||window.PythagorasiUser.role!=="student"){
+    section.classList.add("hidden");
+    host.innerHTML="";
+    return;
+  }
+
+  const rows=normalizedScheduledEvents()
+    // Keep a started event visible for one hour, then it disappears automatically.
+    .filter(x=>Date.now()<x.startAt+60*60*1000);
+
+  if(!rows.length){
+    section.classList.add("hidden");
+    host.innerHTML="";
+    return;
+  }
+
+  section.classList.remove("hidden");
+  host.innerHTML="";
+
+  for(const item of rows){
+    const started=Date.now()>=item.startAt;
+    const card=document.createElement("div");
+    card.className=`student-upcoming-card ${started?"started":""}`;
+    card.dataset.upcomingId=item.id;
+    card.innerHTML=`
+      <div class="student-upcoming-main">
+        <b>${upcomingEventIcon(item.type)} ${escapeHtml(item.title||upcomingEventTypeLabel(item.type))}</b>
+        <small>
+          ${escapeHtml(upcomingEventTypeLabel(item.type))}
+          • ${started?adminLang("بدأ","Started"):adminLang("موعده","Starts")}: ${escapeHtml(upcomingAbsoluteText(item.startAt))}
+        </small>
+      </div>
+      <div class="student-upcoming-countdown">${escapeHtml(upcomingCountdownText(item.startAt))}</div>`;
+    host.appendChild(card);
+  }
+}
+
+function renderAdminUpcomingEvents(){
+  const host=document.getElementById("adminUpcomingCurrentList");
+  const count=document.getElementById("adminUpcomingCurrentCount");
+  if(!host||!count)return;
+
+  const rows=normalizedScheduledEvents();
+  count.textContent=rows.length;
+  host.innerHTML="";
+
+  if(!rows.length){
+    host.innerHTML=`<div class="cloud-note">${adminLang("ما في مواعيد جاية حاليًا.","No upcoming events right now.")}</div>`;
+    return;
+  }
+
+  for(const item of rows){
+    const row=document.createElement("div");
+    row.className="admin-upcoming-item";
+    row.dataset.upcomingId=item.id;
+    row.innerHTML=`
+      <div>
+        <b>${upcomingEventIcon(item.type)} ${escapeHtml(item.title||upcomingEventTypeLabel(item.type))}</b>
+        <small>${escapeHtml(upcomingEventTypeLabel(item.type))} • ${escapeHtml(upcomingAbsoluteText(item.startAt))}</small>
+      </div>
+      <div class="admin-upcoming-countdown">${escapeHtml(upcomingCountdownText(item.startAt))}</div>
+      <button class="admin-upcoming-delete" title="${adminLang("حذف","Delete")}">🗑</button>`;
+
+    row.querySelector(".admin-upcoming-delete").addEventListener("click",()=>deleteUpcomingEvent(item.id));
+    host.appendChild(row);
+  }
+}
+
+async function addUpcomingEvent(){
+  if(!requireSuperAdmin())return;
+
+  const type=document.getElementById("adminUpcomingType").value||"other";
+  const title=document.getElementById("adminUpcomingName").value.trim();
+  const duration=upcomingCompositeDuration();
+  const status=document.getElementById("adminUpcomingStatus");
+
+  if(duration.totalMs<=0){
+    status.textContent=adminLang("حط وقت أكبر من صفر.","Enter a duration greater than zero.");
+    soundFx("wrong");
+    return;
+  }
+
+  const item={
+    id:`ev_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+    type,
+    title:title||upcomingEventTypeLabel(type),
+    startAt:Date.now()+duration.totalMs,
+    createdAtMs:Date.now(),
+    createdBy:auth.currentUser.uid
+  };
+
+  try{
+    const rows=normalizedScheduledEvents();
+    rows.push(item);
+
+    await setDoc(doc(db,"siteControls","main"),{
+      scheduledEvents:rows,
+      updatedBy:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    },{merge:true});
+
+    siteControlsCache={...siteControlsCache,scheduledEvents:rows};
+
+    await adminAudit(
+      "add_upcoming_event",
+      `${type} • ${item.title} • ${item.startAt}`
+    );
+
+    document.getElementById("adminUpcomingName").value="";
+    status.textContent=adminLang(
+      `✅ انضاف: ${item.title} • ${upcomingCountdownText(item.startAt)}`,
+      `✅ Added: ${item.title} • ${upcomingCountdownText(item.startAt)}`
+    );
+
+    soundFx("win");
+    renderAdminUpcomingEvents();
+    renderStudentUpcomingEvents();
+    loadSiteUpdatesForCurrentUser();
+  }catch(err){
+    console.error("add upcoming event",err);
+    status.textContent=adminLang("تعذر إضافة الموعد.","Could not add the event.");
+  }
+}
+
+async function deleteUpcomingEvent(id){
+  if(!requireSuperAdmin())return;
+
+  const rows=normalizedScheduledEvents();
+  const item=rows.find(x=>x.id===id);
+  if(!item)return;
+
+  if(!confirm(adminLang(
+    `حذف «${item.title}»؟ رح يختفي فورًا من عند الطلاب.`,
+    `Delete “${item.title}”? It will disappear from students immediately.`
+  )))return;
+
+  const next=rows.filter(x=>x.id!==id);
+
+  try{
+    await setDoc(doc(db,"siteControls","main"),{
+      scheduledEvents:next,
+      updatedBy:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    },{merge:true});
+
+    siteControlsCache={...siteControlsCache,scheduledEvents:next};
+    await adminAudit("delete_upcoming_event",`${item.type} • ${item.title}`);
+
+    showToast(adminLang("تم حذف الموعد 🗑","Event deleted 🗑"));
+    renderAdminUpcomingEvents();
+    renderStudentUpcomingEvents();
+  }catch(err){
+    console.error("delete upcoming event",err);
+    showToast(adminLang("تعذر حذف الموعد.","Could not delete the event."));
+  }
+}
+
+let upcomingTimerTicker=null;
+function startUpcomingTimerTicker(){
+  if(upcomingTimerTicker)return;
+
+  upcomingTimerTicker=setInterval(()=>{
+    document.querySelectorAll(".student-upcoming-card").forEach(card=>{
+      const item=normalizedScheduledEvents().find(x=>x.id===card.dataset.upcomingId);
+      if(!item)return;
+      const box=card.querySelector(".student-upcoming-countdown");
+      if(box)box.textContent=upcomingCountdownText(item.startAt);
+      card.classList.toggle("started",Date.now()>=item.startAt);
+    });
+
+    document.querySelectorAll(".admin-upcoming-item").forEach(row=>{
+      const item=normalizedScheduledEvents().find(x=>x.id===row.dataset.upcomingId);
+      if(!item)return;
+      const box=row.querySelector(".admin-upcoming-countdown");
+      if(box)box.textContent=upcomingCountdownText(item.startAt);
+    });
+
+    // Clean only from UI after the one-hour "started" window.
+    renderStudentUpcomingEvents();
+  },1000);
+}
+
+startUpcomingTimerTicker();
+
 const adminControlDefinitions=[
   {key:"globalPause",checkbox:"adminGlobalPause",labelAr:"كل شيء",labelEn:"Everything"},
   {key:"lockExams",checkbox:"adminLockExams",labelAr:"الامتحانات",labelEn:"Exams"},
@@ -11422,6 +11859,7 @@ async function adminLoadControls(){
   document.getElementById("adminMaintenanceMessage").value=siteControlsCache.maintenanceMessage||"";
   adminSyncFeatureToggleButtons();
   adminRenderControlLiveStatus();
+  renderAdminUpcomingEvents();
 }
 
 function controlDataFromUI(){
@@ -11562,6 +12000,10 @@ async function loadSiteControls(){
     siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache;
   }catch{}
   try{renderStudentActiveTimers()}catch{}
+  try{
+    renderStudentUpcomingEvents();
+    renderAdminUpcomingEvents();
+  }catch{}
   return siteControlsCache;
 }
 
@@ -11598,6 +12040,7 @@ async function loadSiteUpdatesForCurrentUser(){
 
   await loadSiteControls();
   renderStudentActiveTimers();
+  renderStudentUpcomingEvents();
 
   try{
     const [anns,polls]=await Promise.all([
@@ -11834,6 +12277,7 @@ document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSa
 document.getElementById("adminPauseAllBtn").addEventListener("click",()=>adminSetEverythingPaused(true));
 document.getElementById("adminResumeAllBtn").addEventListener("click",()=>adminSetEverythingPaused(false));
 document.getElementById("adminStartQuickTimerBtn").addEventListener("click",adminStartQuickTimer);
+document.getElementById("adminAddUpcomingBtn").addEventListener("click",addUpcomingEvent);
 document.getElementById("adminRefreshControlStatusBtn").addEventListener("click",async()=>{
   await adminLoadControls();
   showToast(adminLang("تم تحديث الحالة ↻","Status refreshed ↻"));
