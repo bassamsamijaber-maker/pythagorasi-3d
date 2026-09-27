@@ -6394,6 +6394,58 @@ async function getManagedClasses(){
   }
   return [...owned,...extra].filter(x=>x.active!==false);
 }
+
+async function ensureClassJoinCodeRecord(classData){
+  if(!auth.currentUser||!classData?.id||!classData?.code)return false;
+
+  const code=String(classData.code||"").trim().replace(/\s+/g,"").toUpperCase();
+  if(!code)return false;
+
+  try{
+    const ref=doc(db,"classJoinCodes",code);
+    const snap=await getDoc(ref);
+    const payload={
+      code,
+      classId:classData.id,
+      className:classData.name||"Class",
+      ownerId:classData.ownerId||auth.currentUser.uid,
+      active:classData.active!==false,
+      repairedAt:serverTimestamp()
+    };
+
+    if(!snap.exists()){
+      await setDoc(ref,{...payload,createdAt:serverTimestamp()});
+      return true;
+    }
+
+    const old=snap.data()||{};
+    const needsRepair=
+      old.classId!==classData.id ||
+      old.className!==(classData.name||"Class") ||
+      old.ownerId!==(classData.ownerId||auth.currentUser.uid) ||
+      old.active!==(classData.active!==false);
+
+    if(needsRepair){
+      await setDoc(ref,payload,{merge:true});
+      return true;
+    }
+  }catch(err){
+    console.warn("class join-code repair",classData.id,err);
+  }
+
+  return false;
+}
+
+async function repairManagedClassJoinCodes(classes=[]){
+  let repaired=0;
+  for(const c of classes){
+    try{
+      if(await ensureClassJoinCodeRecord(c))repaired++;
+    }catch{}
+  }
+  return repaired;
+}
+
 async function createClassForTeacher(name,{silent=false}={}){
   if(!isTeacherLike()||!auth.currentUser)throw new Error("teacher-required");
   const clean=(name||"صفي").trim().slice(0,50)||"صفي";
@@ -6404,8 +6456,14 @@ async function createClassForTeacher(name,{silent=false}={}){
     createdAt:serverTimestamp(),updatedAt:serverTimestamp(),active:true,
     hiddenTopicIds:[],customTopics:[]
   });
-  await setDoc(doc(db,"classJoinCodes",code),{
-    code,classId:ref.id,className:clean,ownerId:auth.currentUser.uid,active:true,createdAt:serverTimestamp()
+  const normalizedCode=String(code).trim().replace(/\s+/g,"").toUpperCase();
+  await setDoc(doc(db,"classJoinCodes",normalizedCode),{
+    code:normalizedCode,
+    classId:ref.id,
+    className:clean,
+    ownerId:auth.currentUser.uid,
+    active:true,
+    createdAt:serverTimestamp()
   });
   if(!silent)showToast(`تم إنشاء ${clean} • الكود ${code}`);
   return {id:ref.id,name:clean,code};
@@ -6449,79 +6507,112 @@ document.getElementById("createClassBtn").addEventListener("click",async()=>{
 });
 
 async function joinClassForStudent(code,{duringSignup=false}={}){
-  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)throw new Error("student-required");
-
-  const clean=String(code||"").trim().toUpperCase();
-  const joinSnap=await getDoc(doc(db,"classJoinCodes",clean));
-  if(!joinSnap.exists()||!joinSnap.data().active)throw new Error("invalid-class-code");
-
-  const data=joinSnap.data();
-  const classId=data.classId;
-  const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
-
-  // Only the actual membership document decides if the student is currently in the class.
-  // A stale classIds entry never blocks a rejoin.
-  const existingMember=await getDoc(memberRef);
-  if(existingMember.exists()){
-    const currentIds=[...new Set([...(window.PythagorasiUser.classIds||[]),classId])];
-    if(!(window.PythagorasiUser.classIds||[]).includes(classId)){
-      await setDoc(doc(db,"users",auth.currentUser.uid),{
-        classIds:currentIds,updatedAt:serverTimestamp()
-      },{merge:true});
-      window.PythagorasiUser={...window.PythagorasiUser,classIds:currentIds};
-      activeProfile=window.PythagorasiUser;
-    }
-    return {already:true,classId,className:data.className};
+  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser){
+    throw new Error("student-required");
   }
 
-  // If the student left or was removed, a valid active class code lets them join again.
-  const p=window.PythagorasiUser;
-  const xp=Number(p.xp)||0;
-  const exams=Number(p.examCount)||0;
-  const avg=exams?Math.round((Number(p.totalScorePct)||0)/exams):0;
+  const clean=String(code||"").trim().replace(/\s+/g,"").toUpperCase();
+  if(clean.length<4)throw new Error("invalid-class-code");
+
+  const joinSnap=await getDoc(doc(db,"classJoinCodes",clean));
+  if(!joinSnap.exists())throw new Error("invalid-class-code");
+
+  const data=joinSnap.data()||{};
+  if(data.active===false||!data.classId)throw new Error("invalid-class-code");
+
+  const classId=data.classId;
+  const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
+  const existingMember=await getDoc(memberRef);
+
+  const profile=window.PythagorasiUser;
+  const currentIds=Array.isArray(profile.classIds)?profile.classIds:[];
+
+  // If the real membership exists, just repair classIds if needed.
+  if(existingMember.exists()){
+    const classIds=[...new Set([...currentIds,classId])];
+    if(!currentIds.includes(classId)){
+      await setDoc(doc(db,"users",auth.currentUser.uid),{
+        classIds,
+        updatedAt:serverTimestamp()
+      },{merge:true});
+      window.PythagorasiUser={...profile,classIds};
+      activeProfile=window.PythagorasiUser;
+    }
+    return {already:true,classId,className:data.className||"Class"};
+  }
+
+  // Leaving or being removed never permanently bans rejoining.
+  // A valid active class code recreates membership.
+  const xp=Number(profile.xp)||0;
+  const exams=Number(profile.examCount)||0;
+  const average=exams?Math.round((Number(profile.totalScorePct)||0)/exams):0;
 
   await setDoc(memberRef,{
     uid:auth.currentUser.uid,
-    displayName:p.displayName||"طالب",
-    photoData:p.photoData||"",
+    displayName:profile.displayName||"طالب",
+    photoData:profile.photoData||"",
     joinCode:clean,
     xp,
     level:profileLevelFromXP(xp),
     examCount:exams,
-    average:avg,
+    average,
     joinedAt:serverTimestamp(),
     rejoinedWithCode:true,
     lastActiveAt:serverTimestamp()
   });
 
-  const classIds=[...new Set([...(Array.isArray(p.classIds)?p.classIds:[]),classId])];
+  const classIds=[...new Set([...currentIds,classId])];
   await setDoc(doc(db,"users",auth.currentUser.uid),{
-    classIds,updatedAt:serverTimestamp()
+    classIds,
+    updatedAt:serverTimestamp()
   },{merge:true});
 
-  window.PythagorasiUser={...p,classIds};
+  window.PythagorasiUser={...profile,classIds};
   activeProfile=window.PythagorasiUser;
 
-  await logStudentActivity("class_join",`انضم إلى صف ${data.className||""}`,"");
-  return {classId,className:data.className,rejoined:true};
+  try{
+    await logStudentActivity("class_join",`انضم إلى صف ${data.className||""}`,"");
+  }catch{}
+
+  return {classId,className:data.className||"Class",rejoined:true};
 }
 
 document.getElementById("joinClassBtn").addEventListener("click",async()=>{
-  const code=(document.getElementById("joinClassCode").value||"").trim().toUpperCase();
+  const code=(document.getElementById("joinClassCode").value||"").trim().replace(/\s+/g,"").toUpperCase();
   const status=document.getElementById("joinClassStatus");
-  if(code.length<4){status.textContent="اكتب الكود أولًا.";return}
-  status.textContent="⏳ جاري البحث...";
+
+  if(code.length<4){
+    status.textContent=currentUILanguage==="en"?"Enter the class code first.":"اكتب كود الصف أولًا.";
+    return;
+  }
+
+  status.textContent=currentUILanguage==="en"?"⏳ Checking class code...":"⏳ جاري فحص كود الصف...";
+
   try{
     const r=await joinClassForStudent(code);
+
     status.textContent=r.already
-      ? (currentUILanguage==="en"?"You're already in this class ✅":"أنت بالصف أصلًا ✅")
-      : r.rejoined
-        ? (currentUILanguage==="en"?`✅ You rejoined ${r.className||"the class"}`:`✅ رجعت انضمّيت إلى ${r.className||"الصف"}`)
-        : (currentUILanguage==="en"?`✅ Joined ${r.className||"the class"}`:`✅ انضممت إلى ${r.className||"الصف"}`);
+      ?(currentUILanguage==="en"?"You're already in this class ✅":"أنت بالصف أصلًا ✅")
+      :(currentUILanguage==="en"
+        ?`✅ Joined ${r.className||"the class"}`
+        :`✅ دخلت على ${r.className||"الصف"}`);
+
+    document.getElementById("joinClassCode").value="";
+    soundFx("win");
     await loadStudentClasses();
   }catch(err){
-    console.error(err);
-    status.textContent=String(err?.message||"")==="invalid-class-code"?"الكود غير صحيح.":"تعذر الانضمام للصف.";
+    console.error("join class",err);
+    const invalid=String(err?.message||"")==="invalid-class-code";
+
+    status.textContent=invalid
+      ?(currentUILanguage==="en"
+        ?"This class code does not exist or is inactive."
+        :"كود الصف مش موجود أو مش فعّال.")
+      :(currentUILanguage==="en"
+        ?"Could not join the class."
+        :"تعذر الدخول للصف.");
+
+    soundFx("wrong");
   }
 });
 
@@ -6817,6 +6908,7 @@ async function loadTeacherClasses(){
   if(!auth.currentUser)return;
   try{
     currentTeacherClasses=await getManagedClasses();
+    await repairManagedClassJoinCodes(currentTeacherClasses);
     host.innerHTML="";
     if(!currentTeacherClasses.length){
       host.innerHTML='<div class="cloud-note">ما عندك صفوف.</div>';return;
@@ -8629,6 +8721,7 @@ async function adminLoadAllData(){
     adminUsersCache=usersSnap.docs.map(d=>({uid:d.id,...d.data()}));
     adminBlocksCache=new Map(blocksSnap.docs.map(d=>[d.id,d.data()]));
     const baseClasses=classesSnap.docs.map(d=>({id:d.id,...d.data()}));
+    await repairManagedClassJoinCodes(baseClasses);
     adminClassesCache=await Promise.all(baseClasses.map(async c=>{
       try{
         const [members,teachers,assignments]=await Promise.all([
