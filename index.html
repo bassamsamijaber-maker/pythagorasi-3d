@@ -2471,6 +2471,294 @@ body.light .student-upcoming-countdown{
   .admin-upcoming-delete{grid-column:2;grid-row:1/3}
 }
 
+
+/* ================= V34 ADMIN REDESIGN ================= */
+.admin-panel-box{
+  width:min(1320px,98vw)!important;
+  max-height:95vh!important;
+  padding:18px!important;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(32,139,255,.07),transparent 28%),
+    radial-gradient(circle at 100% 100%,rgba(119,78,224,.05),transparent 30%),
+    #08131f!important;
+  border:1px solid rgba(109,184,255,.12)!important;
+  box-shadow:0 36px 100px rgba(0,0,0,.52)!important;
+}
+.admin-panel-box .modalhead{
+  border-radius:16px 16px 0 0;
+}
+.admin-v34-overview{
+  margin:2px 0 12px;
+  padding:14px;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(36,129,219,.075),rgba(113,76,220,.04));
+  border:1px solid rgba(84,181,255,.12);
+}
+.admin-v34-overview-main{
+  display:flex;justify-content:space-between;align-items:center;gap:12px
+}
+.admin-v34-overview-main h3{margin:4px 0 4px;font-size:18px}
+.admin-v34-overview-main p{margin:0;color:#819aab;font-size:11px;line-height:1.5}
+.admin-v34-kicker{
+  font-size:8px;font-weight:1000;letter-spacing:.14em;color:#77d3ff
+}
+.admin-v34-system-badge{
+  padding:7px 10px;border-radius:999px;flex:none;
+  font-size:9px;font-weight:1000;letter-spacing:.05em;
+  color:#8ee0b9;background:rgba(69,193,144,.065);
+  border:1px solid rgba(69,193,144,.13)
+}
+.admin-v34-quick-actions{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:11px
+}
+.admin-v34-quick-actions button{
+  min-height:42px;border-radius:11px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.055);
+  background:rgba(255,255,255,.025);
+  color:inherit;font-size:10px;font-weight:900;
+  transition:.18s ease
+}
+.admin-v34-quick-actions button:hover{
+  transform:translateY(-2px);
+  border-color:rgba(72,180,255,.17);
+  background:rgba(43,145,229,.055)
+}
+.admin-v34-nav-label{
+  margin:10px 0 5px;
+  color:#6f8799;font-size:9px;font-weight:1000;
+  letter-spacing:.08em;text-transform:uppercase
+}
+
+/* Cleaner sticky search */
+.admin-toolbar{
+  top:78px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  border-radius:14px!important;
+  padding:9px!important
+}
+.admin-toolbar input{
+  min-height:42px!important;
+  font-size:13px!important;
+}
+.admin-toolbar button{
+  min-height:42px!important;
+  min-width:88px!important;
+}
+
+/* Nav feels like app navigation */
+.admin-tabs{
+  top:142px!important;
+  gap:6px!important;
+  padding:7px!important;
+  border-radius:14px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.10)
+}
+.admin-tabs button{
+  min-height:39px!important;
+  border-radius:10px!important;
+  font-size:10px!important;
+  padding:8px 11px!important;
+  opacity:.82
+}
+.admin-tabs button.active{
+  opacity:1;
+  background:linear-gradient(135deg,rgba(26,143,255,.25),rgba(98,74,220,.18))!important;
+  border-color:rgba(80,182,255,.22)!important;
+  box-shadow:0 8px 22px rgba(20,125,235,.20)!important;
+}
+
+/* Views/cards */
+.admin-view{padding-top:2px}
+.admin-section-intro{
+  padding:13px 14px!important;
+  border-radius:14px!important;
+}
+.admin-person-card,.admin-class-card,.admin-poll-card,.admin-history-card,.admin-student-overview-card,.admin-content-card{
+  border-radius:15px!important;
+  border-color:rgba(255,255,255,.055)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.015))!important;
+  transition:.16s ease
+}
+.admin-person-card:hover,.admin-class-card:hover,.admin-poll-card:hover,.admin-history-card:hover,.admin-student-overview-card:hover,.admin-content-card:hover{
+  transform:translateY(-1px);
+  border-color:rgba(74,179,255,.13)!important;
+}
+
+/* Dashboard looks more like cards */
+.admin-stat{
+  min-height:104px!important;
+  border-radius:14px!important;
+}
+.admin-stat b{font-size:25px!important}
+.admin-stat small{font-size:9px!important}
+
+/* Make actions easier to scan */
+.admin-actions{
+  gap:6px!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+}
+.admin-actions button,.admin-actions label{
+  border-radius:9px!important;
+  min-height:34px!important;
+  font-size:9px!important;
+}
+
+/* Scrollbar */
+.admin-panel-box::-webkit-scrollbar{width:8px}
+.admin-panel-box::-webkit-scrollbar-track{background:transparent}
+.admin-panel-box::-webkit-scrollbar-thumb{
+  background:rgba(118,155,184,.24);border-radius:999px
+}
+
+/* Light mode */
+body.light .admin-panel-box{
+  background:linear-gradient(145deg,#f7fbfd,#f4f7fb)!important;
+}
+body.light .admin-v34-overview{
+  background:linear-gradient(145deg,#f2faff,#f7f5ff);
+  border-color:#d6e8f4
+}
+body.light .admin-v34-quick-actions button{
+  background:#fff;border-color:#dfe8ed;color:#183047
+}
+
+/* Desktop: tabs become more compact and balanced */
+@media(min-width:1100px){
+  .admin-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    overflow:visible!important;
+  }
+}
+@media(max-width:800px){
+  .admin-v34-quick-actions{grid-template-columns:1fr 1fr}
+  .admin-v34-overview-main{align-items:flex-start;flex-direction:column}
+  .admin-toolbar{grid-template-columns:1fr!important}
+  .admin-toolbar button{width:100%}
+}
+@media(max-width:520px){
+  .admin-v34-quick-actions{grid-template-columns:1fr}
+}
+
+
+/* ================= V35 SUPER ADMIN STUDIO ================= */
+.admin-panel-box{
+  width:calc(100vw - 28px)!important;
+  max-width:none!important;
+  height:calc(100vh - 28px)!important;
+  max-height:none!important;
+  border-radius:22px!important;
+  padding:20px!important;
+  overflow:auto!important;
+}
+#adminPanelModal{padding:14px!important}
+.admin-panel-box .modalhead{
+  top:-20px!important;
+  margin:-20px -20px 12px!important;
+  padding:18px 20px 15px!important;
+  border-radius:22px 22px 0 0!important;
+}
+.admin-v34-overview{padding:17px!important}
+.admin-v34-overview-main h3{font-size:22px!important}
+.admin-v34-quick-actions button{min-height:48px!important;font-size:11px!important}
+.admin-toolbar{top:73px!important}
+.admin-tabs{top:133px!important}
+.admin-tabs button{min-height:42px!important;font-size:10px!important}
+@media(min-width:1200px){
+  .admin-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  .admin-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .admin-list{gap:10px!important}
+}
+
+/* Studio */
+.studio-hero{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 18px;border-radius:18px;margin-bottom:12px;
+  background:
+    radial-gradient(circle at 95% 5%,rgba(127,84,233,.11),transparent 29%),
+    linear-gradient(145deg,rgba(35,133,223,.07),rgba(122,76,225,.045));
+  border:1px solid rgba(108,126,245,.14)
+}
+.studio-hero h3{margin:5px 0 4px;font-size:21px}
+.studio-hero p{margin:0;color:#849cac;font-size:11px;line-height:1.55}
+.studio-kicker{font-size:8px;font-weight:1000;letter-spacing:.14em;color:#ae9dff}
+.studio-hero-icon{
+  width:62px;height:62px;border-radius:18px;display:grid;place-items:center;flex:none;
+  font-size:29px;background:rgba(115,86,230,.09);border:1px solid rgba(115,86,230,.14)
+}
+.studio-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.studio-card{
+  padding:14px;border-radius:17px;
+  background:linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.06)
+}
+.studio-card-head b{display:block;font-size:14px}
+.studio-card-head small{display:block;margin-top:3px;color:#7d95a8;font-size:9px}
+.studio-form{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px
+}
+.studio-form label{display:grid;gap:4px;font-size:9px;color:#7d96a8;margin:0}
+.studio-form input,.studio-form select,.studio-form textarea{width:100%}
+.studio-form textarea{min-height:88px;resize:vertical}
+.studio-wide{grid-column:1/-1}
+.studio-create-btn{margin-top:9px}
+.studio-item-list{display:grid;gap:7px;margin-top:10px}
+.studio-item{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;
+  padding:9px;border-radius:11px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.045)
+}
+.studio-item.inactive{opacity:.68;border-color:rgba(255,176,72,.11)}
+.studio-item-main b{display:block;font-size:11px}
+.studio-item-main small{display:block;margin-top:3px;color:#778fa1;font-size:8px;line-height:1.5}
+.studio-item-actions{display:flex;gap:5px}
+.studio-item-actions button{
+  min-height:32px;padding:5px 8px;border-radius:8px;cursor:pointer;font-size:9px;font-weight:900
+}
+.studio-toggle{
+  border:1px solid rgba(255,179,73,.14);background:rgba(255,179,73,.055);color:#ffc47c
+}
+.studio-toggle.show{
+  border-color:rgba(72,195,145,.14);background:rgba(72,195,145,.055);color:#8fe0b9
+}
+.studio-delete{
+  border:1px solid rgba(255,96,113,.14);background:rgba(255,96,113,.055);color:#ffabb5
+}
+
+/* Custom surface for users */
+.admin-custom-surface{margin-top:11px}
+.admin-custom-surface.hidden{display:none!important}
+.admin-custom-notices{display:grid;gap:7px;margin-bottom:8px}
+.admin-custom-notice{
+  padding:11px 13px;border-radius:13px;
+  background:linear-gradient(145deg,rgba(45,151,235,.065),rgba(116,78,222,.04));
+  border:1px solid rgba(75,178,255,.12)
+}
+.admin-custom-notice b{display:block;font-size:12px}
+.admin-custom-notice p{margin:4px 0 0;color:#8aa1b2;font-size:10px;line-height:1.55}
+.admin-custom-buttons{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px
+}
+.admin-custom-button{
+  min-height:46px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(79,181,255,.12);
+  background:linear-gradient(145deg,rgba(36,144,233,.07),rgba(111,77,220,.045));
+  color:inherit;font-weight:900;font-size:11px
+}
+.admin-custom-button:hover{transform:translateY(-1px);border-color:rgba(79,181,255,.21)}
+body.light .studio-card,.body.light .studio-hero,.body.light .studio-item,
+body.light .admin-custom-notice,.body.light .admin-custom-button{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+@media(max-width:850px){
+  .studio-grid{grid-template-columns:1fr}
+  .admin-panel-box{width:calc(100vw - 12px)!important;height:calc(100vh - 12px)!important}
+  #adminPanelModal{padding:6px!important}
+}
+
 </style>
 </head>
 <body>
@@ -2555,6 +2843,11 @@ body.light .student-upcoming-countdown{
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
     </div>
+
+    <section class="admin-custom-surface hidden" id="adminCustomSurface">
+      <div class="admin-custom-notices" id="adminCustomNotices"></div>
+      <div class="admin-custom-buttons" id="adminCustomButtons"></div>
+    </section>
 
     <section class="student-upcoming-events hidden" id="studentUpcomingEvents">
       <div class="student-upcoming-head">
@@ -2667,13 +2960,35 @@ body.light .student-upcoming-countdown{
       <button class="close" id="closeAdminPanel">×</button>
     </div>
 
+    <section class="admin-v34-overview">
+      <div class="admin-v34-overview-main">
+        <div>
+          <span class="admin-v34-kicker">SUPER ADMIN</span>
+          <h3 id="adminV34OverviewTitle">إدارة المدرسة من مكان واحد</h3>
+          <p id="adminV34OverviewSub">طلاب، صفوف، وظائف، تصويتات، محتوى وتحكم مباشر بالموقع.</p>
+        </div>
+        <div class="admin-v34-system-badge" id="adminV34SystemBadge">● SYSTEM OK</div>
+      </div>
+
+      <div class="admin-v34-quick-actions">
+        <button data-open-admin-tab="studio">✨ <span>استوديو الموقع</span></button>
+        <button data-open-admin-tab="students">🎒 <span>كل الطلاب</span></button>
+        <button data-open-admin-tab="classes">🏫 <span>الصفوف</span></button>
+        <button data-open-admin-tab="send">🚀 <span>إرسال وظيفة</span></button>
+        <button data-open-admin-tab="polls">📊 <span>التصويتات</span></button>
+        <button data-open-admin-tab="controls">🎛️ <span>التحكم</span></button>
+      </div>
+    </section>
+
     <div class="admin-toolbar">
       <input id="adminGlobalSearch" placeholder="Search students, teachers, classes or Profile ID...">
       <button class="exam-secondary" id="adminRefreshBtn">↻ Refresh</button>
     </div>
 
+    <div class="admin-v34-nav-label" id="adminV34NavLabel">التنقل</div>
     <div class="admin-tabs" id="adminTabs">
       <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
+      <button data-admin-tab="studio">✨ Site Studio</button>
       <button data-admin-tab="content">👁️ Content Manager</button>
       <button data-admin-tab="students">🎒 Student Overview</button>
       <button data-admin-tab="history">📝 Assignment History</button>
@@ -2828,6 +3143,79 @@ body.light .student-upcoming-countdown{
       <div class="cloud-note" id="adminSendStatus"></div>
     </div>
 
+    <div class="admin-view hidden" id="adminViewStudio">
+      <section class="studio-hero">
+        <div>
+          <span class="studio-kicker">SITE STUDIO</span>
+          <h3 id="studioTitle">✨ استوديو الموقع</h3>
+          <p id="studioSub">أضف أزرار وملاحظات للطلاب، وجّهها للجميع أو لصف محدد، ووقفها أو احذفها بأي وقت.</p>
+        </div>
+        <div class="studio-hero-icon">🧩</div>
+      </section>
+
+      <div class="studio-grid">
+        <section class="studio-card">
+          <div class="studio-card-head">
+            <div><b id="studioButtonTitle">🔘 إضافة زر جديد</b><small id="studioButtonSub">زر يظهر باللوبي ويعمل إجراء محدد وآمن.</small></div>
+          </div>
+
+          <div class="studio-form">
+            <label><span id="studioButtonTargetLabel">الهدف</span>
+              <select id="studioButtonTarget"><option value="all">الجميع</option></select>
+            </label>
+            <label><span id="studioButtonEmojiLabel">الأيقونة</span>
+              <input id="studioButtonEmoji" maxlength="4" value="⭐">
+            </label>
+            <label class="studio-wide"><span id="studioButtonLabelLabel">اسم الزر</span>
+              <input id="studioButtonLabel" maxlength="42" placeholder="مثال: افتح صفوفي">
+            </label>
+            <label><span id="studioButtonActionLabel">الإجراء</span>
+              <select id="studioButtonAction">
+                <option value="classes">🏫 صفوفي</option>
+                <option value="exam">🎓 الامتحانات</option>
+                <option value="competition">🏆 المسابقات</option>
+                <option value="challenge">🔥 التحدي</option>
+                <option value="questions">❓ أسئلة تدريب</option>
+                <option value="settings">⚙️ الإعدادات</option>
+                <option value="profile">👤 الملف الشخصي</option>
+                <option value="message">💬 إظهار رسالة</option>
+                <option value="url">🔗 فتح رابط</option>
+              </select>
+            </label>
+            <label class="studio-wide"><span id="studioButtonValueLabel">رسالة أو رابط — حسب الإجراء</span>
+              <input id="studioButtonValue" maxlength="300" placeholder="اختياري">
+            </label>
+          </div>
+
+          <button class="apply studio-create-btn" id="studioCreateButtonBtn">＋ أضف الزر</button>
+          <div class="cloud-note" id="studioButtonStatus"></div>
+          <div class="studio-item-list" id="studioButtonsList"></div>
+        </section>
+
+        <section class="studio-card">
+          <div class="studio-card-head">
+            <div><b id="studioNoticeTitle">🗒️ إضافة ملاحظة</b><small id="studioNoticeSub">ملاحظة تظهر فوق باللوبي وتقدر تخفيها أو تحذفها.</small></div>
+          </div>
+
+          <div class="studio-form">
+            <label><span id="studioNoticeTargetLabel">الهدف</span>
+              <select id="studioNoticeTarget"><option value="all">الجميع</option></select>
+            </label>
+            <label class="studio-wide"><span id="studioNoticeHeadingLabel">العنوان</span>
+              <input id="studioNoticeHeading" maxlength="70" placeholder="مثال: تذكير مهم">
+            </label>
+            <label class="studio-wide"><span id="studioNoticeBodyLabel">الملاحظة</span>
+              <textarea id="studioNoticeBody" maxlength="500" placeholder="اكتب الملاحظة..."></textarea>
+            </label>
+          </div>
+
+          <button class="apply studio-create-btn" id="studioCreateNoticeBtn">＋ أضف الملاحظة</button>
+          <div class="cloud-note" id="studioNoticeStatus"></div>
+          <div class="studio-item-list" id="studioNoticesList"></div>
+        </section>
+      </div>
+    </div>
+
     <div class="admin-view hidden" id="adminViewContent">
       <div class="admin-section-intro">
         <div>
@@ -2891,7 +3279,7 @@ body.light .student-upcoming-countdown{
         <div class="admin-history-stat"><b id="adminHistoryStudentCount">0</b><small id="adminHistoryStudentsLabel">طلاب سلّموا</small></div>
       </div>
 
-      <div class="cloud-note" id="adminHistoryStatus">السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.</div>
+      <div class="cloud-note" id="adminHistoryStatus">السجل بيعرض كل البيانات المحفوظة مهما كان تاريخها.</div>
       <div class="admin-assignment-history-list" id="adminAssignmentHistoryList"></div>
     </div>
 
@@ -6693,7 +7081,7 @@ async function submitCloudExam(){
     document.getElementById("examScoreMax").textContent="";
     document.getElementById("examGradeText").textContent="تم تسليم الامتحان للمعلم ☁️";
     document.getElementById("examResultSummary").textContent=`انحفظت ${answered} إجابة من ${activeExam.questions.length}. المعلم يقدر يشوف النتيجة من لوحة النتائج.`;
-    document.getElementById("examReview").innerHTML='<div class="cloud-note">🔒 مفتاح الإجابة محفوظ عند المعلم، لذلك ما منعرض الإجابات الصحيحة للطالب من Firebase.</div>';
+    document.getElementById("examReview").innerHTML='<div class="cloud-note">🔒 مفتاح الإجابة محفوظ عند المعلم، لذلك ما منعرض الإجابات الصحيحة للطالب.</div>';
 
     saveLocalExamHistory({
       title:activeExam.title,cloud:true,submittedAt:Date.now(),answered,
@@ -6903,7 +7291,7 @@ async function loadTeacherResults(){
     }
   }catch(err){
     console.error("teacher results",err);
-    list.innerHTML='<div class="cloud-note">تعذر تحميل النتائج. تأكد من Firestore Rules ومن إنك داخل بنفس حساب المعلم.</div>';
+    list.innerHTML='<div class="cloud-note">تعذر تحميل النتائج. تأكد من صلاحيات الحساب وحاول مرة ثانية.</div>';
   }
 }
 
@@ -9525,7 +9913,9 @@ let siteControlsCache={
   lockAssignments:false,lockAssignmentsUntil:0,
   lockPollVoting:false,lockPollVotingUntil:0,
   lockClassJoin:false,lockClassJoinUntil:0,
-  maintenance:false,maintenanceMessage:""
+  maintenance:false,maintenanceMessage:"",
+  customButtons:[],
+  customNotices:[]
 };
 
 function adminLang(ar,en){return currentUILanguage==="en"?en:ar}
@@ -9545,7 +9935,7 @@ function applyAdminLanguage(){
   ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
   const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
   const tabs=[
-    ["polls","📊 التصويتات","📊 Polls"],["content","👁️ إدارة المحتوى","👁️ Content Manager"],
+    ["polls","📊 التصويتات","📊 Polls"],["studio","✨ استوديو الموقع","✨ Site Studio"],["content","👁️ إدارة المحتوى","👁️ Content Manager"],
     ["students","🎒 كل الطلاب","🎒 Student Overview"],
     ["history","📝 سجل الوظائف","📝 Assignment History"],["dashboard","📈 الرئيسية","📈 Dashboard"],
     ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
@@ -9555,9 +9945,38 @@ function applyAdminLanguage(){
   const stats=document.querySelectorAll(".admin-stat small"),statWords=en?["Students","Teachers","Classes","Assignments"]:["طلاب","معلمين","صفوف","وظائف"];
   stats.forEach((x,i)=>{if(statWords[i])x.textContent=statWords[i]});
   const notes=document.querySelectorAll("#adminViewDashboard .admin-security-note span,#adminViewClasses .admin-section-intro span,#adminViewControls .admin-note");
-  if(notes[0])notes[0].textContent=en?"🔐 Student passwords are never stored or readable. Firebase Authentication does not expose them. Use secure account recovery instead of viewing passwords.":"🔐 كلمات سر الطلاب لا تُحفظ بشكل قابل للقراءة ولا يمكن عرضها. Firebase Authentication لا يكشفها؛ استخدم استرجاع وصول آمن بدل عرض كلمة السر.";
+  if(notes[0])notes[0].textContent=en?"🔐 Student passwords are protected and are never stored as readable text. Use secure account recovery instead of viewing passwords.":"🔐 كلمات سر الطلاب محمية ولا تُحفظ بشكل قابل للقراءة. استخدم استرجاع وصول آمن بدل عرض كلمة السر.";
   if(notes[1])notes[1].textContent=en?"Each class shows its owner, co-teachers, teacher emails and students. Search above by class, teacher or student name.":"كل صف بعرض المالك، المعلمين المساعدين، إيميلات المعلمين والطلاب. ابحث فوق باسم صف أو معلم أو طالب.";
   if(notes[2])notes[2].textContent=en?"All admin actions are logged with date, Profile ID and action type.":"كل عملية أدمن تنحفظ بالسجل مع التاريخ وProfile ID ونوع العملية.";
+  set("studioTitle","✨ استوديو الموقع","✨ Site Studio");
+  set("studioSub","أضف أزرار وملاحظات للطلاب، وجّهها للجميع أو لصف محدد، ووقفها أو احذفها بأي وقت.","Add buttons and notices, target everyone or a class, and hide or delete them anytime.");
+  set("studioButtonTitle","🔘 إضافة زر جديد","🔘 Add custom button");
+  set("studioButtonSub","زر يظهر باللوبي ويعمل إجراء محدد وآمن.","A lobby button with a predefined safe action.");
+  set("studioButtonTargetLabel","الهدف","Target");
+  set("studioButtonEmojiLabel","الأيقونة","Icon");
+  set("studioButtonLabelLabel","اسم الزر","Button label");
+  set("studioButtonActionLabel","الإجراء","Action");
+  set("studioButtonValueLabel","رسالة أو رابط — حسب الإجراء","Message or URL — depending on action");
+  set("studioNoticeTitle","🗒️ إضافة ملاحظة","🗒️ Add notice");
+  set("studioNoticeSub","ملاحظة تظهر فوق باللوبي وتقدر تخفيها أو تحذفها.","A lobby notice you can hide or delete anytime.");
+  set("studioNoticeTargetLabel","الهدف","Target");
+  set("studioNoticeHeadingLabel","العنوان","Title");
+  set("studioNoticeBodyLabel","الملاحظة","Notice");
+  ph("studioButtonLabel","مثال: افتح صفوفي","Example: Open My Classes");
+  ph("studioButtonValue","اختياري","Optional");
+  ph("studioNoticeHeading","مثال: تذكير مهم","Example: Important reminder");
+  ph("studioNoticeBody","اكتب الملاحظة...","Write the notice...");
+  const studioCreateBtn=document.getElementById("studioCreateButtonBtn");if(studioCreateBtn)studioCreateBtn.textContent=en?"＋ Add button":"＋ أضف الزر";
+  const studioCreateNote=document.getElementById("studioCreateNoticeBtn");if(studioCreateNote)studioCreateNote.textContent=en?"＋ Add notice":"＋ أضف الملاحظة";
+
+  set("adminV34OverviewTitle","إدارة المدرسة من مكان واحد","Manage the school from one place");
+  set("adminV34OverviewSub","طلاب، صفوف، وظائف، تصويتات، محتوى وتحكم مباشر بالموقع.","Students, classes, assignments, polls, content and direct site controls.");
+  set("adminV34NavLabel","التنقل","Navigation");
+  const quickButtons=[...document.querySelectorAll(".admin-v34-quick-actions button span")];
+  const quickAr=["استوديو الموقع","كل الطلاب","الصفوف","إرسال وظيفة","التصويتات","التحكم"];
+  const quickEn=["Site Studio","Students","Classes","Send assignment","Polls","Controls"];
+  quickButtons.forEach((el,i)=>el.textContent=(en?quickEn:quickAr)[i]||el.textContent);
+
   const securityTitle=document.querySelector("#adminViewDashboard .admin-security-note b");if(securityTitle)securityTitle.textContent=en?"🔐 Account security":"🔐 أمان الحسابات";
   const peopleIntro=document.querySelector("#adminViewPeople .admin-section-intro");if(peopleIntro){peopleIntro.querySelector("b").textContent=en?"👥 Accounts":"👥 الحسابات";peopleIntro.querySelector("span").textContent=en?"Search by name, Profile ID, login name, teacher email or UID.":"ابحث بالاسم، Profile ID، اسم الدخول، إيميل المعلم أو UID.";peopleIntro.querySelector(".admin-safe-badge").textContent=en?"🔒 Passwords protected":"🔒 كلمات السر محمية"}
   const classIntro=document.querySelector("#adminViewClasses .admin-section-intro");if(classIntro){classIntro.querySelector("b").textContent=en?"🏫 Classes":"🏫 الصفوف";classIntro.querySelector("span").textContent=en?"Every class shows teachers, teacher emails, Profile IDs and students.":"كل صف يعرض المعلمين، إيميلاتهم، Profile IDs والطلاب.";classIntro.querySelector(".admin-safe-badge").textContent=en?"🔎 Search from the top bar":"🔎 ابحث من الشريط بالأعلى"}
@@ -9602,7 +10021,7 @@ function applyAdminLanguage(){
   set("adminHistoryAssignmentsLabel","وظائف","ASSIGNMENTS");
   set("adminHistorySubmissionsLabel","تسليمات","SUBMISSIONS");
   set("adminHistoryStudentsLabel","طلاب سلّموا","STUDENTS");
-  set("adminHistoryStatus","السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.","This history loads all assignment data currently stored in Firestore, regardless of age.");
+  set("adminHistoryStatus","السجل بيعرض كل البيانات المحفوظة مهما كان تاريخها.","This history loads all stored assignment data, regardless of age.");
   const historyRefresh=document.getElementById("adminRefreshHistoryBtn");if(historyRefresh)historyRefresh.textContent=en?"↻ Refresh history":"↻ تحديث السجل";
   set("adminContentTitle","👁️ إدارة المحتوى","👁️ Content Manager");
   set("adminContentSub","وقف أي عنصر فيختفي من الطلاب، رجّعه فيظهر، أو احذفه نهائيًا.","Pause an item to hide it from students, resume it to show it again, or delete it permanently.");
@@ -9682,6 +10101,7 @@ function applyAdminLanguage(){
       renderStudentActiveTimers();
       renderStudentUpcomingEvents();
       renderAdminUpcomingEvents();
+      adminV34UpdateSystemBadge();
     }
   }catch{}
   set("myClassesHeroTitle","صفوفي","My Classes");
@@ -9759,13 +10179,14 @@ async function adminLoadAllData(){
     adminAssignmentHistoryLoaded=false;
     adminQuickAddSelectedStudent=null;
     adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
+    adminV34UpdateSystemBadge();
     if(adminActiveTab==="polls")adminLoadPolls();
     if(adminActiveTab==="content")adminLoadContentManager();
     if(adminActiveTab==="students")adminLoadStudentOverview({force:true});
     if(adminActiveTab==="history")adminLoadAssignmentHistory({force:true});
     if(adminActiveTab==="controls")adminLoadControls();
   }catch(err){
-    console.error("admin load",err);showToast(adminLang("تعذر تحميل بيانات الأدمن. تأكد من Firestore Rules.","Could not load admin data. Check Firestore Rules."));
+    console.error("admin load",err);showToast(adminLang("تعذر تحميل بيانات الأدمن. تأكد من الصلاحيات.","Could not load admin data. Check permissions."));
   }finally{
     refresh.disabled=false;refresh.textContent=adminLang("↻ تحديث","↻ Refresh");
   }
@@ -10142,7 +10563,7 @@ function adminRenderStudentOverview(){
       <div class="admin-student-overview-meta">
         <div><small>${adminLang("آخر دخول","LAST VISIT")}</small><span>${lastVisit?escapeHtml(adminDate(lastVisit)):adminLang("لسه ما تسجل","Not recorded yet")}</span></div>
         <div><small>${adminLang("الصفوف","CLASSES")}</small><span>${classes.length?classes.map(c=>escapeHtml(c.name||"Class")).join(" • "):"—"}</span></div>
-        <div><small>PASSWORD</small><span class="student-password-safe">🔒 ${resetPending?adminLang("طلب تغيير معلّق","Change requested"):adminLang("محمي داخل Firebase","Protected by Firebase")}</span></div>
+        <div><small>PASSWORD</small><span class="student-password-safe">🔒 ${resetPending?adminLang("طلب تغيير معلّق","Change requested"):adminLang("محمي","Protected")}</span></div>
         <div><small>${adminLang("وظائف محلولة","SUBMISSIONS")}</small><span>${subs.length}</span></div>
       </div>
 
@@ -10428,6 +10849,206 @@ async function adminDeleteContentItem(item){
   }
 }
 
+
+function studioTargetLabel(target){
+  if(!target||target==="all")return adminLang("الجميع","Everyone");
+  const c=adminClassById(target);
+  return c?.name||adminLang("صف محدد","Selected class");
+}
+
+function studioVisibleToCurrentUser(item){
+  if(!item||item.active===false)return false;
+  if(item.target==="all"||!item.target)return true;
+  if(isSuperAdminProfile())return true;
+  return (window.PythagorasiUser?.classIds||[]).includes(item.target);
+}
+
+function safeStudioButtons(){
+  return Array.isArray(siteControlsCache.customButtons)?siteControlsCache.customButtons:[];
+}
+function safeStudioNotices(){
+  return Array.isArray(siteControlsCache.customNotices)?siteControlsCache.customNotices:[];
+}
+
+function renderAdminCustomSurface(){
+  const section=document.getElementById("adminCustomSurface");
+  const noticeHost=document.getElementById("adminCustomNotices");
+  const buttonHost=document.getElementById("adminCustomButtons");
+  if(!section||!noticeHost||!buttonHost)return;
+
+  const notices=safeStudioNotices().filter(studioVisibleToCurrentUser);
+  const buttons=safeStudioButtons().filter(studioVisibleToCurrentUser);
+
+  noticeHost.innerHTML="";
+  buttonHost.innerHTML="";
+
+  for(const n of notices){
+    const d=document.createElement("div");
+    d.className="admin-custom-notice";
+    d.innerHTML=`<b>📌 ${escapeHtml(n.title||adminLang("ملاحظة","Notice"))}</b><p>${escapeHtml(n.body||"")}</p>`;
+    noticeHost.appendChild(d);
+  }
+
+  for(const b of buttons){
+    const btn=document.createElement("button");
+    btn.className="admin-custom-button";
+    btn.textContent=`${b.emoji||"⭐"} ${b.label||adminLang("زر","Button")}`;
+    btn.addEventListener("click",()=>runStudioButtonAction(b));
+    buttonHost.appendChild(btn);
+  }
+
+  section.classList.toggle("hidden",!(notices.length||buttons.length));
+}
+
+function runStudioButtonAction(item){
+  const action=item?.action||"";
+  if(action==="classes")document.getElementById("lobbyClassBtn")?.click();
+  else if(action==="exam")document.getElementById("lobbyExamBtn")?.click();
+  else if(action==="competition")document.getElementById("competitionBtn")?.click();
+  else if(action==="challenge")document.getElementById("lobbyChallengeBtn")?.click();
+  else if(action==="questions")document.getElementById("lobbyQuestionBtn")?.click();
+  else if(action==="settings")document.getElementById("lobbySettingsBtn")?.click();
+  else if(action==="profile")document.getElementById("lobbyProfileBtn")?.click();
+  else if(action==="message")showToast(String(item.value||adminLang("تم ✅","Done ✅")).slice(0,300));
+  else if(action==="url"){
+    const url=String(item.value||"").trim();
+    if(/^https?:\/\//i.test(url))window.open(url,"_blank","noopener,noreferrer");
+    else showToast(adminLang("الرابط غير صالح.","Invalid link."));
+  }
+}
+
+function studioRenderAdminLists(){
+  const bHost=document.getElementById("studioButtonsList");
+  const nHost=document.getElementById("studioNoticesList");
+  if(!bHost||!nHost)return;
+  bHost.innerHTML="";nHost.innerHTML="";
+
+  for(const b of safeStudioButtons()){
+    const row=document.createElement("div");
+    row.className=`studio-item ${b.active===false?"inactive":""}`;
+    row.innerHTML=`
+      <div class="studio-item-main">
+        <b>${escapeHtml(b.emoji||"⭐")} ${escapeHtml(b.label||adminLang("زر","Button"))}</b>
+        <small>${escapeHtml(studioTargetLabel(b.target))} • ${escapeHtml(b.action||"")}${b.active===false?` • ${adminLang("مخفي","Hidden")}`:""}</small>
+      </div>
+      <div class="studio-item-actions">
+        <button class="studio-toggle ${b.active===false?"show":""}">${b.active===false?adminLang("▶ إظهار","▶ Show"):adminLang("⏸ إخفاء","⏸ Hide")}</button>
+        <button class="studio-delete">🗑</button>
+      </div>`;
+    row.querySelector(".studio-toggle").addEventListener("click",()=>studioToggleItem("button",b.id));
+    row.querySelector(".studio-delete").addEventListener("click",()=>studioDeleteItem("button",b.id));
+    bHost.appendChild(row);
+  }
+  if(!bHost.children.length)bHost.innerHTML=`<div class="cloud-note">${adminLang("ما في أزرار مضافة.","No custom buttons yet.")}</div>`;
+
+  for(const n of safeStudioNotices()){
+    const row=document.createElement("div");
+    row.className=`studio-item ${n.active===false?"inactive":""}`;
+    row.innerHTML=`
+      <div class="studio-item-main">
+        <b>📌 ${escapeHtml(n.title||adminLang("ملاحظة","Notice"))}</b>
+        <small>${escapeHtml(studioTargetLabel(n.target))} • ${escapeHtml((n.body||"").slice(0,110))}${n.active===false?` • ${adminLang("مخفية","Hidden")}`:""}</small>
+      </div>
+      <div class="studio-item-actions">
+        <button class="studio-toggle ${n.active===false?"show":""}">${n.active===false?adminLang("▶ إظهار","▶ Show"):adminLang("⏸ إخفاء","⏸ Hide")}</button>
+        <button class="studio-delete">🗑</button>
+      </div>`;
+    row.querySelector(".studio-toggle").addEventListener("click",()=>studioToggleItem("notice",n.id));
+    row.querySelector(".studio-delete").addEventListener("click",()=>studioDeleteItem("notice",n.id));
+    nHost.appendChild(row);
+  }
+  if(!nHost.children.length)nHost.innerHTML=`<div class="cloud-note">${adminLang("ما في ملاحظات مضافة.","No custom notices yet.")}</div>`;
+}
+
+async function adminLoadStudio(){
+  await loadSiteControls();
+  studioRenderAdminLists();
+}
+
+async function studioSaveArrays(buttons,notices,auditAction,auditDetail){
+  if(!requireSuperAdmin())return;
+  const cleanButtons=(buttons||[]).slice(0,40);
+  const cleanNotices=(notices||[]).slice(0,40);
+  await setDoc(doc(db,"siteControls","main"),{
+    customButtons:cleanButtons,
+    customNotices:cleanNotices,
+    updatedBy:auth.currentUser.uid,
+    updatedAt:serverTimestamp()
+  },{merge:true});
+  siteControlsCache={...siteControlsCache,customButtons:cleanButtons,customNotices:cleanNotices};
+  await adminAudit(auditAction,auditDetail||"");
+  studioRenderAdminLists();
+  renderAdminCustomSurface();
+}
+
+async function studioCreateButton(){
+  const status=document.getElementById("studioButtonStatus");
+  const label=document.getElementById("studioButtonLabel").value.trim();
+  const emoji=document.getElementById("studioButtonEmoji").value.trim().slice(0,4)||"⭐";
+  const target=document.getElementById("studioButtonTarget").value||"all";
+  const action=document.getElementById("studioButtonAction").value||"message";
+  const value=document.getElementById("studioButtonValue").value.trim().slice(0,300);
+
+  if(!label){status.textContent=adminLang("اكتب اسم الزر.","Enter a button label.");return}
+  if(action==="url"&&!/^https?:\/\//i.test(value)){status.textContent=adminLang("الرابط لازم يبدأ بـ http أو https.","URL must start with http or https.");return}
+
+  const buttons=safeStudioButtons();
+  if(buttons.length>=40){status.textContent=adminLang("وصلت للحد الأقصى من الأزرار.","Maximum custom buttons reached.");return}
+
+  buttons.push({
+    id:`btn_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,
+    label:label.slice(0,42),emoji,target,action,value,active:true,createdAtMs:Date.now()
+  });
+
+  try{
+    await studioSaveArrays(buttons,safeStudioNotices(),"create_custom_button",label);
+    document.getElementById("studioButtonLabel").value="";
+    document.getElementById("studioButtonValue").value="";
+    status.textContent=adminLang("تمت إضافة الزر ✅","Button added ✅");
+    soundFx("win");
+  }catch(err){console.error(err);status.textContent=adminLang("تعذر إضافة الزر.","Could not add button.")}
+}
+
+async function studioCreateNotice(){
+  const status=document.getElementById("studioNoticeStatus");
+  const target=document.getElementById("studioNoticeTarget").value||"all";
+  const title=document.getElementById("studioNoticeHeading").value.trim();
+  const body=document.getElementById("studioNoticeBody").value.trim();
+  if(!title&&!body){status.textContent=adminLang("اكتب عنوان أو ملاحظة.","Enter a title or notice.");return}
+
+  const notices=safeStudioNotices();
+  if(notices.length>=40){status.textContent=adminLang("وصلت للحد الأقصى من الملاحظات.","Maximum notices reached.");return}
+  notices.push({
+    id:`note_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,
+    title:title.slice(0,70),body:body.slice(0,500),target,active:true,createdAtMs:Date.now()
+  });
+
+  try{
+    await studioSaveArrays(safeStudioButtons(),notices,"create_custom_notice",title||body.slice(0,50));
+    document.getElementById("studioNoticeHeading").value="";
+    document.getElementById("studioNoticeBody").value="";
+    status.textContent=adminLang("تمت إضافة الملاحظة ✅","Notice added ✅");
+    soundFx("win");
+  }catch(err){console.error(err);status.textContent=adminLang("تعذر إضافة الملاحظة.","Could not add notice.")}
+}
+
+async function studioToggleItem(kind,id){
+  const buttons=safeStudioButtons();
+  const notices=safeStudioNotices();
+  const list=kind==="button"?buttons:notices;
+  const item=list.find(x=>x.id===id);if(!item)return;
+  item.active=item.active===false?true:false;
+  await studioSaveArrays(buttons,notices,item.active?"show_studio_item":"hide_studio_item",`${kind} • ${id}`);
+}
+
+async function studioDeleteItem(kind,id){
+  if(!confirm(adminLang("حذف نهائي؟","Delete permanently?")))return;
+  const buttons=kind==="button"?safeStudioButtons().filter(x=>x.id!==id):safeStudioButtons();
+  const notices=kind==="notice"?safeStudioNotices().filter(x=>x.id!==id):safeStudioNotices();
+  await studioSaveArrays(buttons,notices,"delete_studio_item",`${kind} • ${id}`);
+  showToast(adminLang("تم الحذف 🗑","Deleted 🗑"));
+}
+
 function adminRenderDashboard(){
   const students=adminUsersCache.filter(u=>u.role==="student").length;
   const teachers=adminUsersCache.filter(u=>u.role==="teacher"||isSuperAdminProfile(u)).length;
@@ -10456,13 +11077,13 @@ function adminRenderPeople(){
   for(const u of rows){
     const blocked=adminBlocksCache.has(u.uid),admin=isSuperAdminProfile(u),teacher=u.role==="teacher"||admin;
     const memberships=adminClassesCache.filter(c=>c.ownerId===u.uid||c.teachers?.some(t=>t.uid===u.uid)||c.members?.some(m=>m.uid===u.uid));const owned=adminClassesCache.filter(c=>c.ownerId===u.uid);
-    const provider=teacher?(u.provider||"google.com"):(u.provider||"password"),loginName=u.loginName||u.originalLoginName||u.displayName||"—";
-    const passwordText=teacher?adminLang("مُدار بواسطة Google — غير قابل للعرض","Managed by Google — not viewable"):adminLang("محمي داخل Firebase — غير قابل للعرض","Protected by Firebase — not viewable");
+    const provider=teacher?adminLang("تسجيل خارجي","External sign-in"):adminLang("كلمة سر","Password sign-in"),loginName=u.loginName||u.originalLoginName||u.displayName||"—";
+    const passwordText=teacher?adminLang("مُدار عبر تسجيل خارجي — غير قابل للعرض","Managed by external sign-in — not viewable"):adminLang("محمي — غير قابل للعرض","Protected — not viewable");
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
     card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
       <div class="admin-detail-grid">
         <div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
-        <div class="admin-detail-item"><small>FIREBASE UID</small><span>${escapeHtml(u.uid||"—")}</span></div>
+        <div class="admin-detail-item"><small>ACCOUNT UID</small><span>${escapeHtml(u.uid||"—")}</span></div>
         <div class="admin-detail-item"><small>${adminLang("اسم الدخول","LOGIN NAME")}</small><span>${escapeHtml(loginName)}</span></div>
         <div class="admin-detail-item"><small>${adminLang("نوع الدخول","AUTH PROVIDER")}</small><span>${escapeHtml(provider)}</span></div>
         <div class="admin-detail-item"><small>EMAIL</small><span class="${teacher&&u.email?"admin-email":""}">${escapeHtml(u.email||(teacher?"—":adminLang("بريد تقني داخلي","Internal auth email")))}</span></div>
@@ -10525,7 +11146,7 @@ async function adminDeleteSiteUser(u){
   if(isSuperAdminProfile(u))return;
   const owned=adminClassesCache.filter(c=>c.ownerId===u.uid);
   if(owned.length){alert(adminLang("هذا المعلم يملك صفوف. انقل/احذف صفوفه أولًا.","This teacher owns classes. Transfer or delete those classes first."));return}
-  if(!confirm(adminLang("حذف بيانات هذا الحساب من الموقع وإيقاف دخوله؟\nملاحظة: بيانات Firebase Authentication نفسها تحتاج Backend للحذف النهائي.","Delete this account's site data and block access?\nNote: the Firebase Authentication credential itself requires a secure backend for final deletion.")))return;
+  if(!confirm(adminLang("حذف بيانات هذا الحساب من الموقع وإيقاف دخوله؟\nملاحظة: حذف بيانات تسجيل الدخول نفسها يحتاج خدمة إدارية آمنة.","Delete this account's site data and block access?\nNote: deleting the sign-in credential itself requires a secure admin service.")))return;
   try{
     await setDoc(doc(db,"blockedUsers",u.uid),{uid:u.uid,profileId:u.profileId||"",displayName:adminUserDisplay(u),deletedFromSite:true,blockedAt:serverTimestamp(),blockedBy:auth.currentUser.uid});
     for(const c of adminClassesCache){
@@ -10912,7 +11533,7 @@ async function adminDeleteClass(c){
   }catch(err){console.error(err);showToast(adminLang("تعذر حذف الصف بالكامل.","Could not fully delete the class."))}
 }
 function adminPopulateTargets(){
-  for(const id of ["adminTargetClass","adminPollTarget","autoAssignTarget"]){
+  for(const id of ["adminTargetClass","adminPollTarget","autoAssignTarget","studioButtonTarget","studioNoticeTarget"]){
     const sel=document.getElementById(id);if(!sel)continue;
     const first=id==="adminPollTarget"
       ?adminLang("الجميع","Everyone")
@@ -11860,6 +12481,7 @@ async function adminLoadControls(){
   adminSyncFeatureToggleButtons();
   adminRenderControlLiveStatus();
   renderAdminUpcomingEvents();
+  adminV34UpdateSystemBadge();
 }
 
 function controlDataFromUI(){
@@ -12004,6 +12626,7 @@ async function loadSiteControls(){
     renderStudentUpcomingEvents();
     renderAdminUpcomingEvents();
   }catch{}
+  try{renderAdminCustomSurface()}catch{}
   return siteControlsCache;
 }
 
@@ -12039,6 +12662,7 @@ async function loadSiteUpdatesForCurrentUser(){
   if(!section||!host)return;
 
   await loadSiteControls();
+  renderAdminCustomSurface();
   renderStudentActiveTimers();
   renderStudentUpcomingEvents();
 
@@ -12224,13 +12848,44 @@ async function loadSiteUpdatesForCurrentUser(){
     section.classList.add("hidden");
   }
 }
+
+function adminV34UpdateSystemBadge(){
+  const badge=document.getElementById("adminV34SystemBadge");
+  if(!badge)return;
+
+  const pausedKeys=[
+    "globalPause","lockExams","lockCompetitions",
+    "lockAssignments","lockPollVoting","lockClassJoin"
+  ];
+  const paused=pausedKeys.filter(k=>siteControlActive(k));
+
+  if(paused.length){
+    badge.textContent=`● ${adminLang("في تحكمات موقوفة","Controls paused")} (${paused.length})`;
+    badge.style.color="#ffbd78";
+    badge.style.background="rgba(255,165,72,.065)";
+    badge.style.borderColor="rgba(255,165,72,.13)";
+  }else{
+    badge.textContent=adminLang("● النظام شغّال","● SYSTEM OK");
+    badge.style.color="";
+    badge.style.background="";
+    badge.style.borderColor="";
+  }
+}
+
+document.querySelectorAll("[data-open-admin-tab]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    adminShowTab(btn.dataset.openAdminTab);
+  });
+});
+
 function adminShowTab(tab){
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Content","History","Controls"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Controls"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
+  if(tab==="studio")adminLoadStudio();
   if(tab==="content")adminLoadContentManager();
   if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
@@ -12286,6 +12941,8 @@ document.querySelectorAll(".admin-feature-toggle-btn").forEach(btn=>{
   btn.addEventListener("click",()=>adminToggleFeatureControl(btn.dataset.controlKey));
 });
 document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>adminLoadStudentOverview({force:true}));
+document.getElementById("studioCreateButtonBtn").addEventListener("click",studioCreateButton);
+document.getElementById("studioCreateNoticeBtn").addEventListener("click",studioCreateNotice);
 document.getElementById("adminRefreshContentBtn").addEventListener("click",adminLoadContentManager);
 document.getElementById("adminContentTypeFilter").addEventListener("change",adminRenderContentManager);
 document.getElementById("adminContentVisibilityFilter").addEventListener("change",adminRenderContentManager);
