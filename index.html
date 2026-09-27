@@ -1883,6 +1883,91 @@ body.light .public-poll-track{background:#e7eef3}
 body.light .admin-add-student-box{background:#f3f9fd;border-color:#d6e9f5}
 body.light .admin-add-student-result{background:#fff;border-color:#dce7ee;color:#173047}
 
+
+/* ================= V24 ADMIN HISTORY / VOTER DETAILS ================= */
+.admin-history-intro button{flex:none}
+.admin-history-stats{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0
+}
+.admin-history-stat{
+  padding:12px;border-radius:14px;text-align:center;
+  background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.06)
+}
+.admin-history-stat b{display:block;font-size:22px}
+.admin-history-stat small{display:block;margin-top:3px;color:#7f98aa;font-size:9px}
+.admin-assignment-history-list{display:grid;gap:11px;margin-top:11px}
+.admin-history-card{
+  padding:14px;border-radius:17px;
+  background:linear-gradient(145deg,rgba(255,255,255,.036),rgba(255,255,255,.018));
+  border:1px solid rgba(255,255,255,.065)
+}
+.admin-history-card-head{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start
+}
+.admin-history-card-head h4{margin:0 0 4px;font-size:16px}
+.admin-history-card-meta{font-size:10px;color:#8098aa;line-height:1.6}
+.admin-history-count{
+  flex:none;padding:6px 9px;border-radius:999px;
+  color:#8bd9ff;background:rgba(48,164,245,.08);
+  border:1px solid rgba(48,164,245,.14);font-size:10px;font-weight:900
+}
+.admin-history-submissions{display:grid;gap:7px;margin-top:10px}
+.admin-history-submit-row{
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.7fr) minmax(0,.7fr);
+  gap:9px;align-items:center;padding:9px;border-radius:11px;
+  background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.045)
+}
+.admin-history-student{display:flex;align-items:center;gap:8px;min-width:0}
+.admin-history-avatar{
+  width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;
+  background:linear-gradient(135deg,#218eff,#7a58e7);background-size:cover;background-position:center;
+  font-size:11px;font-weight:1000
+}
+.admin-history-student b{display:block;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-history-student small{display:block;color:#748da0;font-size:9px}
+.admin-history-score{font-size:11px;font-weight:900}
+.admin-history-time{font-size:9px;color:#7c94a7;text-align:end}
+.admin-history-empty{
+  padding:9px;border-radius:10px;color:#7891a4;font-size:10px;
+  background:rgba(255,255,255,.018);border:1px dashed rgba(255,255,255,.05)
+}
+
+/* Voter details */
+.poll-voter-details{
+  margin-top:9px;border-radius:11px;
+  background:rgba(255,255,255,.018);border:1px dashed rgba(255,255,255,.06);
+  overflow:hidden
+}
+.poll-voter-details summary{
+  padding:9px 10px;cursor:pointer;font-size:10px;font-weight:900;color:#8fd7ff
+}
+.poll-voter-table{display:grid;gap:5px;padding:0 9px 9px}
+.poll-voter-row{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr) minmax(0,.7fr);
+  gap:8px;align-items:center;padding:7px;border-radius:9px;
+  background:rgba(255,255,255,.024);border:1px solid rgba(255,255,255,.04)
+}
+.poll-voter-person b{display:block;font-size:10px}
+.poll-voter-person small{display:block;font-size:8px;color:#768fa2}
+.poll-voter-choice{font-size:10px;font-weight:900;color:#99ddff}
+.poll-voter-time{font-size:8px;color:#788fa2;text-align:end}
+
+body.light .admin-history-stat,
+body.light .admin-history-card,
+body.light .admin-history-submit-row,
+body.light .poll-voter-row{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
+
+@media(max-width:720px){
+  .admin-history-card-head{flex-direction:column}
+  .admin-history-submit-row{grid-template-columns:1fr}
+  .admin-history-time{text-align:start}
+  .poll-voter-row{grid-template-columns:1fr}
+  .poll-voter-time{text-align:start}
+}
+
 </style>
 </head>
 <body>
@@ -2069,6 +2154,7 @@ body.light .admin-add-student-result{background:#fff;border-color:#dce7ee;color:
 
     <div class="admin-tabs" id="adminTabs">
       <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
+      <button data-admin-tab="history">📝 Assignment History</button>
       <button data-admin-tab="dashboard">📈 Dashboard</button>
       <button data-admin-tab="people">👥 Students & Teachers</button>
       <button data-admin-tab="classes">🏫 Classes</button>
@@ -2186,6 +2272,25 @@ body.light .admin-add-student-result{background:#fff;border-color:#dce7ee;color:
       </div>
       <button class="apply" id="adminSendBtn">🚀 Send / Publish</button>
       <div class="cloud-note" id="adminSendStatus"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewHistory">
+      <div class="admin-section-intro admin-history-intro">
+        <div>
+          <b id="adminHistoryTitle">📝 سجل الوظائف والتسليمات</b>
+          <span id="adminHistorySub">يعرض كل الوظائف الموجودة وكل طالب سلّمها بدون حد زمني.</span>
+        </div>
+        <button class="exam-secondary" id="adminRefreshHistoryBtn">↻ تحديث السجل</button>
+      </div>
+
+      <div class="admin-history-stats">
+        <div class="admin-history-stat"><b id="adminHistoryAssignmentCount">0</b><small id="adminHistoryAssignmentsLabel">وظائف</small></div>
+        <div class="admin-history-stat"><b id="adminHistorySubmissionCount">0</b><small id="adminHistorySubmissionsLabel">تسليمات</small></div>
+        <div class="admin-history-stat"><b id="adminHistoryStudentCount">0</b><small id="adminHistoryStudentsLabel">طلاب سلّموا</small></div>
+      </div>
+
+      <div class="cloud-note" id="adminHistoryStatus">السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.</div>
+      <div class="admin-assignment-history-list" id="adminAssignmentHistoryList"></div>
     </div>
 
     <div class="admin-view hidden" id="adminViewPolls">
@@ -8623,7 +8728,8 @@ function applyAdminLanguage(){
   ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
   const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
   const tabs=[
-    ["polls","📊 التصويتات","📊 Polls"],["dashboard","📈 الرئيسية","📈 Dashboard"],
+    ["polls","📊 التصويتات","📊 Polls"],["history","📝 سجل الوظائف","📝 Assignment History"],
+    ["dashboard","📈 الرئيسية","📈 Dashboard"],
     ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
     ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","⚙️ تحكم الموقع","⚙️ Site Controls"]
   ];
@@ -8665,6 +8771,13 @@ function applyAdminLanguage(){
   ph("adminPollTitle","عنوان التصويت","Poll title");ph("adminPollQuestion","شو بدك تسأل؟","What do you want to ask?");
   document.querySelectorAll(".admin-poll-opt").forEach((el,i)=>el.placeholder=en?`Option ${i+1}`:`الخيار ${i+1}`);
   const pollBtn=document.getElementById("adminCreatePollBtn");if(pollBtn)pollBtn.textContent=en?"📊 Publish poll":"📊 نشر التصويت";
+  set("adminHistoryTitle","📝 سجل الوظائف والتسليمات","📝 Assignment & Submission History");
+  set("adminHistorySub","يعرض كل الوظائف الموجودة وكل طالب سلّمها بدون حد زمني.","Shows every stored assignment and every student submission with no date limit.");
+  set("adminHistoryAssignmentsLabel","وظائف","ASSIGNMENTS");
+  set("adminHistorySubmissionsLabel","تسليمات","SUBMISSIONS");
+  set("adminHistoryStudentsLabel","طلاب سلّموا","STUDENTS");
+  set("adminHistoryStatus","السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.","This history loads all assignment data currently stored in Firestore, regardless of age.");
+  const historyRefresh=document.getElementById("adminRefreshHistoryBtn");if(historyRefresh)historyRefresh.textContent=en?"↻ Refresh history":"↻ تحديث السجل";
   const toggles=[["adminLockExams","قفل دخول الطلاب للامتحانات","Lock student exam entry"],["adminLockCompetitions","قفل مسابقات الطلاب","Lock student competitions"],["adminMaintenance","إظهار تنبيه صيانة","Maintenance banner"]];
   toggles.forEach(([id,ar,enText])=>{const el=document.getElementById(id)?.parentElement;if(el){const n=[...el.childNodes].find(x=>x.nodeType===Node.TEXT_NODE);if(n)n.nodeValue=" "+(en?enText:ar)}});
   label("adminMaintenanceMessage","رسالة الصيانة","Maintenance message");ph("adminMaintenanceMessage","رسالة صيانة الموقع","Site maintenance message");
@@ -8703,6 +8816,9 @@ async function adminAudit(action,detail=""){
     });
   }catch(err){console.warn("admin audit",err)}
 }
+let adminAssignmentHistoryCache=[];
+let adminAssignmentHistoryLoaded=false;
+
 function adminUserByUid(uid){return adminUsersCache.find(x=>x.uid===uid)||null}
 function adminClassById(id){return adminClassesCache.find(x=>x.id===id)||null}
 function adminUserDisplay(u){return u?.displayName||u?.loginName||adminLang("مستخدم","User")}
@@ -8736,8 +8852,10 @@ async function adminLoadAllData(){
         };
       }catch(err){console.warn("admin class detail",c.id,err);return {...c,members:[],teachers:[],assignmentCount:0}}
     }));
+    adminAssignmentHistoryLoaded=false;
     adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
     if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="history")adminLoadAssignmentHistory({force:true});
     if(adminActiveTab==="controls")adminLoadControls();
   }catch(err){
     console.error("admin load",err);showToast(adminLang("تعذر تحميل بيانات الأدمن. تأكد من Firestore Rules.","Could not load admin data. Check Firestore Rules."));
@@ -8747,6 +8865,183 @@ async function adminLoadAllData(){
 }
 function adminSearchText(){return (document.getElementById("adminGlobalSearch")?.value||"").trim().toLowerCase()}
 function adminMatches(text){const q=adminSearchText();return !q||String(text||"").toLowerCase().includes(q)}
+
+function adminSubmissionDisplay(sub){
+  const u=adminUserByUid(sub.studentUid||sub.uid);
+  return {
+    name:u?adminUserDisplay(u):(sub.studentName||adminLang("طالب سابق / غير موجود","Former / unavailable student")),
+    profileId:u?.profileId||"—",
+    photo:u?.photoData||u?.photoURL||"",
+    uid:sub.studentUid||sub.uid||""
+  };
+}
+
+function adminHistoryTimestamp(ts){
+  if(!ts)return adminLang("بدون تاريخ","No date");
+  return adminDate(ts);
+}
+
+function adminRenderAssignmentHistory(){
+  const host=document.getElementById("adminAssignmentHistoryList");
+  if(!host)return;
+
+  const q=adminSearchText();
+  let rows=[...adminAssignmentHistoryCache];
+
+  if(q){
+    rows=rows.filter(a=>{
+      const studentBits=(a.submissions||[]).flatMap(s=>{
+        const u=adminSubmissionDisplay(s);
+        return [u.name,u.profileId,u.uid];
+      });
+      return [
+        a.title,a.className,a.description,a.id,a.classId,
+        ...studentBits
+      ].some(v=>String(v||"").toLowerCase().includes(q));
+    });
+  }
+
+  const allSubmissions=rows.flatMap(a=>a.submissions||[]);
+  const uniqueStudentIds=new Set(allSubmissions.map(s=>s.studentUid||s.uid).filter(Boolean));
+
+  document.getElementById("adminHistoryAssignmentCount").textContent=rows.length;
+  document.getElementById("adminHistorySubmissionCount").textContent=allSubmissions.length;
+  document.getElementById("adminHistoryStudentCount").textContent=uniqueStudentIds.size;
+
+  host.innerHTML="";
+
+  if(!rows.length){
+    host.innerHTML=`<div class="cloud-note">${adminLang("ما في وظائف مطابقة بالسجل.","No matching assignments in history.")}</div>`;
+    return;
+  }
+
+  for(const a of rows){
+    const card=document.createElement("article");
+    card.className="admin-history-card";
+
+    const submissions=[...(a.submissions||[])].sort((x,y)=>
+      (y.submittedAt?.seconds||y.gradedAt?.seconds||0)-
+      (x.submittedAt?.seconds||x.gradedAt?.seconds||0)
+    );
+
+    const submitRows=submissions.map(sub=>{
+      const person=adminSubmissionDisplay(sub);
+      const score=sub.teacherReviewed
+        ? sub.finalScore
+        : (sub.autoScore ?? sub.finalScore);
+      const total=sub.totalPoints||a.totalPoints||0;
+      const when=sub.submittedAt||sub.gradedAt||null;
+
+      return `<div class="admin-history-submit-row">
+        <div class="admin-history-student">
+          <div class="admin-history-avatar" ${person.photo?`style="background-image:url('${escapeHtml(person.photo)}')"`:""}>
+            ${person.photo?"":escapeHtml((person.name[0]||"?").toUpperCase())}
+          </div>
+          <div style="min-width:0">
+            <b>${escapeHtml(person.name)}</b>
+            <small>Profile ID: ${escapeHtml(person.profileId)}${person.uid?` • UID: ${escapeHtml(person.uid)}`:""}</small>
+          </div>
+        </div>
+        <div class="admin-history-score">
+          ${score!=null
+            ? `${escapeHtml(String(score))}/${escapeHtml(String(total))}`
+            : adminLang("بانتظار التصحيح","Pending grade")}
+          ${sub.teacherReviewed
+            ? ` • ${adminLang("نهائي","Final")}`
+            : ` • ${adminLang("تلقائي","Auto")}`}
+        </div>
+        <div class="admin-history-time">${escapeHtml(adminHistoryTimestamp(when))}</div>
+      </div>`;
+    }).join("");
+
+    card.innerHTML=`
+      <div class="admin-history-card-head">
+        <div>
+          <h4>📝 ${escapeHtml(a.title||adminLang("وظيفة بدون عنوان","Untitled assignment"))}</h4>
+          <div class="admin-history-card-meta">
+            🏫 ${escapeHtml(a.className||"Class")}
+            ${a.createdAt?` • ${adminLang("أُنشئت","Created")}: ${escapeHtml(adminHistoryTimestamp(a.createdAt))}`:""}
+            ${a.dueDate?` • ${adminLang("التسليم","Due")}: ${escapeHtml(formatStoredDate(a.dueDate))}`:""}
+            ${a.totalPoints!=null?` • ${escapeHtml(String(a.totalPoints))} ${adminLang("علامة","points")}`:""}
+          </div>
+        </div>
+        <span class="admin-history-count">${submissions.length} ${adminLang("سلّموا","submitted")}</span>
+      </div>
+
+      ${a.description?`<div class="admin-meta" style="margin-top:7px">${escapeHtml(a.description)}</div>`:""}
+
+      <div class="admin-history-submissions">
+        ${submitRows||`<div class="admin-history-empty">${adminLang("لسه ما حدا سلّم هاي الوظيفة.","No one has submitted this assignment yet.")}</div>`}
+      </div>`;
+
+    host.appendChild(card);
+  }
+}
+
+async function adminLoadAssignmentHistory({force=false}={}){
+  if(!requireSuperAdmin())return;
+  const host=document.getElementById("adminAssignmentHistoryList");
+  const status=document.getElementById("adminHistoryStatus");
+
+  if(adminAssignmentHistoryLoaded&&!force){
+    adminRenderAssignmentHistory();
+    return;
+  }
+
+  if(host)host.innerHTML=`<div class="cloud-note">${adminLang("⏳ جاري تحميل كل الوظائف والتسليمات القديمة...","⏳ Loading all assignments and historical submissions...")}</div>`;
+  if(status)status.textContent=adminLang(
+    "جاري قراءة السجل كامل — ما في فلترة حسب السنة.",
+    "Loading the complete stored history — no year filter."
+  );
+
+  try{
+    const history=[];
+
+    for(const c of adminClassesCache){
+      const assignmentsSnap=await getDocs(collection(db,"classes",c.id,"assignments"));
+
+      for(const d of assignmentsSnap.docs){
+        const a={id:d.id,...d.data()};
+        let submissions=[];
+
+        try{
+          const subSnap=await getDocs(collection(db,"classes",c.id,"assignments",d.id,"submissions"));
+          submissions=subSnap.docs.map(s=>({uid:s.id,...s.data()}));
+        }catch(err){
+          console.warn("history submissions",c.id,d.id,err);
+        }
+
+        history.push({
+          ...a,
+          id:d.id,
+          classId:c.id,
+          className:c.name||"Class",
+          submissions
+        });
+      }
+    }
+
+    history.sort((a,b)=>
+      (b.createdAt?.seconds||b.updatedAt?.seconds||0)-
+      (a.createdAt?.seconds||a.updatedAt?.seconds||0)
+    );
+
+    adminAssignmentHistoryCache=history;
+    adminAssignmentHistoryLoaded=true;
+
+    if(status)status.textContent=adminLang(
+      `تم تحميل السجل كامل: ${history.length} وظيفة.`,
+      `Complete history loaded: ${history.length} assignments.`
+    );
+
+    adminRenderAssignmentHistory();
+  }catch(err){
+    console.error("assignment history",err);
+    if(status)status.textContent=adminLang("تعذر تحميل سجل الوظائف.","Could not load assignment history.");
+    if(host)host.innerHTML="";
+  }
+}
+
 function adminRenderDashboard(){
   const students=adminUsersCache.filter(u=>u.role==="student").length;
   const teachers=adminUsersCache.filter(u=>u.role==="teacher"||isSuperAdminProfile(u)).length;
@@ -9322,14 +9617,31 @@ async function adminLoadPolls(){
     for(const poll of polls){
       const votes=await getDocs(collection(db,"adminPolls",poll.id,"votes"));
       const counts=Array(poll.options?.length||0).fill(0);
-      const voterNames=[];
+      const voterRows=[];
 
       votes.docs.forEach(v=>{
-        const data=v.data();
+        const data=v.data()||{};
+        const uid=data.uid||v.id;
         const i=Number(data.optionIndex);
+
         if(i>=0&&i<counts.length)counts[i]++;
-        if(data.displayName)voterNames.push(data.displayName);
+
+        const user=adminUserByUid(uid);
+        const name=user
+          ?adminUserDisplay(user)
+          :(data.displayName||data.studentName||adminLang("حساب غير موجود","Unavailable account"));
+
+        voterRows.push({
+          uid,
+          name,
+          profileId:user?.profileId||"—",
+          optionIndex:i,
+          optionText:(i>=0&&i<(poll.options||[]).length)?poll.options[i]:adminLang("خيار غير معروف","Unknown option"),
+          votedAt:data.votedAt||null
+        });
       });
+
+      voterRows.sort((a,b)=>(b.votedAt?.seconds||0)-(a.votedAt?.seconds||0));
 
       const total=votes.size;
       const eligible=adminPollEligibleCount(poll);
@@ -9357,6 +9669,17 @@ async function adminLoadPolls(){
         : leadingIndexes.length>1
           ? adminLang("تعادل بين أكثر من خيار","Tie between multiple options")
           : adminLang("لسه ما في أصوات","No votes yet");
+
+      const voterHtml=voterRows.map(v=>`
+        <div class="poll-voter-row">
+          <div class="poll-voter-person">
+            <b>${escapeHtml(v.name)}</b>
+            <small>Profile ID: ${escapeHtml(v.profileId)} • UID: ${escapeHtml(v.uid)}</small>
+          </div>
+          <div class="poll-voter-choice">✓ ${escapeHtml(v.optionText)}</div>
+          <div class="poll-voter-time">${escapeHtml(adminHistoryTimestamp(v.votedAt))}</div>
+        </div>
+      `).join("");
 
       const card=document.createElement("div");
       card.className="admin-poll-card";
@@ -9391,9 +9714,12 @@ async function adminLoadPolls(){
         <div class="poll-results-list">${resultsHtml}</div>
         <span class="poll-leading">🏆 ${leaderText}</span>
 
-        ${voterNames.length
-          ? `<details class="poll-voter-list"><summary>${adminLang("عرض أسماء المصوّتين","Show voter names")} (${voterNames.length})</summary><div style="margin-top:7px">${voterNames.map(escapeHtml).join(" • ")}</div></details>`
-          : ""}
+        <details class="poll-voter-details" ${voterRows.length<=8&&voterRows.length?"open":""}>
+          <summary>${adminLang("مين صوّت وشو اختار","Who voted and what they chose")} (${voterRows.length})</summary>
+          <div class="poll-voter-table">
+            ${voterHtml||`<div class="admin-history-empty">${adminLang("لسه ما حدا صوّت.","No votes yet.")}</div>`}
+          </div>
+        </details>
 
         <div class="admin-actions">
           <button class="admin-close-poll">${poll.active!==false?adminLang("إغلاق","Close"):adminLang("إعادة فتح","Reopen")}</button>
@@ -9631,9 +9957,14 @@ async function loadSiteUpdatesForCurrentUser(){
   }
 }
 function adminShowTab(tab){
-  adminActiveTab=tab;document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Classes","Send","Polls","Controls"])document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
-  if(tab==="polls")adminLoadPolls();if(tab==="controls")adminLoadControls();
+  adminActiveTab=tab;
+  document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
+  for(const key of ["Dashboard","People","Classes","Send","Polls","History","Controls"]){
+    document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
+  }
+  if(tab==="polls")adminLoadPolls();
+  if(tab==="history")adminLoadAssignmentHistory();
+  if(tab==="controls")adminLoadControls();
 }
 function openAdminPanel(){if(!requireSuperAdmin())return;applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
 document.getElementById("adminPanelBtn").addEventListener("click",openAdminPanel);
@@ -9641,7 +9972,11 @@ document.getElementById("closeAdminPanel").addEventListener("click",()=>adminPan
 adminPanelModal.addEventListener("click",e=>{if(e.target===adminPanelModal)adminPanelModal.classList.remove("open")});
 document.querySelectorAll("#adminTabs button").forEach(b=>b.addEventListener("click",()=>adminShowTab(b.dataset.adminTab)));
 document.getElementById("adminRefreshBtn").addEventListener("click",adminLoadAllData);
-document.getElementById("adminGlobalSearch").addEventListener("input",()=>{adminRenderPeople();adminRenderClasses()});
+document.getElementById("adminGlobalSearch").addEventListener("input",()=>{
+  adminRenderPeople();
+  adminRenderClasses();
+  if(adminActiveTab==="history")adminRenderAssignmentHistory();
+});
 document.getElementById("adminPeopleRoleFilter").addEventListener("change",adminRenderPeople);
 document.getElementById("adminSendType").addEventListener("change",adminUpdateSendFields);adminUpdateSendFields();
 document.getElementById("adminSendBtn").addEventListener("click",adminSendContent);
@@ -9656,6 +9991,7 @@ document.getElementById("autoAssignCount").addEventListener("input",()=>{
   document.getElementById("autoAssignPreview").classList.add("hidden");
 });
 document.getElementById("adminCreatePollBtn").addEventListener("click",adminCreatePoll);
+document.getElementById("adminRefreshHistoryBtn").addEventListener("click",()=>adminLoadAssignmentHistory({force:true}));
 document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSaveControls);
 
 
