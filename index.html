@@ -1619,6 +1619,105 @@ body.light .site-updates-priority{background:linear-gradient(145deg,#f5fbff,#f8f
 body.light .admin-panel-box{background:#f5f9fc;color:#173047}body.light .admin-panel-box .modalhead,body.light .admin-toolbar,body.light .admin-tabs{background:rgba(247,251,253,.94);border-color:#dce7ee}body.light .admin-stat,body.light .admin-person-card,body.light .admin-class-card,body.light .admin-poll-card,body.light .admin-log-row,body.light .admin-class-col{background:#fff!important;border-color:#dbe5ec!important}body.light .admin-section-intro,body.light .admin-security-note{background:#eef7fd;border-color:#d5e9f6}body.light .classmates-panel{background:#f5f9fc;border-color:#dce7ee}body.light .classmate-card{background:#fff;border-color:#dce6ed;color:#173047}
 @media(max-width:760px){.admin-tabs{top:132px!important;overflow-x:auto;flex-wrap:nowrap!important}.admin-tabs button{white-space:nowrap}.admin-detail-grid{grid-template-columns:1fr}.admin-section-intro{align-items:flex-start;flex-direction:column}}
 
+
+/* ================= V19 AUTO ASSIGNMENT / POLL STATS ================= */
+.admin-auto-assignment{
+  border:1px solid rgba(67,184,255,.18);
+  background:
+    radial-gradient(circle at 92% 8%,rgba(82,171,255,.10),transparent 28%),
+    linear-gradient(145deg,rgba(20,108,188,.08),rgba(126,80,226,.045));
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 18px 48px rgba(0,0,0,.12);
+}
+.admin-auto-head{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px
+}
+.admin-auto-head h3{margin:5px 0 4px;font-size:19px}
+.admin-auto-head p{margin:0;color:#8ea6b9;line-height:1.6;font-size:12px}
+.admin-auto-badge{
+  display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;
+  background:rgba(48,182,255,.10);border:1px solid rgba(72,190,255,.18);
+  color:#8bdaff;font-size:10px;font-weight:1000;letter-spacing:.07em
+}
+.admin-auto-icon{
+  width:58px;height:58px;border-radius:18px;display:grid;place-items:center;
+  font-size:28px;background:linear-gradient(145deg,rgba(29,148,255,.18),rgba(135,80,235,.15));
+  border:1px solid rgba(84,184,255,.16);flex:none
+}
+.admin-auto-grid{margin-top:8px}
+.admin-auto-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.admin-auto-actions button{min-width:190px}
+.admin-auto-preview{
+  margin-top:12px;padding:11px;border-radius:14px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);max-height:390px;overflow:auto
+}
+.admin-auto-preview h4{margin:0 0 9px}
+.auto-preview-q{
+  padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.045);margin-top:6px
+}
+.auto-preview-q b{font-size:12px}
+.auto-preview-q small{display:block;margin-top:4px;color:#7e97a9}
+.admin-divider{
+  display:flex;align-items:center;gap:9px;margin:15px 0;color:#738b9e;font-size:10px;font-weight:900
+}
+.admin-divider::before,.admin-divider::after{
+  content:"";height:1px;flex:1;background:rgba(255,255,255,.065)
+}
+
+/* Poll statistics */
+.poll-stat-summary{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:11px 0
+}
+.poll-stat-box{
+  padding:9px;border-radius:12px;text-align:center;
+  background:rgba(255,255,255,.026);border:1px solid rgba(255,255,255,.055)
+}
+.poll-stat-box b{display:block;font-size:20px}
+.poll-stat-box small{display:block;color:#7f97aa;font-size:9px;margin-top:2px}
+.poll-results-list{display:grid;gap:8px;margin-top:9px}
+.poll-result-row{
+  padding:9px;border-radius:11px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.045)
+}
+.poll-result-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px}
+.poll-result-head b{font-size:12px}
+.poll-result-track{
+  height:9px;border-radius:999px;background:rgba(255,255,255,.06);
+  overflow:hidden;margin-top:6px
+}
+.poll-result-fill{
+  display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#168dff,#6b63ed);
+  transition:width .5s ease
+}
+.poll-leading{
+  display:inline-flex;margin-top:7px;padding:5px 7px;border-radius:999px;
+  background:rgba(75,189,143,.07);border:1px solid rgba(75,189,143,.14);
+  color:#8bdcb8;font-size:10px;font-weight:900
+}
+.poll-voter-list{
+  margin-top:8px;padding:8px;border-radius:10px;background:rgba(255,255,255,.018);
+  border:1px dashed rgba(255,255,255,.055);font-size:10px;color:#8ca4b7
+}
+
+body.light .admin-auto-assignment{
+  background:linear-gradient(145deg,#f2faff,#f8f5ff);border-color:#d4e9f8
+}
+body.light .admin-auto-preview,body.light .auto-preview-q,body.light .poll-stat-box,body.light .poll-result-row{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+body.light .poll-result-track{background:#e8f0f5}
+body.light .admin-divider::before,body.light .admin-divider::after{background:#dbe6ed}
+
+@media(max-width:700px){
+  .admin-auto-head{align-items:flex-start}.admin-auto-icon{width:48px;height:48px}
+  .admin-auto-actions{flex-direction:column}.admin-auto-actions button{width:100%}
+  .poll-stat-summary{grid-template-columns:1fr 1fr 1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1847,6 +1946,59 @@ body.light .admin-panel-box{background:#f5f9fc;color:#173047}body.light .admin-p
     </div>
 
     <div class="admin-view hidden" id="adminViewSend">
+
+      <section class="admin-auto-assignment">
+        <div class="admin-auto-head">
+          <div>
+            <span class="admin-auto-badge">⚡ AUTO</span>
+            <h3 id="autoAssignHeading">الموقع يعمل وظيفة ويرسلها للصفوف</h3>
+            <p id="autoAssignSub">اختار الصف، المستوى وعدد الأسئلة. الموقع يولّد وظيفة فيثاغورس جاهزة بتصحيح تلقائي ويرسلها مباشرة.</p>
+          </div>
+          <div class="admin-auto-icon">📝</div>
+        </div>
+
+        <div class="admin-form-grid admin-auto-grid">
+          <label id="autoAssignTargetLabel">الصف
+            <select id="autoAssignTarget"><option value="all">كل الصفوف</option></select>
+          </label>
+
+          <label id="autoAssignDifficultyLabel">المستوى
+            <select id="autoAssignDifficulty">
+              <option value="easy">سهل</option>
+              <option value="medium" selected>متوسط</option>
+              <option value="hard">صعب</option>
+              <option value="expert">خبير</option>
+            </select>
+          </label>
+
+          <label id="autoAssignCountLabel">عدد الأسئلة
+            <input id="autoAssignCount" type="number" min="3" max="20" value="10">
+          </label>
+
+          <label id="autoAssignDueLabel">تاريخ التسليم
+            <input id="autoAssignDueDate" type="date">
+          </label>
+
+          <label class="admin-wide" id="autoAssignTitleLabel">اسم الوظيفة
+            <input id="autoAssignTitle" maxlength="80" value="Pythagoras Practice" placeholder="Pythagoras Practice">
+          </label>
+
+          <label class="admin-wide" id="autoAssignInstructionsLabel">تعليمات للطلاب — اختياري
+            <textarea id="autoAssignInstructions" placeholder="حل الأسئلة وسلّم قبل الموعد..."></textarea>
+          </label>
+        </div>
+
+        <div class="admin-auto-actions">
+          <button class="exam-secondary" id="autoAssignPreviewBtn">👀 معاينة الأسئلة</button>
+          <button class="apply" id="autoAssignSendBtn">🚀 ولّد الوظيفة وأرسلها</button>
+        </div>
+
+        <div class="admin-auto-preview hidden" id="autoAssignPreview"></div>
+        <div class="cloud-note" id="autoAssignStatus"></div>
+      </section>
+
+      <div class="admin-divider"><span id="adminManualSendLabel">إرسال يدوي / أدوات إضافية</span></div>
+
       <div class="admin-form-grid">
         <label>Target
           <select id="adminTargetClass"><option value="all">All classes</option></select>
@@ -7977,6 +8129,24 @@ function applyAdminLanguage(){
   const peopleIntro=document.querySelector("#adminViewPeople .admin-section-intro");if(peopleIntro){peopleIntro.querySelector("b").textContent=en?"👥 Accounts":"👥 الحسابات";peopleIntro.querySelector("span").textContent=en?"Search by name, Profile ID, login name, teacher email or UID.":"ابحث بالاسم، Profile ID، اسم الدخول، إيميل المعلم أو UID.";peopleIntro.querySelector(".admin-safe-badge").textContent=en?"🔒 Passwords protected":"🔒 كلمات السر محمية"}
   const classIntro=document.querySelector("#adminViewClasses .admin-section-intro");if(classIntro){classIntro.querySelector("b").textContent=en?"🏫 Classes":"🏫 الصفوف";classIntro.querySelector("span").textContent=en?"Every class shows teachers, teacher emails, Profile IDs and students.":"كل صف يعرض المعلمين، إيميلاتهم، Profile IDs والطلاب.";classIntro.querySelector(".admin-safe-badge").textContent=en?"🔎 Search from the top bar":"🔎 ابحث من الشريط بالأعلى"}
     const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
+  set("autoAssignHeading","الموقع يعمل وظيفة ويرسلها للصفوف","Generate an assignment and send it to classes");
+  set("autoAssignSub","اختار الصف، المستوى وعدد الأسئلة. الموقع يولّد وظيفة فيثاغورس جاهزة بتصحيح تلقائي ويرسلها مباشرة.","Choose the class, difficulty and question count. The site generates a ready Pythagoras assignment with automatic grading and sends it directly.");
+  set("adminManualSendLabel","إرسال يدوي / أدوات إضافية","Manual send / additional tools");
+  label("autoAssignTarget","الصف","Class");
+  label("autoAssignDifficulty","المستوى","Difficulty");
+  label("autoAssignCount","عدد الأسئلة","Questions");
+  label("autoAssignDueDate","تاريخ التسليم","Due date");
+  label("autoAssignTitle","اسم الوظيفة","Assignment title");
+  label("autoAssignInstructions","تعليمات للطلاب — اختياري","Student instructions — optional");
+  ph("autoAssignTitle","اسم الوظيفة","Assignment title");
+  ph("autoAssignInstructions","حل الأسئلة وسلّم قبل الموعد...","Complete the questions and submit before the due date...");
+  const autoDiff=document.getElementById("autoAssignDifficulty");
+  if(autoDiff){const v=en?["Easy","Medium","Hard","Expert"]:["سهل","متوسط","صعب","خبير"];[...autoDiff.options].forEach((o,i)=>o.textContent=v[i])}
+  const previewBtn=document.getElementById("autoAssignPreviewBtn");
+  if(previewBtn)previewBtn.textContent=en?"👀 Preview questions":"👀 معاينة الأسئلة";
+  const autoSendBtn=document.getElementById("autoAssignSendBtn");
+  if(autoSendBtn)autoSendBtn.textContent=en?"🚀 Generate & send assignment":"🚀 ولّد الوظيفة وأرسلها";
+
   label("adminTargetClass","الهدف","Target");label("adminSendType","النوع","Type");label("adminSendTitle","العنوان","Title");label("adminSendBody","الرسالة / التعليمات","Message / instructions");label("adminSendDueDate","تاريخ التسليم","Due date");label("adminQuestionCount","عدد الأسئلة","Questions");label("adminDifficulty","الصعوبة","Difficulty");
   ph("adminSendTitle","العنوان","Title");ph("adminSendBody","اكتب الرسالة أو تعليمات الوظيفة...","Write the message or assignment instructions...");
   const sendType=document.getElementById("adminSendType");if(sendType){const v=en?["Announcement","Assignment","Generated Pythagoras exam as assignment","Competition"]:["إعلان","وظيفة","امتحان فيثاغورس مولّد كوظيفة","مسابقة"];[...sendType.options].forEach((o,i)=>o.textContent=v[i])}
@@ -8218,8 +8388,11 @@ async function adminDeleteClass(c){
   }catch(err){console.error(err);showToast(adminLang("تعذر حذف الصف بالكامل.","Could not fully delete the class."))}
 }
 function adminPopulateTargets(){
-  for(const id of ["adminTargetClass","adminPollTarget"]){
-    const sel=document.getElementById(id);if(!sel)continue;const first=id==="adminTargetClass"?adminLang("كل الصفوف","All classes"):adminLang("الجميع","Everyone");
+  for(const id of ["adminTargetClass","adminPollTarget","autoAssignTarget"]){
+    const sel=document.getElementById(id);if(!sel)continue;
+    const first=id==="adminPollTarget"
+      ?adminLang("الجميع","Everyone")
+      :adminLang("كل الصفوف","All classes");
     sel.innerHTML=`<option value="all">${first}</option>`+adminClassesCache.map(c=>`<option value="${c.id}">${escapeHtml(c.name||"Class")} (${escapeHtml(c.code||"")})</option>`).join("");
   }
 }
@@ -8231,21 +8404,99 @@ async function adminPostAnnouncement(title,body,targetValue,extra={}){
   const t=adminTargetMeta(targetValue);
   return addDoc(collection(db,"adminAnnouncements"),{title,body,...t,...extra,active:true,createdBy:auth.currentUser.uid,createdByName:window.PythagorasiUser.displayName||"Super Admin",createdAt:serverTimestamp()});
 }
-function adminGeneratedPythagorasQuestions(count=10){
-  const triples=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[9,12,15],[6,8,10]];const qs=[];
+function adminGeneratedPythagorasQuestions(count=10,difficulty="medium"){
+  const pools={
+    easy:[[3,4,5],[6,8,10],[5,12,13]],
+    medium:[[5,12,13],[8,15,17],[7,24,25],[9,12,15]],
+    hard:[[9,40,41],[12,35,37],[20,21,29],[11,60,61],[28,45,53]],
+    expert:[[33,56,65],[16,63,65],[48,55,73],[39,80,89],[65,72,97]]
+  };
+  const triples=pools[difficulty]||pools.medium;
+  const qs=[];
+  const now=Date.now();
+
   for(let i=0;i<count;i++){
-    const [a,b,c]=triples[i%triples.length];const mode=i%3;
-    if(mode===0)qs.push({id:`aq_${Date.now()}_${i}`,type:"number",prompt:`a = ${a}, b = ${b}. ${adminLang("احسب c (الوتر).","Find c (the hypotenuse).")}`,points:10,options:[],answerHash:assignmentHash(c),_answer:String(c)});
-    else if(mode===1)qs.push({id:`aq_${Date.now()}_${i}`,type:"number",prompt:`b = ${b}, c = ${c}. ${adminLang("احسب a.","Find a.")}`,points:10,options:[],answerHash:assignmentHash(a),_answer:String(a)});
-    else{const opts=["a² + b² = c²","a + b = c","a² - b² = c²","a × b = c"].sort(()=>Math.random()-.5);qs.push({id:`aq_${Date.now()}_${i}`,type:"mcq",prompt:adminLang("أي قانون صحيح للمثلث القائم؟","Which formula is correct for a right triangle?"),points:10,options:opts,answerHash:assignmentHash("a² + b² = c²"),_answer:"a² + b² = c²"})}
+    const [a,b,c]=triples[i%triples.length];
+    const mode=i%5;
+    const id=`aq_${now}_${i}_${Math.random().toString(36).slice(2,5)}`;
+    const points=10;
+
+    if(mode===0){
+      qs.push({
+        id,type:"number",
+        prompt:`a = ${a}, b = ${b}. ${adminLang("احسب c (الوتر).","Find c (the hypotenuse).")}`,
+        points,options:[],answerHash:assignmentHash(c),_answer:String(c)
+      });
+    }else if(mode===1){
+      qs.push({
+        id,type:"number",
+        prompt:`a = ${a}, c = ${c}. ${adminLang("احسب b.","Find b.")}`,
+        points,options:[],answerHash:assignmentHash(b),_answer:String(b)
+      });
+    }else if(mode===2){
+      qs.push({
+        id,type:"number",
+        prompt:`b = ${b}, c = ${c}. ${adminLang("احسب a.","Find a.")}`,
+        points,options:[],answerHash:assignmentHash(a),_answer:String(a)
+      });
+    }else if(mode===3){
+      const options=["a² + b² = c²","a + b = c","a² - b² = c²","a × b = c"]
+        .sort(()=>Math.random()-.5);
+      qs.push({
+        id,type:"mcq",
+        prompt:adminLang("أي قانون صحيح للمثلث القائم؟","Which formula is correct for a right triangle?"),
+        points,options,answerHash:assignmentHash("a² + b² = c²"),_answer:"a² + b² = c²"
+      });
+    }else{
+      const scenario=difficulty==="easy"
+        ? adminLang(`سُلّم يرتفع ${a} متر ويبتعد ${b} متر عن الحائط. كم طول السلم؟`,`A ladder rises ${a} m and is ${b} m from the wall. How long is the ladder?`)
+        : adminLang(`مستطيل أبعاده ${a} و ${b}. كم طول القطر؟`,`A rectangle measures ${a} by ${b}. What is its diagonal?`);
+      qs.push({
+        id,type:"number",prompt:scenario,points,options:[],
+        answerHash:assignmentHash(c),_answer:String(c)
+      });
+    }
   }
   return qs;
 }
-async function adminCreateAssignmentForClass(classId,title,description,dueDate,generated,count){
-  let questions=generated?adminGeneratedPythagorasQuestions(count):[{id:`aq_${Date.now()}_0`,type:"open",prompt:description||adminLang("اكتب إجابتك هنا.","Write your answer here."),points:100,options:[],answerHash:"",_guide:description||""}];
+
+function adminAssignmentDifficultyName(level){
+  const ar={easy:"سهل",medium:"متوسط",hard:"صعب",expert:"خبير"};
+  const en={easy:"Easy",medium:"Medium",hard:"Hard",expert:"Expert"};
+  return currentUILanguage==="en"?(en[level]||"Medium"):(ar[level]||"متوسط");
+}
+
+function adminRenderGeneratedAssignmentPreview(questions,difficulty){
+  const host=document.getElementById("autoAssignPreview");
+  if(!host)return;
+  host.classList.remove("hidden");
+  host.innerHTML=`<h4>${adminLang("👀 معاينة الوظيفة","👀 Assignment preview")} • ${adminAssignmentDifficultyName(difficulty)} • ${questions.length} ${adminLang("أسئلة","questions")}</h4>`;
+  questions.forEach((q,i)=>{
+    const d=document.createElement("div");
+    d.className="auto-preview-q";
+    d.innerHTML=`<b>${i+1}. ${escapeHtml(q.prompt)}</b>
+      <small>${q.type==="mcq"
+        ? `${adminLang("اختيار من متعدد","Multiple choice")} • ${(q.options||[]).map(escapeHtml).join(" / ")}`
+        : adminLang("إجابة رقمية","Numeric answer")}</small>`;
+    host.appendChild(d);
+  });
+}
+async function adminCreateAssignmentForClass(classId,title,description,dueDate,generated,count,difficulty="medium",questionsOverride=null){
+  let questions=questionsOverride
+    ? questionsOverride.map(q=>({...q}))
+    : generated
+      ? adminGeneratedPythagorasQuestions(count,difficulty)
+      : [{id:`aq_${Date.now()}_0`,type:"open",prompt:description||adminLang("اكتب إجابتك هنا.","Write your answer here."),points:100,options:[],answerHash:"",_guide:description||""}];
   const totalPoints=questions.reduce((s,q)=>s+(q.points||0),0);
   const pub=questions.map(({_answer,_guide,...q})=>q);
-  const ref=await addDoc(collection(db,"classes",classId,"assignments"),{title,description,subject:"pythagoras",dueDate,questions:pub,totalPoints,createdBy:auth.currentUser.uid,createdByName:window.PythagorasiUser.displayName||"Super Admin",adminCreated:true,createdAt:serverTimestamp()});
+  const ref=await addDoc(collection(db,"classes",classId,"assignments"),{
+    title,description,subject:"pythagoras",dueDate,questions:pub,totalPoints,
+    difficulty:generated?difficulty:"custom",
+    autoGenerated:!!generated,
+    createdBy:auth.currentUser.uid,
+    createdByName:window.PythagorasiUser.displayName||"Super Admin",
+    adminCreated:true,createdAt:serverTimestamp()
+  });
   for(const q of questions)await setDoc(doc(db,"classes",classId,"assignments",ref.id,"answerKey",q.id),{id:q.id,type:q.type,answer:q._answer||"",guide:q._guide||"",points:q.points});
   return ref.id;
 }
@@ -8260,7 +8511,14 @@ async function adminCreateTargetCompetition(targetValue,title,count=8){
 }
 async function adminSendContent(){
   if(!requireSuperAdmin())return;
-  const type=document.getElementById("adminSendType").value,target=document.getElementById("adminTargetClass").value,title=document.getElementById("adminSendTitle").value.trim()||adminLang("من إدارة الموقع","From Site Admin"),body=document.getElementById("adminSendBody").value.trim(),due=document.getElementById("adminSendDueDate").value,count=Math.max(3,Math.min(20,Number(document.getElementById("adminQuestionCount").value)||10)),status=document.getElementById("adminSendStatus");
+  const type=document.getElementById("adminSendType").value,
+    target=document.getElementById("adminTargetClass").value,
+    title=document.getElementById("adminSendTitle").value.trim()||adminLang("من إدارة الموقع","From Site Admin"),
+    body=document.getElementById("adminSendBody").value.trim(),
+    due=document.getElementById("adminSendDueDate").value,
+    count=Math.max(3,Math.min(20,Number(document.getElementById("adminQuestionCount").value)||10)),
+    difficulty=document.getElementById("adminDifficulty").value||"medium",
+    status=document.getElementById("adminSendStatus");
   const btn=document.getElementById("adminSendBtn");btn.disabled=true;status.textContent=adminLang("⏳ جاري النشر...","⏳ Publishing...");
   try{
     if(type==="announcement")await adminPostAnnouncement(title,body,target);
@@ -8269,13 +8527,107 @@ async function adminSendContent(){
     }else{
       const targets=target==="all"?adminClassesCache:[adminClassById(target)].filter(Boolean);
       if(!targets.length)throw new Error("no-target-class");
-      for(const c of targets)await adminCreateAssignmentForClass(c.id,title,body,due,type==="generatedAssignment",count);
+      for(const c of targets)await adminCreateAssignmentForClass(c.id,title,body,due,type==="generatedAssignment",count,difficulty);
       await adminPostAnnouncement(title,body||adminLang("تم إرسال وظيفة جديدة.","A new assignment was sent."),target,{kind:"assignment"});
     }
     await adminAudit(`admin_send_${type}`,`${title} • ${target}`);status.textContent=adminLang("تم النشر بنجاح ✅","Published successfully ✅");showToast(status.textContent);await adminLoadAllData();
   }catch(err){console.error(err);status.textContent=adminLang("تعذر النشر.","Could not publish.")}
   finally{btn.disabled=false}
 }
+
+let autoAssignmentPreviewQuestions=[];
+
+function autoAssignmentValues(){
+  return {
+    target:document.getElementById("autoAssignTarget").value,
+    difficulty:document.getElementById("autoAssignDifficulty").value||"medium",
+    count:Math.max(3,Math.min(20,Number(document.getElementById("autoAssignCount").value)||10)),
+    due:document.getElementById("autoAssignDueDate").value,
+    title:document.getElementById("autoAssignTitle").value.trim()||adminLang("وظيفة فيثاغورس","Pythagoras Assignment"),
+    instructions:document.getElementById("autoAssignInstructions").value.trim()
+  };
+}
+
+function previewAutoAssignment(){
+  const v=autoAssignmentValues();
+  autoAssignmentPreviewQuestions=adminGeneratedPythagorasQuestions(v.count,v.difficulty);
+  adminRenderGeneratedAssignmentPreview(autoAssignmentPreviewQuestions,v.difficulty);
+  const status=document.getElementById("autoAssignStatus");
+  status.textContent=adminLang(
+    `تم توليد ${v.count} أسئلة للمعاينة. ما انرسلت لسه.`,
+    `${v.count} questions generated for preview. Nothing has been sent yet.`
+  );
+  soundFx("click");
+}
+
+async function sendAutoAssignment(){
+  if(!requireSuperAdmin())return;
+  const v=autoAssignmentValues();
+  const status=document.getElementById("autoAssignStatus");
+  const btn=document.getElementById("autoAssignSendBtn");
+  const targets=v.target==="all"?adminClassesCache:[adminClassById(v.target)].filter(Boolean);
+
+  if(!targets.length){
+    status.textContent=adminLang("اختار صف صالح.","Choose a valid class.");
+    soundFx("wrong");return;
+  }
+
+  if(!v.due){
+    if(!confirm(adminLang("ما حددت تاريخ تسليم. ترسل الوظيفة بدون موعد؟","No due date selected. Send the assignment without a due date?")))return;
+  }
+
+  btn.disabled=true;
+  btn.textContent=adminLang("⏳ جاري التوليد والإرسال...","⏳ Generating & sending...");
+  status.textContent=adminLang("جاري تجهيز الوظيفة...","Preparing assignment...");
+
+  try{
+    // Generate once so all selected classes receive the exact same assignment.
+    const questions=adminGeneratedPythagorasQuestions(v.count,v.difficulty);
+
+    for(const c of targets){
+      await adminCreateAssignmentForClass(
+        c.id,v.title,v.instructions,v.due,true,v.count,v.difficulty,questions
+      );
+    }
+
+    const targetLabel=v.target==="all"
+      ? adminLang("كل الصفوف","all classes")
+      : (adminClassById(v.target)?.name||"Class");
+
+    await adminPostAnnouncement(
+      v.title,
+      v.instructions||adminLang(
+        `وظيفة جديدة من ${v.count} أسئلة • المستوى ${adminAssignmentDifficultyName(v.difficulty)}`,
+        `New ${v.count}-question assignment • ${adminAssignmentDifficultyName(v.difficulty)} level`
+      ),
+      v.target,
+      {kind:"assignment",autoGenerated:true}
+    );
+
+    await adminAudit(
+      "auto_generate_assignment",
+      `${v.title} • ${targetLabel} • ${v.difficulty} • ${v.count} questions`
+    );
+
+    autoAssignmentPreviewQuestions=questions;
+    adminRenderGeneratedAssignmentPreview(questions,v.difficulty);
+    status.textContent=adminLang(
+      `✅ تم توليد الوظيفة وإرسالها إلى ${targetLabel} • ${v.count} أسئلة`,
+      `✅ Assignment generated and sent to ${targetLabel} • ${v.count} questions`
+    );
+    soundFx("win");
+    fxElement(document.querySelector(".admin-auto-assignment"),"win");
+    await adminLoadAllData();
+  }catch(err){
+    console.error("auto assignment",err);
+    status.textContent=adminLang("تعذر توليد أو إرسال الوظيفة.","Could not generate or send the assignment.");
+    soundFx("wrong");
+  }finally{
+    btn.disabled=false;
+    btn.textContent=adminLang("🚀 ولّد الوظيفة وأرسلها","🚀 Generate & send assignment");
+  }
+}
+
 function adminUpdateSendFields(){
   const type=document.getElementById("adminSendType").value,assignment=type==="assignment"||type==="generatedAssignment",generated=type==="generatedAssignment"||type==="competition";
   document.getElementById("adminDueDateWrap").classList.toggle("hidden",!assignment);
@@ -8288,13 +8640,139 @@ async function adminCreatePoll(){
   const t=adminTargetMeta(target);
   try{await addDoc(collection(db,"adminPolls"),{title,question,options,...t,active:true,createdBy:auth.currentUser.uid,createdAt:serverTimestamp()});await adminAudit("create_poll",`${title} • ${target}`);showToast(adminLang("تم نشر التصويت ✅","Poll published ✅"));adminLoadPolls();loadSiteUpdatesForCurrentUser()}catch(err){console.error(err)}
 }
+function adminPollEligibleCount(poll){
+  if(poll.targetType==="class"&&poll.targetClassId){
+    const c=adminClassById(poll.targetClassId);
+    return c?.members?.length||0;
+  }
+  return adminUsersCache.filter(u=>u.role==="student").length;
+}
+
 async function adminLoadPolls(){
-  const host=document.getElementById("adminPollList");host.innerHTML=`<div class="cloud-note">${adminLang("⏳ تحميل التصويتات...","⏳ Loading polls...")}</div>`;
+  const host=document.getElementById("adminPollList");
+  host.innerHTML=`<div class="cloud-note">${adminLang("⏳ تحميل التصويتات والإحصائيات...","⏳ Loading polls and statistics...")}</div>`;
+
   try{
-    const snap=await getDocs(collection(db,"adminPolls"));const polls=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));host.innerHTML="";
-    for(const poll of polls){const votes=await getDocs(collection(db,"adminPolls",poll.id,"votes"));const counts=Array(poll.options?.length||0).fill(0);votes.docs.forEach(v=>{const i=Number(v.data().optionIndex);if(i>=0&&i<counts.length)counts[i]++});const card=document.createElement("div");card.className="admin-poll-card";card.innerHTML=`<div class="admin-poll-head"><div><b>${escapeHtml(poll.title||"Poll")}</b><div>${escapeHtml(poll.question||"")}</div><div class="admin-meta">${escapeHtml(poll.targetName||poll.targetType||"")} • ${votes.size} votes • ${poll.active!==false?"Active":"Closed"}</div></div></div><div class="admin-meta">${(poll.options||[]).map((o,i)=>`${escapeHtml(o)}: ${counts[i]||0}`).join(" • ")}</div><div class="admin-actions"><button class="admin-close-poll">${poll.active!==false?adminLang("إغلاق","Close"):adminLang("إعادة فتح","Reopen")}</button><button class="danger admin-delete-poll">${adminLang("حذف","Delete")}</button></div>`;card.querySelector(".admin-close-poll").onclick=async()=>{await updateDoc(doc(db,"adminPolls",poll.id),{active:poll.active===false,updatedAt:serverTimestamp()});await adminAudit("toggle_poll",poll.id);adminLoadPolls();loadSiteUpdatesForCurrentUser()};card.querySelector(".admin-delete-poll").onclick=async()=>{if(!confirm(adminLang("حذف التصويت؟","Delete this poll?")))return;for(const v of votes.docs)await deleteDoc(v.ref);await deleteDoc(doc(db,"adminPolls",poll.id));await adminAudit("delete_poll",poll.id);adminLoadPolls();loadSiteUpdatesForCurrentUser()};host.appendChild(card)}
-    if(!polls.length)host.innerHTML=`<div class="cloud-note">${adminLang("ما في تصويتات.","No polls.")}</div>`;
-  }catch(err){console.error(err);host.innerHTML=""}
+    const snap=await getDocs(collection(db,"adminPolls"));
+    const polls=snap.docs
+      .map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+
+    host.innerHTML="";
+
+    for(const poll of polls){
+      const votes=await getDocs(collection(db,"adminPolls",poll.id,"votes"));
+      const counts=Array(poll.options?.length||0).fill(0);
+      const voterNames=[];
+
+      votes.docs.forEach(v=>{
+        const data=v.data();
+        const i=Number(data.optionIndex);
+        if(i>=0&&i<counts.length)counts[i]++;
+        if(data.displayName)voterNames.push(data.displayName);
+      });
+
+      const total=votes.size;
+      const eligible=adminPollEligibleCount(poll);
+      const turnout=eligible?Math.min(100,Math.round(total/eligible*100)):0;
+      const maxVotes=counts.length?Math.max(...counts):0;
+      const leadingIndexes=counts
+        .map((n,i)=>({n,i}))
+        .filter(x=>x.n===maxVotes&&maxVotes>0)
+        .map(x=>x.i);
+
+      const resultsHtml=(poll.options||[]).map((o,i)=>{
+        const count=counts[i]||0;
+        const pct=total?Math.round(count/total*100):0;
+        return `<div class="poll-result-row">
+          <div class="poll-result-head">
+            <b>${escapeHtml(o)}</b>
+            <span>${count} ${adminLang("صوت","votes")} • ${pct}%</span>
+          </div>
+          <div class="poll-result-track"><span class="poll-result-fill" style="width:${pct}%"></span></div>
+        </div>`;
+      }).join("");
+
+      const leaderText=leadingIndexes.length===1
+        ? `${adminLang("المتصدر","Leading")}: ${escapeHtml(poll.options?.[leadingIndexes[0]]||"—")}`
+        : leadingIndexes.length>1
+          ? adminLang("تعادل بين أكثر من خيار","Tie between multiple options")
+          : adminLang("لسه ما في أصوات","No votes yet");
+
+      const card=document.createElement("div");
+      card.className="admin-poll-card";
+      card.innerHTML=`
+        <div class="admin-poll-head">
+          <div>
+            <b>${escapeHtml(poll.title||"Poll")}</b>
+            <div>${escapeHtml(poll.question||"")}</div>
+            <div class="admin-meta">
+              ${escapeHtml(poll.targetName||poll.targetType||"")} •
+              ${poll.active!==false?adminLang("نشط","Active"):adminLang("مغلق","Closed")} •
+              ${adminDate(poll.createdAt)}
+            </div>
+          </div>
+        </div>
+
+        <div class="poll-stat-summary">
+          <div class="poll-stat-box">
+            <b>${total}</b>
+            <small>${adminLang("إجمالي الأصوات","TOTAL VOTES")}</small>
+          </div>
+          <div class="poll-stat-box">
+            <b>${eligible||"—"}</b>
+            <small>${adminLang("المستهدفين","ELIGIBLE")}</small>
+          </div>
+          <div class="poll-stat-box">
+            <b>${eligible?turnout+"%":"—"}</b>
+            <small>${adminLang("نسبة المشاركة","TURNOUT")}</small>
+          </div>
+        </div>
+
+        <div class="poll-results-list">${resultsHtml}</div>
+        <span class="poll-leading">🏆 ${leaderText}</span>
+
+        ${voterNames.length
+          ? `<details class="poll-voter-list"><summary>${adminLang("عرض أسماء المصوّتين","Show voter names")} (${voterNames.length})</summary><div style="margin-top:7px">${voterNames.map(escapeHtml).join(" • ")}</div></details>`
+          : ""}
+
+        <div class="admin-actions">
+          <button class="admin-close-poll">${poll.active!==false?adminLang("إغلاق","Close"):adminLang("إعادة فتح","Reopen")}</button>
+          <button class="exam-secondary admin-refresh-poll">${adminLang("↻ تحديث الإحصائيات","↻ Refresh stats")}</button>
+          <button class="danger admin-delete-poll">${adminLang("حذف","Delete")}</button>
+        </div>`;
+
+      card.querySelector(".admin-close-poll").onclick=async()=>{
+        await updateDoc(doc(db,"adminPolls",poll.id),{
+          active:poll.active===false,
+          updatedAt:serverTimestamp()
+        });
+        await adminAudit("toggle_poll",poll.id);
+        adminLoadPolls();
+        loadSiteUpdatesForCurrentUser();
+      };
+
+      card.querySelector(".admin-refresh-poll").onclick=()=>adminLoadPolls();
+
+      card.querySelector(".admin-delete-poll").onclick=async()=>{
+        if(!confirm(adminLang("حذف التصويت؟","Delete this poll?")))return;
+        for(const v of votes.docs)await deleteDoc(v.ref);
+        await deleteDoc(doc(db,"adminPolls",poll.id));
+        await adminAudit("delete_poll",poll.id);
+        adminLoadPolls();
+        loadSiteUpdatesForCurrentUser();
+      };
+
+      host.appendChild(card);
+    }
+
+    if(!polls.length){
+      host.innerHTML=`<div class="cloud-note">${adminLang("ما في تصويتات.","No polls.")}</div>`;
+    }
+  }catch(err){
+    console.error(err);
+    host.innerHTML=`<div class="cloud-note">${adminLang("تعذر تحميل إحصائيات التصويت.","Could not load poll statistics.")}</div>`;
+  }
 }
 async function adminLoadControls(){
   try{const s=await getDoc(doc(db,"siteControls","main"));siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache}catch{}
@@ -8354,6 +8832,16 @@ document.getElementById("adminGlobalSearch").addEventListener("input",()=>{admin
 document.getElementById("adminPeopleRoleFilter").addEventListener("change",adminRenderPeople);
 document.getElementById("adminSendType").addEventListener("change",adminUpdateSendFields);adminUpdateSendFields();
 document.getElementById("adminSendBtn").addEventListener("click",adminSendContent);
+document.getElementById("autoAssignPreviewBtn").addEventListener("click",previewAutoAssignment);
+document.getElementById("autoAssignSendBtn").addEventListener("click",sendAutoAssignment);
+document.getElementById("autoAssignDifficulty").addEventListener("change",()=>{
+  autoAssignmentPreviewQuestions=[];
+  document.getElementById("autoAssignPreview").classList.add("hidden");
+});
+document.getElementById("autoAssignCount").addEventListener("input",()=>{
+  autoAssignmentPreviewQuestions=[];
+  document.getElementById("autoAssignPreview").classList.add("hidden");
+});
 document.getElementById("adminCreatePollBtn").addEventListener("click",adminCreatePoll);
 document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSaveControls);
 
