@@ -2759,6 +2759,26 @@ body.light .admin-custom-notice,.body.light .admin-custom-button{
   #adminPanelModal{padding:6px!important}
 }
 
+
+/* ================= V36 HYBRID SUPER ADMIN ================= */
+.admin-hybrid-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:34px;padding:6px 9px;border-radius:999px;
+  border:1px solid rgba(108,151,255,.14);
+  background:linear-gradient(135deg,rgba(36,145,235,.08),rgba(115,79,224,.07));
+  color:#a9d8ff;font-size:9px;font-weight:1000;white-space:nowrap
+}
+.admin-hybrid-badge.hidden{display:none!important}
+body.light .admin-hybrid-badge{
+  background:#f3f8ff;border-color:#d8e5f3;color:#476681
+}
+#classModal .modalbox:has(#teacherClassSection:not(.hidden)) #studentClassSection:not(.hidden){
+  margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)
+}
+@media(max-width:700px){
+  .admin-hybrid-badge{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -2833,6 +2853,7 @@ body.light .admin-custom-notice,.body.light .admin-custom-button{
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
+        <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات">⚙️</button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
@@ -4396,6 +4417,10 @@ function isTeacherLikeProfile(profile=window.PythagorasiUser){
   return !!profile&&(profile.role==="teacher"||isSuperAdminProfile(profile));
 }
 function isTeacherLike(){return isTeacherLikeProfile(window.PythagorasiUser)}
+function isStudentLikeProfile(profile=window.PythagorasiUser){
+  return !!profile&&(profile.role==="student"||isSuperAdminProfile(profile));
+}
+function isStudentLike(){return isStudentLikeProfile(window.PythagorasiUser)}
 async function isSuperAdminUid(uid){
   try{
     const snap=await getDoc(doc(db,"profileIds",SUPER_ADMIN_PROFILE_ID));
@@ -4505,12 +4530,14 @@ function showPlatformLobby(){
   document.getElementById("lobbyProfileName").textContent=name;
   applyAvatar(document.getElementById("lobbyAvatar"),p,name);
   const teacherLike=isTeacherLikeProfile(p);
+  const hybridAdmin=isSuperAdminProfile(p);
   document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",!teacherLike);
-  document.getElementById("adminPanelBtn")?.classList.toggle("hidden",!isSuperAdminProfile(p));
+  document.getElementById("adminPanelBtn")?.classList.toggle("hidden",!hybridAdmin);
+  document.getElementById("adminHybridBadge")?.classList.toggle("hidden",!hybridAdmin);
   const examSmall=document.querySelector("#lobbyExamBtn small");
   const compSmall=document.querySelector("#competitionBtn small");
-  if(examSmall)examSmall.textContent=teacherLike?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
-  if(compSmall)compSmall.textContent=teacherLike?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
+  if(examSmall)examSmall.textContent=hybridAdmin?"أنشئ امتحان أو ادخل كطالب بالكود":teacherLike?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
+  if(compSmall)compSmall.textContent=hybridAdmin?"أنشئ مسابقة أو ادخل كلاعب":teacherLike?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
   updateAssistantLabels();
   setTimeout(refreshLobbySubjectVisibility,30);
   setTimeout(loadSiteUpdatesForCurrentUser,80);
@@ -4805,7 +4832,7 @@ function paintUser(user,profile){
   const teacher=isTeacherLikeProfile(profile);
   const admin=isSuperAdminProfile(profile);
   document.getElementById("authDisplayName").textContent=name;
-  document.getElementById("authRoleText").textContent=admin?"🛡️ Super Admin":teacher?"👨‍🏫 معلم":"🎒 طالب";
+  document.getElementById("authRoleText").textContent=admin?"🛡️ Super Admin • 👨‍🏫 معلم • 🎒 طالب":teacher?"👨‍🏫 معلم":"🎒 طالب";
   applyAvatar(document.getElementById("authAvatar"),profile,name);
   authUserBar.classList.add("show");
   authGate.classList.remove("show");
@@ -6912,9 +6939,10 @@ function openExamCenter(){
   showExamView("examHome");
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
   const teacher=isTeacherLike();
+  const hybrid=isSuperAdminProfile();
   document.getElementById("teacherExamCreateTools").classList.toggle("hidden",!teacher);
   document.getElementById("teacherExamResultsCard").classList.toggle("hidden",!teacher);
-  document.getElementById("studentExamJoinCard").classList.toggle("hidden",teacher);
+  document.getElementById("studentExamJoinCard").classList.toggle("hidden",teacher&&!hybrid);
   document.getElementById("examLevels").classList.toggle("hidden",!teacher);
   document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
 }
@@ -7772,10 +7800,14 @@ async function ensureTeacherStarterClass(){
 
 async function openClassModal(){
   const teacher=isTeacherLike();
+  const hybrid=isSuperAdminProfile();
   document.getElementById("teacherClassSection").classList.toggle("hidden",!teacher);
-  document.getElementById("studentClassSection").classList.toggle("hidden",teacher);
+  document.getElementById("studentClassSection").classList.toggle("hidden",teacher&&!hybrid);
   classModal.classList.add("open");
-  if(teacher)await loadTeacherClasses();else await loadStudentClasses();
+  if(hybrid){
+    Promise.allSettled([loadTeacherClasses(),loadStudentClasses()]);
+  }else if(teacher)loadTeacherClasses();
+  else loadStudentClasses();
 }
 document.getElementById("closeClassModal").addEventListener("click",()=>classModal.classList.remove("open"));
 document.getElementById("refreshClassesBtn").addEventListener("click",loadTeacherClasses);
@@ -7793,7 +7825,7 @@ document.getElementById("createClassBtn").addEventListener("click",async()=>{
 });
 
 async function joinClassForStudent(code,{duringSignup=false}={}){
-  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser){
+  if(!isStudentLike()||!auth.currentUser){
     throw new Error("student-required");
   }
   await loadSiteControls();
@@ -7911,7 +7943,7 @@ document.getElementById("joinClassBtn").addEventListener("click",async()=>{
 });
 
 async function syncStudentMemberStats(){
-  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  if(!isStudentLike()||!auth.currentUser)return;
   const p=window.PythagorasiUser;
   const xp=p.xp||0,exams=p.examCount||0,average=exams?Math.round((p.totalScorePct||0)/exams):0;
   for(const classId of (p.classIds||[])){
@@ -7929,7 +7961,7 @@ async function syncStudentMemberStats(){
   }
 }
 async function logStudentActivity(type,detail,subject=""){
-  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  if(!isStudentLike()||!auth.currentUser)return;
   const classIds=window.PythagorasiUser.classIds||[];
   for(const classId of classIds){
     try{
@@ -8007,7 +8039,7 @@ function collectStudentAssignmentAnswers(card,a){
 }
 
 async function leaveClassAsStudent(classId,className="الصف"){
-  if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)return;
+  if(!isStudentLike()||!auth.currentUser)return;
   if(!confirm(`متأكد بدك تطلع من «${className}»؟`))return;
   try{
     await deleteDoc(doc(db,"classes",classId,"members",auth.currentUser.uid));
@@ -9395,7 +9427,7 @@ document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>
     document.getElementById("authDisplayName").textContent=name;
     document.getElementById("lobbyProfileName").textContent=name;
     document.getElementById("lobbyGreeting").textContent=`أهلًا ${name.split(/\s+/)[0]} 👋`;
-    if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+    if(isStudentLike())await syncStudentMemberStats();
     refreshAIWelcome();refreshSettingsUI();
     status.textContent="تم حفظ الاسم الظاهر ✅";
     soundFx("correct");
@@ -9429,7 +9461,7 @@ async function saveOwnProfilePhoto(file){
   applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
   const img=document.getElementById("profilePhotoPreview");
   if(img){img.src=photoData;img.style.display="block"}
-  if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+  if(isStudentLike())await syncStudentMemberStats();
 }
 document.getElementById("settingsPhotoInput").addEventListener("change",async e=>{
   const file=e.target.files?.[0];if(!file)return;
@@ -9459,7 +9491,7 @@ document.getElementById("settingsRemovePhotoBtn").addEventListener("click",async
     applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
     applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
     const img=document.getElementById("profilePhotoPreview");if(img){img.removeAttribute("src");img.style.display="none"}
-    if(window.PythagorasiUser.role==="student")await syncStudentMemberStats();
+    if(isStudentLike())await syncStudentMemberStats();
     status.textContent=currentUILanguage==="en"?"Profile photo removed ✅":"تم حذف صورة البروفايل ✅";
     soundFx("submit");fxElement(document.getElementById("settingsAvatar"),"pop");
   }catch(err){console.error(err);status.textContent=currentUILanguage==="en"?"Could not remove the photo.":"تعذر حذف الصورة.";soundFx("wrong")}
@@ -9528,16 +9560,21 @@ let currentVisibleTopics=[];
 let currentTopicPractice=null;
 
 async function classDocsForCurrentUser(){
-  const p=window.PythagorasiUser||{},docs=[];
-  if(p.role==="student"){
+  const p=window.PythagorasiUser||{},docs=[],seen=new Set();
+  if(isStudentLikeProfile(p)){
     for(const id of (p.classIds||[])){
       try{
         const s=await getDoc(doc(db,"classes",id));
-        if(s.exists())docs.push({id:s.id,...s.data()});
+        if(s.exists()&&!seen.has(s.id)){seen.add(s.id);docs.push({id:s.id,...s.data()})}
       }catch{}
     }
-  }else if(isTeacherLikeProfile(p)){
-    try{docs.push(...await getManagedClasses())}catch{}
+  }
+  if(isTeacherLikeProfile(p)){
+    try{
+      for(const c of await getManagedClasses()){
+        if(!seen.has(c.id)){seen.add(c.id);docs.push(c)}
+      }
+    }catch{}
   }
   return docs;
 }
@@ -9676,9 +9713,11 @@ function openClassManagerModal(){
   if(!window.PythagorasiUser||!auth.currentUser)return;
   classModal.classList.add("open");
   const teacher=isTeacherLike();
-  document.getElementById("studentClassSection").classList.toggle("hidden",teacher);
+  const hybrid=isSuperAdminProfile();
+  document.getElementById("studentClassSection").classList.toggle("hidden",teacher&&!hybrid);
   document.getElementById("teacherClassSection").classList.toggle("hidden",!teacher);
-  if(teacher)loadTeacherClasses();
+  if(hybrid)Promise.allSettled([loadTeacherClasses(),loadStudentClasses()]);
+  else if(teacher)loadTeacherClasses();
   else loadStudentClasses();
 }
 const questionBankModal=document.getElementById("questionBankModal");
@@ -12022,7 +12061,7 @@ function renderStudentActiveTimers(){
   const host=document.getElementById("studentActiveTimerList");
   if(!section||!host)return;
 
-  if(!window.PythagorasiUser||window.PythagorasiUser.role!=="student"){
+  if(!window.PythagorasiUser||!isStudentLike()){
     section.classList.add("hidden");
     host.innerHTML="";
     return;
@@ -12169,7 +12208,7 @@ function renderStudentUpcomingEvents(){
   const host=document.getElementById("studentUpcomingList");
   if(!section||!host)return;
 
-  if(!window.PythagorasiUser||window.PythagorasiUser.role!=="student"){
+  if(!window.PythagorasiUser||!isStudentLike()){
     section.classList.add("hidden");
     host.innerHTML="";
     return;
@@ -12650,7 +12689,12 @@ async function getTargetedAdminDocs(collectionName){
   const out=new Map();
   try{const all=await getDocs(query(collection(db,collectionName),where("targetType","==","all")));all.docs.forEach(d=>out.set(d.id,{id:d.id,...d.data()}))}catch{}
   let ids=[];
-  if(window.PythagorasiUser.role==="student")ids=window.PythagorasiUser.classIds||[];
+  if(isSuperAdminProfile()){
+    const memberIds=window.PythagorasiUser.classIds||[];
+    let managedIds=[];
+    try{managedIds=(await getManagedClasses()).map(c=>c.id)}catch{}
+    ids=[...new Set([...memberIds,...managedIds])];
+  }else if(window.PythagorasiUser.role==="student")ids=window.PythagorasiUser.classIds||[];
   else if(isTeacherLike())try{ids=(await getManagedClasses()).map(c=>c.id)}catch{}
   for(const classId of ids){try{const s=await getDocs(query(collection(db,collectionName),where("targetType","==","class"),where("targetClassId","==",classId)));s.docs.forEach(d=>out.set(d.id,{id:d.id,...d.data()}))}catch{}}
   return [...out.values()];
@@ -12989,7 +13033,8 @@ async function openCompetitionModal(){
   showCompetitionView("competitionHome");
   document.getElementById("competitionModalTitle").textContent="🏆 المسابقة المباشرة";
   const teacher=isTeacherLike();
-  document.getElementById("competitionStudentCard").classList.toggle("hidden",teacher);
+  const hybrid=isSuperAdminProfile();
+  document.getElementById("competitionStudentCard").classList.toggle("hidden",teacher&&!hybrid);
   document.getElementById("competitionTeacherCard").classList.toggle("hidden",!teacher);
   document.getElementById("compAutoStudentName").textContent=window.PythagorasiUser.displayName||"طالب";
 }
@@ -13220,7 +13265,7 @@ document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
 async function ensureAnonymousStudent(name){
   const user=auth.currentUser;
   if(!user || !window.PythagorasiUser)throw new Error("login-required");
-  if(isTeacherLike())throw new Error("teacher-account");
+  if(isTeacherLike()&&!isSuperAdminProfile())throw new Error("teacher-account");
   return user;
 }
 async function joinLiveCompetition(){
@@ -13228,7 +13273,7 @@ async function joinLiveCompetition(){
   const code=(document.getElementById("compJoinCode").value||"").trim().toUpperCase();
   const team=document.getElementById("compJoinTeam").value;
   const status=document.getElementById("compJoinStatus");
-  if(window.PythagorasiUser?.role!=="student"){
+  if(!isStudentLike()){
     status.textContent="الدخول كلاعب للطلاب فقط.";soundFx("wrong");return;
   }
   if(code.length<4){status.textContent="اكتب كود الغرفة.";return}
