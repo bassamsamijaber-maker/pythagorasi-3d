@@ -1829,6 +1829,60 @@ body.light .public-poll-track{background:#e7eef3}
   .myclasses-hero-icon{width:52px;height:52px}
 }
 
+
+/* ================= V21 ADMIN ADD STUDENT / REJOIN ================= */
+.admin-add-student-box{
+  margin:12px 0 4px;padding:11px;border-radius:14px;
+  background:rgba(31,143,224,.045);border:1px solid rgba(71,175,245,.11)
+}
+.admin-add-student-head{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px
+}
+.admin-add-student-head b{font-size:12px}
+.admin-add-student-head small{color:#7892a5;font-size:9px}
+.admin-add-student-search{
+  display:grid;grid-template-columns:1fr auto;gap:7px
+}
+.admin-add-student-search input{
+  min-width:0;height:38px;border-radius:10px!important
+}
+.admin-add-student-search button{
+  min-height:38px;padding:0 12px;border-radius:10px;
+  border:1px solid rgba(74,181,255,.14);background:rgba(44,156,240,.08);
+  color:#9bdcff;font-weight:900;cursor:pointer
+}
+.admin-add-student-results{
+  display:grid;gap:6px;margin-top:8px
+}
+.admin-add-student-result{
+  display:flex;justify-content:space-between;align-items:center;gap:9px;
+  padding:8px;border-radius:10px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.045)
+}
+.admin-add-student-result-main{display:flex;align-items:center;gap:7px;min-width:0}
+.admin-add-student-mini-avatar{
+  width:34px;height:34px;flex:none;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#218eff,#7958e7);background-size:cover;background-position:center;
+  font-size:11px;font-weight:1000
+}
+.admin-add-student-result b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-add-student-result small{display:block;color:#7890a2;font-size:9px}
+.admin-add-student-result button{
+  flex:none;padding:6px 9px;border-radius:8px;cursor:pointer;
+  border:1px solid rgba(76,196,147,.16);background:rgba(76,196,147,.07);
+  color:#92dfbc;font-size:10px;font-weight:900
+}
+.admin-add-empty{
+  padding:8px;color:#7e96a9;font-size:10px;text-align:center
+}
+.rejoin-note{
+  margin-top:7px;padding:7px 9px;border-radius:9px;
+  background:rgba(75,190,147,.045);border:1px solid rgba(75,190,147,.10);
+  color:#8ed8b6;font-size:9px;line-height:1.5
+}
+body.light .admin-add-student-box{background:#f3f9fd;border-color:#d6e9f5}
+body.light .admin-add-student-result{background:#fff;border-color:#dce7ee;color:#173047}
+
 </style>
 </head>
 <body>
@@ -2321,15 +2375,20 @@ body.light .public-poll-track{background:#e7eef3}
     <div class="modalhead">
       <div>
         <h2 id="forcedPasswordTitle">🔐 تغيير كلمة السر</h2>
-        <div class="subject-assistant-line" id="forcedPasswordSub">طلبت الإدارة منك تغيير كلمة السر لحماية حسابك.</div>
+        <div class="subject-assistant-line" id="forcedPasswordSub">طلبت الإدارة تغيير كلمة السر مرة واحدة لحماية حسابك.</div>
       </div>
     </div>
     <div class="profile-card">
-      <label id="forcedPasswordLabel1">كلمة السر الجديدة</label>
+      <label id="forcedPasswordCurrentLabel">كلمة السر الحالية</label>
+      <input id="forcedPasswordCurrent" type="password" minlength="1" maxlength="64" autocomplete="current-password">
+
+      <label id="forcedPasswordLabel1" style="margin-top:9px">كلمة السر الجديدة</label>
       <input id="forcedPasswordNew" type="password" minlength="6" maxlength="64" autocomplete="new-password">
-      <label id="forcedPasswordLabel2" style="margin-top:9px">تأكيد كلمة السر</label>
+
+      <label id="forcedPasswordLabel2" style="margin-top:9px">تأكيد كلمة السر الجديدة</label>
       <input id="forcedPasswordConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password">
-      <button class="apply" id="forcedPasswordSave" style="margin-top:12px">حفظ كلمة السر الجديدة</button>
+
+      <button class="apply" id="forcedPasswordSave" style="margin-top:12px">تغيير كلمة السر</button>
       <div class="cloud-note" id="forcedPasswordStatus" style="margin-top:8px"></div>
     </div>
   </div>
@@ -3001,6 +3060,7 @@ import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
+  reauthenticateWithCredential, EmailAuthProvider,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -3729,8 +3789,169 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
 
 
 const forcedPasswordModal=document.getElementById("forcedPasswordModal");
-function openForcedPasswordReset(){const en=currentUILanguage==="en";document.getElementById("forcedPasswordTitle").textContent=en?"🔐 Change password":"🔐 تغيير كلمة السر";document.getElementById("forcedPasswordSub").textContent=en?"The administrator requested a password change for this account.":"طلبت الإدارة منك تغيير كلمة السر لحماية الحساب.";document.getElementById("forcedPasswordLabel1").textContent=en?"New password":"كلمة السر الجديدة";document.getElementById("forcedPasswordLabel2").textContent=en?"Confirm password":"تأكيد كلمة السر";document.getElementById("forcedPasswordSave").textContent=en?"Save new password":"حفظ كلمة السر الجديدة";document.getElementById("forcedPasswordStatus").textContent="";document.getElementById("forcedPasswordNew").value="";document.getElementById("forcedPasswordConfirm").value="";forcedPasswordModal.classList.add("open")}
-document.getElementById("forcedPasswordSave").addEventListener("click",async()=>{const user=auth.currentUser,status=document.getElementById("forcedPasswordStatus");if(!user)return;const a=document.getElementById("forcedPasswordNew").value,b=document.getElementById("forcedPasswordConfirm").value;if(a.length<6){status.textContent=currentUILanguage==="en"?"Use at least 6 characters.":"اكتب 6 خانات أو أكثر.";soundFx("wrong");return}if(a!==b){status.textContent=currentUILanguage==="en"?"Passwords do not match.":"كلمتا السر مش نفس بعض.";soundFx("wrong");return}try{status.textContent=currentUILanguage==="en"?"Saving...":"جاري الحفظ...";await updatePassword(user,a);await updateDoc(doc(db,"users",user.uid),{forcePasswordReset:false,passwordChangedAt:serverTimestamp(),updatedAt:serverTimestamp()});window.PythagorasiUser={...window.PythagorasiUser,forcePasswordReset:false};forcedPasswordModal.classList.remove("open");soundFx("win");showToast(currentUILanguage==="en"?"Password updated ✅":"تم تغيير كلمة السر ✅")}catch(err){console.error("forced password reset",err);status.textContent=String(err?.code||"").includes("requires-recent-login")?(currentUILanguage==="en"?"For security, log out, sign in again with your current password, then set the new one.":"للأمان: اعمل تسجيل خروج، ادخل من جديد بكلمة السر الحالية، وبعدها غيّرها."):(currentUILanguage==="en"?"Could not change the password.":"تعذر تغيير كلمة السر.");soundFx("wrong")}});
+let forcedPasswordChangeBusy=false;
+
+function openForcedPasswordReset(){
+  const en=currentUILanguage==="en";
+
+  document.getElementById("forcedPasswordTitle").textContent=en
+    ?"🔐 Change password"
+    :"🔐 تغيير كلمة السر";
+
+  document.getElementById("forcedPasswordSub").textContent=en
+    ?"The administrator requested a one-time password change. You do not need to log out."
+    :"طلبت الإدارة تغيير كلمة السر مرة واحدة. ما في داعي تعمل تسجيل خروج.";
+
+  document.getElementById("forcedPasswordCurrentLabel").textContent=en
+    ?"Current password"
+    :"كلمة السر الحالية";
+
+  document.getElementById("forcedPasswordLabel1").textContent=en
+    ?"New password"
+    :"كلمة السر الجديدة";
+
+  document.getElementById("forcedPasswordLabel2").textContent=en
+    ?"Confirm new password"
+    :"تأكيد كلمة السر الجديدة";
+
+  document.getElementById("forcedPasswordSave").textContent=en
+    ?"Change password"
+    :"تغيير كلمة السر";
+
+  document.getElementById("forcedPasswordStatus").textContent="";
+  document.getElementById("forcedPasswordCurrent").value="";
+  document.getElementById("forcedPasswordNew").value="";
+  document.getElementById("forcedPasswordConfirm").value="";
+  forcedPasswordModal.classList.add("open");
+
+  setTimeout(()=>document.getElementById("forcedPasswordCurrent")?.focus(),80);
+}
+
+document.getElementById("forcedPasswordSave").addEventListener("click",async()=>{
+  if(forcedPasswordChangeBusy)return;
+
+  const user=auth.currentUser;
+  const status=document.getElementById("forcedPasswordStatus");
+  const btn=document.getElementById("forcedPasswordSave");
+  if(!user)return;
+
+  const current=document.getElementById("forcedPasswordCurrent").value;
+  const next=document.getElementById("forcedPasswordNew").value;
+  const confirmNext=document.getElementById("forcedPasswordConfirm").value;
+  const en=currentUILanguage==="en";
+
+  if(!current){
+    status.textContent=en?"Enter your current password.":"اكتب كلمة السر الحالية.";
+    soundFx("wrong");
+    return;
+  }
+
+  if(next.length<6){
+    status.textContent=en?"New password must be at least 6 characters.":"كلمة السر الجديدة لازم تكون 6 خانات أو أكثر.";
+    soundFx("wrong");
+    return;
+  }
+
+  if(next!==confirmNext){
+    status.textContent=en?"New passwords do not match.":"كلمتا السر الجديدة مش نفس بعض.";
+    soundFx("wrong");
+    return;
+  }
+
+  if(current===next){
+    status.textContent=en?"Choose a new password different from the current one.":"اختار كلمة سر جديدة غير الحالية.";
+    soundFx("wrong");
+    return;
+  }
+
+  try{
+    forcedPasswordChangeBusy=true;
+    btn.disabled=true;
+    btn.textContent=en?"⏳ Changing...":"⏳ جاري التغيير...";
+    status.textContent=en?"Checking current password...":"جاري التحقق من كلمة السر الحالية...";
+
+    if(!user.email){
+      throw new Error("student-email-missing");
+    }
+
+    // Securely re-authenticate in the SAME screen.
+    // This avoids the logout -> login -> forced-reset loop.
+    const credential=EmailAuthProvider.credential(user.email,current);
+    await reauthenticateWithCredential(user,credential);
+
+    status.textContent=en?"Saving new password...":"جاري حفظ كلمة السر الجديدة...";
+    await updatePassword(user,next);
+
+    await updateDoc(doc(db,"users",user.uid),{
+      forcePasswordReset:false,
+      forcePasswordResetAt:null,
+      forcePasswordResetBy:"",
+      passwordChangedAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+
+    window.PythagorasiUser={
+      ...window.PythagorasiUser,
+      forcePasswordReset:false,
+      forcePasswordResetAt:null,
+      forcePasswordResetBy:""
+    };
+    activeProfile=window.PythagorasiUser;
+
+    forcedPasswordModal.classList.remove("open");
+    document.getElementById("forcedPasswordCurrent").value="";
+    document.getElementById("forcedPasswordNew").value="";
+    document.getElementById("forcedPasswordConfirm").value="";
+
+    soundFx("win");
+    showToast(en
+      ?"Password changed successfully ✅"
+      :"تم تغيير كلمة السر بنجاح ✅");
+
+  }catch(err){
+    console.error("forced password reset",err);
+
+    const code=String(err?.code||"");
+    if(
+      code.includes("invalid-credential") ||
+      code.includes("wrong-password") ||
+      code.includes("invalid-login-credentials")
+    ){
+      status.textContent=en
+        ?"Current password is incorrect."
+        :"كلمة السر الحالية غير صحيحة.";
+    }else if(code.includes("weak-password")){
+      status.textContent=en
+        ?"Choose a stronger password."
+        :"اختار كلمة سر أقوى.";
+    }else if(code.includes("too-many-requests")){
+      status.textContent=en
+        ?"Too many attempts. Wait a little and try again."
+        :"محاولات كثيرة. استنى شوي وجرب مرة ثانية.";
+    }else{
+      status.textContent=en
+        ?"Could not change the password. Try again."
+        :"تعذر تغيير كلمة السر. جرّب مرة ثانية.";
+    }
+
+    // IMPORTANT: never tell the student to log out/re-login.
+    soundFx("wrong");
+  }finally{
+    forcedPasswordChangeBusy=false;
+    btn.disabled=false;
+    btn.textContent=currentUILanguage==="en"?"Change password":"تغيير كلمة السر";
+  }
+});
+
+
+["forcedPasswordCurrent","forcedPasswordNew","forcedPasswordConfirm"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      document.getElementById("forcedPasswordSave").click();
+    }
+  });
+});
 
 authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
   console.error("teacher redirect result",error);
@@ -6229,30 +6450,60 @@ document.getElementById("createClassBtn").addEventListener("click",async()=>{
 
 async function joinClassForStudent(code,{duringSignup=false}={}){
   if(window.PythagorasiUser?.role!=="student"||!auth.currentUser)throw new Error("student-required");
+
   const clean=String(code||"").trim().toUpperCase();
   const joinSnap=await getDoc(doc(db,"classJoinCodes",clean));
   if(!joinSnap.exists()||!joinSnap.data().active)throw new Error("invalid-class-code");
-  const data=joinSnap.data(),classId=data.classId;
-  const current=window.PythagorasiUser.classIds||[];
-  const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
-  const existingMember=await getDoc(memberRef);
-  if(existingMember.exists())return {already:true,classId,className:data.className};
 
-  const xp=window.PythagorasiUser.xp||0,exams=window.PythagorasiUser.examCount||0;
-  const avg=exams?Math.round((window.PythagorasiUser.totalScorePct||0)/exams):0;
-  await setDoc(doc(db,"classes",classId,"members",auth.currentUser.uid),{
+  const data=joinSnap.data();
+  const classId=data.classId;
+  const memberRef=doc(db,"classes",classId,"members",auth.currentUser.uid);
+
+  // Only the actual membership document decides if the student is currently in the class.
+  // A stale classIds entry never blocks a rejoin.
+  const existingMember=await getDoc(memberRef);
+  if(existingMember.exists()){
+    const currentIds=[...new Set([...(window.PythagorasiUser.classIds||[]),classId])];
+    if(!(window.PythagorasiUser.classIds||[]).includes(classId)){
+      await setDoc(doc(db,"users",auth.currentUser.uid),{
+        classIds:currentIds,updatedAt:serverTimestamp()
+      },{merge:true});
+      window.PythagorasiUser={...window.PythagorasiUser,classIds:currentIds};
+      activeProfile=window.PythagorasiUser;
+    }
+    return {already:true,classId,className:data.className};
+  }
+
+  // If the student left or was removed, a valid active class code lets them join again.
+  const p=window.PythagorasiUser;
+  const xp=Number(p.xp)||0;
+  const exams=Number(p.examCount)||0;
+  const avg=exams?Math.round((Number(p.totalScorePct)||0)/exams):0;
+
+  await setDoc(memberRef,{
     uid:auth.currentUser.uid,
-    displayName:window.PythagorasiUser.displayName||"طالب",
-    photoData:window.PythagorasiUser.photoData||"",
-    joinCode:clean,xp,level:profileLevelFromXP(xp),examCount:exams,average:avg,
-    joinedAt:serverTimestamp(),lastActiveAt:serverTimestamp()
+    displayName:p.displayName||"طالب",
+    photoData:p.photoData||"",
+    joinCode:clean,
+    xp,
+    level:profileLevelFromXP(xp),
+    examCount:exams,
+    average:avg,
+    joinedAt:serverTimestamp(),
+    rejoinedWithCode:true,
+    lastActiveAt:serverTimestamp()
+  });
+
+  const classIds=[...new Set([...(Array.isArray(p.classIds)?p.classIds:[]),classId])];
+  await setDoc(doc(db,"users",auth.currentUser.uid),{
+    classIds,updatedAt:serverTimestamp()
   },{merge:true});
-  const classIds=[...new Set([...current,classId])];
-  await setDoc(doc(db,"users",auth.currentUser.uid),{classIds,updatedAt:serverTimestamp()},{merge:true});
-  window.PythagorasiUser={...window.PythagorasiUser,classIds};
+
+  window.PythagorasiUser={...p,classIds};
   activeProfile=window.PythagorasiUser;
+
   await logStudentActivity("class_join",`انضم إلى صف ${data.className||""}`,"");
-  return {classId,className:data.className};
+  return {classId,className:data.className,rejoined:true};
 }
 
 document.getElementById("joinClassBtn").addEventListener("click",async()=>{
@@ -6262,7 +6513,11 @@ document.getElementById("joinClassBtn").addEventListener("click",async()=>{
   status.textContent="⏳ جاري البحث...";
   try{
     const r=await joinClassForStudent(code);
-    status.textContent=r.already?`أنت بالصف أصلًا ✅`:`✅ انضممت إلى ${r.className||"الصف"}`;
+    status.textContent=r.already
+      ? (currentUILanguage==="en"?"You're already in this class ✅":"أنت بالصف أصلًا ✅")
+      : r.rejoined
+        ? (currentUILanguage==="en"?`✅ You rejoined ${r.className||"the class"}`:`✅ رجعت انضمّيت إلى ${r.className||"الصف"}`)
+        : (currentUILanguage==="en"?`✅ Joined ${r.className||"the class"}`:`✅ انضممت إلى ${r.className||"الصف"}`);
     await loadStudentClasses();
   }catch(err){
     console.error(err);
@@ -8519,16 +8774,156 @@ function adminRenderClasses(){
     const card=document.createElement("div");card.className="admin-class-card";card.dataset.classId=c.id;
     card.innerHTML=`<div class="admin-class-head"><div>${c.photoData?`<img src="${escapeHtml(c.photoData)}" style="width:58px;height:58px;object-fit:cover;border-radius:14px;float:${currentUILanguage==="en"?"left":"right"};margin-inline-end:10px">`:""}<h3 style="margin:0">${escapeHtml(c.name||"Class")}</h3><div class="admin-meta">Code: <span class="admin-id">${escapeHtml(c.code||"—")}</span> • ${students.length} ${adminLang("طلاب","students")} • ${teacherRows.length} ${adminLang("معلمين","teachers")}</div></div></div>
       <div class="admin-class-people"><div class="admin-class-col"><h4>👨‍🏫 ${adminLang("المعلمين","Teachers")}</h4>${teacherRows.map(t=>`<div class="admin-mini-row"><div class="admin-mini-person"><b>${escapeHtml(adminUserDisplay(t))}${t.uid===c.ownerId?" ⭐":""}</b>${t.email?`<div class="admin-email">${escapeHtml(t.email)}</div>`:""}<div class="admin-meta">ID: ${escapeHtml(t.profileId||"—")}</div></div><div class="admin-mini-actions"><button class="admin-focus-person" data-uid="${escapeHtml(t.uid||"")}">${adminLang("إدارة","Manage")}</button></div></div>`).join("")||"—"}</div><div class="admin-class-col"><h4>🎒 ${adminLang("الطلاب","Students")}</h4>${students.slice(0,100).map(s=>`<div class="admin-mini-row"><div class="admin-mini-person"><b>${escapeHtml(adminUserDisplay(s))}</b><div class="admin-meta">ID: ${escapeHtml(s.profileId||"—")}</div></div><div class="admin-mini-actions"><button class="admin-focus-person" data-uid="${escapeHtml(s.uid||"")}">${adminLang("إدارة","Manage")}</button><button class="admin-remove-from-class" data-uid="${escapeHtml(s.uid||"")}">✕</button></div></div>`).join("")||"—"}</div></div>
+
+      <div class="admin-add-student-box">
+        <div class="admin-add-student-head">
+          <b>➕ ${adminLang("إضافة طالب للصف","Add student to class")}</b>
+          <small>${adminLang("ابحث بالاسم أو Profile ID","Search by name or Profile ID")}</small>
+        </div>
+        <div class="admin-add-student-search">
+          <input class="admin-add-student-input" placeholder="${adminLang("اكتب اسم الطالب أو Profile ID...","Type student name or Profile ID...")}">
+          <button class="admin-find-student">🔎 ${adminLang("بحث","Search")}</button>
+        </div>
+        <div class="admin-add-student-results"></div>
+        <div class="rejoin-note">↩ ${adminLang("إذا الطالب طلع من الصف، بقدر يرجع بأي وقت إذا كود الصف ما زال شغال.","If a student leaves, they can rejoin later as long as the class code is still active.")}</div>
+      </div>
+
       <div class="admin-actions"><button class="admin-rename-class">✏️ ${adminLang("اسم الصف","Rename class")}</button><label>📷 ${adminLang("صورة الصف","Class photo")}<input type="file" class="admin-class-photo" accept="image/*" hidden></label><button class="admin-remove-class-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button><button class="danger admin-delete-class">🗑 ${adminLang("حذف الصف","Delete class")}</button></div>`;
     card.querySelector(".admin-rename-class").addEventListener("click",()=>adminRenameClass(c));
     card.querySelector(".admin-class-photo").addEventListener("change",e=>adminChangeClassPhoto(c,e.target));
     card.querySelector(".admin-remove-class-photo").addEventListener("click",()=>adminRemoveClassPhoto(c));
     card.querySelector(".admin-delete-class").addEventListener("click",()=>adminDeleteClass(c));
+
+    const addInput=card.querySelector(".admin-add-student-input");
+    const addSearch=card.querySelector(".admin-find-student");
+    addSearch?.addEventListener("click",()=>adminRenderStudentSearchForClass(card,c));
+    addInput?.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){
+        e.preventDefault();
+        adminRenderStudentSearchForClass(card,c);
+      }
+    });
+    addInput?.addEventListener("input",()=>{
+      if(addInput.value.trim().length>=2)adminRenderStudentSearchForClass(card,c);
+      else card.querySelector(".admin-add-student-results").innerHTML="";
+    });
+
     card.querySelectorAll(".admin-focus-person").forEach(btn=>btn.addEventListener("click",()=>{const u=adminUserByUid(btn.dataset.uid);if(!u)return;document.getElementById("adminGlobalSearch").value=u.profileId||adminUserDisplay(u);adminShowTab("people");adminRenderPeople();setTimeout(()=>document.querySelector(`.admin-person-card[data-uid="${CSS.escape(u.uid)}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}),80)}));
     card.querySelectorAll(".admin-remove-from-class").forEach(btn=>btn.addEventListener("click",async()=>{const u=adminUserByUid(btn.dataset.uid);if(!u)return;if(!confirm(adminLang(`إخراج ${adminUserDisplay(u)} من صف ${c.name||""}؟`,`Remove ${adminUserDisplay(u)} from ${c.name||"this class"}?`)))return;try{await deleteDoc(doc(db,"classes",c.id,"members",u.uid));const ids=(u.classIds||[]).filter(x=>x!==c.id);await updateDoc(doc(db,"users",u.uid),{classIds:ids,adminEditedAt:serverTimestamp()});await adminAudit("remove_student_from_class",`${u.profileId||u.uid} • ${c.id}`);showToast(adminLang("تم إخراج الطالب من الصف.","Student removed from class."));await adminLoadAllData()}catch(err){console.error(err);showToast(adminLang("تعذر إخراج الطالب.","Could not remove the student."))}}));
     host.appendChild(card);
   }
 }
+
+function adminStudentSearchResultsForClass(c,term){
+  const q=String(term||"").trim().toLowerCase();
+  if(!q)return [];
+  const currentIds=new Set((c.members||[]).map(x=>x.uid));
+  return adminUsersCache
+    .filter(u=>u.role==="student"&&!currentIds.has(u.uid))
+    .filter(u=>[
+      u.displayName,u.loginName,u.originalLoginName,u.profileId,u.uid
+    ].some(v=>String(v||"").toLowerCase().includes(q)))
+    .sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)))
+    .slice(0,12);
+}
+
+function adminRenderStudentSearchForClass(card,c){
+  const input=card.querySelector(".admin-add-student-input");
+  const host=card.querySelector(".admin-add-student-results");
+  if(!input||!host)return;
+
+  const term=input.value.trim();
+  if(!term){
+    host.innerHTML=`<div class="admin-add-empty">${adminLang("اكتب اسم طالب أو Profile ID.","Type a student name or Profile ID.")}</div>`;
+    return;
+  }
+
+  const rows=adminStudentSearchResultsForClass(c,term);
+  host.innerHTML="";
+
+  if(!rows.length){
+    host.innerHTML=`<div class="admin-add-empty">${adminLang("ما لقيت طالب مطابق خارج هذا الصف.","No matching student found outside this class.")}</div>`;
+    return;
+  }
+
+  for(const u of rows){
+    const name=adminUserDisplay(u);
+    const photo=u.photoData||u.photoURL||"";
+    const row=document.createElement("div");
+    row.className="admin-add-student-result";
+    row.innerHTML=`
+      <div class="admin-add-student-result-main">
+        <div class="admin-add-student-mini-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>
+          ${photo?"":escapeHtml((name[0]||"?").toUpperCase())}
+        </div>
+        <div style="min-width:0">
+          <b>${escapeHtml(name)}</b>
+          <small>Profile ID: ${escapeHtml(u.profileId||"—")}</small>
+        </div>
+      </div>
+      <button>＋ ${adminLang("إضافة","Add")}</button>`;
+
+    row.querySelector("button").addEventListener("click",()=>adminAddStudentToClass(c,u));
+    host.appendChild(row);
+  }
+}
+
+async function adminAddStudentToClass(c,u){
+  if(!requireSuperAdmin())return;
+  if(!c?.id||!u?.uid)return;
+
+  const already=(c.members||[]).some(m=>m.uid===u.uid);
+  if(already){
+    showToast(adminLang("الطالب موجود بهذا الصف أصلًا.","Student is already in this class."));
+    return;
+  }
+
+  if(!confirm(adminLang(
+    `تضيف ${adminUserDisplay(u)} إلى صف «${c.name||"Class"}»؟`,
+    `Add ${adminUserDisplay(u)} to “${c.name||"Class"}”?`
+  )))return;
+
+  try{
+    const xp=Number(u.xp)||0;
+    const exams=Number(u.examCount)||0;
+    const average=exams?Math.round((Number(u.totalScorePct)||0)/exams):0;
+
+    await setDoc(doc(db,"classes",c.id,"members",u.uid),{
+      uid:u.uid,
+      displayName:u.displayName||u.loginName||adminLang("طالب","Student"),
+      photoData:u.photoData||"",
+      joinCode:c.code||"",
+      addedByAdmin:true,
+      addedByAdminUid:auth.currentUser.uid,
+      xp,
+      level:profileLevelFromXP(xp),
+      examCount:exams,
+      average,
+      joinedAt:serverTimestamp(),
+      lastActiveAt:serverTimestamp()
+    });
+
+    const classIds=[...new Set([...(Array.isArray(u.classIds)?u.classIds:[]),c.id])];
+    await updateDoc(doc(db,"users",u.uid),{
+      classIds,
+      adminEditedAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+
+    await adminAudit("add_student_to_class",`${u.profileId||u.uid} • ${c.id}`);
+    soundFx("win");
+    showToast(adminLang(
+      `تمت إضافة ${adminUserDisplay(u)} إلى ${c.name||"الصف"} ✅`,
+      `${adminUserDisplay(u)} added to ${c.name||"class"} ✅`
+    ));
+    await adminLoadAllData();
+  }catch(err){
+    console.error("admin add student",err);
+    showToast(adminLang("تعذر إضافة الطالب للصف.","Could not add the student to the class."));
+    soundFx("wrong");
+  }
+}
+
 async function adminRenameClass(c){
   const next=prompt(adminLang("اسم الصف الجديد:","New class name:"),c.name||"");if(next==null)return;const name=next.trim().slice(0,60);if(name.length<2)return;
   try{await updateDoc(doc(db,"classes",c.id),{name,updatedAt:serverTimestamp()});if(c.code)try{await updateDoc(doc(db,"classJoinCodes",c.code),{className:name})}catch{}await adminAudit("rename_class",`${c.id} → ${name}`);await adminLoadAllData()}catch(err){console.error(err)}
