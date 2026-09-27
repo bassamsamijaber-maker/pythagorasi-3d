@@ -1552,10 +1552,48 @@ body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{an
 body.light .settings-account-meta,body.light .profile-public-id{color:#6e8394}
 body.light .settings-account-meta b,body.light .profile-public-id b{color:#7b5700}
 body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:ltr;text-align:left}
+
+/* ================= V17 SUPER ADMIN ================= */
+body:not(.auth-ready) .platform-lobby,body:not(.auth-ready) .shell{visibility:hidden!important}
+body:not(.auth-ready)::before{content:"Pythagoras 3D";position:fixed;inset:0;display:grid;place-items:center;z-index:999999;background:#07111c;color:#fff;font-size:22px;font-weight:950;letter-spacing:.5px}
+body.light:not(.auth-ready)::before{background:#edf4f9;color:#173047}
+.admin-panel-btn{height:46px;border-radius:13px;padding:0 13px;border:1px solid rgba(255,213,77,.24);background:linear-gradient(135deg,rgba(255,196,45,.13),rgba(117,78,255,.12));color:#ffe39a;font-weight:950;cursor:pointer;display:flex;align-items:center;gap:7px}
+.admin-panel-btn.hidden{display:none!important}
+.admin-panel-box{width:min(1180px,97vw);max-height:92vh;overflow:auto}
+.admin-toolbar{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0 10px}
+.admin-toolbar input{height:46px}
+.admin-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 12px;position:sticky;top:-1px;z-index:6;padding:7px 0;background:inherit}
+.admin-tabs button{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:inherit;border-radius:11px;padding:9px 11px;font-weight:900;cursor:pointer}
+.admin-tabs button.active{background:#168cff;color:#fff;border-color:#168cff;box-shadow:0 10px 28px rgba(22,140,255,.22)}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.admin-stat{padding:16px;border-radius:16px;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.028);display:grid;gap:4px;text-align:center}
+.admin-stat span{font-size:24px}.admin-stat b{font-size:31px}.admin-stat small{color:#8da3b5}
+.admin-note{padding:10px 12px;border-radius:12px;background:rgba(80,158,255,.07);border:1px solid rgba(80,158,255,.12);color:#9eb7c9;line-height:1.6;margin:10px 0}
+.admin-list{display:grid;gap:9px}
+.admin-person-card,.admin-class-card,.admin-poll-card,.admin-log-row,.site-update-card{border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.025);border-radius:14px;padding:12px}
+.admin-person-top,.admin-class-head,.admin-poll-head{display:flex;justify-content:space-between;gap:9px;align-items:flex-start;flex-wrap:wrap}
+.admin-person-main{display:flex;gap:10px;align-items:center;min-width:0}.admin-person-avatar{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#258eff,#8853e9);background-size:cover;background-position:center;display:grid;place-items:center;font-weight:1000;flex:none}
+.admin-meta{font-size:11px;color:#8198aa;line-height:1.65}.admin-email{direction:ltr;unicode-bidi:isolate;color:#8de8ff;font-size:12px}.admin-id{direction:ltr;unicode-bidi:isolate;color:#f1cf78;font-weight:900}
+.admin-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.admin-actions button,.admin-actions label{padding:7px 9px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:inherit;cursor:pointer;font-size:11px}
+.admin-actions .danger{color:#ff9da6;border-color:rgba(255,90,102,.16);background:rgba(255,70,88,.055)}
+.admin-filter-row{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}.admin-filter-row select{max-width:240px}
+.admin-class-people{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}.admin-class-col{border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:9px}.admin-class-col h4{margin:0 0 7px}.admin-mini-row{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.055)}.admin-mini-row:last-child{border-bottom:0}
+.admin-form-grid,.admin-control-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.admin-form-grid label,.admin-control-grid label{display:grid;gap:5px}.admin-wide{grid-column:1/-1!important}.admin-form-grid textarea{min-height:100px}.admin-form-grid input,.admin-form-grid select,.admin-control-grid input{height:46px}
+.site-updates-list{display:grid;gap:9px}.site-update-card h4{margin:0 0 6px}.site-update-meta{color:#829aab;font-size:11px}.site-poll-options{display:grid;gap:6px;margin-top:8px}.site-poll-options button{text-align:start}
+.admin-disabled-badge{display:inline-block;padding:3px 7px;border-radius:999px;background:rgba(255,76,92,.09);color:#ff9ea8;font-size:10px;font-weight:900}
+body.light .admin-panel-btn{background:#fff8e6;color:#765400;border-color:#ecd18e}
+body.light .admin-person-card,body.light .admin-class-card,body.light .admin-poll-card,body.light .admin-log-row,body.light .site-update-card,body.light .admin-stat,body.light .admin-class-col{background:#fff;color:#173047;border-color:#d9e4eb}
+body.light .admin-note{background:#eef7fd;color:#557086;border-color:#d4e9f6}
+body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.light .admin-id{color:#7e5b00}
+@media(max-width:780px){.admin-stat-grid{grid-template-columns:1fr 1fr}.admin-class-people,.admin-form-grid,.admin-control-grid{grid-template-columns:1fr}.admin-wide{grid-column:auto!important}.admin-toolbar{grid-template-columns:1fr}.admin-panel-btn span{display:none}}
+
+
+.class-mini-photo{width:46px;height:46px;border-radius:12px;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.08)}
+.class-name-with-photo{display:flex;align-items:center;gap:9px;min-width:0}
 </style>
 </head>
 <body>
-<div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
+<div class="auth-gate" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
@@ -1631,6 +1669,7 @@ body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:lt
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
+        <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات">⚙️</button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
@@ -1699,6 +1738,13 @@ body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:lt
       </div>
     </section>
 
+    <section class="lobby-section hidden" id="siteUpdatesSection">
+      <div class="lobby-section-head">
+        <div><h3 id="siteUpdatesTitle">📣 تحديثات المدرسة</h3><p id="siteUpdatesSub">إعلانات، تصويتات ومسابقات مرسلة إلك أو لصفك.</p></div>
+      </div>
+      <div class="site-updates-list" id="siteUpdatesList"></div>
+    </section>
+
     <section class="lobby-section teacher-only-lobby hidden" id="teacherLobbyTools">
       <div class="lobby-section-head">
         <div><h3>👨‍🏫 أدوات المعلم</h3><p>كل الأدوات مخصّصة لفيثاغورس.</p></div>
@@ -1710,6 +1756,106 @@ body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:lt
         <button class="lobby-action" id="teacherCompetitionsLobbyBtn"><span>🏆</span><b>مسابقاتي</b><small>المسابقات المحفوظة</small></button>
       </div>
     </section>
+  </div>
+</div>
+
+<div class="modal" id="adminPanelModal">
+  <div class="modalbox admin-panel-box">
+    <div class="modalhead">
+      <div>
+        <h2 id="adminPanelTitle">🛡️ Admin Panel</h2>
+        <div class="subject-assistant-line" id="adminPanelSub">Super Admin • full school management</div>
+      </div>
+      <button class="close" id="closeAdminPanel">×</button>
+    </div>
+
+    <div class="admin-toolbar">
+      <input id="adminGlobalSearch" placeholder="Search students, teachers, classes or Profile ID...">
+      <button class="exam-secondary" id="adminRefreshBtn">↻ Refresh</button>
+    </div>
+
+    <div class="admin-tabs" id="adminTabs">
+      <button class="active" data-admin-tab="dashboard">Dashboard</button>
+      <button data-admin-tab="people">Students & Teachers</button>
+      <button data-admin-tab="classes">Classes</button>
+      <button data-admin-tab="send">Send / Assign</button>
+      <button data-admin-tab="polls">Polls</button>
+      <button data-admin-tab="controls">Site Controls</button>
+    </div>
+
+    <div class="admin-view" id="adminViewDashboard">
+      <div class="admin-stat-grid">
+        <div class="admin-stat"><span>👥</span><b id="adminStatStudents">0</b><small>Students</small></div>
+        <div class="admin-stat"><span>👨‍🏫</span><b id="adminStatTeachers">0</b><small>Teachers</small></div>
+        <div class="admin-stat"><span>🏫</span><b id="adminStatClasses">0</b><small>Classes</small></div>
+        <div class="admin-stat"><span>📝</span><b id="adminStatAssignments">0</b><small>Assignments</small></div>
+      </div>
+      <div class="admin-note">🔐 Student passwords are never stored or readable. Firebase Authentication does not expose them. Use account-access recovery instead of viewing passwords.</div>
+      <div class="admin-log-list" id="adminRecentLog"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewPeople">
+      <div class="admin-filter-row">
+        <select id="adminPeopleRoleFilter"><option value="all">All accounts</option><option value="student">Students</option><option value="teacher">Teachers</option></select>
+        <span id="adminPeopleCount">0 accounts</span>
+      </div>
+      <div class="admin-list" id="adminPeopleList"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewClasses">
+      <div class="admin-note">Each class shows its owner, co-teachers, teacher emails and students. Search above by class, teacher or student name.</div>
+      <div class="admin-list" id="adminClassesList"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewSend">
+      <div class="admin-form-grid">
+        <label>Target
+          <select id="adminTargetClass"><option value="all">All classes</option></select>
+        </label>
+        <label>Type
+          <select id="adminSendType">
+            <option value="announcement">Announcement</option>
+            <option value="assignment">Assignment</option>
+            <option value="generatedAssignment">Generated Pythagoras exam as assignment</option>
+            <option value="competition">Competition</option>
+          </select>
+        </label>
+        <label class="admin-wide">Title <input id="adminSendTitle" maxlength="80" placeholder="Title"></label>
+        <label class="admin-wide">Message / instructions <textarea id="adminSendBody" placeholder="Write the message or assignment instructions..."></textarea></label>
+        <label id="adminDueDateWrap">Due date <input id="adminSendDueDate" type="date"></label>
+        <label id="adminQuestionCountWrap">Questions <input id="adminQuestionCount" type="number" min="3" max="20" value="10"></label>
+        <label id="adminDifficultyWrap">Difficulty
+          <select id="adminDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="expert">Expert</option></select>
+        </label>
+      </div>
+      <button class="apply" id="adminSendBtn">🚀 Send / Publish</button>
+      <div class="cloud-note" id="adminSendStatus"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewPolls">
+      <div class="admin-form-grid">
+        <label>Target <select id="adminPollTarget"><option value="all">Everyone</option></select></label>
+        <label>Poll title <input id="adminPollTitle" maxlength="80" placeholder="Poll title"></label>
+        <label class="admin-wide">Question <input id="adminPollQuestion" maxlength="160" placeholder="What do you want to ask?"></label>
+        <label>Option 1 <input class="admin-poll-opt" placeholder="Option 1"></label>
+        <label>Option 2 <input class="admin-poll-opt" placeholder="Option 2"></label>
+        <label>Option 3 <input class="admin-poll-opt" placeholder="Option 3"></label>
+        <label>Option 4 <input class="admin-poll-opt" placeholder="Option 4"></label>
+      </div>
+      <button class="apply" id="adminCreatePollBtn">📊 Publish poll</button>
+      <div class="admin-list" id="adminPollList"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewControls">
+      <div class="admin-control-grid">
+        <label class="settings-toggle"><input id="adminLockExams" type="checkbox"> Lock student exam entry</label>
+        <label class="settings-toggle"><input id="adminLockCompetitions" type="checkbox"> Lock student competitions</label>
+        <label class="settings-toggle"><input id="adminMaintenance" type="checkbox"> Maintenance banner</label>
+        <label class="admin-wide">Maintenance message <input id="adminMaintenanceMessage" placeholder="Site maintenance message"></label>
+      </div>
+      <button class="apply" id="adminSaveControlsBtn">💾 Save controls</button>
+      <div class="admin-note">All admin actions are logged with date, Profile ID and action type.</div>
+    </div>
   </div>
 </div>
 
@@ -2587,6 +2733,21 @@ async function ensureProfileId(user,profile={}){
   return profileId;
 }
 
+const SUPER_ADMIN_PROFILE_ID="3228667330";
+function isSuperAdminProfile(profile=window.PythagorasiUser){
+  return String(profile?.profileId||"")===SUPER_ADMIN_PROFILE_ID;
+}
+function isTeacherLikeProfile(profile=window.PythagorasiUser){
+  return !!profile&&(profile.role==="teacher"||isSuperAdminProfile(profile));
+}
+function isTeacherLike(){return isTeacherLikeProfile(window.PythagorasiUser)}
+async function isSuperAdminUid(uid){
+  try{
+    const snap=await getDoc(doc(db,"profileIds",SUPER_ADMIN_PROFILE_ID));
+    return snap.exists()&&snap.data().uid===uid;
+  }catch{return false}
+}
+
 window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
 
@@ -2628,6 +2789,8 @@ function assistantNames(){
   return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
 }
 function assistantNameFor(subject){
+  const english=localStorage.getItem("pythagorasi_language")==="en";
+  if(english&&(subject==="pythagoras"||subject==="lobby"))return "Pythagorasi";
   return assistantNames()[subject]||defaultAssistantNames[subject]||"مساعدي";
 }
 function applyAvatar(el,profile,name){
@@ -2664,13 +2827,16 @@ function showPlatformLobby(){
   document.getElementById("lobbyGreeting").textContent=`أهلًا ${first} 👋`;
   document.getElementById("lobbyProfileName").textContent=name;
   applyAvatar(document.getElementById("lobbyAvatar"),p,name);
-  document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",p.role!=="teacher");
+  const teacherLike=isTeacherLikeProfile(p);
+  document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",!teacherLike);
+  document.getElementById("adminPanelBtn")?.classList.toggle("hidden",!isSuperAdminProfile(p));
   const examSmall=document.querySelector("#lobbyExamBtn small");
   const compSmall=document.querySelector("#competitionBtn small");
-  if(examSmall)examSmall.textContent=p.role==="teacher"?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
-  if(compSmall)compSmall.textContent=p.role==="teacher"?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
+  if(examSmall)examSmall.textContent=teacherLike?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
+  if(compSmall)compSmall.textContent=teacherLike?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
   updateAssistantLabels();
   setTimeout(refreshLobbySubjectVisibility,30);
+  setTimeout(loadSiteUpdatesForCurrentUser,80);
 }
 function hidePlatformLobby(){
   document.getElementById("platformLobby")?.classList.add("hidden");
@@ -2912,6 +3078,7 @@ function friendlyAuthError(error){
   if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "الاسم أو كلمة السر غير صحيحة.";
   if(code.includes("weak-password"))return "كلمة السر لازم تكون 6 خانات أو أكثر.";
   if(code.includes("api-key-not-valid"))return "إعدادات الاتصال غير صحيحة داخل الموقع.";
+  if(String(error?.message||"")==="account-disabled")return "هذا الحساب موقوف من إدارة الموقع.";
   if(code.includes("permission-denied"))return "الحفظ السحابي منع العملية. تأكد من قواعد الحفظ.";
   if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
   if(code.includes("internal-error"))return "Firebase رجّع خطأ داخلي. حدّث الصفحة وجرب مرة ثانية.";
@@ -2958,9 +3125,10 @@ function finishAuthIntent(){
 function paintUser(user,profile){
   activeProfile=profile;
   const name=profile?.displayName||user?.displayName||"مستخدم";
-  const teacher=profile?.role==="teacher";
+  const teacher=isTeacherLikeProfile(profile);
+  const admin=isSuperAdminProfile(profile);
   document.getElementById("authDisplayName").textContent=name;
-  document.getElementById("authRoleText").textContent=teacher?"👨‍🏫 معلم":"🎒 طالب";
+  document.getElementById("authRoleText").textContent=admin?"🛡️ Super Admin":teacher?"👨‍🏫 معلم":"🎒 طالب";
   applyAvatar(document.getElementById("authAvatar"),profile,name);
   authUserBar.classList.add("show");
   authGate.classList.remove("show");
@@ -2991,6 +3159,14 @@ async function resolveCurrentUser(user){
 
   authBusy(true,"جاري تحميل حسابك…");
   try{
+    const adminUid=await isSuperAdminUid(user.uid);
+    if(!adminUid){
+      const blockedSnap=await getDoc(doc(db,"blockedUsers",user.uid));
+      if(blockedSnap.exists()){
+        try{await signOut(auth)}catch{}
+        throw new Error("account-disabled");
+      }
+    }
     const provider=user.providerData?.[0]?.providerId;
     const snap=await getDoc(doc(db,"users",user.uid));
     let profile=snap.exists()?snap.data():null;
@@ -3210,6 +3386,7 @@ authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
 onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
   authResolved=true;
+  document.body.classList.add("auth-ready");
   if(user){
     let expires=rememberedLoginExpiresAt();
     if(!expires)expires=rememberLoginForTwoMonths();
@@ -4837,7 +5014,7 @@ function clearSavedAttempt(){
 function refreshResumeBox(){
   const saved=getSavedAttempt();
   const box=document.getElementById("resumeExamBox");
-  if(saved?.exam?.questions?.length && (window.PythagorasiUser?.role==="teacher" || saved.exam.cloud)){
+  if(saved?.exam?.questions?.length && (isTeacherLike() || saved.exam.cloud)){
     box.classList.add("show");
     document.getElementById("resumeExamText").textContent=`${saved.exam.title} • ${saved.exam.questions.length} أسئلة`;
   }else box.classList.remove("show");
@@ -4873,14 +5050,16 @@ function openExamCenter(){
   refreshResumeBox();
   showExamView("examHome");
   document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
-  const teacher=window.PythagorasiUser?.role==="teacher";
+  const teacher=isTeacherLike();
   document.getElementById("teacherExamCreateTools").classList.toggle("hidden",!teacher);
   document.getElementById("teacherExamResultsCard").classList.toggle("hidden",!teacher);
   document.getElementById("studentExamJoinCard").classList.toggle("hidden",teacher);
   document.getElementById("examLevels").classList.toggle("hidden",!teacher);
   document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
 }
-function openExamWithIdentity(){
+async function openExamWithIdentity(){
+  await loadSiteControls();
+  if(window.PythagorasiUser?.role==="student"&&!isSuperAdminProfile()&&siteControlsCache.lockExams){showToast(adminLang("دخول الامتحانات مقفول مؤقتًا من الإدارة.","Exam entry is temporarily locked by the admin."));return}
   if(window.PythagorasiUser&&auth.currentUser){
     hidePlatformLobby();
     openExamCenter();
@@ -5101,7 +5280,7 @@ function submitCurrentExam(){
 }
 document.getElementById("submitExam").addEventListener("click",submitCurrentExam);
 document.getElementById("startSurpriseExam").addEventListener("click",()=>{
-  if(window.PythagorasiUser?.role!=="teacher"){
+  if(!isTeacherLike()){
     showToast("الطالب يدخل امتحان المعلم بالكود.");
     soundFx("wrong");return;
   }
@@ -5190,7 +5369,7 @@ function gradeTeacherAttempt(question,key,answer){
 async function loadTeacherResults(){
   const list=document.getElementById("teacherResultsList");
   list.innerHTML='<div class="cloud-note">⏳ جاري تحميل امتحاناتك ونتائج الطلاب...</div>';
-  if(!auth.currentUser || window.PythagorasiUser?.role!=="teacher"){
+  if(!auth.currentUser || !isTeacherLike()){
     list.innerHTML='<div class="cloud-note">👨‍🏫 لازم تدخل كمعلم حتى تشوف النتائج.</div>';
     return;
   }
@@ -5256,7 +5435,7 @@ async function loadTeacherResults(){
 }
 
 document.getElementById("openTeacherResults").addEventListener("click",()=>{
-  if(window.PythagorasiUser?.role!=="teacher"){
+  if(!isTeacherLike()){
     authPendingAction=null;
     authGate.classList.add("show");
     showTeacherLogin();
@@ -5276,7 +5455,7 @@ document.getElementById("teacherResultsBack").addEventListener("click",()=>{
 
 /* ---- custom exam builder ---- */
 function openBuilder(){
-  if(window.PythagorasiUser?.role!=="teacher"){
+  if(!isTeacherLike()){
     showToast("إنشاء الامتحان للمعلم فقط.");
     soundFx("wrong");
     return;
@@ -5444,7 +5623,7 @@ function makeExamCode(){
 }
 document.getElementById("publishCloudExam")?.addEventListener("click",async()=>{
   const btn=document.getElementById("publishCloudExam");
-  if(!window.PythagorasiUser || window.PythagorasiUser.role!=="teacher"){
+  if(!window.PythagorasiUser || !isTeacherLike()){
     authPendingAction=null;
     authGate.classList.add("show");
     showTeacherLogin();
@@ -5530,13 +5709,13 @@ document.getElementById("loadBuilderExam").addEventListener("click",()=>{
 
 /* -------------------- TEACHER QUESTION BANK -------------------- */
 function openQuestionBank(){
-  if(window.PythagorasiUser?.role!=="teacher"){showToast("هاي الأداة للمعلم.");return}
+  if(!isTeacherLike()){showToast("هاي الأداة للمعلم.");return}
   questionBankModal.classList.add("open");loadQuestionBank();
 }
 document.getElementById("closeQuestionBankModal").addEventListener("click",()=>questionBankModal.classList.remove("open"));
 
 document.getElementById("qbSaveBtn").addEventListener("click",async()=>{
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  if(!isTeacherLike()||!auth.currentUser)return;
   const prompt=document.getElementById("qbPrompt").value.trim();
   const options=[...document.querySelectorAll(".qb-option")].map(x=>x.value.trim());
   const idx=+document.getElementById("qbCorrect").value;
@@ -5626,7 +5805,7 @@ async function getOwnedClasses(uid){
   return snap.docs.map(d=>({id:d.id,...d.data(),role:"owner"}));
 }
 async function getManagedClasses(){
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return [];
+  if(!isTeacherLike()||!auth.currentUser)return [];
   const owned=await getOwnedClasses(auth.currentUser.uid);
   const ids=new Set(owned.map(x=>x.id));
   const teachingIds=window.PythagorasiUser.teachingClassIds||[];
@@ -5641,7 +5820,7 @@ async function getManagedClasses(){
   return [...owned,...extra].filter(x=>x.active!==false);
 }
 async function createClassForTeacher(name,{silent=false}={}){
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)throw new Error("teacher-required");
+  if(!isTeacherLike()||!auth.currentUser)throw new Error("teacher-required");
   const clean=(name||"صفي").trim().slice(0,50)||"صفي";
   const code=await reserveUniqueCode("class");
   const ref=await addDoc(collection(db,"classes"),{
@@ -5657,7 +5836,7 @@ async function createClassForTeacher(name,{silent=false}={}){
   return {id:ref.id,name:clean,code};
 }
 async function ensureTeacherStarterClass(){
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  if(!isTeacherLike()||!auth.currentUser)return;
   if(teacherStarterCheckedFor===auth.currentUser.uid)return;
   teacherStarterCheckedFor=auth.currentUser.uid;
   try{
@@ -5673,7 +5852,7 @@ async function ensureTeacherStarterClass(){
 }
 
 async function openClassModal(){
-  const teacher=window.PythagorasiUser?.role==="teacher";
+  const teacher=isTeacherLike();
   document.getElementById("teacherClassSection").classList.toggle("hidden",!teacher);
   document.getElementById("studentClassSection").classList.toggle("hidden",teacher);
   classModal.classList.add("open");
@@ -5874,7 +6053,7 @@ async function loadStudentClasses(){
 
       const row=document.createElement("div");row.className="class-row";
       row.innerHTML=`
-        <span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span>
+        <span class="class-name-with-photo">${c.photoData?`<img class="class-mini-photo" src="${escapeHtml(c.photoData)}" alt="">`:""}<span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span></span>
         <span style="display:flex;gap:7px;align-items:center"><b>${escapeHtml(c.code||"")}</b><button class="student-leave-class">خروج</button></span>`;
       row.querySelector(".student-leave-class").addEventListener("click",()=>leaveClassAsStudent(classId,c.name||"الصف"));
       host.appendChild(row);
@@ -5964,7 +6143,7 @@ async function createTeacherInvite(classId,className){
   return code;
 }
 document.getElementById("joinTeacherInviteBtn").addEventListener("click",async()=>{
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser)return;
+  if(!isTeacherLike()||!auth.currentUser)return;
   const code=(document.getElementById("teacherInviteJoinCode").value||"").trim().toUpperCase();
   const status=document.getElementById("teacherInviteJoinStatus");
   if(code.length<4){status.textContent="اكتب كود الدعوة.";return}
@@ -6267,9 +6446,10 @@ async function renderTeacherClassCard(host,c){
 
   box.innerHTML=`
     <div class="class-card-head">
-      <div>
-        <h3>${escapeHtml(c.name||"صف")}</h3>
-        <span class="class-role-badge">${isOwner?"مالك الصف":"معلم مساعد"} • ${members.size} طلاب</span>
+      <div class="class-name-with-photo">
+        ${c.photoData?`<img class="class-mini-photo" src="${escapeHtml(c.photoData)}" alt="">`:""}
+        <div><h3>${escapeHtml(c.name||"صف")}</h3>
+        <span class="class-role-badge">${isOwner?"مالك الصف":"معلم مساعد"} • ${members.size} طلاب</span></div>
       </div>
       <div class="class-code-big">${escapeHtml(c.code||"------")}</div>
     </div>
@@ -6541,7 +6721,7 @@ async function openProfileModal(){
   await refreshCurrentProfile();
   const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
   document.getElementById("profileDisplayName").textContent=name;
-  document.getElementById("profileRoleText").textContent=p.role==="teacher"?"معلم":"طالب";
+  document.getElementById("profileRoleText").textContent=isSuperAdminProfile(p)?"Super Admin":isTeacherLikeProfile(p)?"معلم":"طالب";
   document.getElementById("profilePublicId").textContent=p.profileId||"----------";
   document.getElementById("profilePhotoFallback").textContent=(name[0]||"؟").toUpperCase();
   const img=document.getElementById("profilePhotoPreview");
@@ -6991,6 +7171,7 @@ function translateTextValue(arText){
 function translateElementNode(el){
   if(!(el instanceof Element))return;
   if(el.matches('script,style'))return;
+  if(el.closest?.('#adminPanelModal,#siteUpdatesSection,#adminPanelBtn'))return;
   for(const node of [...el.childNodes]){
     if(node.nodeType===Node.TEXT_NODE){
       const original=node.__arOriginal??node.nodeValue;
@@ -7026,6 +7207,8 @@ function applySiteLanguage(lang,save=true){
   if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
+  try{updateAssistantLabels()}catch{}
+  try{applyAdminLanguage()}catch{}
   setTimeout(()=>document.body.classList.remove('language-switching'),350);
 }
 const bilingualObserver=new MutationObserver(records=>{
@@ -7253,6 +7436,10 @@ document.getElementById("settingsLogoutBtn").addEventListener("click",()=>{
 document.getElementById("deleteAccountBtn").addEventListener("click",async()=>{
   const user=auth.currentUser,p=window.PythagorasiUser;
   if(!user||!p)return;
+  if(isSuperAdminProfile(p)){
+    document.getElementById("settingsStatus").textContent=currentUILanguage==="en"?"The Super Admin account cannot be deleted from the website.":"حساب الـSuper Admin ما بنحذف من داخل الموقع.";
+    return;
+  }
   const status=document.getElementById("settingsStatus");
   if(p.role==="teacher"){
     try{
@@ -7313,7 +7500,7 @@ async function classDocsForCurrentUser(){
         if(s.exists())docs.push({id:s.id,...s.data()});
       }catch{}
     }
-  }else if(p.role==="teacher"){
+  }else if(isTeacherLikeProfile(p)){
     try{docs.push(...await getManagedClasses())}catch{}
   }
   return docs;
@@ -7668,6 +7855,411 @@ document.getElementById("teacherCompetitionsLobbyBtn").addEventListener("click",
 });
 
 
+/* -------------------- V17 SUPER ADMIN -------------------- */
+const adminPanelModal=document.getElementById("adminPanelModal");
+let adminUsersCache=[];
+let adminClassesCache=[];
+let adminBlocksCache=new Map();
+let adminActiveTab="dashboard";
+let siteControlsCache={lockExams:false,lockCompetitions:false,maintenance:false,maintenanceMessage:""};
+
+function adminLang(ar,en){return currentUILanguage==="en"?en:ar}
+function adminDate(ts){
+  try{
+    const d=ts?.toDate?ts.toDate():ts instanceof Date?ts:new Date(ts||Date.now());
+    return d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+  }catch{return "—"}
+}
+function applyAdminLanguage(){
+  const en=currentUILanguage==="en";
+  const set=(id,ar,enText)=>{const el=document.getElementById(id);if(el)el.textContent=en?enText:ar};
+  const ph=(id,ar,enText)=>{const el=document.getElementById(id);if(el)el.placeholder=en?enText:ar};
+  const label=(id,ar,enText)=>{const el=document.getElementById(id)?.parentElement;if(!el)return;const n=[...el.childNodes].find(x=>x.nodeType===Node.TEXT_NODE&&x.nodeValue.trim());if(n)n.nodeValue=(en?enText:ar)+" ";};
+  set("adminPanelTitle","🛡️ لوحة الأدمن","🛡️ Admin Panel");
+  set("adminPanelSub","Super Admin • إدارة كاملة للمدرسة","Super Admin • full school management");
+  ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
+  const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
+  const tabs=[
+    ["dashboard","الرئيسية","Dashboard"],["people","الطلاب والمعلمين","Students & Teachers"],
+    ["classes","الصفوف","Classes"],["send","إرسال / وظائف","Send / Assign"],
+    ["polls","التصويتات","Polls"],["controls","تحكم الموقع","Site Controls"]
+  ];
+  tabs.forEach(([key,ar,enText])=>{const b=document.querySelector(`[data-admin-tab="${key}"]`);if(b)b.textContent=en?enText:ar});
+  const stats=document.querySelectorAll(".admin-stat small"),statWords=en?["Students","Teachers","Classes","Assignments"]:["طلاب","معلمين","صفوف","وظائف"];
+  stats.forEach((x,i)=>{if(statWords[i])x.textContent=statWords[i]});
+  const notes=document.querySelectorAll("#adminViewDashboard .admin-note,#adminViewClasses .admin-note,#adminViewControls .admin-note");
+  if(notes[0])notes[0].textContent=en?"🔐 Student passwords are never stored or readable. Firebase Authentication does not expose them. Use secure account recovery instead of viewing passwords.":"🔐 كلمات سر الطلاب لا تُحفظ بشكل قابل للقراءة ولا يمكن عرضها. Firebase Authentication لا يكشفها؛ استخدم استرجاع وصول آمن بدل عرض كلمة السر.";
+  if(notes[1])notes[1].textContent=en?"Each class shows its owner, co-teachers, teacher emails and students. Search above by class, teacher or student name.":"كل صف بعرض المالك، المعلمين المساعدين، إيميلات المعلمين والطلاب. ابحث فوق باسم صف أو معلم أو طالب.";
+  if(notes[2])notes[2].textContent=en?"All admin actions are logged with date, Profile ID and action type.":"كل عملية أدمن تنحفظ بالسجل مع التاريخ وProfile ID ونوع العملية.";
+  const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
+  label("adminTargetClass","الهدف","Target");label("adminSendType","النوع","Type");label("adminSendTitle","العنوان","Title");label("adminSendBody","الرسالة / التعليمات","Message / instructions");label("adminSendDueDate","تاريخ التسليم","Due date");label("adminQuestionCount","عدد الأسئلة","Questions");label("adminDifficulty","الصعوبة","Difficulty");
+  ph("adminSendTitle","العنوان","Title");ph("adminSendBody","اكتب الرسالة أو تعليمات الوظيفة...","Write the message or assignment instructions...");
+  const sendType=document.getElementById("adminSendType");if(sendType){const v=en?["Announcement","Assignment","Generated Pythagoras exam as assignment","Competition"]:["إعلان","وظيفة","امتحان فيثاغورس مولّد كوظيفة","مسابقة"];[...sendType.options].forEach((o,i)=>o.textContent=v[i])}
+  const diff=document.getElementById("adminDifficulty");if(diff){const v=en?["Easy","Medium","Hard","Expert"]:["سهل","متوسط","صعب","خبير"];[...diff.options].forEach((o,i)=>o.textContent=v[i])}
+  const sendBtn=document.getElementById("adminSendBtn");if(sendBtn)sendBtn.textContent=en?"🚀 Send / Publish":"🚀 إرسال / نشر";
+  label("adminPollTarget","الهدف","Target");label("adminPollTitle","عنوان التصويت","Poll title");label("adminPollQuestion","السؤال","Question");
+  ph("adminPollTitle","عنوان التصويت","Poll title");ph("adminPollQuestion","شو بدك تسأل؟","What do you want to ask?");
+  document.querySelectorAll(".admin-poll-opt").forEach((el,i)=>el.placeholder=en?`Option ${i+1}`:`الخيار ${i+1}`);
+  const pollBtn=document.getElementById("adminCreatePollBtn");if(pollBtn)pollBtn.textContent=en?"📊 Publish poll":"📊 نشر التصويت";
+  const toggles=[["adminLockExams","قفل دخول الطلاب للامتحانات","Lock student exam entry"],["adminLockCompetitions","قفل مسابقات الطلاب","Lock student competitions"],["adminMaintenance","إظهار تنبيه صيانة","Maintenance banner"]];
+  toggles.forEach(([id,ar,enText])=>{const el=document.getElementById(id)?.parentElement;if(el){const n=[...el.childNodes].find(x=>x.nodeType===Node.TEXT_NODE);if(n)n.nodeValue=" "+(en?enText:ar)}});
+  label("adminMaintenanceMessage","رسالة الصيانة","Maintenance message");ph("adminMaintenanceMessage","رسالة صيانة الموقع","Site maintenance message");
+  const ctrl=document.getElementById("adminSaveControlsBtn");if(ctrl)ctrl.textContent=en?"💾 Save controls":"💾 حفظ التحكم";
+  set("siteUpdatesTitle","📣 تحديثات المدرسة","📣 School Updates");
+  set("siteUpdatesSub","إعلانات، تصويتات ومسابقات مرسلة إلك أو لصفك.","Announcements, polls and competitions sent to you or your class.");
+  const adminBtn=document.querySelector("#adminPanelBtn span");if(adminBtn)adminBtn.textContent=en?"Admin Panel":"لوحة الأدمن";
+  try{if(adminPanelModal?.classList.contains("open")){adminRenderPeople();adminRenderClasses();adminPopulateTargets()}}catch{}
+  try{if(window.PythagorasiUser)loadSiteUpdatesForCurrentUser()}catch{}
+}
+
+function requireSuperAdmin(){
+  if(!isSuperAdminProfile()){
+    showToast(adminLang("هاي الصفحة لحساب الـSuper Admin فقط.","This page is for the Super Admin only."));
+    return false;
+  }
+  return true;
+}
+async function adminAudit(action,detail=""){
+  if(!isSuperAdminProfile()||!auth.currentUser)return;
+  try{
+    await addDoc(collection(db,"adminAudit"),{
+      action,detail:String(detail||"").slice(0,1500),
+      adminUid:auth.currentUser.uid,adminProfileId:SUPER_ADMIN_PROFILE_ID,
+      adminName:window.PythagorasiUser?.displayName||"Super Admin",createdAt:serverTimestamp()
+    });
+  }catch(err){console.warn("admin audit",err)}
+}
+function adminUserByUid(uid){return adminUsersCache.find(x=>x.uid===uid)||null}
+function adminClassById(id){return adminClassesCache.find(x=>x.id===id)||null}
+function adminUserDisplay(u){return u?.displayName||u?.loginName||adminLang("مستخدم","User")}
+function adminAvatarHTML(u){
+  const name=adminUserDisplay(u),photo=u?.photoData||u?.photoURL||"";
+  return `<div class="admin-person-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>${photo?"":escapeHtml((name[0]||"?").toUpperCase())}</div>`;
+}
+async function adminLoadAllData(){
+  if(!requireSuperAdmin())return;
+  const refresh=document.getElementById("adminRefreshBtn");
+  refresh.disabled=true;refresh.textContent=adminLang("⏳ تحميل...","⏳ Loading...");
+  try{
+    const [usersSnap,classesSnap,blocksSnap]=await Promise.all([
+      getDocs(collection(db,"users")),getDocs(collection(db,"classes")),getDocs(collection(db,"blockedUsers"))
+    ]);
+    adminUsersCache=usersSnap.docs.map(d=>({uid:d.id,...d.data()}));
+    adminBlocksCache=new Map(blocksSnap.docs.map(d=>[d.id,d.data()]));
+    const baseClasses=classesSnap.docs.map(d=>({id:d.id,...d.data()}));
+    adminClassesCache=await Promise.all(baseClasses.map(async c=>{
+      try{
+        const [members,teachers,assignments]=await Promise.all([
+          getDocs(collection(db,"classes",c.id,"members")),
+          getDocs(collection(db,"classes",c.id,"teachers")),
+          getDocs(collection(db,"classes",c.id,"assignments"))
+        ]);
+        return {...c,
+          members:members.docs.map(d=>({uid:d.id,...d.data()})),
+          teachers:teachers.docs.map(d=>({uid:d.id,...d.data()})),
+          assignmentCount:assignments.size
+        };
+      }catch(err){console.warn("admin class detail",c.id,err);return {...c,members:[],teachers:[],assignmentCount:0}}
+    }));
+    adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
+    if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="controls")adminLoadControls();
+  }catch(err){
+    console.error("admin load",err);showToast(adminLang("تعذر تحميل بيانات الأدمن. تأكد من Firestore Rules.","Could not load admin data. Check Firestore Rules."));
+  }finally{
+    refresh.disabled=false;refresh.textContent=adminLang("↻ تحديث","↻ Refresh");
+  }
+}
+function adminSearchText(){return (document.getElementById("adminGlobalSearch")?.value||"").trim().toLowerCase()}
+function adminMatches(text){const q=adminSearchText();return !q||String(text||"").toLowerCase().includes(q)}
+function adminRenderDashboard(){
+  const students=adminUsersCache.filter(u=>u.role==="student").length;
+  const teachers=adminUsersCache.filter(u=>u.role==="teacher"||isSuperAdminProfile(u)).length;
+  const assignments=adminClassesCache.reduce((s,c)=>s+(c.assignmentCount||0),0);
+  document.getElementById("adminStatStudents").textContent=students;
+  document.getElementById("adminStatTeachers").textContent=teachers;
+  document.getElementById("adminStatClasses").textContent=adminClassesCache.length;
+  document.getElementById("adminStatAssignments").textContent=assignments;
+  adminLoadRecentAudit();
+}
+async function adminLoadRecentAudit(){
+  const host=document.getElementById("adminRecentLog");
+  host.innerHTML=`<div class="cloud-note">${adminLang("⏳ تحميل آخر العمليات...","⏳ Loading recent actions...")}</div>`;
+  try{
+    const snap=await getDocs(collection(db,"adminAudit"));
+    const rows=snap.docs.map(d=>d.data()).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,12);
+    host.innerHTML=rows.length?rows.map(r=>`<div class="admin-log-row"><b>${escapeHtml(r.action||"Action")}</b><div class="admin-meta">${escapeHtml(r.detail||"")} • ${adminDate(r.createdAt)}</div></div>`).join(""):`<div class="cloud-note">${adminLang("لسه ما في سجل عمليات.","No admin actions yet.")}</div>`;
+  }catch{host.innerHTML=""}
+}
+function adminRenderPeople(){
+  const host=document.getElementById("adminPeopleList"),filter=document.getElementById("adminPeopleRoleFilter")?.value||"all",q=adminSearchText();
+  let rows=adminUsersCache.filter(u=>filter==="all"||u.role===filter||filter==="teacher"&&isSuperAdminProfile(u));
+  if(q)rows=rows.filter(u=>[u.displayName,u.loginName,u.profileId,u.email,u.uid].some(v=>String(v||"").toLowerCase().includes(q)));
+  rows.sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)));
+  document.getElementById("adminPeopleCount").textContent=`${rows.length} ${currentUILanguage==="en"?"accounts":"حساب"}`;
+  host.innerHTML="";
+  if(!rows.length){host.innerHTML=`<div class="cloud-note">${adminLang("ما في نتائج.","No results.")}</div>`;return}
+  for(const u of rows){
+    const blocked=adminBlocksCache.has(u.uid),admin=isSuperAdminProfile(u),teacher=u.role==="teacher"||admin;
+    const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
+    card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")} • Profile ID: <span class="admin-id">${escapeHtml(u.profileId||"—")}</span>${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div>${teacher&&u.email?`<div class="admin-email">${escapeHtml(u.email)}</div>`:""}${!teacher?`<div class="admin-meta">${adminLang("اسم الدخول","Login name")}: ${escapeHtml(u.loginName||u.originalLoginName||u.displayName||"—")}</div><div class="admin-meta">${adminLang("كلمة السر محمية وغير قابلة للعرض.","Password is protected and cannot be viewed.")}</div>`:""}</div></div></div>
+      <div class="admin-actions">
+        <button class="admin-rename-user">✏️ ${adminLang("تغيير الاسم","Rename")}</button>
+        <label>📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label>
+        <button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>
+        ${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف من الموقع","Delete from site")}</button>`}
+      </div>`;
+    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));
+    card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));
+    card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));
+    card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));
+    card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));
+    host.appendChild(card);
+  }
+}
+async function adminRenameUser(u){
+  const next=prompt(adminLang("اكتب الاسم الجديد:","Enter the new display name:"),adminUserDisplay(u));if(next==null)return;
+  const name=next.trim().replace(/\s+/g," ").slice(0,40);if(name.length<2)return;
+  try{
+    await updateDoc(doc(db,"users",u.uid),{displayName:name,adminEditedAt:serverTimestamp()});
+    for(const c of adminClassesCache){
+      if(c.ownerId===u.uid)try{await updateDoc(doc(db,"classes",c.id),{ownerName:name,updatedAt:serverTimestamp()})}catch{}
+      if(c.members?.some(m=>m.uid===u.uid))try{await updateDoc(doc(db,"classes",c.id,"members",u.uid),{displayName:name,teacherNameOverride:"",adminEditedAt:serverTimestamp()})}catch{}
+      if(c.teachers?.some(t=>t.uid===u.uid))try{await updateDoc(doc(db,"classes",c.id,"teachers",u.uid),{displayName:name,adminEditedAt:serverTimestamp()})}catch{}
+    }
+    await adminAudit("rename_user",`${u.profileId||u.uid} → ${name}`);showToast(adminLang("تم تغيير الاسم ✅","Name updated ✅"));await adminLoadAllData();
+  }catch(err){console.error(err);showToast(adminLang("تعذر تغيير الاسم.","Could not rename the account."))}
+}
+async function adminChangeUserPhoto(u,input){
+  const file=input.files?.[0];if(!file)return;
+  try{
+    if(!file.type.startsWith("image/")||file.size>8*1024*1024)throw new Error("invalid-image");
+    const photoData=await imageFileToDataURL(file);
+    await updateDoc(doc(db,"users",u.uid),{photoData,photoURL:"",adminEditedAt:serverTimestamp()});
+    for(const c of adminClassesCache)if(c.members?.some(m=>m.uid===u.uid))try{await updateDoc(doc(db,"classes",c.id,"members",u.uid),{photoData,teacherPhotoOverride:"",adminEditedAt:serverTimestamp()})}catch{}
+    await adminAudit("change_user_photo",u.profileId||u.uid);showToast(adminLang("تم تغيير الصورة ✅","Photo updated ✅"));await adminLoadAllData();
+  }catch(err){console.error(err);showToast(adminLang("تعذر حفظ الصورة.","Could not save the photo."))}finally{input.value=""}
+}
+async function adminRemoveUserPhoto(u){
+  if(!confirm(adminLang("تحذف صورة هذا الحساب؟","Remove this account photo?")))return;
+  try{
+    await updateDoc(doc(db,"users",u.uid),{photoData:"",photoURL:"",adminEditedAt:serverTimestamp()});
+    for(const c of adminClassesCache)if(c.members?.some(m=>m.uid===u.uid))try{await updateDoc(doc(db,"classes",c.id,"members",u.uid),{photoData:"",teacherPhotoOverride:"",adminEditedAt:serverTimestamp()})}catch{}
+    await adminAudit("remove_user_photo",u.profileId||u.uid);await adminLoadAllData();
+  }catch(err){console.error(err)}
+}
+async function adminToggleBlockUser(u){
+  const blocked=adminBlocksCache.has(u.uid);
+  if(!confirm(blocked?adminLang("تفعيل هذا الحساب؟","Enable this account?"):adminLang("إيقاف هذا الحساب عن دخول الموقع؟","Disable this account from using the site?")))return;
+  try{
+    if(blocked)await deleteDoc(doc(db,"blockedUsers",u.uid));
+    else await setDoc(doc(db,"blockedUsers",u.uid),{uid:u.uid,profileId:u.profileId||"",displayName:adminUserDisplay(u),blockedAt:serverTimestamp(),blockedBy:auth.currentUser.uid});
+    await adminAudit(blocked?"enable_user":"disable_user",u.profileId||u.uid);await adminLoadAllData();
+  }catch(err){console.error(err);showToast(adminLang("تعذر تعديل حالة الحساب.","Could not update account status."))}
+}
+async function adminDeleteSiteUser(u){
+  if(isSuperAdminProfile(u))return;
+  const owned=adminClassesCache.filter(c=>c.ownerId===u.uid);
+  if(owned.length){alert(adminLang("هذا المعلم يملك صفوف. انقل/احذف صفوفه أولًا.","This teacher owns classes. Transfer or delete those classes first."));return}
+  if(!confirm(adminLang("حذف بيانات هذا الحساب من الموقع وإيقاف دخوله؟\nملاحظة: بيانات Firebase Authentication نفسها تحتاج Backend للحذف النهائي.","Delete this account's site data and block access?\nNote: the Firebase Authentication credential itself requires a secure backend for final deletion.")))return;
+  try{
+    await setDoc(doc(db,"blockedUsers",u.uid),{uid:u.uid,profileId:u.profileId||"",displayName:adminUserDisplay(u),deletedFromSite:true,blockedAt:serverTimestamp(),blockedBy:auth.currentUser.uid});
+    for(const c of adminClassesCache){
+      if(c.members?.some(m=>m.uid===u.uid))try{await deleteDoc(doc(db,"classes",c.id,"members",u.uid))}catch{}
+      if(c.teachers?.some(t=>t.uid===u.uid))try{await deleteDoc(doc(db,"classes",c.id,"teachers",u.uid))}catch{}
+    }
+    await deleteDoc(doc(db,"users",u.uid));
+    await adminAudit("delete_site_account",u.profileId||u.uid);showToast(adminLang("تم حذف بيانات الحساب من الموقع وإيقافه.","Site account data deleted and access blocked."));await adminLoadAllData();
+  }catch(err){console.error(err);showToast(adminLang("تعذر حذف الحساب من الموقع.","Could not delete the site account."))}
+}
+function adminRenderClasses(){
+  const host=document.getElementById("adminClassesList"),q=adminSearchText();host.innerHTML="";
+  let classes=adminClassesCache;
+  if(q)classes=classes.filter(c=>{
+    const owner=adminUserByUid(c.ownerId),teacherNames=(c.teachers||[]).map(t=>adminUserDisplay(adminUserByUid(t.uid)||t)),studentNames=(c.members||[]).map(m=>adminUserDisplay(adminUserByUid(m.uid)||m));
+    return [c.name,c.code,c.ownerName,owner?.email,...teacherNames,...studentNames].some(v=>String(v||"").toLowerCase().includes(q));
+  });
+  classes.sort((a,b)=>String(a.name||"").localeCompare(String(b.name||"")));
+  if(!classes.length){host.innerHTML=`<div class="cloud-note">${adminLang("ما في صفوف مطابقة.","No matching classes.")}</div>`;return}
+  for(const c of classes){
+    const owner=adminUserByUid(c.ownerId)||{uid:c.ownerId,displayName:c.ownerName||"Teacher"};
+    const teacherRows=[owner,...(c.teachers||[]).map(t=>adminUserByUid(t.uid)||t).filter(t=>t.uid!==owner.uid)];
+    const students=(c.members||[]).map(m=>adminUserByUid(m.uid)||m);
+    const card=document.createElement("div");card.className="admin-class-card";card.dataset.classId=c.id;
+    card.innerHTML=`<div class="admin-class-head"><div>${c.photoData?`<img src="${escapeHtml(c.photoData)}" style="width:58px;height:58px;object-fit:cover;border-radius:14px;float:${currentUILanguage==="en"?"left":"right"};margin-inline-end:10px">`:""}<h3 style="margin:0">${escapeHtml(c.name||"Class")}</h3><div class="admin-meta">Code: <span class="admin-id">${escapeHtml(c.code||"—")}</span> • ${students.length} ${adminLang("طلاب","students")} • ${teacherRows.length} ${adminLang("معلمين","teachers")}</div></div></div>
+      <div class="admin-class-people"><div class="admin-class-col"><h4>👨‍🏫 ${adminLang("المعلمين","Teachers")}</h4>${teacherRows.map(t=>`<div class="admin-mini-row"><b>${escapeHtml(adminUserDisplay(t))}${t.uid===c.ownerId?" ⭐":""}</b>${t.email?`<div class="admin-email">${escapeHtml(t.email)}</div>`:""}<div class="admin-meta">ID: ${escapeHtml(t.profileId||"—")}</div></div>`).join("")||"—"}</div><div class="admin-class-col"><h4>🎒 ${adminLang("الطلاب","Students")}</h4>${students.slice(0,80).map(s=>`<div class="admin-mini-row"><b>${escapeHtml(adminUserDisplay(s))}</b><div class="admin-meta">ID: ${escapeHtml(s.profileId||"—")}</div></div>`).join("")||"—"}</div></div>
+      <div class="admin-actions"><button class="admin-rename-class">✏️ ${adminLang("اسم الصف","Rename class")}</button><label>📷 ${adminLang("صورة الصف","Class photo")}<input type="file" class="admin-class-photo" accept="image/*" hidden></label><button class="admin-remove-class-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button><button class="danger admin-delete-class">🗑 ${adminLang("حذف الصف","Delete class")}</button></div>`;
+    card.querySelector(".admin-rename-class").addEventListener("click",()=>adminRenameClass(c));
+    card.querySelector(".admin-class-photo").addEventListener("change",e=>adminChangeClassPhoto(c,e.target));
+    card.querySelector(".admin-remove-class-photo").addEventListener("click",()=>adminRemoveClassPhoto(c));
+    card.querySelector(".admin-delete-class").addEventListener("click",()=>adminDeleteClass(c));
+    host.appendChild(card);
+  }
+}
+async function adminRenameClass(c){
+  const next=prompt(adminLang("اسم الصف الجديد:","New class name:"),c.name||"");if(next==null)return;const name=next.trim().slice(0,60);if(name.length<2)return;
+  try{await updateDoc(doc(db,"classes",c.id),{name,updatedAt:serverTimestamp()});if(c.code)try{await updateDoc(doc(db,"classJoinCodes",c.code),{className:name})}catch{}await adminAudit("rename_class",`${c.id} → ${name}`);await adminLoadAllData()}catch(err){console.error(err)}
+}
+async function adminChangeClassPhoto(c,input){
+  const file=input.files?.[0];if(!file)return;try{if(!file.type.startsWith("image/")||file.size>8*1024*1024)throw new Error();const photoData=await imageFileToDataURL(file);await updateDoc(doc(db,"classes",c.id),{photoData,updatedAt:serverTimestamp()});await adminAudit("change_class_photo",c.id);await adminLoadAllData()}catch{showToast(adminLang("تعذر حفظ صورة الصف.","Could not save class photo."))}finally{input.value=""}
+}
+async function adminRemoveClassPhoto(c){try{await updateDoc(doc(db,"classes",c.id),{photoData:"",updatedAt:serverTimestamp()});await adminAudit("remove_class_photo",c.id);await adminLoadAllData()}catch{}}
+async function adminDeleteClass(c){
+  if(!confirm(adminLang(`حذف صف «${c.name}» وكل وظائفه ونشاطه؟`,`Delete class “${c.name}” and its assignments/activity?`)))return;
+  if(!confirm(adminLang("تأكيد أخير: ما في تراجع.","Final confirmation: this cannot be undone.")))return;
+  try{
+    const assignments=await getDocs(collection(db,"classes",c.id,"assignments"));
+    for(const a of assignments.docs){
+      for(const subname of ["answerKey","submissions"]){const s=await getDocs(collection(db,"classes",c.id,"assignments",a.id,subname));for(const d of s.docs)await deleteDoc(d.ref)}
+      await deleteDoc(a.ref);
+    }
+    for(const subname of ["members","teachers","activity"]){const s=await getDocs(collection(db,"classes",c.id,subname));for(const d of s.docs)await deleteDoc(d.ref)}
+    if(c.code)try{await deleteDoc(doc(db,"classJoinCodes",c.code))}catch{}
+    const invites=await getDocs(query(collection(db,"teacherInvites"),where("classId","==",c.id)));for(const d of invites.docs)try{await deleteDoc(d.ref)}catch{}
+    for(const u of adminUsersCache){
+      let changed=false,patch={};
+      if(Array.isArray(u.classIds)&&u.classIds.includes(c.id)){patch.classIds=u.classIds.filter(x=>x!==c.id);changed=true}
+      if(Array.isArray(u.teachingClassIds)&&u.teachingClassIds.includes(c.id)){patch.teachingClassIds=u.teachingClassIds.filter(x=>x!==c.id);changed=true}
+      if(changed)try{await updateDoc(doc(db,"users",u.uid),patch)}catch{}
+    }
+    await deleteDoc(doc(db,"classes",c.id));await adminAudit("delete_class",`${c.name||""} (${c.id})`);showToast(adminLang("تم حذف الصف.","Class deleted."));await adminLoadAllData();
+  }catch(err){console.error(err);showToast(adminLang("تعذر حذف الصف بالكامل.","Could not fully delete the class."))}
+}
+function adminPopulateTargets(){
+  for(const id of ["adminTargetClass","adminPollTarget"]){
+    const sel=document.getElementById(id);if(!sel)continue;const first=id==="adminTargetClass"?adminLang("كل الصفوف","All classes"):adminLang("الجميع","Everyone");
+    sel.innerHTML=`<option value="all">${first}</option>`+adminClassesCache.map(c=>`<option value="${c.id}">${escapeHtml(c.name||"Class")} (${escapeHtml(c.code||"")})</option>`).join("");
+  }
+}
+function adminTargetMeta(value){
+  if(value==="all")return {targetType:"all",targetClassId:"",targetName:adminLang("الجميع","Everyone")};
+  const c=adminClassById(value);return {targetType:"class",targetClassId:value,targetName:c?.name||"Class"};
+}
+async function adminPostAnnouncement(title,body,targetValue,extra={}){
+  const t=adminTargetMeta(targetValue);
+  return addDoc(collection(db,"adminAnnouncements"),{title,body,...t,...extra,active:true,createdBy:auth.currentUser.uid,createdByName:window.PythagorasiUser.displayName||"Super Admin",createdAt:serverTimestamp()});
+}
+function adminGeneratedPythagorasQuestions(count=10){
+  const triples=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[9,12,15],[6,8,10]];const qs=[];
+  for(let i=0;i<count;i++){
+    const [a,b,c]=triples[i%triples.length];const mode=i%3;
+    if(mode===0)qs.push({id:`aq_${Date.now()}_${i}`,type:"number",prompt:`a = ${a}, b = ${b}. ${adminLang("احسب c (الوتر).","Find c (the hypotenuse).")}`,points:10,options:[],answerHash:assignmentHash(c),_answer:String(c)});
+    else if(mode===1)qs.push({id:`aq_${Date.now()}_${i}`,type:"number",prompt:`b = ${b}, c = ${c}. ${adminLang("احسب a.","Find a.")}`,points:10,options:[],answerHash:assignmentHash(a),_answer:String(a)});
+    else{const opts=["a² + b² = c²","a + b = c","a² - b² = c²","a × b = c"].sort(()=>Math.random()-.5);qs.push({id:`aq_${Date.now()}_${i}`,type:"mcq",prompt:adminLang("أي قانون صحيح للمثلث القائم؟","Which formula is correct for a right triangle?"),points:10,options:opts,answerHash:assignmentHash("a² + b² = c²"),_answer:"a² + b² = c²"})}
+  }
+  return qs;
+}
+async function adminCreateAssignmentForClass(classId,title,description,dueDate,generated,count){
+  let questions=generated?adminGeneratedPythagorasQuestions(count):[{id:`aq_${Date.now()}_0`,type:"open",prompt:description||adminLang("اكتب إجابتك هنا.","Write your answer here."),points:100,options:[],answerHash:"",_guide:description||""}];
+  const totalPoints=questions.reduce((s,q)=>s+(q.points||0),0);
+  const pub=questions.map(({_answer,_guide,...q})=>q);
+  const ref=await addDoc(collection(db,"classes",classId,"assignments"),{title,description,subject:"pythagoras",dueDate,questions:pub,totalPoints,createdBy:auth.currentUser.uid,createdByName:window.PythagorasiUser.displayName||"Super Admin",adminCreated:true,createdAt:serverTimestamp()});
+  for(const q of questions)await setDoc(doc(db,"classes",classId,"assignments",ref.id,"answerKey",q.id),{id:q.id,type:q.type,answer:q._answer||"",guide:q._guide||"",points:q.points});
+  return ref.id;
+}
+async function adminCreateTargetCompetition(targetValue,title,count=8){
+  const code=await reserveUniqueCode("competition");
+  const questions=makeGeneralLiveQuestions("pythagoras",Math.max(3,Math.min(15,count))).map((q,i)=>({...q,index:i,points:q.points||1000}));
+  const t=adminTargetMeta(targetValue);
+  const ref=await addDoc(collection(db,"competitions"),{ownerId:auth.currentUser.uid,ownerName:window.PythagorasiUser.displayName||"Super Admin",title:title||"Pythagoras Competition",code,status:"lobby",currentIndex:-1,questionCount:questions.length,teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,...t,adminCreated:true,createdAt:serverTimestamp()});
+  for(let i=0;i<questions.length;i++)await setDoc(doc(db,"competitions",ref.id,"questions",String(i)),questions[i]);
+  await adminPostAnnouncement(title||adminLang("مسابقة فيثاغورس","Pythagoras Competition"),`${adminLang("كود المسابقة","Competition code")}: ${code}`,targetValue,{kind:"competition",competitionId:ref.id,competitionCode:code});
+  return code;
+}
+async function adminSendContent(){
+  if(!requireSuperAdmin())return;
+  const type=document.getElementById("adminSendType").value,target=document.getElementById("adminTargetClass").value,title=document.getElementById("adminSendTitle").value.trim()||adminLang("من إدارة الموقع","From Site Admin"),body=document.getElementById("adminSendBody").value.trim(),due=document.getElementById("adminSendDueDate").value,count=Math.max(3,Math.min(20,Number(document.getElementById("adminQuestionCount").value)||10)),status=document.getElementById("adminSendStatus");
+  const btn=document.getElementById("adminSendBtn");btn.disabled=true;status.textContent=adminLang("⏳ جاري النشر...","⏳ Publishing...");
+  try{
+    if(type==="announcement")await adminPostAnnouncement(title,body,target);
+    else if(type==="competition"){
+      const code=await adminCreateTargetCompetition(target,title,count);status.textContent=`${adminLang("تم إنشاء المسابقة. الكود","Competition created. Code")}: ${code}`;await adminAudit("create_target_competition",`${title} • ${target} • ${code}`);return;
+    }else{
+      const targets=target==="all"?adminClassesCache:[adminClassById(target)].filter(Boolean);
+      if(!targets.length)throw new Error("no-target-class");
+      for(const c of targets)await adminCreateAssignmentForClass(c.id,title,body,due,type==="generatedAssignment",count);
+      await adminPostAnnouncement(title,body||adminLang("تم إرسال وظيفة جديدة.","A new assignment was sent."),target,{kind:"assignment"});
+    }
+    await adminAudit(`admin_send_${type}`,`${title} • ${target}`);status.textContent=adminLang("تم النشر بنجاح ✅","Published successfully ✅");showToast(status.textContent);await adminLoadAllData();
+  }catch(err){console.error(err);status.textContent=adminLang("تعذر النشر.","Could not publish.")}
+  finally{btn.disabled=false}
+}
+function adminUpdateSendFields(){
+  const type=document.getElementById("adminSendType").value,assignment=type==="assignment"||type==="generatedAssignment",generated=type==="generatedAssignment"||type==="competition";
+  document.getElementById("adminDueDateWrap").classList.toggle("hidden",!assignment);
+  document.getElementById("adminQuestionCountWrap").classList.toggle("hidden",!generated);
+  document.getElementById("adminDifficultyWrap").classList.toggle("hidden",!generated);
+}
+async function adminCreatePoll(){
+  const target=document.getElementById("adminPollTarget").value,title=document.getElementById("adminPollTitle").value.trim()||adminLang("تصويت","Poll"),question=document.getElementById("adminPollQuestion").value.trim(),options=[...document.querySelectorAll(".admin-poll-opt")].map(x=>x.value.trim()).filter(Boolean);
+  if(question.length<3||options.length<2){showToast(adminLang("اكتب سؤال وخيارين على الأقل.","Enter a question and at least two options."));return}
+  const t=adminTargetMeta(target);
+  try{await addDoc(collection(db,"adminPolls"),{title,question,options,...t,active:true,createdBy:auth.currentUser.uid,createdAt:serverTimestamp()});await adminAudit("create_poll",`${title} • ${target}`);showToast(adminLang("تم نشر التصويت ✅","Poll published ✅"));adminLoadPolls();loadSiteUpdatesForCurrentUser()}catch(err){console.error(err)}
+}
+async function adminLoadPolls(){
+  const host=document.getElementById("adminPollList");host.innerHTML=`<div class="cloud-note">${adminLang("⏳ تحميل التصويتات...","⏳ Loading polls...")}</div>`;
+  try{
+    const snap=await getDocs(collection(db,"adminPolls"));const polls=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));host.innerHTML="";
+    for(const poll of polls){const votes=await getDocs(collection(db,"adminPolls",poll.id,"votes"));const counts=Array(poll.options?.length||0).fill(0);votes.docs.forEach(v=>{const i=Number(v.data().optionIndex);if(i>=0&&i<counts.length)counts[i]++});const card=document.createElement("div");card.className="admin-poll-card";card.innerHTML=`<div class="admin-poll-head"><div><b>${escapeHtml(poll.title||"Poll")}</b><div>${escapeHtml(poll.question||"")}</div><div class="admin-meta">${escapeHtml(poll.targetName||poll.targetType||"")} • ${votes.size} votes • ${poll.active!==false?"Active":"Closed"}</div></div></div><div class="admin-meta">${(poll.options||[]).map((o,i)=>`${escapeHtml(o)}: ${counts[i]||0}`).join(" • ")}</div><div class="admin-actions"><button class="admin-close-poll">${poll.active!==false?adminLang("إغلاق","Close"):adminLang("إعادة فتح","Reopen")}</button><button class="danger admin-delete-poll">${adminLang("حذف","Delete")}</button></div>`;card.querySelector(".admin-close-poll").onclick=async()=>{await updateDoc(doc(db,"adminPolls",poll.id),{active:poll.active===false,updatedAt:serverTimestamp()});await adminAudit("toggle_poll",poll.id);adminLoadPolls();loadSiteUpdatesForCurrentUser()};card.querySelector(".admin-delete-poll").onclick=async()=>{if(!confirm(adminLang("حذف التصويت؟","Delete this poll?")))return;for(const v of votes.docs)await deleteDoc(v.ref);await deleteDoc(doc(db,"adminPolls",poll.id));await adminAudit("delete_poll",poll.id);adminLoadPolls();loadSiteUpdatesForCurrentUser()};host.appendChild(card)}
+    if(!polls.length)host.innerHTML=`<div class="cloud-note">${adminLang("ما في تصويتات.","No polls.")}</div>`;
+  }catch(err){console.error(err);host.innerHTML=""}
+}
+async function adminLoadControls(){
+  try{const s=await getDoc(doc(db,"siteControls","main"));siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache}catch{}
+  document.getElementById("adminLockExams").checked=!!siteControlsCache.lockExams;document.getElementById("adminLockCompetitions").checked=!!siteControlsCache.lockCompetitions;document.getElementById("adminMaintenance").checked=!!siteControlsCache.maintenance;document.getElementById("adminMaintenanceMessage").value=siteControlsCache.maintenanceMessage||"";
+}
+async function adminSaveControls(){
+  const data={lockExams:document.getElementById("adminLockExams").checked,lockCompetitions:document.getElementById("adminLockCompetitions").checked,maintenance:document.getElementById("adminMaintenance").checked,maintenanceMessage:document.getElementById("adminMaintenanceMessage").value.trim(),updatedBy:auth.currentUser.uid,updatedAt:serverTimestamp()};
+  try{await setDoc(doc(db,"siteControls","main"),data,{merge:true});siteControlsCache={...siteControlsCache,...data};await adminAudit("update_site_controls",JSON.stringify({lockExams:data.lockExams,lockCompetitions:data.lockCompetitions,maintenance:data.maintenance}));showToast(adminLang("تم حفظ تحكم الموقع ✅","Site controls saved ✅"));loadSiteUpdatesForCurrentUser()}catch(err){console.error(err)}
+}
+async function loadSiteControls(){
+  try{const s=await getDoc(doc(db,"siteControls","main"));siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache}catch{}
+  return siteControlsCache;
+}
+async function getTargetedAdminDocs(collectionName){
+  if(!auth.currentUser||!window.PythagorasiUser)return [];
+  const out=new Map();
+  try{const all=await getDocs(query(collection(db,collectionName),where("targetType","==","all")));all.docs.forEach(d=>out.set(d.id,{id:d.id,...d.data()}))}catch{}
+  let ids=[];
+  if(window.PythagorasiUser.role==="student")ids=window.PythagorasiUser.classIds||[];
+  else if(isTeacherLike())try{ids=(await getManagedClasses()).map(c=>c.id)}catch{}
+  for(const classId of ids){try{const s=await getDocs(query(collection(db,collectionName),where("targetType","==","class"),where("targetClassId","==",classId)));s.docs.forEach(d=>out.set(d.id,{id:d.id,...d.data()}))}catch{}}
+  return [...out.values()];
+}
+async function loadSiteUpdatesForCurrentUser(){
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const section=document.getElementById("siteUpdatesSection"),host=document.getElementById("siteUpdatesList");if(!section||!host)return;
+  await loadSiteControls();
+  try{
+    const [anns,polls]=await Promise.all([getTargetedAdminDocs("adminAnnouncements"),getTargetedAdminDocs("adminPolls")]);
+    const activeAnns=anns.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8),activePolls=polls.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+    host.innerHTML="";
+    if(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4><div>${escapeHtml(siteControlsCache.maintenanceMessage)}</div>`;host.appendChild(d)}
+    for(const a of activeAnns){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4><div>${escapeHtml(a.body||"")}</div><div class="site-update-meta">${adminDate(a.createdAt)}${a.targetName?` • ${escapeHtml(a.targetName)}`:""}</div>${a.kind==="competition"&&a.competitionCode?`<button class="exam-secondary join-admin-competition" data-code="${escapeHtml(a.competitionCode)}">🏆 ${adminLang("دخول المسابقة","Join Competition")} • ${escapeHtml(a.competitionCode)}</button>`:""}`;d.querySelector(".join-admin-competition")?.addEventListener("click",()=>{openCompetitionModal();document.getElementById("compJoinCode").value=a.competitionCode||""});host.appendChild(d)}
+    for(const poll of activePolls){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4><div>${escapeHtml(poll.question||"")}</div><div class="site-poll-options">${(poll.options||[]).map((o,i)=>`<button class="exam-secondary site-poll-vote" data-index="${i}">${escapeHtml(o)}</button>`).join("")}</div><div class="site-update-meta poll-result"></div>`;const myVote=await getDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid)).catch(()=>null);if(myVote?.exists())d.querySelector(".poll-result").textContent=adminLang("صوّتت بالفعل. بتقدر تغيّر صوتك.","You already voted. You can change your vote.");d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{try{await setDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid),{uid:auth.currentUser.uid,optionIndex:Number(btn.dataset.index),displayName:window.PythagorasiUser.displayName||"User",votedAt:serverTimestamp()},{merge:true});soundFx("correct");d.querySelector(".poll-result").textContent=adminLang("تم تسجيل صوتك ✅","Vote recorded ✅")}catch(err){console.error(err)}}));host.appendChild(d)}
+    const has=host.children.length>0;section.classList.toggle("hidden",!has);
+  }catch(err){console.warn("site updates",err);section.classList.add("hidden")}
+}
+function adminShowTab(tab){
+  adminActiveTab=tab;document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
+  for(const key of ["Dashboard","People","Classes","Send","Polls","Controls"])document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
+  if(tab==="polls")adminLoadPolls();if(tab==="controls")adminLoadControls();
+}
+function openAdminPanel(){if(!requireSuperAdmin())return;applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
+document.getElementById("adminPanelBtn").addEventListener("click",openAdminPanel);
+document.getElementById("closeAdminPanel").addEventListener("click",()=>adminPanelModal.classList.remove("open"));
+adminPanelModal.addEventListener("click",e=>{if(e.target===adminPanelModal)adminPanelModal.classList.remove("open")});
+document.querySelectorAll("#adminTabs button").forEach(b=>b.addEventListener("click",()=>adminShowTab(b.dataset.adminTab)));
+document.getElementById("adminRefreshBtn").addEventListener("click",adminLoadAllData);
+document.getElementById("adminGlobalSearch").addEventListener("input",()=>{adminRenderPeople();adminRenderClasses()});
+document.getElementById("adminPeopleRoleFilter").addEventListener("change",adminRenderPeople);
+document.getElementById("adminSendType").addEventListener("change",adminUpdateSendFields);adminUpdateSendFields();
+document.getElementById("adminSendBtn").addEventListener("click",adminSendContent);
+document.getElementById("adminCreatePollBtn").addEventListener("click",adminCreatePoll);
+document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSaveControls);
+
+
+
 /* -------------------- LIVE CLASS COMPETITION -------------------- */
 const competitionModal=document.getElementById("competitionModal");
 let liveCompetitionId=null;
@@ -7695,6 +8287,7 @@ function showCompetitionView(id){
   });
 }
 function openCompetitionModal(){
+  if(window.PythagorasiUser?.role==="student"&&!isSuperAdminProfile()&&siteControlsCache.lockCompetitions){showToast(adminLang("المسابقات مقفولة مؤقتًا من الإدارة.","Competitions are temporarily locked by the admin."));return}
   if(!window.PythagorasiUser||!auth.currentUser){
     authPendingAction=null;
     authGate.classList.add("show");
@@ -7705,7 +8298,7 @@ function openCompetitionModal(){
   competitionModal.classList.add("open");
   showCompetitionView("competitionHome");
   document.getElementById("competitionModalTitle").textContent="🏆 المسابقة المباشرة";
-  const teacher=window.PythagorasiUser.role==="teacher";
+  const teacher=isTeacherLike();
   document.getElementById("competitionStudentCard").classList.toggle("hidden",teacher);
   document.getElementById("competitionTeacherCard").classList.toggle("hidden",!teacher);
   document.getElementById("compAutoStudentName").textContent=window.PythagorasiUser.displayName||"طالب";
@@ -7730,7 +8323,7 @@ function makeLiveQuestions(subject="mixed"){
   return makeGeneralLiveQuestions(subject,8);
 }
 async function createLiveCompetition(customQuestions=null,customTitle="مسابقة فيثاغورس"){
-  if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
+  if(!isTeacherLike() || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
     authGate.classList.add("show");
@@ -7777,7 +8370,7 @@ document.getElementById("compCreateBtn").addEventListener("click",()=>createLive
 async function loadCompetitionLibrary(){
   const host=document.getElementById("compLibraryList");
   host.innerHTML='<div class="cloud-note">⏳ جاري تحميل مسابقاتك...</div>';
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser){
+  if(!isTeacherLike()||!auth.currentUser){
     host.innerHTML='<div class="cloud-note">لازم تدخل كمعلم حتى تشوف مسابقاتك.</div>';
     return;
   }
@@ -7833,7 +8426,7 @@ async function loadCompetitionLibrary(){
   }
 }
 function openCompetitionLibrary(){
-  if(window.PythagorasiUser?.role!=="teacher"||!auth.currentUser){
+  if(!isTeacherLike()||!auth.currentUser){
     competitionModal.classList.remove("open");
     authPendingAction="competitionHost";
     authGate.classList.add("show");showTeacherLogin();
@@ -7886,7 +8479,7 @@ function addCompetitionQuestion(data={}){
   host.appendChild(card);
 }
 function openCompetitionBuilder(){
-  if(window.PythagorasiUser?.role!=="teacher" || !auth.currentUser){
+  if(!isTeacherLike() || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
     authGate.classList.add("show");
@@ -7937,7 +8530,7 @@ document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
 async function ensureAnonymousStudent(name){
   const user=auth.currentUser;
   if(!user || !window.PythagorasiUser)throw new Error("login-required");
-  if(window.PythagorasiUser.role==="teacher")throw new Error("teacher-account");
+  if(isTeacherLike())throw new Error("teacher-account");
   return user;
 }
 async function joinLiveCompetition(){
@@ -8585,7 +9178,7 @@ function executeSiteAction(raw,t){
 
   if(has(t,"شو وضعي","انا طالب ولا معلم","مين انا بالموقع")){
     const p=window.PythagorasiUser;
-    return p?`أنت داخل حاليًا كـ${p.role==="teacher"?"معلم":"طالب"} باسم ${p.displayName||"مستخدم"}.`:"أنت مش مسجل دخول حاليًا.";
+    return p?`أنت داخل حاليًا كـ${isSuperAdminProfile(p)?"Super Admin":isTeacherLikeProfile(p)?"معلم":"طالب"} باسم ${p.displayName||"مستخدم"}.`:"أنت مش مسجل دخول حاليًا.";
   }
 
   return null;
