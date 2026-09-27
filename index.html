@@ -2168,6 +2168,71 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
 #authStatusText:empty{display:none!important}
 #studentLoginBtn:disabled{opacity:.65;cursor:wait;pointer-events:none}
 .auth-error{line-height:1.6}
+
+/* ================= V30 CONTROL STATUS / DAY TIMERS ================= */
+.admin-control-live-panel{
+  margin-bottom:11px;padding:14px;border-radius:17px;
+  background:
+    radial-gradient(circle at 95% 5%,rgba(54,180,255,.09),transparent 28%),
+    linear-gradient(145deg,rgba(31,124,205,.065),rgba(80,201,155,.035));
+  border:1px solid rgba(77,184,255,.13)
+}
+.admin-control-live-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px
+}
+.admin-control-live-head h3{margin:4px 0 0;font-size:17px}
+.admin-control-live-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px
+}
+.admin-control-live-item{
+  padding:10px;border-radius:12px;
+  background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05)
+}
+.admin-control-live-item b{display:block;font-size:11px}
+.admin-control-live-item small{display:block;margin-top:4px;font-size:9px;color:#7d96a9;line-height:1.45}
+.admin-control-live-item.running{border-color:rgba(72,198,145,.14)}
+.admin-control-live-item.stopped{border-color:rgba(255,103,119,.14);background:rgba(255,85,105,.028)}
+.admin-control-live-dot{font-size:9px;font-weight:1000}
+.admin-control-live-item.running .admin-control-live-dot{color:#86dfb5}
+.admin-control-live-item.stopped .admin-control-live-dot{color:#ff9aa6}
+.admin-control-live-summary{
+  margin-top:9px;padding:8px 9px;border-radius:10px;font-size:10px;
+  background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.04);
+  color:#8da6b8
+}
+.admin-feature-toggle-btn{
+  min-width:110px;min-height:36px;padding:7px 9px;border-radius:10px;cursor:pointer;
+  font-size:10px;font-weight:1000;
+  border:1px solid rgba(74,198,146,.15);background:rgba(74,198,146,.06);color:#91dfbb
+}
+.admin-feature-toggle-btn.is-stopped{
+  border-color:rgba(255,105,120,.16);background:rgba(255,87,105,.055);color:#ffadb6
+}
+.admin-control-checkbox-fallback{display:none!important}
+.admin-timer-grid-v30{
+  grid-template-columns:1.2fr .5fr .55fr .8fr!important
+}
+body.light .admin-control-live-panel,
+body.light .admin-control-live-item,
+body.light .admin-control-live-summary{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+body.light .admin-feature-toggle-btn{
+  background:#f0faf5;border-color:#d2ebdd;color:#39785f
+}
+body.light .admin-feature-toggle-btn.is-stopped{
+  background:#fff3f4;border-color:#f0d3d7;color:#9b4e59
+}
+@media(max-width:850px){
+  .admin-control-live-grid{grid-template-columns:1fr 1fr}
+  .admin-timer-grid-v30{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:560px){
+  .admin-control-live-grid{grid-template-columns:1fr}
+  .admin-timer-grid-v30{grid-template-columns:1fr!important}
+  .admin-feature-toggle-btn{width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -2552,6 +2617,18 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
     </div>
 
     <div class="admin-view hidden" id="adminViewControls">
+      <section class="admin-control-live-panel">
+        <div class="admin-control-live-head">
+          <div>
+            <span class="admin-control-kicker">LIVE STATUS</span>
+            <h3 id="adminControlLiveTitle">📡 شو شغّال هسا؟</h3>
+          </div>
+          <button class="exam-secondary" id="adminRefreshControlStatusBtn">↻ تحديث الحالة</button>
+        </div>
+        <div class="admin-control-live-grid" id="adminControlLiveGrid"></div>
+        <div class="admin-control-live-summary" id="adminControlLiveSummary"></div>
+      </section>
+
       <section class="admin-master-control">
         <div>
           <span class="admin-control-kicker">MASTER CONTROL</span>
@@ -2568,7 +2645,7 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
         <div class="admin-control-card-head">
           <div><b id="adminQuickTimerTitle">⏱ تايمر سريع</b><small id="adminQuickTimerSub">اختار شو بدك توقف وكم دقيقة.</small></div>
         </div>
-        <div class="admin-timer-grid">
+        <div class="admin-timer-grid admin-timer-grid-v30">
           <select id="adminQuickTimerFeature">
             <option value="globalPause">كل شيء</option>
             <option value="lockExams">الامتحانات</option>
@@ -2577,7 +2654,12 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
             <option value="lockPollVoting">التصويت</option>
             <option value="lockClassJoin">دخول الصفوف</option>
           </select>
-          <input id="adminQuickTimerMinutes" type="number" min="1" max="10080" value="30">
+          <input id="adminQuickTimerValue" type="number" min="1" max="365" value="30">
+          <select id="adminQuickTimerUnit">
+            <option value="minutes">دقائق</option>
+            <option value="hours">ساعات</option>
+            <option value="days">أيام</option>
+          </select>
           <button class="apply" id="adminStartQuickTimerBtn">⏱ ابدأ التايمر</button>
         </div>
         <div class="cloud-note" id="adminQuickTimerStatus"></div>
@@ -2586,37 +2668,43 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
       <section class="admin-feature-controls">
         <div class="admin-control-row master">
           <div class="admin-control-name"><b id="controlGlobalLabel">⏸ إيقاف عام</b><small id="controlGlobalSub">يوقف نشاطات الطلاب الرئيسية.</small></div>
-          <label class="settings-toggle"><input id="adminGlobalPause" type="checkbox"><span id="controlGlobalToggle">موقوف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="globalPause" data-checkbox-id="adminGlobalPause">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminGlobalPause" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span id="controlGlobalUntilLabel">حتى</span><input id="adminGlobalPauseUntil" type="datetime-local"></label>
         </div>
 
         <div class="admin-control-row">
           <div class="admin-control-name"><b id="controlExamsLabel">🎓 الامتحانات</b><small id="controlExamsSub">منع الطلاب من فتح الامتحانات.</small></div>
-          <label class="settings-toggle"><input id="adminLockExams" type="checkbox"><span id="controlExamsToggle">إيقاف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="lockExams" data-checkbox-id="adminLockExams">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminLockExams" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span>حتى</span><input id="adminLockExamsUntil" type="datetime-local"></label>
         </div>
 
         <div class="admin-control-row">
           <div class="admin-control-name"><b id="controlCompetitionsLabel">🏆 المسابقات</b><small id="controlCompetitionsSub">منع الطلاب من دخول المسابقات.</small></div>
-          <label class="settings-toggle"><input id="adminLockCompetitions" type="checkbox"><span id="controlCompetitionsToggle">إيقاف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="lockCompetitions" data-checkbox-id="adminLockCompetitions">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminLockCompetitions" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span>حتى</span><input id="adminLockCompetitionsUntil" type="datetime-local"></label>
         </div>
 
         <div class="admin-control-row">
           <div class="admin-control-name"><b id="controlAssignmentsLabel">📝 الوظائف</b><small id="controlAssignmentsSub">منع تسليم الوظائف مؤقتًا.</small></div>
-          <label class="settings-toggle"><input id="adminLockAssignments" type="checkbox"><span id="controlAssignmentsToggle">إيقاف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="lockAssignments" data-checkbox-id="adminLockAssignments">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminLockAssignments" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span>حتى</span><input id="adminLockAssignmentsUntil" type="datetime-local"></label>
         </div>
 
         <div class="admin-control-row">
           <div class="admin-control-name"><b id="controlPollsLabel">📊 التصويت</b><small id="controlPollsSub">إظهار النتائج بدون السماح بأصوات جديدة.</small></div>
-          <label class="settings-toggle"><input id="adminLockPollVoting" type="checkbox"><span id="controlPollsToggle">إيقاف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="lockPollVoting" data-checkbox-id="adminLockPollVoting">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminLockPollVoting" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span>حتى</span><input id="adminLockPollVotingUntil" type="datetime-local"></label>
         </div>
 
         <div class="admin-control-row">
           <div class="admin-control-name"><b id="controlJoinLabel">🏫 دخول الصفوف</b><small id="controlJoinSub">منع الانضمام بكود الصف مؤقتًا.</small></div>
-          <label class="settings-toggle"><input id="adminLockClassJoin" type="checkbox"><span id="controlJoinToggle">إيقاف</span></label>
+          <button type="button" class="admin-feature-toggle-btn" data-control-key="lockClassJoin" data-checkbox-id="adminLockClassJoin">🟢 شغّال</button>
+          <label class="settings-toggle admin-control-checkbox-fallback"><input id="adminLockClassJoin" type="checkbox"><span>إيقاف</span></label>
           <label class="admin-control-until"><span>حتى</span><input id="adminLockClassJoinUntil" type="datetime-local"></label>
         </div>
       </section>
@@ -9167,6 +9255,16 @@ function applyAdminLanguage(){
   set("adminStudentsLastLabel","أحدث دخول","LATEST VISIT");
   const refreshStudents=document.getElementById("adminRefreshStudentsBtn");if(refreshStudents)refreshStudents.textContent=en?"↻ Refresh":"↻ تحديث";
 
+  set("adminControlLiveTitle","📡 شو شغّال هسا؟","📡 What's running now?");
+  const refreshControlStatus=document.getElementById("adminRefreshControlStatusBtn");
+  if(refreshControlStatus)refreshControlStatus.textContent=en?"↻ Refresh status":"↻ تحديث الحالة";
+
+  const timerUnit=document.getElementById("adminQuickTimerUnit");
+  if(timerUnit){
+    const unitLabels=en?["Minutes","Hours","Days"]:["دقائق","ساعات","أيام"];
+    [...timerUnit.options].forEach((o,i)=>o.textContent=unitLabels[i]||o.textContent);
+  }
+
   set("adminControlTitle","🎛️ مركز التحكم الكامل","🎛️ Full Control Center");
   set("adminControlSub","وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.","Pause one feature, set an end time, or pause all student activities at once.");
   set("adminQuickTimerTitle","⏱ تايمر سريع","⏱ Quick timer");
@@ -9194,7 +9292,15 @@ function applyAdminLanguage(){
   set("siteUpdatesTitle","📊 التصويتات والتحديثات","📊 Polls & updates");
   set("siteUpdatesSub","التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.","Polls appear first, followed by announcements and competitions.");
   const adminBtn=document.querySelector("#adminPanelBtn span");if(adminBtn)adminBtn.textContent=en?"Admin Panel":"لوحة الأدمن";
-  try{if(adminPanelModal?.classList.contains("open")){adminRenderPeople();adminRenderClasses();adminPopulateTargets()}}catch{}
+  try{
+    if(adminPanelModal?.classList.contains("open")){
+      adminRenderPeople();
+      adminRenderClasses();
+      adminPopulateTargets();
+      adminSyncFeatureToggleButtons();
+      adminRenderControlLiveStatus();
+    }
+  }catch{}
   set("myClassesHeroTitle","صفوفي","My Classes");
   set("myClassesHeroSub","شوف صفوفك، زملاءك، وكل الوظائف من مكان واحد.","See your classes, classmates and assignments in one place.");
   set("myClassesListTitle","🏫 الصفوف","🏫 Classes");
@@ -10664,6 +10770,134 @@ function setControlField(id,key){
   if(until)until.value=toLocalDateTimeValue(siteControlsCache?.[controlUntilKey(key)]||0);
 }
 
+
+const adminControlDefinitions=[
+  {key:"globalPause",checkbox:"adminGlobalPause",labelAr:"كل شيء",labelEn:"Everything"},
+  {key:"lockExams",checkbox:"adminLockExams",labelAr:"الامتحانات",labelEn:"Exams"},
+  {key:"lockCompetitions",checkbox:"adminLockCompetitions",labelAr:"المسابقات",labelEn:"Competitions"},
+  {key:"lockAssignments",checkbox:"adminLockAssignments",labelAr:"تسليم الوظائف",labelEn:"Assignment submissions"},
+  {key:"lockPollVoting",checkbox:"adminLockPollVoting",labelAr:"التصويت",labelEn:"Poll voting"},
+  {key:"lockClassJoin",checkbox:"adminLockClassJoin",labelAr:"دخول الصفوف",labelEn:"Class joining"}
+];
+
+function adminControlLabel(def){
+  return currentUILanguage==="en"?def.labelEn:def.labelAr;
+}
+
+function adminControlAbsoluteEnd(key){
+  const until=Number(siteControlsCache?.[controlUntilKey(key)]||0);
+  if(!until)return "";
+  try{
+    return new Date(until).toLocaleString("en-GB",{
+      day:"2-digit",month:"short",year:"numeric",
+      hour:"2-digit",minute:"2-digit",hour12:false
+    });
+  }catch{return ""}
+}
+
+function adminSyncFeatureToggleButtons(){
+  for(const def of adminControlDefinitions){
+    const button=document.querySelector(`.admin-feature-toggle-btn[data-control-key="${def.key}"]`);
+    const checkbox=document.getElementById(def.checkbox);
+    if(!button||!checkbox)continue;
+    const stopped=siteControlActive(def.key);
+    checkbox.checked=stopped;
+    button.classList.toggle("is-stopped",stopped);
+    button.textContent=stopped
+      ?`🔴 ${adminLang("موقوف","Stopped")}`
+      :`🟢 ${adminLang("شغّال","Running")}`;
+    button.title=stopped
+      ?adminLang("اكبس لتشغيله","Click to resume")
+      :adminLang("اكبس لإيقافه","Click to pause");
+  }
+}
+
+function adminRenderControlLiveStatus(){
+  const host=document.getElementById("adminControlLiveGrid");
+  const summary=document.getElementById("adminControlLiveSummary");
+  if(!host||!summary)return;
+
+  host.innerHTML="";
+  let stoppedCount=0;
+
+  for(const def of adminControlDefinitions){
+    const stopped=siteControlActive(def.key);
+    if(stopped)stoppedCount++;
+    const end=adminControlAbsoluteEnd(def.key);
+    const item=document.createElement("div");
+    item.className=`admin-control-live-item ${stopped?"stopped":"running"}`;
+    item.innerHTML=`
+      <span class="admin-control-live-dot">${stopped?"● STOPPED":"● RUNNING"}</span>
+      <b>${escapeHtml(adminControlLabel(def))}</b>
+      <small>
+        ${stopped
+          ? `${adminLang("موقوف","Paused")}${end?` • ${adminLang("ينتهي","ends")}: ${escapeHtml(end)}`:` • ${adminLang("بدون وقت انتهاء","no end time")}`}`
+          : adminLang("شغّال الآن","Running now")}
+      </small>`;
+    host.appendChild(item);
+  }
+
+  summary.textContent=stoppedCount
+    ? adminLang(
+        `هسا في ${stoppedCount} تحكمات موقوفة من أصل ${adminControlDefinitions.length}.`,
+        `${stoppedCount} of ${adminControlDefinitions.length} controls are currently paused.`
+      )
+    : adminLang(
+        "كل الميزات شغّالة هسا ✅",
+        "Everything is running right now ✅"
+      );
+}
+
+async function adminToggleFeatureControl(key){
+  if(!requireSuperAdmin())return;
+  const def=adminControlDefinitions.find(x=>x.key===key);
+  if(!def)return;
+
+  await loadSiteControls();
+  const currentlyStopped=siteControlActive(key);
+  const patch={
+    [key]:!currentlyStopped,
+    [controlUntilKey(key)]:0,
+    updatedBy:auth.currentUser.uid,
+    updatedAt:serverTimestamp()
+  };
+
+  try{
+    await setDoc(doc(db,"siteControls","main"),patch,{merge:true});
+    siteControlsCache={...siteControlsCache,...patch};
+    await adminAudit(
+      currentlyStopped?"resume_feature":"pause_feature",
+      key
+    );
+    await adminLoadControls();
+    showToast(currentlyStopped
+      ?adminLang(`${adminControlLabel(def)} شغّال هسا ▶`,` ${adminControlLabel(def)} is running ▶`)
+      :adminLang(`${adminControlLabel(def)} موقوف هسا ⏸`,` ${adminControlLabel(def)} is paused ⏸`)
+    );
+    loadSiteUpdatesForCurrentUser();
+  }catch(err){
+    console.error("toggle feature control",err);
+    showToast(adminLang("تعذر تغيير الحالة.","Could not change status."));
+  }
+}
+
+function adminTimerUnitMs(unit){
+  if(unit==="days")return 24*60*60*1000;
+  if(unit==="hours")return 60*60*1000;
+  return 60*1000;
+}
+
+function adminTimerUnitLabel(unit,value){
+  if(currentUILanguage==="en"){
+    if(unit==="days")return value===1?"day":"days";
+    if(unit==="hours")return value===1?"hour":"hours";
+    return value===1?"minute":"minutes";
+  }
+  if(unit==="days")return "يوم";
+  if(unit==="hours")return "ساعة";
+  return "دقيقة";
+}
+
 async function adminLoadControls(){
   try{
     const s=await getDoc(doc(db,"siteControls","main"));
@@ -10679,6 +10913,8 @@ async function adminLoadControls(){
 
   document.getElementById("adminMaintenance").checked=!!siteControlsCache.maintenance;
   document.getElementById("adminMaintenanceMessage").value=siteControlsCache.maintenanceMessage||"";
+  adminSyncFeatureToggleButtons();
+  adminRenderControlLiveStatus();
 }
 
 function controlDataFromUI(){
@@ -10749,9 +10985,13 @@ async function adminSetEverythingPaused(paused){
 
 async function adminStartQuickTimer(){
   if(!requireSuperAdmin())return;
+
   const key=document.getElementById("adminQuickTimerFeature").value;
-  const minutes=Math.max(1,Math.min(10080,Number(document.getElementById("adminQuickTimerMinutes").value)||30));
-  const until=Date.now()+minutes*60000;
+  const value=Math.max(1,Number(document.getElementById("adminQuickTimerValue").value)||1);
+  const unit=document.getElementById("adminQuickTimerUnit").value||"minutes";
+  const maxValue=unit==="days"?365:unit==="hours"?8760:525600;
+  const safeValue=Math.min(maxValue,value);
+  const until=Date.now()+safeValue*adminTimerUnitMs(unit);
   const status=document.getElementById("adminQuickTimerStatus");
 
   try{
@@ -10763,8 +11003,11 @@ async function adminStartQuickTimer(){
     };
     await setDoc(doc(db,"siteControls","main"),patch,{merge:true});
     siteControlsCache={...siteControlsCache,...patch};
-    await adminAudit("start_control_timer",`${key} • ${minutes} minutes`);
-    status.textContent=adminLang(`✅ بدأ تايمر ${minutes} دقيقة.`,`✅ ${minutes}-minute timer started.`);
+    await adminAudit("start_control_timer",`${key} • ${safeValue} ${unit}`);
+    status.textContent=adminLang(
+      `✅ توقف ${safeValue} ${adminTimerUnitLabel(unit,safeValue)} • ينتهي ${adminControlAbsoluteEnd(key)}`,
+      `✅ Paused for ${safeValue} ${adminTimerUnitLabel(unit,safeValue)} • ends ${adminControlAbsoluteEnd(key)}`
+    );
     await adminLoadControls();
     loadSiteUpdatesForCurrentUser();
   }catch(err){
@@ -11047,6 +11290,13 @@ document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSa
 document.getElementById("adminPauseAllBtn").addEventListener("click",()=>adminSetEverythingPaused(true));
 document.getElementById("adminResumeAllBtn").addEventListener("click",()=>adminSetEverythingPaused(false));
 document.getElementById("adminStartQuickTimerBtn").addEventListener("click",adminStartQuickTimer);
+document.getElementById("adminRefreshControlStatusBtn").addEventListener("click",async()=>{
+  await adminLoadControls();
+  showToast(adminLang("تم تحديث الحالة ↻","Status refreshed ↻"));
+});
+document.querySelectorAll(".admin-feature-toggle-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>adminToggleFeatureControl(btn.dataset.controlKey));
+});
 document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>adminLoadStudentOverview({force:true}));
 
 
