@@ -1968,6 +1968,201 @@ body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
   .poll-voter-time{text-align:start}
 }
 
+
+/* ================= V25 QUICK ADD TO CLASS ================= */
+.admin-quick-add-class{
+  margin:0 0 14px;padding:15px;border-radius:18px;
+  background:
+    radial-gradient(circle at 96% 8%,rgba(58,177,255,.10),transparent 30%),
+    linear-gradient(145deg,rgba(32,123,201,.075),rgba(125,78,225,.04));
+  border:1px solid rgba(79,182,255,.14);
+  box-shadow:0 14px 36px rgba(0,0,0,.10)
+}
+.admin-quick-add-head{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:11px
+}
+.admin-quick-add-head h3{margin:5px 0 3px;font-size:18px}
+.admin-quick-add-head p{margin:0;color:#8098aa;font-size:11px;line-height:1.6}
+.admin-quick-add-icon{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none;
+  font-size:25px;background:rgba(60,169,250,.09);border:1px solid rgba(72,179,255,.14)
+}
+.admin-quick-add-grid{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:9px
+}
+.admin-quick-add-grid label{font-size:10px;color:#89a0b2;font-weight:800}
+.admin-quick-add-grid input,.admin-quick-add-grid select{
+  width:100%;margin-top:5px
+}
+.admin-quick-add-results{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px
+}
+.admin-quick-add-result{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:9px;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.024);border:1px solid rgba(255,255,255,.045)
+}
+.admin-quick-add-result:hover{
+  border-color:rgba(75,180,255,.18);background:rgba(46,151,235,.05)
+}
+.admin-quick-add-result.active{
+  border-color:rgba(70,200,150,.22);background:rgba(70,200,150,.065)
+}
+.admin-quick-add-person{
+  display:flex;gap:8px;align-items:center;min-width:0
+}
+.admin-quick-add-avatar{
+  width:37px;height:37px;border-radius:10px;display:grid;place-items:center;flex:none;
+  background:linear-gradient(135deg,#218eff,#7759e6);background-size:cover;background-position:center;
+  font-size:12px;font-weight:1000
+}
+.admin-quick-add-person b{
+  display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.admin-quick-add-person small{display:block;color:#748ca0;font-size:9px}
+.admin-quick-add-selected{
+  margin-top:9px;padding:10px;border-radius:12px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  background:rgba(74,192,145,.055);border:1px solid rgba(74,192,145,.13)
+}
+.admin-quick-add-selected.hidden{display:none}
+.admin-quick-add-selected #adminQuickAddSelectedInfo{
+  font-size:11px;color:#93d8b8;font-weight:800
+}
+.admin-quick-add-selected button{margin:0;flex:none}
+.admin-quick-add-empty{
+  grid-column:1/-1;padding:9px;text-align:center;color:#7790a4;font-size:10px
+}
+body.light .admin-quick-add-class{
+  background:linear-gradient(145deg,#f2faff,#f8f5ff);border-color:#d5e8f6
+}
+body.light .admin-quick-add-result{background:#fff;border-color:#dce7ee;color:#173047}
+
+@media(max-width:720px){
+  .admin-quick-add-grid,.admin-quick-add-results{grid-template-columns:1fr}
+  .admin-quick-add-selected{flex-direction:column;align-items:stretch}
+  .admin-quick-add-selected button{width:100%}
+}
+
+
+/* ================= V26 STUDENT OVERVIEW / CONTROL CENTER ================= */
+.admin-student-summary{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0
+}
+.admin-student-summary>div{
+  padding:11px;border-radius:13px;text-align:center;
+  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055)
+}
+.admin-student-summary b{display:block;font-size:20px}
+.admin-student-summary small{display:block;margin-top:3px;color:#7891a4;font-size:9px}
+.admin-student-overview-list{display:grid;gap:10px}
+.admin-student-overview-card{
+  padding:13px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.017));
+  border:1px solid rgba(255,255,255,.06)
+}
+.admin-student-overview-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.admin-student-overview-person{display:flex;align-items:center;gap:9px;min-width:0}
+.admin-student-overview-person .admin-person-avatar{flex:none}
+.admin-student-overview-person b{display:block;font-size:14px}
+.admin-student-overview-person small{display:block;color:#7892a5;font-size:9px}
+.admin-student-overview-meta{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:9px
+}
+.admin-student-overview-meta>div{
+  padding:8px;border-radius:10px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.04);min-width:0
+}
+.admin-student-overview-meta small{display:block;color:#708a9e;font-size:8px;text-transform:uppercase}
+.admin-student-overview-meta span{display:block;margin-top:3px;font-size:10px;overflow-wrap:anywhere}
+.student-password-safe{color:#8cdcff!important;font-weight:900}
+.student-work-history{margin-top:9px}
+.student-work-history summary{cursor:pointer;color:#91d7ff;font-size:10px;font-weight:900}
+.student-work-list{display:grid;gap:5px;margin-top:7px}
+.student-work-row{
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.7fr) minmax(0,.8fr);
+  gap:8px;padding:7px;border-radius:9px;
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04)
+}
+.student-work-row b{font-size:10px}.student-work-row small{display:block;color:#748da0;font-size:8px}
+.student-work-score{font-size:10px;font-weight:900}.student-work-time{font-size:8px;color:#748da0;text-align:end}
+
+/* control center */
+.admin-master-control{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:16px;border-radius:18px;margin-bottom:11px;
+  background:linear-gradient(145deg,rgba(255,91,109,.065),rgba(52,151,240,.055));
+  border:1px solid rgba(255,126,139,.12)
+}
+.admin-master-control h3{margin:4px 0 3px;font-size:19px}
+.admin-master-control p{margin:0;color:#8199ab;font-size:11px;line-height:1.6}
+.admin-control-kicker{font-size:9px;font-weight:1000;letter-spacing:.10em;color:#ff9ba7}
+.admin-master-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.admin-master-actions button{min-height:38px}
+.admin-control-timer-card,.admin-maintenance-card{
+  padding:12px;border-radius:15px;margin-bottom:10px;
+  background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.055)
+}
+.admin-control-card-head b{display:block;font-size:13px}.admin-control-card-head small{color:#7891a3;font-size:9px}
+.admin-timer-grid{
+  display:grid;grid-template-columns:1.2fr .55fr .75fr;gap:7px;margin-top:9px
+}
+.admin-feature-controls{display:grid;gap:7px;margin:11px 0}
+.admin-control-row{
+  display:grid;grid-template-columns:minmax(0,1.2fr) auto minmax(190px,.65fr);
+  gap:10px;align-items:center;padding:10px;border-radius:13px;
+  background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05)
+}
+.admin-control-row.master{border-color:rgba(255,113,127,.12);background:rgba(255,92,107,.035)}
+.admin-control-name b{display:block;font-size:12px}.admin-control-name small{display:block;color:#748da0;font-size:9px;margin-top:2px}
+.admin-control-until{display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:center;font-size:9px;color:#7892a5}
+.admin-control-until input{min-width:0}
+.admin-maintenance-card{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:center}
+.admin-control-live{
+  margin-top:8px;padding:8px;border-radius:10px;font-size:10px;
+  color:#9ed9ff;background:rgba(48,155,238,.05);border:1px solid rgba(48,155,238,.10)
+}
+.student-control-pause-banner{
+  padding:10px 12px;border-radius:12px;margin-bottom:8px;
+  background:rgba(255,91,109,.065);border:1px solid rgba(255,91,109,.13);
+  color:#ffbcc4;font-size:11px;font-weight:800
+}
+body.light .admin-student-overview-card,body.light .admin-student-summary>div,
+body.light .admin-control-timer-card,body.light .admin-maintenance-card,body.light .admin-control-row{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+body.light .admin-master-control{background:linear-gradient(145deg,#fff4f5,#f2f9ff);border-color:#f0d9de}
+body.light .student-work-row{background:#f7fafc;border-color:#e0e9ef;color:#173047}
+
+@media(max-width:800px){
+  .admin-student-overview-meta{grid-template-columns:1fr 1fr}
+  .student-work-row{grid-template-columns:1fr}
+  .student-work-time{text-align:start}
+  .admin-master-control{align-items:flex-start;flex-direction:column}
+  .admin-master-actions{width:100%;justify-content:stretch}.admin-master-actions button{flex:1}
+  .admin-timer-grid,.admin-control-row,.admin-maintenance-card{grid-template-columns:1fr}
+}
+
+
+/* ================= V27 ONE-TIME ADMIN GRADE EDIT ================= */
+.admin-grade-once-wrap{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:5px
+}
+.admin-grade-once-btn{
+  min-height:30px;padding:5px 8px;border-radius:8px;cursor:pointer;
+  border:1px solid rgba(255,197,83,.16);background:rgba(255,197,83,.07);
+  color:#ffd78e;font-size:9px;font-weight:900
+}
+.admin-grade-locked{
+  display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border-radius:999px;
+  border:1px solid rgba(77,191,144,.13);background:rgba(77,191,144,.055);
+  color:#8eddb8;font-size:8px;font-weight:900
+}
+.admin-grade-edited-meta{
+  color:#7e95a7;font-size:8px
+}
+body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#8b6424}
+
 </style>
 </head>
 <body>
@@ -2154,12 +2349,13 @@ body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
 
     <div class="admin-tabs" id="adminTabs">
       <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
+      <button data-admin-tab="students">🎒 Student Overview</button>
       <button data-admin-tab="history">📝 Assignment History</button>
       <button data-admin-tab="dashboard">📈 Dashboard</button>
       <button data-admin-tab="people">👥 Students & Teachers</button>
       <button data-admin-tab="classes">🏫 Classes</button>
       <button data-admin-tab="send">🚀 Send / Assign</button>
-      <button data-admin-tab="controls">⚙️ Site Controls</button>
+      <button data-admin-tab="controls">🎛️ Control Center</button>
     </div>
 
     <div class="admin-view" id="adminViewDashboard">
@@ -2177,6 +2373,38 @@ body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
     </div>
 
     <div class="admin-view hidden" id="adminViewPeople">
+      <section class="admin-quick-add-class">
+        <div class="admin-quick-add-head">
+          <div>
+            <span class="admin-auto-badge">⚡ QUICK</span>
+            <h3 id="adminQuickAddTitle">إدخال طالب على صف</h3>
+            <p id="adminQuickAddSub">ابحث عن الطالب باسمه أو Profile ID، اختار الصف، واضغط إضافة.</p>
+          </div>
+          <div class="admin-quick-add-icon">🏫</div>
+        </div>
+
+        <div class="admin-quick-add-grid">
+          <label id="adminQuickAddStudentLabel">الطالب
+            <input id="adminQuickAddStudentSearch" placeholder="اكتب الاسم أو Profile ID...">
+          </label>
+
+          <label id="adminQuickAddClassLabel">الصف
+            <select id="adminQuickAddClassSelect">
+              <option value="">اختار الصف</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="adminQuickAddStudentResults" class="admin-quick-add-results"></div>
+
+        <div class="admin-quick-add-selected hidden" id="adminQuickAddSelected">
+          <div id="adminQuickAddSelectedInfo"></div>
+          <button class="apply" id="adminQuickAddConfirmBtn">➕ إضافة للصف</button>
+        </div>
+
+        <div class="cloud-note" id="adminQuickAddStatus"></div>
+      </section>
+
       <div class="admin-section-intro">
         <div><b>👥 Accounts</b><span>Search by name, Profile ID, login name, teacher email or UID.</span></div>
         <div class="admin-safe-badge">🔒 Passwords protected</div>
@@ -2274,6 +2502,22 @@ body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
       <div class="cloud-note" id="adminSendStatus"></div>
     </div>
 
+    <div class="admin-view hidden" id="adminViewStudents">
+      <div class="admin-section-intro">
+        <div>
+          <b id="adminStudentsTitle">🎒 كل الطلاب</b>
+          <span id="adminStudentsSub">آخر دخول، الصفوف، حالة كلمة السر، وكل الوظائف اللي سلّموها.</span>
+        </div>
+        <button class="exam-secondary" id="adminRefreshStudentsBtn">↻ تحديث</button>
+      </div>
+      <div class="admin-student-summary">
+        <div><b id="adminStudentsCount">0</b><small id="adminStudentsCountLabel">طلاب</small></div>
+        <div><b id="adminStudentsSolvedCount">0</b><small id="adminStudentsSolvedLabel">تسليمات وظائف</small></div>
+        <div><b id="adminStudentsOnlineInfo">—</b><small id="adminStudentsLastLabel">أحدث دخول</small></div>
+      </div>
+      <div class="admin-student-overview-list" id="adminStudentOverviewList"></div>
+    </div>
+
     <div class="admin-view hidden" id="adminViewHistory">
       <div class="admin-section-intro admin-history-intro">
         <div>
@@ -2308,14 +2552,82 @@ body.light .poll-voter-details{background:#f7fafc;border-color:#dbe7ee}
     </div>
 
     <div class="admin-view hidden" id="adminViewControls">
-      <div class="admin-control-grid">
-        <label class="settings-toggle"><input id="adminLockExams" type="checkbox"> Lock student exam entry</label>
-        <label class="settings-toggle"><input id="adminLockCompetitions" type="checkbox"> Lock student competitions</label>
-        <label class="settings-toggle"><input id="adminMaintenance" type="checkbox"> Maintenance banner</label>
-        <label class="admin-wide">Maintenance message <input id="adminMaintenanceMessage" placeholder="Site maintenance message"></label>
-      </div>
-      <button class="apply" id="adminSaveControlsBtn">💾 Save controls</button>
-      <div class="admin-note">All admin actions are logged with date, Profile ID and action type.</div>
+      <section class="admin-master-control">
+        <div>
+          <span class="admin-control-kicker">MASTER CONTROL</span>
+          <h3 id="adminControlTitle">🎛️ مركز التحكم الكامل</h3>
+          <p id="adminControlSub">وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.</p>
+        </div>
+        <div class="admin-master-actions">
+          <button class="danger" id="adminPauseAllBtn">⏸ إيقاف كل شيء الآن</button>
+          <button class="exam-secondary" id="adminResumeAllBtn">▶ تشغيل كل شيء</button>
+        </div>
+      </section>
+
+      <section class="admin-control-timer-card">
+        <div class="admin-control-card-head">
+          <div><b id="adminQuickTimerTitle">⏱ تايمر سريع</b><small id="adminQuickTimerSub">اختار شو بدك توقف وكم دقيقة.</small></div>
+        </div>
+        <div class="admin-timer-grid">
+          <select id="adminQuickTimerFeature">
+            <option value="globalPause">كل شيء</option>
+            <option value="lockExams">الامتحانات</option>
+            <option value="lockCompetitions">المسابقات</option>
+            <option value="lockAssignments">تسليم الوظائف</option>
+            <option value="lockPollVoting">التصويت</option>
+            <option value="lockClassJoin">دخول الصفوف</option>
+          </select>
+          <input id="adminQuickTimerMinutes" type="number" min="1" max="10080" value="30">
+          <button class="apply" id="adminStartQuickTimerBtn">⏱ ابدأ التايمر</button>
+        </div>
+        <div class="cloud-note" id="adminQuickTimerStatus"></div>
+      </section>
+
+      <section class="admin-feature-controls">
+        <div class="admin-control-row master">
+          <div class="admin-control-name"><b id="controlGlobalLabel">⏸ إيقاف عام</b><small id="controlGlobalSub">يوقف نشاطات الطلاب الرئيسية.</small></div>
+          <label class="settings-toggle"><input id="adminGlobalPause" type="checkbox"><span id="controlGlobalToggle">موقوف</span></label>
+          <label class="admin-control-until"><span id="controlGlobalUntilLabel">حتى</span><input id="adminGlobalPauseUntil" type="datetime-local"></label>
+        </div>
+
+        <div class="admin-control-row">
+          <div class="admin-control-name"><b id="controlExamsLabel">🎓 الامتحانات</b><small id="controlExamsSub">منع الطلاب من فتح الامتحانات.</small></div>
+          <label class="settings-toggle"><input id="adminLockExams" type="checkbox"><span id="controlExamsToggle">إيقاف</span></label>
+          <label class="admin-control-until"><span>حتى</span><input id="adminLockExamsUntil" type="datetime-local"></label>
+        </div>
+
+        <div class="admin-control-row">
+          <div class="admin-control-name"><b id="controlCompetitionsLabel">🏆 المسابقات</b><small id="controlCompetitionsSub">منع الطلاب من دخول المسابقات.</small></div>
+          <label class="settings-toggle"><input id="adminLockCompetitions" type="checkbox"><span id="controlCompetitionsToggle">إيقاف</span></label>
+          <label class="admin-control-until"><span>حتى</span><input id="adminLockCompetitionsUntil" type="datetime-local"></label>
+        </div>
+
+        <div class="admin-control-row">
+          <div class="admin-control-name"><b id="controlAssignmentsLabel">📝 الوظائف</b><small id="controlAssignmentsSub">منع تسليم الوظائف مؤقتًا.</small></div>
+          <label class="settings-toggle"><input id="adminLockAssignments" type="checkbox"><span id="controlAssignmentsToggle">إيقاف</span></label>
+          <label class="admin-control-until"><span>حتى</span><input id="adminLockAssignmentsUntil" type="datetime-local"></label>
+        </div>
+
+        <div class="admin-control-row">
+          <div class="admin-control-name"><b id="controlPollsLabel">📊 التصويت</b><small id="controlPollsSub">إظهار النتائج بدون السماح بأصوات جديدة.</small></div>
+          <label class="settings-toggle"><input id="adminLockPollVoting" type="checkbox"><span id="controlPollsToggle">إيقاف</span></label>
+          <label class="admin-control-until"><span>حتى</span><input id="adminLockPollVotingUntil" type="datetime-local"></label>
+        </div>
+
+        <div class="admin-control-row">
+          <div class="admin-control-name"><b id="controlJoinLabel">🏫 دخول الصفوف</b><small id="controlJoinSub">منع الانضمام بكود الصف مؤقتًا.</small></div>
+          <label class="settings-toggle"><input id="adminLockClassJoin" type="checkbox"><span id="controlJoinToggle">إيقاف</span></label>
+          <label class="admin-control-until"><span>حتى</span><input id="adminLockClassJoinUntil" type="datetime-local"></label>
+        </div>
+      </section>
+
+      <section class="admin-maintenance-card">
+        <label class="settings-toggle"><input id="adminMaintenance" type="checkbox"><span id="adminMaintenanceLabel">إظهار رسالة صيانة</span></label>
+        <input id="adminMaintenanceMessage" placeholder="رسالة صيانة الموقع">
+      </section>
+
+      <button class="apply" id="adminSaveControlsBtn">💾 حفظ التحكم</button>
+      <div class="admin-note" id="adminControlNote">الوقت اختياري. إذا تركته فاضي، الإيقاف يستمر لحد ما ترجعه يدويًا.</div>
     </div>
   </div>
 </div>
@@ -3707,6 +4019,12 @@ async function resolveCurrentUser(user){
         profile={...profile,profileId:await ensureProfileId(user,profile)};
       }
     }
+    try{
+      await setDoc(doc(db,"users",user.uid),{
+        lastLoginAt:serverTimestamp(),
+        lastSeenAt:serverTimestamp()
+      },{merge:true});
+    }catch(err){console.warn("last visit save",err)}
     paintUser(user,profile);
     authStatusText.textContent="تم الدخول ✓";
   }catch(error){
@@ -5739,7 +6057,7 @@ function openExamCenter(){
 }
 async function openExamWithIdentity(){
   await loadSiteControls();
-  if(window.PythagorasiUser?.role==="student"&&!isSuperAdminProfile()&&siteControlsCache.lockExams){showToast(adminLang("دخول الامتحانات مقفول مؤقتًا من الإدارة.","Exam entry is temporarily locked by the admin."));return}
+  if(studentFeatureBlocked("exams")){showToast(`${adminLang("دخول الامتحانات مقفول مؤقتًا من الإدارة.","Exam entry is temporarily locked by the admin.")} • ${siteControlActive("globalPause")?controlRemainingText("globalPause"):controlRemainingText("lockExams")}`);return}
   if(window.PythagorasiUser&&auth.currentUser){
     hidePlatformLobby();
     openExamCenter();
@@ -6615,6 +6933,8 @@ async function joinClassForStudent(code,{duringSignup=false}={}){
   if(window.PythagorasiUser?.role!=="student"||!auth.currentUser){
     throw new Error("student-required");
   }
+  await loadSiteControls();
+  if(studentFeatureBlocked("classJoin"))throw new Error("class-join-locked");
 
   const clean=String(code||"").trim().replace(/\s+/g,"").toUpperCase();
   if(clean.length<4)throw new Error("invalid-class-code");
@@ -6707,15 +7027,21 @@ document.getElementById("joinClassBtn").addEventListener("click",async()=>{
     await loadStudentClasses();
   }catch(err){
     console.error("join class",err);
-    const invalid=String(err?.message||"")==="invalid-class-code";
+    const msg=String(err?.message||"");
+    const invalid=msg==="invalid-class-code";
+    const locked=msg==="class-join-locked";
 
-    status.textContent=invalid
+    status.textContent=locked
       ?(currentUILanguage==="en"
-        ?"This class code does not exist or is inactive."
-        :"كود الصف مش موجود أو مش فعّال.")
-      :(currentUILanguage==="en"
-        ?"Could not join the class."
-        :"تعذر الدخول للصف.");
+        ?"Class joining is temporarily paused by the admin."
+        :"الانضمام للصفوف موقوف مؤقتًا من الإدارة.")
+      :invalid
+        ?(currentUILanguage==="en"
+          ?"This class code does not exist or is inactive."
+          :"كود الصف مش موجود أو مش فعّال.")
+        :(currentUILanguage==="en"
+          ?"Could not join the class."
+          :"تعذر الدخول للصف.");
 
     soundFx("wrong");
   }
@@ -6837,6 +7163,8 @@ async function loadStudentClasses(){
   assignHost.innerHTML="";
   if(!auth.currentUser)return;
 
+  await loadSiteControls();
+  const assignmentsLocked=studentFeatureBlocked("assignments");
   const p=await refreshCurrentProfile();
   const ids=[...(p?.classIds||[])];
   if(!ids.length){
@@ -6902,7 +7230,7 @@ async function loadStudentClasses(){
             ${submitted.teacherFeedback?`<div class="cloud-note">💬 ملاحظة المعلم: ${escapeHtml(submitted.teacherFeedback)}</div>`:""}`;
         }else{
           submitHtml=`<div class="assignment-student-questions"></div>
-            <button class="exam-secondary submit-assignment-btn">📤 تسليم الوظيفة</button>`;
+            <button class="exam-secondary submit-assignment-btn" ${assignmentsLocked?"disabled":""}>${assignmentsLocked?(currentUILanguage==="en"?"⏸ Submission paused by admin":"⏸ التسليم موقوف من الإدارة"):"📤 "+(currentUILanguage==="en"?"Submit assignment":"تسليم الوظيفة")}</button>`;
         }
         card.innerHTML=`
           <span class="assignment-status-chip ${submitted?"done":"open"}">
@@ -6928,6 +7256,11 @@ async function loadStudentClasses(){
         if(!submitted){
           renderStudentAssignmentQuestions(card,a);
           card.querySelector(".submit-assignment-btn").addEventListener("click",async()=>{
+            await loadSiteControls();
+            if(studentFeatureBlocked("assignments")){
+              showToast(adminLang("تسليم الوظائف موقوف مؤقتًا من الإدارة.","Assignment submission is temporarily paused by the admin."));
+              return;
+            }
             const answers=collectStudentAssignmentAnswers(card,a);
             const unanswered=answers.filter(x=>!String(x.answer).trim()).length;
             if(unanswered){
@@ -8709,7 +9042,15 @@ let adminUsersCache=[];
 let adminClassesCache=[];
 let adminBlocksCache=new Map();
 let adminActiveTab="polls";
-let siteControlsCache={lockExams:false,lockCompetitions:false,maintenance:false,maintenanceMessage:""};
+let siteControlsCache={
+  globalPause:false,globalPauseUntil:0,
+  lockExams:false,lockExamsUntil:0,
+  lockCompetitions:false,lockCompetitionsUntil:0,
+  lockAssignments:false,lockAssignmentsUntil:0,
+  lockPollVoting:false,lockPollVotingUntil:0,
+  lockClassJoin:false,lockClassJoinUntil:0,
+  maintenance:false,maintenanceMessage:""
+};
 
 function adminLang(ar,en){return currentUILanguage==="en"?en:ar}
 function adminDate(ts){
@@ -8728,10 +9069,10 @@ function applyAdminLanguage(){
   ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
   const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
   const tabs=[
-    ["polls","📊 التصويتات","📊 Polls"],["history","📝 سجل الوظائف","📝 Assignment History"],
-    ["dashboard","📈 الرئيسية","📈 Dashboard"],
+    ["polls","📊 التصويتات","📊 Polls"],["students","🎒 كل الطلاب","🎒 Student Overview"],
+    ["history","📝 سجل الوظائف","📝 Assignment History"],["dashboard","📈 الرئيسية","📈 Dashboard"],
     ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
-    ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","⚙️ تحكم الموقع","⚙️ Site Controls"]
+    ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","🎛️ مركز التحكم","🎛️ Control Center"]
   ];
   tabs.forEach(([key,ar,enText])=>{const b=document.querySelector(`[data-admin-tab="${key}"]`);if(b)b.textContent=en?enText:ar});
   const stats=document.querySelectorAll(".admin-stat small"),statWords=en?["Students","Teachers","Classes","Assignments"]:["طلاب","معلمين","صفوف","وظائف"];
@@ -8743,7 +9084,15 @@ function applyAdminLanguage(){
   const securityTitle=document.querySelector("#adminViewDashboard .admin-security-note b");if(securityTitle)securityTitle.textContent=en?"🔐 Account security":"🔐 أمان الحسابات";
   const peopleIntro=document.querySelector("#adminViewPeople .admin-section-intro");if(peopleIntro){peopleIntro.querySelector("b").textContent=en?"👥 Accounts":"👥 الحسابات";peopleIntro.querySelector("span").textContent=en?"Search by name, Profile ID, login name, teacher email or UID.":"ابحث بالاسم، Profile ID، اسم الدخول، إيميل المعلم أو UID.";peopleIntro.querySelector(".admin-safe-badge").textContent=en?"🔒 Passwords protected":"🔒 كلمات السر محمية"}
   const classIntro=document.querySelector("#adminViewClasses .admin-section-intro");if(classIntro){classIntro.querySelector("b").textContent=en?"🏫 Classes":"🏫 الصفوف";classIntro.querySelector("span").textContent=en?"Every class shows teachers, teacher emails, Profile IDs and students.":"كل صف يعرض المعلمين، إيميلاتهم، Profile IDs والطلاب.";classIntro.querySelector(".admin-safe-badge").textContent=en?"🔎 Search from the top bar":"🔎 ابحث من الشريط بالأعلى"}
-    const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
+    set("adminQuickAddTitle","إدخال طالب على صف","Add student to class");
+  set("adminQuickAddSub","ابحث عن الطالب باسمه أو Profile ID، اختار الصف، واضغط إضافة.","Search by student name or Profile ID, choose a class, and add them.");
+  label("adminQuickAddStudentSearch","الطالب","Student");
+  label("adminQuickAddClassSelect","الصف","Class");
+  ph("adminQuickAddStudentSearch","اكتب الاسم أو Profile ID...","Type name or Profile ID...");
+  const quickAddBtn=document.getElementById("adminQuickAddConfirmBtn");
+  if(quickAddBtn)quickAddBtn.textContent=en?"➕ Add to class":"➕ إضافة للصف";
+
+  const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
   set("autoAssignHeading","الموقع يعمل وظيفة ويرسلها للصفوف","Generate an assignment and send it to classes");
   set("autoAssignSub","اختار الصف، المستوى وعدد الأسئلة. الموقع يولّد وظيفة فيثاغورس جاهزة بتصحيح تلقائي ويرسلها مباشرة.","Choose the class, difficulty and question count. The site generates a ready Pythagoras assignment with automatic grading and sends it directly.");
   set("adminManualSendLabel","إرسال يدوي / أدوات إضافية","Manual send / additional tools");
@@ -8778,9 +9127,35 @@ function applyAdminLanguage(){
   set("adminHistoryStudentsLabel","طلاب سلّموا","STUDENTS");
   set("adminHistoryStatus","السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.","This history loads all assignment data currently stored in Firestore, regardless of age.");
   const historyRefresh=document.getElementById("adminRefreshHistoryBtn");if(historyRefresh)historyRefresh.textContent=en?"↻ Refresh history":"↻ تحديث السجل";
-  const toggles=[["adminLockExams","قفل دخول الطلاب للامتحانات","Lock student exam entry"],["adminLockCompetitions","قفل مسابقات الطلاب","Lock student competitions"],["adminMaintenance","إظهار تنبيه صيانة","Maintenance banner"]];
-  toggles.forEach(([id,ar,enText])=>{const el=document.getElementById(id)?.parentElement;if(el){const n=[...el.childNodes].find(x=>x.nodeType===Node.TEXT_NODE);if(n)n.nodeValue=" "+(en?enText:ar)}});
-  label("adminMaintenanceMessage","رسالة الصيانة","Maintenance message");ph("adminMaintenanceMessage","رسالة صيانة الموقع","Site maintenance message");
+  set("adminStudentsTitle","🎒 كل الطلاب","🎒 Student Overview");
+  set("adminStudentsSub","آخر دخول، الصفوف، حالة كلمة السر، وكل الوظائف اللي سلّموها.","Last visit, classes, password status, and every stored assignment submission.");
+  set("adminStudentsCountLabel","طلاب","STUDENTS");
+  set("adminStudentsSolvedLabel","تسليمات وظائف","SUBMISSIONS");
+  set("adminStudentsLastLabel","أحدث دخول","LATEST VISIT");
+  const refreshStudents=document.getElementById("adminRefreshStudentsBtn");if(refreshStudents)refreshStudents.textContent=en?"↻ Refresh":"↻ تحديث";
+
+  set("adminControlTitle","🎛️ مركز التحكم الكامل","🎛️ Full Control Center");
+  set("adminControlSub","وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.","Pause one feature, set an end time, or pause all student activities at once.");
+  set("adminQuickTimerTitle","⏱ تايمر سريع","⏱ Quick timer");
+  set("adminQuickTimerSub","اختار شو بدك توقف وكم دقيقة.","Choose what to pause and for how many minutes.");
+  set("controlGlobalLabel","⏸ إيقاف عام","⏸ Global pause");
+  set("controlGlobalSub","يوقف نشاطات الطلاب الرئيسية.","Pauses main student activities.");
+  set("controlExamsLabel","🎓 الامتحانات","🎓 Exams");
+  set("controlExamsSub","منع الطلاب من فتح الامتحانات.","Prevent students from opening exams.");
+  set("controlCompetitionsLabel","🏆 المسابقات","🏆 Competitions");
+  set("controlCompetitionsSub","منع الطلاب من دخول المسابقات.","Prevent students from joining competitions.");
+  set("controlAssignmentsLabel","📝 الوظائف","📝 Assignments");
+  set("controlAssignmentsSub","منع تسليم الوظائف مؤقتًا.","Temporarily prevent assignment submissions.");
+  set("controlPollsLabel","📊 التصويت","📊 Poll voting");
+  set("controlPollsSub","إظهار النتائج بدون السماح بأصوات جديدة.","Show results but prevent new votes.");
+  set("controlJoinLabel","🏫 دخول الصفوف","🏫 Class joining");
+  set("controlJoinSub","منع الانضمام بكود الصف مؤقتًا.","Temporarily prevent joining by class code.");
+  set("adminMaintenanceLabel","إظهار رسالة صيانة","Show maintenance message");
+  set("adminControlNote","الوقت اختياري. إذا تركته فاضي، الإيقاف يستمر لحد ما ترجعه يدويًا.","End time is optional. If blank, the pause stays active until you resume it manually.");
+  ph("adminMaintenanceMessage","رسالة صيانة الموقع","Site maintenance message");
+  const pauseBtn=document.getElementById("adminPauseAllBtn");if(pauseBtn)pauseBtn.textContent=en?"⏸ Pause everything now":"⏸ إيقاف كل شيء الآن";
+  const resumeBtn=document.getElementById("adminResumeAllBtn");if(resumeBtn)resumeBtn.textContent=en?"▶ Resume everything":"▶ تشغيل كل شيء";
+  const timerBtn=document.getElementById("adminStartQuickTimerBtn");if(timerBtn)timerBtn.textContent=en?"⏱ Start timer":"⏱ ابدأ التايمر";
   const ctrl=document.getElementById("adminSaveControlsBtn");if(ctrl)ctrl.textContent=en?"💾 Save controls":"💾 حفظ التحكم";
   set("siteUpdatesTitle","📣 تحديثات المدرسة","📣 School Updates");
   set("siteUpdatesTitle","📊 التصويتات والتحديثات","📊 Polls & updates");
@@ -8853,8 +9228,10 @@ async function adminLoadAllData(){
       }catch(err){console.warn("admin class detail",c.id,err);return {...c,members:[],teachers:[],assignmentCount:0}}
     }));
     adminAssignmentHistoryLoaded=false;
+    adminQuickAddSelectedStudent=null;
     adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
     if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="students")adminLoadStudentOverview({force:true});
     if(adminActiveTab==="history")adminLoadAssignmentHistory({force:true});
     if(adminActiveTab==="controls")adminLoadControls();
   }catch(err){
@@ -8865,6 +9242,64 @@ async function adminLoadAllData(){
 }
 function adminSearchText(){return (document.getElementById("adminGlobalSearch")?.value||"").trim().toLowerCase()}
 function adminMatches(text){const q=adminSearchText();return !q||String(text||"").toLowerCase().includes(q)}
+
+
+function adminSubmissionScore(sub){
+  return sub.teacherReviewed
+    ? sub.finalScore
+    : (sub.autoScore ?? sub.finalScore);
+}
+
+async function adminEditSubmissionGrade({classId,assignmentId,submission}){
+  if(!requireSuperAdmin())return;
+  if(!classId||!assignmentId||!submission)return;
+
+  const current=adminSubmissionScore(submission);
+  const total=Number(submission.totalPoints)||0;
+  const raw=prompt(
+    adminLang(
+      `العلامة الحالية: ${current==null?"—":current}/${total}\nاكتب العلامة الجديدة:`,
+      `Current grade: ${current==null?"—":current}/${total}\nEnter the new grade:`
+    ),
+    current==null?"":String(current)
+  );
+  if(raw==null)return;
+
+  const next=Number(String(raw).trim());
+  if(!Number.isFinite(next)||next<0||next>total){
+    alert(adminLang(`اكتب علامة بين 0 و ${total}.`,`Enter a grade between 0 and ${total}.`));
+    return;
+  }
+
+  try{
+    const uid=submission.uid||submission.studentUid;
+    const ref=doc(db,"classes",classId,"assignments",assignmentId,"submissions",uid);
+    const fresh=await getDoc(ref);
+    if(!fresh.exists()){
+      showToast(adminLang("التسليم مش موجود.","Submission not found."));
+      return;
+    }
+    const before=adminSubmissionScore(fresh.data());
+
+    await updateDoc(ref,{
+      finalScore:next,
+      teacherReviewed:true,
+      adminGradeEditedAt:serverTimestamp(),
+      adminGradeEditedBy:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    });
+
+    await adminAudit("edit_grade",`${classId}/${assignmentId}/${uid} • ${before??"—"} → ${next}/${total}`);
+    showToast(adminLang(`تم حفظ العلامة ${next}/${total} ✅`,`Grade saved: ${next}/${total} ✅`));
+
+    adminAssignmentHistoryLoaded=false;
+    await adminLoadAssignmentHistory({force:true});
+    if(adminActiveTab==="students")adminRenderStudentOverview();
+  }catch(err){
+    console.error("grade edit",err);
+    showToast(adminLang("تعذر تعديل العلامة.","Could not edit the grade."));
+  }
+}
 
 function adminSubmissionDisplay(sub){
   const u=adminUserByUid(sub.studentUid||sub.uid);
@@ -8949,6 +9384,14 @@ function adminRenderAssignmentHistory(){
           ${sub.teacherReviewed
             ? ` • ${adminLang("نهائي","Final")}`
             : ` • ${adminLang("تلقائي","Auto")}`}
+          <div class="admin-grade-once-wrap">
+            <button class="admin-grade-once-btn"
+              data-class-id="${escapeHtml(a.classId)}"
+              data-assignment-id="${escapeHtml(a.id)}"
+              data-submission-uid="${escapeHtml(sub.uid||sub.studentUid||"")}">
+              ✏️ ${adminLang("تعديل العلامة","Edit grade")}
+            </button>
+          </div>
         </div>
         <div class="admin-history-time">${escapeHtml(adminHistoryTimestamp(when))}</div>
       </div>`;
@@ -8973,6 +9416,16 @@ function adminRenderAssignmentHistory(){
       <div class="admin-history-submissions">
         ${submitRows||`<div class="admin-history-empty">${adminLang("لسه ما حدا سلّم هاي الوظيفة.","No one has submitted this assignment yet.")}</div>`}
       </div>`;
+
+    card.querySelectorAll(".admin-grade-once-btn").forEach(btn=>btn.addEventListener("click",()=>{
+      const submission=submissions.find(s=>(s.uid||s.studentUid)===btn.dataset.submissionUid);
+      if(!submission)return;
+      adminEditSubmissionGrade({
+        classId:btn.dataset.classId,
+        assignmentId:btn.dataset.assignmentId,
+        submission
+      });
+    }));
 
     host.appendChild(card);
   }
@@ -9040,6 +9493,172 @@ async function adminLoadAssignmentHistory({force=false}={}){
     if(status)status.textContent=adminLang("تعذر تحميل سجل الوظائف.","Could not load assignment history.");
     if(host)host.innerHTML="";
   }
+}
+
+
+function adminTimestampMs(ts){
+  try{
+    if(!ts)return 0;
+    if(typeof ts.toMillis==="function")return ts.toMillis();
+    if(typeof ts.seconds==="number")return ts.seconds*1000;
+    if(ts instanceof Date)return ts.getTime();
+    const n=Number(ts);if(Number.isFinite(n))return n;
+    const d=new Date(ts);return Number.isFinite(d.getTime())?d.getTime():0;
+  }catch{return 0}
+}
+
+function adminStudentLastVisit(u){
+  const direct=[u.lastLoginAt,u.lastSeenAt,u.updatedAt].map(adminTimestampMs).filter(Boolean);
+  const memberTimes=adminClassesCache.flatMap(c=>
+    (c.members||[]).filter(m=>m.uid===u.uid).map(m=>adminTimestampMs(m.lastActiveAt))
+  ).filter(Boolean);
+  const all=[...direct,...memberTimes];
+  if(!all.length)return 0;
+  return Math.max(...all);
+}
+
+function adminStudentSubmissions(uid){
+  const rows=[];
+  for(const a of adminAssignmentHistoryCache){
+    for(const s of (a.submissions||[])){
+      const subUid=s.studentUid||s.uid;
+      if(subUid!==uid)continue;
+      rows.push({
+        ...s,
+        classId:a.classId,
+        assignmentId:a.id,
+        assignmentTitle:a.title||adminLang("وظيفة","Assignment"),
+        className:a.className||"Class",
+        total:a.totalPoints||s.totalPoints||0,
+        time:s.submittedAt||s.gradedAt||null
+      });
+    }
+  }
+  return rows.sort((x,y)=>adminTimestampMs(y.time)-adminTimestampMs(x.time));
+}
+
+function adminRenderStudentOverview(){
+  const host=document.getElementById("adminStudentOverviewList");
+  if(!host)return;
+
+  const q=adminSearchText();
+  let students=adminUsersCache.filter(u=>u.role==="student");
+
+  if(q){
+    students=students.filter(u=>{
+      const classes=adminClassesCache.filter(c=>(c.members||[]).some(m=>m.uid===u.uid)).map(c=>c.name);
+      const work=adminStudentSubmissions(u.uid).map(x=>x.assignmentTitle);
+      return [u.displayName,u.loginName,u.profileId,u.uid,...classes,...work]
+        .some(v=>String(v||"").toLowerCase().includes(q));
+    });
+  }
+
+  students.sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)));
+
+  const submissionTotal=students.reduce((n,u)=>n+adminStudentSubmissions(u.uid).length,0);
+  const latest=Math.max(0,...students.map(adminStudentLastVisit));
+
+  document.getElementById("adminStudentsCount").textContent=students.length;
+  document.getElementById("adminStudentsSolvedCount").textContent=submissionTotal;
+  document.getElementById("adminStudentsOnlineInfo").textContent=latest?adminDate(latest):"—";
+
+  host.innerHTML="";
+  if(!students.length){
+    host.innerHTML=`<div class="cloud-note">${adminLang("ما في طلاب مطابقين.","No matching students.")}</div>`;
+    return;
+  }
+
+  for(const u of students){
+    const name=adminUserDisplay(u);
+    const classes=adminClassesCache.filter(c=>(c.members||[]).some(m=>m.uid===u.uid));
+    const subs=adminStudentSubmissions(u.uid);
+    const lastVisit=adminStudentLastVisit(u);
+    const resetPending=!!u.forcePasswordReset;
+
+    const workHtml=subs.map(s=>{
+      const score=s.teacherReviewed?s.finalScore:(s.autoScore??s.finalScore);
+      const total=s.totalPoints||s.total||0;
+      return `<div class="student-work-row" data-class-id="${escapeHtml(s.classId||"")}" data-assignment-id="${escapeHtml(s.assignmentId||"")}" data-submission-uid="${escapeHtml(s.uid||s.studentUid||"")}">
+        <div>
+          <b>${escapeHtml(s.assignmentTitle)}</b>
+          <small>🏫 ${escapeHtml(s.className)}</small>
+        </div>
+        <div class="student-work-score">
+          ${score!=null?`${escapeHtml(String(score))}/${escapeHtml(String(total))}`:adminLang("بانتظار التصحيح","Pending grade")}
+          <div class="admin-grade-once-wrap">
+            <button class="admin-grade-once-btn student-grade-once-btn">
+              ✏️ ${adminLang("تعديل العلامة","Edit grade")}
+            </button>
+          </div>
+        </div>
+        <div class="student-work-time">${escapeHtml(adminHistoryTimestamp(s.time))}</div>
+      </div>`;
+    }).join("");
+
+    const card=document.createElement("article");
+    card.className="admin-student-overview-card";
+    card.innerHTML=`
+      <div class="admin-student-overview-head">
+        <div class="admin-student-overview-person">
+          ${adminAvatarHTML(u)}
+          <div style="min-width:0">
+            <b>${escapeHtml(name)}</b>
+            <small>Profile ID: ${escapeHtml(u.profileId||"—")} • UID: ${escapeHtml(u.uid)}</small>
+          </div>
+        </div>
+        <button class="exam-secondary student-manage-account">${adminLang("إدارة الحساب","Manage account")}</button>
+      </div>
+
+      <div class="admin-student-overview-meta">
+        <div><small>${adminLang("آخر دخول","LAST VISIT")}</small><span>${lastVisit?escapeHtml(adminDate(lastVisit)):adminLang("لسه ما تسجل","Not recorded yet")}</span></div>
+        <div><small>${adminLang("الصفوف","CLASSES")}</small><span>${classes.length?classes.map(c=>escapeHtml(c.name||"Class")).join(" • "):"—"}</span></div>
+        <div><small>PASSWORD</small><span class="student-password-safe">🔒 ${resetPending?adminLang("طلب تغيير معلّق","Change requested"):adminLang("محمي داخل Firebase","Protected by Firebase")}</span></div>
+        <div><small>${adminLang("وظائف محلولة","SUBMISSIONS")}</small><span>${subs.length}</span></div>
+      </div>
+
+      <details class="student-work-history" ${subs.length&&subs.length<=4?"open":""}>
+        <summary>📝 ${adminLang("شو حل من الوظائف","Assignment submissions")} (${subs.length})</summary>
+        <div class="student-work-list">
+          ${workHtml||`<div class="admin-history-empty">${adminLang("لسه ما سلّم وظائف.","No assignment submissions yet.")}</div>`}
+        </div>
+      </details>
+
+      <div class="admin-actions">
+        <button class="student-require-password">🔐 ${resetPending?adminLang("إعادة طلب تغيير كلمة السر","Request password change again"):adminLang("طلب تغيير كلمة السر","Require password change")}</button>
+      </div>`;
+
+    card.querySelector(".student-manage-account").addEventListener("click",()=>{
+      document.getElementById("adminGlobalSearch").value=u.profileId||name;
+      adminShowTab("people");
+      adminRenderPeople();
+      setTimeout(()=>document.querySelector(`.admin-person-card[data-uid="${CSS.escape(u.uid)}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+    });
+    card.querySelector(".student-require-password").addEventListener("click",()=>adminRequirePasswordChange(u));
+    card.querySelectorAll(".student-grade-once-btn").forEach(btn=>btn.addEventListener("click",()=>{
+      const row=btn.closest(".student-work-row");
+      const submission=subs.find(s=>
+        String(s.classId||"")===String(row?.dataset.classId||"") &&
+        String(s.assignmentId||"")===String(row?.dataset.assignmentId||"") &&
+        String(s.uid||s.studentUid||"")===String(row?.dataset.submissionUid||"")
+      );
+      if(!submission)return;
+      adminEditSubmissionGrade({
+        classId:submission.classId,
+        assignmentId:submission.assignmentId,
+        submission
+      });
+    }));
+    host.appendChild(card);
+  }
+}
+
+async function adminLoadStudentOverview({force=false}={}){
+  if(!requireSuperAdmin())return;
+  const host=document.getElementById("adminStudentOverviewList");
+  if(host)host.innerHTML=`<div class="cloud-note">${adminLang("⏳ جاري تحميل كل الطلاب وسجل الوظائف...","⏳ Loading students and assignment history...")}</div>`;
+  if(force)adminAssignmentHistoryLoaded=false;
+  if(!adminAssignmentHistoryLoaded)await adminLoadAssignmentHistory({force});
+  adminRenderStudentOverview();
 }
 
 function adminRenderDashboard(){
@@ -9202,6 +9821,186 @@ function adminRenderClasses(){
   }
 }
 
+
+let adminQuickAddSelectedStudent=null;
+
+function adminQuickSearchStudents(term){
+  const q=String(term||"").trim().toLowerCase();
+  if(!q)return [];
+
+  return adminUsersCache
+    .filter(u=>u.role==="student")
+    .filter(u=>[
+      u.displayName,
+      u.loginName,
+      u.originalLoginName,
+      u.profileId,
+      u.uid
+    ].some(v=>String(v||"").toLowerCase().includes(q)))
+    .sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)))
+    .slice(0,20);
+}
+
+function adminRenderQuickStudentSearch(){
+  const input=document.getElementById("adminQuickAddStudentSearch");
+  const host=document.getElementById("adminQuickAddStudentResults");
+  const term=input?.value?.trim()||"";
+
+  if(!host)return;
+
+  adminQuickAddSelectedStudent=null;
+  document.getElementById("adminQuickAddSelected")?.classList.add("hidden");
+
+  if(term.length<1){
+    host.innerHTML="";
+    return;
+  }
+
+  const rows=adminQuickSearchStudents(term);
+  host.innerHTML="";
+
+  if(!rows.length){
+    host.innerHTML=`<div class="admin-quick-add-empty">${adminLang("ما لقيت طالب بهذا الاسم أو الـID.","No student found with that name or ID.")}</div>`;
+    return;
+  }
+
+  for(const u of rows){
+    const name=adminUserDisplay(u);
+    const photo=u.photoData||u.photoURL||"";
+    const row=document.createElement("div");
+    row.className="admin-quick-add-result";
+    row.dataset.uid=u.uid;
+
+    row.innerHTML=`
+      <div class="admin-quick-add-person">
+        <div class="admin-quick-add-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>
+          ${photo?"":escapeHtml((name[0]||"?").toUpperCase())}
+        </div>
+        <div style="min-width:0">
+          <b>${escapeHtml(name)}</b>
+          <small>Profile ID: ${escapeHtml(u.profileId||"—")}</small>
+        </div>
+      </div>
+      <span>›</span>`;
+
+    row.addEventListener("click",()=>{
+      adminQuickAddSelectedStudent=u;
+
+      host.querySelectorAll(".admin-quick-add-result").forEach(x=>
+        x.classList.toggle("active",x.dataset.uid===u.uid)
+      );
+
+      const selected=document.getElementById("adminQuickAddSelected");
+      const info=document.getElementById("adminQuickAddSelectedInfo");
+      selected.classList.remove("hidden");
+
+      info.textContent=adminLang(
+        `تم اختيار: ${name} • ID ${u.profileId||"—"}`,
+        `Selected: ${name} • ID ${u.profileId||"—"}`
+      );
+    });
+
+    host.appendChild(row);
+  }
+}
+
+async function adminQuickAddStudentToSelectedClass(){
+  if(!requireSuperAdmin())return;
+
+  const status=document.getElementById("adminQuickAddStatus");
+  const classId=document.getElementById("adminQuickAddClassSelect").value;
+  const student=adminQuickAddSelectedStudent;
+
+  if(!student){
+    status.textContent=adminLang("اختار طالب أولًا.","Select a student first.");
+    return;
+  }
+
+  if(!classId){
+    status.textContent=adminLang("اختار الصف أولًا.","Choose a class first.");
+    return;
+  }
+
+  const c=adminClassById(classId);
+  if(!c){
+    status.textContent=adminLang("الصف مش موجود.","Class not found.");
+    return;
+  }
+
+  if((c.members||[]).some(m=>m.uid===student.uid)){
+    status.textContent=adminLang(
+      `${adminUserDisplay(student)} موجود بالصف أصلًا ✅`,
+      `${adminUserDisplay(student)} is already in this class ✅`
+    );
+    return;
+  }
+
+  const btn=document.getElementById("adminQuickAddConfirmBtn");
+  btn.disabled=true;
+  btn.textContent=adminLang("⏳ جاري الإضافة...","⏳ Adding...");
+
+  try{
+    const xp=Number(student.xp)||0;
+    const exams=Number(student.examCount)||0;
+    const average=exams?Math.round((Number(student.totalScorePct)||0)/exams):0;
+
+    await setDoc(doc(db,"classes",c.id,"members",student.uid),{
+      uid:student.uid,
+      displayName:student.displayName||student.loginName||adminLang("طالب","Student"),
+      photoData:student.photoData||"",
+      joinCode:c.code||"",
+      addedByAdmin:true,
+      addedByAdminUid:auth.currentUser.uid,
+      xp,
+      level:profileLevelFromXP(xp),
+      examCount:exams,
+      average,
+      joinedAt:serverTimestamp(),
+      lastActiveAt:serverTimestamp()
+    });
+
+    const classIds=[...new Set([
+      ...(Array.isArray(student.classIds)?student.classIds:[]),
+      c.id
+    ])];
+
+    await updateDoc(doc(db,"users",student.uid),{
+      classIds,
+      adminEditedAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+
+    await adminAudit(
+      "quick_add_student_to_class",
+      `${student.profileId||student.uid} • ${c.id}`
+    );
+
+    status.textContent=adminLang(
+      `✅ تمت إضافة ${adminUserDisplay(student)} إلى ${c.name||"الصف"}`,
+      `✅ ${adminUserDisplay(student)} added to ${c.name||"class"}`
+    );
+
+    soundFx("win");
+    adminQuickAddSelectedStudent=null;
+    document.getElementById("adminQuickAddStudentSearch").value="";
+    document.getElementById("adminQuickAddStudentResults").innerHTML="";
+    document.getElementById("adminQuickAddSelected").classList.add("hidden");
+
+    await adminLoadAllData();
+
+  }catch(err){
+    console.error("quick add student",err);
+    status.textContent=adminLang(
+      "تعذر إضافة الطالب للصف.",
+      "Could not add the student to the class."
+    );
+    soundFx("wrong");
+  }finally{
+    btn.disabled=false;
+    btn.textContent=adminLang("➕ إضافة للصف","➕ Add to class");
+  }
+}
+
 function adminStudentSearchResultsForClass(c,term){
   const q=String(term||"").trim().toLowerCase();
   if(!q)return [];
@@ -9348,6 +10147,13 @@ function adminPopulateTargets(){
       ?adminLang("الجميع","Everyone")
       :adminLang("كل الصفوف","All classes");
     sel.innerHTML=`<option value="all">${first}</option>`+adminClassesCache.map(c=>`<option value="${c.id}">${escapeHtml(c.name||"Class")} (${escapeHtml(c.code||"")})</option>`).join("");
+  }
+  const quickClass=document.getElementById("adminQuickAddClassSelect");
+  if(quickClass){
+    const current=quickClass.value;
+    quickClass.innerHTML=`<option value="">${adminLang("اختار الصف","Choose class")}</option>`+
+      adminClassesCache.map(c=>`<option value="${c.id}">${escapeHtml(c.name||"Class")} (${escapeHtml(c.code||"")})</option>`).join("");
+    if([...quickClass.options].some(o=>o.value===current))quickClass.value=current;
   }
 }
 function adminTargetMeta(value){
@@ -9759,18 +10565,193 @@ async function adminLoadPolls(){
     host.innerHTML=`<div class="cloud-note">${adminLang("تعذر تحميل إحصائيات التصويت.","Could not load poll statistics.")}</div>`;
   }
 }
+function controlUntilKey(key){return `${key}Until`}
+
+function siteControlActive(key){
+  if(!siteControlsCache?.[key])return false;
+  const until=Number(siteControlsCache?.[controlUntilKey(key)]||0);
+  return !until || Date.now()<until;
+}
+
+function studentFeatureBlocked(feature){
+  if(window.PythagorasiUser?.role!=="student"||isSuperAdminProfile())return false;
+  if(siteControlActive("globalPause"))return true;
+  const map={
+    exams:"lockExams",
+    competitions:"lockCompetitions",
+    assignments:"lockAssignments",
+    polls:"lockPollVoting",
+    classJoin:"lockClassJoin"
+  };
+  const key=map[feature];
+  return key?siteControlActive(key):false;
+}
+
+function controlRemainingText(key){
+  const until=Number(siteControlsCache?.[controlUntilKey(key)]||0);
+  if(!until)return adminLang("حتى يتم تشغيله يدويًا","until manually resumed");
+  const diff=until-Date.now();
+  if(diff<=0)return adminLang("انتهى الوقت","timer finished");
+  const mins=Math.ceil(diff/60000);
+  if(mins<60)return `${mins} ${adminLang("دقيقة","min")}`;
+  const hrs=Math.floor(mins/60),rem=mins%60;
+  return `${hrs}h${rem?` ${rem}m`:""}`;
+}
+
+function toLocalDateTimeValue(ms){
+  const n=Number(ms||0);
+  if(!n)return "";
+  const d=new Date(n);
+  if(!Number.isFinite(d.getTime()))return "";
+  const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return local.toISOString().slice(0,16);
+}
+
+function fromLocalDateTimeValue(value){
+  if(!value)return 0;
+  const n=new Date(value).getTime();
+  return Number.isFinite(n)?n:0;
+}
+
+function setControlField(id,key){
+  const box=document.getElementById(id);
+  const until=document.getElementById(`${id}Until`);
+  if(box)box.checked=siteControlActive(key);
+  if(until)until.value=toLocalDateTimeValue(siteControlsCache?.[controlUntilKey(key)]||0);
+}
+
 async function adminLoadControls(){
-  try{const s=await getDoc(doc(db,"siteControls","main"));siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache}catch{}
-  document.getElementById("adminLockExams").checked=!!siteControlsCache.lockExams;document.getElementById("adminLockCompetitions").checked=!!siteControlsCache.lockCompetitions;document.getElementById("adminMaintenance").checked=!!siteControlsCache.maintenance;document.getElementById("adminMaintenanceMessage").value=siteControlsCache.maintenanceMessage||"";
+  try{
+    const s=await getDoc(doc(db,"siteControls","main"));
+    siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache;
+  }catch{}
+
+  setControlField("adminGlobalPause","globalPause");
+  setControlField("adminLockExams","lockExams");
+  setControlField("adminLockCompetitions","lockCompetitions");
+  setControlField("adminLockAssignments","lockAssignments");
+  setControlField("adminLockPollVoting","lockPollVoting");
+  setControlField("adminLockClassJoin","lockClassJoin");
+
+  document.getElementById("adminMaintenance").checked=!!siteControlsCache.maintenance;
+  document.getElementById("adminMaintenanceMessage").value=siteControlsCache.maintenanceMessage||"";
 }
+
+function controlDataFromUI(){
+  const pair=(id,key)=>({
+    [key]:document.getElementById(id).checked,
+    [controlUntilKey(key)]:fromLocalDateTimeValue(document.getElementById(`${id}Until`).value)
+  });
+
+  return {
+    ...pair("adminGlobalPause","globalPause"),
+    ...pair("adminLockExams","lockExams"),
+    ...pair("adminLockCompetitions","lockCompetitions"),
+    ...pair("adminLockAssignments","lockAssignments"),
+    ...pair("adminLockPollVoting","lockPollVoting"),
+    ...pair("adminLockClassJoin","lockClassJoin"),
+    maintenance:document.getElementById("adminMaintenance").checked,
+    maintenanceMessage:document.getElementById("adminMaintenanceMessage").value.trim(),
+    updatedBy:auth.currentUser.uid,
+    updatedAt:serverTimestamp()
+  };
+}
+
 async function adminSaveControls(){
-  const data={lockExams:document.getElementById("adminLockExams").checked,lockCompetitions:document.getElementById("adminLockCompetitions").checked,maintenance:document.getElementById("adminMaintenance").checked,maintenanceMessage:document.getElementById("adminMaintenanceMessage").value.trim(),updatedBy:auth.currentUser.uid,updatedAt:serverTimestamp()};
-  try{await setDoc(doc(db,"siteControls","main"),data,{merge:true});siteControlsCache={...siteControlsCache,...data};await adminAudit("update_site_controls",JSON.stringify({lockExams:data.lockExams,lockCompetitions:data.lockCompetitions,maintenance:data.maintenance}));showToast(adminLang("تم حفظ تحكم الموقع ✅","Site controls saved ✅"));loadSiteUpdatesForCurrentUser()}catch(err){console.error(err)}
+  const data=controlDataFromUI();
+  try{
+    await setDoc(doc(db,"siteControls","main"),data,{merge:true});
+    siteControlsCache={...siteControlsCache,...data};
+    await adminAudit("update_site_controls",JSON.stringify({
+      globalPause:data.globalPause,
+      lockExams:data.lockExams,
+      lockCompetitions:data.lockCompetitions,
+      lockAssignments:data.lockAssignments,
+      lockPollVoting:data.lockPollVoting,
+      lockClassJoin:data.lockClassJoin
+    }));
+    showToast(adminLang("تم حفظ التحكم ✅","Controls saved ✅"));
+    await adminLoadControls();
+    loadSiteUpdatesForCurrentUser();
+  }catch(err){console.error(err)}
 }
+
+async function adminSetEverythingPaused(paused){
+  if(!requireSuperAdmin())return;
+  try{
+    const patch={
+      globalPause:!!paused,
+      globalPauseUntil:paused?fromLocalDateTimeValue(document.getElementById("adminGlobalPauseUntil").value):0,
+      updatedBy:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    };
+    if(!paused){
+      Object.assign(patch,{
+        lockExams:false,lockExamsUntil:0,
+        lockCompetitions:false,lockCompetitionsUntil:0,
+        lockAssignments:false,lockAssignmentsUntil:0,
+        lockPollVoting:false,lockPollVotingUntil:0,
+        lockClassJoin:false,lockClassJoinUntil:0
+      });
+    }
+    await setDoc(doc(db,"siteControls","main"),patch,{merge:true});
+    siteControlsCache={...siteControlsCache,...patch};
+    await adminAudit(paused?"pause_everything":"resume_everything","");
+    showToast(paused?adminLang("تم إيقاف نشاطات الطلاب ⏸","Student activities paused ⏸"):adminLang("تم تشغيل كل شيء ▶","Everything resumed ▶"));
+    await adminLoadControls();
+    loadSiteUpdatesForCurrentUser();
+  }catch(err){console.error(err)}
+}
+
+async function adminStartQuickTimer(){
+  if(!requireSuperAdmin())return;
+  const key=document.getElementById("adminQuickTimerFeature").value;
+  const minutes=Math.max(1,Math.min(10080,Number(document.getElementById("adminQuickTimerMinutes").value)||30));
+  const until=Date.now()+minutes*60000;
+  const status=document.getElementById("adminQuickTimerStatus");
+
+  try{
+    const patch={
+      [key]:true,
+      [controlUntilKey(key)]:until,
+      updatedBy:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    };
+    await setDoc(doc(db,"siteControls","main"),patch,{merge:true});
+    siteControlsCache={...siteControlsCache,...patch};
+    await adminAudit("start_control_timer",`${key} • ${minutes} minutes`);
+    status.textContent=adminLang(`✅ بدأ تايمر ${minutes} دقيقة.`,`✅ ${minutes}-minute timer started.`);
+    await adminLoadControls();
+    loadSiteUpdatesForCurrentUser();
+  }catch(err){
+    console.error(err);
+    status.textContent=adminLang("تعذر بدء التايمر.","Could not start the timer.");
+  }
+}
+
 async function loadSiteControls(){
-  try{const s=await getDoc(doc(db,"siteControls","main"));siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache}catch{}
+  try{
+    const s=await getDoc(doc(db,"siteControls","main"));
+    siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache;
+  }catch{}
   return siteControlsCache;
 }
+
+/* Global student activity pause: settings/profile/logout remain available. */
+document.addEventListener("click",e=>{
+  if(window.PythagorasiUser?.role!=="student"||isSuperAdminProfile())return;
+  if(!siteControlActive("globalPause"))return;
+
+  const blocked=e.target.closest(
+    "#lobbyLabBtn,#lobbyLabCard,#lobbyChallengeBtn,#lobbyQuestionBtn,#lobbyExamBtn,#competitionBtn,#examBtn,#quickPythagExamBtn,#topicExamBtn,#applyBtn,#proofBtn,#shakeBtn,#challengeCheck,#challengeNew,#challengeShow"
+  );
+  if(!blocked)return;
+
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  showToast(`${adminLang("النشاطات موقوفة مؤقتًا من الإدارة","Activities are temporarily paused by the admin")} • ${controlRemainingText("globalPause")}`);
+},true);
+
 async function getTargetedAdminDocs(collectionName){
   if(!auth.currentUser||!window.PythagorasiUser)return [];
   const out=new Map();
@@ -9807,6 +10788,13 @@ async function loadSiteUpdatesForCurrentUser(){
 
     host.innerHTML="";
 
+    if(window.PythagorasiUser?.role==="student"&&siteControlActive("globalPause")){
+      const pause=document.createElement("div");
+      pause.className="student-control-pause-banner";
+      pause.textContent=`⏸ ${adminLang("الإدارة أوقفت النشاطات مؤقتًا","The admin temporarily paused student activities")} • ${controlRemainingText("globalPause")}`;
+      host.appendChild(pause);
+    }
+
     // Polls first + public result percentages.
     for(const poll of activePolls){
       const [myVoteSnap,votesSnap]=await Promise.all([
@@ -9823,6 +10811,7 @@ async function loadSiteUpdatesForCurrentUser(){
       }
       const total=counts.reduce((a,b)=>a+b,0);
       const myVote=myVoteSnap?.exists()?myVoteSnap.data():null;
+      const pollLocked=studentFeatureBlocked("polls");
 
       const d=document.createElement("div");
       d.className="site-update-card poll-priority";
@@ -9833,7 +10822,7 @@ async function loadSiteUpdatesForCurrentUser(){
         <div class="site-poll-options">
           ${(poll.options||[]).map((o,i)=>`
             <button class="exam-secondary site-poll-vote ${myVote&&Number(myVote.optionIndex)===i?"voted-choice":""}"
-              data-index="${i}" ${myVote?"disabled":""}>
+              data-index="${i}" ${(myVote||pollLocked)?"disabled":""}>
               ${escapeHtml(o)}
             </button>
           `).join("")}
@@ -9860,10 +10849,17 @@ async function loadSiteUpdatesForCurrentUser(){
         <div class="site-update-meta poll-result">
           ${myVote
             ? adminLang("✅ تم تسجيل صوتك. التصويت مسموح مرة واحدة فقط.","✅ Your vote is recorded. You can vote only once.")
-            : adminLang("اختار خيار واحد. بعد التصويت ما بتقدر تغيّر صوتك.","Choose one option. You cannot change your vote after submitting.")}
+            : pollLocked
+              ? adminLang("⏸ التصويت موقوف مؤقتًا من الإدارة.","⏸ Voting is temporarily paused by the admin.")
+              : adminLang("اختار خيار واحد. بعد التصويت ما بتقدر تغيّر صوتك.","Choose one option. You cannot change your vote after submitting.")}
         </div>`;
 
       d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{
+        await loadSiteControls();
+        if(studentFeatureBlocked("polls")){
+          d.querySelector(".poll-result").textContent=adminLang("التصويت موقوف مؤقتًا من الإدارة.","Voting is temporarily paused by the admin.");
+          return;
+        }
         if(myVote){
           d.querySelector(".poll-result").textContent=adminLang(
             "صوّتت من قبل. التصويت مسموح مرة واحدة فقط.",
@@ -9959,10 +10955,11 @@ async function loadSiteUpdatesForCurrentUser(){
 function adminShowTab(tab){
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Classes","Send","Polls","History","Controls"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","History","Controls"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
+  if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
   if(tab==="controls")adminLoadControls();
 }
@@ -9975,9 +10972,19 @@ document.getElementById("adminRefreshBtn").addEventListener("click",adminLoadAll
 document.getElementById("adminGlobalSearch").addEventListener("input",()=>{
   adminRenderPeople();
   adminRenderClasses();
+  if(adminActiveTab==="students")adminRenderStudentOverview();
   if(adminActiveTab==="history")adminRenderAssignmentHistory();
 });
 document.getElementById("adminPeopleRoleFilter").addEventListener("change",adminRenderPeople);
+
+document.getElementById("adminQuickAddStudentSearch").addEventListener("input",adminRenderQuickStudentSearch);
+document.getElementById("adminQuickAddStudentSearch").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    e.preventDefault();
+    adminRenderQuickStudentSearch();
+  }
+});
+document.getElementById("adminQuickAddConfirmBtn").addEventListener("click",adminQuickAddStudentToSelectedClass);
 document.getElementById("adminSendType").addEventListener("change",adminUpdateSendFields);adminUpdateSendFields();
 document.getElementById("adminSendBtn").addEventListener("click",adminSendContent);
 document.getElementById("autoAssignPreviewBtn").addEventListener("click",previewAutoAssignment);
@@ -9993,6 +11000,10 @@ document.getElementById("autoAssignCount").addEventListener("input",()=>{
 document.getElementById("adminCreatePollBtn").addEventListener("click",adminCreatePoll);
 document.getElementById("adminRefreshHistoryBtn").addEventListener("click",()=>adminLoadAssignmentHistory({force:true}));
 document.getElementById("adminSaveControlsBtn").addEventListener("click",adminSaveControls);
+document.getElementById("adminPauseAllBtn").addEventListener("click",()=>adminSetEverythingPaused(true));
+document.getElementById("adminResumeAllBtn").addEventListener("click",()=>adminSetEverythingPaused(false));
+document.getElementById("adminStartQuickTimerBtn").addEventListener("click",adminStartQuickTimer);
+document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>adminLoadStudentOverview({force:true}));
 
 
 
@@ -10022,8 +11033,9 @@ function showCompetitionView(id){
     document.getElementById(x).classList.toggle("hidden",x!==id);
   });
 }
-function openCompetitionModal(){
-  if(window.PythagorasiUser?.role==="student"&&!isSuperAdminProfile()&&siteControlsCache.lockCompetitions){showToast(adminLang("المسابقات مقفولة مؤقتًا من الإدارة.","Competitions are temporarily locked by the admin."));return}
+async function openCompetitionModal(){
+  await loadSiteControls();
+  if(studentFeatureBlocked("competitions")){showToast(`${adminLang("المسابقات مقفولة مؤقتًا من الإدارة.","Competitions are temporarily locked by the admin.")} • ${siteControlActive("globalPause")?controlRemainingText("globalPause"):controlRemainingText("lockCompetitions")}`);return}
   if(!window.PythagorasiUser||!auth.currentUser){
     authPendingAction=null;
     authGate.classList.add("show");
