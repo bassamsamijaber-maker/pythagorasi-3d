@@ -1590,6 +1590,35 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
 
 .class-mini-photo{width:46px;height:46px;border-radius:12px;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.08)}
 .class-name-with-photo{display:flex;align-items:center;gap:9px;min-width:0}
+
+/* ================= V18 CLEAR ADMIN / CLASSMATES ================= */
+.site-updates-priority{margin-top:12px;border:1px solid rgba(80,175,255,.16);background:linear-gradient(145deg,rgba(22,140,255,.055),rgba(126,87,255,.035));border-radius:22px;padding:14px;box-shadow:0 18px 55px rgba(0,0,0,.14)}
+.site-update-card.poll-priority{border-color:rgba(75,188,255,.26);background:linear-gradient(145deg,rgba(33,151,255,.09),rgba(123,83,234,.07));box-shadow:0 14px 32px rgba(20,83,140,.12)}
+.site-update-card.poll-priority::before{content:"LIVE POLL";display:inline-block;font-size:10px;font-weight:1000;letter-spacing:.08em;color:#88dbff;margin-bottom:7px}
+body.light .site-updates-priority{background:linear-gradient(145deg,#f5fbff,#f8f6ff);border-color:#d5e9f7}body.light .site-update-card.poll-priority{background:linear-gradient(145deg,#f2faff,#f7f4ff)}
+.admin-panel-box{width:min(1240px,98vw)!important;max-height:94vh!important;background:radial-gradient(circle at 0% 0%,rgba(35,143,255,.07),transparent 32%),radial-gradient(circle at 100% 100%,rgba(130,84,235,.06),transparent 32%),#09131f;border:1px solid rgba(119,187,255,.13)!important;box-shadow:0 35px 100px rgba(0,0,0,.5)!important}
+.admin-panel-box .modalhead{position:sticky;top:0;z-index:20;backdrop-filter:blur(18px);background:rgba(9,19,31,.91);border-bottom:1px solid rgba(255,255,255,.06);margin:-18px -18px 10px;padding:16px 18px 13px}
+.admin-toolbar{position:sticky;top:76px;z-index:18;padding:10px;border:1px solid rgba(255,255,255,.065);border-radius:16px;background:rgba(7,15,25,.88);backdrop-filter:blur(16px);box-shadow:0 12px 32px rgba(0,0,0,.17)}
+.admin-toolbar input{background:rgba(255,255,255,.045)!important;border-color:rgba(90,183,255,.16)!important}
+.admin-tabs{position:sticky!important;top:142px!important;z-index:17!important;margin:8px 0 14px!important;padding:8px!important;border:1px solid rgba(255,255,255,.055);border-radius:16px;background:rgba(7,15,25,.91)!important;backdrop-filter:blur(16px)}
+.admin-tabs button{padding:10px 13px!important;border-radius:12px!important}.admin-tabs .admin-poll-tab{border-color:rgba(77,185,255,.18);background:rgba(30,145,255,.07)}
+.admin-view{animation:adminViewIn .24s ease-out}@keyframes adminViewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.admin-stat{min-height:120px;justify-content:center;border-color:rgba(95,177,255,.11)!important;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.018))!important}
+.admin-security-note,.admin-section-intro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0;padding:12px 14px;border-radius:15px;border:1px solid rgba(83,184,255,.13);background:rgba(38,138,220,.055)}
+.admin-security-note{align-items:flex-start;flex-direction:column}.admin-security-note span,.admin-section-intro span{font-size:12px;color:#8ea9bc;line-height:1.55}.admin-section-intro>div:first-child{display:grid;gap:3px}
+.admin-safe-badge{padding:7px 10px;border-radius:999px;background:rgba(72,190,146,.075);border:1px solid rgba(72,190,146,.15);color:#86e3bd;font-size:11px;font-weight:900;white-space:nowrap}
+.admin-person-card,.admin-class-card,.admin-poll-card,.admin-log-row{padding:14px!important;border-radius:17px!important;border-color:rgba(255,255,255,.07)!important;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.018))!important}
+.admin-person-card:hover,.admin-class-card:hover,.admin-poll-card:hover{border-color:rgba(82,180,255,.18)!important;box-shadow:0 15px 38px rgba(0,0,0,.14)}
+.admin-person-avatar{width:58px!important;height:58px!important;border-radius:16px!important}
+.admin-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin-top:9px;padding:9px;border-radius:11px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045)}
+.admin-detail-item{min-width:0}.admin-detail-item small{display:block;color:#728a9d;font-size:9px;text-transform:uppercase;letter-spacing:.05em}.admin-detail-item span{display:block;margin-top:2px;font-size:12px;overflow-wrap:anywhere}
+.admin-password-protected{color:#89d7ff!important;font-weight:800}.admin-account-classes{margin-top:8px;font-size:11px;color:#92a7b8}
+.admin-actions{padding-top:8px;border-top:1px solid rgba(255,255,255,.045)}.admin-action-primary{color:#8ddcff!important;border-color:rgba(84,191,255,.14)!important}.admin-reset-access{color:#ffd68a!important;border-color:rgba(255,202,91,.15)!important}
+.admin-class-col{max-height:410px;overflow:auto;background:rgba(255,255,255,.018)}.admin-mini-row{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center;padding:8px 3px!important}.admin-mini-person{min-width:0}.admin-mini-actions{display:flex;gap:4px}.admin-mini-actions button{border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.03);color:inherit;border-radius:7px;padding:5px 7px;cursor:pointer;font-size:9px}
+.classmates-panel{grid-column:1/-1;margin-top:9px;padding:10px;border-radius:13px;background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.06)}.classmates-panel h5{margin:0 0 8px;font-size:13px}.classmates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}.classmate-card{display:flex;align-items:center;gap:7px;padding:7px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045)}.classmate-avatar{width:35px;height:35px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,#278eff,#8653e7);background-size:cover;background-position:center;font-size:12px;font-weight:1000;flex:none}.classmate-card b{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.classmate-card small{display:block;color:#7e95a7;font-size:9px}.classmate-me{border-color:rgba(78,184,255,.18);background:rgba(43,145,225,.055)}
+body.light .admin-panel-box{background:#f5f9fc;color:#173047}body.light .admin-panel-box .modalhead,body.light .admin-toolbar,body.light .admin-tabs{background:rgba(247,251,253,.94);border-color:#dce7ee}body.light .admin-stat,body.light .admin-person-card,body.light .admin-class-card,body.light .admin-poll-card,body.light .admin-log-row,body.light .admin-class-col{background:#fff!important;border-color:#dbe5ec!important}body.light .admin-section-intro,body.light .admin-security-note{background:#eef7fd;border-color:#d5e9f6}body.light .classmates-panel{background:#f5f9fc;border-color:#dce7ee}body.light .classmate-card{background:#fff;border-color:#dce6ed;color:#173047}
+@media(max-width:760px){.admin-tabs{top:132px!important;overflow-x:auto;flex-wrap:nowrap!important}.admin-tabs button{white-space:nowrap}.admin-detail-grid{grid-template-columns:1fr}.admin-section-intro{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -1680,6 +1709,13 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
       </div>
     </div>
 
+    <section class="lobby-section hidden site-updates-priority" id="siteUpdatesSection">
+      <div class="lobby-section-head">
+        <div><h3 id="siteUpdatesTitle">📊 التصويتات والتحديثات</h3><p id="siteUpdatesSub">التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.</p></div>
+      </div>
+      <div class="site-updates-list" id="siteUpdatesList"></div>
+    </section>
+
     <section class="pythag-lobby-hero">
       <div class="pythag-hero-copy">
         <span class="general-badge">📐 موضوع المنصة</span>
@@ -1738,13 +1774,6 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
       </div>
     </section>
 
-    <section class="lobby-section hidden" id="siteUpdatesSection">
-      <div class="lobby-section-head">
-        <div><h3 id="siteUpdatesTitle">📣 تحديثات المدرسة</h3><p id="siteUpdatesSub">إعلانات، تصويتات ومسابقات مرسلة إلك أو لصفك.</p></div>
-      </div>
-      <div class="site-updates-list" id="siteUpdatesList"></div>
-    </section>
-
     <section class="lobby-section teacher-only-lobby hidden" id="teacherLobbyTools">
       <div class="lobby-section-head">
         <div><h3>👨‍🏫 أدوات المعلم</h3><p>كل الأدوات مخصّصة لفيثاغورس.</p></div>
@@ -1775,12 +1804,12 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
     </div>
 
     <div class="admin-tabs" id="adminTabs">
-      <button class="active" data-admin-tab="dashboard">Dashboard</button>
-      <button data-admin-tab="people">Students & Teachers</button>
-      <button data-admin-tab="classes">Classes</button>
-      <button data-admin-tab="send">Send / Assign</button>
-      <button data-admin-tab="polls">Polls</button>
-      <button data-admin-tab="controls">Site Controls</button>
+      <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
+      <button data-admin-tab="dashboard">📈 Dashboard</button>
+      <button data-admin-tab="people">👥 Students & Teachers</button>
+      <button data-admin-tab="classes">🏫 Classes</button>
+      <button data-admin-tab="send">🚀 Send / Assign</button>
+      <button data-admin-tab="controls">⚙️ Site Controls</button>
     </div>
 
     <div class="admin-view" id="adminViewDashboard">
@@ -1790,11 +1819,18 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
         <div class="admin-stat"><span>🏫</span><b id="adminStatClasses">0</b><small>Classes</small></div>
         <div class="admin-stat"><span>📝</span><b id="adminStatAssignments">0</b><small>Assignments</small></div>
       </div>
-      <div class="admin-note">🔐 Student passwords are never stored or readable. Firebase Authentication does not expose them. Use account-access recovery instead of viewing passwords.</div>
+      <div class="admin-security-note">
+        <b>🔐 Account security</b>
+        <span>Names, Profile IDs, teacher emails, classes and account status are visible here. Passwords are protected by the authentication provider and are never stored as readable text.</span>
+      </div>
       <div class="admin-log-list" id="adminRecentLog"></div>
     </div>
 
     <div class="admin-view hidden" id="adminViewPeople">
+      <div class="admin-section-intro">
+        <div><b>👥 Accounts</b><span>Search by name, Profile ID, login name, teacher email or UID.</span></div>
+        <div class="admin-safe-badge">🔒 Passwords protected</div>
+      </div>
       <div class="admin-filter-row">
         <select id="adminPeopleRoleFilter"><option value="all">All accounts</option><option value="student">Students</option><option value="teacher">Teachers</option></select>
         <span id="adminPeopleCount">0 accounts</span>
@@ -1803,7 +1839,10 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
     </div>
 
     <div class="admin-view hidden" id="adminViewClasses">
-      <div class="admin-note">Each class shows its owner, co-teachers, teacher emails and students. Search above by class, teacher or student name.</div>
+      <div class="admin-section-intro">
+        <div><b>🏫 Classes</b><span>Every class shows teachers, teacher emails, Profile IDs and students.</span></div>
+        <div class="admin-safe-badge">🔎 Search from the top bar</div>
+      </div>
       <div class="admin-list" id="adminClassesList"></div>
     </div>
 
@@ -2013,6 +2052,25 @@ body.light .admin-meta{color:#6f8597}body.light .admin-email{color:#17618f}body.
   </div>
 </div>
 
+
+<div class="modal" id="forcedPasswordModal">
+  <div class="modalbox" style="width:min(520px,94vw)">
+    <div class="modalhead">
+      <div>
+        <h2 id="forcedPasswordTitle">🔐 تغيير كلمة السر</h2>
+        <div class="subject-assistant-line" id="forcedPasswordSub">طلبت الإدارة منك تغيير كلمة السر لحماية حسابك.</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <label id="forcedPasswordLabel1">كلمة السر الجديدة</label>
+      <input id="forcedPasswordNew" type="password" minlength="6" maxlength="64" autocomplete="new-password">
+      <label id="forcedPasswordLabel2" style="margin-top:9px">تأكيد كلمة السر</label>
+      <input id="forcedPasswordConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password">
+      <button class="apply" id="forcedPasswordSave" style="margin-top:12px">حفظ كلمة السر الجديدة</button>
+      <div class="cloud-note" id="forcedPasswordStatus" style="margin-top:8px"></div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="settingsModal">
   <div class="modalbox settings-modalbox">
@@ -2652,7 +2710,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/fireba
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -3138,6 +3196,7 @@ function paintUser(user,profile){
   applySavedAccountState(window.PythagorasiUser);
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
+  if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
 
   const pending=authPendingAction;
   if(!pending)showPlatformLobby();
@@ -3377,6 +3436,11 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
     showToast("تعذر تسجيل الخروج.");
   }
 });
+
+
+const forcedPasswordModal=document.getElementById("forcedPasswordModal");
+function openForcedPasswordReset(){const en=currentUILanguage==="en";document.getElementById("forcedPasswordTitle").textContent=en?"🔐 Change password":"🔐 تغيير كلمة السر";document.getElementById("forcedPasswordSub").textContent=en?"The administrator requested a password change for this account.":"طلبت الإدارة منك تغيير كلمة السر لحماية الحساب.";document.getElementById("forcedPasswordLabel1").textContent=en?"New password":"كلمة السر الجديدة";document.getElementById("forcedPasswordLabel2").textContent=en?"Confirm password":"تأكيد كلمة السر";document.getElementById("forcedPasswordSave").textContent=en?"Save new password":"حفظ كلمة السر الجديدة";document.getElementById("forcedPasswordStatus").textContent="";document.getElementById("forcedPasswordNew").value="";document.getElementById("forcedPasswordConfirm").value="";forcedPasswordModal.classList.add("open")}
+document.getElementById("forcedPasswordSave").addEventListener("click",async()=>{const user=auth.currentUser,status=document.getElementById("forcedPasswordStatus");if(!user)return;const a=document.getElementById("forcedPasswordNew").value,b=document.getElementById("forcedPasswordConfirm").value;if(a.length<6){status.textContent=currentUILanguage==="en"?"Use at least 6 characters.":"اكتب 6 خانات أو أكثر.";soundFx("wrong");return}if(a!==b){status.textContent=currentUILanguage==="en"?"Passwords do not match.":"كلمتا السر مش نفس بعض.";soundFx("wrong");return}try{status.textContent=currentUILanguage==="en"?"Saving...":"جاري الحفظ...";await updatePassword(user,a);await updateDoc(doc(db,"users",user.uid),{forcePasswordReset:false,passwordChangedAt:serverTimestamp(),updatedAt:serverTimestamp()});window.PythagorasiUser={...window.PythagorasiUser,forcePasswordReset:false};forcedPasswordModal.classList.remove("open");soundFx("win");showToast(currentUILanguage==="en"?"Password updated ✅":"تم تغيير كلمة السر ✅")}catch(err){console.error("forced password reset",err);status.textContent=String(err?.code||"").includes("requires-recent-login")?(currentUILanguage==="en"?"For security, log out, sign in again with your current password, then set the new one.":"للأمان: اعمل تسجيل خروج، ادخل من جديد بكلمة السر الحالية، وبعدها غيّرها."):(currentUILanguage==="en"?"Could not change the password.":"تعذر تغيير كلمة السر.");soundFx("wrong")}});
 
 authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
   console.error("teacher redirect result",error);
@@ -6053,10 +6117,28 @@ async function loadStudentClasses(){
 
       const row=document.createElement("div");row.className="class-row";
       row.innerHTML=`
-        <span class="class-name-with-photo">${c.photoData?`<img class="class-mini-photo" src="${escapeHtml(c.photoData)}" alt="">`:""}<span><b>${escapeHtml(c.name||"صف")}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span></span>
-        <span style="display:flex;gap:7px;align-items:center"><b>${escapeHtml(c.code||"")}</b><button class="student-leave-class">خروج</button></span>`;
+        <span class="class-name-with-photo">${c.photoData?`<img class="class-mini-photo" src="${escapeHtml(c.photoData)}" alt="">`:""}<span><b>${escapeHtml(c.name||(currentUILanguage==="en"?"Class":"صف"))}</b><small style="display:block;color:#7f96a9">${escapeHtml(c.ownerName||"")}</small></span></span>
+        <span style="display:flex;gap:7px;align-items:center"><b>${escapeHtml(c.code||"")}</b><button class="student-leave-class">${currentUILanguage==="en"?"Leave":"خروج"}</button></span>
+        <div class="classmates-panel">
+          <h5>${currentUILanguage==="en"?"👥 My classmates":"👥 زملائي في الصف"}</h5>
+          <div class="classmates-grid"><div class="cloud-note">${currentUILanguage==="en"?"Loading classmates...":"جاري تحميل الزملاء..."}</div></div>
+        </div>`;
       row.querySelector(".student-leave-class").addEventListener("click",()=>leaveClassAsStudent(classId,c.name||"الصف"));
       host.appendChild(row);
+
+      try{
+        const classmatesSnap=await getDocs(collection(db,"classes",classId,"members"));
+        const classmates=classmatesSnap.docs.map(d=>({uid:d.id,...d.data()})).sort((a,b)=>String(a.teacherNameOverride||a.displayName||"").localeCompare(String(b.teacherNameOverride||b.displayName||"")));
+        const classmateHost=row.querySelector(".classmates-grid");classmateHost.innerHTML="";
+        for(const mate of classmates){
+          const name=mate.teacherNameOverride||mate.displayName||(currentUILanguage==="en"?"Student":"طالب");
+          const photo=mate.teacherPhotoOverride||mate.photoData||"";const me=mate.uid===auth.currentUser.uid;
+          const item=document.createElement("div");item.className=`classmate-card ${me?"classmate-me":""}`;
+          item.innerHTML=`<div class="classmate-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>${photo?"":escapeHtml((name[0]||"?").toUpperCase())}</div><div style="min-width:0"><b>${escapeHtml(name)}${me?` ${currentUILanguage==="en"?"(You)":"(أنت)"}`:""}</b><small>${currentUILanguage==="en"?"Classmate":"زميل صف"}</small></div>`;
+          classmateHost.appendChild(item);
+        }
+        if(!classmates.length)classmateHost.innerHTML=`<div class="cloud-note">${currentUILanguage==="en"?"No classmates yet.":"لسه ما في طلاب."}</div>`;
+      }catch(err){console.warn("classmates",err);row.querySelector(".classmates-grid").innerHTML=`<div class="cloud-note">${currentUILanguage==="en"?"Could not load classmates.":"تعذر تحميل الزملاء."}</div>`;}
 
       const assignments=await getDocs(collection(db,"classes",classId,"assignments"));
       const assignmentDocs=assignments.docs
@@ -7860,7 +7942,7 @@ const adminPanelModal=document.getElementById("adminPanelModal");
 let adminUsersCache=[];
 let adminClassesCache=[];
 let adminBlocksCache=new Map();
-let adminActiveTab="dashboard";
+let adminActiveTab="polls";
 let siteControlsCache={lockExams:false,lockCompetitions:false,maintenance:false,maintenanceMessage:""};
 
 function adminLang(ar,en){return currentUILanguage==="en"?en:ar}
@@ -7880,18 +7962,21 @@ function applyAdminLanguage(){
   ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
   const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
   const tabs=[
-    ["dashboard","الرئيسية","Dashboard"],["people","الطلاب والمعلمين","Students & Teachers"],
-    ["classes","الصفوف","Classes"],["send","إرسال / وظائف","Send / Assign"],
-    ["polls","التصويتات","Polls"],["controls","تحكم الموقع","Site Controls"]
+    ["polls","📊 التصويتات","📊 Polls"],["dashboard","📈 الرئيسية","📈 Dashboard"],
+    ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
+    ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","⚙️ تحكم الموقع","⚙️ Site Controls"]
   ];
   tabs.forEach(([key,ar,enText])=>{const b=document.querySelector(`[data-admin-tab="${key}"]`);if(b)b.textContent=en?enText:ar});
   const stats=document.querySelectorAll(".admin-stat small"),statWords=en?["Students","Teachers","Classes","Assignments"]:["طلاب","معلمين","صفوف","وظائف"];
   stats.forEach((x,i)=>{if(statWords[i])x.textContent=statWords[i]});
-  const notes=document.querySelectorAll("#adminViewDashboard .admin-note,#adminViewClasses .admin-note,#adminViewControls .admin-note");
+  const notes=document.querySelectorAll("#adminViewDashboard .admin-security-note span,#adminViewClasses .admin-section-intro span,#adminViewControls .admin-note");
   if(notes[0])notes[0].textContent=en?"🔐 Student passwords are never stored or readable. Firebase Authentication does not expose them. Use secure account recovery instead of viewing passwords.":"🔐 كلمات سر الطلاب لا تُحفظ بشكل قابل للقراءة ولا يمكن عرضها. Firebase Authentication لا يكشفها؛ استخدم استرجاع وصول آمن بدل عرض كلمة السر.";
   if(notes[1])notes[1].textContent=en?"Each class shows its owner, co-teachers, teacher emails and students. Search above by class, teacher or student name.":"كل صف بعرض المالك، المعلمين المساعدين، إيميلات المعلمين والطلاب. ابحث فوق باسم صف أو معلم أو طالب.";
   if(notes[2])notes[2].textContent=en?"All admin actions are logged with date, Profile ID and action type.":"كل عملية أدمن تنحفظ بالسجل مع التاريخ وProfile ID ونوع العملية.";
-  const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
+  const securityTitle=document.querySelector("#adminViewDashboard .admin-security-note b");if(securityTitle)securityTitle.textContent=en?"🔐 Account security":"🔐 أمان الحسابات";
+  const peopleIntro=document.querySelector("#adminViewPeople .admin-section-intro");if(peopleIntro){peopleIntro.querySelector("b").textContent=en?"👥 Accounts":"👥 الحسابات";peopleIntro.querySelector("span").textContent=en?"Search by name, Profile ID, login name, teacher email or UID.":"ابحث بالاسم، Profile ID، اسم الدخول، إيميل المعلم أو UID.";peopleIntro.querySelector(".admin-safe-badge").textContent=en?"🔒 Passwords protected":"🔒 كلمات السر محمية"}
+  const classIntro=document.querySelector("#adminViewClasses .admin-section-intro");if(classIntro){classIntro.querySelector("b").textContent=en?"🏫 Classes":"🏫 الصفوف";classIntro.querySelector("span").textContent=en?"Every class shows teachers, teacher emails, Profile IDs and students.":"كل صف يعرض المعلمين، إيميلاتهم، Profile IDs والطلاب.";classIntro.querySelector(".admin-safe-badge").textContent=en?"🔎 Search from the top bar":"🔎 ابحث من الشريط بالأعلى"}
+    const filter=document.getElementById("adminPeopleRoleFilter");if(filter){filter.options[0].textContent=en?"All accounts":"كل الحسابات";filter.options[1].textContent=en?"Students":"طلاب";filter.options[2].textContent=en?"Teachers":"معلمين"}
   label("adminTargetClass","الهدف","Target");label("adminSendType","النوع","Type");label("adminSendTitle","العنوان","Title");label("adminSendBody","الرسالة / التعليمات","Message / instructions");label("adminSendDueDate","تاريخ التسليم","Due date");label("adminQuestionCount","عدد الأسئلة","Questions");label("adminDifficulty","الصعوبة","Difficulty");
   ph("adminSendTitle","العنوان","Title");ph("adminSendBody","اكتب الرسالة أو تعليمات الوظيفة...","Write the message or assignment instructions...");
   const sendType=document.getElementById("adminSendType");if(sendType){const v=en?["Announcement","Assignment","Generated Pythagoras exam as assignment","Competition"]:["إعلان","وظيفة","امتحان فيثاغورس مولّد كوظيفة","مسابقة"];[...sendType.options].forEach((o,i)=>o.textContent=v[i])}
@@ -7906,7 +7991,8 @@ function applyAdminLanguage(){
   label("adminMaintenanceMessage","رسالة الصيانة","Maintenance message");ph("adminMaintenanceMessage","رسالة صيانة الموقع","Site maintenance message");
   const ctrl=document.getElementById("adminSaveControlsBtn");if(ctrl)ctrl.textContent=en?"💾 Save controls":"💾 حفظ التحكم";
   set("siteUpdatesTitle","📣 تحديثات المدرسة","📣 School Updates");
-  set("siteUpdatesSub","إعلانات، تصويتات ومسابقات مرسلة إلك أو لصفك.","Announcements, polls and competitions sent to you or your class.");
+  set("siteUpdatesTitle","📊 التصويتات والتحديثات","📊 Polls & updates");
+  set("siteUpdatesSub","التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.","Polls appear first, followed by announcements and competitions.");
   const adminBtn=document.querySelector("#adminPanelBtn span");if(adminBtn)adminBtn.textContent=en?"Admin Panel":"لوحة الأدمن";
   try{if(adminPanelModal?.classList.contains("open")){adminRenderPeople();adminRenderClasses();adminPopulateTargets()}}catch{}
   try{if(window.PythagorasiUser)loadSiteUpdatesForCurrentUser()}catch{}
@@ -7994,29 +8080,33 @@ async function adminLoadRecentAudit(){
 function adminRenderPeople(){
   const host=document.getElementById("adminPeopleList"),filter=document.getElementById("adminPeopleRoleFilter")?.value||"all",q=adminSearchText();
   let rows=adminUsersCache.filter(u=>filter==="all"||u.role===filter||filter==="teacher"&&isSuperAdminProfile(u));
-  if(q)rows=rows.filter(u=>[u.displayName,u.loginName,u.profileId,u.email,u.uid].some(v=>String(v||"").toLowerCase().includes(q)));
-  rows.sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)));
-  document.getElementById("adminPeopleCount").textContent=`${rows.length} ${currentUILanguage==="en"?"accounts":"حساب"}`;
-  host.innerHTML="";
+  if(q)rows=rows.filter(u=>{const memberships=adminClassesCache.filter(c=>c.ownerId===u.uid||c.teachers?.some(t=>t.uid===u.uid)||c.members?.some(m=>m.uid===u.uid)).map(c=>c.name);return [u.displayName,u.loginName,u.originalLoginName,u.profileId,u.email,u.uid,u.provider,...memberships].some(v=>String(v||"").toLowerCase().includes(q))});
+  rows.sort((a,b)=>adminUserDisplay(a).localeCompare(adminUserDisplay(b)));document.getElementById("adminPeopleCount").textContent=`${rows.length} ${currentUILanguage==="en"?"accounts":"حساب"}`;host.innerHTML="";
   if(!rows.length){host.innerHTML=`<div class="cloud-note">${adminLang("ما في نتائج.","No results.")}</div>`;return}
   for(const u of rows){
     const blocked=adminBlocksCache.has(u.uid),admin=isSuperAdminProfile(u),teacher=u.role==="teacher"||admin;
+    const memberships=adminClassesCache.filter(c=>c.ownerId===u.uid||c.teachers?.some(t=>t.uid===u.uid)||c.members?.some(m=>m.uid===u.uid));const owned=adminClassesCache.filter(c=>c.ownerId===u.uid);
+    const provider=teacher?(u.provider||"google.com"):(u.provider||"password"),loginName=u.loginName||u.originalLoginName||u.displayName||"—";
+    const passwordText=teacher?adminLang("مُدار بواسطة Google — غير قابل للعرض","Managed by Google — not viewable"):adminLang("محمي داخل Firebase — غير قابل للعرض","Protected by Firebase — not viewable");
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
-    card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")} • Profile ID: <span class="admin-id">${escapeHtml(u.profileId||"—")}</span>${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div>${teacher&&u.email?`<div class="admin-email">${escapeHtml(u.email)}</div>`:""}${!teacher?`<div class="admin-meta">${adminLang("اسم الدخول","Login name")}: ${escapeHtml(u.loginName||u.originalLoginName||u.displayName||"—")}</div><div class="admin-meta">${adminLang("كلمة السر محمية وغير قابلة للعرض.","Password is protected and cannot be viewed.")}</div>`:""}</div></div></div>
-      <div class="admin-actions">
-        <button class="admin-rename-user">✏️ ${adminLang("تغيير الاسم","Rename")}</button>
-        <label>📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label>
-        <button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>
-        ${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف من الموقع","Delete from site")}</button>`}
-      </div>`;
-    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));
-    card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));
-    card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));
-    card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));
-    card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));
-    host.appendChild(card);
+    card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
+      <div class="admin-detail-grid">
+        <div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
+        <div class="admin-detail-item"><small>FIREBASE UID</small><span>${escapeHtml(u.uid||"—")}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("اسم الدخول","LOGIN NAME")}</small><span>${escapeHtml(loginName)}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("نوع الدخول","AUTH PROVIDER")}</small><span>${escapeHtml(provider)}</span></div>
+        <div class="admin-detail-item"><small>EMAIL</small><span class="${teacher&&u.email?"admin-email":""}">${escapeHtml(u.email||(teacher?"—":adminLang("بريد تقني داخلي","Internal auth email")))}</span></div>
+        <div class="admin-detail-item"><small>PASSWORD</small><span class="admin-password-protected">🔒 ${escapeHtml(passwordText)}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("الصفوف","CLASSES")}</small><span>${memberships.length}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
+      </div>
+      <div class="admin-account-classes">${memberships.length?`${adminLang("الصفوف","Classes")}: ${memberships.map(c=>escapeHtml(c.name||"Class")).join(" • ")}`:adminLang("مش مربوط بأي صف.","Not linked to a class.")}</div>
+      <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
+    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));card.querySelector(".admin-reset-access")?.addEventListener("click",()=>adminRequirePasswordChange(u));card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));host.appendChild(card)
   }
 }
+async function adminRequirePasswordChange(u){if(u.role!=="student")return;if(!confirm(adminLang(`تطلب من ${adminUserDisplay(u)} تغيير كلمة السر عند دخوله؟`,`Require ${adminUserDisplay(u)} to change their password?`)))return;try{await updateDoc(doc(db,"users",u.uid),{forcePasswordReset:true,forcePasswordResetAt:serverTimestamp(),forcePasswordResetBy:auth.currentUser.uid});await adminAudit("require_password_change",u.profileId||u.uid);showToast(adminLang("تم تسجيل طلب تغيير كلمة السر ✅","Password-change requirement saved ✅"));await adminLoadAllData()}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الطلب.","Could not save the request."))}}
+
 async function adminRenameUser(u){
   const next=prompt(adminLang("اكتب الاسم الجديد:","Enter the new display name:"),adminUserDisplay(u));if(next==null)return;
   const name=next.trim().replace(/\s+/g," ").slice(0,40);if(name.length<2)return;
@@ -8087,12 +8177,14 @@ function adminRenderClasses(){
     const students=(c.members||[]).map(m=>adminUserByUid(m.uid)||m);
     const card=document.createElement("div");card.className="admin-class-card";card.dataset.classId=c.id;
     card.innerHTML=`<div class="admin-class-head"><div>${c.photoData?`<img src="${escapeHtml(c.photoData)}" style="width:58px;height:58px;object-fit:cover;border-radius:14px;float:${currentUILanguage==="en"?"left":"right"};margin-inline-end:10px">`:""}<h3 style="margin:0">${escapeHtml(c.name||"Class")}</h3><div class="admin-meta">Code: <span class="admin-id">${escapeHtml(c.code||"—")}</span> • ${students.length} ${adminLang("طلاب","students")} • ${teacherRows.length} ${adminLang("معلمين","teachers")}</div></div></div>
-      <div class="admin-class-people"><div class="admin-class-col"><h4>👨‍🏫 ${adminLang("المعلمين","Teachers")}</h4>${teacherRows.map(t=>`<div class="admin-mini-row"><b>${escapeHtml(adminUserDisplay(t))}${t.uid===c.ownerId?" ⭐":""}</b>${t.email?`<div class="admin-email">${escapeHtml(t.email)}</div>`:""}<div class="admin-meta">ID: ${escapeHtml(t.profileId||"—")}</div></div>`).join("")||"—"}</div><div class="admin-class-col"><h4>🎒 ${adminLang("الطلاب","Students")}</h4>${students.slice(0,80).map(s=>`<div class="admin-mini-row"><b>${escapeHtml(adminUserDisplay(s))}</b><div class="admin-meta">ID: ${escapeHtml(s.profileId||"—")}</div></div>`).join("")||"—"}</div></div>
+      <div class="admin-class-people"><div class="admin-class-col"><h4>👨‍🏫 ${adminLang("المعلمين","Teachers")}</h4>${teacherRows.map(t=>`<div class="admin-mini-row"><div class="admin-mini-person"><b>${escapeHtml(adminUserDisplay(t))}${t.uid===c.ownerId?" ⭐":""}</b>${t.email?`<div class="admin-email">${escapeHtml(t.email)}</div>`:""}<div class="admin-meta">ID: ${escapeHtml(t.profileId||"—")}</div></div><div class="admin-mini-actions"><button class="admin-focus-person" data-uid="${escapeHtml(t.uid||"")}">${adminLang("إدارة","Manage")}</button></div></div>`).join("")||"—"}</div><div class="admin-class-col"><h4>🎒 ${adminLang("الطلاب","Students")}</h4>${students.slice(0,100).map(s=>`<div class="admin-mini-row"><div class="admin-mini-person"><b>${escapeHtml(adminUserDisplay(s))}</b><div class="admin-meta">ID: ${escapeHtml(s.profileId||"—")}</div></div><div class="admin-mini-actions"><button class="admin-focus-person" data-uid="${escapeHtml(s.uid||"")}">${adminLang("إدارة","Manage")}</button><button class="admin-remove-from-class" data-uid="${escapeHtml(s.uid||"")}">✕</button></div></div>`).join("")||"—"}</div></div>
       <div class="admin-actions"><button class="admin-rename-class">✏️ ${adminLang("اسم الصف","Rename class")}</button><label>📷 ${adminLang("صورة الصف","Class photo")}<input type="file" class="admin-class-photo" accept="image/*" hidden></label><button class="admin-remove-class-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button><button class="danger admin-delete-class">🗑 ${adminLang("حذف الصف","Delete class")}</button></div>`;
     card.querySelector(".admin-rename-class").addEventListener("click",()=>adminRenameClass(c));
     card.querySelector(".admin-class-photo").addEventListener("change",e=>adminChangeClassPhoto(c,e.target));
     card.querySelector(".admin-remove-class-photo").addEventListener("click",()=>adminRemoveClassPhoto(c));
     card.querySelector(".admin-delete-class").addEventListener("click",()=>adminDeleteClass(c));
+    card.querySelectorAll(".admin-focus-person").forEach(btn=>btn.addEventListener("click",()=>{const u=adminUserByUid(btn.dataset.uid);if(!u)return;document.getElementById("adminGlobalSearch").value=u.profileId||adminUserDisplay(u);adminShowTab("people");adminRenderPeople();setTimeout(()=>document.querySelector(`.admin-person-card[data-uid="${CSS.escape(u.uid)}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}),80)}));
+    card.querySelectorAll(".admin-remove-from-class").forEach(btn=>btn.addEventListener("click",async()=>{const u=adminUserByUid(btn.dataset.uid);if(!u)return;if(!confirm(adminLang(`إخراج ${adminUserDisplay(u)} من صف ${c.name||""}؟`,`Remove ${adminUserDisplay(u)} from ${c.name||"this class"}?`)))return;try{await deleteDoc(doc(db,"classes",c.id,"members",u.uid));const ids=(u.classIds||[]).filter(x=>x!==c.id);await updateDoc(doc(db,"users",u.uid),{classIds:ids,adminEditedAt:serverTimestamp()});await adminAudit("remove_student_from_class",`${u.profileId||u.uid} • ${c.id}`);showToast(adminLang("تم إخراج الطالب من الصف.","Student removed from class."));await adminLoadAllData()}catch(err){console.error(err);showToast(adminLang("تعذر إخراج الطالب.","Could not remove the student."))}}));
     host.appendChild(card);
   }
 }
@@ -8232,11 +8324,18 @@ async function loadSiteUpdatesForCurrentUser(){
   await loadSiteControls();
   try{
     const [anns,polls]=await Promise.all([getTargetedAdminDocs("adminAnnouncements"),getTargetedAdminDocs("adminPolls")]);
-    const activeAnns=anns.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8),activePolls=polls.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+    const activeAnns=anns.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
+    const activePolls=polls.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
     host.innerHTML="";
+    for(const poll of activePolls){
+      const d=document.createElement("div");d.className="site-update-card poll-priority";
+      d.innerHTML=`<h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4><div>${escapeHtml(poll.question||"")}</div><div class="site-poll-options">${(poll.options||[]).map((o,i)=>`<button class="exam-secondary site-poll-vote" data-index="${i}">${escapeHtml(o)}</button>`).join("")}</div><div class="site-update-meta poll-result"></div>`;
+      const myVote=await getDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid)).catch(()=>null);if(myVote?.exists())d.querySelector(".poll-result").textContent=adminLang("صوّتت بالفعل. بتقدر تغيّر صوتك.","You already voted. You can change your vote.");
+      d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{try{await setDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid),{uid:auth.currentUser.uid,optionIndex:Number(btn.dataset.index),displayName:window.PythagorasiUser.displayName||"User",votedAt:serverTimestamp()},{merge:true});soundFx("correct");d.querySelector(".poll-result").textContent=adminLang("تم تسجيل صوتك ✅","Vote recorded ✅")}catch(err){console.error(err)}}));
+      host.appendChild(d);
+    }
     if(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4><div>${escapeHtml(siteControlsCache.maintenanceMessage)}</div>`;host.appendChild(d)}
     for(const a of activeAnns){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4><div>${escapeHtml(a.body||"")}</div><div class="site-update-meta">${adminDate(a.createdAt)}${a.targetName?` • ${escapeHtml(a.targetName)}`:""}</div>${a.kind==="competition"&&a.competitionCode?`<button class="exam-secondary join-admin-competition" data-code="${escapeHtml(a.competitionCode)}">🏆 ${adminLang("دخول المسابقة","Join Competition")} • ${escapeHtml(a.competitionCode)}</button>`:""}`;d.querySelector(".join-admin-competition")?.addEventListener("click",()=>{openCompetitionModal();document.getElementById("compJoinCode").value=a.competitionCode||""});host.appendChild(d)}
-    for(const poll of activePolls){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4><div>${escapeHtml(poll.question||"")}</div><div class="site-poll-options">${(poll.options||[]).map((o,i)=>`<button class="exam-secondary site-poll-vote" data-index="${i}">${escapeHtml(o)}</button>`).join("")}</div><div class="site-update-meta poll-result"></div>`;const myVote=await getDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid)).catch(()=>null);if(myVote?.exists())d.querySelector(".poll-result").textContent=adminLang("صوّتت بالفعل. بتقدر تغيّر صوتك.","You already voted. You can change your vote.");d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{try{await setDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid),{uid:auth.currentUser.uid,optionIndex:Number(btn.dataset.index),displayName:window.PythagorasiUser.displayName||"User",votedAt:serverTimestamp()},{merge:true});soundFx("correct");d.querySelector(".poll-result").textContent=adminLang("تم تسجيل صوتك ✅","Vote recorded ✅")}catch(err){console.error(err)}}));host.appendChild(d)}
     const has=host.children.length>0;section.classList.toggle("hidden",!has);
   }catch(err){console.warn("site updates",err);section.classList.add("hidden")}
 }
