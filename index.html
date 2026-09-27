@@ -1543,6 +1543,15 @@ body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{an
 
 
 .settings-choice-row .active{background:#168cff!important;color:white!important;border-color:#168cff!important;box-shadow:0 8px 22px rgba(22,140,255,.22)}
+
+/* ================= V16 ACCOUNT PERSISTENCE / PROFILE ID ================= */
+.settings-account-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:#91a6b8;font-size:12px}
+.settings-account-meta b,.profile-public-id b{letter-spacing:1.4px;color:#ffd36e;font-size:13px}
+.mini-copy-btn{padding:5px 8px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:inherit;cursor:pointer;font-size:11px}
+.profile-public-id{margin-top:4px;color:#7f96aa;font-size:11px}
+body.light .settings-account-meta,body.light .profile-public-id{color:#6e8394}
+body.light .settings-account-meta b,body.light .profile-public-id b{color:#7b5700}
+body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:ltr;text-align:left}
 </style>
 </head>
 <body>
@@ -1608,6 +1617,7 @@ body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{an
 
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText">حسابك يحفظ تقدمك وإعداداتك على أجهزتك.</div>
+    <div class="auth-foot login-persistence-note">🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.</div>
     <div class="auth-setup-hint">إذا ظهر خطأ إن كلمة السر غير مفعلة: لازم المعلم/صاحب المشروع يفعّل Email/Password مرة واحدة من إعدادات Authentication.</div>
   </div>
 </div>
@@ -1816,6 +1826,7 @@ body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{an
       <div>
         <h3 id="profileDisplayName">—</h3>
         <div id="profileRoleText">—</div>
+        <div class="profile-public-id">Profile ID: <b id="profilePublicId" class="numeric-latin">----------</b></div>
         <input id="profilePhotoInput" type="file" accept="image/*" hidden>
       </div>
     </div>
@@ -1872,6 +1883,11 @@ body.reduce-motion .platform-lobby *,body.reduce-motion .modal.open .modalbox{an
       <div class="settings-profile-info">
         <b id="settingsCurrentName">—</b>
         <span id="settingsLoginName">اسم الدخول: —</span>
+        <div class="settings-account-meta">
+          <span>Profile ID: <b id="settingsProfileId" class="numeric-latin">----------</b></span>
+          <button class="mini-copy-btn" id="copyProfileIdBtn" type="button">Copy ID</button>
+        </div>
+        <span id="settingsRememberedLogin">تسجيل الدخول محفوظ لغاية: —</span>
         <div class="settings-photo-actions">
           <label class="settings-photo-btn">📷 تغيير الصورة
             <input id="settingsPhotoInput" type="file" accept="image/*" hidden>
@@ -2490,7 +2506,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/fireba
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser,
+  setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
@@ -2511,8 +2528,64 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+const authPersistenceReady=setPersistence(auth,browserLocalPersistence).catch(err=>{
+  console.warn("auth persistence",err);
+});
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({prompt:"select_account"});
+
+const LOGIN_REMEMBER_MS=60*24*60*60*1000;
+const LOGIN_EXPIRES_KEY="pythagorasi_login_expires_at";
+function rememberLoginForTwoMonths(){
+  const expires=Date.now()+LOGIN_REMEMBER_MS;
+  localStorage.setItem(LOGIN_EXPIRES_KEY,String(expires));
+  return expires;
+}
+function rememberedLoginExpiresAt(){
+  const n=Number(localStorage.getItem(LOGIN_EXPIRES_KEY)||0);
+  return Number.isFinite(n)?n:0;
+}
+function clearRememberedLogin(){localStorage.removeItem(LOGIN_EXPIRES_KEY)}
+function isRememberedLoginExpired(){
+  const expires=rememberedLoginExpiresAt();
+  return expires>0&&Date.now()>=expires;
+}
+function formatLoginExpiry(ms){
+  if(!ms)return "—";
+  return new Date(ms).toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"});
+}
+
+function randomTenDigitProfileId(){
+  const a=new Uint32Array(2);
+  crypto.getRandomValues(a);
+  const n=(BigInt(a[0])<<32n)|BigInt(a[1]);
+  return String(1000000000n+(n%9000000000n));
+}
+async function reserveUniqueProfileId(uid){
+  for(let attempt=0;attempt<40;attempt++){
+    const profileId=randomTenDigitProfileId();
+    const ref=doc(db,"profileIds",profileId);
+    try{
+      const claimed=await runTransaction(db,async tx=>{
+        const snap=await tx.get(ref);
+        if(snap.exists())return false;
+        tx.set(ref,{uid,createdAt:serverTimestamp()});
+        return true;
+      });
+      if(claimed)return profileId;
+    }catch(err){
+      console.warn("profile id reservation",err);
+    }
+  }
+  throw new Error("profile-id-unavailable");
+}
+async function ensureProfileId(user,profile={}){
+  const existing=String(profile?.profileId||"");
+  if(/^\d{10}$/.test(existing))return existing;
+  const profileId=await reserveUniqueProfileId(user.uid);
+  await setDoc(doc(db,"users",user.uid),{profileId,updatedAt:serverTimestamp()},{merge:true});
+  return profileId;
+}
 
 window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
@@ -2603,6 +2676,128 @@ function hidePlatformLobby(){
   document.getElementById("platformLobby")?.classList.add("hidden");
 }
 
+let accountStateSaveTimer=null;
+let pendingAccountStatePatch={};
+function safeAccountStateHistory(items,max=30){
+  if(!Array.isArray(items))return [];
+  return items.slice(-max).map(x=>({
+    who:String(x?.who||"bot").slice(0,20),
+    text:String(x?.text||"").slice(0,1400),
+    at:Number(x?.at||Date.now())
+  }));
+}
+function queueAccountStateSave(patch={}){
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  pendingAccountStatePatch={...pendingAccountStatePatch,...patch};
+  if(accountStateSaveTimer)clearTimeout(accountStateSaveTimer);
+  accountStateSaveTimer=setTimeout(async()=>{
+    const user=auth.currentUser;if(!user)return;
+    const current={...(window.PythagorasiUser?.accountState||{}),...pendingAccountStatePatch};
+    pendingAccountStatePatch={};accountStateSaveTimer=null;
+    window.PythagorasiUser={...window.PythagorasiUser,accountState:current};
+    activeProfile=window.PythagorasiUser;
+    try{
+      await setDoc(doc(db,"users",user.uid),{accountState:current,stateUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});
+    }catch(err){console.warn("account state save",err)}
+  },450);
+}
+function collectAccountPreferences(){
+  return {
+    language:typeof currentUILanguage!=="undefined"?currentUILanguage:(localStorage.getItem("pythagorasi_language")==="en"?"en":"ar"),
+    theme:document.body.classList.contains("light")?"light":"dark",
+    sound:typeof soundEnabled!=="undefined"?!!soundEnabled:localStorage.getItem("pythagorasi_sound")!=="off",
+    motion:typeof motionEnabled!=="undefined"?!!motionEnabled:localStorage.getItem("pythagorasi_motion")!=="off"
+  };
+}
+function saveAccountPreferences(){queueAccountStateSave({preferences:collectAccountPreferences()})}
+function readLocalJSON(key,fallback=null){
+  try{return JSON.parse(localStorage.getItem(key)||"null")??fallback}catch{return fallback}
+}
+function clearAccountScopedLocalState(){
+  [
+    "pythagorasi_exam_history","pythagorasi_saved_attempt","pythagorasi_custom_exam",
+    "pythagorasi_ai_history","learnsphere_ai_context","pythagorasi_challenge_score",
+    "pythagorasi_last_host_room","pythagorasi_last_competition"
+  ].forEach(k=>localStorage.removeItem(k));
+}
+function snapshotLocalAccountState(){
+  const state={};
+  const examHistory=readLocalJSON("pythagorasi_exam_history",[]);if(Array.isArray(examHistory)&&examHistory.length)state.examHistory=examHistory.slice(0,40);
+  const savedAttempt=readLocalJSON("pythagorasi_saved_attempt",null);if(savedAttempt)state.savedAttempt=savedAttempt;
+  const customExam=readLocalJSON("pythagorasi_custom_exam",null);if(customExam)state.customExam=customExam;
+  const aiHistory=readLocalJSON("pythagorasi_ai_history",[]);if(Array.isArray(aiHistory)&&aiHistory.length)state.aiHistory=safeAccountStateHistory(aiHistory,30);
+  const aiContext=readLocalJSON("learnsphere_ai_context",null);if(aiContext)state.aiContext=aiContext;
+  const lastHostRoom=readLocalJSON("pythagorasi_last_host_room",null);if(lastHostRoom)state.lastHostRoom=lastHostRoom;
+  const lastCompetition=readLocalJSON("pythagorasi_last_competition",null);if(lastCompetition)state.lastCompetition=lastCompetition;
+  const challengeScore=Number(localStorage.getItem("pythagorasi_challenge_score")||0);if(Number.isFinite(challengeScore)&&challengeScore>0)state.challengeScore=challengeScore;
+  state.preferences=collectAccountPreferences();
+  return state;
+}
+function applySavedAccountState(profile){
+  const uid=String(profile?.uid||"");
+  const ownerKey="pythagorasi_local_state_uid";
+  const previousOwner=localStorage.getItem(ownerKey)||"";
+  const originalState=profile?.accountState||{};
+  const hasCloudState=Object.keys(originalState).length>0;
+
+  // Keep local data separated between different accounts.
+  if(previousOwner&&uid&&previousOwner!==uid)clearAccountScopedLocalState();
+
+  let state=originalState;
+  if(!hasCloudState&&(!previousOwner||previousOwner===uid)){
+    // One-time migration of the current account's pre-V16 local data to its cloud profile.
+    state=snapshotLocalAccountState();
+    if(Object.keys(state).length)queueAccountStateSave(state);
+  }else if(hasCloudState){
+    clearAccountScopedLocalState();
+  }
+  if(uid)localStorage.setItem(ownerKey,uid);
+
+  if(Array.isArray(state.examHistory))localStorage.setItem("pythagorasi_exam_history",JSON.stringify(state.examHistory.slice(0,40)));
+  if(state.savedAttempt)localStorage.setItem("pythagorasi_saved_attempt",JSON.stringify(state.savedAttempt));
+  if(state.customExam)localStorage.setItem("pythagorasi_custom_exam",JSON.stringify(state.customExam));
+  if(state.lastHostRoom)localStorage.setItem("pythagorasi_last_host_room",JSON.stringify(state.lastHostRoom));
+  if(state.lastCompetition)localStorage.setItem("pythagorasi_last_competition",JSON.stringify(state.lastCompetition));
+  if(Array.isArray(state.aiHistory))localStorage.setItem("pythagorasi_ai_history",JSON.stringify(state.aiHistory.slice(-30)));
+  if(state.aiContext)localStorage.setItem("learnsphere_ai_context",JSON.stringify(state.aiContext));
+  if(Number.isFinite(Number(state.challengeScore)))localStorage.setItem("pythagorasi_challenge_score",String(Number(state.challengeScore)));
+
+  const pref=state.preferences||profile?.preferences||{};
+  if(pref.language==="ar"||pref.language==="en")localStorage.setItem("pythagorasi_language",pref.language);
+  if(pref.theme==="light"||pref.theme==="dark")localStorage.setItem("pythagorasi_theme",pref.theme);
+  if(typeof pref.sound==="boolean")localStorage.setItem("pythagorasi_sound",pref.sound?"on":"off");
+  if(typeof pref.motion==="boolean")localStorage.setItem("pythagorasi_motion",pref.motion?"on":"off");
+
+  setTimeout(()=>{
+    try{
+      if(pref.language==="ar"||pref.language==="en")applySiteLanguage(pref.language,false);
+      if(pref.theme==="light"||pref.theme==="dark")applySiteTheme(pref.theme,false);
+      if(typeof pref.sound==="boolean"){soundEnabled=pref.sound;document.getElementById("settingsSoundToggle").checked=soundEnabled}
+      if(typeof pref.motion==="boolean"){motionEnabled=pref.motion;applyMotionSetting();document.getElementById("settingsMotionToggle").checked=motionEnabled}
+      const score=Number(state.challengeScore);
+      if(Number.isFinite(score)&&typeof challenge!=="undefined"){
+        challenge.score=score;
+        const el=document.getElementById("challengeScore");if(el)el.textContent=currentUILanguage==="en"?`${score} pts`:`${score} نقاط`;
+      }
+      if(state.model&&Number(state.model.a)>0&&Number(state.model.b)>0){
+        unknownSide=["a","b","c"].includes(state.model.unknownSide)?state.model.unknownSide:"c";
+        syncUnknownUI();
+        document.getElementById("aInput").value=pretty(Number(state.model.a));
+        document.getElementById("bInput").value=pretty(Number(state.model.b));
+        document.getElementById("cInput").value=pretty(Number(state.model.c)||Math.sqrt(Number(state.model.a)**2+Number(state.model.b)**2));
+        applyChange();
+      }
+      if(Array.isArray(state.aiHistory)&&state.aiHistory.length){
+        const chatEl=document.getElementById("chat");
+        if(chatEl){
+          chatEl.innerHTML="";
+          state.aiHistory.slice(-24).forEach(m=>addMsg(String(m.text||""),m.who||"bot",false,false));
+          document.getElementById("aiMemoryStatus").textContent=currentUILanguage==="en"?`Restored ${Math.min(state.aiHistory.length,24)} messages`:`رجّعنا آخر ${Math.min(state.aiHistory.length,24)} رسالة`;
+        }
+      }
+    }catch(err){console.warn("apply saved state",err)}
+  },0);
+}
 
 
 /* -------------------- PERMANENT UNIQUE ACCESS CODES -------------------- */
@@ -2727,6 +2922,12 @@ async function saveUserProfile(user,profile){
   const existing=await getDoc(ref);
   const clean={...profile};
   delete clean.uid;
+  const existingData=existing.exists()?existing.data():{};
+  if(!/^\d{10}$/.test(String(clean.profileId||existingData.profileId||""))){
+    clean.profileId=await reserveUniqueProfileId(user.uid);
+  }else if(!clean.profileId){
+    clean.profileId=existingData.profileId;
+  }
   const base={
     ...clean,
     displayName:profile.displayName||user.displayName||"بدون اسم",
@@ -2738,7 +2939,7 @@ async function saveUserProfile(user,profile){
   if(user.photoURL&&!base.photoData)base.photoURL=user.photoURL;
   if(!existing.exists())base.createdAt=serverTimestamp();
   await setDoc(ref,base,{merge:true});
-  return {...(existing.exists()?existing.data():{}),...clean,...base};
+  return {...existingData,...clean,...base};
 }
 
 function finishAuthIntent(){
@@ -2766,6 +2967,7 @@ function paintUser(user,profile){
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
   activeProfile=window.PythagorasiUser;
+  applySavedAccountState(window.PythagorasiUser);
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
 
@@ -2811,6 +3013,9 @@ async function resolveCurrentUser(user){
         throw new Error("student-profile-missing");
       }
       profile={...profile,role:"student"};
+      if(!/^\d{10}$/.test(String(profile.profileId||""))){
+        profile={...profile,profileId:await ensureProfileId(user,profile)};
+      }
     }
     paintUser(user,profile);
     authStatusText.textContent="تم الدخول ✓";
@@ -2838,6 +3043,7 @@ document.getElementById("studentBackBtn").addEventListener("click",showRoleChoos
 document.getElementById("teacherBackBtn").addEventListener("click",showRoleChooser);
 
 document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
+  await authPersistenceReady;
   const displayName=studentNameInput.value.trim().replace(/\s+/g," ");
   const nameKey=normalizeStudentNameKey(displayName);
   const password=studentPasswordInput.value;
@@ -2894,6 +3100,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
           joinedAt:serverTimestamp(),lastActiveAt:serverTimestamp()
         });
         studentAccountCreationInProgress=false;
+        rememberLoginForTwoMonths();
         paintUser(cred.user,saved);
         await logStudentActivity("account_created",`أنشأ الحساب وانضم إلى صف ${joinData.className||""}`,"");
         showToast(`👋 أهلًا ${displayName}! انضممت إلى ${joinData.className||"الصف"}.`);
@@ -2918,6 +3125,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
       if(profile.nameKey && profile.nameKey!==nameKey){
         await signOut(auth);throw new Error("name-mismatch");
       }
+      rememberLoginForTwoMonths();
       paintUser(cred.user,profile);
       setTimeout(()=>logStudentActivity("login","سجّل دخول للمنصة",""),250);
       showToast(`👋 أهلًا ${profile.displayName||displayName}!`);
@@ -2937,6 +3145,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
   }
 });
 document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
+  await authPersistenceReady;
   authBusy(true,"جاري فتح تسجيل الدخول…");
   setAuthError("");
   try{
@@ -2951,8 +3160,9 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
       provider:"google.com",
       email:user.email||""
     };
-    await saveUserProfile(user,profile);
-    paintUser(user,profile);
+    const savedProfile=await saveUserProfile(user,profile);
+    rememberLoginForTwoMonths();
+    paintUser(user,savedProfile);
     showToast(`👨‍🏫 أهلًا ${profile.displayName}! دخلت كمعلم.`);
   }catch(error){
     console.error("teacher login",error);
@@ -2960,6 +3170,7 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
     if(error?.code==="auth/popup-blocked"){
       try{
         authStatusText.textContent="المتصفح منع النافذة؛ رح أحولك لصفحة تسجيل الدخول…";
+        rememberLoginForTwoMonths();
         await signInWithRedirect(auth,googleProvider);
         return;
       }catch(redirectError){
@@ -2975,6 +3186,8 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
 });
 document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
   try{
+    if(accountStateSaveTimer)await new Promise(resolve=>setTimeout(resolve,520));
+    clearRememberedLogin();
     await signOut(auth);
     activeProfile=null;
     hidePlatformLobby();
@@ -2989,13 +3202,26 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
   }
 });
 
-getRedirectResult(auth).catch(error=>{
+authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
   console.error("teacher redirect result",error);
   console.warn(friendlyAuthError(error));
 });
 
 onAuthStateChanged(auth,async user=>{
+  await authPersistenceReady;
   authResolved=true;
+  if(user){
+    let expires=rememberedLoginExpiresAt();
+    if(!expires)expires=rememberLoginForTwoMonths();
+    if(Date.now()>=expires){
+      clearRememberedLogin();
+      try{await signOut(auth)}catch{}
+      activeProfile=null;window.PythagorasiUser=null;
+      hidePlatformLobby();authUserBar.classList.remove("show");authGate.classList.add("show");showRoleChooser();
+      authStatusText.textContent="انتهت مدة حفظ تسجيل الدخول بعد شهرين. سجّل دخولك من جديد.";
+      return;
+    }
+  }
   await resolveCurrentUser(user);
 });
 
@@ -3933,6 +4159,7 @@ function applyChange(){
     const pa=+x.dataset.a,pb=+x.dataset.b,pc=Math.sqrt(pa*pa+pb*pb);
     x.classList.toggle("active",Math.abs(pa-a)<.01&&Math.abs(pb-b)<.01&&Math.abs(pc-c)<.01);
   });
+  queueAccountStateSave({model:{a,b,c,unknownSide}});
 }
 document.getElementById("applyBtn").addEventListener("click",applyChange);
 ["aInput","bInput","cInput"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")applyChange()}));
@@ -4255,17 +4482,42 @@ function hardQuestionPool(){
   const t1=pick(triples),t2=pick(triples.filter(x=>x!==t1)),t3=pick(triples.filter(x=>x!==t1&&x!==t2));
   const coord=pick([[5,12,13],[8,15,17],[7,24,25],[9,40,41]]);
   const notRight=pick([[7,8,12],[10,12,17],[8,10,15],[9,12,17]]);
+  if(currentUILanguage==="en"){
+    return [
+      {type:"number",prompt:`A right triangle has legs ${t1[0]} and ${t1[1]}. Find the hypotenuse c.`,answer:t1[2],points:10,explanation:`c = √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
+      {type:"number",prompt:`In a right triangle, c = ${t2[2]} and a = ${t2[0]}. Find b.`,answer:t2[1],points:10,explanation:`b = √(${t2[2]}² − ${t2[0]}²) = ${t2[1]}.`},
+      {type:"mcq",prompt:`Do the lengths ${t3[0]}, ${t3[1]}, ${t3[2]} form a right triangle?`,options:["Yes","No","Cannot be determined","Only if one angle is 60°"],answer:"Yes",points:10,explanation:`Because ${t3[0]}² + ${t3[1]}² = ${t3[2]}².`},
+      {type:"number",prompt:`A rectangle is ${t1[1]} by ${t1[0]}. What is its diagonal length?`,answer:t1[2],points:10,explanation:`The diagonal is the hypotenuse: √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
+      {type:"mcq",prompt:"Which statement correctly describes the converse of the Pythagorean theorem?",options:[
+        "If a² + b² = c², the triangle is right-angled",
+        "Every triangle with a + b = c is right-angled",
+        "The theorem applies only to equilateral triangles",
+        "If c is the shortest side, the triangle is right-angled"
+      ],answer:"If a² + b² = c², the triangle is right-angled",points:10,explanation:"If the sum of the squares of the two shorter sides equals the square of the longest side, the triangle is right-angled."},
+      {type:"number",prompt:`Two points differ by ${coord[0]} on x and ${coord[1]} on y. What is the straight-line distance?`,answer:coord[2],points:10,explanation:`Distance = √(${coord[0]}² + ${coord[1]}²) = ${coord[2]}.`},
+      {type:"mcq",prompt:"If both a and b are multiplied by 3, what happens to c?",options:["It doubles","It is multiplied by 3","It is multiplied by 6","It does not change"],answer:"It is multiplied by 3",points:10,explanation:"Scaling a triangle by 3 multiplies every length, including the hypotenuse, by 3."},
+      {type:"number",prompt:`If a = ${t3[0]} and b = ${t3[1]}, what is the area of the square built on c?`,answer:t3[2]*t3[2],points:10,explanation:`c² = a² + b² = ${t3[0]**2} + ${t3[1]**2} = ${t3[2]**2}.`},
+      {type:"mcq",prompt:`Do ${notRight[0]}, ${notRight[1]}, ${notRight[2]} satisfy the Pythagorean theorem?`,options:["Yes","No"],answer:"No",points:10,explanation:`${notRight[0]}² + ${notRight[1]}² is not equal to ${notRight[2]}².`},
+      {type:"open",prompt:"Explain why a² + b² = c² cannot be used directly for every non-right triangle.",keywords:["right","90","angle"],answerText:"The Pythagorean theorem applies to right triangles that contain a 90° angle.",points:10,explanation:"For a non-right triangle, another relation such as the law of cosines is needed."},
+      {type:"open",prompt:"Explain the sand proof in your own words.",keywords:["area","sum","sand","c","hypotenuse"],answerText:"The sand represents area, and the combined sand/area of a² and b² equals the sand/area of c².",points:10,explanation:"Visually, the two squares on a and b together have the same area as the square on the hypotenuse c."},
+      {type:"mcq",prompt:"Which side is the hypotenuse in a right triangle?",options:["The side opposite the 90° angle","Always the shortest side","Any side we choose","Only the side next to the 90° angle"],answer:"The side opposite the 90° angle",points:10,explanation:"The hypotenuse is opposite the right angle and is the longest side."},
+      {type:"number",prompt:"If the area of the square on a is 81 and the area of the square on b is 144, what is c?",answer:15,points:10,explanation:"c² = 81 + 144 = 225, so c = 15."},
+      {type:"mcq",prompt:"What is the best interpretation of a² + b² = c² in the square model?",options:[
+        "The areas of the squares on the legs add up to the area of the square on the hypotenuse",
+        "The perimeter of square c equals the sum of the other perimeters",
+        "All three squares have the same area",
+        "c always equals a + b"
+      ],answer:"The areas of the squares on the legs add up to the area of the square on the hypotenuse",points:10,explanation:"The exponent 2 represents the area of a square built on each side."},
+      {type:"number",prompt:"A rectangular screen is 16 units wide and 30 units high. What is its diagonal?",answer:34,points:10,explanation:"Diagonal = √(16² + 30²) = √1156 = 34."},
+      {type:"mcq",prompt:"If c² = 400 and a² = 144, what is b²?",options:["256","544","16","20"],answer:"256",points:10,explanation:"b² = c² − a² = 400 − 144 = 256."}
+    ];
+  }
   return [
     {type:"number",prompt:`مثلث قائم ضلعاه القائمان ${t1[0]} و ${t1[1]}. احسب طول الوتر c.`,answer:t1[2],points:10,explanation:`c = √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
     {type:"number",prompt:`في مثلث قائم، الوتر c = ${t2[2]} والضلع a = ${t2[0]}. احسب b.`,answer:t2[1],points:10,explanation:`b = √(${t2[2]}² − ${t2[0]}²) = ${t2[1]}.`},
     {type:"mcq",prompt:`هل الأطوال ${t3[0]}، ${t3[1]}، ${t3[2]} تكوّن مثلثًا قائمًا؟`,options:["نعم","لا","لا يمكن تحديد ذلك","فقط إذا كانت الزاوية 60°"],answer:"نعم",points:10,explanation:`لأن ${t3[0]}² + ${t3[1]}² = ${t3[2]}².`},
     {type:"number",prompt:`مستطيل طوله ${t1[1]} وعرضه ${t1[0]}. كم طول قطره؟`,answer:t1[2],points:10,explanation:`القطر هو وتر مثلث قائم: √(${t1[0]}² + ${t1[1]}²) = ${t1[2]}.`},
-    {type:"mcq",prompt:"أي عبارة تصف عكس نظرية فيثاغورس بشكل صحيح؟",options:[
-      "إذا كان a² + b² = c² فإن المثلث قائم الزاوية",
-      "كل مثلث يحقق a + b = c يكون قائمًا",
-      "النظرية تنطبق فقط على المثلث المتساوي الأضلاع",
-      "إذا كان c أصغر ضلع فالمثلث قائم"
-    ],answer:"إذا كان a² + b² = c² فإن المثلث قائم الزاوية",points:10,explanation:"إذا تحقق مجموع مربعي الضلعين الأصغر مساويًا لمربع الأطول، فالمثلث قائم."},
+    {type:"mcq",prompt:"أي عبارة تصف عكس نظرية فيثاغورس بشكل صحيح؟",options:["إذا كان a² + b² = c² فإن المثلث قائم الزاوية","كل مثلث يحقق a + b = c يكون قائمًا","النظرية تنطبق فقط على المثلث المتساوي الأضلاع","إذا كان c أصغر ضلع فالمثلث قائم"],answer:"إذا كان a² + b² = c² فإن المثلث قائم الزاوية",points:10,explanation:"إذا تحقق مجموع مربعي الضلعين الأصغر مساويًا لمربع الأطول، فالمثلث قائم."},
     {type:"number",prompt:`نقطتان فرق الإحداثي السيني بينهما ${coord[0]} وفرق الإحداثي الصادي ${coord[1]}. ما المسافة المستقيمة بينهما؟`,answer:coord[2],points:10,explanation:`المسافة = √(${coord[0]}² + ${coord[1]}²) = ${coord[2]}.`},
     {type:"mcq",prompt:"إذا ضاعفنا طولي a و b ثلاث مرات، ماذا يحدث للوتر c؟",options:["يتضاعف مرتين","يتضاعف 3 مرات","يتضاعف 6 مرات","لا يتغير"],answer:"يتضاعف 3 مرات",points:10,explanation:"عند تكبير المثلث بمعامل 3، كل الأطوال ومنها الوتر تتضاعف 3 مرات."},
     {type:"number",prompt:`إذا كان a = ${t3[0]} و b = ${t3[1]}، فما مساحة المربع المبني على الوتر c؟`,answer:t3[2]*t3[2],points:10,explanation:`c² = a² + b² = ${t3[0]**2} + ${t3[1]**2} = ${t3[2]**2}.`},
@@ -4274,12 +4526,7 @@ function hardQuestionPool(){
     {type:"open",prompt:"اشرح فكرة البرهان بالرمل في المجسم بكلماتك.",keywords:["مساح","مجموع","رمل","c","وتر"],answerText:"الرمل يمثل المساحات، ومجموع مساحة/رمل a² و b² يساوي مساحة/رمل c².",points:10,explanation:"المقصود بصريًا أن مساحتي مربعي a و b معًا تساويان مساحة مربع الوتر c."},
     {type:"mcq",prompt:"أي ضلع هو الوتر في المثلث القائم؟",options:["الضلع المقابل لزاوية 90°","أقصر ضلع دائمًا","أي ضلع نختاره","الضلع المجاور فقط للزاوية 90°"],answer:"الضلع المقابل لزاوية 90°",points:10,explanation:"الوتر يقابل الزاوية القائمة وهو أطول ضلع."},
     {type:"number",prompt:"إذا كانت مساحة مربع a تساوي 81 ومساحة مربع b تساوي 144، فما طول c؟",answer:15,points:10,explanation:"c² = 81 + 144 = 225، إذن c = 15."},
-    {type:"mcq",prompt:"ما التفسير الأدق للمعادلة a² + b² = c² في نموذج المربعات؟",options:[
-      "مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر",
-      "محيط مربع c يساوي مجموع محيطي المربعين الآخرين",
-      "كل المربعات لها نفس المساحة",
-      "c يساوي a + b دائمًا"
-    ],answer:"مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر",points:10,explanation:"الأس 2 يمثل مساحة مربع مبني على كل ضلع."},
+    {type:"mcq",prompt:"ما التفسير الأدق للمعادلة a² + b² = c² في نموذج المربعات؟",options:["مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر","محيط مربع c يساوي مجموع محيطي المربعين الآخرين","كل المربعات لها نفس المساحة","c يساوي a + b دائمًا"],answer:"مجموع مساحتي المربعين على الضلعين القائمين يساوي مساحة مربع الوتر",points:10,explanation:"الأس 2 يمثل مساحة مربع مبني على كل ضلع."},
     {type:"number",prompt:"شاشة مستطيلة عرضها 16 وحدة وارتفاعها 30 وحدة. ما طول القطر؟",answer:34,points:10,explanation:"القطر = √(16² + 30²) = √1156 = 34."},
     {type:"mcq",prompt:"إذا كان c² = 400 و a² = 144، فما قيمة b²؟",options:["256","544","16","20"],answer:"256",points:10,explanation:"b² = c² − a² = 400 − 144 = 256."}
   ];
@@ -4541,8 +4788,10 @@ function createSurpriseExam(){
   }
   qs=qs.slice(0,10).map((q,i)=>({...q,id:`s${Date.now()}_${i}`,points:10}));
 
-  const titleMap={easy:"سهل",medium:"متوسط",hard:"صعب",expert:"خبير 🔥"};
-  const subjectTitle=subjectNames[examSubject]||"مختلط";
+  const titleMap=currentUILanguage==="en"
+    ?{easy:"Easy",medium:"Medium",hard:"Hard",expert:"Expert 🔥"}
+    :{easy:"سهل",medium:"متوسط",hard:"صعب",expert:"خبير 🔥"};
+  const subjectTitle=currentUILanguage==="en"?"Pythagoras":(subjectNames[examSubject]||"مختلط");
   return {
     title:`⚡ ${subjectTitle} — ${titleMap[examDifficulty]}`,
     questions:qs,total:100,surprise:true,level:examDifficulty,subject:examSubject
@@ -4577,12 +4826,14 @@ function getSavedAttempt(){
 }
 function saveAttemptLocal(){
   if(!activeExam||restoringSavedAttempt)return;
-  const answers=activeExam.questions.map((q,i)=>getExamAnswer(i,q));
-  localStorage.setItem("pythagorasi_saved_attempt",JSON.stringify({
-    exam:activeExam,answers,startedAt:examStartTime||Date.now(),savedAt:Date.now()
-  }));
+  const saved={exam:activeExam,answers:activeExam.questions.map((q,i)=>getExamAnswer(i,q)),startedAt:examStartTime||Date.now(),savedAt:Date.now()};
+  localStorage.setItem("pythagorasi_saved_attempt",JSON.stringify(saved));
+  queueAccountStateSave({savedAttempt:saved});
 }
-function clearSavedAttempt(){localStorage.removeItem("pythagorasi_saved_attempt")}
+function clearSavedAttempt(){
+  localStorage.removeItem("pythagorasi_saved_attempt");
+  queueAccountStateSave({savedAttempt:null});
+}
 function refreshResumeBox(){
   const saved=getSavedAttempt();
   const box=document.getElementById("resumeExamBox");
@@ -4748,7 +4999,9 @@ function saveLocalExamHistory(record){
   try{
     const arr=JSON.parse(localStorage.getItem("pythagorasi_exam_history")||"[]");
     arr.unshift(record);
-    localStorage.setItem("pythagorasi_exam_history",JSON.stringify(arr.slice(0,40)));
+    const kept=arr.slice(0,40);
+    localStorage.setItem("pythagorasi_exam_history",JSON.stringify(kept));
+    queueAccountStateSave({examHistory:kept});
   }catch{}
 }
 
@@ -5255,7 +5508,8 @@ document.getElementById("startCustomExam").addEventListener("click",()=>{
 document.getElementById("saveBuilderExam").addEventListener("click",()=>{
   const e=examFromBuilder();if(!e)return;
   localStorage.setItem("pythagorasi_custom_exam",JSON.stringify(e));
-  showToast("💾 تم حفظ الامتحان على هذا الجهاز.");
+  queueAccountStateSave({customExam:e});
+  showToast(currentUILanguage==="en"?"💾 Exam saved to your account.":"💾 تم حفظ الامتحان في حسابك.");
 });
 document.getElementById("loadBuilderExam").addEventListener("click",()=>{
   const raw=localStorage.getItem("pythagorasi_custom_exam");
@@ -6288,6 +6542,7 @@ async function openProfileModal(){
   const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
   document.getElementById("profileDisplayName").textContent=name;
   document.getElementById("profileRoleText").textContent=p.role==="teacher"?"معلم":"طالب";
+  document.getElementById("profilePublicId").textContent=p.profileId||"----------";
   document.getElementById("profilePhotoFallback").textContent=(name[0]||"؟").toUpperCase();
   const img=document.getElementById("profilePhotoPreview");
   if(p.photoData||p.photoURL){img.src=p.photoData||p.photoURL;img.style.display="block"}
@@ -6470,7 +6725,208 @@ const uiExactTranslations=new Map([
   ["إغلاق","Close"],["الإعدادات","Settings"],["صفوفي","My Classes"],["حسابي","My Account"]
 ]);
 
+
+// Extra V16 translations for every visible account/class/exam/competition state.
+[
+  ["سجّل دخولك أو أنشئ حساب طالب جديد","Sign in or create a student account"],
+  ["جاري تحميل حسابك…","Loading your account…"],
+  ["تم الدخول ✓","Signed in ✓"],
+  ["الحساب ناقص بياناته. أنشئ حساب جديد.","This account is missing profile data. Create a new account."],
+  ["اكتب اسمك أولًا — حرفين على الأقل.","Enter your name first — at least 2 characters."],
+  ["كلمة السر لازم تكون 6 خانات أو أكثر.","Password must be at least 6 characters."],
+  ["اكتب كود الصف اللي أعطاك إياه المعلم.","Enter the class code given by your teacher."],
+  ["جاري إنشاء الحساب والانضمام للصف…","Creating your account and joining the class…"],
+  ["جاري الدخول…","Signing in…"],
+  ["كلمتا السر مش نفس بعض.","The passwords do not match."],
+  ["كود الصف غير صحيح. تأكد من المعلم وجرب مرة ثانية.","The class code is invalid. Check it with your teacher and try again."],
+  ["تعذر الانضمام للصف. جرّب مرة ثانية.","Could not join the class. Try again."],
+  ["في حساب موجود بهذا الاسم. إذا هو حسابك اختار «دخول».","An account already exists with this name. If it is yours, choose Login."],
+  ["الاسم أو كلمة السر غير صحيحة.","The name or password is incorrect."],
+  ["جاري فتح تسجيل الدخول…","Opening sign-in…"],
+  ["المتصفح منع النافذة؛ رح أحولك لصفحة تسجيل الدخول…","The browser blocked the popup. Redirecting to sign-in…"],
+  ["تم تسجيل الخروج.","Signed out."],
+  ["تعذر تسجيل الخروج.","Could not sign out."],
+  ["انتهت مدة حفظ تسجيل الدخول بعد شهرين. سجّل دخولك من جديد.","Your 2-month saved login has expired. Please sign in again."],
+  ["تسجيل الدخول محفوظ لغاية: —","Login saved until: —"],
+  ["تم نسخ Profile ID.","Profile ID copied."],
+  ["معلم","Teacher"],["طالب","Student"],["مستخدم","User"],["بدون اسم","No name"],
+  ["مش منضم لأي صف.","You are not in any class."],
+  ["ما عندك وظائف حاليًا 🎉","You have no assignments right now 🎉"],
+  ["ما عندك صفوف.","You do not have any classes."],
+  ["تعذر تحميل الصفوف.","Could not load classes."],
+  ["لسه ما في طلاب.","No students yet."],
+  ["ما في معلمين مساعدين.","No co-teachers yet."],
+  ["لسه ما في نشاط مسجل.","No activity recorded yet."],
+  ["ما في وظائف بعد.","No assignments yet."],
+  ["كود الصف غير موجود.","Class code not found."],
+  ["الكود غير صحيح.","Invalid code."],
+  ["أنت بالصف أصلًا ✅","You are already in this class ✅"],
+  ["تم تغيير اسم الصف ✅","Class name updated ✅"],
+  ["تعذر تغيير الاسم.","Could not change the name."],
+  ["تم نشر الوظيفة ✅","Assignment published ✅"],
+  ["تعذر نشر الوظيفة.","Could not publish the assignment."],
+  ["تم حذف الصف.","Class deleted."],
+  ["تعذر حذف الصف.","Could not delete the class."],
+  ["تم تغيير اسم الطالب داخل الصف ✅","Student name updated in this class ✅"],
+  ["تم تغيير صورة الطالب داخل الصف ✅","Student photo updated in this class ✅"],
+  ["تعذر حفظ الصورة.","Could not save the photo."],
+  ["تعذر إخراج الطالب.","Could not remove the student."],
+  ["تم حفظ التصحيح ✅","Grading saved ✅"],
+  ["تعذر حفظ التصحيح.","Could not save grading."],
+  ["تم التسليم ✅","Submitted ✅"],
+  ["تعذر تسليم الوظيفة.","Could not submit the assignment."],
+  ["بانتظار التصحيح","Waiting for grading"],
+  ["بانتظار المعلم","Waiting for teacher"],
+  ["صحّحها المعلم","Graded by teacher"],
+  ["التصحيح التلقائي","Auto grading"],
+  ["الأسئلة المفتوحة بانتظار المعلم","Open questions are waiting for teacher grading"],
+  ["إجابة الطالب:","Student answer:"],
+  ["ملاحظة المعلم:","Teacher note:"],
+  ["علامة السؤال من","Question score out of"],
+  ["✅ حفظ التصحيح","✅ Save grading"],
+  ["وظيفة","Assignment"],["موعد","Due"],["تسليم","submission"],["تسليمات","submissions"],
+  ["مالك الصف","Class owner"],["معلم مساعد","Co-teacher"],["كود دعوة المعلم:","Teacher invite code:"],
+  ["⚙️ اسم الصف","⚙️ Class name"],["👨‍🏫 مربيّو / معلمو الصف","👨‍🏫 Class teachers"],
+  ["📚 الوظائف والتسليمات والتصحيح","📚 Assignments, submissions & grading"],
+  ["اكتب عنوان الوظيفة.","Enter an assignment title."],
+  ["أضف سؤال واحد على الأقل للوظيفة.","Add at least one question to the assignment."],
+  ["اختيار من متعدد","Multiple choice"],["رقمي","Numeric"],["مفتوح — تصحيح المعلم","Open — teacher grading"],
+  ["الإجابة الرقمية الصحيحة","Correct numeric answer"],
+  ["هذا السؤال ما بينفحص تلقائيًا؛ المعلم يعطي علامته بعد التسليم.","This question is graded manually by the teacher after submission."],
+  ["هذا السؤال يراجعه المعلم يدويًا.","This question is reviewed manually by the teacher."],
+  ["اكتب تسليمك هنا...","Write your submission here…"],
+  ["اكتب إجابتك المفتوحة...","Write your open answer…"],
+  ["اكتب/اختار جواب أولًا.","Enter or choose an answer first."],
+  ["✓ فحص السؤال","✓ Check question"],
+  ["الطالب يدخل امتحان المعلم بالكود.","Students join the teacher's exam with a code."],
+  ["إنشاء الامتحان للمعلم فقط.","Only teachers can create exams."],
+  ["سجّل دخولك حتى نفتح الامتحان","Sign in to open the exam"],
+  ["لازم تجاوب على سؤال واحد على الأقل.","Answer at least one question."],
+  ["لازم يكون الحفظ السحابي متصل حتى نحفظ الامتحان عند المعلم.","Cloud saving must be connected to submit the exam to the teacher."],
+  ["تم تسليم الامتحان للمعلم ✅","Exam submitted to the teacher ✅"],
+  ["تعذر تسليم الامتحان.","Could not submit the exam."],
+  ["تم نشر الامتحان ✅","Exam published ✅"],
+  ["تعذر نشر الامتحان.","Could not publish the exam."],
+  ["كود الامتحان غير موجود.","Exam code not found."],
+  ["الامتحان غير منشور.","This exam is not published."],
+  ["تم تحميل الامتحان ✅","Exam loaded ✅"],
+  ["تعذر تحميل الامتحان.","Could not load the exam."],
+  ["الدخول كلاعب للطلاب فقط.","Only students can join as players."],
+  ["اكتب كود الغرفة.","Enter the room code."],
+  ["الغرفة غير موجودة.","Room not found."],
+  ["✅ دخلت الغرفة.","✅ Joined the room."],
+  ["تم إرسال إجابتك ✓ — استنى باقي الصف.","Your answer was sent ✓ — wait for the rest of the class."],
+  ["اختار جواب واحد.","Choose one answer."],
+  ["استنى الإجابات أو خلي التايمر يخلص تلقائيًا.","Wait for answers or let the timer finish automatically."],
+  ["⏱ انتهى الوقت — استنى النتيجة.","⏱ Time is up — wait for the result."],
+  ["تعذر إرسال الإجابة.","Could not send the answer."],
+  ["المسابقة انتهت.","The competition has ended."],
+  ["تعادل 🔥","Tie 🔥"],["🔵 الفريق A فاز!","🔵 Team A won!"],["🔴 الفريق B فاز!","🔴 Team B won!"],
+  ["الإجابة الصحيحة:","Correct answer:"],
+  ["اكتب قيم صحيحة لـ a و b.","Enter valid values for a and b."],
+  ["اكتب قيم صحيحة لـ b و c.","Enter valid values for b and c."],
+  ["اكتب قيم صحيحة لـ a و c.","Enter valid values for a and c."],
+  ["الوتر c لازم يكون أكبر من b.","The hypotenuse c must be greater than b."],
+  ["الوتر c لازم يكون أكبر من a.","The hypotenuse c must be greater than a."],
+  ["⏳ البرهان شغّال الآن...","⏳ The proof is running…"],
+  ["↻ شغّل البرهان مرة ثانية","↻ Run the proof again"],
+  ["🔊 اقرأ الرد بصوت","🔊 Read reply aloud"],
+  ["🎤 الإدخال الصوتي غير متوفر في هذا المتصفح.","🎤 Voice input is not available in this browser."],
+  ["التعرف الصوتي غير مدعوم بهذا المتصفح","Voice recognition is not supported in this browser"],
+  ["محفوظ","Saved"],["رسالة","message"],["رسائل","messages"],
+  ["تم حفظ الاسم الظاهر ✅","Display name saved ✅"],
+  ["تعذر حفظ الاسم.","Could not save the name."],
+  ["تم حفظ اسم المساعد ✅","Assistant name saved ✅"],
+  ["تعذر حفظ اسم المساعد.","Could not save the assistant name."],
+  ["تم تغيير الصورة ✅","Photo updated ✅"],
+  ["ما عندك صورة بروفايل أصلًا.","You do not have a profile photo."],
+  ["تحذف صورة البروفايل؟","Remove your profile photo?"],
+  ["تم حذف صورة البروفايل ✅","Profile photo removed ✅"],
+  ["تعذر حذف الصورة.","Could not remove the photo."],
+  ["لأمان الحساب: اعمل تسجيل خروج، ادخل من جديد، وبعدها افتح الإعدادات واحذف الحساب.","For account security, sign out, sign in again, then open Settings and delete the account."],
+  ["قبل حذف حساب المعلم: انقل ملكية صفوفك أو احذفها أولًا.","Before deleting a teacher account, transfer ownership of your classes or delete them first."],
+  ["متأكد بدك تحذف حسابك؟","Are you sure you want to delete your account?"],
+  ["تأكيد أخير: الحساب رح ينحذف نهائيًا. أكمل؟","Final confirmation: this account will be permanently deleted. Continue?"],
+  ["⏳ جاري حذف الحساب...","⏳ Deleting account…"],
+  ["تم حذف الحساب.","Account deleted."],
+  ["تعذر حذف الحساب الآن.","Could not delete the account right now."],
+  ["ابدأ أول امتحان لتحصل على شارة","Take your first exam to earn a badge"],
+  ["🌱 أول امتحان","🌱 First exam"],["🔥 مستمر","🔥 Consistent"],["🏅 عشر امتحانات","🏅 Ten exams"],["🌟 متفوّق","🌟 High achiever"],
+  ["لا يوجد","None"],["نعم","Yes"],["لا","No"],["قائم","Right"],["وتر","Hypotenuse"],["رمل","Sand"],
+  ["الوضع النهاري","Light mode"],["الوضع الليلي","Dark mode"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+
+[
+  ["أهلًا 👋","Welcome 👋"],["فيثاغورسي","Pythagorasi"],["المختبر 3D","3D Lab"],["تحدّي فيثاغورس","Pythagoras Challenge"],
+  ["أسئلة تدريب","Practice Questions"],["امتحانات","Exams"],["مسابقة مباشرة","Live Competition"],["ملفي","My Profile"],
+  ["بنك أسئلة فيثاغورس","Pythagoras Question Bank"],["نتائج الامتحانات","Exam Results"],["مسابقاتي","My Competitions"],
+  ["السؤال","Question"],["النقاط","Score"],["المادة","Subject"],["المساعد:","Assistant:"],["بحث","Search"],
+  ["اختار موضوع حتى تفتح الشرح والأمثلة والتدريب.","Choose a topic to open its explanation, examples and practice."],
+  ["← كل المواضيع","← All topics"],["الموضوع","Topic"],["المساعد","Assistant"],["📖 الشرح","📖 Explanation"],["💡 مثال","💡 Example"],
+  ["🎯 تدريب سريع","🎯 Quick Practice"],["🤖 اسأل مساعد الموضوع","🤖 Ask the topic assistant"],["🎓 امتحان على هذا الموضوع","🎓 Exam on this topic"],
+  ["🔎 ابحث عن موضوع ثاني","🔎 Search another topic"],["👤 ملفي الشخصي","👤 My Profile"],["🤖 أسماء المساعدين","🤖 Assistant Names"],
+  ["مساعد اللوبي","Lobby Assistant"],["حفظ الأسماء","Save names"],["اسم الدخول: —","Login name: —"],["العربية","Arabic"],
+  ["الخيار 1 هو الصحيح","Option 1 is correct"],["الخيار 2 هو الصحيح","Option 2 is correct"],["الخيار 3 هو الصحيح","Option 3 is correct"],["الخيار 4 هو الصحيح","Option 4 is correct"],
+  ["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","🖱 Drag left/right or up/down within the front viewing angle"],
+  ["🔎 عجلة الماوس للتقريب","🔎 Use the mouse wheel to zoom"],["● فيثاغورسي","● Pythagorasi"],["تسجيل خروج","Log out"],
+  ["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.",", and the site calculates the requested side and rebuilds the model and sand."],
+  ["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. The sand is distributed in proportion to each square's area."],
+  ["0 نقاط","0 pts"],["فيثاغورسي AI","Pythagorasi AI"],["هلا فيك 👋 أنا","Hi 👋 I am"],
+  [". اسألني عن نظرية فيثاغورس، الوتر، المثلث القائم، الحسابات، المجسم أو الامتحانات والمسابقات.",". Ask me about the Pythagorean theorem, the hypotenuse, right triangles, calculations, the model, exams or competitions."],
+  ["فيثاغورسي ذكي محليًا • فهم عربي موسّع ولهجات • يحفظ الاسم والسياق والمحادثات","Pythagorasi runs locally • understands flexible input • remembers your name, context and conversations"],
+  ["مخصص لنظرية فيثاغورس: يفهم أسئلتك عن الوتر، الأضلاع، المثلث القائم، الأمثلة والحسابات.","Focused on the Pythagorean theorem: hypotenuse, sides, right triangles, examples and calculations."],
+  ["الصوت العربي • السرعة","Voice • speed"],["عادي","Normal"],
+  [". إذا سمّينا الضلعين اللذين يصنعان الزاوية القائمة بـ",". If we call the two sides that form the right angle"],
+  ["و","and"],["، وسمّينا الضلع المقابل للزاوية القائمة — وهو أطول ضلع — بـ",", and call the side opposite the right angle — the longest side —"],
+  ["، فإن:",", then:"],
+  ["المربع المبني على الضلع a مساحته a²، والمربع المبني على الضلع b مساحته b²، أما المربع المبني على الوتر c فمساحته c². النظرية تقول إن","The square built on side a has area a², the square on b has area b², and the square on hypotenuse c has area c². The theorem says that"],
+  ["مجموع المساحتين a² و b² يساوي تمامًا المساحة c²","the sum of the areas a² and b² is exactly equal to c²"],
+  [". لهذا جعلنا كمية الرمل متناسبة مع مساحة كل مربع.",". That is why the amount of sand is proportional to each square's area."],
+  ["إذن عندما a = 3 و b = 4 يكون طول الوتر c = 5.","So when a = 3 and b = 4, the hypotenuse is c = 5."],
+  ["مثلًا: إذا c = 13 و a = 5، فإن b = √(169 − 25) = √144 = 12.","For example, if c = 13 and a = 5, then b = √(169 − 25) = √144 = 12."],
+  ["إذا كان لدينا ثلاثة أطوال مرتبة بحيث c هو الأكبر، ووجدنا أن a² + b² = c²، فهذا يعني أن المثلث قائم الزاوية. مثل 3، 4، 5 أو 5، 12، 13.","If three side lengths are ordered with c as the longest and a² + b² = c², then the triangle is right-angled. Examples: 3-4-5 and 5-12-13."],
+  ["في الهندسة، البناء، قياس المسافات، الخرائط، الإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والمسائل التي تتضمن مسافة قطرية أو زاوية قائمة.","It is used in geometry, construction, distance measurement, maps, coordinates, 3D design, computer graphics and diagonal-distance problems."],
+  ["لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.","You cannot apply a² + b² = c² directly to any triangle; it must be right-angled. For non-right triangles, other rules such as the law of cosines are used."],
+  ["صمّم امتحان جديد","Build a New Exam"],["اكتب كود المعلم. نفس كود الامتحان يقدر يدخل عليه 100 طالب وأكثر، وكل طالب تسليمه مستقل.","Enter the teacher's code. The same exam code can be used by 100+ students, each with an independent submission."],
+  ["الإجابات تنحفظ باسمك عند التسليم.","Your answers are saved under your account when you submit."],
+  ["إذا كنت داخل كمعلم، شوف امتحاناتك والطلاب اللي سلموا وحساب العلامة.","If you are signed in as a teacher, view your exams, student submissions and grading."],
+  ["فتح لوحة النتائج","Open Results Dashboard"],["امتحان","Exam"],["10 أسئلة","10 questions"],["🔄 غيّر الامتحان","🔄 Change exam"],
+  ["سلّم الامتحان وشوف العلامة","Submit the exam and view your score"],["نتيجتك","Your Result"],["↻ امتحان جديد","↻ New Exam"],
+  ["⌂ مركز الامتحانات","⌂ Exam Center"],["↻ تحديث النتائج","↻ Refresh Results"],
+  ["العلامة تُحسب عند المعلم من مفتاح الإجابة الخاص، لذلك الطالب ما بيشوف الإجابات الصحيحة داخل ملف الامتحان.","The teacher calculates the score using a private answer key, so students cannot see correct answers inside the exam file."],
+  ["تصحيح تلقائي","Auto Grading"],["للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.","For open questions, enter key answer words separated by |. The site scores based on the matching keywords."],
+  ["☁️ نشر الامتحان للطلاب","☁️ Publish Exam to Students"],["بعد ما تجهز الامتحان، انشره وخذ كود دخول واحد. نفس الكود يقدر يستخدمه كل طلاب الصف بنفس الوقت.","When the exam is ready, publish it and get one access code. All class students can use the same code at the same time."],
+  ["☁️ حفظ وإنشاء كود","☁️ Save & Create Code"],["نسخ الكود","Copy Code"],["＋ أضف سؤال","＋ Add Question"],["💾 حفظ الامتحان","💾 Save Exam"],
+  ["📂 تحميل المحفوظ","📂 Load Saved"],["▶ ابدأ هذا الامتحان","▶ Start This Exam"],
+  ["مسابقة فيثاغورس مباشرة ⚡","Live Pythagoras Competition ⚡"],["غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.","Room, code, Team A vs Team B, live questions and a real-time leaderboard."],
+  ["اسمك يؤخذ تلقائيًا من حسابك. اكتب كود الغرفة واختار فريقك.","Your name is taken automatically from your account. Enter the room code and choose your team."],
+  ["اسم الحساب","Account name"],["🔵 الفريق A","🔵 Team A"],["🔴 الفريق B","🔴 Team B"],["دخول الغرفة","Join Room"],
+  ["كل طالب يدخل من جهازه بنفس الكود.","Every student joins from their own device using the same code."],
+  ["اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.","Create a quick Pythagoras competition or design your own Pythagoras questions and answers."],
+  ["⚡ إنشاء مسابقة سريعة","⚡ Create Quick Competition"],["🛠️ صمّم المسابقة بنفسك","🛠️ Design Competition"],["📚 مسابقاتي المحفوظة","📚 Saved Competitions"],
+  ["إنشاء الغرفة يحتاج دخول المعلم أولًا.","Creating a room requires teacher sign-in."],["📚 مسابقاتي","📚 My Competitions"],
+  ["كل المسابقات اللي أنشأتها محفوظة. افتح غرفة لسه شغالة أو انسخ مسابقة قديمة وشغّلها من جديد بكود جديد.","All competitions you create are saved. Open an active room or duplicate an old competition and restart it with a new code."],
+  ["🛠️ صمّم المسابقة","🛠️ Design Competition"],["اكتب أسئلة فيثاغورس والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.","Write Pythagoras questions and choices, then select the correct answer. Maximum: 15 questions."],
+  ["🏆 أنشئ الغرفة","🏆 Create Room"],["غرفة الانتظار","Waiting Room"],["شارك هذا الكود مع الصف","Share this code with the class"],
+  ["▶ ابدأ المسابقة","▶ Start Competition"],["خروج","Exit"],["سؤال 1","Question 1"],["مباشر","Live"],
+  ["✓ اقفل السؤال واحسب النقاط","✓ Lock Question & Calculate Points"],["السؤال التالي ➜","Next Question ➜"],["🏅 الترتيب","🏅 Leaderboard"],
+  ["انتهت المسابقة!","Competition Finished!"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["🌐 اللغة / Language","🌐 Language"],["فيثاغورس","Pythagoras"],["أو","or"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["احكي مع فيثاغورسي","Talk to Pythagorasi"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.","🔒 You stay signed in on this device for 2 months unless you log out."]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
 const uiPlaceholderTranslations=new Map([
+  ["🔎 ابحث عن موضوع داخل المادة...","🔎 Search topics..."],
+  ["اسأل عن هذا الموضوع...","Ask about this topic..."],
+  ["الخيار 1","Option 1"],["الخيار 2","Option 2"],["الخيار 3","Option 3"],["الخيار 4","Option 4"],
+  ["اكتب الجواب","Enter your answer"],
+  ["اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?"],
+  ["مثال: AB12CD","Example: AB12CD"],["اسم الامتحان","Exam name"],["اسم المسابقة","Competition name"],
   ["اكتب اسمك","Enter your name"],["اكتب جوابك هنا...","Enter your answer..."],["اكتب سؤالك لفيثاغورسي...","Ask Pythagorasi..."],
   ["مثال: بسام جابر","Example: Bassam Jaber"],["6 خانات أو أكثر","6 characters or more"],
   ["اكتب كلمة السر مرة ثانية","Enter the password again"],["الكود اللي أعطاك إياه المعلم","Code given by your teacher"],
@@ -6483,16 +6939,49 @@ const uiPlaceholderTranslations=new Map([
 ]);
 
 function uiDynamicEnglish(text){
-  let s=latinDigits(text);
+  let s=latinDigits(text).replace(/،/g,",");
   s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
+  s=s.replace(/^👋\s*أهلًا\s+(.+?)!$/u,"👋 Welcome $1!");
+  s=s.replace(/^👨‍🏫\s*أهلًا\s+(.+?)!\s*دخلت كمعلم\.$/u,"👨‍🏫 Welcome $1! You signed in as a teacher.");
   s=s.replace(/^اسم الدخول:\s*/u,"Login name: ");
+  s=s.replace(/^تسجيل الدخول محفوظ لغاية:\s*/u,"Login saved until: ");
   s=s.replace(/^سؤال\s+(\d+)\s*\/\s*(\d+)/u,"Question $1 / $2");
+  s=s.replace(/^السؤال\s+(\d+)/u,"Question $1");
   s=s.replace(/^النقاط\s*/u,"Score ");
+  s=s.replace(/^(\d+)\s*نقاط$/u,"$1 pts");
+  s=s.replace(/^(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة$/u,"$1 questions • $2 points");
+  s=s.replace(/^موعد:\s*/u,"Due: ");
   s=s.replace(/موعد:\s*/gu,"Due: ");
-  s=s.replace(/علامة/gu,"pts");
-  s=s.replace(/امتحانات/gu,"exams");
-  s=s.replace(/آخر نشاط:\s*/gu,"Last activity: ");
-  return s;
+  s=s.replace(/\bعلامة\b/gu,"points");
+  s=s.replace(/\bعلامات\b/gu,"points");
+  s=s.replace(/\bامتحانات\b/gu,"exams");
+  s=s.replace(/^آخر نشاط:\s*/gu,"Last activity: ");
+  s=s.replace(/^تم الانضمام إلى\s+(.+)$/u,"Joined $1");
+  s=s.replace(/^انضممت إلى\s+(.+)$/u,"Joined $1");
+  s=s.replace(/^تم إنشاء\s+(.+?)\s*•\s*الكود\s*(.+)$/u,"Created $1 • code $2");
+  s=s.replace(/^كود الصف:\s*/u,"Class code: ");
+  s=s.replace(/^كود الغرفة:\s*/u,"Room code: ");
+  s=s.replace(/^كود الامتحان:\s*/u,"Exam code: ");
+  s=s.replace(/^كود دعوة المعلم:\s*/u,"Teacher invite code: ");
+  s=s.replace(/^تم نشر الوظيفة\s*•\s*(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة\s*✅$/u,"Assignment published • $1 questions • $2 points ✅");
+  s=s.replace(/^تم حفظ التصحيح\s*•\s*(.+)\s*✅$/u,"Grading saved • $1 ✅");
+  s=s.replace(/^تم التسليم\s*•\s*التلقائي\s*(.+)\s*والباقي للمعلم$/u,"Submitted • auto score $1 • remaining points are teacher-graded");
+  s=s.replace(/^تم التسليم\s*•\s*العلامة\s*(.+)$/u,"Submitted • score $1");
+  s=s.replace(/^صحّحها المعلم\s*•\s*(.+)$/u,"Graded by teacher • $1");
+  s=s.replace(/^التلقائي\s*(.+)$/u,"Auto score $1");
+  s=s.replace(/^✅\s*الإجابة الصحيحة:\s*/u,"✅ Correct answer: ");
+  s=s.replace(/^✅\s*صحيح\s*—\s*/u,"✅ Correct — ");
+  s=s.replace(/^❌\s*مش صحيح\s*—\s*/u,"❌ Incorrect — ");
+  s=s.replace(/جرّب مرة ثانية\.?/gu,"Try again.");
+  s=s.replace(/^حسبنا\s+(.+?)\s*=\s*/u,"Calculated $1 = ");
+  s=s.replace(/\(الوتر\)/gu,"(hypotenuse)");
+  s=s.replace(/^القيم الحالية:\s*/u,"Current values: ");
+  s=s.replace(/^الوتر c$/u,"hypotenuse c");
+  s=s.replace(/^الضلع\s+([abc])$/u,"side $1");
+  s=s.replace(/^المرحلة\s+(\d+)\/(\d+):/u,"Step $1/$2:");
+  s=s.replace(/^✅\s*البرهان اكتمل:/u,"✅ Proof complete:");
+  s=s.replace(/^⏳\s*تم تحريك الرمل من جديد/u,"⏳ The sand was reset");
+  return uiExactTranslations.get(s.trim())||s;
 }
 function translateTextValue(arText){
   const raw=latinDigits(arText);
@@ -6626,6 +7115,8 @@ function refreshSettingsUI(){
   document.getElementById("settingsCurrentName").textContent=name;
   document.getElementById("settingsDisplayName").value=name;
   document.getElementById("settingsLoginName").textContent=`اسم الدخول: ${p.loginName||p.originalLoginName||p.nameKey||name}`;
+  document.getElementById("settingsProfileId").textContent=p.profileId||"----------";
+  document.getElementById("settingsRememberedLogin").textContent=`تسجيل الدخول محفوظ لغاية: ${formatLoginExpiry(rememberedLoginExpiresAt())}`;
   document.getElementById("settingsAIName").value=assistantNameFor("pythagoras");
   const avatar=document.getElementById("settingsAvatar");
   applyAvatar(avatar,p,name);
@@ -6647,21 +7138,29 @@ document.getElementById("lobbySettingsBtn").addEventListener("click",openSetting
 document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
 settingsModal.addEventListener("click",e=>{if(e.target===settingsModal)closeSettingsModal()});
+document.getElementById("copyProfileIdBtn").addEventListener("click",async()=>{
+  const id=String(window.PythagorasiUser?.profileId||"");
+  if(!/^\d{10}$/.test(id))return;
+  try{await navigator.clipboard.writeText(id);showToast(currentUILanguage==="en"?"Profile ID copied.":"تم نسخ Profile ID.")}
+  catch{showToast(`Profile ID: ${id}`)}
+});
 
-document.getElementById("settingsDarkBtn").addEventListener("click",()=>{applySiteTheme("dark");refreshSettingsUI()});
-document.getElementById("settingsLightBtn").addEventListener("click",()=>{applySiteTheme("light");refreshSettingsUI()});
-document.getElementById("settingsArabicBtn").addEventListener("click",()=>{applySiteLanguage("ar");refreshSettingsUI()});
-document.getElementById("settingsEnglishBtn").addEventListener("click",()=>{applySiteLanguage("en");refreshSettingsUI()});
+document.getElementById("settingsDarkBtn").addEventListener("click",()=>{applySiteTheme("dark");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsLightBtn").addEventListener("click",()=>{applySiteTheme("light");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsArabicBtn").addEventListener("click",()=>{applySiteLanguage("ar");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsEnglishBtn").addEventListener("click",()=>{applySiteLanguage("en");refreshSettingsUI();saveAccountPreferences()});
 document.getElementById("settingsOpenProfileBtn").addEventListener("click",()=>{closeSettingsModal();openProfileModal()});
 document.getElementById("settingsSoundToggle").addEventListener("change",e=>{
   soundEnabled=e.target.checked;
   localStorage.setItem("pythagorasi_sound",soundEnabled?"on":"off");
+  saveAccountPreferences();
   if(soundEnabled)soundFx("correct");
 });
 document.getElementById("settingsMotionToggle").addEventListener("change",e=>{
   motionEnabled=e.target.checked;
   localStorage.setItem("pythagorasi_motion",motionEnabled?"on":"off");
   applyMotionSetting();
+  saveAccountPreferences();
 });
 
 document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>{
@@ -6784,6 +7283,7 @@ document.getElementById("deleteAccountBtn").addEventListener("click",async()=>{
     }
     try{await deleteDoc(doc(db,"users",user.uid))}catch{}
     await deleteUser(user);
+    clearRememberedLogin();
     localStorage.removeItem("pythagorasi_ai_name");
     localStorage.removeItem("learnsphere_ai_context");
     closeSettingsModal();
@@ -7258,7 +7758,9 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
     }
     liveCompetitionId=ref.id;
     liveCompetitionRole="host";
-    localStorage.setItem("pythagorasi_last_host_room",JSON.stringify({id:ref.id,code}));
+    const lastHostRoom={id:ref.id,code};
+    localStorage.setItem("pythagorasi_last_host_room",JSON.stringify(lastHostRoom));
+    queueAccountStateSave({lastHostRoom});
     subscribeCompetition(ref.id,"host");
     showCompetitionView("competitionLobby");
   }catch(err){
@@ -7463,7 +7965,9 @@ async function joinLiveCompetition(){
     liveCompetitionId=room.id;
     liveCompetitionRole="player";
     liveAnsweredIndex=-1;
-    localStorage.setItem("pythagorasi_last_competition",JSON.stringify({id:room.id,code,name,team}));
+    const lastCompetition={id:room.id,code,name,team};
+    localStorage.setItem("pythagorasi_last_competition",JSON.stringify(lastCompetition));
+    queueAccountStateSave({lastCompetition});
     subscribeCompetition(room.id,"player");
     showCompetitionView(room.data().status==="lobby"?"competitionLobby":"competitionGame");
     status.textContent="✅ دخلت الغرفة.";
@@ -7912,11 +8416,9 @@ function refreshAIWelcome(){
 }
 function persistAIContext(){
   try{
-    localStorage.setItem("learnsphere_ai_context",JSON.stringify({
-      ...aiContext,
-      savedAt:Date.now(),
-      displayName:savedAIName()
-    }));
+    const savedContext={...aiContext,savedAt:Date.now(),displayName:savedAIName()};
+    localStorage.setItem("learnsphere_ai_context",JSON.stringify(savedContext));
+    queueAccountStateSave({aiContext:savedContext});
   }catch{}
 }
 function loadAIContext(){
@@ -8317,7 +8819,30 @@ function advancedLocalMathAnswer(raw,t){
   return null;
 }
 
+function pythagorasiAnswerEnglish(raw){
+  const text=String(raw||"").trim();
+  const t=text.toLowerCase();
+  const nums=extractNumbers(text);
+  const first=String(window.PythagorasiUser?.displayName||"").trim().split(/\s+/)[0];
+  const hello=first?`Hi ${first}!`:`Hi!`;
+  if(/^(hi|hello|hey|good morning|good evening)\b/.test(t))return `${hello} I’m ${assistantNameFor("pythagoras")}. Ask me about the Pythagorean theorem, the hypotenuse, right triangles, or give me side lengths to calculate.`;
+  if(t.includes("my name")||t.includes("who am i"))return first?`Your saved name is ${window.PythagorasiUser.displayName}.`:`I do not have a saved name for you yet.`;
+  if((t.includes("a=")||t.includes(" a "))&&(t.includes("b=")||t.includes(" b "))&&nums.length>=2){const a=nums[0],b=nums[1],c=Math.sqrt(a*a+b*b);return `Using c = √(a² + b²): c = √(${a}² + ${b}²) = ${pretty(c)}.`}
+  if(t.includes("hypotenuse")||t.includes("what is c"))return "The hypotenuse is the side opposite the 90° angle. It is the longest side of a right triangle and is usually called c.";
+  if(t.includes("what is the theorem")||t.includes("explain")||t.includes("pythagorean theorem"))return "For a right triangle, a² + b² = c², where a and b are the legs and c is the hypotenuse. In the square model, the areas of the two smaller squares add up exactly to the area of the square on c.";
+  if(t.includes("why")||t.includes("proof")||t.includes("sand"))return `The sand represents square area. The model moves the sand from a² and b² into c². With the current values, ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}, so the total areas match.`;
+  if(t.includes("right triangle")||t.includes("90"))return "A right triangle has one 90° angle. The Pythagorean theorem applies directly only to right triangles.";
+  if(t.includes("find a")&&nums.length>=2){const b=nums[0],c=nums[1];if(c<=b)return "c must be longer than b because c is the hypotenuse.";return `a = √(c² − b²) = √(${c}² − ${b}²) = ${pretty(Math.sqrt(c*c-b*b))}.`}
+  if(t.includes("find b")&&nums.length>=2){const a=nums[0],c=nums[1];if(c<=a)return "c must be longer than a because c is the hypotenuse.";return `b = √(c² − a²) = √(${c}² − ${a}²) = ${pretty(Math.sqrt(c*c-a*a))}.`}
+  if(t.includes("exam"))return "Students join a teacher’s exam using its code. Teachers can create and publish exams, and each student has an independent submission.";
+  if(t.includes("competition"))return "Students join a live Pythagoras competition using the room code. Their account name is used automatically.";
+  if(t.includes("challenge"))return "Open the Pythagoras Challenge from the lobby or lab, solve the missing hypotenuse, and collect points.";
+  if(t.includes("current values")||t.includes("values now"))return `Current model: a = ${pretty(currentA)}, b = ${pretty(currentB)}, c = ${pretty(currentC)}. So a² + b² = ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)} = c².`;
+  return `I’m focused on the Pythagorean theorem. You can ask: “Explain the theorem”, “What is the hypotenuse?”, “If a=5 and b=12, what is c?”, “Why does the sand proof work?”, or ask me to open the exam or competition.`;
+}
+
 function pythagorasiAnswer(raw){
+  if(currentUILanguage==="en")return pythagorasiAnswerEnglish(raw);
   const t=correctedText(raw);
   const n=normalizeArabic(raw);
 
@@ -8508,8 +9033,10 @@ const chat=document.getElementById("chat"),q=document.getElementById("question")
 function readAIHistory(){try{return JSON.parse(localStorage.getItem("pythagorasi_ai_history")||"[]")}catch{return[]}}
 function writeAIHistory(items){
   try{
-    localStorage.setItem("pythagorasi_ai_history",JSON.stringify(items.slice(-40)));
-    document.getElementById("aiMemoryStatus").textContent=`محفوظ ${Math.min(items.length,40)} رسالة محليًا`;
+    const kept=items.slice(-40);
+    localStorage.setItem("pythagorasi_ai_history",JSON.stringify(kept));
+    document.getElementById("aiMemoryStatus").textContent=currentUILanguage==="en"?`Saved ${Math.min(items.length,40)} messages`:`محفوظ ${Math.min(items.length,40)} رسالة`;
+    queueAccountStateSave({aiHistory:safeAccountStateHistory(kept,30)});
   }catch{}
 }
 function saveAIHistoryMessage(text,who){
@@ -8625,7 +9152,7 @@ document.querySelectorAll(".suggestions button").forEach(b=>b.addEventListener("
 
 
 /* -------------------- QUICK CHALLENGE -------------------- */
-let challenge={a:3,b:4,c:5,score:0};
+let challenge={a:3,b:4,c:5,score:Number(localStorage.getItem("pythagorasi_challenge_score")||0)||0};
 
 function newChallenge(){
   const triples=[
@@ -8633,8 +9160,9 @@ function newChallenge(){
   ];
   const pick=triples[Math.floor(Math.random()*triples.length)];
   challenge.a=pick[0];challenge.b=pick[1];challenge.c=pick[2];
-  document.getElementById("challengeQuestion").innerHTML=
-    `إذا كان <b>a = ${challenge.a}</b> و <b>b = ${challenge.b}</b>، كم يساوي الوتر <b>c</b>؟`;
+  document.getElementById("challengeQuestion").innerHTML=currentUILanguage==="en"
+    ?`If <b>a = ${challenge.a}</b> and <b>b = ${challenge.b}</b>, what is the hypotenuse <b>c</b>?`
+    :`إذا كان <b>a = ${challenge.a}</b> و <b>b = ${challenge.b}</b>، كم يساوي الوتر <b>c</b>؟`;
   document.getElementById("challengeAnswer").value="";
   const f=document.getElementById("challengeFeedback");
   f.className="challenge-feedback";
@@ -8652,22 +9180,24 @@ document.getElementById("challengeNew").addEventListener("click",newChallenge);
 document.getElementById("challengeCheck").addEventListener("click",()=>{
   const val=parseFloat(document.getElementById("challengeAnswer").value);
   if(!Number.isFinite(val)){
-    challengeFeedback("اكتب جواب أولًا 👀",false);return;
+    challengeFeedback(currentUILanguage==="en"?"Enter an answer first 👀":"اكتب جواب أولًا 👀",false);return;
   }
   if(Math.abs(val-challenge.c)<.01){
     challenge.score+=10;
-    document.getElementById("challengeScore").textContent=`${challenge.score} نقاط`;
-    challengeFeedback(`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`,true);
+    localStorage.setItem("pythagorasi_challenge_score",String(challenge.score));
+    queueAccountStateSave({challengeScore:challenge.score});
+    document.getElementById("challengeScore").textContent=currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`;
+    challengeFeedback(currentUILanguage==="en"?`Correct! 🔥 Because ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 pts`:`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`,true);
     soundFx("correct");fxElement(document.getElementById("pythagChallengeBox"),"win");
   }else{
-    challengeFeedback(`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`,false);
+    challengeFeedback(currentUILanguage==="en"?`Close! Try: c = √(${challenge.a}² + ${challenge.b}²).`:`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`,false);
     soundFx("wrong");fxElement(document.getElementById("pythagChallengeBox"),"shake");
   }
 });
 
 document.getElementById("challengeShow").addEventListener("click",()=>{
   challengeFeedback(
-    `${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}، إذن c = ${challenge.c}.`,
+    currentUILanguage==="en"?`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}, so c = ${challenge.c}.`:`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}، إذن c = ${challenge.c}.`,
     true
   );
 });
@@ -8677,6 +9207,7 @@ document.getElementById("challengeAnswer").addEventListener("keydown",e=>{
 });
 
 newChallenge();
+document.getElementById("challengeScore").textContent=currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`;
 
 
 /* resize and render */
