@@ -2233,6 +2233,136 @@ body.light .admin-feature-toggle-btn.is-stopped{
   .admin-feature-toggle-btn{width:100%}
 }
 
+
+/* ================= V31 VISIBLE COMPOSITE TIMERS ================= */
+.admin-timer-grid-v31{
+  grid-template-columns:minmax(170px,1.15fr) repeat(3,minmax(86px,.42fr)) minmax(150px,.7fr)!important;
+  align-items:end
+}
+.admin-duration-field{
+  display:grid!important;gap:4px!important;font-size:9px!important;color:#7d96a8!important;
+  margin:0!important
+}
+.admin-duration-field input{width:100%}
+.student-active-timers{
+  margin-top:12px;padding:14px;border-radius:19px;
+  background:
+    radial-gradient(circle at 96% 5%,rgba(255,174,62,.10),transparent 28%),
+    linear-gradient(145deg,rgba(255,155,54,.055),rgba(255,84,108,.035));
+  border:1px solid rgba(255,177,72,.15);
+  box-shadow:0 14px 36px rgba(0,0,0,.10)
+}
+.student-active-timers.hidden{display:none!important}
+.student-active-timers-head h3{margin:4px 0 2px;font-size:16px}
+.student-active-timers-head p{margin:0;color:#849cad;font-size:10px;line-height:1.5}
+.student-timer-kicker{
+  font-size:8px;font-weight:1000;letter-spacing:.12em;color:#ffc06f
+}
+.student-active-timer-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px
+}
+.student-timer-card{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 11px;border-radius:12px;
+  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)
+}
+.student-timer-card-main{min-width:0}
+.student-timer-card b{display:block;font-size:11px}
+.student-timer-card small{display:block;margin-top:3px;color:#7e97aa;font-size:9px}
+.student-timer-countdown{
+  flex:none;min-width:112px;text-align:center;padding:7px 9px;border-radius:10px;
+  background:rgba(255,171,65,.075);border:1px solid rgba(255,171,65,.14);
+  color:#ffc880;font-weight:1000;font-variant-numeric:tabular-nums;font-size:11px
+}
+.student-timer-card.indefinite .student-timer-countdown{
+  color:#ffadb5;background:rgba(255,89,108,.055);border-color:rgba(255,89,108,.12)
+}
+body.light .student-active-timers{
+  background:linear-gradient(145deg,#fff9ef,#fff4f5);border-color:#f1dfc5
+}
+body.light .student-timer-card{
+  background:#fff;border-color:#e0e8ed;color:#173047
+}
+body.light .student-timer-countdown{
+  background:#fff8eb;border-color:#f1dfbd;color:#8d6525
+}
+@media(max-width:900px){
+  .admin-timer-grid-v31{grid-template-columns:1fr 1fr 1fr 1fr!important}
+  .admin-timer-grid-v31>select{grid-column:1/-1}
+  .admin-timer-grid-v31>button{grid-column:1/-1}
+}
+@media(max-width:650px){
+  .student-active-timer-list{grid-template-columns:1fr}
+  .student-timer-card{align-items:flex-start}
+  .admin-timer-grid-v31{grid-template-columns:1fr 1fr 1fr!important}
+  .admin-timer-grid-v31>select,.admin-timer-grid-v31>button{grid-column:1/-1}
+}
+
+
+/* ================= V32 CONTENT VISIBILITY MANAGER ================= */
+.admin-content-filter-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0
+}
+.admin-content-status-note{
+  padding:9px 11px;border-radius:11px;margin-bottom:10px;
+  background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05);
+  color:#8098aa;font-size:10px
+}
+.admin-content-manager-list{display:grid;gap:9px}
+.admin-content-card{
+  padding:12px;border-radius:15px;
+  background:linear-gradient(145deg,rgba(255,255,255,.034),rgba(255,255,255,.017));
+  border:1px solid rgba(255,255,255,.06)
+}
+.admin-content-card.hidden-content{
+  opacity:.72;border-color:rgba(255,165,74,.11);
+  background:linear-gradient(145deg,rgba(255,161,68,.035),rgba(255,255,255,.012))
+}
+.admin-content-card-head{
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start
+}
+.admin-content-type{
+  display:inline-flex;padding:4px 7px;border-radius:999px;margin-bottom:5px;
+  font-size:8px;font-weight:1000;letter-spacing:.06em;
+  background:rgba(57,165,245,.07);border:1px solid rgba(57,165,245,.12);
+  color:#8ed8ff
+}
+.admin-content-card h4{margin:0 0 4px;font-size:14px}
+.admin-content-meta{font-size:9px;color:#758ea1;line-height:1.5}
+.admin-content-state{
+  flex:none;padding:5px 8px;border-radius:999px;font-size:9px;font-weight:1000
+}
+.admin-content-state.visible{
+  color:#8fe0b9;background:rgba(72,195,145,.065);border:1px solid rgba(72,195,145,.13)
+}
+.admin-content-state.hidden{
+  color:#ffc17a;background:rgba(255,168,72,.065);border:1px solid rgba(255,168,72,.13)
+}
+.admin-content-actions{
+  display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;padding-top:9px;
+  border-top:1px solid rgba(255,255,255,.04)
+}
+.admin-content-toggle{
+  padding:7px 10px;border-radius:9px;cursor:pointer;
+  border:1px solid rgba(255,175,72,.14);background:rgba(255,175,72,.055);
+  color:#ffc37e;font-size:9px;font-weight:900
+}
+.admin-content-toggle.show{
+  border-color:rgba(72,195,145,.14);background:rgba(72,195,145,.055);color:#8ee0b9
+}
+.admin-content-delete{
+  padding:7px 10px;border-radius:9px;cursor:pointer;
+  border:1px solid rgba(255,95,112,.14);background:rgba(255,95,112,.055);
+  color:#ffabb4;font-size:9px;font-weight:900
+}
+body.light .admin-content-card,.body.light .admin-content-status-note{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+@media(max-width:650px){
+  .admin-content-filter-row{grid-template-columns:1fr}
+  .admin-content-card-head{flex-direction:column}
+}
+
 </style>
 </head>
 <body>
@@ -2317,6 +2447,17 @@ body.light .admin-feature-toggle-btn.is-stopped{
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
     </div>
+
+    <section class="student-active-timers hidden" id="studentActiveTimers">
+      <div class="student-active-timers-head">
+        <div>
+          <span class="student-timer-kicker">LIVE TIMER</span>
+          <h3 id="studentTimerTitle">⏱ مؤقتات الإدارة</h3>
+          <p id="studentTimerSub">هاي النشاطات موقوفة مؤقتًا، والوقت المتبقي بيظهر هون.</p>
+        </div>
+      </div>
+      <div class="student-active-timer-list" id="studentActiveTimerList"></div>
+    </section>
 
     <section class="lobby-section hidden site-updates-priority" id="siteUpdatesSection">
       <div class="lobby-section-head">
@@ -2414,6 +2555,7 @@ body.light .admin-feature-toggle-btn.is-stopped{
 
     <div class="admin-tabs" id="adminTabs">
       <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
+      <button data-admin-tab="content">👁️ Content Manager</button>
       <button data-admin-tab="students">🎒 Student Overview</button>
       <button data-admin-tab="history">📝 Assignment History</button>
       <button data-admin-tab="dashboard">📈 Dashboard</button>
@@ -2567,6 +2709,38 @@ body.light .admin-feature-toggle-btn.is-stopped{
       <div class="cloud-note" id="adminSendStatus"></div>
     </div>
 
+    <div class="admin-view hidden" id="adminViewContent">
+      <div class="admin-section-intro">
+        <div>
+          <b id="adminContentTitle">👁️ إدارة المحتوى</b>
+          <span id="adminContentSub">وقف أي عنصر فيختفي من الطلاب، رجّعه فيظهر، أو احذفه نهائيًا.</span>
+        </div>
+        <button class="exam-secondary" id="adminRefreshContentBtn">↻ تحديث</button>
+      </div>
+
+      <div class="admin-content-filter-row">
+        <select id="adminContentTypeFilter">
+          <option value="all">كل المحتوى</option>
+          <option value="announcement">إعلانات</option>
+          <option value="poll">تصويتات</option>
+          <option value="assignment">وظائف</option>
+          <option value="competition">مسابقات</option>
+        </select>
+        <select id="adminContentVisibilityFilter">
+          <option value="all">الكل</option>
+          <option value="visible">ظاهر</option>
+          <option value="hidden">مخفي</option>
+        </select>
+      </div>
+
+      <div class="admin-content-status-note">
+        <b>⏸ وقف</b> = يختفي من الطلاب ويقدر يرجع. &nbsp;
+        <b>🗑 حذف</b> = حذف نهائي.
+      </div>
+
+      <div class="admin-content-manager-list" id="adminContentManagerList"></div>
+    </div>
+
     <div class="admin-view hidden" id="adminViewStudents">
       <div class="admin-section-intro">
         <div>
@@ -2645,7 +2819,7 @@ body.light .admin-feature-toggle-btn.is-stopped{
         <div class="admin-control-card-head">
           <div><b id="adminQuickTimerTitle">⏱ تايمر سريع</b><small id="adminQuickTimerSub">اختار شو بدك توقف وكم دقيقة.</small></div>
         </div>
-        <div class="admin-timer-grid admin-timer-grid-v30">
+        <div class="admin-timer-grid admin-timer-grid-v31">
           <select id="adminQuickTimerFeature">
             <option value="globalPause">كل شيء</option>
             <option value="lockExams">الامتحانات</option>
@@ -2654,12 +2828,22 @@ body.light .admin-feature-toggle-btn.is-stopped{
             <option value="lockPollVoting">التصويت</option>
             <option value="lockClassJoin">دخول الصفوف</option>
           </select>
-          <input id="adminQuickTimerValue" type="number" min="1" max="365" value="30">
-          <select id="adminQuickTimerUnit">
-            <option value="minutes">دقائق</option>
-            <option value="hours">ساعات</option>
-            <option value="days">أيام</option>
-          </select>
+
+          <label class="admin-duration-field">
+            <span id="adminTimerDaysLabel">أيام</span>
+            <input id="adminQuickTimerDays" type="number" min="0" max="365" value="0">
+          </label>
+
+          <label class="admin-duration-field">
+            <span id="adminTimerHoursLabel">ساعات</span>
+            <input id="adminQuickTimerHours" type="number" min="0" max="23" value="0">
+          </label>
+
+          <label class="admin-duration-field">
+            <span id="adminTimerMinutesLabel">دقائق</span>
+            <input id="adminQuickTimerMinutes" type="number" min="0" max="59" value="30">
+          </label>
+
           <button class="apply" id="adminStartQuickTimerBtn">⏱ ابدأ التايمر</button>
         </div>
         <div class="cloud-note" id="adminQuickTimerStatus"></div>
@@ -3628,7 +3812,7 @@ async function reserveUniqueProfileId(uid){
       const claimed=await runTransaction(db,async tx=>{
         const snap=await tx.get(ref);
         if(snap.exists())return false;
-        tx.set(ref,{uid,createdAt:serverTimestamp()});
+        tx.set(ref,{uid,active:true,hidden:false,createdAt:serverTimestamp()});
         return true;
       });
       if(claimed)return profileId;
@@ -6936,7 +7120,7 @@ async function getManagedClasses(){
       if(snap.exists())extra.push({id:snap.id,...snap.data(),role:"coTeacher"});
     }catch{}
   }
-  return [...owned,...extra].filter(x=>x.active!==false);
+  return [...owned,...extra].filter(x=>x.active!==false&&x.hidden!==true);
 }
 
 async function ensureClassJoinCodeRecord(classData){
@@ -7333,6 +7517,7 @@ async function loadStudentClasses(){
       const assignments=await getDocs(collection(db,"classes",classId,"assignments"));
       const assignmentDocs=assignments.docs
         .map(d=>({id:d.id,...d.data()}))
+        .filter(a=>a.hidden!==true&&a.active!==false)
         .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
 
       for(const raw of assignmentDocs){
@@ -9190,7 +9375,8 @@ function applyAdminLanguage(){
   ph("adminGlobalSearch","ابحث عن طالب، معلم، صف، إيميل أو Profile ID...","Search students, teachers, classes, email or Profile ID...");
   const refresh=document.getElementById("adminRefreshBtn");if(refresh)refresh.textContent=en?"↻ Refresh":"↻ تحديث";
   const tabs=[
-    ["polls","📊 التصويتات","📊 Polls"],["students","🎒 كل الطلاب","🎒 Student Overview"],
+    ["polls","📊 التصويتات","📊 Polls"],["content","👁️ إدارة المحتوى","👁️ Content Manager"],
+    ["students","🎒 كل الطلاب","🎒 Student Overview"],
     ["history","📝 سجل الوظائف","📝 Assignment History"],["dashboard","📈 الرئيسية","📈 Dashboard"],
     ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
     ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","🎛️ مركز التحكم","🎛️ Control Center"]
@@ -9248,6 +9434,11 @@ function applyAdminLanguage(){
   set("adminHistoryStudentsLabel","طلاب سلّموا","STUDENTS");
   set("adminHistoryStatus","السجل بيعرض كل البيانات الموجودة في Firestore مهما كان تاريخها.","This history loads all assignment data currently stored in Firestore, regardless of age.");
   const historyRefresh=document.getElementById("adminRefreshHistoryBtn");if(historyRefresh)historyRefresh.textContent=en?"↻ Refresh history":"↻ تحديث السجل";
+  set("adminContentTitle","👁️ إدارة المحتوى","👁️ Content Manager");
+  set("adminContentSub","وقف أي عنصر فيختفي من الطلاب، رجّعه فيظهر، أو احذفه نهائيًا.","Pause an item to hide it from students, resume it to show it again, or delete it permanently.");
+  const contentRefresh=document.getElementById("adminRefreshContentBtn");
+  if(contentRefresh)contentRefresh.textContent=en?"↻ Refresh":"↻ تحديث";
+
   set("adminStudentsTitle","🎒 كل الطلاب","🎒 Student Overview");
   set("adminStudentsSub","آخر دخول، الصفوف، حالة كلمة السر، وكل الوظائف اللي سلّموها.","Last visit, classes, password status, and every stored assignment submission.");
   set("adminStudentsCountLabel","طلاب","STUDENTS");
@@ -9259,15 +9450,14 @@ function applyAdminLanguage(){
   const refreshControlStatus=document.getElementById("adminRefreshControlStatusBtn");
   if(refreshControlStatus)refreshControlStatus.textContent=en?"↻ Refresh status":"↻ تحديث الحالة";
 
-  const timerUnit=document.getElementById("adminQuickTimerUnit");
-  if(timerUnit){
-    const unitLabels=en?["Minutes","Hours","Days"]:["دقائق","ساعات","أيام"];
-    [...timerUnit.options].forEach((o,i)=>o.textContent=unitLabels[i]||o.textContent);
-  }
-
   set("adminControlTitle","🎛️ مركز التحكم الكامل","🎛️ Full Control Center");
   set("adminControlSub","وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.","Pause one feature, set an end time, or pause all student activities at once.");
   set("adminQuickTimerTitle","⏱ تايمر سريع","⏱ Quick timer");
+  set("adminTimerDaysLabel","أيام","Days");
+  set("adminTimerHoursLabel","ساعات","Hours");
+  set("adminTimerMinutesLabel","دقائق","Minutes");
+  set("studentTimerTitle","⏱ مؤقتات الإدارة","⏱ Active timers");
+  set("studentTimerSub","هاي النشاطات موقوفة مؤقتًا، والوقت المتبقي بيظهر هون.","These activities are temporarily paused. The remaining time appears here.");
   set("adminQuickTimerSub","اختار شو بدك توقف وكم دقيقة.","Choose what to pause and for how many minutes.");
   set("controlGlobalLabel","⏸ إيقاف عام","⏸ Global pause");
   set("controlGlobalSub","يوقف نشاطات الطلاب الرئيسية.","Pauses main student activities.");
@@ -9299,6 +9489,7 @@ function applyAdminLanguage(){
       adminPopulateTargets();
       adminSyncFeatureToggleButtons();
       adminRenderControlLiveStatus();
+      renderStudentActiveTimers();
     }
   }catch{}
   set("myClassesHeroTitle","صفوفي","My Classes");
@@ -9377,6 +9568,7 @@ async function adminLoadAllData(){
     adminQuickAddSelectedStudent=null;
     adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
     if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="content")adminLoadContentManager();
     if(adminActiveTab==="students")adminLoadStudentOverview({force:true});
     if(adminActiveTab==="history")adminLoadAssignmentHistory({force:true});
     if(adminActiveTab==="controls")adminLoadControls();
@@ -9805,6 +9997,243 @@ async function adminLoadStudentOverview({force=false}={}){
   if(force)adminAssignmentHistoryLoaded=false;
   if(!adminAssignmentHistoryLoaded)await adminLoadAssignmentHistory({force});
   adminRenderStudentOverview();
+}
+
+
+let adminContentManagerCache=[];
+
+function adminContentTypeLabel(type){
+  const ar={
+    announcement:"إعلان",
+    poll:"تصويت",
+    assignment:"وظيفة",
+    competition:"مسابقة"
+  };
+  const en={
+    announcement:"Announcement",
+    poll:"Poll",
+    assignment:"Assignment",
+    competition:"Competition"
+  };
+  return currentUILanguage==="en"?(en[type]||type):(ar[type]||type);
+}
+
+function adminContentVisible(item){
+  return item.active!==false && item.hidden!==true && item.published!==false;
+}
+
+function adminRenderContentManager(){
+  const host=document.getElementById("adminContentManagerList");
+  if(!host)return;
+
+  const type=document.getElementById("adminContentTypeFilter")?.value||"all";
+  const vis=document.getElementById("adminContentVisibilityFilter")?.value||"all";
+  const q=adminSearchText();
+
+  let rows=[...adminContentManagerCache];
+
+  if(type!=="all")rows=rows.filter(x=>x.type===type);
+  if(vis==="visible")rows=rows.filter(adminContentVisible);
+  if(vis==="hidden")rows=rows.filter(x=>!adminContentVisible(x));
+
+  if(q){
+    rows=rows.filter(x=>[
+      x.title,x.question,x.body,x.description,x.className,x.targetName,x.code
+    ].some(v=>String(v||"").toLowerCase().includes(q)));
+  }
+
+  rows.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  host.innerHTML="";
+
+  if(!rows.length){
+    host.innerHTML=`<div class="cloud-note">${adminLang("ما في محتوى مطابق.","No matching content.")}</div>`;
+    return;
+  }
+
+  for(const item of rows){
+    const visible=adminContentVisible(item);
+    const card=document.createElement("article");
+    card.className=`admin-content-card ${visible?"":"hidden-content"}`;
+
+    const title=item.title||item.question||item.body||adminLang("بدون عنوان","Untitled");
+    const meta=[
+      item.className?`🏫 ${item.className}`:"",
+      item.targetName?`🎯 ${item.targetName}`:"",
+      item.code?`#${item.code}`:"",
+      item.createdAt?adminDate(item.createdAt):""
+    ].filter(Boolean).join(" • ");
+
+    card.innerHTML=`
+      <div class="admin-content-card-head">
+        <div>
+          <span class="admin-content-type">${escapeHtml(adminContentTypeLabel(item.type))}</span>
+          <h4>${escapeHtml(title)}</h4>
+          <div class="admin-content-meta">${escapeHtml(meta)}</div>
+        </div>
+        <span class="admin-content-state ${visible?"visible":"hidden"}">
+          ${visible?adminLang("🟢 ظاهر","🟢 Visible"):adminLang("⏸ مخفي","⏸ Hidden")}
+        </span>
+      </div>
+
+      <div class="admin-content-actions">
+        <button class="admin-content-toggle ${visible?"":"show"}">
+          ${visible?adminLang("⏸ وقف وخبّي","⏸ Pause & hide"):adminLang("▶ رجّع واظهر","▶ Resume & show")}
+        </button>
+        <button class="admin-content-delete">🗑 ${adminLang("حذف نهائي","Delete permanently")}</button>
+      </div>`;
+
+    card.querySelector(".admin-content-toggle").addEventListener("click",()=>
+      adminToggleContentVisibility(item)
+    );
+    card.querySelector(".admin-content-delete").addEventListener("click",()=>
+      adminDeleteContentItem(item)
+    );
+
+    host.appendChild(card);
+  }
+}
+
+async function adminLoadContentManager(){
+  if(!requireSuperAdmin())return;
+  const host=document.getElementById("adminContentManagerList");
+  if(host)host.innerHTML=`<div class="cloud-note">${adminLang("⏳ تحميل المحتوى...","⏳ Loading content...")}</div>`;
+
+  try{
+    const [annSnap,pollSnap,compSnap]=await Promise.all([
+      getDocs(collection(db,"adminAnnouncements")),
+      getDocs(collection(db,"adminPolls")),
+      getDocs(collection(db,"competitions"))
+    ]);
+
+    const items=[];
+
+    annSnap.docs.forEach(d=>{
+      const x={id:d.id,...d.data()};
+      items.push({
+        ...x,
+        source:"adminAnnouncements",
+        type:x.kind==="competition"?"competition":x.kind==="assignment"?"announcement":"announcement"
+      });
+    });
+
+    pollSnap.docs.forEach(d=>{
+      const x={id:d.id,...d.data()};
+      items.push({...x,source:"adminPolls",type:"poll"});
+    });
+
+    compSnap.docs.forEach(d=>{
+      const x={id:d.id,...d.data()};
+      if(x.adminCreated||x.createdBy===auth.currentUser.uid||x.targetType){
+        items.push({...x,source:"competitions",type:"competition"});
+      }
+    });
+
+    for(const c of adminClassesCache){
+      const aSnap=await getDocs(collection(db,"classes",c.id,"assignments"));
+      aSnap.docs.forEach(d=>{
+        const x={id:d.id,...d.data()};
+        items.push({
+          ...x,
+          source:"assignment",
+          type:"assignment",
+          classId:c.id,
+          className:c.name||"Class"
+        });
+      });
+    }
+
+    adminContentManagerCache=items;
+    adminRenderContentManager();
+  }catch(err){
+    console.error("content manager load",err);
+    if(host)host.innerHTML=`<div class="cloud-note">${adminLang("تعذر تحميل المحتوى.","Could not load content.")}</div>`;
+  }
+}
+
+async function adminToggleContentVisibility(item){
+  if(!requireSuperAdmin())return;
+  const visible=adminContentVisible(item);
+
+  try{
+    if(item.source==="assignment"){
+      await updateDoc(doc(db,"classes",item.classId,"assignments",item.id),{
+        hidden:visible,
+        active:!visible,
+        updatedAt:serverTimestamp()
+      });
+    }else{
+      await updateDoc(doc(db,item.source,item.id),{
+        hidden:visible,
+        active:!visible,
+        updatedAt:serverTimestamp()
+      });
+    }
+
+    await adminAudit(
+      visible?"hide_content":"show_content",
+      `${item.type} • ${item.id}`
+    );
+
+    showToast(visible
+      ?adminLang("اختفى من عند الطلاب ⏸","Hidden from students ⏸")
+      :adminLang("رجع يبين عند الطلاب ▶","Visible to students again ▶")
+    );
+
+    await adminLoadContentManager();
+    loadSiteUpdatesForCurrentUser();
+    if(adminActiveTab==="polls")adminLoadPolls();
+  }catch(err){
+    console.error("toggle content visibility",err);
+    showToast(adminLang("تعذر تغيير الظهور.","Could not change visibility."));
+  }
+}
+
+async function adminDeleteContentItem(item){
+  if(!requireSuperAdmin())return;
+
+  if(!confirm(adminLang(
+    "حذف نهائي؟ بعد الحذف ما بقدر يرجع.",
+    "Delete permanently? This cannot be restored."
+  )))return;
+
+  try{
+    if(item.source==="adminPolls"){
+      const votes=await getDocs(collection(db,"adminPolls",item.id,"votes"));
+      for(const v of votes.docs)await deleteDoc(v.ref);
+      await deleteDoc(doc(db,"adminPolls",item.id));
+    }else if(item.source==="assignment"){
+      const subs=await getDocs(collection(db,"classes",item.classId,"assignments",item.id,"submissions"));
+      for(const s of subs.docs)await deleteDoc(s.ref);
+      try{
+        const keySnap=await getDocs(collection(db,"classes",item.classId,"assignments",item.id,"answerKey"));
+        for(const k of keySnap.docs)await deleteDoc(k.ref);
+      }catch{}
+      await deleteDoc(doc(db,"classes",item.classId,"assignments",item.id));
+    }else if(item.source==="competitions"){
+      try{
+        const players=await getDocs(collection(db,"competitions",item.id,"players"));
+        for(const x of players.docs)await deleteDoc(x.ref);
+      }catch{}
+      try{
+        const responses=await getDocs(collection(db,"competitions",item.id,"responses"));
+        for(const x of responses.docs)await deleteDoc(x.ref);
+      }catch{}
+      await deleteDoc(doc(db,"competitions",item.id));
+    }else{
+      await deleteDoc(doc(db,item.source,item.id));
+    }
+
+    await adminAudit("delete_content",`${item.type} • ${item.id}`);
+    showToast(adminLang("تم الحذف النهائي 🗑","Deleted permanently 🗑"));
+
+    await adminLoadContentManager();
+    loadSiteUpdatesForCurrentUser();
+    if(adminActiveTab==="polls")adminLoadPolls();
+    adminAssignmentHistoryLoaded=false;
+  }catch(err){
+    console.error("delete content",err);
+    showToast(adminLang("تعذر حذف العنصر.","Could not delete item."));
+  }
 }
 
 function adminRenderDashboard(){
@@ -10748,6 +11177,101 @@ function controlRemainingText(key){
   return `${hrs}h${rem?` ${rem}m`:""}`;
 }
 
+function studentCountdownText(until){
+  const diff=Math.max(0,Number(until||0)-Date.now());
+  if(!until)return adminLang("موقوف بدون وقت","Paused");
+  if(diff<=0)return adminLang("انتهى","Ended");
+
+  let sec=Math.floor(diff/1000);
+  const days=Math.floor(sec/86400);sec%=86400;
+  const hours=Math.floor(sec/3600);sec%=3600;
+  const minutes=Math.floor(sec/60);sec%=60;
+
+  const two=n=>String(n).padStart(2,"0");
+  if(days>0)return `${days}d ${two(hours)}:${two(minutes)}:${two(sec)}`;
+  return `${two(hours)}:${two(minutes)}:${two(sec)}`;
+}
+
+function studentTimerDefinition(key){
+  const defs={
+    globalPause:["⏸",adminLang("كل النشاطات","All activities")],
+    lockExams:["🎓",adminLang("الامتحانات","Exams")],
+    lockCompetitions:["🏆",adminLang("المسابقات","Competitions")],
+    lockAssignments:["📝",adminLang("تسليم الوظائف","Assignment submissions")],
+    lockPollVoting:["📊",adminLang("التصويت","Poll voting")],
+    lockClassJoin:["🏫",adminLang("دخول الصفوف","Class joining")]
+  };
+  return defs[key]||["⏱",key];
+}
+
+function renderStudentActiveTimers(){
+  const section=document.getElementById("studentActiveTimers");
+  const host=document.getElementById("studentActiveTimerList");
+  if(!section||!host)return;
+
+  if(!window.PythagorasiUser||window.PythagorasiUser.role!=="student"){
+    section.classList.add("hidden");
+    host.innerHTML="";
+    return;
+  }
+
+  const keys=["globalPause","lockExams","lockCompetitions","lockAssignments","lockPollVoting","lockClassJoin"];
+  const active=keys.filter(key=>siteControlActive(key));
+
+  if(!active.length){
+    section.classList.add("hidden");
+    host.innerHTML="";
+    return;
+  }
+
+  section.classList.remove("hidden");
+  host.innerHTML="";
+
+  for(const key of active){
+    const [icon,label]=studentTimerDefinition(key);
+    const until=Number(siteControlsCache?.[controlUntilKey(key)]||0);
+    const card=document.createElement("div");
+    card.className=`student-timer-card ${until?"":"indefinite"}`;
+    card.dataset.timerKey=key;
+    card.innerHTML=`
+      <div class="student-timer-card-main">
+        <b>${icon} ${escapeHtml(label)}</b>
+        <small>${until
+          ? `${adminLang("موقوف مؤقتًا حتى","Paused until")} ${escapeHtml(adminControlAbsoluteEnd(key))}`
+          : adminLang("موقوف لحد ما الإدارة تشغّله","Paused until the admin resumes it")}</small>
+      </div>
+      <div class="student-timer-countdown">${escapeHtml(studentCountdownText(until))}</div>`;
+    host.appendChild(card);
+  }
+}
+
+let studentTimerTicker=null;
+function startStudentTimerTicker(){
+  if(studentTimerTicker)return;
+  studentTimerTicker=setInterval(()=>{
+    if(!window.PythagorasiUser||window.PythagorasiUser.role!=="student")return;
+
+    let needsRefresh=false;
+    document.querySelectorAll(".student-timer-card").forEach(card=>{
+      const key=card.dataset.timerKey;
+      const until=Number(siteControlsCache?.[controlUntilKey(key)]||0);
+      const box=card.querySelector(".student-timer-countdown");
+      if(box)box.textContent=studentCountdownText(until);
+      if(until&&Date.now()>=until)needsRefresh=true;
+    });
+
+    if(needsRefresh){
+      loadSiteControls().then(()=>{
+        renderStudentActiveTimers();
+        loadSiteUpdatesForCurrentUser();
+      });
+    }
+  },1000);
+}
+
+startStudentTimerTicker();
+
+
 function toLocalDateTimeValue(ms){
   const n=Number(ms||0);
   if(!n)return "";
@@ -10881,23 +11405,6 @@ async function adminToggleFeatureControl(key){
   }
 }
 
-function adminTimerUnitMs(unit){
-  if(unit==="days")return 24*60*60*1000;
-  if(unit==="hours")return 60*60*1000;
-  return 60*1000;
-}
-
-function adminTimerUnitLabel(unit,value){
-  if(currentUILanguage==="en"){
-    if(unit==="days")return value===1?"day":"days";
-    if(unit==="hours")return value===1?"hour":"hours";
-    return value===1?"minute":"minutes";
-  }
-  if(unit==="days")return "يوم";
-  if(unit==="hours")return "ساعة";
-  return "دقيقة";
-}
-
 async function adminLoadControls(){
   try{
     const s=await getDoc(doc(db,"siteControls","main"));
@@ -10953,6 +11460,7 @@ async function adminSaveControls(){
     showToast(adminLang("تم حفظ التحكم ✅","Controls saved ✅"));
     await adminLoadControls();
     loadSiteUpdatesForCurrentUser();
+    renderStudentActiveTimers();
   }catch(err){console.error(err)}
 }
 
@@ -10980,19 +11488,43 @@ async function adminSetEverythingPaused(paused){
     showToast(paused?adminLang("تم إيقاف نشاطات الطلاب ⏸","Student activities paused ⏸"):adminLang("تم تشغيل كل شيء ▶","Everything resumed ▶"));
     await adminLoadControls();
     loadSiteUpdatesForCurrentUser();
+    renderStudentActiveTimers();
   }catch(err){console.error(err)}
+}
+
+function adminCompositeDuration(){
+  const days=Math.max(0,Math.min(365,Number(document.getElementById("adminQuickTimerDays").value)||0));
+  const hours=Math.max(0,Math.min(23,Number(document.getElementById("adminQuickTimerHours").value)||0));
+  const minutes=Math.max(0,Math.min(59,Number(document.getElementById("adminQuickTimerMinutes").value)||0));
+  const totalMs=((days*24*60)+(hours*60)+minutes)*60*1000;
+  return {days,hours,minutes,totalMs};
+}
+
+function adminCompositeDurationText({days=0,hours=0,minutes=0}={}){
+  const parts=[];
+  if(days)parts.push(`${days} ${adminLang("يوم","day"+(days===1?"":"s"))}`);
+  if(hours)parts.push(`${hours} ${adminLang("ساعة","hour"+(hours===1?"":"s"))}`);
+  if(minutes)parts.push(`${minutes} ${adminLang("دقيقة","minute"+(minutes===1?"":"s"))}`);
+  return parts.join(" + ")||adminLang("بدون مدة","no duration");
 }
 
 async function adminStartQuickTimer(){
   if(!requireSuperAdmin())return;
 
   const key=document.getElementById("adminQuickTimerFeature").value;
-  const value=Math.max(1,Number(document.getElementById("adminQuickTimerValue").value)||1);
-  const unit=document.getElementById("adminQuickTimerUnit").value||"minutes";
-  const maxValue=unit==="days"?365:unit==="hours"?8760:525600;
-  const safeValue=Math.min(maxValue,value);
-  const until=Date.now()+safeValue*adminTimerUnitMs(unit);
+  const duration=adminCompositeDuration();
   const status=document.getElementById("adminQuickTimerStatus");
+
+  if(duration.totalMs<=0){
+    status.textContent=adminLang(
+      "حط يوم أو ساعة أو دقيقة على الأقل.",
+      "Enter at least one day, hour, or minute."
+    );
+    soundFx("wrong");
+    return;
+  }
+
+  const until=Date.now()+duration.totalMs;
 
   try{
     const patch={
@@ -11003,13 +11535,21 @@ async function adminStartQuickTimer(){
     };
     await setDoc(doc(db,"siteControls","main"),patch,{merge:true});
     siteControlsCache={...siteControlsCache,...patch};
-    await adminAudit("start_control_timer",`${key} • ${safeValue} ${unit}`);
-    status.textContent=adminLang(
-      `✅ توقف ${safeValue} ${adminTimerUnitLabel(unit,safeValue)} • ينتهي ${adminControlAbsoluteEnd(key)}`,
-      `✅ Paused for ${safeValue} ${adminTimerUnitLabel(unit,safeValue)} • ends ${adminControlAbsoluteEnd(key)}`
+
+    await adminAudit(
+      "start_control_timer",
+      `${key} • ${duration.days}d ${duration.hours}h ${duration.minutes}m`
     );
+
+    status.textContent=adminLang(
+      `✅ التايمر: ${adminCompositeDurationText(duration)} • ينتهي ${adminControlAbsoluteEnd(key)}`,
+      `✅ Timer: ${adminCompositeDurationText(duration)} • ends ${adminControlAbsoluteEnd(key)}`
+    );
+
     await adminLoadControls();
     loadSiteUpdatesForCurrentUser();
+    renderStudentActiveTimers();
+    renderStudentActiveTimers();
   }catch(err){
     console.error(err);
     status.textContent=adminLang("تعذر بدء التايمر.","Could not start the timer.");
@@ -11021,6 +11561,7 @@ async function loadSiteControls(){
     const s=await getDoc(doc(db,"siteControls","main"));
     siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache;
   }catch{}
+  try{renderStudentActiveTimers()}catch{}
   return siteControlsCache;
 }
 
@@ -11056,6 +11597,7 @@ async function loadSiteUpdatesForCurrentUser(){
   if(!section||!host)return;
 
   await loadSiteControls();
+  renderStudentActiveTimers();
 
   try{
     const [anns,polls]=await Promise.all([
@@ -11064,7 +11606,7 @@ async function loadSiteUpdatesForCurrentUser(){
     ]);
 
     const activeAnns=anns
-      .filter(x=>x.active!==false)
+      .filter(x=>x.active!==false&&x.hidden!==true)
       .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
       .slice(0,8);
 
@@ -11242,10 +11784,11 @@ async function loadSiteUpdatesForCurrentUser(){
 function adminShowTab(tab){
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","History","Controls"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Content","History","Controls"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
+  if(tab==="content")adminLoadContentManager();
   if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
   if(tab==="controls")adminLoadControls();
@@ -11259,6 +11802,7 @@ document.getElementById("adminRefreshBtn").addEventListener("click",adminLoadAll
 document.getElementById("adminGlobalSearch").addEventListener("input",()=>{
   adminRenderPeople();
   adminRenderClasses();
+  if(adminActiveTab==="content")adminRenderContentManager();
   if(adminActiveTab==="students")adminRenderStudentOverview();
   if(adminActiveTab==="history")adminRenderAssignmentHistory();
 });
@@ -11298,6 +11842,9 @@ document.querySelectorAll(".admin-feature-toggle-btn").forEach(btn=>{
   btn.addEventListener("click",()=>adminToggleFeatureControl(btn.dataset.controlKey));
 });
 document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>adminLoadStudentOverview({force:true}));
+document.getElementById("adminRefreshContentBtn").addEventListener("click",adminLoadContentManager);
+document.getElementById("adminContentTypeFilter").addEventListener("change",adminRenderContentManager);
+document.getElementById("adminContentVisibilityFilter").addEventListener("change",adminRenderContentManager);
 
 
 
