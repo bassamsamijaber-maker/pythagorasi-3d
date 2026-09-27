@@ -2163,6 +2163,11 @@ body.light .student-work-row{background:#f7fafc;border-color:#e0e9ef;color:#1730
 }
 body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#8b6424}
 
+
+/* ================= V29 CLEAN LOGIN ================= */
+#authStatusText:empty{display:none!important}
+#studentLoginBtn:disabled{opacity:.65;cursor:wait;pointer-events:none}
+.auth-error{line-height:1.6}
 </style>
 </head>
 <body>
@@ -2210,10 +2215,7 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
         <label for="studentClassCodeInput">كود الصف</label>
         <input id="studentClassCodeInput" maxlength="8" autocomplete="off" placeholder="الكود اللي أعطاك إياه المعلم">
       </div>
-
-      <div class="auth-name-note">عند إنشاء الحساب لازم تدخل كود صف صحيح. بعدين بتقدر تنضم لصفوف إضافية من اللوبي.</div>
-
-      <div class="auth-form-actions">
+<div class="auth-form-actions">
         <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
         <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
       </div>
@@ -2227,10 +2229,8 @@ body.light .admin-grade-once-btn{background:#fff9ec;border-color:#f1deb4;color:#
     </div>
 
     <div class="auth-error" id="authError"></div>
-    <div class="auth-foot" id="authStatusText">حسابك يحفظ تقدمك وإعداداتك على أجهزتك.</div>
-    <div class="auth-foot login-persistence-note">🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.</div>
-    <div class="auth-setup-hint">إذا ظهر خطأ إن كلمة السر غير مفعلة: لازم المعلم/صاحب المشروع يفعّل Email/Password مرة واحدة من إعدادات Authentication.</div>
-  </div>
+    <div class="auth-foot" id="authStatusText"></div>
+</div>
 </div>
 
 
@@ -3610,6 +3610,28 @@ function studentEmailFromName(name){
   const key=normalizeStudentNameKey(name);
   return `n${studentNameHash64(key)}@students.learnsphere.app`;
 }
+function studentLoginAliasId(name){
+  return studentNameHash64(normalizeStudentNameKey(name));
+}
+async function resolveStudentLoginEmail(name){
+  const fallback=studentEmailFromName(name);
+  try{
+    const snap=await getDoc(doc(db,"studentLoginAliases",studentLoginAliasId(name)));
+    const email=snap.exists()?String(snap.data()?.loginEmail||"").trim():"";
+    return email||fallback;
+  }catch{return fallback}
+}
+async function saveStudentLoginAlias(name,userOrUid,email){
+  const clean=String(name||"").trim().replace(/\s+/g," ");
+  if(clean.length<2||!email)return;
+  const uid=typeof userOrUid==="string"?userOrUid:userOrUid?.uid;
+  if(!uid)return;
+  try{
+    await setDoc(doc(db,"studentLoginAliases",studentLoginAliasId(clean)),{
+      uid,loginEmail:email,updatedAt:serverTimestamp()
+    },{merge:true});
+  }catch(err){console.warn("login alias save",err)}
+}
 function assistantNames(){
   return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
 }
@@ -3846,8 +3868,12 @@ let authResolved=false;
 let authPendingAction=null;
 
 function setAuthError(message=""){
-  authError.textContent=message;
-  authError.classList.toggle("show",!!message);
+  let text=String(message||"").trim();
+  if(/auth\/|firebase|firestore|api[- ]?key|sdk|credential|provider|permission-denied|internal-error/i.test(text)){
+    text="تعذر الدخول حاليًا. جرّب مرة ثانية بعد شوي.";
+  }
+  authError.textContent=text;
+  authError.classList.toggle("show",!!text);
 }
 
 function authBusy(busy,text=""){
@@ -3893,21 +3919,17 @@ function showTeacherLogin(){
 }
 
 function friendlyAuthError(error){
-  const code=error?.code||"unknown";
-  if(code.includes("popup-closed"))return "سكّرت نافذة Google قبل ما يكتمل الدخول. جرّب مرة ثانية.";
-  if(code.includes("popup-blocked"))return "المتصفح منع نافذة تسجيل الدخول. رح نجرب طريقة دخول ثانية.";
-  if(code.includes("unauthorized-domain"))return "رابط الموقع غير مصرح له بتسجيل الدخول. راجع إعدادات النطاقات المسموحة.";
-  if(code.includes("network"))return "في مشكلة بالإنترنت أو الاتصال بـFirebase.";
-  if(code.includes("operation-not-allowed"))return "دخول الطالب بالاسم وكلمة السر غير مفعّل بعد. فعّل Email/Password من Authentication → Sign-in method ثم جرّب مرة ثانية.";
+  const code=String(error?.code||error?.message||"").toLowerCase();
+  if(code.includes("too-many-requests"))return "محاولات كثيرة. استنى شوي وجرب مرة ثانية.";
+  if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found")||code.includes("name-mismatch"))return "الاسم أو كلمة السر غير صحيحة.";
+  if(code.includes("network"))return "في مشكلة بالاتصال. تأكد من الإنترنت وجرب مرة ثانية.";
   if(code.includes("email-already-in-use"))return "في حساب موجود بهذا الاسم.";
-  if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "الاسم أو كلمة السر غير صحيحة.";
   if(code.includes("weak-password"))return "كلمة السر لازم تكون 6 خانات أو أكثر.";
-  if(code.includes("api-key-not-valid"))return "إعدادات الاتصال غير صحيحة داخل الموقع.";
-  if(String(error?.message||"")==="account-disabled")return "هذا الحساب موقوف من إدارة الموقع.";
-  if(code.includes("permission-denied"))return "الحفظ السحابي منع العملية. تأكد من قواعد الحفظ.";
-  if(code.includes("cancelled-popup-request"))return "انفتحت أكثر من نافذة دخول. سكّرهم وجرب مرة ثانية.";
-  if(code.includes("internal-error"))return "Firebase رجّع خطأ داخلي. حدّث الصفحة وجرب مرة ثانية.";
-  return `صار خطأ بالدخول (${code}). إذا بتبعتلي هالكود بحددلك السبب فورًا.`;
+  if(code.includes("popup-closed")||code.includes("cancelled-popup"))return "ما اكتمل تسجيل الدخول. جرّب مرة ثانية.";
+  if(code.includes("popup-blocked"))return "ما قدرنا نفتح تسجيل الدخول. جرّب مرة ثانية.";
+  if(code.includes("account-disabled")||code.includes("user-disabled"))return "هذا الحساب موقوف حاليًا.";
+  if(code.includes("invalid-class-code"))return "كود الصف غير صحيح.";
+  return "تعذر الدخول حاليًا. جرّب مرة ثانية بعد شوي.";
 }
 async function saveUserProfile(user,profile){
   const ref=doc(db,"users",user.uid);
@@ -3978,12 +4000,12 @@ async function resolveCurrentUser(user){
     hidePlatformLobby();
     authGate.classList.add("show");
     showRoleChooser();
-    authStatusText.textContent="سجّل دخولك أو أنشئ حساب طالب جديد";
+    authStatusText.textContent="";
     setTimeout(refreshAIWelcome,0);
     return;
   }
 
-  authBusy(true,"جاري تحميل حسابك…");
+  authBusy(true,"جاري الدخول…");
   try{
     const adminUid=await isSuperAdminUid(user.uid);
     if(!adminUid){
@@ -4026,7 +4048,7 @@ async function resolveCurrentUser(user){
       },{merge:true});
     }catch(err){console.warn("last visit save",err)}
     paintUser(user,profile);
-    authStatusText.textContent="تم الدخول ✓";
+    authStatusText.textContent="";
   }catch(error){
     console.error("resolveCurrentUser",error);
     if(String(error?.message||"")==="student-profile-missing"){
@@ -4050,7 +4072,12 @@ document.getElementById("chooseTeacher").addEventListener("click",showTeacherLog
 document.getElementById("studentBackBtn").addEventListener("click",showRoleChooser);
 document.getElementById("teacherBackBtn").addEventListener("click",showRoleChooser);
 
+let studentLoginBusy=false;
 document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
+  if(studentLoginBusy)return;
+  studentLoginBusy=true;
+  const studentLoginButton=document.getElementById("studentLoginBtn");
+  studentLoginButton.disabled=true;
   await authPersistenceReady;
   const displayName=studentNameInput.value.trim().replace(/\s+/g," ");
   const nameKey=normalizeStudentNameKey(displayName);
@@ -4074,7 +4101,9 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
   setAuthError("");
 
   try{
-    const email=studentEmailFromName(displayName);
+    const email=studentAuthMode==="create"
+      ?studentEmailFromName(displayName)
+      :await resolveStudentLoginEmail(displayName);
 
     if(studentAuthMode==="create"){
       if(password!==studentPasswordConfirm.value){
@@ -4100,6 +4129,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
         };
 
         const saved=await saveUserProfile(cred.user,profile);
+        await saveStudentLoginAlias(displayName,cred.user,cred.user.email||email);
         await setDoc(doc(db,"classes",classId,"members",cred.user.uid),{
           uid:cred.user.uid,
           displayName,
@@ -4150,6 +4180,9 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
   }finally{
     studentAccountCreationInProgress=false;
     authBusy(false);
+    authStatusText.textContent="";
+    studentLoginBusy=false;
+    studentLoginButton.disabled=false;
   }
 });
 document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
@@ -4177,7 +4210,7 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
 
     if(error?.code==="auth/popup-blocked"){
       try{
-        authStatusText.textContent="المتصفح منع النافذة؛ رح أحولك لصفحة تسجيل الدخول…";
+        authStatusText.textContent="جاري الدخول…";
         rememberLoginForTwoMonths();
         await signInWithRedirect(auth,googleProvider);
         return;
@@ -9211,6 +9244,13 @@ async function adminLoadAllData(){
     ]);
     adminUsersCache=usersSnap.docs.map(d=>({uid:d.id,...d.data()}));
     adminBlocksCache=new Map(blocksSnap.docs.map(d=>[d.id,d.data()]));
+    for(const u of adminUsersCache.filter(x=>x.role==="student")){
+      const original=u.originalLoginName||u.loginName||u.displayName||"";
+      const loginEmail=studentEmailFromName(original);
+      for(const alias of [...new Set([u.displayName,u.loginName,u.originalLoginName].filter(Boolean))]){
+        await saveStudentLoginAlias(alias,u.uid,loginEmail);
+      }
+    }
     const baseClasses=classesSnap.docs.map(d=>({id:d.id,...d.data()}));
     await repairManagedClassJoinCodes(baseClasses);
     adminClassesCache=await Promise.all(baseClasses.map(async c=>{
@@ -9715,6 +9755,10 @@ async function adminRenameUser(u){
   const name=next.trim().replace(/\s+/g," ").slice(0,40);if(name.length<2)return;
   try{
     await updateDoc(doc(db,"users",u.uid),{displayName:name,adminEditedAt:serverTimestamp()});
+    if(u.role==="student"){
+      const original=u.originalLoginName||u.loginName||u.displayName||name;
+      await saveStudentLoginAlias(name,u.uid,studentEmailFromName(original));
+    }
     for(const c of adminClassesCache){
       if(c.ownerId===u.uid)try{await updateDoc(doc(db,"classes",c.id),{ownerName:name,updatedAt:serverTimestamp()})}catch{}
       if(c.members?.some(m=>m.uid===u.uid))try{await updateDoc(doc(db,"classes",c.id,"members",u.uid),{displayName:name,teacherNameOverride:"",adminEditedAt:serverTimestamp()})}catch{}
