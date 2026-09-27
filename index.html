@@ -1718,6 +1718,117 @@ body.light .admin-divider::before,body.light .admin-divider::after{background:#d
   .poll-stat-summary{grid-template-columns:1fr 1fr 1fr}
 }
 
+
+/* ================= V20 MY CLASSES / PUBLIC POLL RESULTS ================= */
+.myclasses-hero{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 20px;margin-bottom:12px;border-radius:20px;
+  background:
+    radial-gradient(circle at 92% 10%,rgba(49,165,255,.14),transparent 30%),
+    linear-gradient(145deg,rgba(26,111,196,.10),rgba(126,79,226,.055));
+  border:1px solid rgba(75,180,255,.15);box-shadow:0 18px 45px rgba(0,0,0,.12)
+}
+.myclasses-hero h3{margin:4px 0 4px;font-size:25px}
+.myclasses-hero p{margin:0;color:#8ca5b8;font-size:12px;line-height:1.6}
+.myclasses-eyebrow{font-size:9px;font-weight:1000;letter-spacing:.12em;color:#7bd1ff}
+.myclasses-hero-icon{
+  width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:29px;
+  background:rgba(64,165,255,.10);border:1px solid rgba(74,179,255,.16)
+}
+.myclasses-layout{display:grid;grid-template-columns:1.45fr .55fr;gap:11px}
+.myclasses-main-card,.myclasses-join-card,.myclasses-assignments-card{
+  padding:14px;border-radius:17px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.065)
+}
+.myclasses-join-card{align-self:start}
+.myclasses-join-card h3{margin:0 0 5px}.myclasses-join-card p{margin:0 0 10px;color:#7f98aa;font-size:11px}
+.myclasses-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.myclasses-section-head h3{margin:0 0 3px}.myclasses-section-head p{margin:0;color:#7f98aa;font-size:10px}
+.myclasses-assignment-badge{
+  padding:5px 8px;border-radius:999px;font-size:9px;font-weight:1000;letter-spacing:.08em;
+  color:#8edcff;background:rgba(49,166,255,.08);border:1px solid rgba(49,166,255,.14)
+}
+.student-classes-grid{display:grid;gap:9px}
+.student-classes-grid .class-row{
+  display:grid!important;grid-template-columns:1fr auto;gap:10px;align-items:start;
+  padding:12px!important;border-radius:14px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.018))!important;
+  border:1px solid rgba(255,255,255,.065)!important
+}
+.student-classes-grid .class-name-with-photo b{font-size:15px}
+.student-classes-grid .class-mini-photo{width:45px;height:45px;border-radius:12px}
+.student-assignment-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+}
+.student-assignment-grid .assignment-card{
+  margin:0!important;padding:13px!important;border-radius:15px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.018))!important;
+  border:1px solid rgba(255,255,255,.065)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.08)
+}
+.student-assignment-grid .assignment-card h5{font-size:15px}
+.assignment-status-chip{
+  display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;
+  font-size:9px;font-weight:900;margin-bottom:7px
+}
+.assignment-status-chip.open{color:#89d9ff;background:rgba(50,166,255,.08);border:1px solid rgba(50,166,255,.14)}
+.assignment-status-chip.done{color:#8bdcb7;background:rgba(66,187,139,.075);border:1px solid rgba(66,187,139,.14)}
+.assignment-route-hint{
+  margin-top:8px;padding:8px 10px;border-radius:10px;
+  background:rgba(48,158,246,.055);border:1px solid rgba(61,171,255,.11);
+  color:#8dd5ff;font-size:10px;font-weight:800
+}
+.assignment-lobby-cta{
+  margin-top:9px;width:100%;padding:9px 10px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(69,181,255,.15);background:rgba(42,153,240,.08);
+  color:#9cddff;font-weight:900
+}
+
+/* Public poll results visible to everyone targeted by the poll */
+.public-poll-results{
+  display:grid;gap:7px;margin-top:10px
+}
+.public-poll-result{
+  padding:7px 8px;border-radius:10px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.045)
+}
+.public-poll-result-head{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:10px
+}
+.public-poll-result-head b{font-size:11px}
+.public-poll-track{
+  height:7px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.06);margin-top:5px
+}
+.public-poll-fill{
+  display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#198fff,#7160e9);
+  transition:width .45s ease
+}
+.public-poll-summary{
+  margin-top:7px;font-size:9px;color:#7f98aa
+}
+.site-poll-vote:disabled{
+  opacity:.55!important;cursor:not-allowed!important;transform:none!important
+}
+.site-poll-vote.voted-choice{
+  opacity:1!important;border-color:rgba(75,202,151,.22)!important;
+  background:rgba(75,202,151,.08)!important;color:#9be3c2!important
+}
+
+body.light .myclasses-main-card,body.light .myclasses-join-card,body.light .myclasses-assignments-card,
+body.light .student-classes-grid .class-row,body.light .student-assignment-grid .assignment-card{
+  background:#fff!important;border-color:#dce7ee!important;color:#173047
+}
+body.light .myclasses-hero{background:linear-gradient(145deg,#f1faff,#f8f5ff);border-color:#d5e9f7}
+body.light .public-poll-result{background:#fff;border-color:#dce7ee;color:#173047}
+body.light .public-poll-track{background:#e7eef3}
+
+@media(max-width:760px){
+  .myclasses-layout{grid-template-columns:1fr}
+  .student-assignment-grid{grid-template-columns:1fr}
+  .myclasses-hero{align-items:flex-start}
+  .myclasses-hero-icon{width:52px;height:52px}
+}
+
 </style>
 </head>
 <body>
@@ -2315,20 +2426,47 @@ body.light .admin-divider::before,body.light .admin-divider::after{background:#d
     </div>
 
     <div id="studentClassSection">
-      <div class="profile-card">
-        <h3>➕ انضم لصف إضافي</h3>
-        <div class="cloud-row">
-          <input id="joinClassCode" maxlength="8" placeholder="كود الصف">
-          <button class="exam-secondary" id="joinClassBtn">انضمام</button>
+      <section class="myclasses-hero">
+        <div>
+          <span class="myclasses-eyebrow">🏫 MY CLASSES</span>
+          <h3 id="myClassesHeroTitle">صفوفي</h3>
+          <p id="myClassesHeroSub">شوف صفوفك، زملاءك، وكل الوظائف من مكان واحد.</p>
         </div>
-        <div class="cloud-note" id="joinClassStatus" style="margin-top:8px">خذ الكود من المعلم.</div>
+        <div class="myclasses-hero-icon">📚</div>
+      </section>
+
+      <div class="myclasses-layout">
+        <section class="myclasses-main-card">
+          <div class="myclasses-section-head">
+            <div>
+              <h3 id="myClassesListTitle">🏫 الصفوف</h3>
+              <p id="myClassesListSub">اضغط على صفك وشوف الزملاء والكود.</p>
+            </div>
+          </div>
+          <div id="studentClassesList" class="student-classes-grid"></div>
+        </section>
+
+        <aside class="myclasses-join-card">
+          <h3 id="joinClassTitle">➕ انضم لصف</h3>
+          <p id="joinClassHelp">خذ كود الصف من المعلم.</p>
+          <div class="cloud-row myclasses-join-row">
+            <input id="joinClassCode" maxlength="8" placeholder="كود الصف">
+            <button class="exam-secondary" id="joinClassBtn">انضمام</button>
+          </div>
+          <div class="cloud-note" id="joinClassStatus" style="margin-top:8px">خذ الكود من المعلم.</div>
+        </aside>
       </div>
 
-      <div class="profile-card">
-        <h3>📚 صفوفي ووظائفي</h3>
-        <div id="studentClassesList"></div>
-        <div id="studentAssignmentsList" class="assignment-list"></div>
-      </div>
+      <section class="myclasses-assignments-card">
+        <div class="myclasses-section-head">
+          <div>
+            <h3 id="myAssignmentsTitle">📝 الوظائف</h3>
+            <p id="myAssignmentsSub">كل وظائف صفوفك موجودة هون. افتح الوظيفة وحلّها من صفوفي.</p>
+          </div>
+          <span class="myclasses-assignment-badge">ASSIGNMENTS</span>
+        </div>
+        <div id="studentAssignmentsList" class="assignment-list student-assignment-grid"></div>
+      </section>
     </div>
 
     <div id="teacherClassSection" class="hidden">
@@ -6316,9 +6454,24 @@ async function loadStudentClasses(){
             <button class="exam-secondary submit-assignment-btn">📤 تسليم الوظيفة</button>`;
         }
         card.innerHTML=`
-          <h5>${escapeHtml(a.title||"وظيفة")} • ${escapeHtml(c.name||"الصف")}</h5>
-          <div class="assignment-meta">فيثاغورس${a.dueDate?` • ${currentUILanguage==="en"?"Due":"موعد"}: ${escapeHtml(formatStoredDate(a.dueDate))}`:""} • ${total} علامة</div>
+          <span class="assignment-status-chip ${submitted?"done":"open"}">
+            ${submitted
+              ? (currentUILanguage==="en"?"✓ Submitted":"✓ تم التسليم")
+              : (currentUILanguage==="en"?"● Open assignment":"● وظيفة مفتوحة")}
+          </span>
+          <h5>${escapeHtml(a.title||(currentUILanguage==="en"?"Assignment":"وظيفة"))}</h5>
+          <div class="assignment-meta">
+            🏫 ${escapeHtml(c.name||(currentUILanguage==="en"?"Class":"الصف"))}
+            • Pythagoras
+            ${a.dueDate?` • ${currentUILanguage==="en"?"Due":"موعد"}: ${escapeHtml(formatStoredDate(a.dueDate))}`:""}
+            • ${total} ${currentUILanguage==="en"?"points":"علامة"}
+          </div>
           <div class="assignment-description">${escapeHtml(a.description||"")}</div>
+          <div class="assignment-route-hint">
+            🏫 ${currentUILanguage==="en"
+              ?"You are in My Classes — complete the assignment here."
+              :"إنت هسا داخل صفوفي — حل الوظيفة من هون."}
+          </div>
           <div class="assignment-submission">${submitHtml}</div>`;
 
         if(!submitted){
@@ -7870,6 +8023,15 @@ document.getElementById("lobbyLogoutBtn").addEventListener("click",()=>document.
 const subjectModal=document.getElementById("subjectModal");
 const profileModal=document.getElementById("profileModal");
 const classModal=document.getElementById("classModal");
+function openClassManagerModal(){
+  if(!window.PythagorasiUser||!auth.currentUser)return;
+  classModal.classList.add("open");
+  const teacher=isTeacherLike();
+  document.getElementById("studentClassSection").classList.toggle("hidden",teacher);
+  document.getElementById("teacherClassSection").classList.toggle("hidden",!teacher);
+  if(teacher)loadTeacherClasses();
+  else loadStudentClasses();
+}
 const questionBankModal=document.getElementById("questionBankModal");
 
 function subjectDisplayName(subject){
@@ -8165,6 +8327,15 @@ function applyAdminLanguage(){
   set("siteUpdatesSub","التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.","Polls appear first, followed by announcements and competitions.");
   const adminBtn=document.querySelector("#adminPanelBtn span");if(adminBtn)adminBtn.textContent=en?"Admin Panel":"لوحة الأدمن";
   try{if(adminPanelModal?.classList.contains("open")){adminRenderPeople();adminRenderClasses();adminPopulateTargets()}}catch{}
+  set("myClassesHeroTitle","صفوفي","My Classes");
+  set("myClassesHeroSub","شوف صفوفك، زملاءك، وكل الوظائف من مكان واحد.","See your classes, classmates and assignments in one place.");
+  set("myClassesListTitle","🏫 الصفوف","🏫 Classes");
+  set("myClassesListSub","شوف صفوفك، الزملاء والكود.","See your classes, classmates and class code.");
+  set("joinClassTitle","➕ انضم لصف","➕ Join a class");
+  set("joinClassHelp","خذ كود الصف من المعلم.","Get the class code from your teacher.");
+  set("myAssignmentsTitle","📝 الوظائف","📝 Assignments");
+  set("myAssignmentsSub","كل وظائف صفوفك موجودة هون. افتح الوظيفة وحلّها من صفوفي.","All class assignments are here. Open and complete them from My Classes.");
+
   try{if(window.PythagorasiUser)loadSiteUpdatesForCurrentUser()}catch{}
 }
 
@@ -8798,24 +8969,178 @@ async function getTargetedAdminDocs(collectionName){
 }
 async function loadSiteUpdatesForCurrentUser(){
   if(!auth.currentUser||!window.PythagorasiUser)return;
-  const section=document.getElementById("siteUpdatesSection"),host=document.getElementById("siteUpdatesList");if(!section||!host)return;
+  const section=document.getElementById("siteUpdatesSection");
+  const host=document.getElementById("siteUpdatesList");
+  if(!section||!host)return;
+
   await loadSiteControls();
+
   try{
-    const [anns,polls]=await Promise.all([getTargetedAdminDocs("adminAnnouncements"),getTargetedAdminDocs("adminPolls")]);
-    const activeAnns=anns.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
-    const activePolls=polls.filter(x=>x.active!==false).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+    const [anns,polls]=await Promise.all([
+      getTargetedAdminDocs("adminAnnouncements"),
+      getTargetedAdminDocs("adminPolls")
+    ]);
+
+    const activeAnns=anns
+      .filter(x=>x.active!==false)
+      .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
+      .slice(0,8);
+
+    const activePolls=polls
+      .filter(x=>x.active!==false)
+      .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
+      .slice(0,5);
+
     host.innerHTML="";
+
+    // Polls first + public result percentages.
     for(const poll of activePolls){
-      const d=document.createElement("div");d.className="site-update-card poll-priority";
-      d.innerHTML=`<h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4><div>${escapeHtml(poll.question||"")}</div><div class="site-poll-options">${(poll.options||[]).map((o,i)=>`<button class="exam-secondary site-poll-vote" data-index="${i}">${escapeHtml(o)}</button>`).join("")}</div><div class="site-update-meta poll-result"></div>`;
-      const myVote=await getDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid)).catch(()=>null);if(myVote?.exists())d.querySelector(".poll-result").textContent=adminLang("صوّتت بالفعل. بتقدر تغيّر صوتك.","You already voted. You can change your vote.");
-      d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{try{await setDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid),{uid:auth.currentUser.uid,optionIndex:Number(btn.dataset.index),displayName:window.PythagorasiUser.displayName||"User",votedAt:serverTimestamp()},{merge:true});soundFx("correct");d.querySelector(".poll-result").textContent=adminLang("تم تسجيل صوتك ✅","Vote recorded ✅")}catch(err){console.error(err)}}));
+      const [myVoteSnap,votesSnap]=await Promise.all([
+        getDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid)).catch(()=>null),
+        getDocs(collection(db,"adminPolls",poll.id,"votes")).catch(()=>null)
+      ]);
+
+      const counts=Array(poll.options?.length||0).fill(0);
+      if(votesSnap){
+        votesSnap.docs.forEach(v=>{
+          const idx=Number(v.data().optionIndex);
+          if(idx>=0&&idx<counts.length)counts[idx]++;
+        });
+      }
+      const total=counts.reduce((a,b)=>a+b,0);
+      const myVote=myVoteSnap?.exists()?myVoteSnap.data():null;
+
+      const d=document.createElement("div");
+      d.className="site-update-card poll-priority";
+      d.innerHTML=`
+        <h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4>
+        <div>${escapeHtml(poll.question||"")}</div>
+
+        <div class="site-poll-options">
+          ${(poll.options||[]).map((o,i)=>`
+            <button class="exam-secondary site-poll-vote ${myVote&&Number(myVote.optionIndex)===i?"voted-choice":""}"
+              data-index="${i}" ${myVote?"disabled":""}>
+              ${escapeHtml(o)}
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="public-poll-results">
+          ${(poll.options||[]).map((o,i)=>{
+            const count=counts[i]||0;
+            const pct=total?Math.round(count/total*100):0;
+            return `<div class="public-poll-result">
+              <div class="public-poll-result-head">
+                <b>${escapeHtml(o)}</b>
+                <span>${pct}% • ${count}</span>
+              </div>
+              <div class="public-poll-track"><span class="public-poll-fill" style="width:${pct}%"></span></div>
+            </div>`;
+          }).join("")}
+        </div>
+
+        <div class="public-poll-summary">
+          ${adminLang("إجمالي الأصوات","Total votes")}: ${total}
+        </div>
+
+        <div class="site-update-meta poll-result">
+          ${myVote
+            ? adminLang("✅ تم تسجيل صوتك. التصويت مسموح مرة واحدة فقط.","✅ Your vote is recorded. You can vote only once.")
+            : adminLang("اختار خيار واحد. بعد التصويت ما بتقدر تغيّر صوتك.","Choose one option. You cannot change your vote after submitting.")}
+        </div>`;
+
+      d.querySelectorAll(".site-poll-vote").forEach(btn=>btn.addEventListener("click",async()=>{
+        if(myVote){
+          d.querySelector(".poll-result").textContent=adminLang(
+            "صوّتت من قبل. التصويت مسموح مرة واحدة فقط.",
+            "You already voted. Only one vote is allowed."
+          );
+          return;
+        }
+
+        // Disable immediately to prevent double-clicks; Firestore rules also make the vote document create-only.
+        d.querySelectorAll(".site-poll-vote").forEach(x=>x.disabled=true);
+
+        try{
+          await setDoc(doc(db,"adminPolls",poll.id,"votes",auth.currentUser.uid),{
+            uid:auth.currentUser.uid,
+            optionIndex:Number(btn.dataset.index),
+            votedAt:serverTimestamp()
+          });
+
+          soundFx("correct");
+          d.querySelector(".poll-result").textContent=adminLang(
+            "✅ تم تسجيل صوتك. ما بتقدر تصوّت مرة ثانية.",
+            "✅ Vote recorded. You cannot vote again."
+          );
+
+          // Refresh percentages immediately.
+          await loadSiteUpdatesForCurrentUser();
+        }catch(err){
+          console.error("poll vote",err);
+          d.querySelectorAll(".site-poll-vote").forEach(x=>x.disabled=false);
+          d.querySelector(".poll-result").textContent=adminLang(
+            "ما قدرنا نسجل الصوت، أو إنك صوّتت من قبل.",
+            "Could not record the vote, or you already voted."
+          );
+          soundFx("wrong");
+        }
+      }));
+
       host.appendChild(d);
     }
-    if(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4><div>${escapeHtml(siteControlsCache.maintenanceMessage)}</div>`;host.appendChild(d)}
-    for(const a of activeAnns){const d=document.createElement("div");d.className="site-update-card";d.innerHTML=`<h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4><div>${escapeHtml(a.body||"")}</div><div class="site-update-meta">${adminDate(a.createdAt)}${a.targetName?` • ${escapeHtml(a.targetName)}`:""}</div>${a.kind==="competition"&&a.competitionCode?`<button class="exam-secondary join-admin-competition" data-code="${escapeHtml(a.competitionCode)}">🏆 ${adminLang("دخول المسابقة","Join Competition")} • ${escapeHtml(a.competitionCode)}</button>`:""}`;d.querySelector(".join-admin-competition")?.addEventListener("click",()=>{openCompetitionModal();document.getElementById("compJoinCode").value=a.competitionCode||""});host.appendChild(d)}
-    const has=host.children.length>0;section.classList.toggle("hidden",!has);
-  }catch(err){console.warn("site updates",err);section.classList.add("hidden")}
+
+    if(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage){
+      const d=document.createElement("div");
+      d.className="site-update-card";
+      d.innerHTML=`<h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4>
+        <div>${escapeHtml(siteControlsCache.maintenanceMessage)}</div>`;
+      host.appendChild(d);
+    }
+
+    // Announcements / assignments / competition invitations after polls.
+    for(const a of activeAnns){
+      const d=document.createElement("div");
+      d.className="site-update-card";
+      const isAssignment=a.kind==="assignment";
+
+      d.innerHTML=`<h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4>
+        <div>${escapeHtml(a.body||"")}</div>
+        <div class="site-update-meta">${adminDate(a.createdAt)}${a.targetName?` • ${escapeHtml(a.targetName)}`:""}</div>
+
+        ${isAssignment?`
+          <div class="assignment-route-hint">
+            🏫 ${adminLang("للدخول للوظيفة روح على صفوفي.","Go to My Classes to open this assignment.")}
+          </div>
+          <button class="assignment-lobby-cta open-assignment-classes">
+            🏫 ${adminLang("افتح صفوفي","Open My Classes")}
+          </button>
+        `:""}
+
+        ${a.kind==="competition"&&a.competitionCode?`
+          <button class="exam-secondary join-admin-competition" data-code="${escapeHtml(a.competitionCode)}">
+            🏆 ${adminLang("دخول المسابقة","Join Competition")} • ${escapeHtml(a.competitionCode)}
+          </button>
+        `:""}`;
+
+      d.querySelector(".open-assignment-classes")?.addEventListener("click",()=>{
+        openClassManagerModal?.();
+      });
+
+      d.querySelector(".join-admin-competition")?.addEventListener("click",()=>{
+        openCompetitionModal();
+        document.getElementById("compJoinCode").value=a.competitionCode||"";
+      });
+
+      host.appendChild(d);
+    }
+
+    const has=host.children.length>0;
+    section.classList.toggle("hidden",!has);
+  }catch(err){
+    console.warn("site updates",err);
+    section.classList.add("hidden");
+  }
 }
 function adminShowTab(tab){
   adminActiveTab=tab;document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
