@@ -6241,8 +6241,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
-  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc
+  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
+  arrayUnion, arrayRemove
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {
+  getMessaging, getToken, onMessage, isSupported as isMessagingSupported
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
@@ -6258,6 +6262,16 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+
+/* Classora Push Notifications
+   Add the Firebase Web Push public VAPID key here after generating it in
+   Firebase Console > Project settings > Cloud Messaging > Web Push certificates.
+   When empty, Firebase falls back to its default key where supported. */
+const CLASSORA_VAPID_KEY="";
+const CLASSORA_FCM_TOKEN_KEY="classora_fcm_token_v1";
+let classoraMessaging=null;
+let classoraForegroundMessageUnsub=null;
+
 const authPersistenceReady=setPersistence(auth,browserLocalPersistence).catch(err=>{
   console.warn("auth persistence",err);
 });
@@ -6755,6 +6769,11 @@ function paintUser(user,profile){
   activeProfile=window.PythagorasiUser;
   applySavedAccountState(window.PythagorasiUser);
   setTimeout(startClassoraRealtimeNotifications,350);
+  setTimeout(()=>{
+    if(classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted"){
+      registerClassoraPushToken();
+    }
+  },900);
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
@@ -7015,6 +7034,7 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
     if(accountStateSaveTimer)await new Promise(resolve=>setTimeout(resolve,520));
     clearRememberedLogin();
     document.body.classList.remove("classora-authenticated");
+    await unregisterClassoraPushToken();
     await signOut(auth);
     activeProfile=null;
     hidePlatformLobby();
@@ -17871,6 +17891,96 @@ setTimeout(classoraAutoWake,80);
 setTimeout(classoraAutoWake,700);
 setTimeout(classoraAutoWake,1800);
 
+
+/* ================= V49 FIREBASE CLOUD MESSAGING ================= */
+async function ensureClassoraMessaging(){
+  try{
+    if(!(await isMessagingSupported()))return null;
+    if(!classoraMessaging){
+      classoraMessaging=getMessaging(firebaseApp);
+      classoraForegroundMessageUnsub=onMessage(classoraMessaging,payload=>{
+        const data=payload?.data||{};
+        const notice=payload?.notification||{};
+        const title=notice.title||data.title||(currentUILanguage==="en"?"Classora notification":"إشعار Classora");
+        const body=notice.body||data.body||"";
+        const type=data.type||"general";
+        const eventKey=data.eventKey||("fcm:"+String(payload?.messageId||Date.now()));
+        classoraNotify(title,body,{type,eventKey}).catch(err=>console.warn("foreground push",err));
+      });
+    }
+    return classoraMessaging;
+  }catch(err){
+    console.warn("messaging unsupported",err);
+    return null;
+  }
+}
+
+async function registerClassoraPushToken(){
+  const user=auth.currentUser;
+  if(!user||!("Notification" in window)||Notification.permission!=="granted")return null;
+  try{
+    const messaging=await ensureClassoraMessaging();
+    if(!messaging)return null;
+    let registration=await navigator.serviceWorker?.getRegistration("./");
+    if(!registration){
+      registration=await navigator.serviceWorker.register("./service-worker.js",{scope:"./"});
+    }
+    const options={serviceWorkerRegistration:registration};
+    if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
+    const token=await getToken(messaging,options);
+    if(!token)return null;
+
+    const previous=localStorage.getItem(CLASSORA_FCM_TOKEN_KEY)||"";
+    localStorage.setItem(CLASSORA_FCM_TOKEN_KEY,token);
+
+    const patch={
+      pushNotificationsEnabled:true,
+      pushUpdatedAt:serverTimestamp(),
+      pushTokens:arrayUnion(token)
+    };
+    await setDoc(doc(db,"users",user.uid),patch,{merge:true});
+
+    if(previous&&previous!==token){
+      try{
+        await updateDoc(doc(db,"users",user.uid),{
+          pushTokens:arrayRemove(previous),
+          pushUpdatedAt:serverTimestamp()
+        });
+      }catch{}
+    }
+    updateClassoraNotificationSettings();
+    return token;
+  }catch(err){
+    console.warn("push token registration",err);
+    const note=document.getElementById("notificationCenterNote");
+    if(note){
+      note.textContent=currentUILanguage==="en"
+        ?"Push setup needs the Firebase Web Push key."
+        :"إعداد Push يحتاج مفتاح Web Push من Firebase.";
+    }
+    return null;
+  }
+}
+
+async function unregisterClassoraPushToken(){
+  const user=auth.currentUser;
+  const token=localStorage.getItem(CLASSORA_FCM_TOKEN_KEY)||"";
+  if(user&&token){
+    try{
+      await updateDoc(doc(db,"users",user.uid),{
+        pushTokens:arrayRemove(token),
+        pushUpdatedAt:serverTimestamp()
+      });
+    }catch(err){console.warn("remove push token",err)}
+  }
+  localStorage.removeItem(CLASSORA_FCM_TOKEN_KEY);
+  updateClassoraNotificationSettings();
+}
+
+function classoraHasPushToken(){
+  return !!localStorage.getItem(CLASSORA_FCM_TOKEN_KEY);
+}
+
 /* ================= V45 CLASSORA REALTIME NOTIFICATIONS ================= */
 const CLASSORA_NOTIFY_HISTORY_KEY="classora_notification_history_v1";
 const CLASSORA_NOTIFY_SEEN_KEY="classora_notification_seen_ids_v1";
@@ -17988,9 +18098,13 @@ async function enableClassoraNotifications(){
   if(permission==="default"){try{permission=await Notification.requestPermission()}catch{}}
   const ok=permission==="granted";
   localStorage.setItem(CLASSORA_NOTIFY_ENABLED_KEY,ok?"1":"0");
+  let pushToken=null;
+  if(ok)pushToken=await registerClassoraPushToken();
   updateClassoraNotificationSettings();
   if(ok){
-    showToast(currentUILanguage==="en"?"Notifications enabled ✅":"تم تفعيل الإشعارات ✅");
+    showToast(pushToken
+      ?(currentUILanguage==="en"?"Push notifications enabled ✅":"تم تفعيل Push Notifications ✅")
+      :(currentUILanguage==="en"?"Notifications enabled on this device ✅":"تم تفعيل إشعارات الجهاز ✅"));
     await showClassoraDeviceNotification(
       currentUILanguage==="en"?"Classora notifications ready":"إشعارات Classora جاهزة",
       currentUILanguage==="en"?"You will get alerts for classes, assignments, exams and competitions.":"رح توصلك تنبيهات الصفوف والوظائف والامتحانات والمسابقات.",
@@ -18002,16 +18116,17 @@ async function enableClassoraNotifications(){
 function updateClassoraNotificationSettings(){
   const en=currentUILanguage==="en";
   const enabled=classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted";
+  const pushReady=enabled&&classoraHasPushToken();
   const btn=document.getElementById("enableNotificationsBtn");
   const modalBtn=document.getElementById("notificationCenterEnableBtn");
   const badge=document.getElementById("notificationsEnabledBadge");
   const note=document.getElementById("notificationSettingsNote");
-  if(btn)btn.textContent=enabled?(en?"🔔 Notifications enabled":"🔔 الإشعارات مفعّلة"):(en?"🔔 Enable notifications":"🔔 تفعيل الإشعارات");
-  if(modalBtn)modalBtn.textContent=enabled?(en?"✓ Device notifications enabled":"✓ إشعارات الجهاز مفعّلة"):(en?"🔔 Enable device notifications":"🔔 تفعيل إشعارات الجهاز");
+  if(btn)btn.textContent=pushReady?(en?"🔔 Push enabled":"🔔 Push مفعّل"):enabled?(en?"🔔 Device alerts enabled":"🔔 إشعارات الجهاز مفعّلة"):(en?"🔔 Enable notifications":"🔔 تفعيل الإشعارات");
+  if(modalBtn)modalBtn.textContent=pushReady?(en?"✓ Push notifications enabled":"✓ Push Notifications مفعّلة"):enabled?(en?"✓ Device alerts enabled":"✓ إشعارات الجهاز مفعّلة"):(en?"🔔 Enable device notifications":"🔔 تفعيل إشعارات الجهاز");
   badge?.classList.toggle("hidden",!enabled);
-  if(note)note.textContent=en
-    ?"Get alerts for assignments, exams, competitions and students joining a class."
-    :"استقبل تنبيهات عند وصول وظيفة أو امتحان أو مسابقة، وعند دخول طالب جديد للصف.";
+  if(note)note.textContent=pushReady
+    ?(en?"Push is connected to this device — alerts can arrive in the background.":"Push مربوط بهذا الجهاز — التنبيهات ممكن توصل بالخلفية.")
+    :(en?"Get alerts for assignments, exams, competitions and students joining a class.":"استقبل تنبيهات عند وصول وظيفة أو امتحان أو مسابقة، وعند دخول طالب جديد للصف.");
   renderClassoraNotificationBadge();
 }
 function openClassoraNotificationCenter(){
@@ -18120,7 +18235,7 @@ async function startClassoraRealtimeNotifications(){
             if(!shouldNotifyFirestoreItem(m,baseline,ready))continue;
             const title=currentUILanguage==="en"?"Student joined your class":"طالب دخل صفك";
             const body=(m.displayName||(currentUILanguage==="en"?"A student":"طالب"))+" • "+(cls.name||(currentUILanguage==="en"?"Class":"الصف"));
-            classoraNotify(title,body,{type:"classJoin",eventKey:"classJoin:"+cls.id+":"+m.uid+":"+(firestoreMs(m.joinedAt)||"new")});
+            classoraNotify(title,body,{type:"classJoin",eventKey:"classJoin:"+cls.id+":"+m.uid});
           }
           ready=true;
         },err=>console.warn("member notifications",err));
