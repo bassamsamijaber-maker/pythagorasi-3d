@@ -4317,6 +4317,51 @@ body.pwa-standalone .platform-lobby{
   }
 }
 
+
+/* ================= V47 SINGLE-SCREEN + AUTO-WAKE ================= */
+body.classora-overlay-open{
+  overflow:hidden!important;
+}
+body.classora-overlay-open .platform-lobby{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  touch-action:none!important;
+}
+body.classora-overlay-open .shell{
+  overflow:hidden!important;
+}
+body.classora-overlay-open .modal.open,
+body.classora-overlay-open .modal.open .modalbox,
+body.classora-overlay-open .auth-gate.show,
+body.classora-overlay-open .auth-gate.show .auth-panel{
+  touch-action:pan-y!important;
+}
+body.classora-overlay-open .modal.open .modalbox,
+body.classora-overlay-open .auth-gate.show .auth-panel{
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+
+/* The active popup owns interaction; background is visually stable. */
+.modal.open{
+  isolation:isolate;
+}
+.modal.open::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+@media(max-width:700px){
+  body.classora-overlay-open .lobby-topbar{
+    position:relative!important;
+  }
+  .modal.open{
+    overscroll-behavior:none!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -17624,6 +17669,144 @@ const digitObserver=new MutationObserver(records=>{
 setTimeout(()=>{normalizeVisibleDigits();digitObserver.observe(document.body,{subtree:true,childList:true,characterData:true})},20);
 
 
+
+
+/* ================= V47 SINGLE-SCREEN CONTROLLER + AUTO-WAKE ================= */
+let classoraOverlayScrollTop=0;
+let classoraOverlaySyncing=false;
+let classoraWakeTimer=null;
+
+function classoraOpenOverlays(){
+  return [...document.querySelectorAll(".modal.open")];
+}
+function classoraLockBackground(){
+  const lobby=document.querySelector(".platform-lobby");
+  if(!document.body.classList.contains("classora-overlay-open")){
+    classoraOverlayScrollTop=lobby?.scrollTop||window.scrollY||0;
+  }
+  document.body.classList.add("classora-overlay-open");
+}
+function classoraUnlockBackground(){
+  document.body.classList.remove("classora-overlay-open");
+  const lobby=document.querySelector(".platform-lobby");
+  if(lobby&&Number.isFinite(classoraOverlayScrollTop)){
+    requestAnimationFrame(()=>{lobby.scrollTop=classoraOverlayScrollTop});
+  }
+}
+function classoraSyncOverlayState(preferred=null){
+  if(classoraOverlaySyncing)return;
+  classoraOverlaySyncing=true;
+  try{
+    let open=classoraOpenOverlays();
+
+    /* Only one normal modal at a time. */
+    if(open.length>1){
+      const keep=(preferred&&preferred.classList?.contains("open"))?preferred:open[open.length-1];
+      for(const modal of open){
+        if(modal!==keep)modal.classList.remove("open");
+      }
+      open=[keep];
+    }
+
+    const authVisible=document.getElementById("authGate")?.classList.contains("show");
+    if(authVisible&&open.length){
+      for(const modal of open)modal.classList.remove("open");
+      open=[];
+    }
+
+    if(authVisible||open.length)classoraLockBackground();
+    else classoraUnlockBackground();
+  }finally{
+    classoraOverlaySyncing=false;
+  }
+}
+
+const classoraOverlayObserver=new MutationObserver(records=>{
+  let preferred=null;
+  for(const record of records){
+    const el=record.target;
+    if(el?.classList?.contains("modal")&&el.classList.contains("open"))preferred=el;
+  }
+  classoraSyncOverlayState(preferred);
+});
+document.querySelectorAll(".modal,#authGate").forEach(el=>{
+  classoraOverlayObserver.observe(el,{attributes:true,attributeFilter:["class"]});
+});
+classoraSyncOverlayState();
+
+/* Stop wheel/touch from leaking through an open screen. */
+document.addEventListener("wheel",event=>{
+  const active=document.querySelector(".modal.open,.auth-gate.show");
+  if(active&&!active.contains(event.target))event.preventDefault();
+},{capture:true,passive:false});
+document.addEventListener("touchmove",event=>{
+  const active=document.querySelector(".modal.open,.auth-gate.show");
+  if(active&&!active.contains(event.target))event.preventDefault();
+},{capture:true,passive:false});
+
+function classoraResizeEquation3D(){
+  try{
+    if(typeof equation3D!=="undefined"&&equation3D?.initialized){
+      const host=document.getElementById("equation3DScene");
+      const w=Math.max(280,host?.clientWidth||0);
+      const h=Math.max(260,host?.clientHeight||0);
+      if(w&&h&&equation3D.renderer&&equation3D.camera){
+        equation3D.renderer.setSize(w,h,false);
+        equation3D.camera.aspect=w/h;
+        equation3D.camera.updateProjectionMatrix();
+        equation3D.controls?.update();
+        equation3D.renderer.render(equation3D.scene,equation3D.camera);
+      }
+    }
+  }catch(err){console.warn("equation wake",err)}
+}
+function classoraAutoWake(){
+  try{
+    if(typeof resize==="function")resize();
+  }catch(err){console.warn("main resize wake",err)}
+  try{
+    controls?.update?.();
+    if(typeof renderer!=="undefined"&&typeof scene!=="undefined"&&typeof camera!=="undefined"){
+      renderer.render(scene,camera);
+    }
+  }catch(err){console.warn("main render wake",err)}
+  try{
+    if(typeof drawEquation2D==="function"&&document.getElementById("equationLabModal")?.classList.contains("open")){
+      drawEquation2D();
+    }
+  }catch{}
+  classoraResizeEquation3D();
+
+  try{
+    if(typeof refreshAIWelcome==="function")refreshAIWelcome();
+    if(typeof updateAssistantLabels==="function")updateAssistantLabels();
+  }catch(err){console.warn("assistant wake",err)}
+
+  try{
+    if(auth?.currentUser&&window.PythagorasiUser&&typeof startClassoraRealtimeNotifications==="function"){
+      startClassoraRealtimeNotifications();
+    }
+  }catch{}
+
+  classoraSyncOverlayState();
+}
+function scheduleClassoraAutoWake(){
+  clearTimeout(classoraWakeTimer);
+  classoraWakeTimer=setTimeout(classoraAutoWake,90);
+  setTimeout(classoraAutoWake,420);
+}
+
+window.addEventListener("load",scheduleClassoraAutoWake,{once:true});
+window.addEventListener("pageshow",scheduleClassoraAutoWake);
+window.addEventListener("resize",scheduleClassoraAutoWake,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(scheduleClassoraAutoWake,180),{passive:true});
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden)scheduleClassoraAutoWake();
+});
+window.visualViewport?.addEventListener("resize",scheduleClassoraAutoWake,{passive:true});
+setTimeout(classoraAutoWake,80);
+setTimeout(classoraAutoWake,700);
+setTimeout(classoraAutoWake,1800);
 
 /* ================= V45 CLASSORA REALTIME NOTIFICATIONS ================= */
 const CLASSORA_NOTIFY_HISTORY_KEY="classora_notification_history_v1";
