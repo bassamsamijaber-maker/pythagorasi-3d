@@ -3287,6 +3287,52 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
   .admin-tabs button{padding:10px 8px!important;font-size:10px!important}
   .equation-mode-toggle button{flex:1 1 100%}
 }
+
+/* ================= V41 world-class graph + competition topics ================= */
+.competition-advanced-create{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.competition-advanced-create input{width:100%;text-align:center;font-weight:900}
+.competition-builder-note{
+  margin:8px 0 2px;padding:8px 10px;border-radius:10px;
+  background:rgba(83,154,213,.045);border:1px solid rgba(83,154,213,.09);
+  color:#92a8ba;font-size:9px
+}
+.competition-question-type{
+  width:max-content;max-width:100%;margin:0 auto 9px;padding:6px 10px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(67,157,225,.10),rgba(105,79,203,.08));
+  border:1px solid rgba(112,183,237,.14);color:#b9dcf5;
+  font-size:9px;font-weight:1000;letter-spacing:.02em
+}
+body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;color:#45677f}
+
+.equation-3d-pro-toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px}
+.equation-3d-pro-toolbar button{
+  min-height:38px;padding:0 11px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(125,177,216,.11);background:rgba(255,255,255,.028);color:inherit;
+  font-size:9px;font-weight:900
+}
+.equation-3d-pro-toolbar button.active{
+  background:rgba(69,151,221,.11);border-color:rgba(86,175,239,.22);color:#bfe5ff
+}
+.equation-3d-wrap{position:relative;border-radius:15px;overflow:hidden}
+.equation-3d-wrap.hidden{display:none!important}
+.equation-3d-hud{
+  position:absolute;inset-inline-start:12px;top:12px;z-index:3;
+  display:grid;gap:2px;padding:8px 10px;border-radius:11px;
+  background:rgba(7,15,24,.72);backdrop-filter:blur(10px);
+  border:1px solid rgba(170,212,241,.10);pointer-events:none
+}
+.equation-3d-hud span{font-size:11px;font-weight:1000;color:#91d9b6}
+.equation-3d-hud small{font-size:7px;color:#7793a6;text-transform:uppercase;letter-spacing:.08em}
+.equation-axis-label{
+  position:absolute;pointer-events:none;font-weight:1000;font-size:11px;color:#9fb6c7
+}
+@media(max-width:900px){
+  .competition-advanced-create{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:560px){
+  .competition-advanced-create{grid-template-columns:1fr!important}
+  .equation-3d-pro-toolbar{display:grid;grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -4126,12 +4172,24 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
         </div>
         <div class="equation-mode-toggle">
           <button class="active" id="equationMode2DBtn">📈 2D Graph</button>
-          <button id="equationMode3DBtn">🧊 3D Graph</button>
+          <button id="equationMode3DBtn">🧊 3D Graph Pro</button>
+        </div>
+        <div class="equation-3d-pro-toolbar hidden" id="equation3DToolbar">
+          <button id="equationViewPerspectiveBtn">◇ Perspective</button>
+          <button id="equationViewTopBtn">⬇ Top</button>
+          <button id="equationViewFrontBtn">▣ Front</button>
+          <button id="equationAutoRotateBtn">⟳ Auto Rotate</button>
         </div>
         <div id="equation2DWrap" class="equation-2d-wrap">
           <canvas id="equation2DCanvas" class="equation-2d-canvas"></canvas>
         </div>
-        <div id="equation3DScene" class="equation-3d-scene hidden"></div>
+        <div class="equation-3d-wrap hidden" id="equation3DWrap">
+          <div id="equation3DScene" class="equation-3d-scene"></div>
+          <div class="equation-3d-hud">
+            <span id="equation3DSolutionHUD">x = — • y = —</span>
+            <small>Drag • Zoom • Rotate</small>
+          </div>
+        </div>
         <div class="equation-graph-caption" id="equationGraphCaption">يظهر تقاطع الخطين في 2D ونقطة الحل نفسها في 3D.</div>
       </section>
     </div>
@@ -4872,8 +4930,18 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
         </div>
         <div class="live-card" id="competitionTeacherCard">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.</p>
-          <div class="competition-create-settings">
+          <p>اعمل مسابقة Mixed أو عن فيثاغورس أو المعادلتين بمجهولين، واختار عدد الأسئلة.</p>
+          <div class="competition-create-settings competition-advanced-create">
+            <label>موضوع المسابقة
+              <select id="compQuickSubject">
+                <option value="mixed" selected>✨ Mixed — فيثاغورس + معادلتين</option>
+                <option value="pythagoras">📐 فيثاغورس فقط</option>
+                <option value="equations2">🧮 معادلتان بمجهولين فقط</option>
+              </select>
+            </label>
+            <label>عدد الأسئلة
+              <input id="compQuickQuestionCount" type="number" min="3" max="30" value="10">
+            </label>
             <label>توزيع اللاعبين
               <select id="compQuickTeamMode">
                 <option value="choice">🎯 الطالب يختار فريقه</option>
@@ -4889,9 +4957,6 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
             </label>
           </div>
           <div class="live-field">
-            <select id="compQuickSubject" class="hidden">
-              <option value="pythagoras" selected>فيثاغورس</option>
-            </select>
             <button class="apply" id="compCreateBtn">⚡ إنشاء مسابقة سريعة</button>
             <button class="exam-secondary" id="compDesignBtn">🛠️ صمّم المسابقة بنفسك</button>
             <button class="exam-secondary" id="compMyBtn">📚 مسابقاتي المحفوظة</button>
@@ -4921,6 +4986,7 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
       <div class="live-field">
         <input id="compBuilderTitle" maxlength="60" value="مسابقة Classora" placeholder="اسم المسابقة">
       </div>
+      <div class="competition-builder-note">كل سؤال مخصص رح يظهر فوقه نوع: <b>✍️ Custom Question</b>.</div>
       <div class="competition-create-settings competition-builder-settings">
         <label>توزيع اللاعبين
           <select id="compBuilderTeamMode">
@@ -4999,6 +5065,7 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
 
       <div class="player-rank-summary hidden" id="compPlayerRankSummary"></div>
 
+      <div class="competition-question-type" id="compQuestionTypeBadge">📚 General</div>
       <div class="live-question" id="compQuestionText">السؤال</div>
       <div class="live-options" id="compOptions"></div>
       <div class="live-answer-status" id="compAnswerStatus"></div>
@@ -9901,6 +9968,13 @@ const uiExactTranslations=new Map([
   ["📊 الرسم التفاعلي ثلاثي الأبعاد","📊 Interactive 3D Graph"],
   ["اسحب لتدوير الرسم • استخدم العجلة للتقريب • غيّر القيم ليتحدث فورًا","Drag to rotate • scroll to zoom • change values for instant updates"],
   ["تقاطع المستويين يمثل حل x و y.","The planes intersect at the x and y solution."],
+  ["📈 الرسم البياني — 2D و 3D","📈 Graph — 2D & 3D"],
+  ["الوضع الافتراضي 2D مثل الرسم المدرسي، ومعه خيار 3D تفاعلي","The default is a classroom-style 2D graph, with an interactive 3D mode"],
+  ["موضوع المسابقة","Competition Topic"],
+  ["عدد الأسئلة","Question Count"],
+  ["✨ Mixed — فيثاغورس + معادلتين","✨ Mixed — Pythagoras + Two-Variable Equations"],
+  ["📐 فيثاغورس فقط","📐 Pythagoras Only"],
+  ["🧮 معادلتان بمجهولين فقط","🧮 Two-Variable Equations Only"],
   ["توزيع اللاعبين","Player Assignment"],
   ["طريقة العرض","Display Mode"],
   ["🎯 الطالب يختار فريقه","🎯 Student chooses a team"],
@@ -10683,7 +10757,7 @@ const equationInputs=["eqA1","eqB1","eqC1","eqA2","eqB2","eqC2"];
 let equationGraphMode="2d";
 let equation3D={
   initialized:false,scene:null,camera:null,renderer:null,controls:null,
-  objects:[],resizeObserver:null,animationId:null
+  objects:[],resizeObserver:null,animationId:null,autoRotate:false
 };
 
 function equationVal(id,fallback=0){
@@ -10882,7 +10956,8 @@ function setEquationGraphMode(mode){
   document.getElementById("equationMode2DBtn")?.classList.toggle("active",equationGraphMode==="2d");
   document.getElementById("equationMode3DBtn")?.classList.toggle("active",equationGraphMode==="3d");
   document.getElementById("equation2DWrap")?.classList.toggle("hidden",equationGraphMode!=="2d");
-  document.getElementById("equation3DScene")?.classList.toggle("hidden",equationGraphMode!=="3d");
+  document.getElementById("equation3DWrap")?.classList.toggle("hidden",equationGraphMode!=="3d");
+  document.getElementById("equation3DToolbar")?.classList.toggle("hidden",equationGraphMode!=="3d");
   if(equationGraphMode==="3d"){
     initEquation3D();
     updateEquation3D();
@@ -10921,12 +10996,59 @@ function equationLineGeometry(a,b,c,size=18,z=.03){
   return new THREE.BufferGeometry().setFromPoints(pts);
 }
 
+function makeEquationTextSprite(text,color="#d7e7f4",scale=1){
+  const canvas=document.createElement("canvas");
+  canvas.width=512;canvas.height=128;
+  const ctx=canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.font="700 42px Arial";ctx.textAlign="center";ctx.textBaseline="middle";
+  ctx.fillStyle="rgba(7,15,24,.72)";ctx.fillRect(8,18,496,92);
+  ctx.strokeStyle="rgba(180,220,246,.18)";ctx.lineWidth=2;ctx.strokeRect(8,18,496,92);
+  ctx.fillStyle=color;ctx.fillText(text,256,64);
+  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
+  const mat=new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false});
+  const sprite=new THREE.Sprite(mat);sprite.scale.set(4.6*scale,1.15*scale,1);
+  sprite.userData.labelTexture=texture;
+  return sprite;
+}
+
+function equationPlaneGrid(a,b,c,color=0x67b8ef){
+  const group=new THREE.Group();
+  const len=Math.hypot(a,b)||1,dx=-b/len,dy=a/len;
+  const px=a*c/(a*a+b*b||1),py=b*c/(a*a+b*b||1);
+  const lineMat=new THREE.LineBasicMaterial({color,transparent:true,opacity:.18});
+  for(let z=-4;z<=4;z+=1){
+    const pts=[new THREE.Vector3(px-dx*9,py-dy*9,z),new THREE.Vector3(px+dx*9,py+dy*9,z)];
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lineMat));
+  }
+  for(let s=-8;s<=8;s+=2){
+    const pts=[new THREE.Vector3(px+dx*s,py+dy*s,-4.5),new THREE.Vector3(px+dx*s,py+dy*s,4.5)];
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lineMat));
+  }
+  return group;
+}
+
+function setEquation3DView(view){
+  initEquation3D();if(!equation3D.initialized)return;
+  const cam=equation3D.camera,controls=equation3D.controls;
+  if(view==="top")cam.position.set(0,0,18);
+  else if(view==="front")cam.position.set(0,-18,2.5);
+  else cam.position.set(11,-13,10);
+  controls.target.set(0,0,0);controls.update();
+  ["equationViewPerspectiveBtn","equationViewTopBtn","equationViewFrontBtn"].forEach(id=>document.getElementById(id)?.classList.remove("active"));
+  const map={perspective:"equationViewPerspectiveBtn",top:"equationViewTopBtn",front:"equationViewFrontBtn"};
+  document.getElementById(map[view]||map.perspective)?.classList.add("active");
+}
+
 function clearEquation3DObjects(){
   for(const obj of equation3D.objects){
     equation3D.scene?.remove(obj);
-    obj.geometry?.dispose?.();
-    if(Array.isArray(obj.material))obj.material.forEach(m=>m.dispose?.());
-    else obj.material?.dispose?.();
+    obj.traverse?.(child=>{
+      child.geometry?.dispose?.();
+      if(child.userData?.labelTexture)child.userData.labelTexture.dispose?.();
+      if(Array.isArray(child.material))child.material.forEach(m=>m.dispose?.());
+      else child.material?.dispose?.();
+    });
   }
   equation3D.objects=[];
 }
@@ -10956,13 +11078,16 @@ function initEquation3D(){
   const ambient=new THREE.AmbientLight(0xffffff,1.25);scene.add(ambient);
   const key=new THREE.DirectionalLight(0xffffff,1.45);key.position.set(7,-6,12);scene.add(key);
 
-  const grid=new THREE.GridHelper(20,20,0x42647a,0x24394a);
+  const grid=new THREE.GridHelper(20,20,0x567d98,0x263e50);
   grid.rotation.x=Math.PI/2;
-  grid.material.transparent=true;grid.material.opacity=.42;
+  grid.material.transparent=true;grid.material.opacity=.34;
   scene.add(grid);
 
-  const axes=new THREE.AxesHelper(5.5);
+  const axes=new THREE.AxesHelper(6.2);
   scene.add(axes);
+  const xLabel=makeEquationTextSprite("X", "#74c4f4",.42);xLabel.position.set(6.7,0,0);scene.add(xLabel);
+  const yLabel=makeEquationTextSprite("Y", "#d497e8",.42);yLabel.position.set(0,6.7,0);scene.add(yLabel);
+  const zLabel=makeEquationTextSprite("Z", "#80d5ad",.42);zLabel.position.set(0,0,6.5);scene.add(zLabel);
 
   const resize=()=>{
     const w=Math.max(280,host.clientWidth),h=Math.max(260,host.clientHeight);
@@ -10974,6 +11099,8 @@ function initEquation3D(){
   const ro=new ResizeObserver(resize);ro.observe(host);
   const animate=()=>{
     equation3D.animationId=requestAnimationFrame(animate);
+    controls.autoRotate=!!equation3D.autoRotate;
+    controls.autoRotateSpeed=.8;
     controls.update();
     renderer.render(scene,camera);
   };
@@ -10998,8 +11125,16 @@ function updateEquation3D(q=equationCoefficients(),solution=solveLinearSystemVal
   );
   const l1=new THREE.Line(equationLineGeometry(q.a1,q.b1,q.c1),new THREE.LineBasicMaterial({color:0x67b8ef}));
   const l2=new THREE.Line(equationLineGeometry(q.a2,q.b2,q.c2),new THREE.LineBasicMaterial({color:0xd18be7}));
-  scene.add(p1,p2,l1,l2);
-  equation3D.objects.push(p1,p2,l1,l2);
+  const g1=equationPlaneGrid(q.a1,q.b1,q.c1,0x67b8ef);
+  const g2=equationPlaneGrid(q.a2,q.b2,q.c2,0xd18be7);
+  const label1=makeEquationTextSprite(equationText(q.a1,q.b1,q.c1),"#8fd0fb",.72);
+  const label2=makeEquationTextSprite(equationText(q.a2,q.b2,q.c2),"#e4a9f4",.72);
+  label1.position.set(4.7,-3.5,3.8);label2.position.set(-4.5,3.5,2.8);
+  scene.add(p1,p2,l1,l2,g1,g2,label1,label2);
+  equation3D.objects.push(p1,p2,l1,l2,g1,g2,label1,label2);
+
+  const hud=document.getElementById("equation3DSolutionHUD");
+  if(hud)hud.textContent=solution.type==="unique"?`x = ${eqNum(solution.x)} • y = ${eqNum(solution.y)}`:solution.type==="none"?adminLang("No intersection","لا يوجد تقاطع"):adminLang("Same line / infinite","نفس الخط / حلول لا نهائية");
 
   if(solution.type==="unique"&&Number.isFinite(solution.x)&&Number.isFinite(solution.y)){
     const sphere=new THREE.Mesh(
@@ -11007,8 +11142,12 @@ function updateEquation3D(q=equationCoefficients(),solution=solveLinearSystemVal
       new THREE.MeshPhongMaterial({color:0x75d5a8,emissive:0x163f31})
     );
     sphere.position.set(solution.x,solution.y,.12);
-    scene.add(sphere);
-    equation3D.objects.push(sphere);
+    const halo=new THREE.Mesh(new THREE.RingGeometry(.25,.36,32),new THREE.MeshBasicMaterial({color:0x75d5a8,transparent:true,opacity:.55,side:THREE.DoubleSide}));
+    halo.position.set(solution.x,solution.y,.12);halo.rotation.x=Math.PI/2;
+    const solLabel=makeEquationTextSprite(`(${eqNum(solution.x)}, ${eqNum(solution.y)})`,"#8ce0b8",.65);
+    solLabel.position.set(solution.x+.5,solution.y+.5,1.05);
+    scene.add(sphere,halo,solLabel);
+    equation3D.objects.push(sphere,halo,solLabel);
 
     const vline=new THREE.Line(
       new THREE.BufferGeometry().setFromPoints([
@@ -11062,7 +11201,16 @@ document.getElementById("randomEquationSystemBtn").addEventListener("click",rand
 document.getElementById("resetEquationCameraBtn").addEventListener("click",resetEquationCamera);
 document.getElementById("equationMethod").addEventListener("change",renderEquationSolution);
 document.getElementById("equationMode2DBtn").addEventListener("click",()=>setEquationGraphMode("2d"));
-document.getElementById("equationMode3DBtn").addEventListener("click",()=>setEquationGraphMode("3d"));
+document.getElementById("equationMode3DBtn").addEventListener("click",()=>{setEquationGraphMode("3d");setEquation3DView("perspective")});
+document.getElementById("equationViewPerspectiveBtn").addEventListener("click",()=>setEquation3DView("perspective"));
+document.getElementById("equationViewTopBtn").addEventListener("click",()=>setEquation3DView("top"));
+document.getElementById("equationViewFrontBtn").addEventListener("click",()=>setEquation3DView("front"));
+document.getElementById("equationAutoRotateBtn").addEventListener("click",()=>{
+  equation3D.autoRotate=!equation3D.autoRotate;
+  const b=document.getElementById("equationAutoRotateBtn");
+  b.classList.toggle("active",equation3D.autoRotate);
+  b.textContent=equation3D.autoRotate?"⏸ Stop Rotate":"⟳ Auto Rotate";
+});
 window.addEventListener("resize",()=>{ if(equationGraphMode==="2d") drawEquation2D(); });
 equationInputs.forEach(id=>{
   document.getElementById(id).addEventListener("input",()=>{
@@ -14466,8 +14614,64 @@ function balancedRandomTeam(){
   if(b<a)return "B";
   return Math.random()<.5?"A":"B";
 }
-function makeLiveQuestions(subject="mixed"){
-  return makeGeneralLiveQuestions(subject,8);
+function competitionQuestionTypeLabel(q){
+  const en=currentUILanguage==="en";
+  const key=q?.topicKey||q?.subject||"general";
+  const kind=q?.questionKind||"general";
+  const topic=key==="pythagoras"?(en?"Pythagoras":"فيثاغورس")
+    :key==="equations2"?(en?"Two-Variable Equations":"معادلتان بمجهولين")
+    :(en?"Mixed":"مكس");
+  const kinds={
+    hypotenuse:["Hypotenuse","الوتر"],leg:["Missing Leg","ضلع ناقص"],formula:["Formula","القانون"],
+    system_pair:["Solve the System","حل النظام"],system_x:["Find x","أوجد x"],system_y:["Find y","أوجد y"],
+    system_type:["Solution Type","نوع الحل"],custom:["Custom Question","سؤال مخصص"],general:["Question","سؤال"]
+  };
+  const k=kinds[kind]||kinds.general;
+  return `${key==="pythagoras"?"📐":key==="equations2"?"🧮":"📚"} ${topic} • ${en?k[0]:k[1]}`;
+}
+
+function numberOptions(correct,spread=1){
+  const vals=[correct,correct+spread,correct-spread,correct+2*spread]
+    .map(v=>Number.isInteger(v)?String(v):String(+v.toFixed(2)));
+  return shuffle([...new Set(vals)]).slice(0,4);
+}
+function pairText(x,y){return `(${x}, ${y})`}
+function pairOptions(x,y){
+  const rows=[[x,y],[x+1,y],[x,y+1],[y,x]].map(([a,b])=>pairText(a,b));
+  return shuffle([...new Set(rows)]).slice(0,4);
+}
+function generatedPythagorasLiveQuestion(i=0){
+  const triples=[[3,4,5],[5,12,13],[6,8,10],[7,24,25],[8,15,17],[9,12,15],[12,16,20]];
+  const [a,b,c]=triples[i%triples.length];
+  const mode=i%4;
+  if(mode===0)return {topicKey:"pythagoras",questionKind:"hypotenuse",prompt:`a = ${a}, b = ${b}. كم يساوي c؟`,options:numberOptions(c),answer:String(c),points:1000};
+  if(mode===1)return {topicKey:"pythagoras",questionKind:"leg",prompt:`a = ${a}, c = ${c}. كم يساوي b؟`,options:numberOptions(b),answer:String(b),points:1000};
+  if(mode===2)return {topicKey:"pythagoras",questionKind:"formula",prompt:"أي قانون صحيح للمثلث القائم؟",options:shuffle(["a² + b² = c²","a + b = c","a² − b² = c²","a × b = c"]),answer:"a² + b² = c²",points:1000};
+  return {topicKey:"pythagoras",questionKind:"hypotenuse",prompt:`مستطيل أبعاده ${a} و ${b}. كم طول القطر؟`,options:numberOptions(c),answer:String(c),points:1000};
+}
+function generatedEquationSystemLiveQuestion(i=0){
+  const sols=[[2,3],[3,1],[-1,4],[4,-2],[5,2],[1,-3],[3,5]];
+  const coeffs=[[2,1,1,-1],[1,2,3,-1],[3,1,1,2],[2,-1,1,1],[4,1,1,-2]];
+  const [x,y]=sols[i%sols.length];
+  let [a1,b1,a2,b2]=coeffs[i%coeffs.length];
+  if(a1*b2-a2*b1===0)b2+=1;
+  const c1=a1*x+b1*y,c2=a2*x+b2*y;
+  const base=`${equationText(a1,b1,c1)}  |  ${equationText(a2,b2,c2)}`;
+  const mode=i%4;
+  if(mode===0)return {topicKey:"equations2",questionKind:"system_pair",prompt:`حل النظام: ${base}`,options:pairOptions(x,y),answer:pairText(x,y),points:1000};
+  if(mode===1)return {topicKey:"equations2",questionKind:"system_x",prompt:`في النظام: ${base} — أوجد x`,options:numberOptions(x),answer:String(x),points:1000};
+  if(mode===2)return {topicKey:"equations2",questionKind:"system_y",prompt:`في النظام: ${base} — أوجد y`,options:numberOptions(y),answer:String(y),points:1000};
+  return {topicKey:"equations2",questionKind:"system_type",prompt:`النظام: ${base} — كم عدد الحلول؟`,options:shuffle(["حل واحد","لا يوجد حل","حلول لا نهائية","حلّان"]),answer:"حل واحد",points:1000};
+}
+function makeLiveQuestions(subject="mixed",count=10){
+  const n=Math.max(3,Math.min(30,Number(count)||10));
+  const rows=[];
+  for(let i=0;i<n;i++){
+    if(subject==="equations2")rows.push(generatedEquationSystemLiveQuestion(i));
+    else if(subject==="pythagoras")rows.push(generatedPythagorasLiveQuestion(i));
+    else rows.push(i%2===0?generatedPythagorasLiveQuestion(i):generatedEquationSystemLiveQuestion(i));
+  }
+  return shuffle(rows).map((q,i)=>({...q,index:i,typeLabel:competitionQuestionTypeLabel(q)}));
 }
 async function createLiveCompetition(customQuestions=null,customTitle="مسابقة Classora",createOptions=null){
   if(!isTeacherLike() || !auth.currentUser){
@@ -14482,14 +14686,16 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{
     const code=await reserveUniqueCode("competition");
-    const quickSubject="pythagoras";
+    const quickSubject=document.getElementById("compQuickSubject")?.value||"mixed";
+    const quickCount=Math.max(3,Math.min(30,Number(document.getElementById("compQuickQuestionCount")?.value)||10));
     const options=createOptions||competitionCreateOptions("quick");
-    const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject))
-      .map((q,i)=>({...q,index:i,points:q.points||1000}));
+    const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject,quickCount))
+      .map((q,i)=>({...q,index:i,points:q.points||1000,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q)}));
     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
-      title:customTitle||`مسابقة ${subjectNames[quickSubject]||"تعليمية"}`,
+      title:customTitle||`مسابقة ${quickSubject==="equations2"?"المعادلتين":quickSubject==="pythagoras"?"فيثاغورس":"Classora Mixed"}`,
+      topicMode:customQuestions?.length?"custom":quickSubject,
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamMode:options.teamMode,
       audienceMode:options.audienceMode,
@@ -14541,7 +14747,7 @@ async function loadCompetitionLibrary(){
         <div class="saved-comp-top">
           <div>
             <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة Classora")}</div>
-            <div class="saved-comp-meta">${room.questionCount||0} أسئلة • ${escapeHtml(statusText)}</div>
+            <div class="saved-comp-meta">${room.questionCount||0} ${adminLang("أسئلة","questions")} • ${escapeHtml(room.topicMode==="equations2"?adminLang("معادلتان بمجهولين","Two-variable equations"):room.topicMode==="pythagoras"?adminLang("فيثاغورس","Pythagoras"):room.topicMode==="mixed"?"Mixed":adminLang("مخصص","Custom"))} • ${escapeHtml(statusText)}</div>
           </div>
           <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
         </div>
@@ -14662,7 +14868,7 @@ function competitionFromBuilder(){
     if(options.some(x=>!x)){compBuilderMessage(`السؤال ${i+1}: اكتب الخيارات الأربعة.`);return null}
     if(new Set(options.map(normExam)).size!==4){compBuilderMessage(`السؤال ${i+1}: في خيارات مكررة.`);return null}
     if(!answer){compBuilderMessage(`السؤال ${i+1}: اختر الإجابة الصحيحة.`);return null}
-    out.push({prompt,options,answer,points:1000});
+    out.push({prompt,options,answer,points:1000,topicKey:"custom",questionKind:"custom",typeLabel:adminLang("✍️ سؤال مخصص","✍️ Custom Question")});
   }
   return out;
 }
@@ -14957,8 +15163,10 @@ function renderLiveRoom(){
   showCompetitionView("competitionGame");
   startCompetitionCountdown(r);
   document.getElementById("compQuestionNo").textContent=`سؤال ${(r.currentIndex||0)+1} / ${r.questionCount||8}`;
-  document.getElementById("compGameState").textContent=r.status==="result"?"النتيجة":"مباشر";
-  document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||"جاري تحميل السؤال...";
+  document.getElementById("compGameState").textContent=r.status==="result"?adminLang("النتيجة","Result"):adminLang("مباشر","Live");
+  const typeBadge=document.getElementById("compQuestionTypeBadge");
+  if(typeBadge)typeBadge.textContent=r.currentQuestion?.typeLabel||competitionQuestionTypeLabel(r.currentQuestion||{});
+  document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
   document.getElementById("compRevealBtn").classList.toggle("hidden",r.status!=="question");
   document.getElementById("compNextBtn").classList.toggle("hidden",r.status!=="result");
@@ -15038,7 +15246,7 @@ async function hostSetQuestion(index){
   const q=qSnap.data();
   await updateDoc(doc(db,"competitions",liveCompetitionId),{
     status:"question",currentIndex:index,
-    currentQuestion:{prompt:q.prompt,options:q.options},
+    currentQuestion:{prompt:q.prompt,options:q.options,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q),topicKey:q.topicKey||"general",questionKind:q.questionKind||"general"},
     correctAnswer:null,questionStartedAt:serverTimestamp()
   });
 }
