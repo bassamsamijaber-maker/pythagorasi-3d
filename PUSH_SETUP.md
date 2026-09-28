@@ -5,8 +5,8 @@ The website client and service worker are already prepared for Firebase Cloud Me
 ## One-time setup
 
 1. Firebase Console → Project settings → Cloud Messaging → Web Push certificates.
-2. Generate a key pair and copy the public VAPID key.
-3. Put that public key in `index.html` at `CLASSORA_VAPID_KEY`.
+2. Web Push certificate key pair generated ✅
+3. Public VAPID key added to `index.html` ✅
 4. From the repository root:
    - `npm install -g firebase-tools`
    - `firebase login`
