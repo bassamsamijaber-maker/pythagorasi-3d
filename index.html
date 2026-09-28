@@ -4362,6 +4362,18 @@ body.classora-overlay-open .auth-gate.show .auth-panel{
   }
 }
 
+
+/* ================= V48 HARD AUTH GATE ================= */
+/* "auth-ready" only means the auth check finished.
+   "classora-authenticated" means a real account + valid profile were verified. */
+body:not(.classora-authenticated) .platform-lobby,
+body:not(.classora-authenticated) .shell{
+  display:none!important;
+}
+body.classora-authenticated .auth-gate:not(.show){
+  display:none!important;
+}
+
 </style>
 </head>
 <body>
@@ -6414,6 +6426,14 @@ function updateAssistantLabels(){
   if(topic)topic.textContent=fixedName;
 }
 function showPlatformLobby(){
+  if(!auth?.currentUser || !window.PythagorasiUser || !window.PythagorasiUser.uid){
+    document.body.classList.remove("classora-authenticated");
+    hidePlatformLobby();
+    authGate?.classList.add("show");
+    showRoleChooser();
+    return false;
+  }
+  document.body.classList.add("classora-authenticated");
   document.getElementById("platformLobby")?.classList.remove("hidden");
   const p=window.PythagorasiUser||{};
   const name=p.displayName||"مستخدم";
@@ -6728,6 +6748,7 @@ function paintUser(user,profile){
   document.getElementById("authRoleText").textContent=admin?"🛡️ Super Admin • 👨‍🏫 معلم • 🎒 طالب":teacher?"👨‍🏫 معلم":"🎒 طالب";
   applyAvatar(document.getElementById("authAvatar"),profile,name);
   authUserBar.classList.add("show");
+  document.body.classList.add("classora-authenticated");
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
@@ -6745,6 +6766,7 @@ function paintUser(user,profile){
 
 async function resolveCurrentUser(user){
   if(!user){
+    document.body.classList.remove("classora-authenticated");
     activeProfile=null;
     clearClassoraRealtimeNotifications();
     window.PythagorasiUser=null;
@@ -6804,6 +6826,8 @@ async function resolveCurrentUser(user){
     paintUser(user,profile);
     authStatusText.textContent="";
   }catch(error){
+    document.body.classList.remove("classora-authenticated");
+    hidePlatformLobby();
     console.error("resolveCurrentUser",error);
     if(String(error?.message||"")==="student-profile-missing"){
       setAuthError("الحساب ناقص بياناته. أنشئ حساب جديد.");
@@ -6817,6 +6841,13 @@ async function resolveCurrentUser(user){
 }
 document.getElementById("authCloseBtn").addEventListener("click",()=>{
   authPendingAction=null;
+  if(!auth.currentUser || !window.PythagorasiUser){
+    document.body.classList.remove("classora-authenticated");
+    hidePlatformLobby();
+    authGate.classList.add("show");
+    showRoleChooser();
+    return;
+  }
   authGate.classList.remove("show");
   setAuthError("");
   showRoleChooser();
@@ -6983,6 +7014,7 @@ document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
   try{
     if(accountStateSaveTimer)await new Promise(resolve=>setTimeout(resolve,520));
     clearRememberedLogin();
+    document.body.classList.remove("classora-authenticated");
     await signOut(auth);
     activeProfile=null;
     hidePlatformLobby();
@@ -7177,6 +7209,7 @@ onAuthStateChanged(auth,async user=>{
     if(!expires)expires=rememberLoginForTwoMonths();
     if(Date.now()>=expires){
       clearRememberedLogin();
+      document.body.classList.remove("classora-authenticated");
       try{await signOut(auth)}catch{}
       activeProfile=null;window.PythagorasiUser=null;
       hidePlatformLobby();authUserBar.classList.remove("show");authGate.classList.add("show");showRoleChooser();
@@ -17671,6 +17704,26 @@ setTimeout(()=>{normalizeVisibleDigits();digitObserver.observe(document.body,{su
 
 
 
+
+/* ================= V48 DEFENSIVE AUTH BARRIER ================= */
+function classoraHasVerifiedSession(){
+  return !!(authResolved && auth?.currentUser && window.PythagorasiUser?.uid && document.body.classList.contains("classora-authenticated"));
+}
+document.addEventListener("click",event=>{
+  if(classoraHasVerifiedSession())return;
+  const insideAuth=event.target?.closest?.("#authGate");
+  if(insideAuth)return;
+  const protectedTarget=event.target?.closest?.("#platformLobby,.shell,.modal");
+  if(protectedTarget){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    document.body.classList.remove("classora-authenticated");
+    hidePlatformLobby();
+    authGate?.classList.add("show");
+    showRoleChooser();
+  }
+},true);
+
 /* ================= V47 SINGLE-SCREEN CONTROLLER + AUTO-WAKE ================= */
 let classoraOverlayScrollTop=0;
 let classoraOverlaySyncing=false;
@@ -17761,6 +17814,16 @@ function classoraResizeEquation3D(){
   }catch(err){console.warn("equation wake",err)}
 }
 function classoraAutoWake(){
+  if(!authResolved || !auth?.currentUser || !window.PythagorasiUser?.uid){
+    document.body.classList.remove("classora-authenticated");
+    hidePlatformLobby();
+    if(authResolved){
+      authGate?.classList.add("show");
+      showRoleChooser();
+    }
+  }else{
+    document.body.classList.add("classora-authenticated");
+  }
   try{
     if(typeof resize==="function")resize();
   }catch(err){console.warn("main resize wake",err)}
