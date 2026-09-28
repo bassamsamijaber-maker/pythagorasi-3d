@@ -4191,6 +4191,132 @@ img,canvas,video{max-width:100%}
   .side{max-height:none!important}
 }
 
+
+/* ================= V46 MOBILE SCROLL / PERFORMANCE FIX ================= */
+html{
+  height:auto!important;
+  min-height:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  scroll-behavior:auto!important;
+}
+body{
+  height:auto!important;
+  min-height:100dvh!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
+  touch-action:pan-y pinch-zoom;
+}
+body.pwa-standalone{
+  height:auto!important;
+  min-height:100dvh!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
+}
+
+/* Main app/lobby scroll container */
+.platform-lobby{
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  scroll-behavior:smooth;
+  contain:layout paint;
+}
+body.pwa-standalone .platform-lobby{
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+}
+
+/* Other vertical scroll areas should behave like native app panels */
+.side,
+.modalbox,
+.auth-panel,
+.notification-center-list,
+.class-manager-modal,
+.admin-panel-box,
+.equation-lab-box{
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+
+/* Keep 3D gestures isolated to canvases */
+#scene,
+#scene canvas,
+.equation-3d-scene,
+.equation-3d-scene canvas{
+  touch-action:none!important;
+}
+
+/* Phone performance: reduce expensive compositing while scrolling */
+@media(max-width:700px){
+  .platform-lobby{
+    scroll-behavior:auto!important;
+    contain:layout!important;
+  }
+
+  .lobby-topbar,
+  .voice-toolbar,
+  .lab-mobile-nav,
+  .pwa-install-modalbox,
+  .notification-center-box{
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  .lobby-topbar{
+    background:rgba(10,22,35,.97)!important;
+  }
+
+  .modal{
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  .platform-lobby *,
+  .modalbox *,
+  .side *{
+    animation-duration:.18s!important;
+  }
+
+  /* Avoid expensive hover/compositor work on touchscreens */
+  button{
+    transition:transform .10s ease,filter .10s ease!important;
+  }
+  button:not(:disabled):hover{
+    filter:none!important;
+  }
+
+  /* Ensure content can extend naturally and be reached by scroll */
+  .lobby-shell,
+  .shell,
+  .side{
+    height:auto!important;
+    max-height:none!important;
+  }
+
+  .platform-lobby{
+    padding-bottom:max(18px,env(safe-area-inset-bottom))!important;
+  }
+}
+
+/* Installed app: respect the home indicator without blocking the last content */
+@media(max-width:700px) and (display-mode:standalone){
+  .platform-lobby{
+    padding-bottom:max(26px,calc(env(safe-area-inset-bottom) + 12px))!important;
+  }
+}
+
 </style>
 </head>
 <body>
