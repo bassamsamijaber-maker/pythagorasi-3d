@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v48-hard-auth-gate";
+const CACHE_NAME="classora-v49-fcm-push";
 const APP_SHELL=[
   "./",
   "./index.html",
@@ -75,20 +75,6 @@ self.addEventListener("fetch",event=>{
 });
 
 
-self.addEventListener("push",event=>{
-  let data={};
-  try{data=event.data?.json?.()||{body:event.data?.text?.()||""}}catch{data={body:event.data?.text?.()||""}}
-  const title=data.title||"Classora";
-  const options={
-    body:data.body||"",
-    icon:data.icon||"./icons/classora-192.png",
-    badge:data.badge||"./icons/favicon-64.png",
-    tag:data.tag||undefined,
-    data:{url:data.url||"./",...(data.data||{})}
-  };
-  event.waitUntil(self.registration.showNotification(title,options));
-});
-
 self.addEventListener("notificationclick",event=>{
   event.notification.close();
   const target=event.notification?.data?.url||"./";
@@ -103,4 +89,37 @@ self.addEventListener("notificationclick",event=>{
       return clients.openWindow?clients.openWindow(target):undefined;
     })
   );
+});
+
+
+/* Firebase Cloud Messaging background handler.
+   Keep notificationclick above these imports so our click behavior wins. */
+importScripts("https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging-compat.js");
+
+firebase.initializeApp({
+  apiKey: "AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",
+  authDomain: "pythagorasi-school.firebaseapp.com",
+  projectId: "pythagorasi-school",
+  storageBucket: "pythagorasi-school.firebasestorage.app",
+  messagingSenderId: "349960442962",
+  appId: "1:349960442962:web:53d13a319dfdc096187b8b",
+  measurementId: "G-PFBVKDZ7CP"
+});
+
+const classoraMessaging=firebase.messaging();
+classoraMessaging.onBackgroundMessage(payload=>{
+  /* Notification payloads are displayed by FCM automatically.
+     This branch handles data-only messages if we use them later. */
+  if(payload?.notification)return;
+  const data=payload?.data||{};
+  const title=data.title||"Classora";
+  const options={
+    body:data.body||"",
+    icon:data.icon||"./icons/classora-192.png",
+    badge:data.badge||"./icons/favicon-64.png",
+    tag:data.eventKey||undefined,
+    data:{url:data.url||"./",type:data.type||"general"}
+  };
+  return self.registration.showNotification(title,options);
 });
