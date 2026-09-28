@@ -6702,7 +6702,6 @@ function showPlatformLobby(){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
     authGate?.classList.add("show");
-    showRoleChooser();
     return false;
   }
   document.body.classList.add("classora-authenticated");
@@ -6938,11 +6937,7 @@ window.addEventListener("classora-auth-settled",()=>{
   classoraFinishIntroWhenReady();
 },{once:true});
 
-/* Safety: if auth already settled before this listener for any reason. */
-if(typeof authResolved!=="undefined"&&authResolved){
-  classoraAuthSettled=true;
-  classoraFinishIntroWhenReady();
-}
+/* Auth settlement is dispatched by onAuthStateChanged below. */
 
 const authGate=document.getElementById("authGate");
 const authPanel=document.getElementById("authPanel");
@@ -7184,10 +7179,19 @@ document.getElementById("authCloseBtn").addEventListener("click",()=>{
   setAuthError("");
   showRoleChooser();
 });
-document.getElementById("chooseStudent").addEventListener("click",showStudentLogin);
+document.getElementById("chooseStudent").addEventListener("click",()=>{
+  setStudentAuthMode("login");
+  showStudentLogin();
+});
 document.getElementById("chooseTeacher").addEventListener("click",showTeacherLogin);
-document.getElementById("studentBackBtn").addEventListener("click",showRoleChooser);
-document.getElementById("teacherBackBtn").addEventListener("click",showRoleChooser);
+document.getElementById("studentBackBtn").addEventListener("click",()=>{
+  document.activeElement?.blur?.();
+  showRoleChooser();
+});
+document.getElementById("teacherBackBtn").addEventListener("click",()=>{
+  document.activeElement?.blur?.();
+  showRoleChooser();
+});
 
 let studentLoginBusy=false;
 document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
@@ -7203,14 +7207,17 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
 
   if(displayName.length<2 || nameKey.length<2){
     setAuthError("اكتب اسمك أولًا — حرفين على الأقل.");
+    studentLoginBusy=false;studentLoginButton.disabled=false;
     studentNameInput.focus();return;
   }
   if(password.length<6){
     setAuthError("كلمة السر لازم تكون 6 خانات أو أكثر.");
+    studentLoginBusy=false;studentLoginButton.disabled=false;
     studentPasswordInput.focus();return;
   }
   if(studentAuthMode==="create"&&classCode.length<4){
     setAuthError("اكتب كود الصف اللي أعطاك إياه المعلم.");
+    studentLoginBusy=false;studentLoginButton.disabled=false;
     studentClassCodeInput.focus();return;
   }
 
@@ -18152,12 +18159,10 @@ function classoraAutoWake(){
   if(!authResolved || !auth?.currentUser || !window.PythagorasiUser?.uid){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
-    if(authResolved){
-      authGate?.classList.add("show");
-      showRoleChooser();
-    }
+    if(authResolved)authGate?.classList.add("show");
   }else{
     document.body.classList.add("classora-authenticated");
+    authGate?.classList.remove("show");
   }
   try{
     if(typeof resize==="function")resize();
@@ -18189,6 +18194,13 @@ function classoraAutoWake(){
   classoraSyncOverlayState();
 }
 function scheduleClassoraAutoWake(){
+  const active=document.activeElement;
+  if(
+    authGate?.classList.contains("show") &&
+    active?.closest?.("#authGate") &&
+    /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName||"")
+  )return;
+
   clearTimeout(classoraWakeTimer);
   classoraWakeTimer=setTimeout(classoraAutoWake,90);
   setTimeout(classoraAutoWake,420);
