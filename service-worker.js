@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v49-fcm-push";
+const CACHE_NAME="classora-v50-animated-intro";
 const APP_SHELL=[
   "./",
   "./index.html",
