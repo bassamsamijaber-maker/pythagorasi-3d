@@ -3333,6 +3333,160 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
   .competition-advanced-create{grid-template-columns:1fr!important}
   .equation-3d-pro-toolbar{display:grid;grid-template-columns:1fr 1fr}
 }
+
+/* ================= V42 INTEGRATED SHELL + RESPONSIVE COMPETITIONS ================= */
+.platform-lobby{
+  padding:18px!important;
+  background:
+    radial-gradient(circle at 14% 0%,rgba(50,121,178,.07),transparent 29%),
+    radial-gradient(circle at 88% 100%,rgba(94,72,157,.045),transparent 30%),
+    #07111b!important;
+}
+.lobby-shell{
+  width:min(1240px,100%)!important;
+  border:1px solid rgba(139,181,215,.085);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(9,19,30,.88),rgba(7,15,24,.76));
+  box-shadow:0 26px 80px rgba(0,0,0,.26);
+  overflow:clip;
+  padding:0 18px 20px;
+}
+.lobby-topbar{
+  position:sticky;
+  top:0;
+  z-index:30;
+  margin:0 -18px 16px!important;
+  padding:14px 18px!important;
+  min-height:70px;
+  border-radius:22px 22px 0 0!important;
+  border:0!important;
+  border-bottom:1px solid rgba(139,181,215,.09)!important;
+  background:linear-gradient(180deg,rgba(11,23,36,.97),rgba(10,20,32,.94))!important;
+  backdrop-filter:blur(18px);
+  box-shadow:none!important;
+}
+.lobby-brand{font-size:29px!important}
+.lobby-top-actions{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
+.lobby-icon-btn,.lobby-profile-btn,.lobby-logout-btn,.admin-panel-btn{
+  min-height:43px!important;border-radius:13px!important
+}
+
+/* Updates controls */
+.site-updates-head{align-items:center!important;gap:10px}
+.site-updates-admin-tools{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.site-updates-admin-tools.hidden{display:none!important}
+.site-updates-admin-tools button,.site-update-admin-delete{
+  min-height:37px;border-radius:10px;padding:7px 10px;cursor:pointer;font-weight:900;font-size:9px
+}
+.site-updates-manage-btn{
+  border:1px solid rgba(89,167,226,.15);background:rgba(89,167,226,.06);color:#acd8f6
+}
+.site-updates-clear-btn,.site-update-admin-delete{
+  border:1px solid rgba(237,105,117,.16);background:rgba(237,105,117,.06);color:#ffb5bd
+}
+.site-update-card{position:relative;padding-inline-end:48px!important}
+.site-update-admin-delete{
+  position:absolute;top:10px;inset-inline-end:10px;width:32px;height:32px;min-height:32px;padding:0;
+  display:grid;place-items:center;font-size:13px
+}
+
+/* Competition visual redesign */
+.live-modalbox{
+  width:min(1080px,calc(100vw - 32px))!important;
+  max-width:min(1080px,calc(100vw - 32px))!important;
+  max-height:92vh!important;
+  overflow-x:hidden!important;
+  border-radius:22px!important;
+}
+#competitionModal .modalhead{
+  position:sticky;top:0;z-index:10;margin:-18px -18px 14px;padding:15px 18px;
+  background:rgba(11,23,37,.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(147,188,219,.08)
+}
+.live-hero{
+  padding:15px 16px!important;border-radius:16px!important;
+  background:linear-gradient(145deg,rgba(55,139,207,.055),rgba(104,76,177,.035))!important;
+  border:1px solid rgba(139,181,215,.08)!important
+}
+.live-home-grid{gap:10px!important;align-items:stretch}
+.live-home-grid>*{min-width:0!important}
+.live-card{
+  min-width:0!important;padding:16px!important;border-radius:17px!important;
+  background:linear-gradient(180deg,rgba(17,31,47,.92),rgba(13,25,39,.94))!important;
+  border-color:rgba(142,184,217,.09)!important;
+  overflow:hidden
+}
+.live-card h3{font-size:17px!important}
+.live-card p{font-size:11px!important;color:#91a7b9!important}
+.live-field,.competition-create-settings,.competition-advanced-create,.competition-builder-settings,
+.competition-room-mode{min-width:0!important;width:100%!important}
+.live-field>* ,.competition-create-settings>* ,.competition-advanced-create>*{min-width:0!important;max-width:100%!important}
+.live-field input,.live-field select,.competition-create-settings input,.competition-create-settings select{
+  width:100%!important;max-width:100%!important;min-width:0!important
+}
+.competition-advanced-create{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important
+}
+.competition-advanced-create label{
+  padding:9px;border-radius:11px;background:rgba(255,255,255,.018);
+  border:1px solid rgba(255,255,255,.045)
+}
+#competitionTeacherCard .live-field button,#competitionStudentCard .live-field button{min-height:44px!important}
+.live-options{gap:8px!important}.live-option{min-height:68px!important}
+.live-question{font-size:clamp(18px,3vw,25px)!important}
+
+/* Mobile polish site-wide */
+@media(max-width:760px){
+  .platform-lobby{padding:6px!important}
+  .lobby-shell{border-radius:16px;padding:0 10px 14px!important}
+  .lobby-topbar{
+    position:relative!important;top:auto!important;margin:0 -10px 12px!important;padding:11px 10px!important;
+    border-radius:16px 16px 0 0!important;display:grid!important;grid-template-columns:1fr!important;gap:9px!important
+  }
+  .lobby-topbar>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .lobby-brand{font-size:24px!important}
+  .lobby-sub{font-size:10px!important}
+  .lobby-top-actions{width:100%;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px!important}
+  .admin-hybrid-badge{display:none!important}
+  .admin-panel-btn{grid-column:span 2;justify-content:center;padding:0 8px!important}
+  .lobby-icon-btn{width:100%!important;min-width:0!important;height:43px!important}
+  .lobby-profile-btn{grid-column:span 2;justify-content:center;min-width:0!important;padding:5px 8px!important}
+  .lobby-profile-btn span{display:block!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lobby-logout-btn{grid-column:span 2;width:100%!important;padding:0 8px!important}
+  .pythag-lobby-hero{padding:14px!important;border-radius:15px!important}
+  .pythag-lobby-hero h1{font-size:clamp(28px,9vw,38px)!important}
+  .pythag-action-grid,.lobby-action-grid,.teacher-lobby-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}
+  .pythag-action-card,.lobby-action{min-height:120px!important;padding:11px!important}
+  .pythag-action-card b,.lobby-action b{font-size:13px!important}
+  .pythag-action-card small,.lobby-action small{font-size:9px!important;line-height:1.45}
+  .site-updates-head{align-items:flex-start!important;flex-direction:column!important}
+  .site-updates-admin-tools{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .site-update-card{padding:12px 42px 12px 12px!important}
+  .live-modalbox{
+    width:calc(100vw - 10px)!important;max-width:calc(100vw - 10px)!important;
+    max-height:calc(100vh - 10px)!important;border-radius:16px!important;padding:12px!important
+  }
+  #competitionModal{padding:5px!important}
+  #competitionModal .modalhead{margin:-12px -12px 12px!important;padding:12px!important;border-radius:16px 16px 0 0}
+  .live-home-grid{grid-template-columns:1fr!important}
+  .competition-advanced-create{grid-template-columns:1fr!important}
+  .competition-create-settings,.competition-room-mode{grid-template-columns:1fr!important}
+  .live-field button,#competitionModal button{min-height:46px}
+  .live-options{grid-template-columns:1fr!important}
+  .live-players{grid-template-columns:1fr!important}
+  .live-teams{grid-template-columns:1fr 1fr!important}
+  .live-code{font-size:31px!important;letter-spacing:5px!important}
+  .projector-lead-grid{grid-template-columns:1fr 1fr!important}
+  .live-rank{grid-template-columns:36px minmax(0,1fr) 70px!important}
+}
+@media(max-width:430px){
+  .lobby-top-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .admin-panel-btn,.lobby-profile-btn,.lobby-logout-btn{grid-column:span 1!important}
+  .pythag-action-grid,.lobby-action-grid,.teacher-lobby-grid{grid-template-columns:1fr!important}
+  .pythag-action-card,.lobby-action{min-height:96px!important}
+  .live-teams,.projector-lead-grid{grid-template-columns:1fr!important}
+  .site-updates-admin-tools{grid-template-columns:1fr!important}
+}
 </style>
 </head>
 <body>
@@ -3459,8 +3613,12 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
     </section>
 
     <section class="lobby-section hidden site-updates-priority" id="siteUpdatesSection">
-      <div class="lobby-section-head">
+      <div class="lobby-section-head site-updates-head">
         <div><h3 id="siteUpdatesTitle">📊 التصويتات والتحديثات</h3><p id="siteUpdatesSub">التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.</p></div>
+        <div class="site-updates-admin-tools hidden" id="siteUpdatesAdminTools">
+          <button class="site-updates-manage-btn" id="siteUpdatesManageBtn">⚙️ إدارة</button>
+          <button class="site-updates-clear-btn" id="siteUpdatesDeleteVisibleBtn">🗑 حذف الظاهر</button>
+        </div>
       </div>
       <div class="site-updates-list" id="siteUpdatesList"></div>
     </section>
@@ -11443,6 +11601,8 @@ function applyAdminLanguage(){
   set("siteUpdatesTitle","📣 تحديثات المدرسة","📣 School Updates");
   set("siteUpdatesTitle","📊 التصويتات والتحديثات","📊 Polls & updates");
   set("siteUpdatesSub","التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.","Polls appear first, followed by announcements and competitions.");
+  const siteManageBtn=document.getElementById("siteUpdatesManageBtn");if(siteManageBtn)siteManageBtn.textContent=en?"⚙️ Manage":"⚙️ إدارة";
+  const siteDeleteVisibleBtn=document.getElementById("siteUpdatesDeleteVisibleBtn");if(siteDeleteVisibleBtn)siteDeleteVisibleBtn.textContent=en?"🗑 Delete visible":"🗑 حذف الظاهر";
   const adminBtn=document.querySelector("#adminPanelBtn span");if(adminBtn)adminBtn.textContent=en?"Admin Panel":"لوحة الأدمن";
   try{
     if(adminPanelModal?.classList.contains("open")){
@@ -14142,6 +14302,68 @@ async function getTargetedAdminDocs(collectionName){
   for(const classId of ids){try{const s=await getDocs(query(collection(db,collectionName),where("targetType","==","class"),where("targetClassId","==",classId)));s.docs.forEach(d=>out.set(d.id,{id:d.id,...d.data()}))}catch{}}
   return [...out.values()];
 }
+
+async function deleteLobbyUpdateItem(source,id,title=""){
+  if(!requireSuperAdmin())return false;
+  const label=title||adminLang("هذا التحديث","this update");
+  if(!confirm(adminLang(`حذف «${label}» من التصويتات والتحديثات؟`,`Delete “${label}” from Polls & Updates?`)))return false;
+  try{
+    if(source==="poll"){
+      const votes=await getDocs(collection(db,"adminPolls",id,"votes")).catch(()=>null);
+      if(votes)await Promise.all(votes.docs.map(v=>deleteDoc(v.ref)));
+      await deleteDoc(doc(db,"adminPolls",id));
+      await adminAudit("delete_lobby_poll",id);
+    }else if(source==="announcement"){
+      await deleteDoc(doc(db,"adminAnnouncements",id));
+      await adminAudit("delete_lobby_update",id);
+    }else if(source==="maintenance"){
+      await setDoc(doc(db,"siteControls","main"),{
+        maintenance:false,maintenanceMessage:"",updatedBy:auth.currentUser.uid,updatedAt:serverTimestamp()
+      },{merge:true});
+      siteControlsCache={...siteControlsCache,maintenance:false,maintenanceMessage:""};
+      await adminAudit("clear_maintenance_notice","lobby");
+    }
+    showToast(adminLang("تم الحذف من اللوبي 🗑","Removed from the lobby 🗑"));
+    await loadSiteUpdatesForCurrentUser();
+    if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="content")adminLoadContentManager();
+    return true;
+  }catch(err){
+    console.error("delete lobby update",err);
+    showToast(adminLang("تعذر حذف التحديث.","Could not delete the update."));
+    return false;
+  }
+}
+
+async function deleteVisibleLobbyUpdates(polls,anns,includeMaintenance=false){
+  if(!requireSuperAdmin())return;
+  const count=(polls?.length||0)+(anns?.length||0)+(includeMaintenance?1:0);
+  if(!count){showToast(adminLang("ما في تحديثات ظاهرة للحذف.","No visible updates to delete."));return}
+  if(!confirm(adminLang(`حذف كل ${count} عنصر ظاهر بقسم التصويتات والتحديثات؟`,`Delete all ${count} visible Polls & Updates items?`)))return;
+  try{
+    for(const poll of polls||[]){
+      const votes=await getDocs(collection(db,"adminPolls",poll.id,"votes")).catch(()=>null);
+      if(votes)await Promise.all(votes.docs.map(v=>deleteDoc(v.ref)));
+      await deleteDoc(doc(db,"adminPolls",poll.id));
+    }
+    for(const a of anns||[])await deleteDoc(doc(db,"adminAnnouncements",a.id));
+    if(includeMaintenance){
+      await setDoc(doc(db,"siteControls","main"),{
+        maintenance:false,maintenanceMessage:"",updatedBy:auth.currentUser.uid,updatedAt:serverTimestamp()
+      },{merge:true});
+      siteControlsCache={...siteControlsCache,maintenance:false,maintenanceMessage:""};
+    }
+    await adminAudit("delete_visible_lobby_updates",String(count));
+    showToast(adminLang("تم حذف التحديثات الظاهرة 🗑","Visible updates deleted 🗑"));
+    await loadSiteUpdatesForCurrentUser();
+    if(adminActiveTab==="polls")adminLoadPolls();
+    if(adminActiveTab==="content")adminLoadContentManager();
+  }catch(err){
+    console.error("delete visible lobby updates",err);
+    showToast(adminLang("تعذر حذف كل التحديثات.","Could not delete all updates."));
+  }
+}
+
 async function loadSiteUpdatesForCurrentUser(){
   if(!auth.currentUser||!window.PythagorasiUser)return;
   const section=document.getElementById("siteUpdatesSection");
@@ -14168,6 +14390,14 @@ async function loadSiteUpdatesForCurrentUser(){
       .filter(x=>x.active!==false)
       .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))
       .slice(0,5);
+
+    const updateAdminTools=document.getElementById("siteUpdatesAdminTools");
+    const isAdminViewer=isSuperAdminProfile();
+    updateAdminTools?.classList.toggle("hidden",!isAdminViewer);
+    const manageUpdatesBtn=document.getElementById("siteUpdatesManageBtn");
+    const deleteVisibleBtn=document.getElementById("siteUpdatesDeleteVisibleBtn");
+    if(manageUpdatesBtn)manageUpdatesBtn.onclick=()=>{document.getElementById("adminPanelBtn")?.click();setTimeout(()=>adminShowTab("content"),80)};
+    if(deleteVisibleBtn)deleteVisibleBtn.onclick=()=>deleteVisibleLobbyUpdates(activePolls,activeAnns,!!(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage));
 
     host.innerHTML="";
 
@@ -14199,6 +14429,7 @@ async function loadSiteUpdatesForCurrentUser(){
       const d=document.createElement("div");
       d.className="site-update-card poll-priority";
       d.innerHTML=`
+        ${isAdminViewer?`<button class="site-update-admin-delete" title="${adminLang("حذف","Delete")}">🗑</button>`:""}
         <h4>📊 ${escapeHtml(poll.title||adminLang("تصويت","Poll"))}</h4>
         <div>${escapeHtml(poll.question||"")}</div>
 
@@ -14280,14 +14511,17 @@ async function loadSiteUpdatesForCurrentUser(){
         }
       }));
 
+      d.querySelector(".site-update-admin-delete")?.addEventListener("click",()=>deleteLobbyUpdateItem("poll",poll.id,poll.title||adminLang("تصويت","Poll")));
       host.appendChild(d);
     }
 
     if(siteControlsCache.maintenance&&siteControlsCache.maintenanceMessage){
       const d=document.createElement("div");
       d.className="site-update-card";
-      d.innerHTML=`<h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4>
+      d.innerHTML=`${isAdminViewer?`<button class="site-update-admin-delete" title="${adminLang("حذف","Delete")}">🗑</button>`:""}
+        <h4>🛠 ${adminLang("تنبيه صيانة","Maintenance Notice")}</h4>
         <div>${escapeHtml(siteControlsCache.maintenanceMessage)}</div>`;
+      d.querySelector(".site-update-admin-delete")?.addEventListener("click",()=>deleteLobbyUpdateItem("maintenance","main",adminLang("تنبيه صيانة","Maintenance Notice")));
       host.appendChild(d);
     }
 
@@ -14297,7 +14531,8 @@ async function loadSiteUpdatesForCurrentUser(){
       d.className="site-update-card";
       const isAssignment=a.kind==="assignment";
 
-      d.innerHTML=`<h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4>
+      d.innerHTML=`${isAdminViewer?`<button class="site-update-admin-delete" title="${adminLang("حذف","Delete")}">🗑</button>`:""}
+        <h4>📣 ${escapeHtml(a.title||adminLang("إعلان","Announcement"))}</h4>
         <div>${escapeHtml(a.body||"")}</div>
         <div class="site-update-meta">${adminDate(a.createdAt)}${a.targetName?` • ${escapeHtml(a.targetName)}`:""}</div>
 
@@ -14324,6 +14559,7 @@ async function loadSiteUpdatesForCurrentUser(){
         openCompetitionModal();
         document.getElementById("compJoinCode").value=a.competitionCode||"";
       });
+      d.querySelector(".site-update-admin-delete")?.addEventListener("click",()=>deleteLobbyUpdateItem("announcement",a.id,a.title||adminLang("إعلان","Announcement")));
 
       host.appendChild(d);
     }
