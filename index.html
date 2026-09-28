@@ -6562,6 +6562,7 @@ function paintUser(user,profile){
   window.PythagorasiUser={uid:user.uid,...profile};
   activeProfile=window.PythagorasiUser;
   applySavedAccountState(window.PythagorasiUser);
+  setTimeout(startClassoraRealtimeNotifications,350);
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
@@ -6574,6 +6575,7 @@ function paintUser(user,profile){
 async function resolveCurrentUser(user){
   if(!user){
     activeProfile=null;
+    clearClassoraRealtimeNotifications();
     window.PythagorasiUser=null;
     if(lobbyCompetitionUnsub){try{lobbyCompetitionUnsub()}catch{} lobbyCompetitionUnsub=null}
     lobbyCompetitionCache=[];window.ClassoraLiveCompetitions=[];
@@ -17495,6 +17497,284 @@ const digitObserver=new MutationObserver(records=>{
 });
 setTimeout(()=>{normalizeVisibleDigits();digitObserver.observe(document.body,{subtree:true,childList:true,characterData:true})},20);
 
+
+
+/* ================= V45 CLASSORA REALTIME NOTIFICATIONS ================= */
+const CLASSORA_NOTIFY_HISTORY_KEY="classora_notification_history_v1";
+const CLASSORA_NOTIFY_SEEN_KEY="classora_notification_seen_ids_v1";
+const CLASSORA_NOTIFY_LAST_CHECK_KEY="classora_notification_last_check_v1";
+const CLASSORA_NOTIFY_ENABLED_KEY="classora_notifications_enabled_v1";
+let classoraNotificationUnsubs=[];
+let classoraNotificationsForUid="";
+
+function classoraNotificationHistory(){
+  try{const x=JSON.parse(localStorage.getItem(CLASSORA_NOTIFY_HISTORY_KEY)||"[]");return Array.isArray(x)?x.slice(0,80):[]}
+  catch{return []}
+}
+function saveClassoraNotificationHistory(items){
+  localStorage.setItem(CLASSORA_NOTIFY_HISTORY_KEY,JSON.stringify(items.slice(0,80)));
+  renderClassoraNotificationBadge();
+}
+function classoraSeenIds(){
+  try{const x=JSON.parse(localStorage.getItem(CLASSORA_NOTIFY_SEEN_KEY)||"[]");return new Set(Array.isArray(x)?x.slice(0,300):[])}
+  catch{return new Set()}
+}
+function classoraEventAlreadySeen(key){return classoraSeenIds().has(key)}
+function markClassoraEventSeen(key){
+  const s=classoraSeenIds();s.add(key);
+  localStorage.setItem(CLASSORA_NOTIFY_SEEN_KEY,JSON.stringify([...s].slice(-300)));
+}
+function classoraNotificationsEnabled(){return localStorage.getItem(CLASSORA_NOTIFY_ENABLED_KEY)==="1"}
+function notificationIconFor(type){
+  return type==="assignment"?"📝":type==="exam"?"🎓":type==="competition"?"🏆":type==="classJoin"?"👤":"🔔"
+}
+function formatClassoraNotificationTime(ms){
+  try{return new Date(ms).toLocaleString(currentUILanguage==="en"?"en-US":"ar",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
+  catch{return ""}
+}
+function pushClassoraNotificationItem(item){
+  const list=classoraNotificationHistory();
+  list.unshift({
+    id:String(Date.now())+"_"+Math.random().toString(36).slice(2,7),
+    title:String(item.title||"Classora"),
+    body:String(item.body||""),
+    type:item.type||"general",
+    eventKey:item.eventKey||"",
+    time:Date.now(),
+    read:false
+  });
+  saveClassoraNotificationHistory(list);
+  renderClassoraNotificationCenter();
+}
+async function showClassoraDeviceNotification(title,body,opts={}){
+  if(!classoraNotificationsEnabled()||!("Notification" in window)||Notification.permission!=="granted")return;
+  try{
+    const reg=await navigator.serviceWorker?.ready;
+    if(reg?.showNotification){
+      await reg.showNotification(title,{
+        body,
+        icon:"./icons/classora-192.png",
+        badge:"./icons/favicon-64.png",
+        tag:opts.tag||undefined,
+        renotify:false,
+        data:{url:"./",type:opts.type||"general"}
+      });
+      return;
+    }
+    new Notification(title,{body,icon:"./icons/classora-192.png",tag:opts.tag||undefined});
+  }catch(err){console.warn("device notification",err)}
+}
+async function classoraNotify(title,body,opts={}){
+  const eventKey=opts.eventKey||"";
+  if(eventKey&&classoraEventAlreadySeen(eventKey))return;
+  if(eventKey)markClassoraEventSeen(eventKey);
+  pushClassoraNotificationItem({title,body,type:opts.type||"general",eventKey});
+  await showClassoraDeviceNotification(title,body,{type:opts.type||"general",tag:eventKey});
+}
+function renderClassoraNotificationBadge(){
+  const badge=document.getElementById("classoraNotifyBadge");if(!badge)return;
+  const unread=classoraNotificationHistory().filter(x=>!x.read).length;
+  badge.textContent=String(Math.min(99,unread));
+  badge.classList.toggle("hidden",unread===0);
+}
+function renderClassoraNotificationCenter(){
+  const host=document.getElementById("notificationCenterList");if(!host)return;
+  const en=currentUILanguage==="en";
+  const list=classoraNotificationHistory();
+  host.innerHTML="";
+  if(!list.length){
+    host.innerHTML='<div class="cloud-note">'+(en?"No notifications yet.":"لسه ما في إشعارات.")+'</div>';
+  }else{
+    for(const n of list){
+      const row=document.createElement("div");
+      row.className="notification-item "+(n.read?"":"unread");
+      row.innerHTML=
+        '<div class="notification-item-icon">'+notificationIconFor(n.type)+'</div>'+
+        '<div><b>'+escapeHtml(n.title)+'</b><p>'+escapeHtml(n.body)+'</p><time>'+escapeHtml(formatClassoraNotificationTime(n.time))+'</time></div>'+
+        '<button class="notification-item-read" title="'+(en?"Mark as read":"تحديد كمقروء")+'">'+(n.read?"✓":"●")+'</button>';
+      row.querySelector(".notification-item-read").addEventListener("click",()=>{
+        const cur=classoraNotificationHistory();
+        const item=cur.find(x=>x.id===n.id);if(item)item.read=true;
+        saveClassoraNotificationHistory(cur);renderClassoraNotificationCenter();
+      });
+      host.appendChild(row);
+    }
+  }
+  const note=document.getElementById("notificationCenterNote");
+  if(note){
+    note.textContent=!("/Notification" in window)
+      ?(en?"This browser does not support notifications.":"هذا المتصفح لا يدعم الإشعارات.")
+      :Notification.permission==="denied"
+        ?(en?"Notifications are blocked in browser settings.":"الإشعارات محظورة من إعدادات المتصفح.")
+        :(en?"Alerts work while Classora is open or running.":"التنبيهات تشتغل أثناء Classora مفتوح أو شغّال.");
+  }
+  renderClassoraNotificationBadge();
+}
+async function enableClassoraNotifications(){
+  if(!("Notification" in window)){showToast(currentUILanguage==="en"?"Notifications are not supported.":"الإشعارات غير مدعومة.");return false}
+  let permission=Notification.permission;
+  if(permission==="default"){try{permission=await Notification.requestPermission()}catch{}}
+  const ok=permission==="granted";
+  localStorage.setItem(CLASSORA_NOTIFY_ENABLED_KEY,ok?"1":"0");
+  updateClassoraNotificationSettings();
+  if(ok){
+    showToast(currentUILanguage==="en"?"Notifications enabled ✅":"تم تفعيل الإشعارات ✅");
+    await showClassoraDeviceNotification(
+      currentUILanguage==="en"?"Classora notifications ready":"إشعارات Classora جاهزة",
+      currentUILanguage==="en"?"You will get alerts for classes, assignments, exams and competitions.":"رح توصلك تنبيهات الصفوف والوظائف والامتحانات والمسابقات.",
+      {type:"general",tag:"classora-enabled"}
+    );
+  }else showToast(currentUILanguage==="en"?"Notification permission was not granted.":"ما تم إعطاء صلاحية الإشعارات.");
+  return ok;
+}
+function updateClassoraNotificationSettings(){
+  const en=currentUILanguage==="en";
+  const enabled=classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted";
+  const btn=document.getElementById("enableNotificationsBtn");
+  const modalBtn=document.getElementById("notificationCenterEnableBtn");
+  const badge=document.getElementById("notificationsEnabledBadge");
+  const note=document.getElementById("notificationSettingsNote");
+  if(btn)btn.textContent=enabled?(en?"🔔 Notifications enabled":"🔔 الإشعارات مفعّلة"):(en?"🔔 Enable notifications":"🔔 تفعيل الإشعارات");
+  if(modalBtn)modalBtn.textContent=enabled?(en?"✓ Device notifications enabled":"✓ إشعارات الجهاز مفعّلة"):(en?"🔔 Enable device notifications":"🔔 تفعيل إشعارات الجهاز");
+  badge?.classList.toggle("hidden",!enabled);
+  if(note)note.textContent=en
+    ?"Get alerts for assignments, exams, competitions and students joining a class."
+    :"استقبل تنبيهات عند وصول وظيفة أو امتحان أو مسابقة، وعند دخول طالب جديد للصف.";
+  renderClassoraNotificationBadge();
+}
+function openClassoraNotificationCenter(){
+  const list=classoraNotificationHistory();list.forEach(x=>x.read=true);
+  saveClassoraNotificationHistory(list);renderClassoraNotificationCenter();
+  document.getElementById("notificationCenterModal")?.classList.add("open");
+}
+function clearClassoraNotificationCenter(){
+  saveClassoraNotificationHistory([]);renderClassoraNotificationCenter();
+}
+function clearClassoraRealtimeNotifications(){
+  for(const fn of classoraNotificationUnsubs){try{fn()}catch{}}
+  classoraNotificationUnsubs=[];classoraNotificationsForUid="";
+}
+function firestoreMs(value){
+  try{
+    if(value?.toMillis)return value.toMillis();
+    if(typeof value?.seconds==="number")return value.seconds*1000;
+    const n=Number(value);return Number.isFinite(n)?n:0;
+  }catch{return 0}
+}
+function shouldNotifyFirestoreItem(data,baseline,initialReady){
+  if(initialReady)return true;
+  const ms=firestoreMs(data?.createdAt||data?.joinedAt);
+  return baseline>0&&ms>baseline&&ms<Date.now()+60000;
+}
+async function startClassoraRealtimeNotifications(){
+  const user=auth.currentUser,profile=window.PythagorasiUser;
+  if(!user||!profile)return;
+  if(classoraNotificationsForUid===user.uid)return;
+  clearClassoraRealtimeNotifications();
+  classoraNotificationsForUid=user.uid;
+  const baseline=Number(localStorage.getItem(CLASSORA_NOTIFY_LAST_CHECK_KEY)||0);
+  localStorage.setItem(CLASSORA_NOTIFY_LAST_CHECK_KEY,String(Date.now()));
+
+  if(profile.role==="student"){
+    const classIds=[...new Set(Array.isArray(profile.classIds)?profile.classIds:[])];
+    for(const classId of classIds){
+      let ready=false;
+      try{
+        const un=onSnapshot(collection(db,"classes",classId,"assignments"),snap=>{
+          for(const change of snap.docChanges()){
+            if(change.type!=="added")continue;
+            const a={id:change.doc.id,...change.doc.data()};
+            if(a.hidden===true||a.active===false)continue;
+            if(!shouldNotifyFirestoreItem(a,baseline,ready))continue;
+            const title=currentUILanguage==="en"?"New assignment":"وظيفة جديدة";
+            let body=a.title||(currentUILanguage==="en"?"Assignment":"وظيفة");
+            if(a.dueDate)body+=" • "+(currentUILanguage==="en"?"Due ":"التسليم ")+a.dueDate;
+            classoraNotify(title,body,{type:"assignment",eventKey:"assignment:"+classId+":"+a.id});
+          }
+          ready=true;
+        },err=>console.warn("assignment notifications",err));
+        classoraNotificationUnsubs.push(un);
+      }catch(err){console.warn("assignment notification setup",err)}
+    }
+
+    let compReady=false;
+    try{
+      const q=query(collection(db,"competitions"),where("publishToLobby","==",true));
+      const un=onSnapshot(q,snap=>{
+        for(const change of snap.docChanges()){
+          if(change.type!=="added")continue;
+          const room={id:change.doc.id,...change.doc.data()};
+          if(room.status==="finished"||room.hidden===true||room.active===false)continue;
+          if(!shouldNotifyFirestoreItem(room,baseline,compReady))continue;
+          const title=currentUILanguage==="en"?"Live competition":"مسابقة جديدة";
+          let body=room.title||(currentUILanguage==="en"?"Classora Competition":"مسابقة Classora");
+          if(room.code)body+=" • "+(currentUILanguage==="en"?"Code ":"الكود ")+room.code;
+          classoraNotify(title,body,{type:"competition",eventKey:"competition:"+room.id});
+        }
+        compReady=true;
+      },err=>console.warn("competition notifications",err));
+      classoraNotificationUnsubs.push(un);
+    }catch(err){console.warn("competition notification setup",err)}
+
+    let examReady=false;
+    try{
+      const q=query(collection(db,"exams"),where("published","==",true));
+      const un=onSnapshot(q,snap=>{
+        for(const change of snap.docChanges()){
+          if(change.type!=="added")continue;
+          const e={id:change.doc.id,...change.doc.data()};
+          if(!shouldNotifyFirestoreItem(e,baseline,examReady))continue;
+          const title=currentUILanguage==="en"?"New exam":"امتحان جديد";
+          let body=e.title||(currentUILanguage==="en"?"Exam":"امتحان");
+          if(e.code)body+=" • "+(currentUILanguage==="en"?"Code ":"الكود ")+e.code;
+          classoraNotify(title,body,{type:"exam",eventKey:"exam:"+e.id});
+        }
+        examReady=true;
+      },err=>console.warn("exam notifications",err));
+      classoraNotificationUnsubs.push(un);
+    }catch(err){console.warn("exam notification setup",err)}
+  }
+
+  if(isTeacherLikeProfile(profile)){
+    try{
+      const classes=await getOwnedClasses(user.uid);
+      for(const cls of classes){
+        let ready=false;
+        const un=onSnapshot(collection(db,"classes",cls.id,"members"),snap=>{
+          for(const change of snap.docChanges()){
+            if(change.type!=="added")continue;
+            const m={uid:change.doc.id,...change.doc.data()};
+            if(m.uid===user.uid)continue;
+            if(!shouldNotifyFirestoreItem(m,baseline,ready))continue;
+            const title=currentUILanguage==="en"?"Student joined your class":"طالب دخل صفك";
+            const body=(m.displayName||(currentUILanguage==="en"?"A student":"طالب"))+" • "+(cls.name||(currentUILanguage==="en"?"Class":"الصف"));
+            classoraNotify(title,body,{type:"classJoin",eventKey:"classJoin:"+cls.id+":"+m.uid+":"+(firestoreMs(m.joinedAt)||"new")});
+          }
+          ready=true;
+        },err=>console.warn("member notifications",err));
+        classoraNotificationUnsubs.push(un);
+      }
+    }catch(err){console.warn("teacher notification setup",err)}
+  }
+  updateClassoraNotificationSettings();
+}
+
+document.getElementById("lobbyNotificationsBtn")?.addEventListener("click",openClassoraNotificationCenter);
+document.getElementById("openNotificationCenterSettingsBtn")?.addEventListener("click",openClassoraNotificationCenter);
+document.getElementById("closeNotificationCenter")?.addEventListener("click",()=>document.getElementById("notificationCenterModal")?.classList.remove("open"));
+document.getElementById("notificationCenterModal")?.addEventListener("click",e=>{if(e.target===e.currentTarget)e.currentTarget.classList.remove("open")});
+document.getElementById("enableNotificationsBtn")?.addEventListener("click",enableClassoraNotifications);
+document.getElementById("notificationCenterEnableBtn")?.addEventListener("click",enableClassoraNotifications);
+document.getElementById("notificationCenterClearBtn")?.addEventListener("click",clearClassoraNotificationCenter);
+
+document.addEventListener("gesturestart",e=>{
+  if(!e.target?.closest?.("#scene,.equation-3d-scene"))e.preventDefault()
+},{passive:false});
+document.addEventListener("touchmove",e=>{
+  if(e.touches?.length>1&&!e.target?.closest?.("#scene,.equation-3d-scene"))e.preventDefault()
+},{passive:false});
+renderClassoraNotificationBadge();
+updateClassoraNotificationSettings();
 
 /* ================= V44 PWA INSTALL ================= */
 let deferredInstallPrompt=null;
