@@ -3068,6 +3068,149 @@ body.light{
   .live-rank{grid-template-columns:34px minmax(0,1fr) 68px!important}
 }
 
+
+/* ================= V39 CLASSORA FORMS + EQUATION LAB ================= */
+html{color-scheme:dark}
+body.light{color-scheme:light}
+input,select,textarea{
+  background:#101d2b!important;
+  color:#eef6fb!important;
+  border:1px solid rgba(205,225,242,.11)!important;
+  box-shadow:none!important;
+}
+input::placeholder,textarea::placeholder{color:#7890a3!important}
+select{
+  background-color:#101d2b!important;
+  color:#eef6fb!important;
+  color-scheme:dark;
+}
+select option,optgroup{
+  background:#101d2b!important;
+  color:#eef6fb!important;
+}
+select:focus,input:focus,textarea:focus{
+  outline:none!important;
+  border-color:rgba(87,174,240,.34)!important;
+  box-shadow:0 0 0 3px rgba(75,156,225,.08)!important;
+}
+body.light input,body.light select,body.light textarea{
+  background:#f7fafc!important;
+  color:#1d3445!important;
+  border-color:#d8e4eb!important;
+  color-scheme:light;
+}
+body.light select option,body.light optgroup{
+  background:#f7fafc!important;color:#1d3445!important;
+}
+input[readonly],input:disabled{
+  opacity:.86;
+  background:#0d1824!important;
+}
+body.light input[readonly],body.light input:disabled{background:#eef3f6!important}
+
+/* Activity card */
+.pythag-action-card.equations{
+  background:
+    radial-gradient(circle at 88% 10%,rgba(82,192,205,.10),transparent 32%),
+    linear-gradient(145deg,rgba(50,135,190,.055),rgba(75,173,160,.035))!important;
+}
+
+/* Equation lab */
+.equation-lab-box{
+  width:min(1320px,calc(100vw - 24px))!important;
+  max-width:min(1320px,calc(100vw - 24px))!important;
+  max-height:94vh!important;
+}
+.equation-lab-layout{
+  display:grid;
+  grid-template-columns:minmax(330px,.82fr) minmax(440px,1.35fr);
+  gap:12px;
+}
+.equation-controls-card,.equation-graph-card{
+  border-radius:17px;padding:14px;
+  background:linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.014));
+  border:1px solid rgba(205,225,242,.07)
+}
+.equation-pair-title{
+  margin:4px 0 7px;font-size:11px;font-weight:1000;color:#b6c8d6
+}
+.equation-coeff-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px
+}
+.equation-coeff-grid label,.equation-method-label{
+  display:grid;gap:4px;font-size:9px;color:#8da4b5
+}
+.equation-coeff-grid input{text-align:center;font-weight:900;font-variant-numeric:tabular-nums}
+.equation-preview{
+  margin:7px 0 12px;padding:9px 11px;border-radius:10px;
+  background:rgba(81,154,216,.05);border:1px solid rgba(81,154,216,.09);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;font-weight:900;text-align:center;direction:ltr
+}
+.equation-method-label{margin-top:3px}
+.equation-actions{
+  display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:7px;margin-top:9px
+}
+.equation-actions button{min-height:42px}
+.equation-result{
+  margin-top:10px;padding:11px;border-radius:12px;
+  background:rgba(76,190,143,.045);border:1px solid rgba(76,190,143,.10);
+  min-height:44px;font-size:12px;font-weight:900;line-height:1.55
+}
+.equation-result.no-solution{
+  background:rgba(236,121,131,.045);border-color:rgba(236,121,131,.11)
+}
+.equation-steps{
+  margin-top:8px;padding:10px;border-radius:12px;min-height:92px;
+  background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.045);
+  color:#9db0bf;font-size:10px;line-height:1.75
+}
+.equation-step-line{
+  display:flex;gap:7px;align-items:flex-start;padding:4px 0
+}
+.equation-step-line b{
+  flex:none;width:21px;height:21px;border-radius:7px;display:grid;place-items:center;
+  background:rgba(85,162,219,.075);color:#a9d7f7;font-size:8px
+}
+.equation-graph-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px
+}
+.equation-graph-head b{display:block;font-size:13px}
+.equation-graph-head small{display:block;margin-top:3px;color:#849bad;font-size:9px}
+.equation-legend{display:flex;gap:8px;flex-wrap:wrap;font-size:8px;color:#92a6b6}
+.equation-legend span{display:flex;align-items:center;gap:4px}
+.eq-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.eq-dot.one{background:#67b8ef}.eq-dot.two{background:#d18be7}.eq-dot.sol{background:#75d5a8}
+.equation-3d-scene{
+  height:min(66vh,650px);min-height:420px;border-radius:14px;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(52,104,148,.11),transparent 55%),
+    #08121d;
+  border:1px solid rgba(205,225,242,.07);
+  position:relative
+}
+.equation-3d-scene canvas{display:block;width:100%!important;height:100%!important}
+.equation-graph-caption{
+  margin-top:7px;color:#8199aa;font-size:9px;text-align:center
+}
+body.light .equation-controls-card,body.light .equation-graph-card,
+body.light .equation-steps,body.light .equation-preview{
+  background:#fff;border-color:#dce7ed;color:#21384a
+}
+body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
+
+@media(max-width:920px){
+  .equation-lab-layout{grid-template-columns:1fr}
+  .equation-3d-scene{height:52vh;min-height:360px}
+}
+@media(max-width:600px){
+  .equation-lab-box{width:calc(100vw - 10px)!important;max-width:calc(100vw - 10px)!important}
+  .equation-coeff-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .equation-actions{grid-template-columns:1fr}
+  .equation-graph-head{flex-direction:column}
+  .equation-3d-scene{height:48vh;min-height:330px}
+}
+
 </style>
 </head>
 <body>
@@ -3213,8 +3356,8 @@ body.light{
         <div class="lobby-ai-head">
           <div class="lobby-ai-orb">∟</div>
           <div>
-            <b id="lobbyAIName">فيثاغورسي</b>
-            <span>مساعد فيثاغورس</span>
+            <b id="lobbyAIName">Classora AI Assistant</b>
+            <span>Classora learning assistant</span>
           </div>
         </div>
         <div class="lobby-ai-reply" id="lobbyAIReply">اسألني عن الوتر، القانون، مثلث قائم، ثلاثيات فيثاغورس أو أعطيني أرقام وأنا أحسبها.</div>
@@ -3241,6 +3384,9 @@ body.light{
         </button>
         <button class="pythag-action-card questions" id="lobbyQuestionBtn">
           <span>❓</span><b>أسئلة تدريب</b><small>أسئلة متغيرة مع تصحيح مباشر</small>
+        </button>
+        <button class="pythag-action-card equations" id="equationLabBtn">
+          <span>🧮</span><b>معادلتان بمجهولين</b><small>حل x و y مع رسم 3D قابل للتعديل</small>
         </button>
         <button class="pythag-action-card exam" id="lobbyExamBtn">
           <span>🎓</span><b>امتحانات</b><small>سهل، متوسط، صعب وخبير</small>
@@ -3833,6 +3979,72 @@ body.light{
   </div>
 </div>
 
+<div class="modal" id="equationLabModal">
+  <div class="modalbox equation-lab-box">
+    <div class="modalhead">
+      <div>
+        <h2 id="equationLabTitle">🧮 معادلتان بمجهولين + رسم 3D</h2>
+        <div class="subject-assistant-line" id="equationLabSub">عدّل المعادلتين وشوف الحل والتقاطع يتغيّر مباشرة.</div>
+      </div>
+      <button class="close" id="closeEquationLab">×</button>
+    </div>
+
+    <div class="equation-lab-layout">
+      <section class="equation-controls-card">
+        <div class="equation-pair-title" id="equation1Title">المعادلة الأولى</div>
+        <div class="equation-coeff-grid">
+          <label><span>a₁</span><input id="eqA1" type="number" step="0.1" value="2"></label>
+          <label><span>b₁</span><input id="eqB1" type="number" step="0.1" value="1"></label>
+          <label><span>c₁</span><input id="eqC1" type="number" step="0.1" value="7"></label>
+        </div>
+        <div class="equation-preview" id="eqPreview1">2x + 1y = 7</div>
+
+        <div class="equation-pair-title" id="equation2Title">المعادلة الثانية</div>
+        <div class="equation-coeff-grid">
+          <label><span>a₂</span><input id="eqA2" type="number" step="0.1" value="1"></label>
+          <label><span>b₂</span><input id="eqB2" type="number" step="0.1" value="-1"></label>
+          <label><span>c₂</span><input id="eqC2" type="number" step="0.1" value="2"></label>
+        </div>
+        <div class="equation-preview" id="eqPreview2">1x - 1y = 2</div>
+
+        <label class="equation-method-label">
+          <span id="equationMethodLabel">طريقة الشرح</span>
+          <select id="equationMethod">
+            <option value="auto">✨ تلقائي</option>
+            <option value="elimination">➖ الحذف</option>
+            <option value="substitution">🔁 التعويض</option>
+          </select>
+        </label>
+
+        <div class="equation-actions">
+          <button class="apply" id="solveEquationSystemBtn">✓ حل وتحديث الرسم</button>
+          <button class="exam-secondary" id="randomEquationSystemBtn">🎲 مثال جديد</button>
+          <button class="exam-secondary" id="resetEquationCameraBtn">⟳ إعادة زاوية الرسم</button>
+        </div>
+
+        <div class="equation-result" id="equationResult"></div>
+        <div class="equation-steps" id="equationSteps"></div>
+      </section>
+
+      <section class="equation-graph-card">
+        <div class="equation-graph-head">
+          <div>
+            <b id="equationGraphTitle">📊 الرسم التفاعلي ثلاثي الأبعاد</b>
+            <small id="equationGraphHint">اسحب لتدوير الرسم • استخدم العجلة للتقريب • غيّر القيم ليتحدث فورًا</small>
+          </div>
+          <div class="equation-legend">
+            <span><i class="eq-dot one"></i> Eq 1</span>
+            <span><i class="eq-dot two"></i> Eq 2</span>
+            <span><i class="eq-dot sol"></i> Solution</span>
+          </div>
+        </div>
+        <div id="equation3DScene" class="equation-3d-scene"></div>
+        <div class="equation-graph-caption" id="equationGraphCaption">تقاطع المستويين يمثل حل x و y.</div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="pythagQuestionsModal">
   <div class="modalbox pythag-question-modalbox">
     <div class="modalhead">
@@ -4050,9 +4262,10 @@ body.light{
       </section>
 
       <section class="settings-card">
-        <h3>🤖 اسم فيثاغورسي</h3>
-        <input id="settingsAIName" maxlength="24" placeholder="فيثاغورسي">
-        <button class="exam-secondary" id="saveAINameSettingsBtn">حفظ اسم المساعد</button>
+        <h3>🤖 Classora AI Assistant</h3>
+        <input id="settingsAIName" value="Classora AI Assistant" readonly>
+        <div class="settings-note">The assistant name is part of the Classora platform.</div>
+        <button class="exam-secondary hidden" id="saveAINameSettingsBtn">Save assistant name</button>
       </section>
 
       <section class="settings-card">
@@ -4233,7 +4446,7 @@ body.light{
   <aside class="side">
     <div class="brand">
       <h1>Classora</h1>
-      <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
+      <div class="ai-chip" id="pythagAIChip">● Classora AI Assistant</div>
       <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
       <button class="exam-secondary" id="labSettingsBtn" style="margin-top:7px;width:100%">⚙️ الإعدادات</button>
     </div>
@@ -4329,11 +4542,11 @@ body.light{
 
 <section class="card ai-card">
       <div class="ai-head">
-        <div class="ai-name"><span class="botlogo">∟</span><span>فيثاغورسي AI</span></div>
+        <div class="ai-name"><span class="botlogo">∟</span><span>Classora AI Assistant</span></div>
         <div class="online">● جاهز</div>
       </div>
       <div class="chat" id="chat">
-        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>فيثاغورسي</b>. اسألني عن نظرية فيثاغورس، الوتر، المثلث القائم، الحسابات، المجسم أو الامتحانات والمسابقات.</div>
+        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>Classora AI Assistant</b>. اسألني عن الدروس، فيثاغورس، المعادلات، الحسابات، الامتحانات أو المسابقات.</div>
       </div>
       <div class="suggestions">
         <button data-q="اشرحلي النظرية ببساطة">اشرحها ببساطة</button>
@@ -4342,7 +4555,7 @@ body.light{
         <button data-q="هل تنفع لكل المثلثات؟">متى نستخدمها؟</button>
       </div>
       <div class="chatinput">
-        <button class="mic" id="micBtn" type="button" title="احكي مع فيثاغورسي">🎤</button>
+        <button class="mic" id="micBtn" type="button" title="Talk to Classora AI Assistant">🎤</button>
         <textarea id="question" rows="1" placeholder="اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟"></textarea>
         <button class="send" id="sendBtn">➤</button>
       </div>
@@ -4355,9 +4568,9 @@ body.light{
         </select>
         <label class="ai-auto"><input id="aiAutoSpeak" type="checkbox"> 🔊 اقرأ الرد تلقائيًا</label>
       </div>
-      <div class="dictnote">فيثاغورسي ذكي محليًا • فهم عربي موسّع ولهجات • يحفظ الاسم والسياق والمحادثات</div>
+      <div class="dictnote">Classora AI Assistant • understands Arabic and English • remembers context on this device</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
-      <div class="ai-scope">مخصص لنظرية فيثاغورس: يفهم أسئلتك عن الوتر، الأضلاع، المثلث القائم، الأمثلة والحسابات.</div>
+      <div class="ai-scope">Classora AI Assistant can help with lessons, Pythagoras, equations, examples and calculations.</div>
     </section>
   </aside>
 </div>
@@ -4844,14 +5057,14 @@ window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
 
 const defaultAssistantNames={
-  lobby:"فيثاغورسي",
-  math:"أوريون",
-  science:"نيوتن",
-  arabic:"بيان",
-  hebrew:"نوعام",
-  english:"Lingo",
-  geography:"أطلس",
-  pythagoras:"فيثاغورسي"
+  lobby:"Classora AI Assistant",
+  math:"Classora AI Assistant",
+  science:"Classora AI Assistant",
+  arabic:"Classora AI Assistant",
+  hebrew:"Classora AI Assistant",
+  english:"Classora AI Assistant",
+  geography:"Classora AI Assistant",
+  pythagoras:"Classora AI Assistant"
 };
 let currentSubjectContext="mixed";
 
@@ -4903,9 +5116,7 @@ function assistantNames(){
   return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
 }
 function assistantNameFor(subject){
-  const english=localStorage.getItem("pythagorasi_language")==="en";
-  if(english&&(subject==="pythagoras"||subject==="lobby"))return "Pythagorasi";
-  return assistantNames()[subject]||defaultAssistantNames[subject]||"مساعدي";
+  return "Classora AI Assistant";
 }
 function applyAvatar(el,profile,name){
   if(!el)return;
@@ -4921,17 +5132,15 @@ function applyAvatar(el,profile,name){
   }
 }
 function updateAssistantLabels(){
-  const names=assistantNames();
-  document.getElementById("lobbyAIName")?.replaceChildren(document.createTextNode(names.lobby));
-  document.querySelectorAll("[data-ai-label]").forEach(el=>{
-    el.textContent=names[el.dataset.aiLabel]||defaultAssistantNames[el.dataset.aiLabel]||"مساعد";
-  });
+  const fixedName="Classora AI Assistant";
+  document.getElementById("lobbyAIName")?.replaceChildren(document.createTextNode(fixedName));
+  document.querySelectorAll("[data-ai-label]").forEach(el=>{el.textContent=fixedName});
   const chip=document.getElementById("pythagAIChip");
-  if(chip)chip.textContent=`● ${names.pythagoras}`;
-  if(currentSubjectContext&&currentSubjectContext!=="mixed"){
-    const sa=document.getElementById("subjectAssistantName");
-    if(sa)sa.textContent=names[currentSubjectContext]||"مساعد";
-  }
+  if(chip)chip.textContent=`● ${fixedName}`;
+  const sa=document.getElementById("subjectAssistantName");
+  if(sa)sa.textContent=fixedName;
+  const topic=document.getElementById("topicAIName");
+  if(topic)topic.textContent=fixedName;
 }
 function showPlatformLobby(){
   document.getElementById("platformLobby")?.classList.remove("hidden");
@@ -9521,24 +9730,24 @@ const uiExactTranslations=new Map([
 
 
 [
-  ["أهلًا 👋","Welcome 👋"],["فيثاغورسي","Pythagorasi"],["المختبر 3D","3D Lab"],["تحدّي فيثاغورس","Pythagoras Challenge"],
+  ["أهلًا 👋","Welcome 👋"],["فيثاغورسي","Classora AI Assistant"],["المختبر 3D","3D Lab"],["تحدّي فيثاغورس","Pythagoras Challenge"],
   ["أسئلة تدريب","Practice Questions"],["امتحانات","Exams"],["مسابقة مباشرة","Live Competition"],["ملفي","My Profile"],
   ["بنك أسئلة فيثاغورس","Pythagoras Question Bank"],["نتائج الامتحانات","Exam Results"],["مسابقاتي","My Competitions"],
   ["السؤال","Question"],["النقاط","Score"],["المادة","Subject"],["المساعد:","Assistant:"],["بحث","Search"],
   ["اختار موضوع حتى تفتح الشرح والأمثلة والتدريب.","Choose a topic to open its explanation, examples and practice."],
   ["← كل المواضيع","← All topics"],["الموضوع","Topic"],["المساعد","Assistant"],["📖 الشرح","📖 Explanation"],["💡 مثال","💡 Example"],
-  ["🎯 تدريب سريع","🎯 Quick Practice"],["🤖 اسأل مساعد الموضوع","🤖 Ask the topic assistant"],["🎓 امتحان على هذا الموضوع","🎓 Exam on this topic"],
+  ["🎯 تدريب سريع","🎯 Quick Practice"],["🤖 اسأل مساعد الموضوع","🤖 Ask Classora AI Assistant"],["🎓 امتحان على هذا الموضوع","🎓 Exam on this topic"],
   ["🔎 ابحث عن موضوع ثاني","🔎 Search another topic"],["👤 ملفي الشخصي","👤 My Profile"],["🤖 أسماء المساعدين","🤖 Assistant Names"],
   ["مساعد اللوبي","Lobby Assistant"],["حفظ الأسماء","Save names"],["اسم الدخول: —","Login name: —"],["العربية","Arabic"],
   ["الخيار 1 هو الصحيح","Option 1 is correct"],["الخيار 2 هو الصحيح","Option 2 is correct"],["الخيار 3 هو الصحيح","Option 3 is correct"],["الخيار 4 هو الصحيح","Option 4 is correct"],
   ["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","🖱 Drag left/right or up/down within the front viewing angle"],
-  ["🔎 عجلة الماوس للتقريب","🔎 Use the mouse wheel to zoom"],["● فيثاغورسي","● Pythagorasi"],["تسجيل خروج","Log out"],
+  ["🔎 عجلة الماوس للتقريب","🔎 Use the mouse wheel to zoom"],["● فيثاغورسي","● Classora AI Assistant"],["تسجيل خروج","Log out"],
   ["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.",", and the site calculates the requested side and rebuilds the model and sand."],
   ["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. The sand is distributed in proportion to each square's area."],
-  ["0 نقاط","0 pts"],["فيثاغورسي AI","Pythagorasi AI"],["هلا فيك 👋 أنا","Hi 👋 I am"],
+  ["0 نقاط","0 pts"],["فيثاغورسي AI","Classora AI Assistant"],["هلا فيك 👋 أنا","Hi 👋 I am"],
   [". اسألني عن نظرية فيثاغورس، الوتر، المثلث القائم، الحسابات، المجسم أو الامتحانات والمسابقات.",". Ask me about the Pythagorean theorem, the hypotenuse, right triangles, calculations, the model, exams or competitions."],
-  ["فيثاغورسي ذكي محليًا • فهم عربي موسّع ولهجات • يحفظ الاسم والسياق والمحادثات","Pythagorasi runs locally • understands flexible input • remembers your name, context and conversations"],
-  ["مخصص لنظرية فيثاغورس: يفهم أسئلتك عن الوتر، الأضلاع، المثلث القائم، الأمثلة والحسابات.","Focused on the Pythagorean theorem: hypotenuse, sides, right triangles, examples and calculations."],
+  ["Classora AI Assistant • understands Arabic and English • remembers context on this device","Pythagorasi runs locally • understands flexible input • remembers your name, context and conversations"],
+  ["Classora AI Assistant can help with lessons, Pythagoras, equations, examples and calculations.","Focused on the Pythagorean theorem: hypotenuse, sides, right triangles, examples and calculations."],
   ["الصوت العربي • السرعة","Voice • speed"],["عادي","Normal"],
   [". إذا سمّينا الضلعين اللذين يصنعان الزاوية القائمة بـ",". If we call the two sides that form the right angle"],
   ["و","and"],["، وسمّينا الضلع المقابل للزاوية القائمة — وهو أطول ضلع — بـ",", and call the side opposite the right angle — the longest side —"],
@@ -9577,9 +9786,54 @@ const uiExactTranslations=new Map([
   ["انتهت المسابقة!","Competition Finished!"]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
+[
+  ["Classora AI Assistant","Classora AI Assistant"],
+  ["مساعد Classora","Classora Assistant"],
+  ["Classora learning assistant","Classora learning assistant"],
+  ["🔥 اختار النشاط","🔥 Choose an Activity"],
+  ["كل النشاطات هون خاصة بنظرية فيثاغورس.","All activities are available here in one place."],
+  ["🧮 معادلتان بمجهولين","🧮 Two-Variable Equations"],
+  ["حل x و y مع رسم 3D قابل للتعديل","Solve x and y with an editable 3D graph"],
+  ["🧮 معادلتان بمجهولين + رسم 3D","🧮 Two Equations, Two Variables + 3D Graph"],
+  ["عدّل المعادلتين وشوف الحل والتقاطع يتغيّر مباشرة.","Edit both equations and watch the solution and intersection update instantly."],
+  ["المعادلة الأولى","First Equation"],
+  ["المعادلة الثانية","Second Equation"],
+  ["طريقة الشرح","Solution Method"],
+  ["✨ تلقائي","✨ Automatic"],
+  ["➖ الحذف","➖ Elimination"],
+  ["🔁 التعويض","🔁 Substitution"],
+  ["✓ حل وتحديث الرسم","✓ Solve & Update Graph"],
+  ["🎲 مثال جديد","🎲 New Example"],
+  ["⟳ إعادة زاوية الرسم","⟳ Reset Camera"],
+  ["📊 الرسم التفاعلي ثلاثي الأبعاد","📊 Interactive 3D Graph"],
+  ["اسحب لتدوير الرسم • استخدم العجلة للتقريب • غيّر القيم ليتحدث فورًا","Drag to rotate • scroll to zoom • change values for instant updates"],
+  ["تقاطع المستويين يمثل حل x و y.","The planes intersect at the x and y solution."],
+  ["توزيع اللاعبين","Player Assignment"],
+  ["طريقة العرض","Display Mode"],
+  ["🎯 الطالب يختار فريقه","🎯 Student chooses a team"],
+  ["🎲 الموقع يوزع عشوائي","🎲 Site assigns teams randomly"],
+  ["👤 فردي — بدون فرق","👤 Solo — no teams"],
+  ["📺 صف / بروجكتر","📺 Classroom / Projector"],
+  ["🌍 عن بُعد — تظهر بالموقع","🌍 Remote — visible on the site"],
+  ["اختار فريقك","Choose Your Team"],
+  ["🎯 الطالب يختار","🎯 Student chooses"],
+  ["🎲 عشوائي من الموقع","🎲 Random assignment"],
+  ["👤 فردي","👤 Solo"],
+  ["📺 بروجكتر","📺 Projector"],
+  ["🌍 عن بُعد","🌍 Remote"],
+  ["💾 تطبيق","💾 Apply"],
+  ["📺 لوحة التقدّم","📺 Progress Board"],
+  ["بانتظار النتائج…","Waiting for results…"],
+  ["🏅 الترتيب المباشر","🏅 Live Leaderboard"],
+  ["🏆 مسابقات شغّالة هسا","🏆 Live Competitions"],
+  ["اضغط دخول وادخل مباشرة للمسابقة عن بُعد.","Tap Join to enter a remote competition immediately."],
+  ["🤖 Classora AI Assistant","🤖 Classora AI Assistant"],
+  ["The assistant name is part of the Classora platform.","The assistant name is part of the Classora platform."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
 [["🌐 اللغة / Language","🌐 Language"],["فيثاغورس","Pythagoras"],["أو","or"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
-[["احكي مع فيثاغورسي","Talk to Pythagorasi"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+[["احكي مع فيثاغورسي","Talk to Classora AI Assistant"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 [["🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.","🔒 You stay signed in on this device for 2 months unless you log out."]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
@@ -9593,7 +9847,7 @@ const uiPlaceholderTranslations=new Map([
   ["اكتب اسمك","Enter your name"],["اكتب جوابك هنا...","Enter your answer..."],["اكتب سؤالك لفيثاغورسي...","Ask Pythagorasi..."],
   ["مثال: بسام جابر","Example: Bassam Jaber"],["6 خانات أو أكثر","6 characters or more"],
   ["اكتب كلمة السر مرة ثانية","Enter the password again"],["الكود اللي أعطاك إياه المعلم","Code given by your teacher"],
-  ["الاسم الظاهر","Display name"],["فيثاغورسي","Pythagorasi"],["كود الصف","Class code"],
+  ["الاسم الظاهر","Display name"],["فيثاغورسي","Classora AI Assistant"],["كود الصف","Class code"],
   ["مثال: ثامن 6","Example: Grade 8 - Class 6"],["كود دعوة المعلم","Teacher invite code"],
   ["عنوان الوظيفة","Assignment title"],["تعليمات الوظيفة للطلاب...","Assignment instructions..."],
   ["اكتب السؤال","Write the question"],["اكتب الرقم","Enter a number"],["اكتب إجابتك المفتوحة...","Write your open answer..."],
@@ -9601,6 +9855,9 @@ const uiPlaceholderTranslations=new Map([
   ["كود الامتحان","Exam code"],["اسم الطالب","Student name"]
 ]);
 
+
+uiPlaceholderTranslations.set("مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?");
+uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?");
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
   s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
@@ -9783,7 +10040,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLoginName").textContent=`اسم الدخول: ${p.loginName||p.originalLoginName||p.nameKey||name}`;
   document.getElementById("settingsProfileId").textContent=p.profileId||"----------";
   document.getElementById("settingsRememberedLogin").textContent=`تسجيل الدخول محفوظ لغاية: ${formatLoginExpiry(rememberedLoginExpiresAt())}`;
-  document.getElementById("settingsAIName").value=assistantNameFor("pythagoras");
+  document.getElementById("settingsAIName").value="Classora AI Assistant";
   const avatar=document.getElementById("settingsAvatar");
   applyAvatar(avatar,p,name);
   document.getElementById("settingsSoundToggle").checked=soundEnabled;
@@ -9851,7 +10108,7 @@ document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>
 
 document.getElementById("saveAINameSettingsBtn").addEventListener("click",async()=>{
   if(!auth.currentUser)return;
-  const ai=(document.getElementById("settingsAIName").value.trim()||"فيثاغورسي").slice(0,24);
+  const ai="Classora AI Assistant";
   const names={...assistantNames(),lobby:ai,pythagoras:ai};
   try{
     await setDoc(doc(db,"users",auth.currentUser.uid),{assistantNames:names,updatedAt:serverTimestamp()},{merge:true});
@@ -10327,11 +10584,294 @@ document.getElementById("topicExamBtn").addEventListener("click",()=>{
   startExam(makeTopicExam(currentTopic));
 });
 
+
+const equationLabModal=document.getElementById("equationLabModal");
+const equationInputs=["eqA1","eqB1","eqC1","eqA2","eqB2","eqC2"];
+let equation3D={
+  initialized:false,scene:null,camera:null,renderer:null,controls:null,
+  objects:[],resizeObserver:null,animationId:null
+};
+
+function equationVal(id,fallback=0){
+  const n=Number(document.getElementById(id)?.value);
+  return Number.isFinite(n)?n:fallback;
+}
+function equationCoefficients(){
+  return {
+    a1:equationVal("eqA1",2),b1:equationVal("eqB1",1),c1:equationVal("eqC1",7),
+    a2:equationVal("eqA2",1),b2:equationVal("eqB2",-1),c2:equationVal("eqC2",2)
+  };
+}
+function eqNum(n){
+  if(Math.abs(n)<1e-10)return "0";
+  const rounded=Math.round(n*1000)/1000;
+  return Number.isInteger(rounded)?String(rounded):String(rounded);
+}
+function equationText(a,b,c){
+  const sign=b<0?"−":"+";
+  return `${eqNum(a)}x ${sign} ${eqNum(Math.abs(b))}y = ${eqNum(c)}`;
+}
+function updateEquationPreviews(){
+  const q=equationCoefficients();
+  document.getElementById("eqPreview1").textContent=equationText(q.a1,q.b1,q.c1);
+  document.getElementById("eqPreview2").textContent=equationText(q.a2,q.b2,q.c2);
+}
+
+function solveLinearSystemValues(q=equationCoefficients()){
+  const D=q.a1*q.b2-q.a2*q.b1;
+  const Dx=q.c1*q.b2-q.c2*q.b1;
+  const Dy=q.a1*q.c2-q.a2*q.c1;
+  const eps=1e-9;
+  if(Math.abs(D)>eps)return {type:"unique",D,x:Dx/D,y:Dy/D};
+  const same1=Math.abs(q.a1*q.c2-q.a2*q.c1)<eps;
+  const same2=Math.abs(q.b1*q.c2-q.b2*q.c1)<eps;
+  return {type:(same1&&same2)?"infinite":"none",D};
+}
+
+function equationStepsHTML(q,solution,method){
+  const en=currentUILanguage==="en";
+  if(solution.type==="none"){
+    return `<div class="equation-step-line"><b>1</b><span>${en?"The determinant is 0, so the equations do not intersect at one point.":"المحدد يساوي 0، والمعادلتان لا تتقاطعان بحل واحد."}</span></div>
+      <div class="equation-step-line"><b>2</b><span>${en?"The planes are parallel, so there is no solution.":"المستويان متوازيان، لذلك لا يوجد حل."}</span></div>`;
+  }
+  if(solution.type==="infinite"){
+    return `<div class="equation-step-line"><b>1</b><span>${en?"The determinant is 0.":"المحدد يساوي 0."}</span></div>
+      <div class="equation-step-line"><b>2</b><span>${en?"Both equations describe the same line, so there are infinitely many solutions.":"المعادلتان تمثلان نفس الخط، لذلك يوجد عدد لا نهائي من الحلول."}</span></div>`;
+  }
+
+  const useMethod=method==="auto"
+    ?(Math.abs(q.a1)>=Math.abs(q.b1)?"elimination":"substitution")
+    :method;
+
+  if(useMethod==="substitution"){
+    let first,expression,substituted;
+    if(Math.abs(q.b1)>1e-9){
+      first=`y = (${eqNum(q.c1)} − ${eqNum(q.a1)}x) / ${eqNum(q.b1)}`;
+      expression=`${eqNum(q.a2)}x + ${eqNum(q.b2)}((${eqNum(q.c1)} − ${eqNum(q.a1)}x) / ${eqNum(q.b1)}) = ${eqNum(q.c2)}`;
+      substituted=`x = ${eqNum(solution.x)}, then y = ${eqNum(solution.y)}`;
+    }else{
+      first=`x = ${eqNum(q.c1/q.a1)}`;
+      expression=`Substitute x into ${equationText(q.a2,q.b2,q.c2)}`;
+      substituted=`x = ${eqNum(solution.x)}, y = ${eqNum(solution.y)}`;
+    }
+    return `
+      <div class="equation-step-line"><b>1</b><span>${en?"Isolate one variable:":"اعزل أحد المجهولين:"} <strong dir="ltr">${first}</strong></span></div>
+      <div class="equation-step-line"><b>2</b><span>${en?"Substitute into the second equation:":"عوّض في المعادلة الثانية:"} <strong dir="ltr">${expression}</strong></span></div>
+      <div class="equation-step-line"><b>3</b><span>${en?"Solve and back-substitute:":"حل ثم ارجع بالتعويض:"} <strong dir="ltr">${substituted}</strong></span></div>`;
+  }
+
+  const m1=q.a2, m2=-q.a1;
+  const yCoef=q.b1*m1+q.b2*m2;
+  const rhs=q.c1*m1+q.c2*m2;
+  return `
+    <div class="equation-step-line"><b>1</b><span>${en?"Multiply the equations so x cancels.":"اضرب المعادلتين حتى يختفي x."}</span></div>
+    <div class="equation-step-line"><b>2</b><span dir="ltr">(${eqNum(m1)})·Eq1 + (${eqNum(m2)})·Eq2 → ${eqNum(yCoef)}y = ${eqNum(rhs)}</span></div>
+    <div class="equation-step-line"><b>3</b><span>${en?"Then solve y and substitute back:":"حل y ثم عوّض للخلف:"} <strong dir="ltr">x = ${eqNum(solution.x)}, y = ${eqNum(solution.y)}</strong></span></div>`;
+}
+
+function renderEquationSolution(){
+  updateEquationPreviews();
+  const q=equationCoefficients();
+  const result=solveLinearSystemValues(q);
+  const box=document.getElementById("equationResult");
+  const steps=document.getElementById("equationSteps");
+  const method=document.getElementById("equationMethod").value;
+  const en=currentUILanguage==="en";
+
+  box.classList.toggle("no-solution",result.type!=="unique");
+  if(result.type==="unique"){
+    box.innerHTML=`${en?"Unique solution":"حل وحيد"}: <strong dir="ltr">x = ${eqNum(result.x)} &nbsp; • &nbsp; y = ${eqNum(result.y)}</strong>`;
+  }else if(result.type==="none"){
+    box.textContent=en?"No solution — the equations are parallel.":"لا يوجد حل — المعادلتان متوازيتان.";
+  }else{
+    box.textContent=en?"Infinitely many solutions — both equations represent the same line.":"عدد لا نهائي من الحلول — المعادلتان تمثلان نفس الخط.";
+  }
+  steps.innerHTML=equationStepsHTML(q,result,method);
+  updateEquation3D(q,result);
+  return result;
+}
+
+function equationPlaneGeometry(a,b,c,size=18,height=9){
+  const len=Math.hypot(a,b)||1;
+  const dx=-b/len,dy=a/len;
+  const px=a*c/(a*a+b*b||1),py=b*c/(a*a+b*b||1);
+  const half=size/2;
+  const verts=new Float32Array([
+    px-dx*half,py-dy*half,-height/2,
+    px+dx*half,py+dy*half,-height/2,
+    px+dx*half,py+dy*half, height/2,
+    px-dx*half,py-dy*half, height/2
+  ]);
+  const geom=new THREE.BufferGeometry();
+  geom.setAttribute("position",new THREE.BufferAttribute(verts,3));
+  geom.setIndex([0,1,2,0,2,3]);
+  geom.computeVertexNormals();
+  return geom;
+}
+
+function equationLineGeometry(a,b,c,size=18,z=.03){
+  const len=Math.hypot(a,b)||1;
+  const dx=-b/len,dy=a/len;
+  const px=a*c/(a*a+b*b||1),py=b*c/(a*a+b*b||1);
+  const h=size/2;
+  const pts=[
+    new THREE.Vector3(px-dx*h,py-dy*h,z),
+    new THREE.Vector3(px+dx*h,py+dy*h,z)
+  ];
+  return new THREE.BufferGeometry().setFromPoints(pts);
+}
+
+function clearEquation3DObjects(){
+  for(const obj of equation3D.objects){
+    equation3D.scene?.remove(obj);
+    obj.geometry?.dispose?.();
+    if(Array.isArray(obj.material))obj.material.forEach(m=>m.dispose?.());
+    else obj.material?.dispose?.();
+  }
+  equation3D.objects=[];
+}
+
+function initEquation3D(){
+  if(equation3D.initialized)return;
+  const host=document.getElementById("equation3DScene");
+  if(!host)return;
+
+  const scene=new THREE.Scene();
+  scene.background=null;
+  const camera=new THREE.PerspectiveCamera(44,1,.1,100);
+  camera.position.set(10,-12,10);
+
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  host.appendChild(renderer.domElement);
+
+  const controls=new OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true;
+  controls.dampingFactor=.08;
+  controls.target.set(0,0,0);
+  controls.minDistance=5;
+  controls.maxDistance=35;
+
+  const ambient=new THREE.AmbientLight(0xffffff,1.25);scene.add(ambient);
+  const key=new THREE.DirectionalLight(0xffffff,1.45);key.position.set(7,-6,12);scene.add(key);
+
+  const grid=new THREE.GridHelper(20,20,0x42647a,0x24394a);
+  grid.rotation.x=Math.PI/2;
+  grid.material.transparent=true;grid.material.opacity=.42;
+  scene.add(grid);
+
+  const axes=new THREE.AxesHelper(5.5);
+  scene.add(axes);
+
+  const resize=()=>{
+    const w=Math.max(280,host.clientWidth),h=Math.max(260,host.clientHeight);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;camera.updateProjectionMatrix();
+  };
+  resize();
+
+  const ro=new ResizeObserver(resize);ro.observe(host);
+  const animate=()=>{
+    equation3D.animationId=requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene,camera);
+  };
+  animate();
+
+  equation3D={...equation3D,initialized:true,scene,camera,renderer,controls,resizeObserver:ro};
+}
+
+function updateEquation3D(q=equationCoefficients(),solution=solveLinearSystemValues(q)){
+  initEquation3D();
+  if(!equation3D.initialized)return;
+  clearEquation3DObjects();
+
+  const scene=equation3D.scene;
+  const p1=new THREE.Mesh(
+    equationPlaneGeometry(q.a1,q.b1,q.c1),
+    new THREE.MeshPhongMaterial({color:0x67b8ef,transparent:true,opacity:.19,side:THREE.DoubleSide,depthWrite:false})
+  );
+  const p2=new THREE.Mesh(
+    equationPlaneGeometry(q.a2,q.b2,q.c2),
+    new THREE.MeshPhongMaterial({color:0xd18be7,transparent:true,opacity:.17,side:THREE.DoubleSide,depthWrite:false})
+  );
+  const l1=new THREE.Line(equationLineGeometry(q.a1,q.b1,q.c1),new THREE.LineBasicMaterial({color:0x67b8ef}));
+  const l2=new THREE.Line(equationLineGeometry(q.a2,q.b2,q.c2),new THREE.LineBasicMaterial({color:0xd18be7}));
+  scene.add(p1,p2,l1,l2);
+  equation3D.objects.push(p1,p2,l1,l2);
+
+  if(solution.type==="unique"&&Number.isFinite(solution.x)&&Number.isFinite(solution.y)){
+    const sphere=new THREE.Mesh(
+      new THREE.SphereGeometry(.19,24,16),
+      new THREE.MeshPhongMaterial({color:0x75d5a8,emissive:0x163f31})
+    );
+    sphere.position.set(solution.x,solution.y,.12);
+    scene.add(sphere);
+    equation3D.objects.push(sphere);
+
+    const vline=new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(solution.x,solution.y,-4.5),
+        new THREE.Vector3(solution.x,solution.y,4.5)
+      ]),
+      new THREE.LineDashedMaterial({color:0x75d5a8,dashSize:.24,gapSize:.14,transparent:true,opacity:.9})
+    );
+    vline.computeLineDistances();
+    scene.add(vline);equation3D.objects.push(vline);
+  }
+}
+
+function resetEquationCamera(){
+  initEquation3D();
+  if(!equation3D.initialized)return;
+  equation3D.camera.position.set(10,-12,10);
+  equation3D.controls.target.set(0,0,0);
+  equation3D.controls.update();
+}
+
+function randomEquationExample(){
+  const examples=[
+    [2,1,7,1,-1,2],
+    [1,1,8,2,-1,1],
+    [3,-2,4,1,1,5],
+    [2,-3,-1,4,1,9],
+    [5,2,14,1,-2,-2]
+  ];
+  const e=examples[Math.floor(Math.random()*examples.length)];
+  equationInputs.forEach((id,i)=>document.getElementById(id).value=e[i]);
+  renderEquationSolution();
+}
+
+function openEquationLab(){
+  equationLabModal.classList.add("open");
+  setTimeout(()=>{
+    initEquation3D();
+    renderEquationSolution();
+    resetEquationCamera();
+  },60);
+}
+function closeEquationLab(){equationLabModal.classList.remove("open")}
+
+document.getElementById("equationLabBtn").addEventListener("click",openEquationLab);
+document.getElementById("closeEquationLab").addEventListener("click",closeEquationLab);
+equationLabModal.addEventListener("click",e=>{if(e.target===equationLabModal)closeEquationLab()});
+document.getElementById("solveEquationSystemBtn").addEventListener("click",renderEquationSolution);
+document.getElementById("randomEquationSystemBtn").addEventListener("click",randomEquationExample);
+document.getElementById("resetEquationCameraBtn").addEventListener("click",resetEquationCamera);
+document.getElementById("equationMethod").addEventListener("change",renderEquationSolution);
+equationInputs.forEach(id=>{
+  document.getElementById(id).addEventListener("input",()=>{
+    updateEquationPreviews();
+    renderEquationSolution();
+  });
+});
+
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";
   const reply=document.getElementById("lobbyAIReply");
-  reply.textContent="يفكّر…";
+  reply.textContent=currentUILanguage==="en"?"Thinking…":"يفكّر…";
   setTimeout(()=>{reply.textContent=pythagorasiAnswer(raw)},120);
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
@@ -14583,7 +15123,9 @@ function saveAIName(name){
 function refreshAIWelcome(){
   const el=document.getElementById("aiWelcome");
   if(!el)return;
-  el.innerHTML=`${helloForUser()} أنا <b>${escapeHtml(assistantNameFor("pythagoras"))}</b>، مساعد Classora الذكي. اسألني عن الدرس، أعطيني مسألة، أو اطلب مني أفتحلك جزء من الموقع.`;
+  el.innerHTML=currentUILanguage==="en"
+    ?`${helloForUser()} I am <b>Classora AI Assistant</b>. Ask me about a lesson, a math problem, equations, or ask me to open part of Classora.`
+    :`${helloForUser()} أنا <b>Classora AI Assistant</b>. اسألني عن درس، مسألة، معادلات، أو اطلب مني أفتحلك جزء من Classora.`;
 }
 function persistAIContext(){
   try{
@@ -14718,6 +15260,11 @@ function executeSiteAction(raw,t){
   if(has(t,"حرك الرمل","حرّك الرمل","رج الرمل","نزل الرمل")){
     document.getElementById("shakeBtn").click();
     return "تم ✅ حرّكت الرمل من جديد.";
+  }
+
+  if(has(t,"افتح المعادلات","افتح معادلتين","معادلتين بمجهولين","حل معادلتين","two equations","equation lab")){
+    document.getElementById("equationLabBtn")?.click();
+    return currentUILanguage==="en"?"Opened the two-variable equation lab ✅":"فتحتلك مختبر المعادلتين ✅";
   }
 
   if(has(t,"افتح صفوفي","روح صفوفي","صفوفي","افتح الصفوف")){
