@@ -2,8 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b1422">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Classora">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="application-name" content="Classora">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/classora-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/classora-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/classora-180.png">
 <title>Classora</title>
 <style>
 :root{
@@ -3998,6 +4009,98 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
   }
 }
 
+
+/* ================= V44 INSTALLABLE APP / PWA ================= */
+.pwa-install-button{
+  border-color:rgba(91,188,255,.17)!important;
+  background:linear-gradient(145deg,rgba(47,151,230,.10),rgba(89,95,214,.07))!important;
+}
+.pwa-install-button.hidden{display:none!important}
+.pwa-settings-card .apply{width:100%;margin:8px 0 0}
+.pwa-installed-badge{
+  margin-top:8px;padding:8px 10px;border-radius:10px;text-align:center;
+  color:#91deb9;background:rgba(73,194,143,.06);border:1px solid rgba(73,194,143,.13);
+  font-size:10px;font-weight:1000
+}
+.pwa-installed-badge.hidden{display:none!important}
+.pwa-install-modalbox{width:min(560px,calc(100vw - 20px))!important}
+.pwa-install-steps{display:grid;gap:8px}
+.pwa-install-step{
+  display:grid;grid-template-columns:34px minmax(0,1fr);gap:9px;align-items:center;
+  padding:10px;border-radius:12px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.055)
+}
+.pwa-install-step>b{
+  width:30px;height:30px;display:grid;place-items:center;border-radius:9px;
+  background:rgba(52,154,232,.10);color:#a9d9f7
+}
+.pwa-install-step span{font-size:11px;line-height:1.65}
+.pwa-preview-card{
+  display:flex;align-items:center;gap:11px;margin-top:11px;padding:11px;
+  border-radius:13px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.05)
+}
+.pwa-preview-card img{width:58px;height:58px;border-radius:15px}
+.pwa-preview-card b{display:block;font-size:14px}
+.pwa-preview-card small{display:block;color:#839aac;margin-top:3px}
+
+/* True app mode */
+body.pwa-standalone{
+  min-height:100dvh;
+  overscroll-behavior:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+body.pwa-standalone input,
+body.pwa-standalone textarea{
+  -webkit-user-select:text;
+  user-select:text;
+}
+body.pwa-standalone .platform-lobby{
+  min-height:100dvh;
+  padding-top:max(12px,env(safe-area-inset-top));
+  padding-right:max(12px,env(safe-area-inset-right));
+  padding-bottom:max(18px,env(safe-area-inset-bottom));
+  padding-left:max(12px,env(safe-area-inset-left));
+}
+body.pwa-standalone .shell{
+  min-height:100dvh;
+  padding-top:max(8px,env(safe-area-inset-top))!important;
+  padding-right:max(8px,env(safe-area-inset-right))!important;
+  padding-bottom:max(8px,env(safe-area-inset-bottom))!important;
+  padding-left:max(8px,env(safe-area-inset-left))!important;
+}
+body.pwa-standalone .lab-mobile-nav{
+  bottom:max(10px,env(safe-area-inset-bottom))!important;
+}
+body.pwa-standalone .modal{
+  padding-top:max(6px,env(safe-area-inset-top))!important;
+  padding-bottom:max(6px,env(safe-area-inset-bottom))!important;
+}
+body.pwa-standalone .lobby-topbar{
+  position:sticky;
+  top:env(safe-area-inset-top);
+  z-index:24;
+}
+body.pwa-standalone .pwa-install-button,
+body.pwa-standalone #settingsInstallAppBtn{display:none!important}
+
+@media(max-width:700px){
+  html,body{min-height:100dvh}
+  body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:contain}
+  .platform-lobby{
+    min-height:100dvh;
+    padding-bottom:max(16px,env(safe-area-inset-bottom))!important
+  }
+  .lobby-topbar{border-radius:16px!important;backdrop-filter:blur(20px)!important}
+  .lobby-top-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .lobby-top-actions>button{min-height:46px!important;border-radius:13px!important}
+  .pwa-install-modalbox{
+    width:100vw!important;max-width:100vw!important;
+    min-height:100dvh;max-height:100dvh!important;border-radius:0!important
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4074,6 +4177,7 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
+        <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات">⚙️</button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
@@ -5122,6 +5226,13 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
         <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
+      <section class="settings-card pwa-settings-card" id="pwaSettingsCard">
+        <h3 id="pwaSettingsTitle">📲 تطبيق Classora</h3>
+        <div class="settings-note" id="pwaSettingsNote">ثبّت Classora على الشاشة الرئيسية وافتحه مثل تطبيق مستقل.</div>
+        <button class="apply" id="settingsInstallAppBtn">📲 تثبيت التطبيق</button>
+        <div class="pwa-installed-badge hidden" id="pwaInstalledBadge">✓ مثبت كتطبيق</div>
+      </section>
+
       <section class="settings-card">
         <h3>🔊 الصوت والحركة</h3>
         <label class="settings-toggle"><input id="settingsSoundToggle" type="checkbox" checked> أصوات الأزرار والنتائج والتايمر</label>
@@ -5134,6 +5245,30 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
       <button class="danger-action" id="deleteAccountBtn">🗑 حذف حسابي نهائيًا</button>
     </div>
     <div class="cloud-note" id="settingsStatus"></div>
+  </div>
+</div>
+
+<div class="modal" id="pwaInstallModal">
+  <div class="modalbox pwa-install-modalbox">
+    <div class="modalhead">
+      <div>
+        <h2 id="pwaInstallTitle">📲 ثبّت Classora كتطبيق</h2>
+        <div class="subject-assistant-line" id="pwaInstallSub">بعد التثبيت بيفتح Classora من الأيقونة مثل تطبيق مستقل.</div>
+      </div>
+      <button class="close" id="closePwaInstallModal">×</button>
+    </div>
+
+    <div class="pwa-install-steps" id="pwaInstallSteps">
+      <div class="pwa-install-step"><b>1</b><span>افتح Classora من Safari.</span></div>
+      <div class="pwa-install-step"><b>2</b><span>اضغط زر المشاركة Share.</span></div>
+      <div class="pwa-install-step"><b>3</b><span>اختار Add to Home Screen.</span></div>
+      <div class="pwa-install-step"><b>4</b><span>اضغط Add، وبعدها افتحه من أيقونة Classora.</span></div>
+    </div>
+
+    <div class="pwa-preview-card">
+      <img src="./icons/classora-192.png" alt="Classora">
+      <div><b>Classora</b><small>Home Screen • Standalone • App-like</small></div>
+    </div>
   </div>
 </div>
 
@@ -10930,6 +11065,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
+  updatePwaUI();
 }
 function openSettingsModal(){
   refreshSettingsUI();
@@ -17241,6 +17377,110 @@ const digitObserver=new MutationObserver(records=>{
   }
 });
 setTimeout(()=>{normalizeVisibleDigits();digitObserver.observe(document.body,{subtree:true,childList:true,characterData:true})},20);
+
+
+/* ================= V44 PWA INSTALL ================= */
+let deferredInstallPrompt=null;
+const pwaInstallModal=document.getElementById("pwaInstallModal");
+
+function isStandaloneApp(){
+  return window.matchMedia?.("(display-mode: standalone)")?.matches
+    || window.navigator.standalone===true;
+}
+function isIOSDevice(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent)
+    || (navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+}
+function updatePwaUI(){
+  const installed=isStandaloneApp();
+  document.body.classList.toggle("pwa-standalone",installed);
+
+  const lobbyBtn=document.getElementById("installAppBtn");
+  const settingsBtn=document.getElementById("settingsInstallAppBtn");
+  const badge=document.getElementById("pwaInstalledBadge");
+  const note=document.getElementById("pwaSettingsNote");
+  const title=document.getElementById("pwaSettingsTitle");
+  const en=currentUILanguage==="en";
+
+  const canInstall=!!deferredInstallPrompt || isIOSDevice();
+  lobbyBtn?.classList.toggle("hidden",installed||!canInstall);
+  settingsBtn?.classList.toggle("hidden",installed);
+  badge?.classList.toggle("hidden",!installed);
+
+  if(lobbyBtn)lobbyBtn.title=en?"Install Classora":"تثبيت Classora";
+  if(title)title.textContent=en?"📲 Classora App":"📲 تطبيق Classora";
+  if(settingsBtn)settingsBtn.textContent=en?"📲 Install App":"📲 تثبيت التطبيق";
+  if(badge)badge.textContent=en?"✓ Installed as an app":"✓ مثبت كتطبيق";
+
+  if(note){
+    note.textContent=installed
+      ?(en?"Classora is running as a standalone app.":"Classora مفتوح كتطبيق مستقل على جهازك.")
+      :isIOSDevice()
+        ?(en?"On iPhone/iPad, install from Safari using Add to Home Screen.":"على iPhone/iPad: ثبّته من Safari عبر Add to Home Screen.")
+        :(en?"Install Classora on your Home Screen and open it like a standalone app.":"ثبّت Classora على الشاشة الرئيسية وافتحه مثل تطبيق مستقل.");
+  }
+}
+
+function showPwaInstallInstructions(){
+  const en=currentUILanguage==="en";
+  document.getElementById("pwaInstallTitle").textContent=en?"📲 Install Classora":"📲 ثبّت Classora كتطبيق";
+  document.getElementById("pwaInstallSub").textContent=en
+    ?"After installation, Classora opens from its own icon in standalone mode."
+    :"بعد التثبيت بيفتح Classora من الأيقونة مثل تطبيق مستقل.";
+
+  const labels=en
+    ?["Open Classora in Safari.","Tap the Share button.","Choose Add to Home Screen.","Tap Add, then open Classora from its icon."]
+    :["افتح Classora من Safari.","اضغط زر المشاركة Share.","اختار Add to Home Screen.","اضغط Add، وبعدها افتحه من أيقونة Classora."];
+  document.querySelectorAll("#pwaInstallSteps .pwa-install-step span").forEach((el,i)=>el.textContent=labels[i]||"");
+  pwaInstallModal?.classList.add("open");
+}
+
+async function installClassoraApp(){
+  if(isStandaloneApp()){
+    showToast(currentUILanguage==="en"?"Classora is already installed ✅":"Classora مثبت ومفتوح كتطبيق ✅");
+    return;
+  }
+  if(deferredInstallPrompt){
+    const promptEvent=deferredInstallPrompt;
+    deferredInstallPrompt=null;
+    promptEvent.prompt();
+    try{await promptEvent.userChoice}catch{}
+    updatePwaUI();
+    return;
+  }
+  if(isIOSDevice()){
+    showPwaInstallInstructions();
+    return;
+  }
+  showToast(currentUILanguage==="en"
+    ?"Open your browser menu and choose Install app or Add to Home Screen."
+    :"افتح قائمة المتصفح واختار Install app أو Add to Home Screen.");
+}
+
+window.addEventListener("beforeinstallprompt",event=>{
+  event.preventDefault();
+  deferredInstallPrompt=event;
+  updatePwaUI();
+});
+window.addEventListener("appinstalled",()=>{
+  deferredInstallPrompt=null;
+  updatePwaUI();
+  showToast(currentUILanguage==="en"?"Classora installed ✅":"تم تثبيت Classora كتطبيق ✅");
+});
+window.matchMedia?.("(display-mode: standalone)")?.addEventListener?.("change",updatePwaUI);
+
+document.getElementById("installAppBtn")?.addEventListener("click",installClassoraApp);
+document.getElementById("settingsInstallAppBtn")?.addEventListener("click",installClassoraApp);
+document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pwaInstallModal?.classList.remove("open"));
+pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js",{scope:"./"})
+      .catch(err=>console.warn("service worker registration",err));
+  });
+}
+updatePwaUI();
 
 </script>
 </body>
