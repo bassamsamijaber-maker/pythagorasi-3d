@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v46-mobile-scroll-fix";
+const CACHE_NAME="classora-v47-single-screen-auto-wake";
 const APP_SHELL=[
   "./",
   "./index.html",
