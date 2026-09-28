@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v50-animated-intro";
+const CACHE_NAME="classora-v50-startup-intro";
 const APP_SHELL=[
   "./",
   "./index.html",
