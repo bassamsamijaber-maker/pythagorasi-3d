@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111c">
-<title>Pythagoras 3D</title>
+<meta name="theme-color" content="#0b1422">
+<title>Classora</title>
 <style>
 :root{
   --bg:#07111c; --panel:#0c1724; --panel2:#101f30; --line:rgba(255,255,255,.10);
@@ -1555,7 +1555,7 @@ body.lang-en .settings-account-meta,body.lang-en .profile-public-id{direction:lt
 
 /* ================= V17 SUPER ADMIN ================= */
 body:not(.auth-ready) .platform-lobby,body:not(.auth-ready) .shell{visibility:hidden!important}
-body:not(.auth-ready)::before{content:"Pythagoras 3D";position:fixed;inset:0;display:grid;place-items:center;z-index:999999;background:#07111c;color:#fff;font-size:22px;font-weight:950;letter-spacing:.5px}
+body:not(.auth-ready)::before{content:"Classora";position:fixed;inset:0;display:grid;place-items:center;z-index:999999;background:#07111c;color:#fff;font-size:22px;font-weight:950;letter-spacing:.5px}
 body.light:not(.auth-ready)::before{background:#edf4f9;color:#173047}
 .admin-panel-btn{height:46px;border-radius:13px;padding:0 13px;border:1px solid rgba(255,213,77,.24);background:linear-gradient(135deg,rgba(255,196,45,.13),rgba(117,78,255,.12));color:#ffe39a;font-weight:950;cursor:pointer;display:flex;align-items:center;gap:7px}
 .admin-panel-btn.hidden{display:none!important}
@@ -2779,6 +2779,295 @@ body.light .admin-hybrid-badge{
   .admin-hybrid-badge{display:none!important}
 }
 
+
+/* ================= V37 READ-ONLY STUDENT PREVIEW ================= */
+.admin-student-preview-box{
+  width:min(1040px,96vw)!important;
+  max-height:92vh!important;
+}
+.admin-student-preview-hero{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:12px;align-items:center;padding:14px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(36,145,233,.065),rgba(115,77,222,.04));
+  border:1px solid rgba(82,179,255,.12)
+}
+.admin-student-preview-avatar{
+  width:62px;height:62px;border-radius:18px;display:grid;place-items:center;
+  font-weight:1000;font-size:24px;background-size:cover;background-position:center;
+  background-color:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)
+}
+.admin-student-preview-hero h3{margin:0 0 4px;font-size:19px}
+.admin-student-preview-meta{color:#8199aa;font-size:10px;line-height:1.55}
+.admin-preview-readonly{
+  padding:6px 9px;border-radius:999px;font-size:8px;font-weight:1000;letter-spacing:.09em;
+  color:#8eddb7;background:rgba(72,195,145,.06);border:1px solid rgba(72,195,145,.13)
+}
+.admin-student-preview-stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0
+}
+.admin-student-preview-stats>div{
+  padding:10px;border-radius:12px;text-align:center;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.05)
+}
+.admin-student-preview-stats b{display:block;font-size:18px}
+.admin-student-preview-stats small{display:block;margin-top:3px;color:#7d95a8;font-size:8px}
+.admin-preview-section{
+  padding:12px;border-radius:14px;margin-top:9px;background:rgba(255,255,255,.018);
+  border:1px solid rgba(255,255,255,.045)
+}
+.admin-preview-section h3{margin:0 0 9px;font-size:13px}
+.admin-preview-list{display:grid;gap:6px}
+.admin-preview-row{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:8px 9px;border-radius:9px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.04)
+}
+.admin-preview-row b{display:block;font-size:10px}
+.admin-preview-row small{display:block;margin-top:3px;color:#7890a3;font-size:8px}
+.admin-preview-row strong{font-size:10px}
+.admin-preview-warning{
+  margin:10px 0;padding:9px 11px;border-radius:10px;
+  color:#9bb0bf;background:rgba(255,183,71,.04);border:1px solid rgba(255,183,71,.10);
+  font-size:9px;line-height:1.5
+}
+.admin-view-as-btn{
+  border:1px solid rgba(90,174,255,.14)!important;
+  background:rgba(90,174,255,.055)!important;color:#9bd7ff!important;
+}
+body.light .admin-student-preview-hero,
+body.light .admin-student-preview-stats>div,
+body.light .admin-preview-section,
+body.light .admin-preview-row{
+  background:#fff;border-color:#dce7ee;color:#173047
+}
+@media(max-width:650px){
+  .admin-student-preview-hero{grid-template-columns:auto 1fr}
+  .admin-preview-readonly{grid-column:1/-1;width:max-content}
+  .admin-student-preview-stats{grid-template-columns:1fr 1fr}
+}
+
+
+/* ================= V38 CLASSORA UI + COMPETITIONS ================= */
+:root{
+  --bg:#0b1422;
+  --panel:#111c2b;
+  --panel2:#162438;
+  --line:rgba(210,228,244,.10);
+  --txt:#f4f8fb;
+  --muted:#9db0c2;
+  --blue:#5aa9ff;
+  --cyan:#75d7e8;
+  --green:#73d4a8;
+  --gold:#e4bd69;
+  --red:#ef7c87;
+}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{
+  background:
+    radial-gradient(circle at 12% 2%,rgba(77,129,184,.08),transparent 28%),
+    radial-gradient(circle at 88% 96%,rgba(103,82,170,.055),transparent 28%),
+    var(--bg);
+}
+button,input,select,textarea{font:inherit}
+button{touch-action:manipulation}
+.platform-lobby,.lobby-shell{max-width:100%}
+.lobby-shell{width:min(1240px,calc(100% - 28px));margin-inline:auto}
+.lobby-topbar{
+  gap:12px;flex-wrap:wrap;
+  background:rgba(13,24,38,.86);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(210,228,244,.075);
+}
+.lobby-brand{
+  font-size:clamp(20px,3vw,30px)!important;
+  letter-spacing:-.02em;
+}
+.lobby-section,.student-upcoming-events,.student-active-timers,
+.admin-custom-surface,.lobby-live-competitions{
+  border-color:rgba(210,228,244,.075)!important;
+}
+.pythag-action-card,.lobby-action,.live-card,.profile-card,.card{
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.017))!important;
+  border-color:rgba(210,228,244,.075)!important;
+}
+.pythag-action-card:hover,.lobby-action:hover{
+  border-color:rgba(117,190,242,.18)!important;
+}
+.modalbox{
+  width:min(1100px,calc(100vw - 28px));
+  max-width:calc(100vw - 28px);
+}
+.live-modalbox{width:min(1180px,calc(100vw - 28px))!important}
+input,select,textarea{
+  min-height:42px;
+  border-color:rgba(210,228,244,.09)!important;
+}
+body.light{
+  --bg:#f4f7f9;--panel:#ffffff;--panel2:#f8fafb;
+  --txt:#1e3040;--muted:#667d8f;--line:#dce6ec;
+  --blue:#3d82c4;--cyan:#3994a5;--green:#4e9c78;--gold:#b28a3f;--red:#c55d68;
+  background:#f4f7f9!important;
+}
+
+/* live competitions on lobby */
+.lobby-live-competitions{
+  margin-top:12px;padding:14px;border-radius:18px;
+  background:linear-gradient(145deg,rgba(51,137,211,.06),rgba(112,78,197,.035));
+  border:1px solid rgba(96,168,228,.12)
+}
+.lobby-live-competitions.hidden{display:none!important}
+.lobby-live-competitions-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px
+}
+.lobby-live-competitions-head h3{margin:3px 0;font-size:16px}
+.lobby-live-competitions-head p{margin:0;color:var(--muted);font-size:10px}
+.live-discovery-kicker{
+  font-size:8px;font-weight:1000;letter-spacing:.14em;color:#8fc9f3
+}
+.live-pulse-dot{
+  flex:none;padding:6px 9px;border-radius:999px;font-size:8px;font-weight:1000;
+  color:#8fdcb9;background:rgba(75,188,139,.06);border:1px solid rgba(75,188,139,.13)
+}
+.lobby-live-competitions-list{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px
+}
+.lobby-live-competition-card{
+  padding:11px;border-radius:13px;background:rgba(255,255,255,.022);
+  border:1px solid rgba(255,255,255,.05)
+}
+.lobby-live-competition-card h4{margin:0 0 5px;font-size:12px}
+.lobby-live-competition-card p{margin:0 0 8px;color:var(--muted);font-size:9px;line-height:1.5}
+.lobby-live-comp-meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.lobby-live-comp-meta span{
+  padding:4px 6px;border-radius:999px;font-size:8px;background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.05)
+}
+.lobby-live-competition-card button{width:100%;min-height:40px}
+
+/* competition room controls */
+.competition-create-settings,.competition-room-mode{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0
+}
+.competition-create-settings label,.competition-room-mode label,
+.competition-team-choice{
+  display:grid;gap:4px;font-size:9px;color:var(--muted)
+}
+.competition-room-mode{
+  grid-template-columns:1fr 1fr auto;align-items:end;
+  padding:10px;border-radius:12px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.05)
+}
+.competition-room-mode.hidden{display:none!important}
+.competition-team-choice.hidden{display:none!important}
+
+/* projector progress board */
+.projector-lead-board{
+  margin:10px 0 12px;padding:12px;border-radius:15px;
+  background:linear-gradient(145deg,rgba(61,136,204,.065),rgba(105,79,180,.045));
+  border:1px solid rgba(100,173,229,.12)
+}
+.projector-lead-board.hidden{display:none!important}
+.projector-lead-title{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px
+}
+.projector-lead-title span{font-size:11px;font-weight:950}
+.projector-lead-title b{font-size:11px;color:#a9d9fb}
+.projector-lead-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px
+}
+.projector-person{
+  min-width:0;padding:9px;border-radius:11px;background:rgba(255,255,255,.028);
+  border:1px solid rgba(255,255,255,.05)
+}
+.projector-person .pos{font-size:9px;color:#8da4b5}
+.projector-person b{
+  display:block;margin:3px 0 7px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.projector-progress{
+  height:7px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.055)
+}
+.projector-progress span{
+  display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#66b6e9,#88d1b0);
+  transition:width .45s ease
+}
+.projector-person strong{display:block;margin-top:5px;font-size:9px}
+.player-rank-summary{
+  margin:9px 0;padding:9px 11px;border-radius:11px;text-align:center;
+  background:rgba(93,143,207,.05);border:1px solid rgba(93,143,207,.10);
+  font-size:10px;font-weight:900
+}
+.player-rank-summary.hidden{display:none!important}
+
+/* animated leaderboard */
+.live-rank{
+  display:grid!important;
+  grid-template-columns:44px minmax(0,1fr) minmax(90px,140px)!important;
+  gap:9px!important;align-items:center!important;
+  transition:transform .3s ease,border-color .3s ease,background .3s ease
+}
+.live-rank.rank-up{
+  border-color:rgba(80,201,145,.18)!important;background:rgba(80,201,145,.035)!important
+}
+.live-rank.rank-down{opacity:.83}
+.live-rank-main{min-width:0}
+.live-rank-name{display:flex;align-items:center;gap:6px;min-width:0}
+.live-rank-name b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-rank-team{color:var(--muted);font-size:8px}
+.live-rank-move{font-size:9px;font-weight:1000}
+.live-rank-move.up{color:#75d5a5}.live-rank-move.down{color:#e99a9f}
+.live-rank-progress{height:6px;border-radius:999px;background:rgba(255,255,255,.055);overflow:hidden;margin-top:5px}
+.live-rank-progress span{
+  display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#5aa9ff,#73d4a8);
+  transition:width .45s ease
+}
+.live-rank-score{text-align:end}
+.live-rank-score b{display:block;font-size:12px}
+.live-rank-score small{font-size:7px;color:var(--muted)}
+.competition-leaderboard-section.hidden{display:none!important}
+
+/* responsive across phone/tablet/desktop */
+@media(max-width:980px){
+  .lobby-live-competitions-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .projector-lead-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  .lobby-shell{width:min(100% - 14px,1240px)}
+  .lobby-topbar{padding:10px!important;align-items:flex-start}
+  .lobby-top-actions{width:100%;justify-content:flex-start;flex-wrap:wrap}
+  .lobby-profile-btn{max-width:100%}
+  .pythag-action-grid,.lobby-action-grid,.teacher-lobby-grid,
+  .live-home-grid,.cloud-home-grid,.myclasses-layout{
+    grid-template-columns:1fr!important
+  }
+  .compact-pythag-tools{grid-template-columns:1fr 1fr!important}
+  .modal{padding:6px!important}
+  .modalbox,.live-modalbox,.admin-panel-box{
+    width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important;
+    max-height:calc(100vh - 12px)!important;border-radius:16px!important
+  }
+  input,select,textarea,button{font-size:16px}
+  .competition-create-settings,.competition-room-mode{grid-template-columns:1fr!important}
+  .competition-room-mode button{width:100%}
+  .live-teams{grid-template-columns:1fr 1fr!important}
+  .live-rank{
+    grid-template-columns:38px minmax(0,1fr) 78px!important;
+    gap:6px!important
+  }
+  .projector-lead-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .compact-pythag-tools{grid-template-columns:1fr!important}
+  .lobby-live-competitions-list{grid-template-columns:1fr}
+  .student-upcoming-list{grid-template-columns:1fr!important}
+  .projector-lead-grid{grid-template-columns:1fr}
+  .lobby-top-actions>button{min-height:42px}
+  .live-question{font-size:clamp(18px,6vw,27px)!important}
+  .live-options{grid-template-columns:1fr!important}
+  .live-teams{grid-template-columns:1fr!important}
+  .live-rank{grid-template-columns:34px minmax(0,1fr) 68px!important}
+}
+
 </style>
 </head>
 <body>
@@ -2787,7 +3076,7 @@ body.light .admin-hybrid-badge{
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
     <div class="auth-logo">∟</div>
-    <h2>أهلًا في Pythagoras 3D 👋</h2>
+    <h2>أهلًا في Classora 👋</h2>
     <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
 
     <div id="authRoleChooser">
@@ -2849,7 +3138,7 @@ body.light .admin-hybrid-badge{
   <div class="lobby-shell">
     <div class="lobby-topbar">
       <div>
-        <div class="lobby-brand">Pythagoras 3D</div>
+        <div class="lobby-brand">Classora</div>
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
@@ -2868,6 +3157,18 @@ body.light .admin-hybrid-badge{
     <section class="admin-custom-surface hidden" id="adminCustomSurface">
       <div class="admin-custom-notices" id="adminCustomNotices"></div>
       <div class="admin-custom-buttons" id="adminCustomButtons"></div>
+    </section>
+
+    <section class="lobby-live-competitions hidden" id="lobbyLiveCompetitions">
+      <div class="lobby-live-competitions-head">
+        <div>
+          <span class="live-discovery-kicker">LIVE NOW</span>
+          <h3 id="lobbyLiveCompetitionsTitle">🏆 مسابقات شغّالة هسا</h3>
+          <p id="lobbyLiveCompetitionsSub">اضغط دخول وادخل مباشرة للمسابقة عن بُعد.</p>
+        </div>
+        <span class="live-pulse-dot">● LIVE</span>
+      </div>
+      <div class="lobby-live-competitions-list" id="lobbyLiveCompetitionsList"></div>
     </section>
 
     <section class="student-upcoming-events hidden" id="studentUpcomingEvents">
@@ -3483,6 +3784,55 @@ body.light .admin-hybrid-badge{
   </div>
 </div>
 
+<div class="modal" id="adminStudentPreviewModal">
+  <div class="modalbox admin-student-preview-box">
+    <div class="modalhead">
+      <div>
+        <h2 id="adminStudentPreviewTitle">🔎 معاينة حساب الطالب</h2>
+        <div class="subject-assistant-line" id="adminStudentPreviewSub">وضع قراءة فقط — ما في أي إجراء باسم الطالب.</div>
+      </div>
+      <button class="close" id="closeAdminStudentPreview">×</button>
+    </div>
+
+    <section class="admin-student-preview-hero">
+      <div class="admin-student-preview-avatar" id="adminStudentPreviewAvatar">؟</div>
+      <div>
+        <h3 id="adminStudentPreviewName">—</h3>
+        <div class="admin-student-preview-meta" id="adminStudentPreviewMeta">—</div>
+      </div>
+      <span class="admin-preview-readonly">READ ONLY</span>
+    </section>
+
+    <div class="admin-student-preview-stats">
+      <div><b id="adminPreviewClassCount">0</b><small>الصفوف</small></div>
+      <div><b id="adminPreviewSubmissionCount">0</b><small>التسليمات</small></div>
+      <div><b id="adminPreviewAverage">—</b><small>المتوسط</small></div>
+      <div><b id="adminPreviewLastSeen">—</b><small>آخر نشاط</small></div>
+    </div>
+
+    <section class="admin-preview-section">
+      <h3>🏫 الصفوف</h3>
+      <div id="adminPreviewClasses" class="admin-preview-list"></div>
+    </section>
+
+    <section class="admin-preview-section">
+      <h3>📝 الوظائف والتسليمات</h3>
+      <div id="adminPreviewAssignments" class="admin-preview-list"></div>
+    </section>
+
+    <section class="admin-preview-section">
+      <h3>📊 الامتحانات والنشاط</h3>
+      <div id="adminPreviewActivity" class="admin-preview-list"></div>
+    </section>
+
+    <div class="admin-preview-warning">
+      🔒 هاي معاينة فقط. ما بتغيّر الحساب، ما بتسلم وظائف، وما بتدخل مسابقات باسم الطالب.
+    </div>
+
+    <button class="exam-secondary" id="adminExitStudentPreviewBtn" style="width:100%">↩ خروج من المعاينة</button>
+  </div>
+</div>
+
 <div class="modal" id="pythagQuestionsModal">
   <div class="modalbox pythag-question-modalbox">
     <div class="modalhead">
@@ -3882,7 +4232,7 @@ body.light .admin-hybrid-badge{
 
   <aside class="side">
     <div class="brand">
-      <h1>Pythagoras 3D</h1>
+      <h1>Classora</h1>
       <div class="ai-chip" id="pythagAIChip">● فيثاغورسي</div>
       <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
       <button class="exam-secondary" id="labSettingsBtn" style="margin-top:7px;width:100%">⚙️ الإعدادات</button>
@@ -4193,7 +4543,7 @@ body.light .admin-hybrid-badge{
     </div>
     <div id="competitionHome">
       <div class="live-hero">
-        <h3>مسابقة فيثاغورس مباشرة ⚡</h3>
+        <h3>مسابقة مباشرة ⚡</h3>
         <p>غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.</p>
       </div>
       <div class="live-home-grid">
@@ -4203,10 +4553,13 @@ body.light .admin-hybrid-badge{
           <div class="live-field">
             <div class="account-name-preview">👤 <b id="compAutoStudentName">اسم الحساب</b></div>
             <input id="compJoinCode" maxlength="8" placeholder="كود الغرفة">
-            <select id="compJoinTeam">
-              <option value="A">🔵 الفريق A</option>
-              <option value="B">🔴 الفريق B</option>
-            </select>
+            <label class="competition-team-choice" id="compJoinTeamWrap">
+              <span>اختار فريقك</span>
+              <select id="compJoinTeam">
+                <option value="A">🔵 الفريق A</option>
+                <option value="B">🔴 الفريق B</option>
+              </select>
+            </label>
             <button class="apply" id="compJoinBtn">دخول الغرفة</button>
           </div>
           <div id="compJoinStatus" class="cloud-note" style="margin-top:9px">كل طالب يدخل من جهازه بنفس الكود.</div>
@@ -4214,6 +4567,21 @@ body.light .admin-hybrid-badge{
         <div class="live-card" id="competitionTeacherCard">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
           <p>اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.</p>
+          <div class="competition-create-settings">
+            <label>توزيع اللاعبين
+              <select id="compQuickTeamMode">
+                <option value="choice">🎯 الطالب يختار فريقه</option>
+                <option value="random">🎲 الموقع يوزع عشوائي</option>
+                <option value="solo">👤 فردي — بدون فرق</option>
+              </select>
+            </label>
+            <label>طريقة العرض
+              <select id="compQuickAudienceMode">
+                <option value="projector">📺 صف / بروجكتر</option>
+                <option value="remote">🌍 عن بُعد — تظهر بالموقع</option>
+              </select>
+            </label>
+          </div>
           <div class="live-field">
             <select id="compQuickSubject" class="hidden">
               <option value="pythagoras" selected>فيثاغورس</option>
@@ -4245,7 +4613,22 @@ body.light .admin-hybrid-badge{
         <p>اكتب أسئلة فيثاغورس والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.</p>
       </div>
       <div class="live-field">
-        <input id="compBuilderTitle" maxlength="60" value="مسابقة فيثاغورس" placeholder="اسم المسابقة">
+        <input id="compBuilderTitle" maxlength="60" value="مسابقة Classora" placeholder="اسم المسابقة">
+      </div>
+      <div class="competition-create-settings competition-builder-settings">
+        <label>توزيع اللاعبين
+          <select id="compBuilderTeamMode">
+            <option value="choice">🎯 الطالب يختار فريقه</option>
+            <option value="random">🎲 الموقع يوزع عشوائي</option>
+            <option value="solo">👤 فردي — بدون فرق</option>
+          </select>
+        </label>
+        <label>طريقة العرض
+          <select id="compBuilderAudienceMode">
+            <option value="projector">📺 صف / بروجكتر</option>
+            <option value="remote">🌍 عن بُعد — تظهر بالموقع</option>
+          </select>
+        </label>
       </div>
       <div id="compBuilderError" class="builder-error"></div>
       <div id="compBuilderQuestions" style="display:grid;gap:10px;margin-top:12px"></div>
@@ -4260,7 +4643,23 @@ body.light .admin-hybrid-badge{
       <div class="live-status" id="compLobbyRole">غرفة الانتظار</div>
       <div class="live-code" id="compRoomCode">------</div>
       <div class="live-status">شارك هذا الكود مع الصف</div>
-      <div class="live-teams">
+      <div class="competition-room-mode" id="compLobbySettings">
+        <label>توزيع اللاعبين
+          <select id="compLobbyTeamMode">
+            <option value="choice">🎯 الطالب يختار</option>
+            <option value="random">🎲 عشوائي من الموقع</option>
+            <option value="solo">👤 فردي</option>
+          </select>
+        </label>
+        <label>طريقة العرض
+          <select id="compLobbyAudienceMode">
+            <option value="projector">📺 بروجكتر</option>
+            <option value="remote">🌍 عن بُعد</option>
+          </select>
+        </label>
+        <button class="exam-secondary" id="compApplyRoomSettings">💾 تطبيق</button>
+      </div>
+      <div class="live-teams" id="compLobbyTeams">
         <div class="live-team a">🔵 الفريق A <b id="compLobbyACount">0</b></div>
         <div class="live-team b">🔴 الفريق B <b id="compLobbyBCount">0</b></div>
       </div>
@@ -4279,10 +4678,21 @@ body.light .admin-hybrid-badge{
         <span class="exam-pill" id="compGameState">مباشر</span>
         <span class="exam-pill live-countdown" id="compQuestionTimer">20</span>
       </div>
-      <div class="live-teams">
+      <div class="live-teams" id="compGameTeams">
         <div class="live-team a">🔵 A <b id="compScoreA">0</b></div>
         <div class="live-team b">🔴 B <b id="compScoreB">0</b></div>
       </div>
+
+      <section class="projector-lead-board hidden" id="compProjectorBoard">
+        <div class="projector-lead-title">
+          <span>📺 لوحة التقدّم</span>
+          <b id="compProjectorLeaderText">بانتظار النتائج…</b>
+        </div>
+        <div class="projector-lead-grid" id="compProjectorLeadGrid"></div>
+      </section>
+
+      <div class="player-rank-summary hidden" id="compPlayerRankSummary"></div>
+
       <div class="live-question" id="compQuestionText">السؤال</div>
       <div class="live-options" id="compOptions"></div>
       <div class="live-answer-status" id="compAnswerStatus"></div>
@@ -4290,15 +4700,17 @@ body.light .admin-hybrid-badge{
         <button class="exam-secondary" id="compRevealBtn">✓ اقفل السؤال واحسب النقاط</button>
         <button class="apply hidden" id="compNextBtn" style="margin:0">السؤال التالي ➜</button>
       </div>
-      <h3 style="margin:16px 0 7px">🏅 الترتيب</h3>
-      <div class="live-leaderboard" id="compLeaderboard"></div>
+      <section class="competition-leaderboard-section" id="compLeaderboardSection">
+        <h3 style="margin:16px 0 7px">🏅 الترتيب المباشر</h3>
+        <div class="live-leaderboard" id="compLeaderboard"></div>
+      </section>
     </div>
 
     <div id="competitionFinished" class="hidden">
       <div class="live-finished">
         <div style="font-size:48px">🏆</div>
         <h3>انتهت المسابقة!</h3>
-        <div class="live-teams">
+        <div class="live-teams" id="compFinalTeams">
           <div class="live-team a">🔵 الفريق A <b id="compFinalA">0</b></div>
           <div class="live-team b">🔴 الفريق B <b id="compFinalB">0</b></div>
         </div>
@@ -4541,6 +4953,7 @@ function showPlatformLobby(){
   updateAssistantLabels();
   setTimeout(refreshLobbySubjectVisibility,30);
   setTimeout(loadSiteUpdatesForCurrentUser,80);
+  setTimeout(subscribeLobbyLiveCompetitions,120);
 }
 function hidePlatformLobby(){
   document.getElementById("platformLobby")?.classList.add("hidden");
@@ -4853,6 +5266,8 @@ async function resolveCurrentUser(user){
   if(!user){
     activeProfile=null;
     window.PythagorasiUser=null;
+    if(lobbyCompetitionUnsub){try{lobbyCompetitionUnsub()}catch{} lobbyCompetitionUnsub=null}
+    lobbyCompetitionCache=[];window.ClassoraLiveCompetitions=[];
     authUserBar.classList.remove("show");
     hidePlatformLobby();
     authGate.classList.add("show");
@@ -8876,7 +9291,7 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="en"?"en":"ar";
 
 const uiExactTranslations=new Map([
-  ["أهلًا في Pythagoras 3D 👋","Welcome to Pythagoras 3D 👋"],
+  ["أهلًا في Classora 👋","Welcome to Classora 👋"],
   ["نظرية فيثاغورس","Pythagorean Theorem"],
   ["📐 موضوع المنصة","📐 Platform Topic"],
   ["تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.","Learn the theorem with the 3D model, sand proof, examples, challenges, practice, exams and live competitions."],
@@ -9147,7 +9562,7 @@ const uiExactTranslations=new Map([
   ["☁️ نشر الامتحان للطلاب","☁️ Publish Exam to Students"],["بعد ما تجهز الامتحان، انشره وخذ كود دخول واحد. نفس الكود يقدر يستخدمه كل طلاب الصف بنفس الوقت.","When the exam is ready, publish it and get one access code. All class students can use the same code at the same time."],
   ["☁️ حفظ وإنشاء كود","☁️ Save & Create Code"],["نسخ الكود","Copy Code"],["＋ أضف سؤال","＋ Add Question"],["💾 حفظ الامتحان","💾 Save Exam"],
   ["📂 تحميل المحفوظ","📂 Load Saved"],["▶ ابدأ هذا الامتحان","▶ Start This Exam"],
-  ["مسابقة فيثاغورس مباشرة ⚡","Live Pythagoras Competition ⚡"],["غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.","Room, code, Team A vs Team B, live questions and a real-time leaderboard."],
+  ["مسابقة مباشرة ⚡","Live Pythagoras Competition ⚡"],["غرفة، كود، فريق A ضد فريق B، أسئلة مباشرة وLeaderboard لحظي.","Room, code, Team A vs Team B, live questions and a real-time leaderboard."],
   ["اسمك يؤخذ تلقائيًا من حسابك. اكتب كود الغرفة واختار فريقك.","Your name is taken automatically from your account. Enter the room code and choose your team."],
   ["اسم الحساب","Account name"],["🔵 الفريق A","🔵 Team A"],["🔴 الفريق B","🔴 Team B"],["دخول الغرفة","Join Room"],
   ["كل طالب يدخل من جهازه بنفس الكود.","Every student joins from their own device using the same code."],
@@ -9271,7 +9686,7 @@ function applySiteLanguage(lang,save=true){
   document.documentElement.lang=currentUILanguage;
   document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
   document.body.classList.toggle('lang-en',currentUILanguage==='en');
-  document.title='Pythagoras 3D';
+  document.title='Classora';
   if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
@@ -9917,7 +10332,7 @@ function sendLobbyAI(){
   input.value="";
   const reply=document.getElementById("lobbyAIReply");
   reply.textContent="يفكّر…";
-  setTimeout(()=>{reply.textContent=pythagorasiAnswer(`${raw} فيثاغورس`)},170);
+  setTimeout(()=>{reply.textContent=pythagorasiAnswer(raw)},120);
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
 document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
@@ -10067,6 +10482,11 @@ function applyAdminLanguage(){
   const contentRefresh=document.getElementById("adminRefreshContentBtn");
   if(contentRefresh)contentRefresh.textContent=en?"↻ Refresh":"↻ تحديث";
 
+  set("adminStudentPreviewTitle","🔎 معاينة حساب الطالب","🔎 Student account preview");
+  set("adminStudentPreviewSub","وضع قراءة فقط — ما في أي إجراء باسم الطالب.","Read-only mode — no actions are performed as the student.");
+  const previewExit=document.getElementById("adminExitStudentPreviewBtn");
+  if(previewExit)previewExit.textContent=en?"↩ Exit preview":"↩ خروج من المعاينة";
+
   set("adminStudentsTitle","🎒 كل الطلاب","🎒 Student Overview");
   set("adminStudentsSub","آخر دخول، الصفوف، حالة كلمة السر، وكل الوظائف اللي سلّموها.","Last visit, classes, password status, and every stored assignment submission.");
   set("adminStudentsCountLabel","طلاب","STUDENTS");
@@ -10088,6 +10508,8 @@ function applyAdminLanguage(){
   set("adminUpcomingHoursLabel","ساعات","Hours");
   set("adminUpcomingMinutesLabel","دقائق","Minutes");
   set("adminUpcomingCurrentTitle","المواعيد الحالية","Current timers");
+  set("lobbyLiveCompetitionsTitle","🏆 مسابقات شغّالة هسا","🏆 Live competitions");
+  set("lobbyLiveCompetitionsSub","اضغط دخول وادخل مباشرة للمسابقة عن بُعد.","Tap join to enter a remote competition directly.");
   set("studentUpcomingTitle","⏳ أشياء جاية قريب","⏳ Coming up");
   set("studentUpcomingSub","امتحانات، مسابقات ووظائف قادمة مع عدّ تنازلي مباشر.","Upcoming exams, competitions and assignments with a live countdown.");
   ph("adminUpcomingName","مثال: امتحان فيثاغورس","Example: Pythagoras exam");
@@ -10497,6 +10919,118 @@ function adminTimestampMs(ts){
   }catch{return 0}
 }
 
+
+const adminStudentPreviewModal=document.getElementById("adminStudentPreviewModal");
+let adminPreviewStudentUid="";
+
+function adminPreviewClose(){
+  adminPreviewStudentUid="";
+  adminStudentPreviewModal?.classList.remove("open");
+}
+
+function adminPreviewClassRows(uid){
+  return adminClassesCache.filter(c=>(c.members||[]).some(m=>m.uid===uid));
+}
+
+function adminPreviewSubmissionRows(uid){
+  return adminStudentSubmissions(uid);
+}
+
+async function adminOpenStudentPreview(uid){
+  if(!requireSuperAdmin())return;
+  const u=adminUsersCache.find(x=>x.uid===uid&&x.role==="student");
+  if(!u){showToast(adminLang("الطالب مش موجود.","Student not found."));return}
+
+  adminPreviewStudentUid=uid;
+  const name=adminUserDisplay(u);
+  const classes=adminPreviewClassRows(uid);
+  const submissions=adminPreviewSubmissionRows(uid);
+  const last=adminStudentLastVisit(u);
+
+  document.getElementById("adminStudentPreviewName").textContent=name;
+  document.getElementById("adminStudentPreviewMeta").textContent=
+    `Profile ID: ${u.profileId||"—"} • UID: ${u.uid||"—"} • ${adminLang("معاينة فقط","Read only")}`;
+
+  const avatar=document.getElementById("adminStudentPreviewAvatar");
+  const photo=u.photoData||u.photoURL||"";
+  avatar.style.backgroundImage=photo?`url("${photo}")`:"";
+  avatar.textContent=photo?"":((name[0]||"?").toUpperCase());
+
+  document.getElementById("adminPreviewClassCount").textContent=classes.length;
+  document.getElementById("adminPreviewSubmissionCount").textContent=submissions.length;
+
+  const scored=submissions
+    .map(s=>({
+      score:Number(s.finalScore??s.autoScore),
+      total:Number(s.totalPoints??s.total)
+    }))
+    .filter(x=>Number.isFinite(x.score)&&Number.isFinite(x.total)&&x.total>0);
+
+  const avg=scored.length
+    ?Math.round(scored.reduce((n,x)=>n+(x.score/x.total*100),0)/scored.length)
+    :null;
+  document.getElementById("adminPreviewAverage").textContent=avg==null?"—":`${avg}%`;
+  document.getElementById("adminPreviewLastSeen").textContent=last?adminRelativeTime(last):"—";
+
+  const classHost=document.getElementById("adminPreviewClasses");
+  classHost.innerHTML="";
+  for(const c of classes){
+    const member=(c.members||[]).find(m=>m.uid===uid)||{};
+    const row=document.createElement("div");
+    row.className="admin-preview-row";
+    row.innerHTML=`
+      <div><b>🏫 ${escapeHtml(c.name||"Class")}</b>
+      <small>${adminLang("كود الصف","Class code")}: ${escapeHtml(c.code||"—")}</small></div>
+      <strong>${member.xp!=null?`${member.xp} XP`:""}</strong>`;
+    classHost.appendChild(row);
+  }
+  if(!classHost.children.length)classHost.innerHTML=`<div class="cloud-note">${adminLang("الطالب مش داخل بأي صف.","Student is not in any class.")}</div>`;
+
+  const workHost=document.getElementById("adminPreviewAssignments");
+  workHost.innerHTML="";
+  for(const s of submissions.slice(0,40)){
+    const score=s.teacherReviewed?s.finalScore:(s.finalScore??s.autoScore);
+    const total=s.totalPoints||s.total||0;
+    const row=document.createElement("div");
+    row.className="admin-preview-row";
+    row.innerHTML=`
+      <div><b>📝 ${escapeHtml(s.assignmentTitle||adminLang("وظيفة","Assignment"))}</b>
+      <small>${escapeHtml(s.className||"Class")} • ${escapeHtml(adminHistoryTimestamp(s.time))}</small></div>
+      <strong>${score!=null?`${escapeHtml(String(score))}/${escapeHtml(String(total))}`:adminLang("بانتظار التصحيح","Pending")}</strong>`;
+    workHost.appendChild(row);
+  }
+  if(!workHost.children.length)workHost.innerHTML=`<div class="cloud-note">${adminLang("ما في تسليمات محفوظة.","No stored submissions.")}</div>`;
+
+  const activityHost=document.getElementById("adminPreviewActivity");
+  activityHost.innerHTML=`<div class="cloud-note">${adminLang("جاري تحميل آخر نشاط...","Loading recent activity...")}</div>`;
+
+  const activity=[];
+  for(const c of classes){
+    try{
+      const snap=await getDocs(collection(db,"classes",c.id,"activity"));
+      snap.docs.forEach(d=>{
+        const a={id:d.id,...d.data(),className:c.name||"Class"};
+        if(a.studentUid===uid)activity.push(a);
+      });
+    }catch{}
+  }
+  activity.sort((a,b)=>(adminTimestampMs(b.createdAt)||0)-(adminTimestampMs(a.createdAt)||0));
+
+  activityHost.innerHTML="";
+  for(const a of activity.slice(0,25)){
+    const row=document.createElement("div");
+    row.className="admin-preview-row";
+    row.innerHTML=`
+      <div><b>${escapeHtml(a.detail||a.type||adminLang("نشاط","Activity"))}</b>
+      <small>${escapeHtml(a.className||"")} • ${escapeHtml(adminHistoryTimestamp(a.createdAt))}</small></div>
+      <strong>${escapeHtml(a.subject||"")}</strong>`;
+    activityHost.appendChild(row);
+  }
+  if(!activityHost.children.length)activityHost.innerHTML=`<div class="cloud-note">${adminLang("ما في نشاط محفوظ.","No stored activity.")}</div>`;
+
+  adminStudentPreviewModal.classList.add("open");
+}
+
 function adminStudentLastVisit(u){
   const direct=[u.lastLoginAt,u.lastSeenAt,u.updatedAt].map(adminTimestampMs).filter(Boolean);
   const memberTimes=adminClassesCache.flatMap(c=>
@@ -10638,6 +11172,13 @@ function adminRenderStudentOverview(){
         submission
       });
     }));
+    const previewBtn=document.createElement("button");
+    previewBtn.className="exam-secondary admin-view-as-btn";
+    previewBtn.textContent=adminLang("🔎 دخول كمعاينة","🔎 Preview account");
+    previewBtn.addEventListener("click",()=>adminOpenStudentPreview(u.uid));
+    const actionHost=card.querySelector(".admin-student-actions")||card.querySelector(".admin-actions")||card;
+    actionHost.appendChild(previewBtn);
+
     host.appendChild(card);
   }
 }
@@ -12985,6 +13526,9 @@ document.querySelectorAll(".admin-feature-toggle-btn").forEach(btn=>{
   btn.addEventListener("click",()=>adminToggleFeatureControl(btn.dataset.controlKey));
 });
 document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>adminLoadStudentOverview({force:true}));
+document.getElementById("closeAdminStudentPreview").addEventListener("click",adminPreviewClose);
+document.getElementById("adminExitStudentPreviewBtn").addEventListener("click",adminPreviewClose);
+adminStudentPreviewModal.addEventListener("click",e=>{if(e.target===adminStudentPreviewModal)adminPreviewClose()});
 document.getElementById("studioCreateButtonBtn").addEventListener("click",studioCreateButton);
 document.getElementById("studioCreateNoticeBtn").addEventListener("click",studioCreateNotice);
 document.getElementById("adminRefreshContentBtn").addEventListener("click",adminLoadContentManager);
@@ -12995,6 +13539,89 @@ document.getElementById("adminContentVisibilityFilter").addEventListener("change
 
 /* -------------------- LIVE CLASS COMPETITION -------------------- */
 const competitionModal=document.getElementById("competitionModal");
+
+let lobbyCompetitionUnsub=null;
+let lobbyCompetitionCache=[];
+window.ClassoraLiveCompetitions=[];
+
+function competitionTeamModeText(mode){
+  return mode==="solo"
+    ?adminLang("فردي","Solo")
+    :mode==="random"
+      ?adminLang("فرق عشوائية","Random teams")
+      :adminLang("اختيار فرق","Team choice");
+}
+function competitionAudienceText(mode){
+  return mode==="remote"?adminLang("عن بُعد","Remote"):adminLang("بروجكتر","Projector");
+}
+function competitionStatusText(status){
+  return status==="lobby"
+    ?adminLang("بانتظار الطلاب","Waiting")
+    :status==="question"
+      ?adminLang("سؤال مباشر","Live question")
+      :status==="result"
+        ?adminLang("نتيجة الجولة","Round result")
+        :adminLang("مباشر","Live");
+}
+function renderLobbyLiveCompetitions(){
+  const section=document.getElementById("lobbyLiveCompetitions");
+  const host=document.getElementById("lobbyLiveCompetitionsList");
+  if(!section||!host)return;
+  const rooms=lobbyCompetitionCache
+    .filter(r=>r.publishToLobby===true&&r.status!=="finished")
+    .slice(0,9);
+  window.ClassoraLiveCompetitions=rooms;
+  host.innerHTML="";
+  if(!rooms.length){
+    section.classList.add("hidden");
+    return;
+  }
+  section.classList.remove("hidden");
+  for(const room of rooms){
+    const card=document.createElement("article");
+    card.className="lobby-live-competition-card";
+    const mode=room.teamMode||"choice";
+    card.innerHTML=`
+      <h4>🏆 ${escapeHtml(room.title||adminLang("مسابقة مباشرة","Live competition"))}</h4>
+      <p>${escapeHtml(room.ownerName||adminLang("المعلم","Teacher"))} • ${escapeHtml(competitionStatusText(room.status))}</p>
+      <div class="lobby-live-comp-meta">
+        <span>${escapeHtml(competitionTeamModeText(mode))}</span>
+        <span>${escapeHtml(competitionAudienceText(room.audienceMode||"remote"))}</span>
+        <span>${escapeHtml(String(room.code||"------"))}</span>
+      </div>
+      <button class="apply">${adminLang("🚀 دخول المسابقة","🚀 Join competition")}</button>`;
+    card.querySelector("button").addEventListener("click",()=>{
+      openCompetitionModal();
+      document.getElementById("compJoinCode").value=room.code||"";
+      configureCompetitionJoinUI(room);
+      document.getElementById("compJoinStatus").textContent=adminLang(
+        `جاهز للدخول إلى «${room.title||"المسابقة"}».`,
+        `Ready to join “${room.title||"competition"}”.`
+      );
+    });
+    host.appendChild(card);
+  }
+}
+
+function subscribeLobbyLiveCompetitions(){
+  if(!auth.currentUser)return;
+  if(lobbyCompetitionUnsub){lobbyCompetitionUnsub();lobbyCompetitionUnsub=null}
+  try{
+    const q=query(collection(db,"competitions"),where("publishToLobby","==",true));
+    lobbyCompetitionUnsub=onSnapshot(q,snap=>{
+      lobbyCompetitionCache=snap.docs
+        .map(d=>({id:d.id,...d.data()}))
+        .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      renderLobbyLiveCompetitions();
+    },err=>{
+      console.warn("live competition discovery",err);
+      document.getElementById("lobbyLiveCompetitions")?.classList.add("hidden");
+    });
+  }catch(err){
+    console.warn("live competition discovery",err);
+  }
+}
+
 let liveCompetitionId=null;
 let liveCompetitionRole=null;
 let liveCompetitionData=null;
@@ -13037,6 +13664,7 @@ async function openCompetitionModal(){
   document.getElementById("competitionStudentCard").classList.toggle("hidden",teacher&&!hybrid);
   document.getElementById("competitionTeacherCard").classList.toggle("hidden",!teacher);
   document.getElementById("compAutoStudentName").textContent=window.PythagorasiUser.displayName||"طالب";
+  configureCompetitionJoinUI(null);
 }
 document.getElementById("competitionBtn").addEventListener("click",openCompetitionModal);
 document.getElementById("closeCompetitionModal").addEventListener("click",()=>{
@@ -13054,10 +13682,36 @@ function makeCompetitionCode(){
   let out="";for(let i=0;i<6;i++)out+=chars[Math.floor(Math.random()*chars.length)];
   return out;
 }
+
+function competitionCreateOptions(source="quick"){
+  const prefix=source==="builder"?"compBuilder":"compQuick";
+  const teamMode=document.getElementById(`${prefix}TeamMode`)?.value||"choice";
+  const audienceMode=document.getElementById(`${prefix}AudienceMode`)?.value||"projector";
+  return {
+    teamMode:["choice","random","solo"].includes(teamMode)?teamMode:"choice",
+    audienceMode:audienceMode==="remote"?"remote":"projector"
+  };
+}
+function configureCompetitionJoinUI(room=null){
+  const wrap=document.getElementById("compJoinTeamWrap");
+  const status=document.getElementById("compJoinStatus");
+  const mode=room?.teamMode||"choice";
+  if(wrap)wrap.classList.toggle("hidden",mode!=="choice");
+  if(!status)return;
+  if(mode==="random")status.textContent=adminLang("🎲 الفريق رح يختاره الموقع تلقائيًا.","🎲 Your team will be assigned automatically.");
+  else if(mode==="solo")status.textContent=adminLang("👤 هاي مسابقة فردية — بدون فرق.","👤 This is a solo competition.");
+}
+function balancedRandomTeam(){
+  const a=livePlayers.filter(p=>p.team==="A").length;
+  const b=livePlayers.filter(p=>p.team==="B").length;
+  if(a<b)return "A";
+  if(b<a)return "B";
+  return Math.random()<.5?"A":"B";
+}
 function makeLiveQuestions(subject="mixed"){
   return makeGeneralLiveQuestions(subject,8);
 }
-async function createLiveCompetition(customQuestions=null,customTitle="مسابقة فيثاغورس"){
+async function createLiveCompetition(customQuestions=null,customTitle="مسابقة Classora",createOptions=null){
   if(!isTeacherLike() || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
@@ -13071,6 +13725,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
   try{
     const code=await reserveUniqueCode("competition");
     const quickSubject="pythagoras";
+    const options=createOptions||competitionCreateOptions("quick");
     const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject))
       .map((q,i)=>({...q,index:i,points:q.points||1000}));
     const ref=await addDoc(collection(db,"competitions"),{
@@ -13078,6 +13733,10 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
       ownerName:window.PythagorasiUser.displayName||"المعلم",
       title:customTitle||`مسابقة ${subjectNames[quickSubject]||"تعليمية"}`,
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
+      teamMode:options.teamMode,
+      audienceMode:options.audienceMode,
+      publishToLobby:options.audienceMode==="remote",
+      leaderboardToPlayers:options.audienceMode==="remote",
       teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,
       createdAt:serverTimestamp()
     });
@@ -13123,14 +13782,14 @@ async function loadCompetitionLibrary(){
       card.innerHTML=`
         <div class="saved-comp-top">
           <div>
-            <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة فيثاغورس")}</div>
+            <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة Classora")}</div>
             <div class="saved-comp-meta">${room.questionCount||0} أسئلة • ${escapeHtml(statusText)}</div>
           </div>
           <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
         </div>
         <div class="saved-comp-actions">
           ${room.status!=="finished"?`<button class="exam-secondary open-old-room" data-id="${room.id}">فتح الغرفة</button>`:""}
-          <button class="exam-secondary clone-old-room" data-id="${room.id}" data-title="${escapeHtml(room.title||"مسابقة فيثاغورس")}">نسخ وتشغيل من جديد</button>
+          <button class="exam-secondary clone-old-room" data-id="${room.id}" data-title="${escapeHtml(room.title||"مسابقة Classora")}">نسخ وتشغيل من جديد</button>
         </div>`;
       host.appendChild(card);
     }
@@ -13148,7 +13807,7 @@ async function loadCompetitionLibrary(){
           .sort((a,b)=>(parseInt(a.id)||0)-(parseInt(b.id)||0))
           .map(d=>d.data());
         if(!qs.length){showToast("المسابقة القديمة ما فيها أسئلة محفوظة.");return}
-        await createLiveCompetition(qs,btn.dataset.title||"مسابقة فيثاغورس");
+        await createLiveCompetition(qs,btn.dataset.title||"مسابقة Classora");
       }catch(err){
         console.error(err);showToast("تعذر نسخ المسابقة.");
       }finally{
@@ -13257,7 +13916,7 @@ document.getElementById("compBuilderCreate").addEventListener("click",async()=>{
   const title=document.getElementById("compBuilderTitle").value.trim()||"مسابقة فيثاغورس";
   const btn=document.getElementById("compBuilderCreate");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
-  try{await createLiveCompetition(qs,title)}
+  try{await createLiveCompetition(qs,title,competitionCreateOptions("builder"))}
   finally{btn.disabled=false;btn.textContent="🏆 أنشئ الغرفة"}
 });
 
@@ -13271,7 +13930,7 @@ async function ensureAnonymousStudent(name){
 async function joinLiveCompetition(){
   const name=(window.PythagorasiUser?.displayName||"طالب").trim().replace(/\s+/g," ");
   const code=(document.getElementById("compJoinCode").value||"").trim().toUpperCase();
-  const team=document.getElementById("compJoinTeam").value;
+  let team=document.getElementById("compJoinTeam").value;
   const status=document.getElementById("compJoinStatus");
   if(!isStudentLike()){
     status.textContent="الدخول كلاعب للطلاب فقط.";soundFx("wrong");return;
@@ -13283,6 +13942,13 @@ async function joinLiveCompetition(){
     const snap=await getDocs(query(collection(db,"competitions"),where("code","==",code)));
     const room=snap.docs.find(d=>d.data().status!=="finished");
     if(!room){status.textContent="❌ ما في غرفة مفتوحة بهذا الكود.";return}
+    const roomData=room.data()||{};
+    configureCompetitionJoinUI(roomData);
+    const teamMode=roomData.teamMode||"choice";
+    if(teamMode==="solo")team="SOLO";
+    else if(teamMode==="random")team=balancedRandomTeam();
+    else team=team==="B"?"B":"A";
+
     const playerRef=doc(db,"competitions",room.id,"players",user.uid);
     const existingPlayer=await getDoc(playerRef);
     if(existingPlayer.exists()){
@@ -13298,7 +13964,7 @@ async function joinLiveCompetition(){
     queueAccountStateSave({lastCompetition});
     subscribeCompetition(room.id,"player");
     showCompetitionView(room.data().status==="lobby"?"competitionLobby":"competitionGame");
-    status.textContent="✅ دخلت الغرفة.";
+    status.textContent=team==="SOLO"?"✅ دخلت المسابقة الفردية.":`✅ دخلت الغرفة • فريق ${team}.`;
     logStudentActivity("competition_join",`دخل مسابقة: ${room.data().title||"مسابقة"}`,"");
   }catch(err){
     console.error("join competition",err);
@@ -13331,24 +13997,107 @@ function subscribeCompetition(id,role){
 function renderLivePlayers(){
   const host=document.getElementById("compPlayersList");
   host.innerHTML="";
+  const mode=liveCompetitionData?.teamMode||"choice";
   const a=livePlayers.filter(p=>p.team==="A").length,b=livePlayers.filter(p=>p.team==="B").length;
   document.getElementById("compLobbyACount").textContent=a;
   document.getElementById("compLobbyBCount").textContent=b;
   livePlayers.forEach(p=>{
     const d=document.createElement("div");d.className="live-player";
-    d.innerHTML=`<b>${escapeHtml(p.name||"طالب")}</b><span class="${p.team==="A"?"teamA":"teamB"}">${p.team==="A"?"🔵 A":"🔴 B"}</span>`;
+    const tag=mode==="solo"?"👤 فردي":p.team==="A"?"🔵 A":"🔴 B";
+    const klass=mode==="solo"?"teamSolo":p.team==="A"?"teamA":"teamB";
+    d.innerHTML=`<b>${escapeHtml(p.name||"طالب")}</b><span class="${klass}">${tag}</span>`;
     host.appendChild(d);
   });
 }
+
+let livePreviousRanks=new Map();
+function renderProjectorLeaders(){
+  const board=document.getElementById("compProjectorBoard");
+  const grid=document.getElementById("compProjectorLeadGrid");
+  const title=document.getElementById("compProjectorLeaderText");
+  if(!board||!grid||!title)return;
+
+  const visible=liveCompetitionRole==="host";
+  board.classList.toggle("hidden",!visible);
+  if(!visible)return;
+
+  const top=livePlayers.slice(0,4);
+  const max=Math.max(1,...top.map(p=>Number(p.score)||0));
+  grid.innerHTML="";
+  top.forEach((p,i)=>{
+    const d=document.createElement("div");
+    d.className="projector-person";
+    const pct=Math.max(4,Math.round((Number(p.score)||0)/max*100));
+    d.innerHTML=`
+      <div class="pos">#${i+1}</div>
+      <b>${escapeHtml(p.name||"طالب")}</b>
+      <div class="projector-progress"><span style="width:${pct}%"></span></div>
+      <strong>${Number(p.score)||0} نقطة</strong>`;
+    grid.appendChild(d);
+  });
+  if(!top.length)grid.innerHTML='<div class="cloud-note">بانتظار الطلاب...</div>';
+  title.textContent=top.length?`المتقدم: ${top[0].name||"طالب"} • ${Number(top[0].score)||0}`:"بانتظار النتائج…";
+}
+
+function renderPlayerRankSummary(){
+  const el=document.getElementById("compPlayerRankSummary");
+  if(!el)return;
+  const remote=(liveCompetitionData?.audienceMode||"projector")==="remote";
+  const isPlayer=liveCompetitionRole==="player";
+  if(!isPlayer||remote){
+    el.classList.add("hidden");el.textContent="";return;
+  }
+  const idx=livePlayers.findIndex(p=>p.uid===auth.currentUser?.uid);
+  const leader=livePlayers[0];
+  if(idx<0){el.classList.add("hidden");return}
+  el.classList.remove("hidden");
+  el.textContent=`مركزك الآن #${idx+1} • ${livePlayers[idx]?.score||0} نقطة${leader&&leader.uid!==auth.currentUser?.uid?` • المتقدم ${leader.name||"طالب"}`:" • أنت بالمقدمة 🔥"}`;
+}
+
 function renderLiveLeaderboard(){
-  const rows=livePlayers.map((p,i)=>`
-    <div class="live-rank">
-      <div class="rank">${i+1}</div>
-      <div>${escapeHtml(p.name||"طالب")} <small style="color:#8399ac">• ${p.team==="A"?"🔵 A":"🔴 B"}</small></div>
-      <div class="score">${p.score||0}</div>
-    </div>`).join("");
+  const max=Math.max(1,...livePlayers.map(p=>Number(p.score)||0));
+  const newRanks=new Map();
+
+  const rows=livePlayers.map((p,i)=>{
+    const rank=i+1;
+    newRanks.set(p.uid,rank);
+    const old=livePreviousRanks.get(p.uid);
+    const movement=old?old-rank:0;
+    const moveText=movement>0?`↑ ${movement}`:movement<0?`↓ ${Math.abs(movement)}`:"";
+    const moveClass=movement>0?"up":movement<0?"down":"";
+    const rowClass=movement>0?"rank-up":movement<0?"rank-down":"";
+    const team=liveCompetitionData?.teamMode==="solo"
+      ?"👤 فردي"
+      :p.team==="A"?"🔵 A":"🔴 B";
+    const pct=Math.max((Number(p.score)||0)>0?4:0,Math.round((Number(p.score)||0)/max*100));
+    return `
+      <div class="live-rank ${rowClass}">
+        <div class="rank">${rank}</div>
+        <div class="live-rank-main">
+          <div class="live-rank-name">
+            <b>${escapeHtml(p.name||"طالب")}</b>
+            <span class="live-rank-team">${team}</span>
+            ${moveText?`<span class="live-rank-move ${moveClass}">${moveText}</span>`:""}
+          </div>
+          <div class="live-rank-progress"><span style="width:${pct}%"></span></div>
+        </div>
+        <div class="live-rank-score"><b>${Number(p.score)||0}</b><small>POINTS</small></div>
+      </div>`;
+  }).join("");
+
+  livePreviousRanks=newRanks;
   document.getElementById("compLeaderboard").innerHTML=rows||'<div class="cloud-note">بانتظار الطلاب...</div>';
-  document.getElementById("compFinalLeaderboard").innerHTML=rows;
+  document.getElementById("compFinalLeaderboard").innerHTML=rows||'<div class="cloud-note">ما في نتائج.</div>';
+
+  const remote=(liveCompetitionData?.audienceMode||"projector")==="remote";
+  const leaderboardVisible=liveCompetitionRole==="host"||remote;
+  document.getElementById("compLeaderboardSection")?.classList.toggle("hidden",!leaderboardVisible);
+  if(document.getElementById("compFinalLeaderboard")){
+    document.getElementById("compFinalLeaderboard").style.display=leaderboardVisible?"":"none";
+  }
+
+  renderProjectorLeaders();
+  renderPlayerRankSummary();
 }
 
 function liveTimestampMs(ts){
@@ -13403,6 +14152,15 @@ function renderLiveRoom(){
   document.getElementById("compGameCode").textContent=r.code||"------";
   document.getElementById("compLobbyRole").textContent=liveCompetitionRole==="host"?"👨‍🏫 غرفة المعلم — الطلاب يدخلون الآن":"🎒 أنت داخل الغرفة — انتظر المعلم";
   document.getElementById("compStartBtn").classList.toggle("hidden",liveCompetitionRole!=="host");
+  document.getElementById("compLobbySettings").classList.toggle("hidden",liveCompetitionRole!=="host"||r.status!=="lobby");
+  document.getElementById("compLobbyTeamMode").value=r.teamMode||"choice";
+  document.getElementById("compLobbyAudienceMode").value=r.audienceMode||"projector";
+
+  const solo=r.teamMode==="solo";
+  document.getElementById("compLobbyTeams").classList.toggle("hidden",solo);
+  document.getElementById("compGameTeams").classList.toggle("hidden",solo);
+  document.getElementById("compFinalTeams").classList.toggle("hidden",solo);
+
   document.getElementById("compScoreA").textContent=r.teamAScore||0;
   document.getElementById("compScoreB").textContent=r.teamBScore||0;
   document.getElementById("compFinalA").textContent=r.teamAScore||0;
@@ -13418,11 +14176,18 @@ function renderLiveRoom(){
     stopCompetitionCountdown();
     showCompetitionView("competitionFinished");
     const a=r.teamAScore||0,b=r.teamBScore||0;
-    document.getElementById("compWinnerText").textContent=a===b?"تعادل 🔥":a>b?"🔵 الفريق A فاز!":"🔴 الفريق B فاز!";
+    if(solo){
+      const winner=livePlayers[0];
+      document.getElementById("compWinnerText").textContent=winner
+        ?`🏆 المركز الأول: ${winner.name||"طالب"} • ${winner.score||0} نقطة`
+        :"انتهت المسابقة!";
+    }else{
+      document.getElementById("compWinnerText").textContent=a===b?"تعادل 🔥":a>b?"🔵 الفريق A فاز!":"🔴 الفريق B فاز!";
+    }
     if(liveLastRenderedStatus!=="finished"){
       if(liveCompetitionRole==="player"){
         const me=livePlayers.find(p=>p.uid===auth.currentUser?.uid);
-        const won=a===b?null:(me?.team==="A"?a>b:b>a);
+        const won=solo?(livePlayers[0]?.uid===auth.currentUser?.uid):a===b?null:(me?.team==="A"?a>b:b>a);
         if(won===true){soundFx("win");fxElement(document.getElementById("competitionFinished"),"win")}
         else if(won===false){soundFx("lose");fxElement(document.getElementById("competitionFinished"),"shake")}
       }else{soundFx("win")}
@@ -13464,6 +14229,10 @@ function renderLiveRoom(){
     }
   }else if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)st.textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
   else st.textContent=liveCompetitionRole==="host"?"استنى الإجابات أو خلي التايمر يخلص تلقائيًا.":"اختار جواب واحد قبل انتهاء الوقت.";
+  renderProjectorLeaders();
+  renderPlayerRankSummary();
+  const remote=(r.audienceMode||"projector")==="remote";
+  document.getElementById("compLeaderboardSection")?.classList.toggle("hidden",liveCompetitionRole!=="host"&&!remote);
   liveLastRenderedStatus=r.status;
 }
 
@@ -13515,6 +14284,44 @@ async function hostSetQuestion(index){
     correctAnswer:null,questionStartedAt:serverTimestamp()
   });
 }
+
+async function applyCompetitionRoomSettings(){
+  if(liveCompetitionRole!=="host"||!liveCompetitionId||liveCompetitionData?.status!=="lobby")return;
+  const teamMode=document.getElementById("compLobbyTeamMode").value;
+  const audienceMode=document.getElementById("compLobbyAudienceMode").value;
+  try{
+    const shuffled=[...livePlayers].sort(()=>Math.random()-.5);
+    if(teamMode==="solo"){
+      for(const p of shuffled){
+        await setDoc(doc(db,"competitions",liveCompetitionId,"players",p.uid),{team:"SOLO"},{merge:true});
+      }
+    }else if(teamMode==="random"){
+      for(let i=0;i<shuffled.length;i++){
+        await setDoc(doc(db,"competitions",liveCompetitionId,"players",shuffled[i].uid),{team:i%2===0?"A":"B"},{merge:true});
+      }
+    }else{
+      let next="A";
+      for(const p of shuffled.filter(x=>!["A","B"].includes(x.team))){
+        await setDoc(doc(db,"competitions",liveCompetitionId,"players",p.uid),{team:next},{merge:true});
+        next=next==="A"?"B":"A";
+      }
+    }
+    await updateDoc(doc(db,"competitions",liveCompetitionId),{
+      teamMode,
+      audienceMode,
+      publishToLobby:audienceMode==="remote",
+      leaderboardToPlayers:audienceMode==="remote",
+      teamAScore:0,
+      teamBScore:0
+    });
+    showToast(adminLang("تم تطبيق إعدادات المسابقة ✅","Competition settings applied ✅"));
+  }catch(err){
+    console.error("competition room settings",err);
+    showToast(adminLang("تعذر حفظ إعدادات المسابقة.","Could not save competition settings."));
+  }
+}
+document.getElementById("compApplyRoomSettings").addEventListener("click",applyCompetitionRoomSettings);
+
 document.getElementById("compStartBtn").addEventListener("click",async()=>{
   if(liveCompetitionRole!=="host")return;
   if(!livePlayers.length){showToast("خلي طالب واحد على الأقل يدخل الغرفة.");return}
@@ -13533,7 +14340,10 @@ document.getElementById("compRevealBtn").addEventListener("click",async()=>{
     for(const r of thisResponses){
       if(normExam(r.answer)===normExam(q.answer)){
         const points=q.points||1000;
-        if(r.team==="A")aScore+=points;else bScore+=points;
+        if(liveCompetitionData?.teamMode!=="solo"){
+          if(r.team==="A")aScore+=points;
+          else if(r.team==="B")bScore+=points;
+        }
         const p=livePlayers.find(x=>x.uid===r.studentUid);
         await setDoc(doc(db,"competitions",liveCompetitionId,"players",r.studentUid),{score:(p?.score||0)+points},{merge:true});
       }
@@ -13573,6 +14383,36 @@ function normalizeArabic(t){
     .replace(/[؟?!.,،:;؛"'()[\]{}]/g," ")
     .replace(/[٠١٢٣٤٥٦٧٨٩]/g,d=>"0123456789"["٠١٢٣٤٥٦٧٨٩".indexOf(d)])
     .replace(/\s+/g," ").trim();
+}
+
+
+/* Arabic typed while the keyboard is accidentally set to English. */
+const arabicKeyboardMap={
+  "q":"ض","w":"ص","e":"ث","r":"ق","t":"ف","y":"غ","u":"ع","i":"ه","o":"خ","p":"ح","[":"ج","]":"د",
+  "a":"ش","s":"س","d":"ي","f":"ب","g":"ل","h":"ا","j":"ت","k":"ن","l":"م",";":"ك","'":"ط",
+  "z":"ئ","x":"ء","c":"ؤ","v":"ر","b":"لا","n":"ى","m":"ة",",":"و",".":"ز","/":"ظ"
+};
+function arabicFromEnglishKeyboard(raw){
+  return String(raw||"").split("").map(ch=>{
+    const low=ch.toLowerCase();
+    return arabicKeyboardMap[low]??ch;
+  }).join("");
+}
+function looksLikeArabicTypedOnEnglishKeyboard(raw){
+  const s=String(raw||"").trim();
+  const latin=(s.match(/[a-z]/gi)||[]).length;
+  if(latin<6)return false;
+  if(/[ء-ي]/.test(s))return false;
+  const englishHints=/\b(hello|hi|what|why|how|explain|find|exam|competition|triangle|theorem|pythagoras|hypotenuse|student|teacher)\b/i;
+  if(englishHints.test(s))return false;
+  const converted=arabicFromEnglishKeyboard(s);
+  return /[ء-ي]{2,}/.test(converted);
+}
+function repairAssistantInput(raw){
+  const s=String(raw||"");
+  return currentUILanguage!=="en"&&looksLikeArabicTypedOnEnglishKeyboard(s)
+    ?arabicFromEnglishKeyboard(s)
+    :s;
 }
 
 /* High-value correction vocabulary */
@@ -13641,7 +14481,7 @@ function correctWord(w){
   return bestD<=limit?best:w;
 }
 function correctedText(raw){
-  const n=normalizeArabic(raw);
+  const n=normalizeArabic(repairAssistantInput(raw));
   return n.split(" ").map(correctWord).join(" ");
 }
 function stemArabicWord(word){
@@ -13710,7 +14550,10 @@ function solveNumeric(raw,t){
 }
 
 
-const aiContext={lastNumbers:[],lastIntent:"",lastQuestion:"",turns:0};
+const aiContext={
+  lastNumbers:[],lastIntent:"",lastQuestion:"",lastAnswer:"",
+  lastTopic:"",preferredDetail:"normal",turns:0
+};
 
 
 function savedAIName(){
@@ -13740,7 +14583,7 @@ function saveAIName(name){
 function refreshAIWelcome(){
   const el=document.getElementById("aiWelcome");
   if(!el)return;
-  el.innerHTML=`${helloForUser()} أنا <b>${escapeHtml(assistantNameFor("pythagoras"))}</b>، مساعد مختبر فيثاغورس. اسألني، أعطيني معادلة، أو اطلب مني أتحكم بالمجسم.`;
+  el.innerHTML=`${helloForUser()} أنا <b>${escapeHtml(assistantNameFor("pythagoras"))}</b>، مساعد Classora الذكي. اسألني عن الدرس، أعطيني مسألة، أو اطلب مني أفتحلك جزء من الموقع.`;
 }
 function persistAIContext(){
   try{
@@ -13756,6 +14599,9 @@ function loadAIContext(){
       aiContext.lastNumbers=Array.isArray(s.lastNumbers)?s.lastNumbers:[];
       aiContext.lastIntent=s.lastIntent||"";
       aiContext.lastQuestion=s.lastQuestion||"";
+      aiContext.lastAnswer=s.lastAnswer||"";
+      aiContext.lastTopic=s.lastTopic||"";
+      aiContext.preferredDetail=s.preferredDetail||"normal";
       aiContext.turns=Number(s.turns)||0;
     }
   }catch{}
@@ -13872,6 +14718,27 @@ function executeSiteAction(raw,t){
   if(has(t,"حرك الرمل","حرّك الرمل","رج الرمل","نزل الرمل")){
     document.getElementById("shakeBtn").click();
     return "تم ✅ حرّكت الرمل من جديد.";
+  }
+
+  if(has(t,"افتح صفوفي","روح صفوفي","صفوفي","افتح الصفوف")){
+    document.getElementById("lobbyClassBtn")?.click();
+    return "فتحتلك صفوفك ✅";
+  }
+
+  if(has(t,"افتح الاعدادات","افتح الإعدادات","روح للاعدادات","روح للإعدادات")){
+    document.getElementById("lobbySettingsBtn")?.click();
+    return "فتحتلك الإعدادات ✅";
+  }
+
+  if(has(t,"افتح حسابي","افتح البروفايل","ملفي الشخصي","افتح ملفي")){
+    document.getElementById("lobbyProfileBtn")?.click();
+    return "فتحتلك ملفك الشخصي ✅";
+  }
+
+  if(has(t,"شو المسابقات الشغاله","شو المسابقات الشغالة","في مسابقات هسا","في مسابقه هسا","مسابقات مفتوحه","مسابقات مفتوحة")){
+    const rooms=(window.ClassoraLiveCompetitions||[]).filter(r=>r.status!=="finished");
+    if(!rooms.length)return "حاليًا ما في مسابقة عن بُعد مفتوحة بالموقع.";
+    return `في ${rooms.length} مسابقة شغّالة هسا: ${rooms.slice(0,4).map(r=>r.title||"مسابقة").join("، ")}. بتقدر تضغط «دخول» من اللوبي.`;
   }
 
   if(has(t,"افتح الامتحان","روح للامتحان","ابدأ امتحان","بدّي امتحان","بدي امتحان")){
@@ -14171,13 +15038,44 @@ function pythagorasiAnswerEnglish(raw){
 
 function pythagorasiAnswer(raw){
   if(currentUILanguage==="en")return pythagorasiAnswerEnglish(raw);
-  const t=correctedText(raw);
-  const n=normalizeArabic(raw);
+  const repairedRaw=repairAssistantInput(raw);
+  const t=correctedText(repairedRaw);
+  const n=normalizeArabic(repairedRaw);
 
-  const generatedGrade=gradeGeneratedAIAnswer(raw);
+  if(looksLikeArabicTypedOnEnglishKeyboard(raw)){
+    aiContext.lastIntent="keyboard_repair";
+  }
+
+  /* Multi-turn follow-ups: the assistant remembers what it just explained. */
+  if(has(t,"اختصر","مختصر","باختصار","اقصر")){
+    aiContext.preferredDetail="short";
+    const base=String(aiContext.lastAnswer||lastBotAnswer||"").trim();
+    if(base){
+      const short=base.replace(/\n+/g," ").split(/[.!؟]/).filter(Boolean).slice(0,2).join(". ").slice(0,220);
+      return short||"أكيد — اسألني السؤال وأنا بجاوبك باختصار.";
+    }
+  }
+  if(has(t,"اشرح ابسط","اشرحلي ابسط","بسطها","بسيطه اكثر","بسيطة اكثر")){
+    aiContext.preferredDetail="simple";
+    if(aiContext.lastTopic==="calculation"||lastBotTopic==="calculation")
+      return "بأبسط شكل: ربّع الضلع الأول، ربّع الثاني، اجمعهم، وبعدها خذ الجذر. إذا بدك ضلع قائم بدل الوتر، منطرح بدل ما نجمع.";
+    if(aiContext.lastTopic==="theory"||lastBotTopic==="theory")
+      return "بأبسط شكل: بالمثلث القائم، مربع الضلع الأول + مربع الضلع الثاني = مربع الوتر. يعني a² + b² = c².";
+    if(aiContext.lastAnswer||lastBotAnswer)
+      return `أبسطها هيك 👇 ${String(aiContext.lastAnswer||lastBotAnswer).replace(/\n+/g," ").slice(0,260)}`;
+  }
+  if(has(t,"اعطيني مثال","هات مثال","مثال ثاني","اعطيني مثال ثاني")){
+    if(aiContext.lastTopic==="hypotenuse"||lastBotTopic==="hypotenuse")
+      return "مثال: بمثلث 3–4–5، الضلع 5 هو الوتر لأنه مقابل الزاوية 90° وهو الأطول.";
+    if(aiContext.lastTopic==="theory"||lastBotTopic==="theory"||aiContext.lastIntent==="calculation")
+      return "مثال سريع: a=6 وb=8 → c=√(36+64)=√100=10.";
+    return "مثال: إذا كان a=5 وb=12، فالوتر c=13 لأن 25+144=169.";
+  }
+
+  const generatedGrade=gradeGeneratedAIAnswer(repairedRaw);
   if(generatedGrade)return generatedGrade;
 
-  const nameMatch=String(raw).trim().match(/(?:^|\s)(?:اسمي|أنا اسمي|انا اسمي|ناديني)\s+([^\r\n،,.!?؟]{2,40})/i);
+  const nameMatch=String(repairedRaw).trim().match(/(?:^|\s)(?:اسمي|أنا اسمي|انا اسمي|ناديني)\s+([^\r\n،,.!?؟]{2,40})/i);
   if(nameMatch){
     const name=nameMatch[1].trim().replace(/\s+/g," ");
     if(saveAIName(name))return `تشرفنا ${name} 👋 حفظت اسمك على هذا الجهاز.`;
@@ -14188,10 +15086,10 @@ function pythagorasiAnswer(raw){
   }
 
   aiContext.turns++;
-  aiContext.lastQuestion=raw;
-  const extracted=extractNumbers(raw);
+  aiContext.lastQuestion=repairedRaw;
+  const extracted=extractNumbers(repairedRaw);
   if(extracted.length)aiContext.lastNumbers=extracted;
-  const advanced=advancedLocalMathAnswer(raw,t);
+  const advanced=advancedLocalMathAnswer(repairedRaw,t);
   if(advanced){
     aiContext.lastIntent="calculation";
     return advanced;
@@ -14200,6 +15098,9 @@ function pythagorasiAnswer(raw){
   const remember=(topic,answer)=>{
     lastBotTopic=topic;
     lastBotAnswer=answer;
+    aiContext.lastTopic=topic;
+    aiContext.lastAnswer=String(answer||"");
+    persistAIContext();
     return answer;
   };
 
@@ -14290,7 +15191,7 @@ function pythagorasiAnswer(raw){
     return prefix + remember("exam","في الموقع امتحان مفاجئ من 10 أسئلة صعبة ومتغيّرة وعلامته من 100. وفيك كمان تدخل «صمّم امتحانك» وتحدد لحد 10 أسئلة، نوع كل سؤال وعلامته وإجابته الصحيحة.");
   }
 
-  const numeric=solveNumeric(raw,t);
+  const numeric=solveNumeric(repairedRaw,t);
   if(numeric){aiContext.lastIntent="calculation";return prefix + remember("calculation",numeric);}
 
   if(has(t,"مين فيثاغورس","من هو فيثاغورس","من فيثاغورس"))
