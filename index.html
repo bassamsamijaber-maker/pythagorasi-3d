@@ -3487,6 +3487,517 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
   .live-teams,.projector-lead-grid{grid-template-columns:1fr!important}
   .site-updates-admin-tools{grid-template-columns:1fr!important}
 }
+
+/* ================= V43 MOBILE-FIRST POLISH ================= */
+
+/* Main lab navigation */
+.lab-brand-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+.lab-brand-actions button{
+  width:100%;
+  margin:0!important;
+  min-height:44px;
+  border-radius:13px;
+}
+.lab-mobile-nav{
+  display:none;
+  position:absolute;
+  z-index:30;
+  top:14px;
+  right:14px;
+  gap:7px;
+}
+.lab-mobile-nav button{
+  height:42px;
+  padding:0 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  color:#eef8ff;
+  background:rgba(7,17,27,.78);
+  backdrop-filter:blur(14px);
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+
+/* Equation cards */
+.equation-pair-card{
+  padding:11px;
+  margin-bottom:9px;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.016));
+  border:1px solid rgba(166,201,228,.075);
+}
+.equation-pair-card .equation-pair-title{
+  margin:0 0 8px;
+  font-size:10px;
+  color:#9fb2c2;
+}
+.equation-math-input{
+  display:grid;
+  grid-template-columns:minmax(64px,1fr) auto auto minmax(64px,1fr) auto auto minmax(64px,1fr);
+  align-items:end;
+  gap:6px;
+}
+.equation-math-input label{
+  display:grid;
+  gap:4px;
+  min-width:0;
+}
+.equation-math-input label small{
+  font-size:8px;
+  color:#718b9f;
+  text-align:center;
+}
+.equation-math-input input{
+  min-width:0;
+  width:100%;
+  text-align:center;
+  height:46px;
+  border-radius:11px!important;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+}
+.equation-math-input b,
+.equation-op{
+  align-self:center;
+  font-size:19px;
+  font-weight:1000;
+  color:#dbeaf5;
+}
+.equation-pair-card .equation-preview{
+  margin:8px 0 0;
+  min-height:36px;
+  display:grid;
+  place-items:center;
+}
+
+/* Assignment builder */
+.assignment-exam-builder{
+  display:block!important;
+  overflow:hidden;
+}
+.assignment-builder-top{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(170px,.42fr);
+  gap:9px;
+}
+.assignment-field{
+  display:grid;
+  gap:5px;
+  min-width:0;
+  color:#90a7b9;
+  font-size:10px;
+  font-weight:800;
+}
+.assignment-field input,
+.assignment-field textarea{
+  width:100%;
+  min-width:0;
+  margin:0;
+}
+.assignment-field input{height:46px}
+.assignment-wide-field{margin-top:9px}
+.assignment-wide-field textarea{
+  min-height:88px!important;
+  resize:vertical;
+}
+.assignment-add-section{
+  margin-top:11px;
+  padding:10px;
+  border-radius:13px;
+  background:rgba(255,255,255,.021);
+  border:1px solid rgba(166,201,228,.07);
+}
+.assignment-add-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+.assignment-add-heading b{font-size:12px}
+.assignment-add-heading small{font-size:9px;color:#718b9e}
+.assignment-builder-toolbar{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px!important;
+}
+.assignment-builder-toolbar button{
+  grid-column:auto!important;
+  min-height:44px;
+  min-width:0;
+  padding:8px 7px;
+  border-radius:11px;
+  white-space:normal;
+  line-height:1.35;
+}
+.assignment-question-builder{
+  margin-top:10px;
+  display:grid;
+  gap:9px;
+}
+.assignment-q-builder{
+  overflow:hidden;
+  padding:11px!important;
+  border-radius:13px!important;
+}
+.assignment-q-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 92px auto!important;
+  gap:7px!important;
+}
+.assignment-q-head>*{min-width:0}
+.assignment-q-head .aq-remove{min-height:42px}
+.assignment-q-builder textarea,
+.assignment-q-builder input,
+.assignment-q-builder select{max-width:100%;min-width:0}
+.assignment-mcq-opt{
+  grid-template-columns:28px minmax(0,1fr)!important;
+}
+.assignment-publish-bar{
+  position:sticky;
+  bottom:-1px;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:12px;
+  padding:10px;
+  border-radius:13px;
+  background:rgba(10,22,34,.94);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(81,167,231,.12);
+}
+.assignment-publish-hint{
+  color:#8097aa;
+  font-size:9px;
+}
+.assignment-publish-bar button{
+  grid-column:auto!important;
+  min-width:190px;
+  margin:0!important;
+}
+
+/* Prevent horizontal drift in class manager */
+.class-manager-modal,
+.teacher-class-card,
+.class-detail-grid,
+.class-panel,
+.assignment-create,
+.assignment-question-builder,
+.assignment-q-builder{
+  max-width:100%;
+  min-width:0;
+}
+#classModal .modalbox{
+  overflow-x:hidden!important;
+}
+.teacher-class-card{
+  overflow:hidden;
+}
+
+/* Phone-first behavior */
+@media(max-width:1000px){
+  .lab-mobile-nav{display:flex}
+  .stagebar{
+    top:64px!important;
+  }
+  .shell{
+    grid-template-columns:1fr!important;
+    padding:8px!important;
+    gap:9px!important;
+  }
+  .stage{
+    min-height:min(72vh,680px)!important;
+    border-radius:20px!important;
+  }
+  .side{
+    padding:13px!important;
+    border-radius:20px!important;
+    max-height:none!important;
+  }
+  .lab-brand-actions{
+    display:none!important;
+  }
+}
+
+@media(max-width:700px){
+  /* Make the lab feel like an app */
+  .shell{
+    padding:0!important;
+    gap:0!important;
+  }
+  .stage,.side{
+    border-radius:0!important;
+    border-inline:0!important;
+  }
+  .stage{
+    min-height:58vh!important;
+    border-top:0!important;
+  }
+  .side{
+    padding:12px!important;
+  }
+  .lab-mobile-nav{
+    position:fixed;
+    top:auto;
+    right:10px;
+    left:10px;
+    bottom:10px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    z-index:49;
+    padding:7px;
+    border-radius:16px;
+    background:rgba(8,18,28,.88);
+    border:1px solid rgba(151,193,225,.11);
+    backdrop-filter:blur(18px);
+    box-shadow:0 18px 45px rgba(0,0,0,.32);
+  }
+  .lab-mobile-nav button{
+    width:100%;
+    height:48px;
+    font-size:14px!important;
+    background:rgba(255,255,255,.04);
+  }
+  .stagebar{
+    top:10px!important;
+    left:10px!important;
+    right:10px!important;
+  }
+  .stagebar button{
+    height:40px!important;
+    padding:0 9px!important;
+    font-size:12px!important;
+  }
+  .stagehint{display:none!important}
+  .side{
+    padding-bottom:86px!important;
+  }
+  .brand h1{
+    font-size:36px!important;
+  }
+  .brand{
+    padding-bottom:4px;
+  }
+  .auth-userbar{
+    gap:7px;
+    flex-wrap:wrap;
+  }
+  .unknown-picker{
+    grid-template-columns:1fr!important;
+  }
+
+  /* Equation lab on phone */
+  .equation-lab-box{
+    width:100vw!important;
+    max-width:100vw!important;
+    max-height:100vh!important;
+    min-height:100vh;
+    border-radius:0!important;
+    padding:12px!important;
+  }
+  .equation-lab-box .modalhead{
+    top:-12px!important;
+    margin:-12px -12px 10px!important;
+    padding:13px 12px 10px!important;
+  }
+  .equation-lab-box .modalhead h2{
+    font-size:20px!important;
+  }
+  .equation-lab-layout{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  .equation-controls-card,.equation-graph-card{
+    padding:10px!important;
+    border-radius:14px!important;
+  }
+  .equation-math-input{
+    grid-template-columns:minmax(54px,1fr) auto auto minmax(54px,1fr) auto auto minmax(54px,1fr);
+    gap:4px;
+  }
+  .equation-math-input input{
+    height:44px;
+    padding:5px!important;
+    font-size:16px!important;
+  }
+  .equation-math-input b,.equation-op{
+    font-size:16px;
+  }
+  .equation-actions{
+    grid-template-columns:1fr!important;
+  }
+  .equation-actions button{
+    width:100%;
+    min-height:46px;
+  }
+  .equation-mode-toggle{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+  }
+  .equation-mode-toggle button{
+    min-width:0;
+    padding:0 8px;
+  }
+  .equation-2d-canvas{
+    height:44vh!important;
+    min-height:300px!important;
+  }
+  .equation-3d-scene{
+    height:46vh!important;
+    min-height:315px!important;
+  }
+  .equation-3d-pro-toolbar{
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  /* Teacher class / assignment modal phone redesign */
+  #classModal{
+    padding:0!important;
+    align-items:stretch!important;
+  }
+  #classModal .class-manager-modal{
+    width:100vw!important;
+    max-width:100vw!important;
+    max-height:100vh!important;
+    min-height:100vh!important;
+    border-radius:0!important;
+    padding:12px!important;
+    overflow-x:hidden!important;
+  }
+  #classModal .modalhead{
+    top:-12px!important;
+    margin:-12px -12px 10px!important;
+    padding:13px 12px 10px!important;
+  }
+  #classModal .modalhead h2{
+    font-size:22px!important;
+  }
+  .teacher-class-card{
+    padding:10px!important;
+    border-radius:14px!important;
+  }
+  .class-card-head{
+    align-items:flex-start!important;
+  }
+  .class-code-big{
+    width:100%;
+    margin-top:5px;
+    padding:7px;
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    text-align:center;
+  }
+  .class-tools{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+  }
+  .class-tools button{
+    min-height:44px;
+    font-size:12px!important;
+  }
+  .class-detail-grid{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+  }
+  .class-panel{
+    grid-column:auto!important;
+    padding:10px!important;
+    overflow:hidden;
+  }
+  .class-panel h4{
+    font-size:15px!important;
+    line-height:1.45;
+  }
+  .class-edit-row{
+    grid-template-columns:1fr!important;
+  }
+  .class-edit-row button{
+    min-height:44px;
+    width:100%;
+  }
+  .class-student-row,.co-teacher-row{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+  }
+  .member-actions{
+    width:100%;
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+  }
+  .member-actions button,.member-actions label{
+    min-height:40px;
+    display:grid;
+    place-items:center;
+  }
+
+  .assignment-builder-top{
+    grid-template-columns:1fr!important;
+  }
+  .assignment-add-heading{
+    display:block;
+  }
+  .assignment-add-heading small{
+    display:block;
+    margin-top:3px;
+  }
+  .assignment-builder-toolbar{
+    grid-template-columns:1fr!important;
+  }
+  .assignment-builder-toolbar button{
+    width:100%;
+    min-height:48px;
+    font-size:14px!important;
+  }
+  .assignment-q-head{
+    grid-template-columns:1fr!important;
+  }
+  .assignment-q-head .aq-points{
+    width:100%!important;
+  }
+  .assignment-q-head .aq-remove{
+    width:100%;
+  }
+  .assignment-mcq-opt{
+    grid-template-columns:30px minmax(0,1fr)!important;
+  }
+  .assignment-publish-bar{
+    flex-direction:column;
+    align-items:stretch;
+    bottom:0;
+    padding:9px;
+  }
+  .assignment-publish-hint{
+    text-align:center;
+  }
+  .assignment-publish-bar button{
+    width:100%;
+    min-width:0;
+    min-height:50px;
+    font-size:15px!important;
+  }
+}
+
+@media(max-width:420px){
+  .lab-mobile-nav button span{display:inline}
+  .equation-math-input{
+    grid-template-columns:minmax(48px,1fr) auto minmax(48px,1fr) auto minmax(48px,1fr);
+  }
+  .equation-math-input b{
+    display:none;
+  }
+  .equation-math-input .equation-op{
+    font-size:15px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4281,21 +4792,33 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
 
     <div class="equation-lab-layout">
       <section class="equation-controls-card">
-        <div class="equation-pair-title" id="equation1Title">المعادلة الأولى</div>
-        <div class="equation-coeff-grid">
-          <label><span>a₁</span><input id="eqA1" type="number" step="0.1" value="2"></label>
-          <label><span>b₁</span><input id="eqB1" type="number" step="0.1" value="1"></label>
-          <label><span>c₁</span><input id="eqC1" type="number" step="0.1" value="7"></label>
+        <div class="equation-pair-card">
+          <div class="equation-pair-title" id="equation1Title">المعادلة الأولى</div>
+          <div class="equation-math-input" dir="ltr">
+            <label><small>a₁</small><input id="eqA1" type="number" step="0.1" value="2"></label>
+            <b>x</b>
+            <span class="equation-op">+</span>
+            <label><small>b₁</small><input id="eqB1" type="number" step="0.1" value="1"></label>
+            <b>y</b>
+            <span class="equation-op">=</span>
+            <label><small>c₁</small><input id="eqC1" type="number" step="0.1" value="7"></label>
+          </div>
+          <div class="equation-preview" id="eqPreview1">2x + 1y = 7</div>
         </div>
-        <div class="equation-preview" id="eqPreview1">2x + 1y = 7</div>
 
-        <div class="equation-pair-title" id="equation2Title">المعادلة الثانية</div>
-        <div class="equation-coeff-grid">
-          <label><span>a₂</span><input id="eqA2" type="number" step="0.1" value="1"></label>
-          <label><span>b₂</span><input id="eqB2" type="number" step="0.1" value="-1"></label>
-          <label><span>c₂</span><input id="eqC2" type="number" step="0.1" value="2"></label>
+        <div class="equation-pair-card">
+          <div class="equation-pair-title" id="equation2Title">المعادلة الثانية</div>
+          <div class="equation-math-input" dir="ltr">
+            <label><small>a₂</small><input id="eqA2" type="number" step="0.1" value="1"></label>
+            <b>x</b>
+            <span class="equation-op">+</span>
+            <label><small>b₂</small><input id="eqB2" type="number" step="0.1" value="-1"></label>
+            <b>y</b>
+            <span class="equation-op">=</span>
+            <label><small>c₂</small><input id="eqC2" type="number" step="0.1" value="2"></label>
+          </div>
+          <div class="equation-preview" id="eqPreview2">1x - 1y = 2</div>
         </div>
-        <div class="equation-preview" id="eqPreview2">1x - 1y = 2</div>
 
         <label class="equation-method-label">
           <span id="equationMethodLabel">طريقة الشرح</span>
@@ -4745,6 +5268,11 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
       <button class="glass" id="themeBtn">☀ <span>الوضع النهاري</span></button>
       <button class="glass" id="resetBtn">↻ <span>إرجاع العرض</span></button>
     </div>
+
+    <div class="lab-mobile-nav" id="labMobileNav">
+      <button id="mobileReturnLobbyBtn">⌂ <span>اللوبي</span></button>
+      <button id="mobileLabSettingsBtn">⚙️ <span>الإعدادات</span></button>
+    </div>
     <div id="toast" class="change-toast"></div>
     <div class="stagehint">
       <div class="hint">🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط<br>🔎 عجلة الماوس للتقريب</div>
@@ -4756,8 +5284,10 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
     <div class="brand">
       <h1>Classora</h1>
       <div class="ai-chip" id="pythagAIChip">● Classora AI Assistant</div>
-      <button class="exam-secondary" id="returnLobbyBtn" style="margin-top:7px;width:100%">⌂ الرجوع للّوبي</button>
-      <button class="exam-secondary" id="labSettingsBtn" style="margin-top:7px;width:100%">⚙️ الإعدادات</button>
+      <div class="lab-brand-actions">
+        <button class="exam-secondary" id="returnLobbyBtn">⌂ <span>الرجوع للّوبي</span></button>
+        <button class="exam-secondary" id="labSettingsBtn">⚙️ <span>الإعدادات</span></button>
+      </div>
     </div>
     <div class="auth-userbar" id="authUserBar">
       <div class="auth-userinfo">
@@ -9493,16 +10023,40 @@ async function renderTeacherClassCard(host,c){
       <div class="class-panel full">
         <h4>📝 وظيفة جديدة — مثل الامتحان</h4>
         <div class="assignment-create assignment-exam-builder">
-          <input class="assignment-title" placeholder="عنوان الوظيفة">
-          <input class="assignment-date" type="date" lang="en-US" dir="ltr">
-          <textarea class="assignment-description-input" placeholder="تعليمات الوظيفة للطلاب..."></textarea>
-          <div class="assignment-builder-toolbar">
-            <button type="button" class="exam-secondary assignment-add-mcq">＋ اختيار من متعدد</button>
-            <button type="button" class="exam-secondary assignment-add-number">＋ سؤال رقمي</button>
-            <button type="button" class="exam-secondary assignment-add-open">＋ سؤال مفتوح</button>
+          <div class="assignment-builder-top">
+            <label class="assignment-field">
+              <span>📝 عنوان الوظيفة</span>
+              <input class="assignment-title" placeholder="مثال: تدريب المعادلات">
+            </label>
+            <label class="assignment-field">
+              <span>📅 موعد التسليم</span>
+              <input class="assignment-date" type="date" lang="en-US" dir="ltr">
+            </label>
           </div>
+
+          <label class="assignment-field assignment-wide-field">
+            <span>📌 تعليمات للطلاب</span>
+            <textarea class="assignment-description-input" placeholder="اكتب المطلوب من الطلاب بشكل واضح..."></textarea>
+          </label>
+
+          <div class="assignment-add-section">
+            <div class="assignment-add-heading">
+              <b>➕ أضف سؤال</b>
+              <small>اختار نوع السؤال، وبعدها عبّي التفاصيل تحته.</small>
+            </div>
+            <div class="assignment-builder-toolbar">
+              <button type="button" class="exam-secondary assignment-add-mcq">☑️ اختيار من متعدد</button>
+              <button type="button" class="exam-secondary assignment-add-number">🔢 سؤال رقمي</button>
+              <button type="button" class="exam-secondary assignment-add-open">✍️ سؤال مفتوح</button>
+            </div>
+          </div>
+
           <div class="assignment-question-builder"></div>
-          <button class="apply create-assignment-btn" style="margin:0">📤 نشر الوظيفة</button>
+
+          <div class="assignment-publish-bar">
+            <span class="assignment-publish-hint">راجع الأسئلة قبل النشر</span>
+            <button class="apply create-assignment-btn">📤 نشر الوظيفة</button>
+          </div>
         </div>
       </div>
 
@@ -10384,6 +10938,7 @@ function openSettingsModal(){
 function closeSettingsModal(){settingsModal.classList.remove("open")}
 document.getElementById("lobbySettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("mobileLabSettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
 settingsModal.addEventListener("click",e=>{if(e.target===settingsModal)closeSettingsModal()});
 document.getElementById("copyProfileIdBtn").addEventListener("click",async()=>{
@@ -10746,6 +11301,7 @@ async function openSubject(subject){
 }
 document.querySelectorAll("[data-subject-open]").forEach(btn=>btn.addEventListener("click",()=>openSubject(btn.dataset.subjectOpen)));
 document.getElementById("returnLobbyBtn").addEventListener("click",showPlatformLobby);
+document.getElementById("mobileReturnLobbyBtn").addEventListener("click",showPlatformLobby);
 document.getElementById("closeSubjectModal").addEventListener("click",()=>subjectModal.classList.remove("open"));
 
 function renderTopicBrowser(topics){
