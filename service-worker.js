@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v45-responsive-notifications";
+const CACHE_NAME="classora-v46-mobile-scroll-fix";
 const APP_SHELL=[
   "./",
   "./index.html",
