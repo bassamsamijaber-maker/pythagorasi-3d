@@ -3211,6 +3211,82 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
   .equation-3d-scene{height:48vh;min-height:330px}
 }
 
+
+/* ================= V40 comfort admin + 2D equation graph ================= */
+.admin-panel-box{
+  width:min(1380px,98vw)!important;
+  max-width:min(1380px,98vw)!important;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(78,149,226,.055),transparent 33%),
+    radial-gradient(circle at 100% 100%,rgba(99,171,151,.05),transparent 30%),
+    linear-gradient(180deg,rgba(8,16,26,.98),rgba(10,19,30,.985))!important;
+  border-color:rgba(118,165,205,.12)!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.42)!important;
+}
+.admin-panel-box .modalhead{
+  background:linear-gradient(180deg,rgba(9,19,31,.94),rgba(9,19,31,.88))!important;
+}
+.admin-v34-overview,
+.admin-toolbar,
+.admin-tabs,
+.admin-section-intro,
+.admin-security-note,
+.admin-student-summary>div,
+.admin-person-card,.admin-class-card,.admin-poll-card,.admin-history-card,.admin-student-overview-card,.admin-content-card,
+.admin-control-card,.studio-card,.admin-class-col,.admin-stat,
+.admin-student-preview-hero,.admin-student-preview-stats>div,.admin-preview-section,
+.admin-quick-add-class{
+  background:linear-gradient(180deg,rgba(14,25,38,.94),rgba(12,21,33,.94))!important;
+  border-color:rgba(144,185,219,.09)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+.admin-tabs button,
+.admin-v34-quick-actions button,
+.admin-actions button,
+.admin-mini-actions button,
+.studio-item-actions button,
+.admin-toolbar button,
+#adminPanelBtn{
+  min-height:44px!important;
+  border-radius:14px!important;
+}
+.admin-tabs{padding:10px!important;gap:8px!important}
+.admin-tabs button{padding:10px 14px!important;background:rgba(255,255,255,.038)!important}
+.admin-tabs button.active{box-shadow:0 8px 24px rgba(22,140,255,.18)!important}
+.admin-student-overview-card{padding:16px!important}
+.admin-student-overview-meta{gap:9px!important}
+.admin-student-overview-meta>div{padding:10px 11px!important;border-radius:12px}
+.admin-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.admin-actions button{flex:1 1 180px}
+.admin-preview-open-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.admin-preview-open-row button{flex:1 1 180px;min-height:44px}
+.studio-quick-tools{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 12px}
+.studio-quick-tools button{min-height:42px;border-radius:13px;border:1px solid rgba(135,178,214,.12);background:rgba(255,255,255,.032);color:inherit;font-weight:900;padding:0 14px;cursor:pointer}
+.studio-quick-tools button:hover{transform:translateY(-1px)}
+
+.equation-mode-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.equation-mode-toggle button{min-height:42px;padding:0 14px;border-radius:12px;border:1px solid rgba(130,178,214,.11);background:rgba(255,255,255,.03);color:inherit;font-weight:900;cursor:pointer}
+.equation-mode-toggle button.active{background:linear-gradient(180deg,#2d8fe7,#1978db);border-color:#2892ef;color:#fff;box-shadow:0 8px 20px rgba(28,138,255,.22)}
+.equation-2d-wrap{border:1px solid rgba(205,225,242,.09);border-radius:16px;overflow:hidden;background:#f7f7f7;position:relative}
+.equation-2d-canvas{display:block;width:100%;height:min(66vh,650px);min-height:420px;background:#f7f7f7}
+.equation-3d-scene.hidden,.equation-2d-wrap.hidden{display:none!important}
+
+@media(max-width:900px){
+  .admin-panel-box{width:calc(100vw - 10px)!important;max-width:calc(100vw - 10px)!important;height:calc(100vh - 10px)!important;max-height:calc(100vh - 10px)!important}
+  .admin-v34-quick-actions{grid-template-columns:1fr 1fr!important}
+  .admin-toolbar{grid-template-columns:1fr!important}
+  .admin-toolbar button{width:100%}
+  .admin-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important;top:129px!important}
+  .admin-tabs button{font-size:11px!important;min-height:46px!important;white-space:normal!important;line-height:1.35}
+  .admin-actions button,.admin-preview-open-row button{flex:1 1 100%}
+  .equation-2d-canvas{height:50vh;min-height:320px}
+}
+@media(max-width:560px){
+  .admin-v34-quick-actions{grid-template-columns:1fr!important}
+  .admin-tabs{grid-template-columns:1fr 1fr!important;gap:7px!important}
+  .admin-tabs button{padding:10px 8px!important;font-size:10px!important}
+  .equation-mode-toggle button{flex:1 1 100%}
+}
 </style>
 </head>
 <body>
@@ -3516,7 +3592,7 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
 
       <div class="admin-section-intro">
         <div><b>👥 Accounts</b><span>Search by name, Profile ID, login name, teacher email or UID.</span></div>
-        <div class="admin-safe-badge">🔒 Passwords protected</div>
+        <div class="admin-safe-badge">🔒 Passwords protected • Lobby messages can be deleted</div>
       </div>
       <div class="admin-filter-row">
         <select id="adminPeopleRoleFilter"><option value="all">All accounts</option><option value="student">Students</option><option value="teacher">Teachers</option></select>
@@ -3620,6 +3696,11 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
         </div>
         <div class="studio-hero-icon">🧩</div>
       </section>
+
+      <div class="studio-quick-tools">
+        <button id="studioFocusNoticesBtn">🗑️ إدارة رسائل اللوبي</button>
+        <button id="studioFocusButtonsBtn">🔘 إدارة أزرار اللوبي</button>
+      </div>
 
       <div class="studio-grid">
         <section class="studio-card">
@@ -3972,7 +4053,12 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
     </section>
 
     <div class="admin-preview-warning">
-      🔒 هاي معاينة فقط. ما بتغيّر الحساب، ما بتسلم وظائف، وما بتدخل مسابقات باسم الطالب.
+      🔒 هاي معاينة فقط. بتقدر تتابع آخر نشاطات الطالب وملفه وشو سلّم، بدون ما تغيّر حسابه.
+    </div>
+
+    <div class="admin-preview-open-row">
+      <button class="apply" id="adminJumpToStudentActivityBtn">🕘 آخر نشاط</button>
+      <button class="exam-secondary" id="adminOpenStudentAccountBtn">↗ فتح الحساب</button>
     </div>
 
     <button class="exam-secondary" id="adminExitStudentPreviewBtn" style="width:100%">↩ خروج من المعاينة</button>
@@ -3983,8 +4069,8 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
   <div class="modalbox equation-lab-box">
     <div class="modalhead">
       <div>
-        <h2 id="equationLabTitle">🧮 معادلتان بمجهولين + رسم 3D</h2>
-        <div class="subject-assistant-line" id="equationLabSub">عدّل المعادلتين وشوف الحل والتقاطع يتغيّر مباشرة.</div>
+        <h2 id="equationLabTitle">🧮 معادلتان بمجهولين + رسم 2D / 3D</h2>
+        <div class="subject-assistant-line" id="equationLabSub">عدّل المعادلتين وشوف الخطين والحل مباشرة مثل الرسم المدرسي، ومعه خيار 3D.</div>
       </div>
       <button class="close" id="closeEquationLab">×</button>
     </div>
@@ -4029,8 +4115,8 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
       <section class="equation-graph-card">
         <div class="equation-graph-head">
           <div>
-            <b id="equationGraphTitle">📊 الرسم التفاعلي ثلاثي الأبعاد</b>
-            <small id="equationGraphHint">اسحب لتدوير الرسم • استخدم العجلة للتقريب • غيّر القيم ليتحدث فورًا</small>
+            <b id="equationGraphTitle">📈 الرسم البياني — 2D و 3D</b>
+            <small id="equationGraphHint">الوضع الافتراضي 2D مثل الرسم المدرسي، ومعه خيار 3D تفاعلي</small>
           </div>
           <div class="equation-legend">
             <span><i class="eq-dot one"></i> Eq 1</span>
@@ -4038,8 +4124,15 @@ body.light .equation-3d-scene{background:#edf4f7;border-color:#d6e4eb}
             <span><i class="eq-dot sol"></i> Solution</span>
           </div>
         </div>
-        <div id="equation3DScene" class="equation-3d-scene"></div>
-        <div class="equation-graph-caption" id="equationGraphCaption">تقاطع المستويين يمثل حل x و y.</div>
+        <div class="equation-mode-toggle">
+          <button class="active" id="equationMode2DBtn">📈 2D Graph</button>
+          <button id="equationMode3DBtn">🧊 3D Graph</button>
+        </div>
+        <div id="equation2DWrap" class="equation-2d-wrap">
+          <canvas id="equation2DCanvas" class="equation-2d-canvas"></canvas>
+        </div>
+        <div id="equation3DScene" class="equation-3d-scene hidden"></div>
+        <div class="equation-graph-caption" id="equationGraphCaption">يظهر تقاطع الخطين في 2D ونقطة الحل نفسها في 3D.</div>
       </section>
     </div>
   </div>
@@ -10587,6 +10680,7 @@ document.getElementById("topicExamBtn").addEventListener("click",()=>{
 
 const equationLabModal=document.getElementById("equationLabModal");
 const equationInputs=["eqA1","eqB1","eqC1","eqA2","eqB2","eqC2"];
+let equationGraphMode="2d";
 let equation3D={
   initialized:false,scene:null,camera:null,renderer:null,controls:null,
   objects:[],resizeObserver:null,animationId:null
@@ -10687,8 +10781,114 @@ function renderEquationSolution(){
     box.textContent=en?"Infinitely many solutions — both equations represent the same line.":"عدد لا نهائي من الحلول — المعادلتان تمثلان نفس الخط.";
   }
   steps.innerHTML=equationStepsHTML(q,result,method);
+  drawEquation2D(q,result);
   updateEquation3D(q,result);
   return result;
+}
+
+function equationAxisRange(q,solution){
+  const xs=[]; const ys=[];
+  const add=(x,y)=>{if(Number.isFinite(x))xs.push(Math.abs(x)); if(Number.isFinite(y))ys.push(Math.abs(y));};
+  [
+    [q.c1/(q.a1||NaN),0],[0,q.c1/(q.b1||NaN)],[q.c2/(q.a2||NaN),0],[0,q.c2/(q.b2||NaN)]
+  ].forEach(([x,y])=>add(x,y));
+  if(solution?.type==="unique")add(solution.x,solution.y);
+  const maxX=Math.max(6,...xs.filter(Number.isFinite).map(v=>Math.ceil(v)+1));
+  const maxY=Math.max(5,...ys.filter(Number.isFinite).map(v=>Math.ceil(v)+1));
+  return {xMin:-maxX,xMax:maxX,yMin:-maxY,yMax:maxY};
+}
+
+function drawEquation2D(q=equationCoefficients(),solution=solveLinearSystemValues(q)){
+  const canvas=document.getElementById("equation2DCanvas");
+  const wrap=document.getElementById("equation2DWrap");
+  if(!canvas||!wrap)return;
+  const rect=wrap.getBoundingClientRect();
+  const ratio=Math.min(window.devicePixelRatio||1,2);
+  const w=Math.max(320,Math.round(rect.width));
+  const h=Math.max(320,Math.round(rect.height||canvas.clientHeight||430));
+  canvas.width=Math.round(w*ratio); canvas.height=Math.round(h*ratio);
+  canvas.style.width=w+"px"; canvas.style.height=h+"px";
+  const ctx=canvas.getContext("2d");
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="#f7f7f7"; ctx.fillRect(0,0,w,h);
+
+  const range=equationAxisRange(q,solution);
+  const pad={l:44,r:28,t:18,b:38};
+  const plotW=w-pad.l-pad.r, plotH=h-pad.t-pad.b;
+  const xToPx=x=>pad.l + (x-range.xMin)/(range.xMax-range.xMin)*plotW;
+  const yToPx=y=>pad.t + plotH - (y-range.yMin)/(range.yMax-range.yMin)*plotH;
+
+  ctx.strokeStyle="rgba(120,120,120,.28)"; ctx.lineWidth=1;
+  for(let x=Math.ceil(range.xMin); x<=Math.floor(range.xMax); x++){
+    const px=xToPx(x); ctx.beginPath(); ctx.moveTo(px,pad.t); ctx.lineTo(px,pad.t+plotH); ctx.stroke();
+  }
+  for(let y=Math.ceil(range.yMin); y<=Math.floor(range.yMax); y++){
+    const py=yToPx(y); ctx.beginPath(); ctx.moveTo(pad.l,py); ctx.lineTo(pad.l+plotW,py); ctx.stroke();
+  }
+
+  const axisX=(0>=range.xMin && 0<=range.xMax)?xToPx(0):xToPx(range.xMin);
+  const axisY=(0>=range.yMin && 0<=range.yMax)?yToPx(0):yToPx(range.yMin);
+  ctx.strokeStyle="#111"; ctx.lineWidth=2.2;
+  ctx.beginPath(); ctx.moveTo(pad.l,axisY); ctx.lineTo(pad.l+plotW+6,axisY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(axisX,pad.t+plotH); ctx.lineTo(axisX,pad.t-6); ctx.stroke();
+
+  ctx.fillStyle="#111";
+  ctx.beginPath(); ctx.moveTo(pad.l+plotW+6,axisY); ctx.lineTo(pad.l+plotW-5,axisY-4); ctx.lineTo(pad.l+plotW-5,axisY+4); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(axisX,pad.t-6); ctx.lineTo(axisX-4,pad.t+5); ctx.lineTo(axisX+4,pad.t+5); ctx.closePath(); ctx.fill();
+  ctx.font="bold 13px Arial"; ctx.fillText("x",pad.l+plotW+14,axisY+4); ctx.fillText("y",axisX+7,pad.t-3);
+
+  ctx.font="12px Arial"; ctx.fillStyle="#333";
+  for(let x=Math.ceil(range.xMin); x<=Math.floor(range.xMax); x++){
+    if(x===0)continue; const px=xToPx(x); ctx.fillText(String(x),px-4,axisY+18);
+  }
+  for(let y=Math.ceil(range.yMin); y<=Math.floor(range.yMax); y++){
+    if(y===0)continue; const py=yToPx(y); ctx.fillText(String(y),axisX-20,py+4);
+  }
+
+  function drawLine(a,b,c,color,label,preferred){
+    const pts=[];
+    const xL=range.xMin,xR=range.xMax,yB=range.yMin,yT=range.yMax;
+    if(Math.abs(b)>1e-9){ pts.push([xL,(c-a*xL)/b],[xR,(c-a*xR)/b]); }
+    if(Math.abs(a)>1e-9){ pts.push([(c-b*yB)/a,yB],[(c-b*yT)/a,yT]); }
+    const valid=pts.filter(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)&&x>=xL-1&&x<=xR+1&&y>=yB-1&&y<=yT+1);
+    const unique=[];
+    for(const p of valid){ if(!unique.some(q=>Math.hypot(q[0]-p[0],q[1]-p[1])<1e-6)) unique.push(p); }
+    if(unique.length<2)return;
+    const [p1,p2]=[unique[0],unique[1]];
+    ctx.strokeStyle=color; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(xToPx(p1[0]),yToPx(p1[1])); ctx.lineTo(xToPx(p2[0]),yToPx(p2[1])); ctx.stroke();
+    const lx = preferred?.x ?? ((p1[0]+p2[0])/2);
+    const ly = preferred?.y ?? ((p1[1]+p2[1])/2);
+    ctx.fillStyle="#1b1b1b"; ctx.font="bold 15px Arial";
+    ctx.fillText(label,xToPx(lx),yToPx(ly));
+  }
+
+  drawLine(q.a1,q.b1,q.c1,"#111",equationText(q.a1,q.b1,q.c1),{x:range.xMax-3.7,y:range.yMax-1.3});
+  drawLine(q.a2,q.b2,q.c2,"#111",equationText(q.a2,q.b2,q.c2),{x:range.xMin+0.7,y:range.yMin+0.7});
+
+  if(solution?.type==="unique"&&Number.isFinite(solution.x)&&Number.isFinite(solution.y)){
+    const px=xToPx(solution.x), py=yToPx(solution.y);
+    ctx.fillStyle="#3046c9"; ctx.beginPath(); ctx.arc(px,py,4.5,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle="rgba(48,70,201,.22)"; ctx.lineWidth=1.5; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(px,axisY); ctx.lineTo(px,py); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(axisX,py); ctx.lineTo(px,py); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function setEquationGraphMode(mode){
+  equationGraphMode=mode==="3d"?"3d":"2d";
+  document.getElementById("equationMode2DBtn")?.classList.toggle("active",equationGraphMode==="2d");
+  document.getElementById("equationMode3DBtn")?.classList.toggle("active",equationGraphMode==="3d");
+  document.getElementById("equation2DWrap")?.classList.toggle("hidden",equationGraphMode!=="2d");
+  document.getElementById("equation3DScene")?.classList.toggle("hidden",equationGraphMode!=="3d");
+  if(equationGraphMode==="3d"){
+    initEquation3D();
+    updateEquation3D();
+  }else{
+    drawEquation2D();
+  }
 }
 
 function equationPlaneGeometry(a,b,c,size=18,height=9){
@@ -10848,6 +11048,7 @@ function openEquationLab(){
   setTimeout(()=>{
     initEquation3D();
     renderEquationSolution();
+    setEquationGraphMode("2d");
     resetEquationCamera();
   },60);
 }
@@ -10860,6 +11061,9 @@ document.getElementById("solveEquationSystemBtn").addEventListener("click",rende
 document.getElementById("randomEquationSystemBtn").addEventListener("click",randomEquationExample);
 document.getElementById("resetEquationCameraBtn").addEventListener("click",resetEquationCamera);
 document.getElementById("equationMethod").addEventListener("change",renderEquationSolution);
+document.getElementById("equationMode2DBtn").addEventListener("click",()=>setEquationGraphMode("2d"));
+document.getElementById("equationMode3DBtn").addEventListener("click",()=>setEquationGraphMode("3d"));
+window.addEventListener("resize",()=>{ if(equationGraphMode==="2d") drawEquation2D(); });
 equationInputs.forEach(id=>{
   document.getElementById(id).addEventListener("input",()=>{
     updateEquationPreviews();
@@ -11714,10 +11918,20 @@ function adminRenderStudentOverview(){
     }));
     const previewBtn=document.createElement("button");
     previewBtn.className="exam-secondary admin-view-as-btn";
-    previewBtn.textContent=adminLang("🔎 دخول كمعاينة","🔎 Preview account");
+    previewBtn.textContent=adminLang("↗ فتح الحساب","↗ Open account");
     previewBtn.addEventListener("click",()=>adminOpenStudentPreview(u.uid));
+
+    const activityBtn=document.createElement("button");
+    activityBtn.className="exam-secondary admin-last-activity-btn";
+    activityBtn.textContent=adminLang("🕘 آخر نشاط","🕘 Last activity");
+    activityBtn.addEventListener("click",async()=>{
+      await adminOpenStudentPreview(u.uid);
+      document.getElementById("adminPreviewActivity")?.scrollIntoView({behavior:"smooth",block:"start"});
+    });
+
     const actionHost=card.querySelector(".admin-student-actions")||card.querySelector(".admin-actions")||card;
     actionHost.appendChild(previewBtn);
+    actionHost.appendChild(activityBtn);
 
     host.appendChild(card);
   }
@@ -14069,6 +14283,10 @@ document.getElementById("adminRefreshStudentsBtn").addEventListener("click",()=>
 document.getElementById("closeAdminStudentPreview").addEventListener("click",adminPreviewClose);
 document.getElementById("adminExitStudentPreviewBtn").addEventListener("click",adminPreviewClose);
 adminStudentPreviewModal.addEventListener("click",e=>{if(e.target===adminStudentPreviewModal)adminPreviewClose()});
+document.getElementById("adminJumpToStudentActivityBtn")?.addEventListener("click",()=>{document.getElementById("adminPreviewActivity")?.scrollIntoView({behavior:"smooth",block:"start"})});
+document.getElementById("adminOpenStudentAccountBtn")?.addEventListener("click",()=>{document.getElementById("adminPreviewClasses")?.scrollIntoView({behavior:"smooth",block:"start"}); showToast(adminLang("تم فتح معاينة حساب الطالب ✅","Student account preview opened ✅"))});
+document.getElementById("studioFocusNoticesBtn")?.addEventListener("click",()=>{document.getElementById("studioNoticesList")?.scrollIntoView({behavior:"smooth",block:"start"})});
+document.getElementById("studioFocusButtonsBtn")?.addEventListener("click",()=>{document.getElementById("studioButtonsList")?.scrollIntoView({behavior:"smooth",block:"start"})});
 document.getElementById("studioCreateButtonBtn").addEventListener("click",studioCreateButton);
 document.getElementById("studioCreateNoticeBtn").addEventListener("click",studioCreateNotice);
 document.getElementById("adminRefreshContentBtn").addEventListener("click",adminLoadContentManager);
