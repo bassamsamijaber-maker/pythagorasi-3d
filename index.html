@@ -4492,9 +4492,96 @@ body.light .classora-splash-word{color:#637a8e}
   .classora-splash-logo,.classora-splash-name,.classora-splash-word,.classora-splash-dot{animation:none!important}
 }
 
+
+/* ================= V50 CLASSORA STARTUP INTRO ================= */
+body.classora-intro-active{overflow:hidden!important}
+body.classora-intro-active::before{display:none!important}
+.classora-intro{
+  position:fixed;inset:0;z-index:1000000;
+  display:grid;place-items:center;overflow:hidden;
+  padding:max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right))
+          max(18px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 50% 40%,rgba(43,141,255,.22),transparent 30%),
+    radial-gradient(circle at 58% 62%,rgba(130,68,255,.17),transparent 34%),
+    linear-gradient(180deg,#07111c 0%,#081525 52%,#06101b 100%);
+  opacity:1;visibility:visible;
+  transition:opacity .42s ease,visibility .42s ease
+}
+.classora-intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.classora-intro::before,.classora-intro::after{
+  content:"";position:absolute;width:300px;height:300px;border-radius:50%;
+  filter:blur(72px);opacity:.18;pointer-events:none
+}
+.classora-intro::before{left:-120px;top:12%;background:#168cff}
+.classora-intro::after{right:-125px;bottom:8%;background:#874bff}
+.classora-intro-core{
+  position:relative;z-index:2;width:min(620px,92vw);
+  display:grid;place-items:center;text-align:center;transform:translateY(-2vh)
+}
+.classora-intro-mark{
+  width:72px;height:72px;border-radius:23px;margin-bottom:18px;
+  display:grid;place-items:center;font-size:36px;font-weight:1000;
+  color:#fff;background:linear-gradient(145deg,#27c6ff,#347cff 50%,#8b4aff);
+  box-shadow:0 18px 45px rgba(43,126,255,.25),0 0 34px rgba(112,78,255,.18);
+  animation:classoraIntroFloat 2.2s ease-in-out infinite
+}
+.classora-intro-title{
+  margin:0;font-size:clamp(52px,12vw,96px);font-weight:1000;line-height:.95;
+  letter-spacing:-3px;
+  background:linear-gradient(90deg,#fff 8%,#d9efff 38%,#63bfff 68%,#a46dff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 10px 26px rgba(41,139,255,.16))
+}
+.classora-intro-rotator{margin-top:20px;min-height:42px;display:grid;place-items:center}
+.classora-intro-word{
+  min-width:210px;font-size:clamp(20px,4.8vw,31px);font-weight:950;
+  color:#bfe9ff;text-shadow:0 0 22px rgba(70,183,255,.28);
+  opacity:1;transform:translateY(0) scale(1);
+  transition:opacity .22s ease,transform .22s ease,filter .22s ease
+}
+.classora-intro-word.swap{
+  opacity:0;transform:translateY(10px) scale(.96);filter:blur(3px)
+}
+.classora-intro-dots{display:flex;gap:6px;margin-top:22px}
+.classora-intro-dots i{
+  width:5px;height:5px;border-radius:999px;background:#67caff;
+  animation:classoraIntroDot 1.15s ease-in-out infinite
+}
+.classora-intro-dots i:nth-child(2){animation-delay:.14s}
+.classora-intro-dots i:nth-child(3){animation-delay:.28s}
+@keyframes classoraIntroFloat{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-7px) rotate(2deg)}
+}
+@keyframes classoraIntroDot{
+  0%,100%{opacity:.25;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.25)}
+}
+@media(max-width:700px){
+  .classora-intro-core{transform:translateY(-4vh)}
+  .classora-intro-mark{width:62px;height:62px;border-radius:20px;font-size:31px;margin-bottom:16px}
+  .classora-intro-title{font-size:clamp(48px,18vw,72px);letter-spacing:-2px}
+  .classora-intro-word{font-size:clamp(19px,6vw,27px);min-width:180px}
+}
+@media(prefers-reduced-motion:reduce){
+  .classora-intro-mark,.classora-intro-dots i{animation:none!important}
+  .classora-intro,.classora-intro-word{transition:none!important}
+}
+
 </style>
 </head>
-<body>
+<body class="classora-intro-active">
+<div class="classora-intro" id="classoraIntro">
+  <div class="classora-intro-core">
+    <div class="classora-intro-mark" aria-hidden="true">C</div>
+    <h1 class="classora-intro-title">Classora</h1>
+    <div class="classora-intro-rotator">
+      <span class="classora-intro-word" id="classoraIntroWord">رياضيات</span>
+    </div>
+    <div class="classora-intro-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</div>
 <div class="classora-splash" id="classoraSplash" aria-label="Classora">
   <div class="classora-splash-inner">
     <div class="classora-splash-logo"><img src="./icons/classora-192.png" alt=""></div>
@@ -6801,6 +6888,61 @@ async function reserveUniqueCode(kind){
 }
 
 
+
+
+/* ================= V50 CLASSORA STARTUP INTRO CONTROLLER ================= */
+const classoraIntro=document.getElementById("classoraIntro");
+const classoraIntroWord=document.getElementById("classoraIntroWord");
+const CLASSORA_INTRO_WORDS=[
+  "رياضيات",
+  "ذكاء اصطناعي",
+  "فيثاغورس",
+  "مسابقات",
+  "امتحانات",
+  "تعلّم تفاعلي"
+];
+const CLASSORA_INTRO_MIN_MS=3800;
+const classoraIntroStart=performance.now();
+let classoraIntroIndex=0;
+let classoraIntroTimer=null;
+let classoraIntroDone=false;
+let classoraAuthSettled=false;
+
+function classoraRotateIntroWord(){
+  if(!classoraIntroWord)return;
+  classoraIntroWord.classList.add("swap");
+  setTimeout(()=>{
+    classoraIntroIndex=(classoraIntroIndex+1)%CLASSORA_INTRO_WORDS.length;
+    classoraIntroWord.textContent=CLASSORA_INTRO_WORDS[classoraIntroIndex];
+    classoraIntroWord.classList.remove("swap");
+  },220);
+}
+function classoraFinishIntroWhenReady(){
+  if(classoraIntroDone||!classoraAuthSettled)return;
+  const elapsed=performance.now()-classoraIntroStart;
+  const wait=Math.max(0,CLASSORA_INTRO_MIN_MS-elapsed);
+  setTimeout(()=>{
+    if(classoraIntroDone)return;
+    classoraIntroDone=true;
+    if(classoraIntroTimer){clearInterval(classoraIntroTimer);classoraIntroTimer=null}
+    classoraIntro?.classList.add("hide");
+    document.body.classList.remove("classora-intro-active");
+    setTimeout(()=>classoraIntro?.remove(),520);
+  },wait);
+}
+
+classoraIntroTimer=setInterval(classoraRotateIntroWord,850);
+
+window.addEventListener("classora-auth-settled",()=>{
+  classoraAuthSettled=true;
+  classoraFinishIntroWhenReady();
+},{once:true});
+
+/* Safety: if auth already settled before this listener for any reason. */
+if(typeof authResolved!=="undefined"&&authResolved){
+  classoraAuthSettled=true;
+  classoraFinishIntroWhenReady();
+}
 
 const authGate=document.getElementById("authGate");
 const authPanel=document.getElementById("authPanel");
