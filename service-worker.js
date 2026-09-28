@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v47-single-screen-auto-wake";
+const CACHE_NAME="classora-v48-hard-auth-gate";
 const APP_SHELL=[
   "./",
   "./index.html",
