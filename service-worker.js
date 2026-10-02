@@ -1,8 +1,11 @@
-const CACHE_NAME="classora-v53-clear-navigation";
+const CACHE_NAME="classora-v54-periodic-table";
 const APP_SHELL=[
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./chemistry/periodic-table.html",
+  "./chemistry/periodic-table.css",
+  "./chemistry/periodic-table.js",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
