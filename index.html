@@ -4715,12 +4715,12 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 </div>
 
 <div class="classora-subject-page" id="periodic-table" aria-label="Periodic Table">
-  <a class="classora-subject-back" href="#platformLobby">← <span>الرجوع للّوبي</span></a>
+  
   <div class="classora-subject-loading" id="periodicTableLoading">
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=58"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=59"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -7451,7 +7451,17 @@ const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(36,1,.1,100);
 camera.position.set(0,.10,13.2);
 
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+let renderer;
+let mainWebGLAvailable=true;
+try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(error){
+ mainWebGLAvailable=false;
+ const canvas=document.createElement("canvas");
+ renderer={domElement:canvas,shadowMap:{},setPixelRatio(){},setSize(){},render(){}};
+ const fallback=document.createElement("p");
+ fallback.textContent="3D is unavailable on this device. You can still use the lobby and learning sections. / العرض ثلاثي الأبعاد غير متاح على هذا الجهاز. يمكنك استخدام اللوبي والأقسام التعليمية.";
+ fallback.style.cssText="position:absolute;inset:30% 8% auto;padding:24px;color:white;background:#102534;border-radius:16px;z-index:2";
+ mount.appendChild(fallback);
+}
 renderer.setPixelRatio(Math.min(devicePixelRatio,2.4));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.shadowMap.enabled=true;
@@ -11548,6 +11558,8 @@ periodicTableFrame?.addEventListener("load",()=>{
 });
 window.addEventListener("message",event=>{
   if(event.origin!==location.origin)return;
+  if(event.source!==periodicTableFrame?.contentWindow)return;
+  if(event.data?.type==="classora-subject-language"){applySiteLanguage(event.data.lang==="ar"?"ar":"en");}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
     location.hash="platformLobby";
   }
@@ -17983,7 +17995,7 @@ let last=performance.now();
 function animate(now){
   requestAnimationFrame(animate);
   const dt=Math.min(2.2,(now-last)/16.67);last=now;
-  if(document.hidden||!mount.getClientRects().length||document.querySelector(".modal.open"))return;
+  if(!mainWebGLAvailable||document.hidden||!mount.getClientRects().length||document.querySelector(".modal.open"))return;
   updateSandPhysics(dt);
   updateProof(now);
   controls.update();
@@ -18238,7 +18250,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=58",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js?v=59",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -18656,7 +18668,7 @@ pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaI
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=58",{scope:"./",updateViaCache:"none"})
+    navigator.serviceWorker.register("./service-worker.js?v=59",{scope:"./",updateViaCache:"none"})
       .catch(err=>console.warn("service worker registration",err));
   });
 }
