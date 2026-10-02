@@ -60,3 +60,8 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .modal-close{right:auto;le
   .el-thumb{width:27px;height:27px}
   .detail-actions{grid-template-columns:1fr}
 }
+
+@media(max-width:760px){
+  .element-card{animation:none!important;transition:transform .12s,filter .12s,opacity .12s}
+  .hero-atom .orbit{animation-duration:16s}
+}
