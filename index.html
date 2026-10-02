@@ -1195,6 +1195,8 @@ body.light .saved-comp-card,.subject-strip{ }
 .pythag-action-card.lab{background:linear-gradient(145deg,rgba(37,145,255,.13),rgba(255,255,255,.02))}
 .pythag-action-card.challenge{background:linear-gradient(145deg,rgba(255,116,56,.12),rgba(255,255,255,.02))}
 .pythag-action-card.questions{background:linear-gradient(145deg,rgba(56,196,156,.10),rgba(255,255,255,.02))}
+.pythag-action-card.chemistry{background:linear-gradient(145deg,rgba(72,220,166,.15),rgba(57,130,255,.07));border-color:rgba(83,226,176,.15)}
+.pythag-action-card.chemistry:hover{border-color:rgba(83,226,176,.5);box-shadow:0 14px 34px rgba(33,182,139,.10)}
 .pythag-action-card.exam{background:linear-gradient(145deg,rgba(151,82,238,.12),rgba(255,255,255,.02))}
 .pythag-action-card.competition{background:linear-gradient(145deg,rgba(255,201,65,.10),rgba(255,255,255,.02))}
 .compact-pythag-tools{grid-template-columns:repeat(2,1fr)}
@@ -4650,8 +4652,8 @@ button{touch-action:manipulation}
     <section class="lobby-section">
       <div class="lobby-section-head">
         <div>
-          <h3>🔥 اختار النشاط</h3>
-          <p>كل النشاطات هون خاصة بنظرية فيثاغورس.</p>
+          <h3>🔥 اختار موضوع أو نشاط</h3>
+          <p>استكشف المواد والأدوات التعليمية المتاحة داخل كلاسورا.</p>
         </div>
       </div>
       <div class="pythag-action-grid">
@@ -4666,6 +4668,9 @@ button{touch-action:manipulation}
         </button>
         <button class="pythag-action-card equations" id="equationLabBtn">
           <span>🧮</span><b>معادلتان بمجهولين</b><small>حل x و y مع رسم 3D قابل للتعديل</small>
+        </button>
+        <button class="pythag-action-card chemistry" id="periodicTableBtn" type="button" onclick="location.href='chemistry/periodic-table.html'">
+          <span>⚛️</span><b>جدول العناصر</b><small>118 عنصر، صور تفاعلية، مقارنة واختبار</small>
         </button>
         <button class="pythag-action-card exam" id="lobbyExamBtn">
           <span>🎓</span><b>امتحانات</b><small>سهل، متوسط، صعب وخبير</small>
@@ -11030,6 +11035,10 @@ let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"
 const uiExactTranslations=new Map([
   ["أهلًا في Classora 👋","Welcome to Classora 👋"],
   ["اللوبي","Lobby"],["الرجوع للّوبي","Back to lobby"],["الإعدادات","Settings"],
+  ["🔥 اختار موضوع أو نشاط","🔥 Choose a subject or activity"],
+  ["استكشف المواد والأدوات التعليمية المتاحة داخل كلاسورا.","Explore the subjects and learning tools available in Classora."],
+  ["جدول العناصر","Periodic Table"],
+  ["118 عنصر، صور تفاعلية، مقارنة واختبار","118 elements, interactive visuals, comparison and quiz"],
   ["نظرية فيثاغورس","Pythagorean Theorem"],
   ["📐 موضوع المنصة","📐 Platform Topic"],
   ["تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.","Learn the theorem with the 3D model, sand proof, examples, challenges, practice, exams and live competitions."],

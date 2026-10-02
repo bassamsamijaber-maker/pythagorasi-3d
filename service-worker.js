@@ -1,8 +1,11 @@
-const CACHE_NAME="classora-v53-clear-navigation";
+const CACHE_NAME="classora-v54-periodic-table";
 const APP_SHELL=[
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./chemistry/periodic-table.html",
+  "./chemistry/periodic-table.css",
+  "./chemistry/periodic-table.js",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
@@ -35,11 +38,13 @@ self.addEventListener("fetch",event=>{
     event.respondWith(
       fetch(event.request)
         .then(response=>{
-          const copy=response.clone();
-          caches.open(CACHE_NAME).then(cache=>cache.put("./index.html",copy));
+          if(response&&response.ok){
+            const copy=response.clone();
+            caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy));
+          }
           return response;
         })
-        .catch(()=>caches.match("./index.html"))
+        .catch(()=>caches.match(event.request).then(cached=>cached||caches.match("./index.html")))
     );
     return;
   }
