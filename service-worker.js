@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v54-periodic-table";
+const CACHE_NAME="classora-v55-periodic-artwork";
 const APP_SHELL=[
   "./",
   "./index.html",
