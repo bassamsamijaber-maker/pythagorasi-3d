@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v63-support-team";
+const CACHE_NAME="classora-v64-layout-reminder";
 const APP_SHELL=[
   "./",
   "./index.html",
