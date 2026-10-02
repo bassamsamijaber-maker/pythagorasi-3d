@@ -44,6 +44,7 @@ const ui={
 let lang=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 const $=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];
 const visualCache=new Map();
+const thumbnailCache=new Map();
 const favorites=new Set(JSON.parse(localStorage.getItem("classora_periodic_favorites")||"[]").map(Number).filter(n=>n>=1&&n<=118));
 function saveFavorites(){localStorage.setItem("classora_periodic_favorites",JSON.stringify([...favorites].sort((a,b)=>a-b)))}
 function animationType(e){
@@ -148,6 +149,18 @@ function visual(e){
  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520"><defs><radialGradient id="b"><stop offset="0" stop-color="#fff" stop-opacity=".30"/><stop offset=".43" stop-color="${c}" stop-opacity=".42"/><stop offset="1" stop-color="#03101a"/></radialGradient><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c}"/><stop offset=".55" stop-color="${accent}"/><stop offset="1" stop-color="#102534"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="18"/></filter></defs><rect width="520" height="520" rx="58" fill="url(#b)"/>${scene}<circle cx="260" cy="230" r="150" fill="${c}" opacity=".14" filter="url(#s)"/>${orbitMarkup}${dotMarkup}<circle cx="260" cy="230" r="77" fill="url(#g)" stroke="white" stroke-opacity=".45" stroke-width="3"/><circle cx="235" cy="207" r="20" fill="#fff" opacity=".20"/><text x="260" y="249" text-anchor="middle" font-family="Arial,sans-serif" font-size="76" font-weight="700" fill="white">${e.s}</text><text x="38" y="62" font-family="Arial,sans-serif" font-size="31" font-weight="700" fill="white" opacity=".92">${e.n}</text><text x="260" y="449" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="600" fill="white">${e.en}</text><text x="260" y="482" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="white" opacity=".72">${e.mass}</text></svg>`;
  const out="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);visualCache.set(e.n,out);return out;
 }
+
+function thumbnailVisual(e){
+ if(thumbnailCache.has(e.n))return thumbnailCache.get(e.n);
+ const c=cats[e.category].color,accent=`hsl(${(e.n*47)%360} 72% 66%)`;
+ const mark=e.state==="gas"
+   ?`<circle cx="52" cy="52" r="27" fill="${c}" fill-opacity=".26"/><circle cx="72" cy="34" r="14" fill="${accent}" fill-opacity=".28"/>`
+   :e.state==="liquid"
+     ?`<path d="M14 70 Q35 56 54 70 T94 70 V104 H14Z" fill="${c}" fill-opacity=".34"/>`
+     :`<rect x="21" y="24" width="62" height="62" rx="16" fill="${c}" fill-opacity=".25" transform="rotate(${(e.n%9)-4} 52 55)"/>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 104"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c}"/><stop offset="1" stop-color="${accent}"/></linearGradient></defs><rect width="104" height="104" rx="22" fill="#071722"/>${mark}<circle cx="52" cy="52" r="27" fill="url(#g)" stroke="white" stroke-opacity=".42"/><text x="52" y="61" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="white">${e.s}</text><text x="13" y="18" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" fill-opacity=".86">${e.n}</text></svg>`;
+ const out="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);thumbnailCache.set(e.n,out);return out;
+}
 function applyLanguage(){
  document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";
  $("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));$("[data-i18n-placeholder]").forEach(el=>el.placeholder=t(el.dataset.i18nPlaceholder));
@@ -167,7 +180,7 @@ function renderTable(){
  const marker1=document.createElement("div");marker1.className="series-marker";marker1.style.gridColumn="3";marker1.style.gridRow="6";marker1.textContent="57–71";host.append(marker1);
  const marker2=document.createElement("div");marker2.className="series-marker";marker2.style.gridColumn="3";marker2.style.gridRow="7";marker2.textContent="89–103";host.append(marker2);
  let shown=0;
- elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" src="${visual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span>${favorites.has(e.n)?'<span class="favorite-indicator" aria-label="favorite">★</span>':""}`;b.onclick=()=>openElement(e);host.append(b)});
+ elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" src="${thumbnailVisual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span>${favorites.has(e.n)?'<span class="favorite-indicator" aria-label="favorite">★</span>':""}`;b.onclick=()=>openElement(e);host.append(b)});
  $("#visibleCount").textContent=shown;
 }
 function buildLegend(){const h=$("#legend");h.innerHTML="";catOrder.forEach(k=>{const b=document.createElement("button");b.type="button";b.style.setProperty("--legend",cats[k].color);b.innerHTML=`<i></i>${cats[k][lang]}`;b.onclick=()=>{filter=k;buildFilters();renderTable();window.scrollTo({top:$("#exploreView").offsetTop-100,behavior:"smooth"})};h.append(b)})}
@@ -209,9 +222,20 @@ function updateQuizLanguage(){if(!quiz.started){$("#quizQuestion").textContent=l
 $("#nextQuizBtn").onclick=newQuiz;
 
 qa(".mode").forEach(b=>b.onclick=()=>{qa(".mode").forEach(x=>x.classList.toggle("active",x===b));qa(".mode-view").forEach(v=>v.classList.remove("active"));$("#"+b.dataset.mode+"View").classList.add("active")});
-$("#searchInput").addEventListener("input",e=>{search=e.target.value;renderTable()});$("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";renderTable()};
+let tableRenderFrame=0;
+function scheduleTableRender(){
+ cancelAnimationFrame(tableRenderFrame);
+ tableRenderFrame=requestAnimationFrame(()=>{tableRenderFrame=0;renderTable()});
+}
+$("#searchInput").addEventListener("input",e=>{search=e.target.value;scheduleTableRender()});
+$("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTableRender()};
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
-$("#backBtn").onclick=()=>location.href="../";
+$("#backBtn").onclick=()=>{
+ sessionStorage.setItem("classora_returning_from_subject","1");
+ const sameOriginRef=(()=>{try{return document.referrer&&new URL(document.referrer).origin===location.origin}catch{return false}})();
+ if(sameOriginRef&&history.length>1)history.back();
+ else location.replace("../");
+};
 window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
 applyLanguage();
 })();
