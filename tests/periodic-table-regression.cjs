@@ -44,3 +44,7 @@ assert(html.includes('periodic-table.css?v=57'),"periodic CSS must be version-bu
 assert(html.includes('periodic-table.js?v=57'),"periodic JS must be version-busted");
 assert(js.includes('classora-close-subject'),"embedded periodic page must close back to Classora");
 assert(js.includes('new URLSearchParams(location.search).get("lang")'),"periodic language must accept Classora language parameter");
+
+assert(html.includes('periodic-table.css?v=58'),"periodic CSS must use v58");
+assert(html.includes('periodic-table.js?v=58'),"periodic JS must use v58");
+assert(js.includes('../#platformLobby'),"standalone periodic back must target the Classora lobby");
