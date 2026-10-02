@@ -22,3 +22,7 @@ node tests/translation-audit.cjs
 ```
 
 The regression suite covers actual hashing and send handlers, including failed sends, duplicate clicks and preservation of a newer draft. Full two-account chat, admin replies and role permissions need a deployed Firebase project and signed-in test accounts. Phone motion requires permission on devices such as iPhone and is opt-in.
+
+
+## Support team update
+Student class codes are optional for sign-up and sign-in. The owner can assign or revoke admin and support roles in the Team tab. Support staff can view, reply to and resolve tickets. Only admins can delete tickets; only the owner can grant staff access. Security phrases remain hashed: the panel shows configuration and proof-match status, never the phrase itself. Deploy updated firestore.rules before staff assignment; HTML publishing does not deploy database rules.

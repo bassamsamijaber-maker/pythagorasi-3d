@@ -4538,7 +4538,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 
 </style>
 <style>
-#supportModal{z-index:210000!important}#supportModal .modalbox{max-height:92dvh;overflow-y:auto}#supportMyTicketsSection{margin-top:20px;border-top:1px solid #ffffff20;padding-top:12px}.support-ticket textarea{width:100%;min-height:80px;margin-top:10px}.chat-contact-list{min-height:20px}#chatBackContactsBtn{display:none}#chatThreadActive{min-height:0}#chatSendBtn:disabled{opacity:.5}#chatThreadActive .chat-messages{overflow-wrap:anywhere}
+#supportModal{z-index:210000!important}.support-guide{padding:14px;border-radius:14px;background:#328bce12;color:#aec4d6;line-height:1.7;margin:14px 0}.support-grid input,.support-grid select,.support-grid textarea{width:100%;min-height:46px;border:1px solid #ffffff20;border-radius:12px;padding:12px;background:#0b1725;color:#ecf7ff}.support-grid label{font-size:13px;gap:8px}.support-actions{flex-wrap:wrap}.support-ticket{border:1px solid #ffffff16;border-radius:16px;padding:16px;margin-bottom:12px}.support-ticket-message{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;padding-block:12px}.support-queue-tools{display:flex;gap:10px;margin-block:16px}.support-queue-tools select{flex:1}.support-ticket select{width:100%;min-height:44px;margin-block:12px}.support-ticket button{min-height:42px}.support-ticket-head{gap:12px}.support-ticket[hidden]{display:none}#supportQueueModal .modalbox{max-height:90dvh;overflow-y:auto}#supportModal .modalbox{max-height:92dvh;overflow-y:auto}#supportMyTicketsSection{margin-top:20px;border-top:1px solid #ffffff20;padding-top:12px}.support-ticket textarea{width:100%;min-height:80px;margin-top:10px}.chat-contact-list{min-height:20px}#chatBackContactsBtn{display:none}#chatThreadActive{min-height:0}#chatSendBtn:disabled{opacity:.5}#chatThreadActive .chat-messages{overflow-wrap:anywhere}
 @media(max-width:700px){#chatModal .chat-thread-pane{display:none}#chatModal.chat-thread-open .chat-contacts-pane{display:none}#chatModal.chat-thread-open .chat-thread-pane{display:flex;min-height:0}#chatModal.chat-thread-open #chatThreadActive{display:flex;flex:1;flex-direction:column;min-height:0}#chatModal.chat-thread-open .chat-messages{flex:1;min-height:0;height:auto}#chatBackContactsBtn{display:inline-flex}.chat-thread-head{flex-wrap:wrap}.chat-compose{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
 </style></head>
 <body class="classora-intro-active">
@@ -4582,11 +4582,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
     <div class="auth-form" id="studentLoginForm">
       <div class="student-class-first" id="studentClassFirstStep">
         <span class="auth-step-kicker">1 / 2</span>
-        <h3>🏫 كود الصف أولًا</h3>
-        <div class="auth-sub auth-step-sub">اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.</div>
+        <h3>🏫 كود الصف — اختياري</h3>
+        <div class="auth-sub auth-step-sub">إذا عندك كود صف اكتبه، أو كمّل بدون كود. بتقدر تنضم لصف لاحقًا.</div>
         <label for="studentClassCodeInput">كود الصف</label>
         <input id="studentClassCodeInput" maxlength="8" autocomplete="off" inputmode="text" placeholder="مثال: A7K92Q">
-        <button class="auth-primary" id="studentClassVerifyBtn" type="button">متابعة ←</button>
+        <button class="auth-primary" id="studentClassVerifyBtn" type="button">متابعة ←</button><button class="auth-back" id="studentSkipClassBtn" type="button">المتابعة بدون كود صف</button>
         <div class="auth-inline-status" id="studentClassVerifiedNote"></div>
       </div>
 
@@ -4651,7 +4651,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
-        <button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
+        <button class="lobby-icon-btn hidden" id="lobbySupportRequestsBtn" type="button">📥 <span>طلبات الدعم</span></button><button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
@@ -4835,10 +4835,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <button data-admin-tab="people">👥 Students & Teachers</button>
       <button data-admin-tab="classes">🏫 Classes</button>
       <button data-admin-tab="send">🚀 Send / Assign</button>
-      <button data-admin-tab="support">🛟 Support</button>
+      <button data-admin-tab="support">📥 Support requests</button><button class="hidden" data-admin-tab="team">🛡️ Team</button>
       <button data-admin-tab="controls">🎛️ Control Center</button>
     </div>
 
+    <div class="admin-view hidden" id="adminViewTeam"><h3>إدارة فريق الموقع</h3><p>مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.</p><input id="teamAccountSearch" placeholder="ابحث بالاسم أو معرّف الحساب"><div id="adminTeamList" class="admin-list"></div></div>
     <div class="admin-view" id="adminViewDashboard">
       <div class="admin-stat-grid">
         <div class="admin-stat"><span>👥</span><b id="adminStatStudents">0</b><small>Students</small></div>
@@ -5805,6 +5806,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
   </div>
 </div>
 
+<div class="modal" id="supportQueueModal"><div class="modalbox support-modalbox"><div class="modalhead"><h2>📥 طلبات الدعم</h2><button class="close" id="closeSupportQueue" type="button">×</button></div><div class="support-queue-tools"><select id="supportQueueFilter"><option value="open">الطلبات المفتوحة</option><option value="resolved">الطلبات المحلولة</option><option value="all">كل الطلبات</option></select><button class="exam-secondary" id="supportQueueRefreshBtn">تحديث الطلبات</button></div><div id="supportQueueList" class="admin-list"></div></div></div>
 <div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportModalTitle">
   <div class="modalbox support-modalbox">
     <div class="modalhead">
@@ -5814,7 +5816,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       </div>
       <button class="close" id="closeSupportModal">×</button>
     </div>
-    <div class="support-grid">
+    <div class="support-guide">اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.</div><div class="support-grid">
       <label>نوع الطلب
         <select id="supportType">
           <option value="forgot_password">نسيت كلمة السر</option>
@@ -6648,8 +6650,25 @@ async function ensureProfileId(user,profile={}){
 }
 
 const SUPER_ADMIN_PROFILE_ID="3228667330";
-function isSuperAdminProfile(profile=window.PythagorasiUser){
-  return String(profile?.profileId||"")===SUPER_ADMIN_PROFILE_ID;
+let classoraStaffUnsub=null;
+let classoraStaffUid="";
+let classoraStaffRole="";
+function isOwnerAdminProfile(profile=window.PythagorasiUser){return String(profile?.profileId||"")===SUPER_ADMIN_PROFILE_ID}
+function isSuperAdminProfile(profile=window.PythagorasiUser){return isOwnerAdminProfile(profile)||!!(profile?.uid&&profile.uid===classoraStaffUid&&classoraStaffRole==="admin")}
+function canManageSupport(){return isSuperAdminProfile()||!!(auth.currentUser?.uid===classoraStaffUid&&classoraStaffRole==="support")}
+function refreshTeamAccessButtons(){
+ document.getElementById("adminPanelBtn")?.classList.toggle("hidden",!isSuperAdminProfile());
+ document.getElementById("lobbySupportRequestsBtn")?.classList.toggle("hidden",!canManageSupport());
+ document.querySelector('[data-admin-tab="team"]')?.classList.toggle("hidden",!isOwnerAdminProfile());
+}
+function listenTeamAccess(uid){
+ if(classoraStaffUnsub)classoraStaffUnsub();classoraStaffUid=uid||"";classoraStaffRole="";refreshTeamAccessButtons();if(!uid)return;
+ classoraStaffUnsub=onSnapshot(doc(db,"staffAccess",uid),snap=>{
+  classoraStaffRole=snap.exists()&&snap.data()?.active!==false?snap.data()?.role||"":"";
+  refreshTeamAccessButtons();
+  if(!isSuperAdminProfile())document.getElementById("adminPanelModal")?.classList.remove("open");
+  if(!canManageSupport())document.getElementById("supportQueueModal")?.classList.remove("open");
+ },err=>{console.warn("staff access",err);classoraStaffRole="";refreshTeamAccessButtons()});
 }
 function isTeacherLikeProfile(profile=window.PythagorasiUser){
   return !!profile&&(profile.role==="teacher"||isSuperAdminProfile(profile));
@@ -7134,7 +7153,7 @@ function resetStudentClassGate(){
 }
 function continueStudentClassGate(){
   const code=(studentClassCodeInput.value||"").trim().replace(/\s+/g,"").toUpperCase();
-  if(code.length<4){
+  if(code&&code.length<4){
     setAuthError("اكتب كود الصف أولًا.");
     studentClassCodeInput.focus();
     return;
@@ -7146,6 +7165,7 @@ function continueStudentClassGate(){
   setAuthError("");
   setTimeout(()=>studentNameInput.focus(),60);
 }
+document.getElementById("studentSkipClassBtn").addEventListener("click",()=>{studentClassCodeInput.value="";continueStudentClassGate()});
 document.getElementById("studentClassVerifyBtn").addEventListener("click",continueStudentClassGate);
 document.getElementById("studentClassCodeInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();continueStudentClassGate()}});
 document.getElementById("studentChangeClassBtn").addEventListener("click",()=>{resetStudentClassGate();setTimeout(()=>studentClassCodeInput.focus(),50)});
@@ -7234,6 +7254,7 @@ function paintUser(user,profile){
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
   activeProfile=window.PythagorasiUser;
+  listenTeamAccess(user.uid);
   applySavedAccountState(window.PythagorasiUser);
   setTimeout(()=>syncPublicProfile(window.PythagorasiUser,user),120);
   setTimeout(startClassoraRealtimeNotifications,350);
@@ -7253,6 +7274,7 @@ function paintUser(user,profile){
 
 async function resolveCurrentUser(user){
   if(!user){
+    listenTeamAccess("");
     document.body.classList.remove("classora-authenticated");
     activeProfile=null;
     clearClassoraRealtimeNotifications();
@@ -7380,7 +7402,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
     studentLoginBusy=false;studentLoginButton.disabled=false;
     studentPasswordInput.focus();return;
   }
-  if(classCode.length<4 || studentClassGateVerified!==classCode){
+  if(classCode&&(classCode.length<4 || studentClassGateVerified!==classCode)){
     setAuthError("ارجع واكتب كود الصف أولًا.");
     studentLoginBusy=false;studentLoginButton.disabled=false;
     resetStudentClassGate();
@@ -7405,22 +7427,19 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
       const cred=await createUserWithEmailAndPassword(auth,email,password);
 
       try{
-        const joinSnap=await getDoc(doc(db,"classJoinCodes",classCode));
-        if(!joinSnap.exists())throw new Error("invalid-class-code");
-        const joinData=joinSnap.data();
-        if(!joinData.active)throw new Error("invalid-class-code");
-
-        const classId=joinData.classId;
+        let joinData=null;
+        if(classCode){const joinSnap=await getDoc(doc(db,"classJoinCodes",classCode));if(!joinSnap.exists()||!joinSnap.data()?.active)throw new Error("invalid-class-code");joinData=joinSnap.data()}
+        const classId=joinData?.classId||"";
         const profile={
           displayName,loginName:displayName,nameKey,role:"student",provider:"password",
           assistantNames:{...defaultAssistantNames},
           xp:0,examCount:0,totalScorePct:0,subjectStats:{},
-          classIds:[classId]
+          classIds:classId?[classId]:[]
         };
 
         const saved=await saveUserProfile(cred.user,profile);
         await saveStudentLoginAlias(displayName,cred.user,cred.user.email||email);
-        await setDoc(doc(db,"classes",classId,"members",cred.user.uid),{
+        if(classId)await setDoc(doc(db,"classes",classId,"members",cred.user.uid),{
           uid:cred.user.uid,
           displayName,
           joinCode:classCode,
@@ -7430,7 +7449,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
         studentAccountCreationInProgress=false;
         rememberLoginForTwoMonths();
         paintUser(cred.user,saved);
-        await logStudentActivity("account_created",`أنشأ الحساب وانضم إلى صف ${joinData.className||""}`,"");
+        await logStudentActivity("account_created",classId?`أنشأ الحساب وانضم إلى صف ${joinData?.className||""}`:"أنشأ الحساب بدون صف","");
         showToast(`👋 أهلًا ${escapeHtml(displayName)}!`);
       }catch(joinErr){
         console.error("class join during signup",joinErr);
@@ -7453,6 +7472,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
       if(profile.nameKey && profile.nameKey!==nameKey){
         await signOut(auth);throw new Error("name-mismatch");
       }
+      if(classCode){
       const joinSnap=await getDoc(doc(db,"classJoinCodes",classCode));
       if(!joinSnap.exists()||joinSnap.data()?.active===false){
         await signOut(auth);throw new Error("invalid-class-code");
@@ -7461,6 +7481,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
       const membership=classId?await getDoc(doc(db,"classes",classId,"members",cred.user.uid)):null;
       if(!classId||!membership?.exists()){
         await signOut(auth);throw new Error("student-not-in-class");
+      }
       }
       rememberLoginForTwoMonths();
       paintUser(cred.user,profile);
@@ -11406,8 +11427,20 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
- ["🏫 كود الصف أولًا", "🏫 Class code first"],
- ["اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.", "Enter your class code, then continue with your name and password."],
+ ["المتابعة بدون كود صف","Continue without a class code"],
+ ["طلبات الدعم","Support requests"],
+ ["إدارة فريق الموقع","Site team management"],
+ ["مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.","Only the site owner can assign or revoke admin and support access."],
+ ["📥 طلبات الدعم","\ud83d\udce5 Support requests"],
+ ["الطلبات المفتوحة","Open requests"],
+ ["الطلبات المحلولة","Resolved requests"],
+ ["كل الطلبات","All requests"],
+ ["تحديث الطلبات","Refresh requests"],
+ ["اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.","Choose a request type and describe the problem. The security phrase is optional and helps verify account ownership."],
+ ["ابحث بالاسم أو معرّف الحساب","Search by name or account ID"],
+
+ ["🏫 كود الصف — اختياري", "🏫 Class code — optional"],
+ ["إذا عندك كود صف اكتبه، أو كمّل بدون كود. بتقدر تنضم لصف لاحقًا.", "Enter a class code if you have one, or continue without it. You can join a class later."],
  ["متابعة ←", "Continue ←"],
  ["تغيير كود الصف", "Change class code"],
  ["اسم + كلمة سر", "Name + password"],
@@ -12102,8 +12135,20 @@ const uiExactTranslations=new Map([
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const uiPlaceholderTranslations=new Map([
- ["🏫 كود الصف أولًا", "🏫 Class code first"],
- ["اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.", "Enter your class code, then continue with your name and password."],
+ ["المتابعة بدون كود صف","Continue without a class code"],
+ ["طلبات الدعم","Support requests"],
+ ["إدارة فريق الموقع","Site team management"],
+ ["مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.","Only the site owner can assign or revoke admin and support access."],
+ ["📥 طلبات الدعم","\ud83d\udce5 Support requests"],
+ ["الطلبات المفتوحة","Open requests"],
+ ["الطلبات المحلولة","Resolved requests"],
+ ["كل الطلبات","All requests"],
+ ["تحديث الطلبات","Refresh requests"],
+ ["اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.","Choose a request type and describe the problem. The security phrase is optional and helps verify account ownership."],
+ ["ابحث بالاسم أو معرّف الحساب","Search by name or account ID"],
+
+ ["🏫 كود الصف — اختياري", "🏫 Class code — optional"],
+ ["إذا عندك كود صف اكتبه، أو كمّل بدون كود. بتقدر تنضم لصف لاحقًا.", "Enter a class code if you have one, or continue without it. You can join a class later."],
  ["متابعة ←", "Continue ←"],
  ["تغيير كود الصف", "Change class code"],
  ["اسم + كلمة سر", "Name + password"],
@@ -16777,9 +16822,10 @@ document.querySelectorAll("[data-open-admin-tab]").forEach(btn=>{
 });
 
 function adminShowTab(tab){
+  if(tab==="team"&&!isOwnerAdminProfile())return;
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Support","Controls"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Support","Controls","Team"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
@@ -16788,9 +16834,10 @@ function adminShowTab(tab){
   if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
   if(tab==="support")adminLoadSupportRequests();
+  if(tab==="team")adminRenderTeam();
   if(tab==="controls")adminLoadControls();
 }
-function openAdminPanel(){if(!requireSuperAdmin())return;applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
+function openAdminPanel(){if(!requireSuperAdmin())return;refreshTeamAccessButtons();applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
 document.getElementById("adminPanelBtn").addEventListener("click",openAdminPanel);
 document.getElementById("closeAdminPanel").addEventListener("click",()=>adminPanelModal.classList.remove("open"));
 adminPanelModal.addEventListener("click",e=>{if(e.target===adminPanelModal)adminPanelModal.classList.remove("open")});
@@ -16855,6 +16902,37 @@ document.getElementById("adminContentVisibilityFilter").addEventListener("change
 
 
 
+
+function supportTypeLabel(type){const labels={forgot_password:["نسيت كلمة السر","Forgot password"],account_access:["مشكلة بالحساب","Account access"],bug:["خطأ بالموقع","Website issue"],report_user:["بلاغ عن مستخدم","User report"],suggestion:["اقتراح","Suggestion"],other:["طلب آخر","Other"]};const item=labels[type]||labels.other;return adminLang(item[0],item[1])}
+async function adminRenderTeam(){
+ if(!isOwnerAdminProfile())return;
+ const host=document.getElementById("adminTeamList"),q=document.getElementById("teamAccountSearch").value.trim().toLowerCase();host.textContent="⏳";
+ try{
+  if(!adminUsersCache.length){const users=await getDocs(collection(db,"users"));adminUsersCache=users.docs.map(d=>({uid:d.id,...d.data()}))}
+  const snap=await getDocs(collection(db,"staffAccess")),roles=new Map(snap.docs.map(d=>[d.id,d.data()]));host.innerHTML="";
+  const rows=adminUsersCache.filter(u=>!isOwnerAdminProfile(u)&&[u.displayName,u.loginName,u.profileId].some(v=>!q||String(v||"").toLowerCase().includes(q))).slice(0,100);
+  for(const u of rows){
+   const card=document.createElement("article");card.className="support-ticket";const title=document.createElement("b"),meta=document.createElement("p"),select=document.createElement("select"),save=document.createElement("button");
+   title.textContent=adminUserDisplay(u);meta.textContent="#"+(u.profileId||"—")+" • "+adminLang(u.securityPhraseHash?"كلمة الأمان مفعّلة":"كلمة الأمان غير مفعّلة",u.securityPhraseHash?"Security phrase configured":"Security phrase not set");
+   for(const [value,ar,en] of [["none","بدون صلاحية إضافية","No extra access"],["support","دعم — الرد على الطلبات فقط","Support — tickets only"],["admin","أدمن — إدارة الموقع","Admin — site management"]]){const opt=document.createElement("option");opt.value=value;opt.textContent=adminLang(ar,en);select.append(opt)}
+   select.value=roles.get(u.uid)?.active===false?"none":roles.get(u.uid)?.role||"none";save.className="exam-secondary";save.textContent=adminLang("حفظ الصلاحية","Save access");
+   save.onclick=async()=>{if(!isOwnerAdminProfile())return;const role=select.value;const description=select.options[select.selectedIndex].textContent;if(!uiConfirm(adminLang("تأكيد تعيين "+adminUserDisplay(u)+": "+description+"؟","Set "+adminUserDisplay(u)+" to "+description+"?")))return;save.disabled=true;try{
+    const ref=doc(db,"staffAccess",u.uid);if(role==="none")await deleteDoc(ref);else await setDoc(ref,{role,active:true,displayName:adminUserDisplay(u),grantedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});
+    await adminAudit("staff_access",u.uid+" • "+role);showToast(adminLang("تم حفظ الصلاحية","Access saved"));
+   }catch(err){console.error(err);showToast(adminLang("تعذر حفظ الصلاحية. تحقق من الاتصال وصلاحيات الإدارة.","Could not save access. Check your connection and admin permissions."))}finally{save.disabled=false}};
+   card.append(title,meta,select,save);host.append(card);
+  }
+  if(!rows.length)host.textContent=adminLang("ما في حسابات مطابقة.","No matching accounts.");
+ }catch(err){console.error(err);host.textContent=adminLang("تعذر تحميل الفريق.","Could not load team.")}
+}
+document.getElementById("teamAccountSearch").addEventListener("input",()=>{clearTimeout(teamSearchTimer);teamSearchTimer=setTimeout(adminRenderTeam,220)});
+let teamSearchTimer=null;
+async function openSupportQueue(){if(!canManageSupport())return;const modal=document.getElementById("supportQueueModal");modal.classList.add("open");await adminLoadSupportRequests(document.getElementById("supportQueueList"));filterSupportQueue()}
+function filterSupportQueue(){const value=document.getElementById("supportQueueFilter").value;document.querySelectorAll("#supportQueueList .support-ticket").forEach(card=>card.hidden=value!=="all"&&card.dataset.status!==value)}
+document.getElementById("lobbySupportRequestsBtn").addEventListener("click",openSupportQueue);
+document.getElementById("supportQueueRefreshBtn").addEventListener("click",openSupportQueue);
+document.getElementById("supportQueueFilter").addEventListener("change",filterSupportQueue);
+document.getElementById("closeSupportQueue").addEventListener("click",()=>document.getElementById("supportQueueModal").classList.remove("open"));
 
 /* -------------------- CLASSORA CHAT + SUPPORT -------------------- */
 const chatModal=document.getElementById("chatModal");
@@ -17211,11 +17289,12 @@ document.getElementById("closeSupportModal").addEventListener("click",closeSuppo
 supportModal.addEventListener("click",e=>{if(e.target===supportModal)closeSupport()});
 document.getElementById("submitSupportBtn").addEventListener("click",submitSupportRequest);
 
-async function adminLoadSupportRequests(){
-  const host=document.getElementById("adminSupportList");
+async function adminLoadSupportRequests(host=document.getElementById("adminSupportList")){
+  if(!canManageSupport())return;
   if(!host)return;
   host.innerHTML='<div class="cloud-note">⏳ Loading...</div>';
   try{
+    if(isSuperAdminProfile()&&!adminUsersCache.length){const users=await getDocs(collection(db,"users"));adminUsersCache=users.docs.map(d=>({uid:d.id,...d.data()}))}
     const snap=await getDocs(collection(db,"supportRequests"));
     const rows=snap.docs.map(d=>({id:d.id,...d.data()}))
       .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
@@ -17225,7 +17304,7 @@ async function adminLoadSupportRequests(){
       return;
     }
     for(const r of rows){
-      const account=adminUsersCache.find(u=>u.uid===r.claimedUid);
+      const account=isSuperAdminProfile()?adminUsersCache.find(u=>u.uid===r.claimedUid):null;
       const hasPhrase=!!account?.securityPhraseHash;
       const submittedProof=r.securityProofHash;
       const proofOk=!!(hasPhrase&&submittedProof&&account.securityPhraseHash===submittedProof);
@@ -17234,17 +17313,18 @@ async function adminLoadSupportRequests(){
 
       const head=document.createElement("div");head.className="support-ticket-head";
       const left=document.createElement("div");
-      const title=document.createElement("b");title.textContent=r.type||"support";
+      const title=document.createElement("b");title.textContent=supportTypeLabel(r.type)+" • #"+r.id.slice(-8);
       const meta=document.createElement("div");meta.className="support-ticket-meta";
       meta.textContent=(r.accountIdentifier||r.createdByName||"—")+" • "+adminDate(r.createdAt);
       left.append(title,meta);
       const state=document.createElement("span");state.textContent=r.status==="resolved"?"✅":"🟡";
       head.append(left,state);
 
-      const message=document.createElement("div");message.textContent=r.message||"";
+      card.dataset.status=r.status||"open";
+      const message=document.createElement("div");message.className="support-ticket-message";message.textContent=r.message||"";
       const proof=document.createElement("div");
       proof.className=proofOk?"support-proof-ok":"support-proof-no";
-      proof.textContent=proofOk
+      proof.textContent=!isSuperAdminProfile()?adminLang("تحقق الملكية ومراجعة الحساب متاحان للأدمن.","Ownership and account review are reserved for admins."):proofOk
         ?"✅ كلمة الأمان مطابقة للحساب"
         :hasPhrase&&submittedProof
           ?"⚠️ كلمة الأمان غير مطابقة"
@@ -17264,7 +17344,7 @@ async function adminLoadSupportRequests(){
       const replyBtn=document.createElement("button");replyBtn.className="exam-secondary";replyBtn.textContent=adminLang("إرسال الرد","Send reply");
       replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;replyBtn.disabled=true;try{await updateDoc(doc(db,"supportRequests",r.id),{adminReply:text,repliedAt:serverTimestamp(),repliedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
       if(r.createdBy)card.append(replyInput,replyBtn);
-      actions.append(resolve,del);card.appendChild(actions);
+      actions.append(resolve);if(isSuperAdminProfile())actions.append(del);card.appendChild(actions);
 
       resolve.addEventListener("click",async()=>{
         await updateDoc(doc(db,"supportRequests",r.id),{
@@ -17273,12 +17353,12 @@ async function adminLoadSupportRequests(){
           resolvedBy:auth.currentUser.uid,
           updatedAt:serverTimestamp()
         });
-        adminLoadSupportRequests();
+        await adminLoadSupportRequests(host);if(host.id==="supportQueueList")filterSupportQueue();
       });
       del.addEventListener("click",async()=>{
         if(uiConfirm("حذف طلب الدعم؟")){
           await deleteDoc(doc(db,"supportRequests",r.id));
-          adminLoadSupportRequests();
+          await adminLoadSupportRequests(host);if(host.id==="supportQueueList")filterSupportQueue();
         }
       });
       host.appendChild(card);
@@ -17288,7 +17368,7 @@ async function adminLoadSupportRequests(){
     host.innerHTML='<div class="cloud-note">تعذر تحميل طلبات الدعم.</div>';
   }
 }
-document.getElementById("adminRefreshSupportBtn")?.addEventListener("click",adminLoadSupportRequests);
+document.getElementById("adminRefreshSupportBtn")?.addEventListener("click",()=>adminLoadSupportRequests());
 
 
 /* -------------------- LIVE CLASS COMPETITION -------------------- */
@@ -19578,7 +19658,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=62",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js?v=63",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -19996,7 +20076,7 @@ pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaI
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=62",{scope:"./",updateViaCache:"none"})
+    navigator.serviceWorker.register("./service-worker.js?v=63",{scope:"./",updateViaCache:"none"})
       .catch(err=>console.warn("service worker registration",err));
   });
 }

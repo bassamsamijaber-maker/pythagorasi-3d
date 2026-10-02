@@ -7,10 +7,32 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isSuperAdmin() {
+    function isOwnerAdmin() {
       return rawSignedIn()
         && exists(/databases/$(database)/documents/profileIds/3228667330)
         && get(/databases/$(database)/documents/profileIds/3228667330).data.uid == request.auth.uid;
+    }
+
+    function hasStaffRole(role) {
+      return rawSignedIn()
+        && exists(/databases/$(database)/documents/staffAccess/$(request.auth.uid))
+        && get(/databases/$(database)/documents/staffAccess/$(request.auth.uid)).data.role == role
+        && get(/databases/$(database)/documents/staffAccess/$(request.auth.uid)).data.active == true;
+    }
+    function isSuperAdmin() { return isOwnerAdmin() || hasStaffRole("admin"); }
+    function isSupportAgent() { return signedIn() && (isSuperAdmin() || hasStaffRole("support")); }
+    match /staffAccess/{uid} {
+      allow get: if rawSignedIn() && (request.auth.uid == uid || isOwnerAdmin());
+      allow list: if isOwnerAdmin();
+      allow create, update: if isOwnerAdmin()
+        && request.resource.data.keys().hasOnly(["role","active","displayName","grantedBy","updatedAt"])
+        && request.resource.data.role in ["admin","support"]
+        && request.resource.data.active is bool
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 80
+        && request.resource.data.grantedBy == request.auth.uid
+        && exists(/databases/$(database)/documents/users/$(uid));
+      allow delete: if isOwnerAdmin();
     }
 
     function isBlocked() {
@@ -239,7 +261,7 @@ service cloud.firestore {
       allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
       allow list: if isSuperAdmin();
 
-      allow update: if isSuperAdmin()
+      allow update: if (isSuperAdmin() && (isOwnerAdmin() || resource.data.profileId != "3228667330"))
         || (
           signedIn()
           && request.auth.uid == uid
@@ -263,7 +285,7 @@ service cloud.firestore {
           )
         );
 
-      allow delete: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+      allow delete: if (isSuperAdmin() && (isOwnerAdmin() || resource.data.profileId != "3228667330")) || (signedIn() && request.auth.uid == uid && resource.data.profileId != "3228667330");
     }
 
     match /classes/{classId} {
@@ -647,13 +669,24 @@ service cloud.firestore {
           )
         );
 
-      allow read, list: if isSuperAdmin()
+      allow read, list: if isSupportAgent()
         || (
           signedIn()
           && resource.data.createdBy == request.auth.uid
         );
 
-      allow update, delete: if isSuperAdmin();
+      allow update: if isSuperAdmin() || (
+        isSupportAgent()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "adminReply", "repliedAt", "repliedBy", "status", "resolvedAt", "resolvedBy", "updatedAt"
+        ])
+        && request.resource.data.status in ["open","resolved"]
+        && (!("adminReply" in request.resource.data)
+          || (request.resource.data.adminReply is string && request.resource.data.adminReply.size() <= 1500))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(["repliedBy"]) || request.resource.data.repliedBy == request.auth.uid)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(["resolvedBy"]) || request.resource.data.resolvedBy == request.auth.uid)
+      );
+      allow delete: if isSuperAdmin();
     }
 
     match /siteControls/{docId} {

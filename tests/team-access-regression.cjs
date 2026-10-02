@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
+const states={};const input={value:'',focus(){}};let error='';
+const ctx={studentClassCodeInput:input,studentNameInput:{focus(){}},studentClassGateVerified:'',document:{getElementById:id=>({classList:{add(){states[id]='hidden'},remove(){states[id]='visible'}}})},setAuthError:s=>error=s,setTimeout:fn=>fn()};vm.createContext(ctx);
+vm.runInContext(html.slice(html.indexOf('function continueStudentClassGate(){'),html.indexOf('document.getElementById("studentSkipClassBtn")')),ctx);
+ctx.continueStudentClassGate();assert.equal(states.studentCredentialsWrap,'visible');assert.equal(error,'');
+input.value='AB';ctx.continueStudentClassGate();assert(error);
+input.value=' ab cd ';ctx.continueStudentClassGate();assert.equal(input.value,'ABCD');assert.equal(error,'');
+const roleCtx={SUPER_ADMIN_PROFILE_ID:'3228667330',window:{PythagorasiUser:{uid:'u1',profileId:'p1'}},auth:{currentUser:{uid:'u1'}},classoraStaffUid:'u1',classoraStaffRole:'support'};vm.createContext(roleCtx);
+vm.runInContext(html.slice(html.indexOf('function isOwnerAdminProfile('),html.indexOf('function refreshTeamAccessButtons(')),roleCtx);
+assert(roleCtx.canManageSupport());assert(!roleCtx.isSuperAdminProfile());assert(!roleCtx.isOwnerAdminProfile());roleCtx.classoraStaffRole='admin';assert(roleCtx.isSuperAdminProfile());assert(!roleCtx.isOwnerAdminProfile());roleCtx.classoraStaffUid='other';assert(!roleCtx.isSuperAdminProfile());
+console.log('PASS: optional class gate, short-code rejection, code normalization, support/admin separation and uid-scoped access.');
