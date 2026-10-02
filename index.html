@@ -18090,13 +18090,22 @@ function classoraResizeEquation3D(){
   }catch(err){console.warn("equation wake",err)}
 }
 function classoraAutoWake(){
-  if(!authResolved || !auth?.currentUser || !window.PythagorasiUser?.uid){
+  if(!authResolved){
+    clearTimeout(classoraWakeTimer);
+    classoraWakeTimer=setTimeout(classoraAutoWake,180);
+    return;
+  }
+  if(!auth?.currentUser || !window.PythagorasiUser?.uid){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
-    if(authResolved)authGate?.classList.add("show");
+    authGate?.classList.add("show");
   }else{
     document.body.classList.add("classora-authenticated");
     authGate?.classList.remove("show");
+    if(sessionStorage.getItem("classora_returning_from_subject")==="1"){
+      sessionStorage.removeItem("classora_returning_from_subject");
+      try{showPlatformLobby?.()}catch{}
+    }
   }
   try{
     if(typeof resize==="function")resize();
