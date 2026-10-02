@@ -4496,6 +4496,33 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 .classora-subject-spinner{width:38px;height:38px;border:3px solid #ffffff22;border-top-color:#61d8ff;border-radius:50%;animation:classoraSubjectSpin .75s linear infinite}
 @keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
 
+
+/* ================= V63 SUPPORT / PHONE RECOVERY ================= */
+.auth-help-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.auth-help-btn{border:1px solid rgba(85,196,255,.18);background:rgba(51,159,225,.07);color:#dff6ff;border-radius:12px;padding:10px 12px;font-weight:850;cursor:pointer}
+.auth-help-btn:hover{border-color:rgba(85,196,255,.42);background:rgba(51,159,225,.12)}
+.auth-help-btn.recovery{border-color:rgba(255,205,94,.18);background:rgba(255,205,94,.06);color:#fff0bd}
+.support-center-btn{height:46px;border-radius:13px;padding:0 13px;border:1px solid rgba(75,212,161,.22);background:linear-gradient(135deg,rgba(54,194,145,.13),rgba(26,143,255,.09));color:#bcffe4;font-weight:950;cursor:pointer;display:flex;align-items:center;gap:7px;position:relative}
+.support-center-btn.hidden{display:none!important}.support-center-badge{min-width:19px;height:19px;padding:0 5px;display:grid;place-items:center;border-radius:999px;background:#ff5e71;color:#fff;font-size:10px;font-weight:1000}
+.support-center-badge.hidden{display:none!important}
+.support-layer{position:fixed;inset:0;z-index:230000;display:grid;place-items:center;padding:18px;background:rgba(2,8,14,.88);backdrop-filter:blur(16px)}
+.support-layer.hidden{display:none!important}
+.support-box{width:min(720px,96vw);max-height:92vh;overflow:auto;border-radius:24px;padding:22px;background:linear-gradient(145deg,#0d1c2b,#07111d);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 100px rgba(0,0,0,.56);position:relative}
+.support-box.wide{width:min(980px,97vw)}.support-close{position:absolute;top:13px;inset-inline-end:13px;width:39px;height:39px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0d1c2a;color:#fff;font-size:22px;cursor:pointer}
+.support-head{padding-inline-end:46px}.support-head h2{margin:0 0 5px;font-size:26px}.support-head p{margin:0;color:#91a8b9;line-height:1.6}
+.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.support-field{display:grid;gap:6px}.support-field.full{grid-column:1/-1}.support-field label{font-size:12px;color:#b8c9d5}.support-field input,.support-field select,.support-field textarea{width:100%;border:1px solid rgba(255,255,255,.11);background:#06111c;color:#eef8ff;border-radius:12px;padding:11px 12px;outline:none}.support-field textarea{min-height:120px;resize:vertical}.support-field input:focus,.support-field select:focus,.support-field textarea:focus{border-color:#2f9eff;box-shadow:0 0 0 3px rgba(47,158,255,.12)}
+.support-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.support-primary,.support-secondary,.support-danger{min-height:44px;border-radius:12px;padding:0 16px;font-weight:900;cursor:pointer}.support-primary{border:0;background:linear-gradient(90deg,#168dff,#47d8ff);color:#04131e}.support-secondary{border:1px solid rgba(255,255,255,.12);background:#102033;color:#eaf6ff}.support-danger{border:1px solid rgba(255,103,118,.22);background:rgba(255,81,101,.08);color:#ffbdc5}
+.support-status{min-height:22px;margin-top:10px;color:#96adbd;font-size:12px;line-height:1.6}.support-status.good{color:#69e6b2}.support-status.bad{color:#ff9ba7}
+.support-options{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:15px}.support-option{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.025);color:#f4fbff;border-radius:15px;padding:13px;text-align:start;cursor:pointer}.support-option:hover,.support-option.active{border-color:#3dafff;background:rgba(61,175,255,.08)}
+.phone-step{display:none}.phone-step.active{display:block}.phone-note{padding:10px 12px;border-radius:12px;background:rgba(78,169,255,.07);border:1px solid rgba(78,169,255,.12);color:#a9c7dc;font-size:12px;line-height:1.65;margin-top:12px}.phone-mask{font-weight:1000;color:#6ce8bb;letter-spacing:.06em}
+.recovery-result{display:none;margin-top:14px;padding:15px;border-radius:16px;border:1px solid rgba(87,218,170,.18);background:rgba(87,218,170,.07)}.recovery-result.show{display:block}.recovery-result b{font-size:18px}
+.support-list{display:grid;gap:10px;margin-top:14px}.support-ticket{padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025)}.support-ticket-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.support-ticket h4{margin:0 0 4px}.support-ticket-meta{font-size:11px;color:#829aae;line-height:1.6}.support-ticket-message{margin-top:9px;line-height:1.7;color:#dce9f2;white-space:pre-wrap}.support-ticket-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.support-ticket-actions button{min-height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:#102033;color:#eaf6ff;padding:0 10px;cursor:pointer}.support-ticket.open{border-color:rgba(54,194,145,.22)}.support-ticket.working{border-color:rgba(255,194,74,.22)}.support-ticket.resolved{opacity:.72}
+.support-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.support-tabs button{border:1px solid rgba(255,255,255,.1);background:#0d1b29;color:#dcecf7;border-radius:999px;padding:8px 12px;cursor:pointer}.support-tabs button.active{background:#168dff;color:#fff;border-color:#168dff}
+.support-audit-row{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px;line-height:1.6}.support-audit-row:last-child{border-bottom:0}
+#phoneRecaptcha,#recoveryRecaptcha{margin-top:10px;min-height:2px}
+body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.light .support-field input,.light .support-field select,.light .support-field textarea{background:#f7fbfd;color:#173047;border-color:#d6e3eb}.light .support-secondary,.light .support-ticket-actions button{background:#edf4f8;color:#24465d;border-color:#d6e3eb}
+@media(max-width:620px){.auth-help-strip,.support-grid,.support-options{grid-template-columns:1fr}.support-box{padding:18px}.support-center-btn span.label{display:none}}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4534,6 +4561,10 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
           <span>دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.</span>
         </button>
       </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="authSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">📱 نسيت الاسم أو كلمة السر؟</button>
+      </div>
     </div>
 
     <div class="auth-form" id="studentLoginForm">
@@ -4561,12 +4592,20 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
         <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
       </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="studentSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+      </div>
     </div>
 
     <div class="auth-form" id="teacherLoginForm">
       <button class="auth-google" id="teacherGoogleBtn" type="button">👨‍🏫 دخول المعلم</button>
       <div class="auth-form-actions">
         <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
+      </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="teacherSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">📱 استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4575,6 +4614,91 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 </div>
 </div>
 
+
+
+<div class="support-layer hidden" id="supportRequestLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close" id="closeSupportRequest" type="button">×</button>
+    <div class="support-head"><h2>🎧 تواصل مع الدعم</h2><p>اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.</p></div>
+    <div class="support-options" id="supportTypeOptions">
+      <button class="support-option active" data-support-type="login" type="button">🔐 مشكلة تسجيل دخول</button>
+      <button class="support-option" data-support-type="forgot-name" type="button">👤 نسيت اسم الدخول</button>
+      <button class="support-option" data-support-type="forgot-password" type="button">🔑 نسيت كلمة السر</button>
+      <button class="support-option" data-support-type="class" type="button">🏫 مشكلة بالصف</button>
+      <button class="support-option" data-support-type="exam" type="button">🎓 مشكلة بامتحان</button>
+      <button class="support-option" data-support-type="competition" type="button">🏆 مشكلة بمسابقة</button>
+      <button class="support-option" data-support-type="technical" type="button">🛠️ مشكلة تقنية</button>
+      <button class="support-option" data-support-type="other" type="button">💬 شيء آخر</button>
+    </div>
+    <div class="support-grid">
+      <div class="support-field"><label for="supportName">الاسم</label><input id="supportName" maxlength="80" placeholder="اكتب اسمك"></div>
+      <div class="support-field"><label for="supportAccountHint">اسم الدخول / Profile ID إن كنت تعرفه</label><input id="supportAccountHint" maxlength="100" placeholder="اختياري"></div>
+      <div class="support-field full"><label for="supportMessage">اشرح المشكلة</label><textarea id="supportMessage" maxlength="1200" placeholder="اكتب شو صار معك بالتفصيل..."></textarea></div>
+    </div>
+    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
+    <div class="support-actions">
+      <button class="support-primary" id="submitSupportRequest" type="button">📨 إرسال للدعم</button>
+      <button class="support-secondary" id="supportOpenRecovery" type="button">📱 استرجاع بالحساب بالهاتف</button>
+    </div>
+    <div class="support-status" id="supportRequestStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="phoneSetupLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close hidden" id="closePhoneSetup" type="button">×</button>
+    <div class="support-head"><h2>📱 اربط رقم هاتفك</h2><p>رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.</p></div>
+    <div class="phone-step active" id="phoneSetupNumberStep">
+      <div class="support-field"><label for="phoneSetupNumber">رقم الهاتف</label><input id="phoneSetupNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+      <div class="phone-note">رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.</div>
+      <div id="phoneRecaptcha"></div>
+      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary hidden" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
+    </div>
+    <div class="phone-step" id="phoneSetupCodeStep">
+      <div class="support-field"><label for="phoneSetupCode">كود التحقق</label><input id="phoneSetupCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
+      <div class="support-actions"><button class="support-primary" id="verifyPhoneSetupCode" type="button">✓ تحقق واربط الرقم</button><button class="support-secondary" id="phoneSetupBack" type="button">رجوع</button></div>
+    </div>
+    <div class="support-status" id="phoneSetupStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="accountRecoveryLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close" id="closeAccountRecovery" type="button">×</button>
+    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.</p></div>
+    <div class="phone-step active" id="recoveryNumberStep">
+      <div class="support-field"><label for="recoveryPhoneNumber">رقم الهاتف المرتبط بالحساب</label><input id="recoveryPhoneNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+      <div class="support-field"><label for="recoveryIntent">شو بدك تسترجع؟</label><select id="recoveryIntent"><option value="name">اسم الدخول</option><option value="password">كلمة السر</option><option value="both">الاثنين</option></select></div>
+      <div class="phone-note">رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.</div>
+      <div id="recoveryRecaptcha"></div>
+      <div class="support-actions"><button class="support-primary" id="sendRecoveryCode" type="button">إرسال كود التحقق</button></div>
+    </div>
+    <div class="phone-step" id="recoveryCodeStep">
+      <div class="support-field"><label for="recoveryCode">كود التحقق</label><input id="recoveryCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
+      <div class="support-actions"><button class="support-primary" id="verifyRecoveryCode" type="button">✓ تحقق</button><button class="support-secondary" id="recoveryBack" type="button">رجوع</button></div>
+    </div>
+    <div class="phone-step" id="recoveryResultStep">
+      <div class="recovery-result show"><small>اسم الدخول</small><b id="recoveredLoginName">—</b><div class="support-ticket-meta" id="recoveredDisplayName"></div></div>
+      <div id="recoveryPasswordWrap" class="support-grid hidden">
+        <div class="support-field full"><label for="recoveryNewPassword">كلمة السر الجديدة</label><input id="recoveryNewPassword" type="password" minlength="6" maxlength="64" autocomplete="new-password"></div>
+        <div class="support-field full"><label for="recoveryNewPassword2">تأكيد كلمة السر الجديدة</label><input id="recoveryNewPassword2" type="password" minlength="6" maxlength="64" autocomplete="new-password"></div>
+      </div>
+      <div class="support-actions"><button class="support-primary hidden" id="saveRecoveredPassword" type="button">🔑 تغيير كلمة السر</button><button class="support-secondary" id="continueRecoveredAccount" type="button">متابعة بدون تغيير</button></div>
+    </div>
+    <div class="support-status" id="accountRecoveryStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="supportCenterLayer" aria-modal="true" role="dialog">
+  <div class="support-box wide">
+    <button class="support-close" id="closeSupportCenter" type="button">×</button>
+    <div class="support-head"><h2>🎧 مركز الدعم</h2><p>كل طلبات الدعم وأحداث استرجاع الحساب المهمة بتظهر هون.</p></div>
+    <div class="support-tabs"><button class="active" data-support-tab="tickets" type="button">طلبات الدعم</button><button data-support-tab="audit" type="button">سجل الاسترجاع والأمان</button></div>
+    <div id="supportTicketsView"><div class="support-list" id="supportTicketsList"></div></div>
+    <div id="supportAuditView" class="hidden"><div class="support-list" id="supportAuditList"></div></div>
+    <div class="support-status" id="supportCenterStatus"></div>
+  </div>
+</div>
 
 <div class="platform-lobby" id="platformLobby">
   <div class="lobby-shell">
@@ -4586,6 +4710,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
+        <button class="support-center-btn hidden" id="supportCenterBtn" type="button"><span>🎧</span><span class="label">مركز الدعم</span><span class="support-center-badge hidden" id="supportCenterBadge">0</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
@@ -6376,6 +6501,7 @@ import {
   signInAnonymously, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
   reauthenticateWithCredential, EmailAuthProvider,
+  PhoneAuthProvider, RecaptchaVerifier, linkWithCredential, signInWithCredential,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -6386,6 +6512,9 @@ import {
 import {
   getMessaging, getToken, onMessage, isSupported as isMessagingSupported
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
+import {
+  getFunctions, httpsCallable
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
@@ -6401,6 +6530,11 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+const classoraFunctions = getFunctions(firebaseApp);
+const createSupportTicketCall = httpsCallable(classoraFunctions,"createSupportTicket");
+const recordSupportEventCall = httpsCallable(classoraFunctions,"recordSupportEvent");
+const getSupportCenterCall = httpsCallable(classoraFunctions,"getSupportCenter");
+const updateSupportTicketCall = httpsCallable(classoraFunctions,"updateSupportTicket");
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -6598,6 +6732,8 @@ function showPlatformLobby(){
   document.getElementById("teacherLobbyTools")?.classList.toggle("hidden",!teacherLike);
   document.getElementById("adminPanelBtn")?.classList.toggle("hidden",!hybridAdmin);
   document.getElementById("adminHybridBadge")?.classList.toggle("hidden",!hybridAdmin);
+  document.getElementById("supportCenterBtn")?.classList.toggle("hidden",!hybridAdmin);
+  if(hybridAdmin)setTimeout(startSupportCenterRealtime,80);
   const examSmall=document.querySelector("#lobbyExamBtn small");
   const compSmall=document.querySelector("#competitionBtn small");
   if(examSmall){
@@ -6976,6 +7112,11 @@ function paintUser(user,profile){
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
+  setTimeout(()=>maybeOpenPhoneSetup(profile,user),950);
+  if(admin){
+    setTimeout(startSupportCenterRealtime,250);
+    if(location.hash==="#support-center")setTimeout(openSupportCenter,500);
+  }
 
   const pending=authPendingAction;
   if(!pending)showPlatformLobby();
@@ -6987,6 +7128,7 @@ async function resolveCurrentUser(user){
     document.body.classList.remove("classora-authenticated");
     activeProfile=null;
     clearClassoraRealtimeNotifications();
+    clearSupportRealtime();
     window.PythagorasiUser=null;
     if(lobbyCompetitionUnsub){try{lobbyCompetitionUnsub()}catch{} lobbyCompetitionUnsub=null}
     lobbyCompetitionCache=[];window.ClassoraLiveCompetitions=[];
@@ -7030,7 +7172,8 @@ async function resolveCurrentUser(user){
         await signOut(auth);
         throw new Error("student-profile-missing");
       }
-      profile={...profile,role:"student"};
+      const storedRole=profile.role==="teacher"?"teacher":"student";
+      profile={...profile,role:storedRole};
       if(!/^\d{10}$/.test(String(profile.profileId||""))){
         profile={...profile,profileId:await ensureProfileId(user,profile)};
       }
@@ -7435,6 +7578,10 @@ onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
   authResolved=true;
   document.body.classList.add("auth-ready");
+  if(classoraPhoneRecoveryActive){
+    window.dispatchEvent(new Event("classora-auth-settled"));
+    return;
+  }
   if(user){
     let expires=rememberedLoginExpiresAt();
     if(!expires)expires=rememberLoginForTwoMonths();
@@ -11716,6 +11863,54 @@ const uiExactTranslations=new Map([
   ["حذف","Delete"]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
+
+[
+  ["🎧 تواصل مع الدعم","🎧 Contact Support"],
+  ["📱 نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
+  ["📱 استرجاع الحساب","📱 Recover Account"],
+  ["مركز الدعم","Support Center"],
+  ["🎧 مركز الدعم","🎧 Support Center"],
+  ["اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.","Choose the issue type and describe what happened. Your request goes directly to Support."],
+  ["🔐 مشكلة تسجيل دخول","🔐 Sign-in Problem"],
+  ["👤 نسيت اسم الدخول","👤 Forgot Login Name"],
+  ["🔑 نسيت كلمة السر","🔑 Forgot Password"],
+  ["🏫 مشكلة بالصف","🏫 Class Problem"],
+  ["🎓 مشكلة بامتحان","🎓 Exam Problem"],
+  ["🏆 مشكلة بمسابقة","🏆 Competition Problem"],
+  ["🛠️ مشكلة تقنية","🛠️ Technical Problem"],
+  ["💬 شيء آخر","💬 Something Else"],
+  ["اسم الدخول / Profile ID إن كنت تعرفه","Login name / Profile ID if known"],
+  ["اشرح المشكلة","Describe the Problem"],
+  ["إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.","If you only forgot your login name or password and have a phone linked to the account, use Account Recovery instead of waiting for Support."],
+  ["📨 إرسال للدعم","📨 Send to Support"],
+  ["📱 استرجاع بالحساب بالهاتف","📱 Recover Account by Phone"],
+  ["📱 اربط رقم هاتفك","📱 Link Your Phone Number"],
+  ["رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.","Your phone helps protect your account and lets you recover your login name or password with an SMS code."],
+  ["رقم الهاتف","Phone Number"],
+  ["رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.","You'll receive an SMS verification code. Standard messaging rates may apply. Classora does not store the code or your password."],
+  ["إرسال الكود","Send Code"],
+  ["ذكّرني لاحقًا","Remind Me Later"],
+  ["كود التحقق","Verification Code"],
+  ["✓ تحقق واربط الرقم","✓ Verify & Link Number"],
+  ["🔐 استرجاع الحساب","🔐 Account Recovery"],
+  ["تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.","Verify with the phone linked to your account, then you can view your login name or change your password."],
+  ["رقم الهاتف المرتبط بالحساب","Phone Number Linked to the Account"],
+  ["شو بدك تسترجع؟","What do you want to recover?"],
+  ["اسم الدخول","Login Name"],
+  ["الاثنين","Both"],
+  ["رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.","We'll send an SMS code to confirm the number is yours. We won't ask for your old password."],
+  ["إرسال كود التحقق","Send Verification Code"],
+  ["✓ تحقق","✓ Verify"],
+  ["كلمة السر الجديدة","New Password"],
+  ["تأكيد كلمة السر الجديدة","Confirm New Password"],
+  ["🔑 تغيير كلمة السر","🔑 Change Password"],
+  ["متابعة بدون تغيير","Continue Without Changes"],
+  ["كل طلبات الدعم وأحداث استرجاع الحساب المهمة بتظهر هون.","All support requests and important account-recovery events appear here."],
+  ["طلبات الدعم","Support Requests"],
+  ["سجل الاسترجاع والأمان","Recovery & Security Log"],
+  ["اكتب شو صار معك بالتفصيل...","Describe what happened in detail..."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
 const uiPlaceholderTranslations=new Map([
   ["🔎 ابحث عن موضوع داخل المادة...","🔎 Search topics..."],
   ["اسأل عن هذا الموضوع...","Ask about this topic..."],
@@ -11737,6 +11932,8 @@ const uiPlaceholderTranslations=new Map([
 
 uiPlaceholderTranslations.set("مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?");
 uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?");
+uiPlaceholderTranslations.set("اكتب شو صار معك بالتفصيل...","Describe what happened in detail...");
+uiPlaceholderTranslations.set("اكتب اسمك","Enter your name");
 
 [
   ["اكتب الاسم أو Profile ID...","Type a name or Profile ID..."],
@@ -11921,6 +12118,384 @@ setTimeout(()=>{
   bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 },0);
 
+
+
+/* -------------------- V63 SUPPORT / PHONE RECOVERY -------------------- */
+let supportRoleContext="unknown";
+let supportType="login";
+let phoneSetupVerificationId="";
+let phoneSetupVerifier=null;
+let phoneSetupPendingPhone="";
+let recoveryVerificationId="";
+let recoveryVerifier=null;
+let recoveryPendingPhone="";
+let recoveredProfile=null;
+let classoraPhoneRecoveryActive=false;
+let supportCenterRefreshTimer=null;
+let supportOpenTicketCount=0;
+
+function supportLang(ar,en){return currentUILanguage==="en"?en:ar}
+function setSupportStatus(id,text,type=""){
+  const el=document.getElementById(id);if(!el)return;
+  el.textContent=text||"";el.className="support-status"+(type?" "+type:"");
+}
+function openLayer(id){document.getElementById(id)?.classList.remove("hidden")}
+function closeLayer(id){document.getElementById(id)?.classList.add("hidden")}
+function phoneLast4(phone){const digits=String(phone||"").replace(/\D/g,"");return digits.slice(-4)}
+function normalizeRecoveryPhone(value){
+  let s=String(value||"").trim().replace(/[\s().-]/g,"");
+  if(/^05\d{8}$/.test(s))s="+972"+s.slice(1);
+  else if(/^9725\d{8}$/.test(s))s="+"+s;
+  if(!/^\+[1-9]\d{7,14}$/.test(s))return "";
+  return s;
+}
+function friendlyPhoneError(err){
+  const code=String(err?.code||"");
+  if(code.includes("invalid-phone-number"))return supportLang("رقم الهاتف غير صحيح. اكتبه مع رمز الدولة مثل +972.","Invalid phone number. Include the country code, for example +972.");
+  if(code.includes("too-many-requests")||code.includes("quota"))return supportLang("صار في محاولات كثيرة. جرّب بعد شوي.","Too many attempts. Try again later.");
+  if(code.includes("invalid-verification-code"))return supportLang("كود التحقق غير صحيح.","The verification code is incorrect.");
+  if(code.includes("credential-already-in-use"))return supportLang("رقم الهاتف مربوط بحساب ثاني.","This phone number is linked to another account.");
+  if(code.includes("operation-not-allowed"))return supportLang("التحقق بالهاتف غير متاح حاليًا.","Phone verification is not available right now.");
+  return supportLang("تعذر إكمال التحقق. جرّب مرة ثانية.","Could not complete verification. Try again.");
+}
+function resetVerifier(which){
+  try{if(which==="setup"&&phoneSetupVerifier)phoneSetupVerifier.clear()}catch{}
+  try{if(which==="recovery"&&recoveryVerifier)recoveryVerifier.clear()}catch{}
+  if(which==="setup")phoneSetupVerifier=null;else recoveryVerifier=null;
+}
+function createPhoneVerifier(containerId,which){
+  resetVerifier(which);
+  auth.languageCode=currentUILanguage==="ar"?"ar":"en";
+  const verifier=new RecaptchaVerifier(auth,containerId,{size:"normal"});
+  if(which==="setup")phoneSetupVerifier=verifier;else recoveryVerifier=verifier;
+  return verifier;
+}
+async function recordSupportEventSafe(event,detail="",profile=window.PythagorasiUser,phone=""){
+  try{
+    await recordSupportEventCall({
+      event,
+      detail:String(detail||"").slice(0,180),
+      profileId:String(profile?.profileId||""),
+      phoneLast4:phoneLast4(phone||profile?.phoneLast4||"")
+    });
+  }catch(err){console.warn("support event",err)}
+}
+function selectSupportType(type){
+  supportType=type||"other";
+  document.querySelectorAll("#supportTypeOptions [data-support-type]").forEach(b=>b.classList.toggle("active",b.dataset.supportType===supportType));
+}
+function openSupportRequest(role="unknown"){
+  supportRoleContext=role;
+  selectSupportType("login");
+  const p=window.PythagorasiUser||{};
+  document.getElementById("supportName").value=p.displayName||"";
+  document.getElementById("supportAccountHint").value=p.profileId||p.loginName||"";
+  document.getElementById("supportMessage").value="";
+  setSupportStatus("supportRequestStatus","");
+  openLayer("supportRequestLayer");
+  recordSupportEventSafe("support_opened",role,p);
+}
+function openAccountRecovery(){
+  closeLayer("supportRequestLayer");
+  document.getElementById("recoveryPhoneNumber").value="";
+  document.getElementById("recoveryCode").value="";
+  document.getElementById("recoveryNumberStep").classList.add("active");
+  document.getElementById("recoveryCodeStep").classList.remove("active");
+  document.getElementById("recoveryResultStep").classList.remove("active");
+  document.getElementById("recoveryPasswordWrap").classList.add("hidden");
+  document.getElementById("saveRecoveredPassword").classList.add("hidden");
+  setSupportStatus("accountRecoveryStatus","");
+  resetVerifier("recovery");
+  openLayer("accountRecoveryLayer");
+  recordSupportEventSafe("recovery_started","login recovery",window.PythagorasiUser||null);
+}
+function openPhoneSetup(){
+  if(!auth.currentUser)return;
+  document.getElementById("phoneSetupNumber").value=auth.currentUser.phoneNumber||"";
+  document.getElementById("phoneSetupCode").value="";
+  document.getElementById("phoneSetupNumberStep").classList.add("active");
+  document.getElementById("phoneSetupCodeStep").classList.remove("active");
+  setSupportStatus("phoneSetupStatus","");
+  document.getElementById("phoneSetupLater")?.classList.add("hidden");
+  document.getElementById("closePhoneSetup")?.classList.add("hidden");
+  resetVerifier("setup");
+  openLayer("phoneSetupLayer");
+}
+async function maybeOpenPhoneSetup(profile=window.PythagorasiUser,user=auth.currentUser){
+  if(!user||!profile)return;
+  if(user.phoneNumber){
+    if(profile.phoneLinked!==true){
+      const last4=phoneLast4(user.phoneNumber);
+      try{await setDoc(doc(db,"users",user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp()},{merge:true})}catch{}
+    }
+    return;
+  }
+  if(profile.phoneLinked===true){
+    try{await setDoc(doc(db,"users",user.uid),{phoneLinked:false,updatedAt:serverTimestamp()},{merge:true})}catch{}
+  }
+  if(sessionStorage.getItem("classora_phone_prompt_later")==="1")return;
+  openPhoneSetup();
+}
+async function sendPhoneSetupCode(){
+  const statusId="phoneSetupStatus";
+  const phone=normalizeRecoveryPhone(document.getElementById("phoneSetupNumber").value);
+  if(!phone){setSupportStatus(statusId,supportLang("اكتب رقم صحيح مع رمز الدولة.","Enter a valid number with the country code."),"bad");return}
+  if(!auth.currentUser){setSupportStatus(statusId,supportLang("سجّل دخولك أولًا.","Sign in first."),"bad");return}
+  const btn=document.getElementById("sendPhoneSetupCode");btn.disabled=true;
+  try{
+    document.getElementById("phoneSetupLater")?.classList.add("hidden");
+    document.getElementById("closePhoneSetup")?.classList.add("hidden");
+    const verifier=createPhoneVerifier("phoneRecaptcha","setup");
+    const provider=new PhoneAuthProvider(auth);
+    phoneSetupVerificationId=await provider.verifyPhoneNumber(phone,verifier);
+    phoneSetupPendingPhone=phone;
+    document.getElementById("phoneSetupNumberStep").classList.remove("active");
+    document.getElementById("phoneSetupCodeStep").classList.add("active");
+    setSupportStatus(statusId,supportLang("تم إرسال الكود ✅","Verification code sent ✅"),"good");
+    recordSupportEventSafe("sms_sent","phone link",window.PythagorasiUser,phone);
+  }catch(err){
+    console.error("phone setup send",err);
+    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
+    const code=String(err?.code||"");
+    if(/operation-not-allowed|network|too-many-requests|quota|captcha/i.test(code)){
+      document.getElementById("phoneSetupLater")?.classList.remove("hidden");
+    }
+    recordSupportEventSafe("phone_link_failed",code||"send-failed",window.PythagorasiUser,phone);
+    resetVerifier("setup");
+  }finally{btn.disabled=false}
+}
+async function verifyPhoneSetupCode(){
+  const statusId="phoneSetupStatus",code=document.getElementById("phoneSetupCode").value.trim();
+  if(!/^\d{6}$/.test(code)||!phoneSetupVerificationId){setSupportStatus(statusId,supportLang("اكتب كود التحقق من 6 أرقام.","Enter the 6-digit verification code."),"bad");return}
+  const btn=document.getElementById("verifyPhoneSetupCode");btn.disabled=true;
+  try{
+    const credential=PhoneAuthProvider.credential(phoneSetupVerificationId,code);
+    const result=await linkWithCredential(auth.currentUser,credential);
+    const last4=phoneLast4(phoneSetupPendingPhone);
+    await setDoc(doc(db,"users",result.user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,phoneLinked:true,phoneLast4:last4};
+    activeProfile=window.PythagorasiUser;
+    setSupportStatus(statusId,supportLang("تم ربط رقم الهاتف ✅","Phone number linked ✅"),"good");
+    await recordSupportEventSafe("phone_linked","verified",window.PythagorasiUser,phoneSetupPendingPhone);
+    setTimeout(()=>closeLayer("phoneSetupLayer"),650);
+  }catch(err){
+    console.error("phone setup verify",err);
+    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
+    recordSupportEventSafe("phone_link_failed",String(err?.code||"verify-failed"),window.PythagorasiUser,phoneSetupPendingPhone);
+  }finally{btn.disabled=false}
+}
+async function sendRecoveryCode(){
+  const statusId="accountRecoveryStatus",phone=normalizeRecoveryPhone(document.getElementById("recoveryPhoneNumber").value);
+  if(!phone){setSupportStatus(statusId,supportLang("اكتب رقم صحيح مع رمز الدولة.","Enter a valid number with the country code."),"bad");return}
+  const btn=document.getElementById("sendRecoveryCode");btn.disabled=true;
+  try{
+    const verifier=createPhoneVerifier("recoveryRecaptcha","recovery");
+    const provider=new PhoneAuthProvider(auth);
+    recoveryVerificationId=await provider.verifyPhoneNumber(phone,verifier);
+    recoveryPendingPhone=phone;
+    document.getElementById("recoveryNumberStep").classList.remove("active");
+    document.getElementById("recoveryCodeStep").classList.add("active");
+    setSupportStatus(statusId,supportLang("تم إرسال كود التحقق ✅","Verification code sent ✅"),"good");
+    recordSupportEventSafe("sms_sent","account recovery",null,phone);
+  }catch(err){
+    console.error("recovery send",err);
+    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
+    recordSupportEventSafe("recovery_failed",String(err?.code||"send-failed"),null,phone);
+    resetVerifier("recovery");
+  }finally{btn.disabled=false}
+}
+async function verifyRecoveryCode(){
+  const statusId="accountRecoveryStatus",code=document.getElementById("recoveryCode").value.trim();
+  if(!/^\d{6}$/.test(code)||!recoveryVerificationId){setSupportStatus(statusId,supportLang("اكتب كود التحقق من 6 أرقام.","Enter the 6-digit verification code."),"bad");return}
+  const btn=document.getElementById("verifyRecoveryCode");btn.disabled=true;
+  try{
+    const credential=PhoneAuthProvider.credential(recoveryVerificationId,code);
+    classoraPhoneRecoveryActive=true;
+    const result=await signInWithCredential(auth,credential);
+    const snap=await getDoc(doc(db,"users",result.user.uid));
+    if(!snap.exists()){
+      try{await deleteUser(result.user)}catch{}
+      classoraPhoneRecoveryActive=false;
+      throw Object.assign(new Error("recovery-no-account"),{code:"recovery/no-account"});
+    }
+    recoveredProfile={uid:result.user.uid,...snap.data()};
+    const last4=phoneLast4(recoveryPendingPhone);
+    try{await setDoc(doc(db,"users",result.user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch{}
+    const loginName=recoveredProfile.loginName||recoveredProfile.originalLoginName||recoveredProfile.displayName||supportLang("غير متوفر","Unavailable");
+    document.getElementById("recoveredLoginName").textContent=loginName;
+    document.getElementById("recoveredDisplayName").textContent=(recoveredProfile.displayName||"")+" • Profile ID "+(recoveredProfile.profileId||"—");
+    const intent=document.getElementById("recoveryIntent").value;
+    const hasPasswordProvider=result.user.providerData.some(p=>p.providerId==="password");
+    const wantsPassword=intent==="password"||intent==="both";
+    document.getElementById("recoveryPasswordWrap").classList.toggle("hidden",!(wantsPassword&&hasPasswordProvider));
+    document.getElementById("saveRecoveredPassword").classList.toggle("hidden",!(wantsPassword&&hasPasswordProvider));
+    document.getElementById("recoveryCodeStep").classList.remove("active");
+    document.getElementById("recoveryResultStep").classList.add("active");
+    setSupportStatus(statusId,wantsPassword&&!hasPasswordProvider?supportLang("هذا الحساب ما عنده كلمة سر داخل كلاسورا. تقدر تكمل للحساب بدون تغيير.","This account does not use a Classora password. You can continue without changing one."):"","good");
+    await recordSupportEventSafe("recovery_verified","verified",recoveredProfile,recoveryPendingPhone);
+    if(intent==="name"||intent==="both")await recordSupportEventSafe("login_name_viewed","login name recovered",recoveredProfile,recoveryPendingPhone);
+  }catch(err){
+    console.error("recovery verify",err);
+    if(!recoveredProfile)classoraPhoneRecoveryActive=false;
+    const msg=String(err?.code||"")==="recovery/no-account"?supportLang("هذا الرقم مش مربوط بحساب كلاسورا.","This number is not linked to a Classora account."):friendlyPhoneError(err);
+    setSupportStatus(statusId,msg,"bad");
+    recordSupportEventSafe("recovery_failed",String(err?.code||"verify-failed"),recoveredProfile,recoveryPendingPhone);
+  }finally{btn.disabled=false}
+}
+async function saveRecoveredPassword(){
+  const a=document.getElementById("recoveryNewPassword").value,b=document.getElementById("recoveryNewPassword2").value,statusId="accountRecoveryStatus";
+  if(a.length<6){setSupportStatus(statusId,supportLang("كلمة السر لازم تكون 6 خانات أو أكثر.","Password must be at least 6 characters."),"bad");return}
+  if(a!==b){setSupportStatus(statusId,supportLang("كلمتا السر مش نفس بعض.","The passwords do not match."),"bad");return}
+  const btn=document.getElementById("saveRecoveredPassword");btn.disabled=true;
+  try{
+    await updatePassword(auth.currentUser,a);
+    setSupportStatus(statusId,supportLang("تم تغيير كلمة السر ✅","Password changed ✅"),"good");
+    await recordSupportEventSafe("password_changed","phone recovery",recoveredProfile,recoveryPendingPhone);
+    btn.classList.add("hidden");
+  }catch(err){console.error(err);setSupportStatus(statusId,supportLang("تعذر تغيير كلمة السر. جرّب مرة ثانية.","Could not change the password. Try again."),"bad")}
+  finally{btn.disabled=false}
+}
+async function submitSupportRequest(){
+  const name=document.getElementById("supportName").value.trim(),accountHint=document.getElementById("supportAccountHint").value.trim(),message=document.getElementById("supportMessage").value.trim();
+  const statusId="supportRequestStatus";
+  if(name.length<2){setSupportStatus(statusId,supportLang("اكتب اسمك.","Enter your name."),"bad");return}
+  if(message.length<3){setSupportStatus(statusId,supportLang("اكتب تفاصيل المشكلة.","Describe the problem."),"bad");return}
+  const btn=document.getElementById("submitSupportRequest");btn.disabled=true;
+  try{
+    const p=window.PythagorasiUser||{};
+    const result=await createSupportTicketCall({
+      type:supportType,role:supportRoleContext,name,accountHint,message,
+      profileId:String(p.profileId||""),phoneLast4:String(p.phoneLast4||"")
+    });
+    setSupportStatus(statusId,supportLang("وصل طلبك للدعم ✅ رقم الطلب: ","Your request reached Support ✅ Ticket: ")+(result.data?.ticketId||"—"),"good");
+    document.getElementById("supportMessage").value="";
+  }catch(err){
+    console.error("support ticket",err);
+    setSupportStatus(statusId,supportLang("تعذر إرسال الطلب حاليًا. جرّب مرة ثانية.","Could not send the request right now. Try again."),"bad");
+  }finally{btn.disabled=false}
+}
+function supportDate(ts,ms){
+  try{
+    const d=Number.isFinite(ms)?new Date(ms):(ts?.toDate?ts.toDate():new Date());
+    return d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+  }catch{return "—"}
+}
+function supportTypeName(type){
+  const map={
+    login:[ "مشكلة تسجيل دخول","Sign-in Problem"],"forgot-name":["نسي اسم الدخول","Forgot Login Name"],"forgot-password":["نسي كلمة السر","Forgot Password"],
+    class:["مشكلة صف","Class Problem"],exam:["مشكلة امتحان","Exam Problem"],competition:["مشكلة مسابقة","Competition Problem"],technical:["مشكلة تقنية","Technical Problem"],other:["طلب دعم","Support Request"]
+  };
+  return (map[type]||map.other)[currentUILanguage==="en"?1:0];
+}
+function renderSupportTickets(items){
+  const host=document.getElementById("supportTicketsList");if(!host)return;host.innerHTML="";
+  if(!items.length){host.innerHTML='<div class="support-ticket-meta">'+supportLang("ما في طلبات دعم.","No support requests.")+'</div>';return}
+  items.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0)).forEach(t=>{
+    const card=document.createElement("article");card.className="support-ticket "+(t.status||"open");
+    const statusLabel=t.status==="resolved"?supportLang("محلول","Resolved"):t.status==="working"?supportLang("قيد المعالجة","In Progress"):supportLang("مفتوح","Open");
+    card.innerHTML=`<div class="support-ticket-head"><div><h4>${escapeHtml(t.name||supportLang("بدون اسم","No name"))} • ${escapeHtml(supportTypeName(t.type))}</h4><div class="support-ticket-meta">${escapeHtml(t.role||"unknown")} • ${escapeHtml(t.profileId||t.accountHint||"—")} • ${supportDate(t.createdAt,t.createdAtMs)}</div></div><b>${statusLabel}</b></div><div class="support-ticket-message">${escapeHtml(t.message||"")}</div><div class="support-ticket-actions"><button data-ticket-status="working" data-id="${t.id}">${supportLang("🟡 قيد المعالجة","🟡 In Progress")}</button><button data-ticket-status="resolved" data-id="${t.id}">${supportLang("✅ تم الحل","✅ Resolved")}</button><button data-ticket-status="open" data-id="${t.id}">${supportLang("↩ إعادة فتح","↩ Reopen")}</button></div>`;
+    host.appendChild(card);
+  });
+  host.querySelectorAll("[data-ticket-status]").forEach(btn=>btn.addEventListener("click",async()=>{
+    btn.disabled=true;
+    try{
+      await updateSupportTicketCall({ticketId:btn.dataset.id,status:btn.dataset.ticketStatus});
+      await refreshSupportCenter();
+    }catch(err){console.error("ticket status",err)}
+    finally{btn.disabled=false}
+  }));
+}
+function renderSupportAudit(items){
+  const host=document.getElementById("supportAuditList");if(!host)return;host.innerHTML="";
+  if(!items.length){host.innerHTML='<div class="support-ticket-meta">'+supportLang("ما في أحداث استرجاع مسجلة.","No recovery events recorded.")+'</div>';return}
+  const labels={
+    ticket_created:["إنشاء طلب دعم","Support ticket created"],support_opened:["فتح الدعم","Support opened"],recovery_started:["بدء استرجاع","Recovery started"],sms_sent:["إرسال كود","Code sent"],recovery_verified:["نجاح التحقق","Recovery verified"],login_name_viewed:["استرجاع اسم الدخول","Login name recovered"],password_changed:["تغيير كلمة السر","Password changed"],phone_linked:["ربط هاتف","Phone linked"],recovery_failed:["فشل الاسترجاع","Recovery failed"],phone_link_failed:["فشل ربط الهاتف","Phone link failed"],ticket_status:["تغيير حالة طلب","Ticket status changed"]
+  };
+  items.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0)).slice(0,150).forEach(x=>{
+    const row=document.createElement("div");row.className="support-audit-row";
+    const label=(labels[x.event]||[x.event,x.event])[currentUILanguage==="en"?1:0];
+    row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")} ${x.phoneLast4?"• ••••"+escapeHtml(x.phoneLast4):""}<div class="support-ticket-meta">${supportDate(x.createdAt,x.createdAtMs)} • ${escapeHtml(x.detail||"")}</div>`;
+    host.appendChild(row);
+  });
+}
+function updateSupportBadge(){
+  const badge=document.getElementById("supportCenterBadge");if(!badge)return;
+  badge.textContent=String(Math.min(99,supportOpenTicketCount));
+  badge.classList.toggle("hidden",supportOpenTicketCount<1);
+}
+function clearSupportRealtime(){
+  if(supportCenterRefreshTimer){clearInterval(supportCenterRefreshTimer);supportCenterRefreshTimer=null}
+}
+async function refreshSupportCenter(){
+  if(!isSuperAdminProfile())return;
+  try{
+    const result=await getSupportCenterCall({});
+    const tickets=Array.isArray(result.data?.tickets)?result.data.tickets:[];
+    const audit=Array.isArray(result.data?.audit)?result.data.audit:[];
+    supportOpenTicketCount=tickets.filter(x=>x.status!=="resolved").length;
+    updateSupportBadge();
+    renderSupportTickets(tickets);
+    renderSupportAudit(audit);
+    setSupportStatus("supportCenterStatus","");
+  }catch(err){
+    console.error("support center load",err);
+    setSupportStatus("supportCenterStatus",supportLang("تعذر تحميل مركز الدعم.","Could not load Support Center."),"bad");
+  }
+}
+function startSupportCenterRealtime(){
+  if(!isSuperAdminProfile())return;
+  refreshSupportCenter();
+  if(!supportCenterRefreshTimer)supportCenterRefreshTimer=setInterval(refreshSupportCenter,12000);
+}
+function openSupportCenter(){
+  if(!isSuperAdminProfile())return;
+  startSupportCenterRealtime();
+  openLayer("supportCenterLayer");
+  if(location.hash!=="#support-center")history.replaceState(null,"","#support-center");
+}
+function closeSupportCenter(){
+  closeLayer("supportCenterLayer");
+  if(location.hash==="#support-center")history.replaceState(null,"",location.pathname+location.search);
+}
+document.getElementById("authSupportBtn")?.addEventListener("click",()=>openSupportRequest("unknown"));
+document.getElementById("studentSupportBtn")?.addEventListener("click",()=>openSupportRequest("student"));
+document.getElementById("teacherSupportBtn")?.addEventListener("click",()=>openSupportRequest("teacher"));
+document.getElementById("authRecoveryBtn")?.addEventListener("click",openAccountRecovery);
+document.getElementById("studentRecoveryBtn")?.addEventListener("click",openAccountRecovery);
+document.getElementById("teacherRecoveryBtn")?.addEventListener("click",openAccountRecovery);
+document.querySelectorAll("#supportTypeOptions [data-support-type]").forEach(b=>b.addEventListener("click",()=>selectSupportType(b.dataset.supportType)));
+document.getElementById("submitSupportRequest")?.addEventListener("click",submitSupportRequest);
+document.getElementById("supportOpenRecovery")?.addEventListener("click",openAccountRecovery);
+document.getElementById("closeSupportRequest")?.addEventListener("click",()=>closeLayer("supportRequestLayer"));
+document.getElementById("closePhoneSetup")?.addEventListener("click",()=>{sessionStorage.setItem("classora_phone_prompt_later","1");closeLayer("phoneSetupLayer");resetVerifier("setup")});
+document.getElementById("phoneSetupLater")?.addEventListener("click",()=>{sessionStorage.setItem("classora_phone_prompt_later","1");closeLayer("phoneSetupLayer");resetVerifier("setup")});
+document.getElementById("sendPhoneSetupCode")?.addEventListener("click",sendPhoneSetupCode);
+document.getElementById("verifyPhoneSetupCode")?.addEventListener("click",verifyPhoneSetupCode);
+document.getElementById("phoneSetupBack")?.addEventListener("click",()=>{document.getElementById("phoneSetupCodeStep").classList.remove("active");document.getElementById("phoneSetupNumberStep").classList.add("active");resetVerifier("setup")});
+document.getElementById("closeAccountRecovery")?.addEventListener("click",async()=>{
+  closeLayer("accountRecoveryLayer");resetVerifier("recovery");
+  if(classoraPhoneRecoveryActive){
+    classoraPhoneRecoveryActive=false;
+    try{await signOut(auth)}catch{}
+    recoveredProfile=null;
+  }
+});
+document.getElementById("sendRecoveryCode")?.addEventListener("click",sendRecoveryCode);
+document.getElementById("verifyRecoveryCode")?.addEventListener("click",verifyRecoveryCode);
+document.getElementById("recoveryBack")?.addEventListener("click",()=>{document.getElementById("recoveryCodeStep").classList.remove("active");document.getElementById("recoveryNumberStep").classList.add("active");resetVerifier("recovery")});
+document.getElementById("saveRecoveredPassword")?.addEventListener("click",saveRecoveredPassword);
+document.getElementById("continueRecoveredAccount")?.addEventListener("click",async()=>{
+  closeLayer("accountRecoveryLayer");
+  classoraPhoneRecoveryActive=false;
+  if(auth.currentUser)await resolveCurrentUser(auth.currentUser);
+});
+document.getElementById("supportCenterBtn")?.addEventListener("click",openSupportCenter);
+document.getElementById("closeSupportCenter")?.addEventListener("click",closeSupportCenter);
+document.querySelectorAll("[data-support-tab]").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll("[data-support-tab]").forEach(x=>x.classList.toggle("active",x===btn));
+  document.getElementById("supportTicketsView").classList.toggle("hidden",btn.dataset.supportTab!=="tickets");
+  document.getElementById("supportAuditView").classList.toggle("hidden",btn.dataset.supportTab!=="audit");
+}));
 
 /* -------------------- V58 EMBEDDED SUBJECT PAGE ENHANCEMENT -------------------- */
 const periodicTableFrame=document.getElementById("periodicTableFrame");

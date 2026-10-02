@@ -1,5 +1,7 @@
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
+const crypto = require("crypto");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
 const { getMessaging } = require("firebase-admin/messaging");
@@ -12,6 +14,83 @@ const messaging = getMessaging();
 const APP_URL = "https://bassamsamijaber-maker.github.io/pythagorasi-3d/";
 const ICON_URL = APP_URL + "icons/classora-192.png";
 const BADGE_URL = APP_URL + "icons/favicon-64.png";
+
+const SUPER_ADMIN_PROFILE_ID = "3228667330";
+const SUPPORT_TYPES = new Set(["login","forgot-name","forgot-password","class","exam","competition","technical","other"]);
+const SUPPORT_ROLES = new Set(["student","teacher","unknown"]);
+const SUPPORT_EVENTS = new Set([
+  "support_opened","ticket_created","recovery_started","sms_sent","recovery_verified",
+  "login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"
+]);
+
+function cleanSupportText(value, max = 500) {
+  return String(value || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+async function superAdminUid() {
+  const snap = await db.collection("profileIds").doc(SUPER_ADMIN_PROFILE_ID).get();
+  return snap.exists ? (snap.data()?.uid || "") : "";
+}
+
+function supportTypeLabel(type) {
+  const map = {
+    "login":"مشكلة تسجيل دخول",
+    "forgot-name":"نسي اسم الدخول",
+    "forgot-password":"نسي كلمة السر",
+    "class":"مشكلة صف",
+    "exam":"مشكلة امتحان",
+    "competition":"مشكلة مسابقة",
+    "technical":"مشكلة تقنية",
+    "other":"طلب دعم"
+  };
+  return map[type] || "طلب دعم";
+}
+
+async function pushSupportEvent(title, body, eventKey) {
+  const uid = await superAdminUid();
+  if (!uid) return;
+  await sendToUsers([uid], {
+    type: "support",
+    eventKey,
+    title,
+    body,
+    url: APP_URL + "#support-center"
+  });
+}
+
+function supportRateKey(request) {
+  const forwarded = String(request.rawRequest?.headers?.["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = forwarded || String(request.rawRequest?.ip || "unknown");
+  return crypto.createHash("sha256").update("classora-support-v1|" + ip).digest("hex").slice(0, 32);
+}
+
+async function enforceSupportRateLimit(request) {
+  const key = supportRateKey(request);
+  const ref = db.collection("_supportRate").doc(key);
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const last = snap.exists ? Number(snap.data()?.lastAtMs || 0) : 0;
+    if (last && now - last < 45000) throw new HttpsError("resource-exhausted", "wait-before-sending-again");
+    tx.set(ref, { lastAtMs: now, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+  });
+}
+
+async function requireSuperAdmin(request) {
+  const uid = request.auth?.uid || "";
+  if (!uid) throw new HttpsError("unauthenticated", "sign-in-required");
+  const adminUid = await superAdminUid();
+  if (!adminUid || adminUid !== uid) throw new HttpsError("permission-denied", "admin-only");
+  return uid;
+}
+
+function serializeSupportDoc(snap) {
+  const data = snap.data() || {};
+  const createdAt = data.createdAt?.toMillis ? data.createdAt.toMillis() : null;
+  const updatedAt = data.updatedAt?.toMillis ? data.updatedAt.toMillis() : null;
+  return { id: snap.id, ...data, createdAtMs: createdAt, updatedAtMs: updatedAt, createdAt: null, updatedAt: null };
+}
+
 
 function chunks(items, size = 500) {
   const out = [];
@@ -242,3 +321,155 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
     });
   }
 );
+
+
+exports.createSupportTicket = onCall({ cors: true }, async (request) => {
+  if (!request.auth?.uid) await enforceSupportRateLimit(request);
+  const data = request.data || {};
+  const type = SUPPORT_TYPES.has(data.type) ? data.type : "other";
+  const role = SUPPORT_ROLES.has(data.role) ? data.role : "unknown";
+  const name = cleanSupportText(data.name, 80);
+  const accountHint = cleanSupportText(data.accountHint, 100);
+  const message = cleanSupportText(data.message, 1200);
+  let profileId = "";
+  let phoneLast4 = "";
+  let serverName = name;
+  let serverRole = role;
+  if (request.auth?.uid) {
+    const userSnap = await db.collection("users").doc(request.auth.uid).get();
+    if (userSnap.exists) {
+      const profile = userSnap.data() || {};
+      profileId = /^\d{10}$/.test(String(profile.profileId || "")) ? String(profile.profileId) : "";
+      phoneLast4 = /^\d{4}$/.test(String(profile.phoneLast4 || "")) ? String(profile.phoneLast4) : "";
+      serverName = cleanSupportText(profile.displayName || name, 80);
+      serverRole = profile.role === "teacher" ? "teacher" : profile.role === "student" ? "student" : role;
+    }
+  }
+
+  if (serverName.length < 2) throw new HttpsError("invalid-argument", "name-required");
+  if (message.length < 3) throw new HttpsError("invalid-argument", "message-required");
+
+  const ref = await db.collection("supportTickets").add({
+    type,
+    role: serverRole,
+    name: serverName,
+    accountHint,
+    message,
+    profileId,
+    phoneLast4,
+    userUid: request.auth?.uid || null,
+    status: "open",
+    source: request.auth?.uid ? "signed-in" : "login",
+    createdAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp()
+  });
+
+  await db.collection("supportAudit").add({
+    event: "ticket_created",
+    ticketId: ref.id,
+    userUid: request.auth?.uid || null,
+    profileId,
+    phoneLast4,
+    detail: supportTypeLabel(type),
+    createdAt: FieldValue.serverTimestamp()
+  });
+
+  await pushSupportEvent(
+    "🎧 طلب دعم جديد",
+    serverName + " • " + supportTypeLabel(type),
+    "support:" + ref.id
+  );
+
+  return { ok: true, ticketId: ref.id };
+});
+
+exports.recordSupportEvent = onCall({ cors: true }, async (request) => {
+  const data = request.data || {};
+  const event = SUPPORT_EVENTS.has(data.event) ? data.event : "";
+  if (!event) throw new HttpsError("invalid-argument", "invalid-event");
+
+  let profileId = "";
+  let phoneLast4 = "";
+  if (request.auth?.uid) {
+    const userSnap = await db.collection("users").doc(request.auth.uid).get();
+    if (userSnap.exists) {
+      const profile = userSnap.data() || {};
+      profileId = /^\d{10}$/.test(String(profile.profileId || "")) ? String(profile.profileId) : "";
+      phoneLast4 = /^\d{4}$/.test(String(profile.phoneLast4 || "")) ? String(profile.phoneLast4) : "";
+    }
+  }
+  const detail = cleanSupportText(data.detail, 180);
+
+  const ref = await db.collection("supportAudit").add({
+    event,
+    userUid: request.auth?.uid || null,
+    profileId,
+    phoneLast4,
+    detail,
+    createdAt: FieldValue.serverTimestamp()
+  });
+
+  const pushable = new Set(["recovery_verified","login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"]);
+  if (request.auth?.uid && pushable.has(event)) {
+    const labels = {
+      recovery_verified:"تم التحقق من استرجاع حساب",
+      login_name_viewed:"تم استرجاع اسم دخول",
+      password_changed:"تم تغيير كلمة سر بالهاتف",
+      phone_linked:"تم ربط رقم هاتف",
+      recovery_failed:"فشل استرجاع حساب",
+      phone_link_failed:"فشل ربط رقم هاتف"
+    };
+    await pushSupportEvent(
+      "🔐 " + (labels[event] || "حدث أمان"),
+      (profileId ? "Profile ID " + profileId : "مستخدم") + (phoneLast4 ? " • ••••" + phoneLast4 : ""),
+      "support-event:" + ref.id
+    );
+  }
+
+  return { ok: true };
+});
+
+
+exports.getSupportCenter = onCall({ cors: true }, async (request) => {
+  await requireSuperAdmin(request);
+
+  const [ticketsSnap, auditSnap] = await Promise.all([
+    db.collection("supportTickets").orderBy("createdAt", "desc").limit(200).get(),
+    db.collection("supportAudit").orderBy("createdAt", "desc").limit(200).get()
+  ]);
+
+  return {
+    tickets: ticketsSnap.docs.map(serializeSupportDoc),
+    audit: auditSnap.docs.map(serializeSupportDoc)
+  };
+});
+
+exports.updateSupportTicket = onCall({ cors: true }, async (request) => {
+  const adminUid = await requireSuperAdmin(request);
+  const ticketId = String(request.data?.ticketId || "").trim();
+  const status = String(request.data?.status || "").trim();
+  if (!/^[A-Za-z0-9_-]{10,80}$/.test(ticketId)) throw new HttpsError("invalid-argument", "bad-ticket-id");
+  if (!new Set(["open","working","resolved"]).has(status)) throw new HttpsError("invalid-argument", "bad-status");
+
+  const ref = db.collection("supportTickets").doc(ticketId);
+  const snap = await ref.get();
+  if (!snap.exists) throw new HttpsError("not-found", "ticket-not-found");
+
+  await ref.update({
+    status,
+    handledBy: adminUid,
+    updatedAt: FieldValue.serverTimestamp()
+  });
+
+  await db.collection("supportAudit").add({
+    event: "ticket_status",
+    ticketId,
+    userUid: adminUid,
+    profileId: SUPER_ADMIN_PROFILE_ID,
+    phoneLast4: "",
+    detail: status,
+    createdAt: FieldValue.serverTimestamp()
+  });
+
+  return { ok: true };
+});
