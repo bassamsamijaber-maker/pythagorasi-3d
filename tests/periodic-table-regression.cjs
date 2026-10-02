@@ -32,6 +32,9 @@ assert(js.includes('class="el-thumb"'),"element cards must include generated art
 assert(js.includes('classora_periodic_favorites'),"favorite persistence missing");
 assert(js.includes('function animationType(e)'),"per-element animation mapping missing");
 assert(js.includes('visualCache'),"generated element artwork cache missing");
+assert(js.includes('thumbnailCache'),"lightweight thumbnail cache missing");
+assert(js.includes('src="${thumbnailVisual(e)}"'),"table cards must use lightweight thumbnails");
+assert(!js.includes('$("#backBtn").onclick=()=>location.href="../"'),"back button must not force a full Classora reload");
 assert(sw.includes("./chemistry/periodic-table.html"),"periodic table must be cached");
 assert(sw.includes("cache.put(event.request,copy)"),"navigation cache must keep page identity");
 
