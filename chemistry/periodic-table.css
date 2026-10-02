@@ -19,10 +19,11 @@ main{width:min(1520px,94vw);margin:auto;padding-bottom:80px}.hero{min-height:360
 html[dir="rtl"] .el-thumb{right:auto;left:6px}
 .favorite-indicator{position:absolute;z-index:2;right:5px;bottom:4px;font-size:11px;color:#5a4410;text-shadow:0 1px 0 #fff8;opacity:.9}
 html[dir="rtl"] .favorite-indicator{right:auto;left:5px}
-.element-card.anim-float .el-thumb{animation:thumbFloat calc(2.8s + var(--motion)*.13s) ease-in-out infinite;animation-delay:calc(var(--i)*-18ms)}
-.element-card.anim-pulse .el-thumb{animation:thumbPulse calc(2.2s + var(--motion)*.1s) ease-in-out infinite;animation-delay:calc(var(--i)*-16ms)}
-.element-card.anim-orbit .el-thumb{animation:thumbOrbit calc(5.5s + var(--motion)*.16s) linear infinite;animation-delay:calc(var(--i)*-20ms)}
-.element-card.anim-shimmer .el-thumb{animation:thumbShimmer calc(3s + var(--motion)*.12s) ease-in-out infinite;animation-delay:calc(var(--i)*-15ms)}
+.element-card.anim-float:hover .el-thumb,.element-card.anim-float:focus-visible .el-thumb{animation:thumbFloat calc(2.8s + var(--motion)*.13s) ease-in-out infinite}
+.element-card.anim-pulse:hover .el-thumb,.element-card.anim-pulse:focus-visible .el-thumb{animation:thumbPulse calc(2.2s + var(--motion)*.1s) ease-in-out infinite}
+.element-card.anim-orbit:hover .el-thumb,.element-card.anim-orbit:focus-visible .el-thumb{animation:thumbOrbit calc(5.5s + var(--motion)*.16s) linear infinite}
+.element-card.anim-shimmer:hover .el-thumb,.element-card.anim-shimmer:focus-visible .el-thumb{animation:thumbShimmer calc(3s + var(--motion)*.12s) ease-in-out infinite}
+@media(hover:none){.element-card .el-thumb{animation:none!important}}
 @keyframes thumbFloat{50%{transform:translateY(-4px) rotate(2deg);filter:brightness(1.12)}}
 @keyframes thumbPulse{50%{transform:scale(1.12);filter:drop-shadow(0 0 7px var(--element)) brightness(1.12)}}
 @keyframes thumbOrbit{50%{transform:rotate(180deg) scale(.94)}to{transform:rotate(360deg)}}
