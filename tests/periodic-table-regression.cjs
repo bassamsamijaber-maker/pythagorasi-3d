@@ -24,6 +24,14 @@ assert(html.includes('id="elementModal"'),"element details modal missing");
 assert(html.includes('id="compareBtn"'),"comparison tool missing");
 assert(html.includes('id="combineBtn"'),"combination tool missing");
 assert(html.includes('id="quizView"'),"quiz mode missing");
+assert(!html.includes('id="langEn"')&&!html.includes('id="langAr"'),"periodic page must use Classora settings language only");
+assert(html.includes('id="elementAnimationBtn"'),"element animation control missing");
+assert(html.includes('id="favoriteElementBtn"'),"favorite element control missing");
+assert(html.includes('id="randomElementBtn"'),"random element button missing");
+assert(js.includes('class="el-thumb"'),"element cards must include generated artwork");
+assert(js.includes('classora_periodic_favorites'),"favorite persistence missing");
+assert(js.includes('function animationType(e)'),"per-element animation mapping missing");
+assert(js.includes('visualCache'),"generated element artwork cache missing");
 assert(sw.includes("./chemistry/periodic-table.html"),"periodic table must be cached");
 assert(sw.includes("cache.put(event.request,copy)"),"navigation cache must keep page identity");
 
