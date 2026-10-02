@@ -4496,6 +4496,46 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 .classora-subject-spinner{width:38px;height:38px;border:3px solid #ffffff22;border-top-color:#61d8ff;border-radius:50%;animation:classoraSubjectSpin .75s linear infinite}
 @keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
 
+
+/* ================= CLASSORA CHAT / SUPPORT / AUTH V60 ================= */
+.auth-step-kicker{display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:rgba(83,174,244,.08);border:1px solid rgba(83,174,244,.15);color:#9dd7ff;font-size:9px;font-weight:1000}
+.student-class-first h3{margin:3px 0 5px}.auth-step-sub{margin-bottom:10px!important}
+.auth-inline-status{min-height:18px;margin-top:7px;color:#8fc9ea;font-size:10px}
+.teacher-auth-tabs,.student-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.teacher-auth-tabs button,.student-auth-tabs button{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);color:inherit;border-radius:11px;padding:9px;font-weight:900;cursor:pointer}
+.teacher-auth-tabs button.active,.student-auth-tabs button.active{background:rgba(43,145,230,.12);border-color:rgba(73,177,255,.3);color:#b9e5ff}
+.auth-divider{display:flex;align-items:center;gap:8px;color:#6f879b;font-size:10px;margin:11px 0}.auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:rgba(255,255,255,.07)}
+.auth-support-link{width:100%;margin-top:11px;padding:9px;border-radius:11px;border:1px solid rgba(99,180,235,.11);background:rgba(99,180,235,.035);color:#9dcbea;font-weight:900;cursor:pointer}
+#lobbyChatBtn span,#lobbySupportBtn span{font-size:9px}
+.classora-chat-box{width:min(1050px,97vw)!important;height:min(760px,92dvh);overflow:hidden!important}
+.classora-chat-layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:10px;height:calc(100% - 64px);min-height:500px}
+.chat-contacts-pane,.chat-thread-pane{min-width:0;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.018);overflow:hidden}
+.chat-contacts-pane{display:flex;flex-direction:column;padding:10px;overflow-y:auto}
+.chat-search-wrap{position:sticky;top:0;z-index:2;background:#0c1827;padding-bottom:8px}.chat-search-wrap input{width:100%}
+.chat-contact-section-title{margin:9px 4px 6px;color:#7993a8;font-size:9px;font-weight:1000;text-transform:uppercase}
+.chat-contact-list{display:grid;gap:6px}
+.chat-contact{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px;border:1px solid rgba(255,255,255,.055);border-radius:12px;background:rgba(255,255,255,.02);cursor:pointer;color:inherit;text-align:start}
+.chat-contact:hover{border-color:rgba(84,176,239,.22);background:rgba(65,153,220,.05)}
+.chat-contact-avatar{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#2b87d9,#7555cb);background-size:cover;background-position:center;display:grid;place-items:center;font-weight:1000}
+.chat-contact b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chat-contact small{display:block;color:#7890a4;font-size:9px;margin-top:2px}
+.chat-thread-pane{position:relative;display:flex;flex-direction:column}.chat-thread-empty{height:100%;display:grid;place-items:center;color:#71899d;text-align:center;padding:20px}
+#chatThreadActive{height:100%;display:flex;flex-direction:column}.chat-thread-head{display:flex;justify-content:space-between;gap:9px;align-items:center;padding:11px;border-bottom:1px solid rgba(255,255,255,.06)}
+.chat-thread-head b{display:block}.chat-thread-head small{display:block;color:#7d96aa;margin-top:2px}
+.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:7px;-webkit-overflow-scrolling:touch}
+.chat-bubble{max-width:min(78%,520px);padding:9px 11px;border-radius:14px;background:#132438;border:1px solid rgba(255,255,255,.055);font-size:12px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.chat-bubble.mine{align-self:flex-end;background:linear-gradient(135deg,#137bc9,#6550cb);border-color:transparent;color:white}.chat-bubble.theirs{align-self:flex-start}
+.chat-bubble time{display:block;margin-top:4px;font-size:8px;opacity:.6}
+.chat-compose{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.06)}.chat-compose textarea{min-height:44px;max-height:120px;resize:none}.chat-compose button{min-width:90px}
+.support-modalbox{width:min(680px,96vw)!important}.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.support-grid label{display:grid;gap:5px}.support-wide{grid-column:1/-1}.support-grid textarea{min-height:120px}.support-actions{display:flex;gap:8px;margin-top:11px}.support-actions>*{flex:1}
+.support-ticket{padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.025);display:grid;gap:7px}.support-ticket-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.support-ticket-meta{font-size:9px;color:#7892a7}.support-proof-ok{color:#7ee1b5;font-weight:900}.support-proof-no{color:#ffb28d;font-weight:900}.support-ticket-actions{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:760px){
+  .classora-chat-box{width:100vw!important;max-width:100vw!important;height:100dvh;max-height:100dvh!important;border-radius:0!important}
+  .classora-chat-layout{grid-template-columns:1fr;height:calc(100% - 55px);min-height:0}
+  .chat-contacts-pane{max-height:39dvh}.chat-thread-pane{min-height:48dvh}
+  .support-grid{grid-template-columns:1fr}.support-wide{grid-column:auto}
+  #lobbyChatBtn span,#lobbySupportBtn span{display:none}
+}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4537,39 +4577,60 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
     </div>
 
     <div class="auth-form" id="studentLoginForm">
-      <div class="student-auth-tabs">
-        <button type="button" class="active" id="studentModeLogin">دخول</button>
-        <button type="button" id="studentModeCreate">حساب جديد</button>
-      </div>
-
-      <label for="studentNameInput">الاسم</label>
-      <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
-
-      <label for="studentPasswordInput">كلمة السر</label>
-      <input id="studentPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="6 خانات أو أكثر">
-
-      <div id="studentConfirmWrap" class="hidden">
-        <label for="studentPasswordConfirm">تأكيد كلمة السر</label>
-        <input id="studentPasswordConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="اكتب كلمة السر مرة ثانية">
-      </div>
-
-      <div id="studentClassCodeWrap" class="hidden">
+      <div class="student-class-first" id="studentClassFirstStep">
+        <span class="auth-step-kicker">1 / 2</span>
+        <h3>🏫 كود الصف أولًا</h3>
+        <div class="auth-sub auth-step-sub">اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.</div>
         <label for="studentClassCodeInput">كود الصف</label>
-        <input id="studentClassCodeInput" maxlength="8" autocomplete="off" placeholder="الكود اللي أعطاك إياه المعلم">
+        <input id="studentClassCodeInput" maxlength="8" autocomplete="off" inputmode="text" placeholder="مثال: A7K92Q">
+        <button class="auth-primary" id="studentClassVerifyBtn" type="button">متابعة ←</button>
+        <div class="auth-inline-status" id="studentClassVerifiedNote"></div>
       </div>
-<div class="auth-form-actions">
-        <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
-        <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
+
+      <div id="studentCredentialsWrap" class="hidden">
+        <div class="student-auth-tabs">
+          <button type="button" class="active" id="studentModeLogin">دخول</button>
+          <button type="button" id="studentModeCreate">حساب جديد</button>
+        </div>
+
+        <span class="auth-step-kicker">2 / 2</span>
+        <label for="studentNameInput">الاسم</label>
+        <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
+
+        <label for="studentPasswordInput">كلمة السر</label>
+        <input id="studentPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="6 خانات أو أكثر">
+
+        <div id="studentConfirmWrap" class="hidden">
+          <label for="studentPasswordConfirm">تأكيد كلمة السر</label>
+          <input id="studentPasswordConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="اكتب كلمة السر مرة ثانية">
+        </div>
+
+        <div class="auth-form-actions">
+          <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
+          <button class="auth-back" id="studentChangeClassBtn" type="button">تغيير كود الصف</button>
+          <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
+        </div>
       </div>
     </div>
 
     <div class="auth-form" id="teacherLoginForm">
-      <button class="auth-google" id="teacherGoogleBtn" type="button">👨‍🏫 دخول المعلم</button>
+      <div class="teacher-auth-tabs">
+        <button type="button" class="active" id="teacherModeName">اسم + كلمة سر</button>
+        <button type="button" id="teacherModeEmail">إيميل + كلمة سر</button>
+      </div>
+      <label for="teacherIdentifierInput" id="teacherIdentifierLabel">اسم الدخول</label>
+      <input id="teacherIdentifierInput" maxlength="80" autocomplete="username" placeholder="اسم المعلم">
+      <label for="teacherPasswordInput">كلمة السر</label>
+      <input id="teacherPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="كلمة السر">
+      <button class="auth-primary" id="teacherPasswordLoginBtn" type="button">👨‍🏫 دخول المعلم</button>
+      <div class="auth-divider"><span>أو</span></div>
+      <button class="auth-google" id="teacherGoogleBtn" type="button">G&nbsp;&nbsp; دخول بحساب Google</button>
       <div class="auth-form-actions">
         <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
       </div>
     </div>
 
+    <button class="auth-support-link" id="authSupportBtn" type="button">🛟 تواصل مع الدعم</button>
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText"></div>
 </div>
@@ -4586,6 +4647,8 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
+        <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
+        <button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
@@ -4769,6 +4832,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <button data-admin-tab="people">👥 Students & Teachers</button>
       <button data-admin-tab="classes">🏫 Classes</button>
       <button data-admin-tab="send">🚀 Send / Assign</button>
+      <button data-admin-tab="support">🛟 Support</button>
       <button data-admin-tab="controls">🎛️ Control Center</button>
     </div>
 
@@ -4828,6 +4892,14 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <span id="adminPeopleCount">0 accounts</span>
       </div>
       <div class="admin-list" id="adminPeopleList"></div>
+    </div>
+
+    <div class="admin-view hidden" id="adminViewSupport">
+      <div class="admin-section-intro">
+        <div><b>🛟 مركز الدعم</b><span>طلبات نسيان كلمة السر، مشاكل الحساب، البلاغات والاقتراحات.</span></div>
+        <button class="exam-secondary" id="adminRefreshSupportBtn">↻ تحديث</button>
+      </div>
+      <div class="admin-list" id="adminSupportList"></div>
     </div>
 
     <div class="admin-view hidden" id="adminViewClasses">
@@ -5636,6 +5708,30 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
+      <section class="settings-card" id="securityPhraseSettingsCard">
+        <h3>🛡️ كلمة أمان الحساب</h3>
+        <div class="settings-note">اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.</div>
+        <input id="securityPhraseInput" type="password" minlength="4" maxlength="64" autocomplete="new-password" placeholder="كلمة الأمان">
+        <input id="securityPhraseConfirm" type="password" minlength="4" maxlength="64" autocomplete="new-password" placeholder="تأكيد كلمة الأمان">
+        <button class="exam-secondary" id="saveSecurityPhraseBtn">حفظ كلمة الأمان</button>
+        <div class="settings-note" id="securityPhraseState">غير مفعّلة بعد.</div>
+      </section>
+
+      <section class="settings-card hidden" id="teacherPasswordSettingsCard">
+        <h3>🔐 دخول المعلم بالاسم أو الإيميل</h3>
+        <div class="settings-note">فعّل كلمة سر لحساب المعلم، وبعدها بتقدر تدخل باسمك أو إيميلك بالإضافة إلى Google.</div>
+        <input id="teacherLoginNameSettings" maxlength="40" placeholder="اسم الدخول">
+        <input id="teacherNewPasswordSettings" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="كلمة سر من 6 خانات أو أكثر">
+        <button class="exam-secondary" id="enableTeacherPasswordBtn">تفعيل / تحديث دخول كلمة السر</button>
+      </section>
+
+      <section class="settings-card">
+        <h3>🛟 الدعم والمساعدة</h3>
+        <div class="settings-note">نسيت كلمة السر؟ مشكلة بالحساب؟ بلّغ عن خطأ أو عن مستخدم من هون.</div>
+        <button class="exam-secondary" id="settingsSupportBtn">فتح مركز الدعم</button>
+        <button class="exam-secondary" id="settingsShakeSupportBtn">📳 تفعيل هز الهاتف لفتح الدعم</button>
+      </section>
+
       <section class="settings-card notification-settings-card" id="notificationSettingsCard">
         <h3 id="notificationSettingsTitle">🔔 الإشعارات</h3>
         <div class="settings-note" id="notificationSettingsNote">فعّل إشعارات Classora للوظائف، الامتحانات، المسابقات ودخول الطلاب للصف.</div>
@@ -5663,6 +5759,84 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <button class="danger-action" id="deleteAccountBtn">🗑 حذف حسابي نهائيًا</button>
     </div>
     <div class="cloud-note" id="settingsStatus"></div>
+  </div>
+</div>
+
+<div class="modal" id="chatModal">
+  <div class="modalbox classora-chat-box">
+    <div class="modalhead">
+      <div>
+        <h2>💬 Classora Chat</h2>
+        <div class="subject-assistant-line">طلاب صفك، المعلمين، والبحث عن أشخاص خارج صفك.</div>
+      </div>
+      <button class="close" id="closeChatModal">×</button>
+    </div>
+    <div class="classora-chat-layout">
+      <aside class="chat-contacts-pane">
+        <div class="chat-search-wrap">
+          <input id="chatPeopleSearch" maxlength="40" placeholder="ابحث عن طالب أو معلم...">
+        </div>
+        <div class="chat-contact-section-title">👥 أشخاص من صفوفك</div>
+        <div id="chatClassPeople" class="chat-contact-list"></div>
+        <div class="chat-contact-section-title">🔎 نتائج البحث</div>
+        <div id="chatSearchResults" class="chat-contact-list"></div>
+      </aside>
+      <section class="chat-thread-pane">
+        <div class="chat-thread-empty" id="chatThreadEmpty">اختار شخص وابدأ المحادثة.</div>
+        <div class="hidden" id="chatThreadActive">
+          <div class="chat-thread-head">
+            <div>
+              <b id="chatThreadName">—</b>
+              <small id="chatThreadRole">—</small>
+            </div>
+            <button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
+          </div>
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-compose">
+            <textarea id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
+            <button class="apply" id="chatSendBtn">إرسال</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="supportModal">
+  <div class="modalbox support-modalbox">
+    <div class="modalhead">
+      <div>
+        <h2>🛟 مركز دعم Classora</h2>
+        <div class="subject-assistant-line">اختر نوع المشكلة وابعت طلب واضح للإدارة.</div>
+      </div>
+      <button class="close" id="closeSupportModal">×</button>
+    </div>
+    <div class="support-grid">
+      <label>نوع الطلب
+        <select id="supportType">
+          <option value="forgot_password">نسيت كلمة السر</option>
+          <option value="account_access">مشكلة بالدخول للحساب</option>
+          <option value="bug">مشكلة أو خطأ بالموقع</option>
+          <option value="report_user">الإبلاغ عن مستخدم</option>
+          <option value="suggestion">اقتراح</option>
+          <option value="other">شيء آخر</option>
+        </select>
+      </label>
+      <label>الحساب / اسم الدخول
+        <input id="supportAccountIdentifier" maxlength="80" placeholder="اسم الدخول أو الإيميل">
+      </label>
+      <label class="support-wide">كلمة الأمان — إذا عندك
+        <input id="supportSecurityPhrase" type="password" maxlength="64" autocomplete="off" placeholder="بتساعد الإدارة تتأكد إن الحساب إلك">
+      </label>
+      <label class="support-wide">اشرح المشكلة
+        <textarea id="supportMessage" maxlength="1500" placeholder="اكتب شو صار بالتفصيل..."></textarea>
+      </label>
+    </div>
+    <div class="support-actions">
+      <button class="apply" id="submitSupportBtn">إرسال الطلب</button>
+      <button class="exam-secondary" id="supportShakeToggleBtn">📳 هز الهاتف للدعم</button>
+    </div>
+    <div class="cloud-note" id="supportStatus"></div>
   </div>
 </div>
 
