@@ -1,4 +1,5 @@
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
@@ -12,6 +13,50 @@ const messaging = getMessaging();
 const APP_URL = "https://bassamsamijaber-maker.github.io/pythagorasi-3d/";
 const ICON_URL = APP_URL + "icons/classora-192.png";
 const BADGE_URL = APP_URL + "icons/favicon-64.png";
+
+const SUPER_ADMIN_PROFILE_ID = "3228667330";
+const SUPPORT_TYPES = new Set(["login","forgot-name","forgot-password","class","exam","competition","technical","other"]);
+const SUPPORT_ROLES = new Set(["student","teacher","unknown"]);
+const SUPPORT_EVENTS = new Set([
+  "support_opened","ticket_created","recovery_started","sms_sent","recovery_verified",
+  "login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"
+]);
+
+function cleanSupportText(value, max = 500) {
+  return String(value || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+async function superAdminUid() {
+  const snap = await db.collection("profileIds").doc(SUPER_ADMIN_PROFILE_ID).get();
+  return snap.exists ? (snap.data()?.uid || "") : "";
+}
+
+function supportTypeLabel(type) {
+  const map = {
+    "login":"مشكلة تسجيل دخول",
+    "forgot-name":"نسي اسم الدخول",
+    "forgot-password":"نسي كلمة السر",
+    "class":"مشكلة صف",
+    "exam":"مشكلة امتحان",
+    "competition":"مشكلة مسابقة",
+    "technical":"مشكلة تقنية",
+    "other":"طلب دعم"
+  };
+  return map[type] || "طلب دعم";
+}
+
+async function pushSupportEvent(title, body, eventKey) {
+  const uid = await superAdminUid();
+  if (!uid) return;
+  await sendToUsers([uid], {
+    type: "support",
+    eventKey,
+    title,
+    body,
+    url: APP_URL + "#support-center"
+  });
+}
+
 
 function chunks(items, size = 500) {
   const out = [];
@@ -242,3 +287,89 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
     });
   }
 );
+
+
+exports.createSupportTicket = onCall({ cors: true }, async (request) => {
+  const data = request.data || {};
+  const type = SUPPORT_TYPES.has(data.type) ? data.type : "other";
+  const role = SUPPORT_ROLES.has(data.role) ? data.role : "unknown";
+  const name = cleanSupportText(data.name, 80);
+  const accountHint = cleanSupportText(data.accountHint, 100);
+  const message = cleanSupportText(data.message, 1200);
+  const profileId = /^\d{10}$/.test(String(data.profileId || "")) ? String(data.profileId) : "";
+  const phoneLast4 = /^\d{4}$/.test(String(data.phoneLast4 || "")) ? String(data.phoneLast4) : "";
+
+  if (name.length < 2) throw new HttpsError("invalid-argument", "name-required");
+  if (message.length < 3) throw new HttpsError("invalid-argument", "message-required");
+
+  const ref = await db.collection("supportTickets").add({
+    type,
+    role,
+    name,
+    accountHint,
+    message,
+    profileId,
+    phoneLast4,
+    userUid: request.auth?.uid || null,
+    status: "open",
+    source: request.auth?.uid ? "signed-in" : "login",
+    createdAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp()
+  });
+
+  await db.collection("supportAudit").add({
+    event: "ticket_created",
+    ticketId: ref.id,
+    userUid: request.auth?.uid || null,
+    profileId,
+    phoneLast4,
+    detail: supportTypeLabel(type),
+    createdAt: FieldValue.serverTimestamp()
+  });
+
+  await pushSupportEvent(
+    "🎧 طلب دعم جديد",
+    name + " • " + supportTypeLabel(type),
+    "support:" + ref.id
+  );
+
+  return { ok: true, ticketId: ref.id };
+});
+
+exports.recordSupportEvent = onCall({ cors: true }, async (request) => {
+  const data = request.data || {};
+  const event = SUPPORT_EVENTS.has(data.event) ? data.event : "";
+  if (!event) throw new HttpsError("invalid-argument", "invalid-event");
+
+  const profileId = /^\d{10}$/.test(String(data.profileId || "")) ? String(data.profileId) : "";
+  const phoneLast4 = /^\d{4}$/.test(String(data.phoneLast4 || "")) ? String(data.phoneLast4) : "";
+  const detail = cleanSupportText(data.detail, 180);
+
+  const ref = await db.collection("supportAudit").add({
+    event,
+    userUid: request.auth?.uid || null,
+    profileId,
+    phoneLast4,
+    detail,
+    createdAt: FieldValue.serverTimestamp()
+  });
+
+  const pushable = new Set(["recovery_verified","login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"]);
+  if (pushable.has(event)) {
+    const labels = {
+      recovery_verified:"تم التحقق من استرجاع حساب",
+      login_name_viewed:"تم استرجاع اسم دخول",
+      password_changed:"تم تغيير كلمة سر بالهاتف",
+      phone_linked:"تم ربط رقم هاتف",
+      recovery_failed:"فشل استرجاع حساب",
+      phone_link_failed:"فشل ربط رقم هاتف"
+    };
+    await pushSupportEvent(
+      "🔐 " + (labels[event] || "حدث أمان"),
+      (profileId ? "Profile ID " + profileId : "مستخدم") + (phoneLast4 ? " • ••••" + phoneLast4 : ""),
+      "support-event:" + ref.id
+    );
+  }
+
+  return { ok: true };
+});
