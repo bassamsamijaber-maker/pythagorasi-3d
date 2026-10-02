@@ -1,6 +1,7 @@
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
+const crypto = require("crypto");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
 const { getMessaging } = require("firebase-admin/messaging");
@@ -54,6 +55,24 @@ async function pushSupportEvent(title, body, eventKey) {
     title,
     body,
     url: APP_URL + "#support-center"
+  });
+}
+
+function supportRateKey(request) {
+  const forwarded = String(request.rawRequest?.headers?.["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = forwarded || String(request.rawRequest?.ip || "unknown");
+  return crypto.createHash("sha256").update("classora-support-v1|" + ip).digest("hex").slice(0, 32);
+}
+
+async function enforceSupportRateLimit(request) {
+  const key = supportRateKey(request);
+  const ref = db.collection("_supportRate").doc(key);
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const last = snap.exists ? Number(snap.data()?.lastAtMs || 0) : 0;
+    if (last && now - last < 45000) throw new HttpsError("resource-exhausted", "wait-before-sending-again");
+    tx.set(ref, { lastAtMs: now, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
   });
 }
 
@@ -305,6 +324,7 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
 
 
 exports.createSupportTicket = onCall({ cors: true }, async (request) => {
+  if (!request.auth?.uid) await enforceSupportRateLimit(request);
   const data = request.data || {};
   const type = SUPPORT_TYPES.has(data.type) ? data.type : "other";
   const role = SUPPORT_ROLES.has(data.role) ? data.role : "unknown";
