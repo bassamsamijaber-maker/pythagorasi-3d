@@ -4496,6 +4496,33 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 .classora-subject-spinner{width:38px;height:38px;border:3px solid #ffffff22;border-top-color:#61d8ff;border-radius:50%;animation:classoraSubjectSpin .75s linear infinite}
 @keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
 
+
+/* ================= V63 SUPPORT / PHONE RECOVERY ================= */
+.auth-help-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.auth-help-btn{border:1px solid rgba(85,196,255,.18);background:rgba(51,159,225,.07);color:#dff6ff;border-radius:12px;padding:10px 12px;font-weight:850;cursor:pointer}
+.auth-help-btn:hover{border-color:rgba(85,196,255,.42);background:rgba(51,159,225,.12)}
+.auth-help-btn.recovery{border-color:rgba(255,205,94,.18);background:rgba(255,205,94,.06);color:#fff0bd}
+.support-center-btn{height:46px;border-radius:13px;padding:0 13px;border:1px solid rgba(75,212,161,.22);background:linear-gradient(135deg,rgba(54,194,145,.13),rgba(26,143,255,.09));color:#bcffe4;font-weight:950;cursor:pointer;display:flex;align-items:center;gap:7px;position:relative}
+.support-center-btn.hidden{display:none!important}.support-center-badge{min-width:19px;height:19px;padding:0 5px;display:grid;place-items:center;border-radius:999px;background:#ff5e71;color:#fff;font-size:10px;font-weight:1000}
+.support-center-badge.hidden{display:none!important}
+.support-layer{position:fixed;inset:0;z-index:230000;display:grid;place-items:center;padding:18px;background:rgba(2,8,14,.88);backdrop-filter:blur(16px)}
+.support-layer.hidden{display:none!important}
+.support-box{width:min(720px,96vw);max-height:92vh;overflow:auto;border-radius:24px;padding:22px;background:linear-gradient(145deg,#0d1c2b,#07111d);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 100px rgba(0,0,0,.56);position:relative}
+.support-box.wide{width:min(980px,97vw)}.support-close{position:absolute;top:13px;inset-inline-end:13px;width:39px;height:39px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0d1c2a;color:#fff;font-size:22px;cursor:pointer}
+.support-head{padding-inline-end:46px}.support-head h2{margin:0 0 5px;font-size:26px}.support-head p{margin:0;color:#91a8b9;line-height:1.6}
+.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.support-field{display:grid;gap:6px}.support-field.full{grid-column:1/-1}.support-field label{font-size:12px;color:#b8c9d5}.support-field input,.support-field select,.support-field textarea{width:100%;border:1px solid rgba(255,255,255,.11);background:#06111c;color:#eef8ff;border-radius:12px;padding:11px 12px;outline:none}.support-field textarea{min-height:120px;resize:vertical}.support-field input:focus,.support-field select:focus,.support-field textarea:focus{border-color:#2f9eff;box-shadow:0 0 0 3px rgba(47,158,255,.12)}
+.support-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.support-primary,.support-secondary,.support-danger{min-height:44px;border-radius:12px;padding:0 16px;font-weight:900;cursor:pointer}.support-primary{border:0;background:linear-gradient(90deg,#168dff,#47d8ff);color:#04131e}.support-secondary{border:1px solid rgba(255,255,255,.12);background:#102033;color:#eaf6ff}.support-danger{border:1px solid rgba(255,103,118,.22);background:rgba(255,81,101,.08);color:#ffbdc5}
+.support-status{min-height:22px;margin-top:10px;color:#96adbd;font-size:12px;line-height:1.6}.support-status.good{color:#69e6b2}.support-status.bad{color:#ff9ba7}
+.support-options{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:15px}.support-option{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.025);color:#f4fbff;border-radius:15px;padding:13px;text-align:start;cursor:pointer}.support-option:hover,.support-option.active{border-color:#3dafff;background:rgba(61,175,255,.08)}
+.phone-step{display:none}.phone-step.active{display:block}.phone-note{padding:10px 12px;border-radius:12px;background:rgba(78,169,255,.07);border:1px solid rgba(78,169,255,.12);color:#a9c7dc;font-size:12px;line-height:1.65;margin-top:12px}.phone-mask{font-weight:1000;color:#6ce8bb;letter-spacing:.06em}
+.recovery-result{display:none;margin-top:14px;padding:15px;border-radius:16px;border:1px solid rgba(87,218,170,.18);background:rgba(87,218,170,.07)}.recovery-result.show{display:block}.recovery-result b{font-size:18px}
+.support-list{display:grid;gap:10px;margin-top:14px}.support-ticket{padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025)}.support-ticket-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.support-ticket h4{margin:0 0 4px}.support-ticket-meta{font-size:11px;color:#829aae;line-height:1.6}.support-ticket-message{margin-top:9px;line-height:1.7;color:#dce9f2;white-space:pre-wrap}.support-ticket-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.support-ticket-actions button{min-height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:#102033;color:#eaf6ff;padding:0 10px;cursor:pointer}.support-ticket.open{border-color:rgba(54,194,145,.22)}.support-ticket.working{border-color:rgba(255,194,74,.22)}.support-ticket.resolved{opacity:.72}
+.support-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.support-tabs button{border:1px solid rgba(255,255,255,.1);background:#0d1b29;color:#dcecf7;border-radius:999px;padding:8px 12px;cursor:pointer}.support-tabs button.active{background:#168dff;color:#fff;border-color:#168dff}
+.support-audit-row{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px;line-height:1.6}.support-audit-row:last-child{border-bottom:0}
+#phoneRecaptcha,#recoveryRecaptcha{margin-top:10px;min-height:2px}
+body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.light .support-field input,.light .support-field select,.light .support-field textarea{background:#f7fbfd;color:#173047;border-color:#d6e3eb}.light .support-secondary,.light .support-ticket-actions button{background:#edf4f8;color:#24465d;border-color:#d6e3eb}
+@media(max-width:620px){.auth-help-strip,.support-grid,.support-options{grid-template-columns:1fr}.support-box{padding:18px}.support-center-btn span.label{display:none}}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4534,6 +4561,10 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
           <span>دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.</span>
         </button>
       </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="authSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">📱 نسيت الاسم أو كلمة السر؟</button>
+      </div>
     </div>
 
     <div class="auth-form" id="studentLoginForm">
@@ -4561,12 +4592,20 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
         <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
       </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="studentSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+      </div>
     </div>
 
     <div class="auth-form" id="teacherLoginForm">
       <button class="auth-google" id="teacherGoogleBtn" type="button">👨‍🏫 دخول المعلم</button>
       <div class="auth-form-actions">
         <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
+      </div>
+      <div class="auth-help-strip">
+        <button class="auth-help-btn" id="teacherSupportBtn" type="button">🎧 تواصل مع الدعم</button>
+        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">📱 استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4575,6 +4614,91 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 </div>
 </div>
 
+
+
+<div class="support-layer hidden" id="supportRequestLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close" id="closeSupportRequest" type="button">×</button>
+    <div class="support-head"><h2>🎧 تواصل مع الدعم</h2><p>اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.</p></div>
+    <div class="support-options" id="supportTypeOptions">
+      <button class="support-option active" data-support-type="login" type="button">🔐 مشكلة تسجيل دخول</button>
+      <button class="support-option" data-support-type="forgot-name" type="button">👤 نسيت اسم الدخول</button>
+      <button class="support-option" data-support-type="forgot-password" type="button">🔑 نسيت كلمة السر</button>
+      <button class="support-option" data-support-type="class" type="button">🏫 مشكلة بالصف</button>
+      <button class="support-option" data-support-type="exam" type="button">🎓 مشكلة بامتحان</button>
+      <button class="support-option" data-support-type="competition" type="button">🏆 مشكلة بمسابقة</button>
+      <button class="support-option" data-support-type="technical" type="button">🛠️ مشكلة تقنية</button>
+      <button class="support-option" data-support-type="other" type="button">💬 شيء آخر</button>
+    </div>
+    <div class="support-grid">
+      <div class="support-field"><label for="supportName">الاسم</label><input id="supportName" maxlength="80" placeholder="اكتب اسمك"></div>
+      <div class="support-field"><label for="supportAccountHint">اسم الدخول / Profile ID إن كنت تعرفه</label><input id="supportAccountHint" maxlength="100" placeholder="اختياري"></div>
+      <div class="support-field full"><label for="supportMessage">اشرح المشكلة</label><textarea id="supportMessage" maxlength="1200" placeholder="اكتب شو صار معك بالتفصيل..."></textarea></div>
+    </div>
+    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
+    <div class="support-actions">
+      <button class="support-primary" id="submitSupportRequest" type="button">📨 إرسال للدعم</button>
+      <button class="support-secondary" id="supportOpenRecovery" type="button">📱 استرجاع بالحساب بالهاتف</button>
+    </div>
+    <div class="support-status" id="supportRequestStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="phoneSetupLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close" id="closePhoneSetup" type="button">×</button>
+    <div class="support-head"><h2>📱 اربط رقم هاتفك</h2><p>رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.</p></div>
+    <div class="phone-step active" id="phoneSetupNumberStep">
+      <div class="support-field"><label for="phoneSetupNumber">رقم الهاتف</label><input id="phoneSetupNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+      <div class="phone-note">رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.</div>
+      <div id="phoneRecaptcha"></div>
+      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
+    </div>
+    <div class="phone-step" id="phoneSetupCodeStep">
+      <div class="support-field"><label for="phoneSetupCode">كود التحقق</label><input id="phoneSetupCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
+      <div class="support-actions"><button class="support-primary" id="verifyPhoneSetupCode" type="button">✓ تحقق واربط الرقم</button><button class="support-secondary" id="phoneSetupBack" type="button">رجوع</button></div>
+    </div>
+    <div class="support-status" id="phoneSetupStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="accountRecoveryLayer" aria-modal="true" role="dialog">
+  <div class="support-box">
+    <button class="support-close" id="closeAccountRecovery" type="button">×</button>
+    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.</p></div>
+    <div class="phone-step active" id="recoveryNumberStep">
+      <div class="support-field"><label for="recoveryPhoneNumber">رقم الهاتف المرتبط بالحساب</label><input id="recoveryPhoneNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+      <div class="support-field"><label for="recoveryIntent">شو بدك تسترجع؟</label><select id="recoveryIntent"><option value="name">اسم الدخول</option><option value="password">كلمة السر</option><option value="both">الاثنين</option></select></div>
+      <div class="phone-note">رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.</div>
+      <div id="recoveryRecaptcha"></div>
+      <div class="support-actions"><button class="support-primary" id="sendRecoveryCode" type="button">إرسال كود التحقق</button></div>
+    </div>
+    <div class="phone-step" id="recoveryCodeStep">
+      <div class="support-field"><label for="recoveryCode">كود التحقق</label><input id="recoveryCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
+      <div class="support-actions"><button class="support-primary" id="verifyRecoveryCode" type="button">✓ تحقق</button><button class="support-secondary" id="recoveryBack" type="button">رجوع</button></div>
+    </div>
+    <div class="phone-step" id="recoveryResultStep">
+      <div class="recovery-result show"><small>اسم الدخول</small><b id="recoveredLoginName">—</b><div class="support-ticket-meta" id="recoveredDisplayName"></div></div>
+      <div id="recoveryPasswordWrap" class="support-grid hidden">
+        <div class="support-field full"><label for="recoveryNewPassword">كلمة السر الجديدة</label><input id="recoveryNewPassword" type="password" minlength="6" maxlength="64" autocomplete="new-password"></div>
+        <div class="support-field full"><label for="recoveryNewPassword2">تأكيد كلمة السر الجديدة</label><input id="recoveryNewPassword2" type="password" minlength="6" maxlength="64" autocomplete="new-password"></div>
+      </div>
+      <div class="support-actions"><button class="support-primary hidden" id="saveRecoveredPassword" type="button">🔑 تغيير كلمة السر</button><button class="support-secondary" id="continueRecoveredAccount" type="button">متابعة بدون تغيير</button></div>
+    </div>
+    <div class="support-status" id="accountRecoveryStatus"></div>
+  </div>
+</div>
+
+<div class="support-layer hidden" id="supportCenterLayer" aria-modal="true" role="dialog">
+  <div class="support-box wide">
+    <button class="support-close" id="closeSupportCenter" type="button">×</button>
+    <div class="support-head"><h2>🎧 مركز الدعم</h2><p>كل طلبات الدعم وأحداث استرجاع الحساب المهمة بتظهر هون.</p></div>
+    <div class="support-tabs"><button class="active" data-support-tab="tickets" type="button">طلبات الدعم</button><button data-support-tab="audit" type="button">سجل الاسترجاع والأمان</button></div>
+    <div id="supportTicketsView"><div class="support-list" id="supportTicketsList"></div></div>
+    <div id="supportAuditView" class="hidden"><div class="support-list" id="supportAuditList"></div></div>
+    <div class="support-status" id="supportCenterStatus"></div>
+  </div>
+</div>
 
 <div class="platform-lobby" id="platformLobby">
   <div class="lobby-shell">
@@ -4586,6 +4710,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
+        <button class="support-center-btn hidden" id="supportCenterBtn" type="button"><span>🎧</span><span class="label">مركز الدعم</span><span class="support-center-badge hidden" id="supportCenterBadge">0</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
@@ -6376,6 +6501,7 @@ import {
   signInAnonymously, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
   reauthenticateWithCredential, EmailAuthProvider,
+  PhoneAuthProvider, RecaptchaVerifier, linkWithCredential, signInWithCredential,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -6386,6 +6512,9 @@ import {
 import {
   getMessaging, getToken, onMessage, isSupported as isMessagingSupported
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
+import {
+  getFunctions, httpsCallable
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
 
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
@@ -6401,6 +6530,9 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+const classoraFunctions = getFunctions(firebaseApp);
+const createSupportTicketCall = httpsCallable(classoraFunctions,"createSupportTicket");
+const recordSupportEventCall = httpsCallable(classoraFunctions,"recordSupportEvent");
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
