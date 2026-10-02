@@ -6600,9 +6600,18 @@ function showPlatformLobby(){
   document.getElementById("adminHybridBadge")?.classList.toggle("hidden",!hybridAdmin);
   const examSmall=document.querySelector("#lobbyExamBtn small");
   const compSmall=document.querySelector("#competitionBtn small");
-  if(examSmall)examSmall.textContent=hybridAdmin?"أنشئ امتحان أو ادخل كطالب بالكود":teacherLike?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود";
-  if(compSmall)compSmall.textContent=hybridAdmin?"أنشئ مسابقة أو ادخل كلاعب":teacherLike?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة";
+  if(examSmall){
+    examSmall.textContent=currentUILanguage==="en"
+      ?(hybridAdmin?"Create an exam or join as a student with a code":teacherLike?"Create an exam and one code for all students":"Join the teacher's exam with a code")
+      :(hybridAdmin?"أنشئ امتحان أو ادخل كطالب بالكود":teacherLike?"أنشئ امتحان وكود واحد لكل الطلاب":"ادخل امتحان المعلم بالكود");
+  }
+  if(compSmall){
+    compSmall.textContent=currentUILanguage==="en"
+      ?(hybridAdmin?"Create a competition or join as a player":teacherLike?"Create a room and competitions for your class":"Join the competition with the room code")
+      :(hybridAdmin?"أنشئ مسابقة أو ادخل كلاعب":teacherLike?"أنشئ غرفة ومسابقات لصفك":"ادخل المسابقة بكود الغرفة");
+  }
   updateAssistantLabels();
+  translateSubtree(document.getElementById("platformLobby"));
   setTimeout(refreshLobbySubjectVisibility,30);
   setTimeout(loadSiteUpdatesForCurrentUser,80);
   setTimeout(subscribeLobbyLiveCompetitions,120);
@@ -11084,6 +11093,18 @@ const uiExactTranslations=new Map([
   ["عند إنشاء الحساب لازم تدخل كود صف صحيح. بعدين بتقدر تنضم لصفوف إضافية من اللوبي.","A valid class code is required when creating an account. You can join more classes later."],
   ["حسابك يحفظ تقدمك وإعداداتك على أجهزتك.","Your account saves your progress and settings across devices."],
   ["تعذر تسجيل الدخول حاليًا. حاول لاحقًا.","Sign-in is currently unavailable. Please try again later."],
+  ["المختبر 3D","3D Lab"],
+  ["تحدّي فيثاغورس","Pythagoras Challenge"],
+  ["أسئلة تدريب","Practice Questions"],
+  ["معادلتان بمجهولين","Two-Variable Equations"],
+  ["امتحانات","Exams"],
+  ["مسابقة مباشرة","Live Competition"],
+  ["صفوفي","My Classes"],
+  ["ملفي","My Profile"],
+  ["أدوات المعلم","Teacher Tools"],
+  ["بنك أسئلة فيثاغورس","Pythagoras Question Bank"],
+  ["نتائج الامتحانات","Exam Results"],
+  ["مسابقاتي","My Competitions"],
   ["العجلة، الرمل، حساب الأضلاع والبرهان الحي","Wheel, sand, side calculations and live proof"],
   ["حل بسرعة واجمع نقاط","Solve quickly and collect points"],
   ["أسئلة متغيرة مع تصحيح مباشر","Changing questions with instant checking"],
