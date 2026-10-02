@@ -4497,7 +4497,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 @keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
 
 
-/* ================= V63 SUPPORT / PHONE RECOVERY ================= */
+/* ================= V64 SUPPORT / RECOVERY KEY ================= */
 .auth-help-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .auth-help-btn{border:1px solid rgba(85,196,255,.18);background:rgba(51,159,225,.07);color:#dff6ff;border-radius:12px;padding:10px 12px;font-weight:850;cursor:pointer}
 .auth-help-btn:hover{border-color:rgba(85,196,255,.42);background:rgba(51,159,225,.12)}
@@ -11878,8 +11878,8 @@ const uiExactTranslations=new Map([
 
 [
   ["🎧 تواصل مع الدعم","🎧 Contact Support"],
-  ["🗝️ نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
-  ["🗝️ استرجاع الحساب","📱 Recover Account"],
+  ["🗝️ نسيت الاسم أو كلمة السر؟","🗝️ Forgot name or password?"],
+  ["🗝️ استرجاع الحساب","🗝️ Recover Account"],
   ["مركز الدعم","Support Center"],
   ["🎧 مركز الدعم","🎧 Support Center"],
   ["اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.","Choose the issue type and describe what happened. Your request goes directly to Support."],
@@ -11893,30 +11893,32 @@ const uiExactTranslations=new Map([
   ["💬 شيء آخر","💬 Something Else"],
   ["اسم الدخول / Profile ID إن كنت تعرفه","Login name / Profile ID if known"],
   ["اشرح المشكلة","Describe the Problem"],
-  ["إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.","If you only forgot your login name or password and have a phone linked to the account, use Account Recovery instead of waiting for Support."],
+  ["إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك مفتاح استرداد، استخدم استرجاع الحساب بدل انتظار الدعم.","If you only forgot your login name or password and have a recovery key, use Account Recovery instead of waiting for Support."],
   ["📨 إرسال للدعم","📨 Send to Support"],
-  ["📱 استرجاع بالحساب بالهاتف","📱 Recover Account by Phone"],
-  ["📱 اربط رقم هاتفك","📱 Link Your Phone Number"],
-  ["رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.","Your phone helps protect your account and lets you recover your login name or password with an SMS code."],
-  ["رقم الهاتف","Phone Number"],
-  ["رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.","You'll receive an SMS verification code. Standard messaging rates may apply. Classora does not store the code or your password."],
-  ["إرسال الكود","Send Code"],
+  ["🗝️ استرجاع بمفتاح الحساب","🗝️ Recover with Account Key"],
+  ["🗝️ مفتاح استرداد الحساب","🗝️ Account Recovery Key"],
+  ["هذا المفتاح يثبت إن الحساب إلك إذا نسيت اسم الدخول أو كلمة السر. ما في رقم هاتف ولا SMS.","This key proves the account is yours if you forget your login name or password. No phone number or SMS is used."],
+  ["كلاسورا رح ينشئ مفتاح قوي إلك. خزّنه بمكان آمن أو خذ له صورة. المفتاح ما بنعرضه للأدمن وما بنقدر نرجعه إذا ضاع؛ بتقدر تعمل مفتاح جديد وأنت داخل حسابك.","Classora will create a strong key for you. Store it somewhere safe or save a picture of it. The key is never shown to admins and cannot be recovered if lost; you can create a new one while signed in."],
+  ["🗝️ إنشاء مفتاح الاسترداد","🗝️ Create Recovery Key"],
   ["ذكّرني لاحقًا","Remind Me Later"],
-  ["كود التحقق","Verification Code"],
-  ["✓ تحقق واربط الرقم","✓ Verify & Link Number"],
+  ["📋 نسخ المفتاح","📋 Copy Key"],
+  ["حفظت المفتاح بمكان آمن","I saved the key somewhere safe"],
+  ["✓ تم، حفظته","✓ Done, I Saved It"],
   ["🔐 استرجاع الحساب","🔐 Account Recovery"],
-  ["تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.","Verify with the phone linked to your account, then you can view your login name or change your password."],
-  ["رقم الهاتف المرتبط بالحساب","Phone Number Linked to the Account"],
+  ["اكتب مفتاح الاسترداد الخاص بحسابك. إذا كان صحيح، بتقدر تشوف اسم الدخول أو تدخل للحساب وتغيّر كلمة السر.","Enter your account recovery key. If it is correct, you can view your login name or enter the account and change the password."],
+  ["مفتاح الاسترداد","Recovery Key"],
   ["شو بدك تسترجع؟","What do you want to recover?"],
   ["اسم الدخول","Login Name"],
+  ["كلمة السر","Password"],
   ["الاثنين","Both"],
-  ["رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.","We'll send an SMS code to confirm the number is yours. We won't ask for your old password."],
-  ["إرسال كود التحقق","Send Verification Code"],
-  ["✓ تحقق","✓ Verify"],
+  ["مفتاح الاسترداد سري مثل كلمة السر. لا تبعته لأي شخص.","Your recovery key is secret like a password. Never send it to anyone."],
+  ["✓ تحقق من المفتاح","✓ Verify Recovery Key"],
   ["كلمة السر الجديدة","New Password"],
   ["تأكيد كلمة السر الجديدة","Confirm New Password"],
   ["🔑 تغيير كلمة السر","🔑 Change Password"],
   ["متابعة بدون تغيير","Continue Without Changes"],
+  ["مفتاح الاسترداد مش مفعّل بعد.","Recovery key is not enabled yet."],
+  ["إنشاء / تغيير المفتاح","Create / Change Key"],
   ["كل طلبات الدعم وأحداث استرجاع الحساب المهمة بتظهر هون.","All support requests and important account-recovery events appear here."],
   ["طلبات الدعم","Support Requests"],
   ["سجل الاسترجاع والأمان","Recovery & Security Log"],
