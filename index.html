@@ -4450,6 +4450,25 @@ body.classora-intro-active::before{display:none!important}
   .classora-intro,.classora-intro-word{transition:none!important}
 }
 
+/* V51 interaction and responsive navigation */
+#lobbySettingsBtn,#lobbyClassBtn{width:auto!important;min-width:100px!important;padding:0 12px!important;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px!important;white-space:nowrap;flex-shrink:0}
+.lobby-topbar{flex-wrap:wrap}
+.lobby-top-actions{max-width:100%}
+.lobby-logout-btn{min-width:110px;flex-shrink:0;white-space:nowrap}
+.lobby-profile-btn{min-width:100px;flex-shrink:0}
+.modalhead{gap:12px;align-items:center}
+.modalhead h2{min-width:0;overflow-wrap:anywhere}
+.modalhead .close{flex:0 0 44px;min-width:44px;min-height:44px;position:relative;z-index:25;touch-action:manipulation!important;animation:none!important;transform:none!important}
+.modalbox{max-height:calc(100dvh - 24px)!important}
+button{touch-action:manipulation}
+.btn-ripple{pointer-events:none}
+@media(max-width:700px){
+ #lobbySettingsBtn,#lobbyClassBtn{min-width:0!important;width:100%!important;padding:0 6px!important}
+ .modalhead{position:sticky!important;top:0!important;z-index:25!important}
+ .modalhead h2{font-size:20px!important}
+ .modal.open .modalbox{animation:none!important}
+ button.super-press,button.ui-pop{animation:none!important}
+}
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4538,8 +4557,8 @@ body.classora-intro-active::before{display:none!important}
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
-        <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات">⚙️</button>
-        <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي">🏫</button>
+        <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
+        <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي"><span aria-hidden="true">🏫</span> <span>صفوفي</span></button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
           <span id="lobbyProfileName">حسابي</span>
@@ -6329,7 +6348,7 @@ import {
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, setDoc, addDoc, collection, getDocs,
+  getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
   query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
   arrayUnion, arrayRemove
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
@@ -11492,7 +11511,7 @@ function getAudioCtx(){
   return audioCtx;
 }
 function tone(freq=440,duration=.07,volume=.035,type="sine",delay=0){
-  const ctx=getAudioCtx();if(!ctx)return;
+  let ctx;try{ctx=getAudioCtx()}catch{return}if(!ctx)return;
   const o=ctx.createOscillator(),g=ctx.createGain();
   o.type=type;o.frequency.value=freq;
   g.gain.setValueAtTime(.0001,ctx.currentTime+delay);
@@ -12445,6 +12464,7 @@ function initEquation3D(){
   const ro=new ResizeObserver(resize);ro.observe(host);
   const animate=()=>{
     equation3D.animationId=requestAnimationFrame(animate);
+    if(document.hidden||!document.getElementById("equationLabModal")?.classList.contains("open"))return;
     controls.autoRotate=!!equation3D.autoRotate;
     controls.autoRotateSpeed=.8;
     controls.update();
@@ -15964,8 +15984,18 @@ let liveTimerLastSecond=null;
 let liveLastAnswerByIndex={};
 let liveLastRenderedStatus="";
 const LIVE_QUESTION_SECONDS=20;
+let liveSubscriptionGeneration=0;
+let liveRecoveryHandle=null;
+let liveReconnectHandle=null;
+let liveAnswerPending=false;
+let liveHostActionPending=false;
+let liveRoomRevision="";
+
 
 function clearLiveSubscriptions(){
+  liveSubscriptionGeneration++;
+  clearInterval(liveRecoveryHandle);liveRecoveryHandle=null;
+  clearTimeout(liveReconnectHandle);liveReconnectHandle=null;
   liveUnsubs.forEach(fn=>{try{fn()}catch{}});
   liveUnsubs=[];
   if(liveCompetitionTimerHandle){clearInterval(liveCompetitionTimerHandle);liveCompetitionTimerHandle=null}
@@ -16061,16 +16091,17 @@ function numberOptions(correct,spread=1){
 }
 function pairText(x,y){return `(${x}, ${y})`}
 function pairOptions(x,y){
-  const rows=[[x,y],[x+1,y],[x,y+1],[y,x]].map(([a,b])=>pairText(a,b));
+  const rows=[[x,y],[x+1,y],[x,y+1],[x-1,y-1]].map(([a,b])=>pairText(a,b));
   return shuffle([...new Set(rows)]).slice(0,4);
 }
 function generatedPythagorasLiveQuestion(i=0){
   const triples=[[3,4,5],[5,12,13],[6,8,10],[7,24,25],[8,15,17],[9,12,15],[12,16,20]];
-  const [a,b,c]=triples[i%triples.length];
+  const scale=1+Math.floor(i/28);
+  const [a,b,c]=triples[i%triples.length].map(v=>v*scale);
   const mode=i%4;
   if(mode===0)return {topicKey:"pythagoras",questionKind:"hypotenuse",prompt:`a = ${a}, b = ${b}. كم يساوي c؟`,options:numberOptions(c),answer:String(c),points:1000};
   if(mode===1)return {topicKey:"pythagoras",questionKind:"leg",prompt:`a = ${a}, c = ${c}. كم يساوي b؟`,options:numberOptions(b),answer:String(b),points:1000};
-  if(mode===2)return {topicKey:"pythagoras",questionKind:"formula",prompt:"أي قانون صحيح للمثلث القائم؟",options:shuffle(["a² + b² = c²","a + b = c","a² − b² = c²","a × b = c"]),answer:"a² + b² = c²",points:1000};
+  if(mode===2)return {topicKey:"pythagoras",questionKind:"leg",prompt:`b = ${b}, c = ${c}. كم يساوي a؟`,options:numberOptions(a),answer:String(a),points:1000};
   return {topicKey:"pythagoras",questionKind:"hypotenuse",prompt:`مستطيل أبعاده ${a} و ${b}. كم طول القطر؟`,options:numberOptions(c),answer:String(c),points:1000};
 }
 function generatedEquationSystemLiveQuestion(i=0){
@@ -16089,13 +16120,17 @@ function generatedEquationSystemLiveQuestion(i=0){
 }
 function makeLiveQuestions(subject="mixed",count=10){
   const n=Math.max(3,Math.min(30,Number(count)||10));
-  const rows=[];
-  for(let i=0;i<n;i++){
-    if(subject==="equations2")rows.push(generatedEquationSystemLiveQuestion(i));
-    else if(subject==="pythagoras")rows.push(generatedPythagorasLiveQuestion(i));
-    else rows.push(i%2===0?generatedPythagorasLiveQuestion(i):generatedEquationSystemLiveQuestion(i));
+  const pool=[],seen=new Set();
+  for(let i=0;i<140;i++){
+    const candidates=subject==="equations2"?[generatedEquationSystemLiveQuestion(i)]
+      :subject==="pythagoras"?[generatedPythagorasLiveQuestion(i)]
+      :[generatedPythagorasLiveQuestion(i),generatedEquationSystemLiveQuestion(i)];
+    for(const q of candidates){
+      const key=normExam(q.prompt);
+      if(!seen.has(key)){seen.add(key);pool.push(q)}
+    }
   }
-  return shuffle(rows).map((q,i)=>({...q,index:i,typeLabel:competitionQuestionTypeLabel(q)}));
+  return shuffle(pool).slice(0,n).map((q,i)=>({...q,index:i,typeLabel:competitionQuestionTypeLabel(q)}));
 }
 async function createLiveCompetition(customQuestions=null,customTitle="مسابقة Classora",createOptions=null){
   if(!isTeacherLike() || !auth.currentUser){
@@ -16282,7 +16317,7 @@ function competitionFromBuilder(){
   clearCompBuilderMessage();
   const cards=[...document.querySelectorAll("#compBuilderQuestions .comp-builder-card")];
   if(!cards.length){compBuilderMessage("أضف سؤال واحد على الأقل.");return null}
-  const out=[];
+  const out=[],seenPrompts=new Set();
   for(let i=0;i<cards.length;i++){
     const card=cards[i],prompt=card.querySelector(".cb-prompt").value.trim();
     const options=[...card.querySelectorAll(".cb-option")].map(x=>x.value.trim());
@@ -16292,6 +16327,8 @@ function competitionFromBuilder(){
     if(options.some(x=>!x)){compBuilderMessage(`السؤال ${i+1}: اكتب الخيارات الأربعة.`);return null}
     if(new Set(options.map(normExam)).size!==4){compBuilderMessage(`السؤال ${i+1}: في خيارات مكررة.`);return null}
     if(!answer){compBuilderMessage(`السؤال ${i+1}: اختر الإجابة الصحيحة.`);return null}
+    if(seenPrompts.has(normExam(prompt))){compBuilderMessage(`السؤال ${i+1}: نص السؤال مكرر.`);return null}
+    seenPrompts.add(normExam(prompt));
     out.push({prompt,options,answer,points:1000,topicKey:"custom",questionKind:"custom",typeLabel:adminLang("✍️ سؤال مخصص","✍️ Custom Question")});
   }
   return out;
@@ -16369,17 +16406,54 @@ document.getElementById("compJoinCode").addEventListener("keydown",e=>{if(e.key=
 function subscribeCompetition(id,role){
   clearLiveSubscriptions();
   liveCompetitionId=id;liveCompetitionRole=role;
+  liveCompetitionData=null;livePlayers=[];liveAnsweredIndex=-1;
+  liveLastAnswerByIndex={};liveLastRenderedStatus="";liveRoomRevision="";
+  livePreviousRanks=new Map();
+  const generation=liveSubscriptionGeneration;
+  const active=()=>generation===liveSubscriptionGeneration;
   const roomRef=doc(db,"competitions",id);
-  liveUnsubs.push(onSnapshot(roomRef,snap=>{
-    if(!snap.exists())return;
-    liveCompetitionData={id:snap.id,...snap.data()};
-    renderLiveRoom();
-  }));
+  const accept=snap=>{
+    if(!active()||snap.metadata?.hasPendingWrites)return;
+    if(!snap.exists()){
+      clearLiveSubscriptions();showCompetitionView("competitionHome");
+      showToast(adminLang("هذه المسابقة لم تعد متاحة.","This competition is no longer available."));return;
+    }
+    const room={id:snap.id,...snap.data()};
+    // A delayed recovery request must not roll back a newer realtime snapshot.
+    const previous=liveCompetitionData;
+    const phase={lobby:0,question:1,grading:2,result:3,finished:4};
+    if(previous&&(Number(room.currentIndex)<Number(previous.currentIndex)||
+       (room.currentIndex===previous.currentIndex&&phase[room.status]<phase[previous.status])))return;
+    const revision=JSON.stringify(room);
+    liveCompetitionData=room;
+    if(revision!==liveRoomRevision){liveRoomRevision=revision;renderLiveRoom()}
+  };
+  const failed=err=>{
+    if(!active())return;
+    console.warn("competition connection",err);
+    document.getElementById("compAnswerStatus").textContent=adminLang("انقطع الاتصال، جاري إعادة الاتصال…","Connection interrupted. Reconnecting…");
+    clearTimeout(liveReconnectHandle);
+    liveReconnectHandle=setTimeout(()=>{if(active()&&competitionModal.classList.contains("open"))subscribeCompetition(id,role)},3000);
+  };
+  liveUnsubs.push(onSnapshot(roomRef,accept,failed));
   liveUnsubs.push(onSnapshot(collection(db,"competitions",id,"players"),snap=>{
+    if(!active())return;
     livePlayers=snap.docs.map(d=>({uid:d.id,...d.data()})).sort((a,b)=>(b.score||0)-(a.score||0));
-    renderLivePlayers();
-    renderLiveLeaderboard();
-  }));
+    renderLivePlayers();renderLiveLeaderboard();
+    if(liveCompetitionData?.status==="finished")renderLiveRoom();
+  },failed));
+  let refreshing=false;
+  const recover=async()=>{
+    if(!active()||refreshing||document.hidden||!navigator.onLine)return;
+    refreshing=true;
+    try{accept(await getDocFromServer(roomRef))}catch(err){console.warn("competition refresh",err)}
+    finally{refreshing=false}
+  };
+  const visible=()=>{if(!document.hidden)recover()};
+  window.addEventListener("online",recover);
+  document.addEventListener("visibilitychange",visible);
+  liveUnsubs.push(()=>{window.removeEventListener("online",recover);document.removeEventListener("visibilitychange",visible)});
+  liveRecoveryHandle=setInterval(recover,8000);
 }
 
 function renderLivePlayers(){
@@ -16530,8 +16604,8 @@ function startCompetitionCountdown(room){
       }
     }
   };
-  tick();
   liveCompetitionTimerHandle=setInterval(tick,250);
+  tick();
 }
 
 function renderLiveRoom(){
@@ -16585,20 +16659,20 @@ function renderLiveRoom(){
   }
 
   showCompetitionView("competitionGame");
-  startCompetitionCountdown(r);
+
   document.getElementById("compQuestionNo").textContent=`سؤال ${(r.currentIndex||0)+1} / ${r.questionCount||8}`;
   document.getElementById("compGameState").textContent=r.status==="result"?adminLang("النتيجة","Result"):adminLang("مباشر","Live");
   const typeBadge=document.getElementById("compQuestionTypeBadge");
   if(typeBadge)typeBadge.textContent=r.currentQuestion?.typeLabel||competitionQuestionTypeLabel(r.currentQuestion||{});
   document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
-  document.getElementById("compRevealBtn").classList.toggle("hidden",r.status!=="question");
+  document.getElementById("compRevealBtn").classList.toggle("hidden",!["question","grading"].includes(r.status));
   document.getElementById("compNextBtn").classList.toggle("hidden",r.status!=="result");
 
   const host=document.getElementById("compOptions");host.innerHTML="";
   (r.currentQuestion?.options||[]).forEach(opt=>{
     const b=document.createElement("button");b.className="live-option";b.textContent=opt;
-    if(liveCompetitionRole==="host")b.disabled=true;
+    if(liveCompetitionRole==="host"||r.status!=="question")b.disabled=true;
     if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)b.disabled=true;
     if(r.status==="result"){
       b.disabled=true;
@@ -16618,60 +16692,75 @@ function renderLiveRoom(){
       fxElement(document.getElementById("competitionGame"),ok?"win":"shake");
     }
   }else if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)st.textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+  else if(r.status==="grading")st.textContent=liveCompetitionRole==="host"?"جاري حساب النقاط… إذا انقطع الاتصال اضغط إظهار النتيجة للمحاولة مجددًا.":"انتهى السؤال — جاري حساب النقاط…";
   else st.textContent=liveCompetitionRole==="host"?"استنى الإجابات أو خلي التايمر يخلص تلقائيًا.":"اختار جواب واحد قبل انتهاء الوقت.";
   renderProjectorLeaders();
   renderPlayerRankSummary();
   const remote=(r.audienceMode||"projector")==="remote";
   document.getElementById("compLeaderboardSection")?.classList.toggle("hidden",liveCompetitionRole!=="host"&&!remote);
   liveLastRenderedStatus=r.status;
+  startCompetitionCountdown(r);
 }
 
 async function sendLiveAnswer(answer,button){
-  if(liveCompetitionRole!=="player"||!liveCompetitionData||liveCompetitionData.status!=="question")return;
-  const idx=liveCompetitionData.currentIndex;
+  if(liveAnswerPending||liveCompetitionRole!=="player"||liveCompetitionData?.status!=="question")return;
+  const idx=liveCompetitionData.currentIndex,roomId=liveCompetitionId;
   if(liveAnsweredIndex===idx)return;
   const user=auth.currentUser;if(!user)return;
-  const responseRef=doc(db,"competitions",liveCompetitionId,"responses",`${user.uid}_${idx}`);
-  try{
-    const existingResponse=await getDoc(responseRef);
-    if(existingResponse.exists()){
-      liveAnsweredIndex=idx;
-      document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=true);
-      document.getElementById("compAnswerStatus").textContent="أنت جاوبت هذا السؤال من قبل ✓";
-      return;
-    }
-  }catch{}
-  liveAnsweredIndex=idx;
+  const generation=liveSubscriptionGeneration;
+  const current=()=>generation===liveSubscriptionGeneration&&liveCompetitionId===roomId&&liveCompetitionData?.currentIndex===idx;
+  liveAnswerPending=true;liveAnsweredIndex=idx;
   document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=true);
   button.classList.add("selected");
   document.getElementById("compAnswerStatus").textContent="⏳ إرسال الإجابة...";
+  const responseRef=doc(db,"competitions",roomId,"responses",`${user.uid}_${idx}`);
+  const roomRef=doc(db,"competitions",roomId);
   const me=livePlayers.find(p=>p.uid===user.uid);
   try{
-    await setDoc(responseRef,{
-      studentUid:user.uid,
-      studentName:me?.name||window.PythagorasiUser?.displayName||"طالب",
-      team:me?.team||"A",questionIndex:idx,answer,
-      answeredAtMs:Date.now(),submittedAt:serverTimestamp()
+    const savedAnswer=await runTransaction(db,async tx=>{
+      const roomSnap=await tx.get(roomRef);
+      const existing=await tx.get(responseRef);
+      if(existing.exists())return existing.data().answer;
+      const room=roomSnap.data();
+      if(!room||room.status!=="question"||room.currentIndex!==idx)throw new Error("round-closed");
+      if(Date.now()-liveTimestampMs(room.questionStartedAt)>=LIVE_QUESTION_SECONDS*1000)throw new Error("round-closed");
+      tx.set(responseRef,{
+        studentUid:user.uid,studentName:me?.name||window.PythagorasiUser?.displayName||"طالب",
+        team:me?.team||"A",questionIndex:idx,answer,
+        answeredAtMs:Date.now(),submittedAt:serverTimestamp()
+      });
+      return answer;
     });
-    liveLastAnswerByIndex[idx]=answer;
-    soundFx("submit");
-    document.getElementById("compAnswerStatus").textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
-    logStudentActivity("competition_answer",`أجاب على السؤال ${(idx||0)+1} في المسابقة`,"");
+    if(current()){
+      liveLastAnswerByIndex[idx]=savedAnswer;
+      soundFx("submit");
+      document.getElementById("compAnswerStatus").textContent="تم إرسال إجابتك ✓ — استنى باقي الصف.";
+    }
+    logStudentActivity("competition_answer",`أجاب على السؤال ${idx+1} في المسابقة`,"");
   }catch(err){
     console.error("live answer",err);
-    liveAnsweredIndex=-1;
-    document.getElementById("compAnswerStatus").textContent="تعذر إرسال الإجابة.";
-    document.querySelectorAll("#compOptions .live-option").forEach(x=>x.disabled=false);
-  }
+    if(current()){
+      liveAnsweredIndex=-1;
+      renderLiveRoom();
+      document.getElementById("compAnswerStatus").textContent=err.message==="round-closed"
+        ?"انتهى وقت السؤال — استنى النتيجة.":"تعذر إرسال الإجابة. افحص الاتصال وحاول مرة ثانية.";
+    }
+  }finally{liveAnswerPending=false}
 }
 async function hostSetQuestion(index){
-  const qSnap=await getDoc(doc(db,"competitions",liveCompetitionId,"questions",String(index)));
+  const roomId=liveCompetitionId;
+  const qSnap=await getDoc(doc(db,"competitions",roomId,"questions",String(index)));
   if(!qSnap.exists())throw new Error("question missing");
-  const q=qSnap.data();
-  await updateDoc(doc(db,"competitions",liveCompetitionId),{
-    status:"question",currentIndex:index,
-    currentQuestion:{prompt:q.prompt,options:q.options,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q),topicKey:q.topicKey||"general",questionKind:q.questionKind||"general"},
-    correctAnswer:null,questionStartedAt:serverTimestamp()
+  const q=qSnap.data(),roomRef=doc(db,"competitions",roomId);
+  await runTransaction(db,async tx=>{
+    const snap=await tx.get(roomRef),room=snap.data();
+    if(!room||room.ownerId!==auth.currentUser?.uid)throw new Error("host-required");
+    if(index===0?room.status!=="lobby":room.status!=="result"||room.currentIndex!==index-1)return;
+    tx.update(roomRef,{
+      status:"question",currentIndex:index,
+      currentQuestion:{prompt:q.prompt,options:q.options,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q),topicKey:q.topicKey||"general",questionKind:q.questionKind||"general"},
+      correctAnswer:null,questionStartedAt:serverTimestamp()
+    });
   });
 }
 
@@ -16712,45 +16801,66 @@ async function applyCompetitionRoomSettings(){
 }
 document.getElementById("compApplyRoomSettings").addEventListener("click",applyCompetitionRoomSettings);
 
-document.getElementById("compStartBtn").addEventListener("click",async()=>{
-  if(liveCompetitionRole!=="host")return;
+async function liveHostAction(buttonId,action){
+  if(liveHostActionPending)return;
+  liveHostActionPending=true;
+  const btn=document.getElementById(buttonId);btn.disabled=true;
+  try{await action()}catch(err){console.error("competition action",err);showToast("تعذر إكمال العملية. افحص الاتصال وحاول مرة ثانية.")}
+  finally{liveHostActionPending=false;btn.disabled=false}
+}
+document.getElementById("compStartBtn").addEventListener("click",()=>{
+  if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="lobby")return;
   if(!livePlayers.length){showToast("خلي طالب واحد على الأقل يدخل الغرفة.");return}
-  try{await hostSetQuestion(0)}catch(err){console.error(err);showToast("تعذر بدء المسابقة.")}
+  return liveHostAction("compStartBtn",()=>hostSetQuestion(0));
 });
-document.getElementById("compRevealBtn").addEventListener("click",async()=>{
-  if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="question")return;
-  const btn=document.getElementById("compRevealBtn");btn.disabled=true;
-  try{
-    const idx=liveCompetitionData.currentIndex;
-    const qSnap=await getDoc(doc(db,"competitions",liveCompetitionId,"questions",String(idx)));
+document.getElementById("compRevealBtn").addEventListener("click",()=>{
+  if(liveCompetitionRole!=="host"||!["question","grading"].includes(liveCompetitionData?.status))return;
+  return liveHostAction("compRevealBtn",async()=>{
+    const roomId=liveCompetitionId,idx=liveCompetitionData.currentIndex;
+    const roomRef=doc(db,"competitions",roomId);
+    // Close the round before collecting answers; pending answer transactions retry against this state.
+    await runTransaction(db,async tx=>{
+      const snap=await tx.get(roomRef),room=snap.data();
+      if(room?.currentIndex===idx&&room.status==="question")tx.update(roomRef,{status:"grading"});
+    });
+    const qSnap=await getDoc(doc(db,"competitions",roomId,"questions",String(idx)));
+    if(!qSnap.exists())throw new Error("question missing");
     const q=qSnap.data();
-    const responses=await getDocs(collection(db,"competitions",liveCompetitionId,"responses"));
-    const thisResponses=responses.docs.map(d=>d.data()).filter(r=>r.questionIndex===idx);
-    let aScore=liveCompetitionData.teamAScore||0,bScore=liveCompetitionData.teamBScore||0;
-    for(const r of thisResponses){
-      if(normExam(r.answer)===normExam(q.answer)){
+    const responses=await getDocs(query(collection(db,"competitions",roomId,"responses"),where("questionIndex","==",idx)));
+    const correct=responses.docs.map(d=>d.data()).filter(r=>normExam(r.answer)===normExam(q.answer));
+    await runTransaction(db,async tx=>{
+      const snap=await tx.get(roomRef),room=snap.data();
+      if(!room||room.currentIndex!==idx||room.status!=="grading")return;
+      const players=[];
+      for(const r of correct){
+        const ref=doc(db,"competitions",roomId,"players",r.studentUid);
+        players.push({r,ref,snap:await tx.get(ref)});
+      }
+      let aScore=room.teamAScore||0,bScore=room.teamBScore||0;
+      for(const {r,ref,snap:player} of players){
+        if(!player.exists())continue;
         const points=q.points||1000;
-        if(liveCompetitionData?.teamMode!=="solo"){
+        if(room.teamMode!=="solo"){
           if(r.team==="A")aScore+=points;
           else if(r.team==="B")bScore+=points;
         }
-        const p=livePlayers.find(x=>x.uid===r.studentUid);
-        await setDoc(doc(db,"competitions",liveCompetitionId,"players",r.studentUid),{score:(p?.score||0)+points},{merge:true});
+        tx.update(ref,{score:(player.data().score||0)+points});
       }
-    }
-    await updateDoc(doc(db,"competitions",liveCompetitionId),{
-      status:"result",correctAnswer:q.answer,teamAScore:aScore,teamBScore:bScore
+      tx.update(roomRef,{status:"result",correctAnswer:q.answer,teamAScore:aScore,teamBScore:bScore});
     });
-  }catch(err){console.error("reveal",err);showToast("تعذر حساب نقاط الجولة.")}
-  finally{btn.disabled=false}
+  });
 });
-document.getElementById("compNextBtn").addEventListener("click",async()=>{
+document.getElementById("compNextBtn").addEventListener("click",()=>{
   if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="result")return;
-  const next=(liveCompetitionData.currentIndex||0)+1;
-  try{
-    if(next>=liveCompetitionData.questionCount)await updateDoc(doc(db,"competitions",liveCompetitionId),{status:"finished"});
-    else await hostSetQuestion(next);
-  }catch(err){console.error(err);showToast("تعذر فتح السؤال التالي.")}
+  const roomId=liveCompetitionId,idx=liveCompetitionData.currentIndex,next=idx+1;
+  return liveHostAction("compNextBtn",async()=>{
+    if(next<liveCompetitionData.questionCount)return hostSetQuestion(next);
+    const ref=doc(db,"competitions",roomId);
+    await runTransaction(db,async tx=>{
+      const snap=await tx.get(ref),room=snap.data();
+      if(room?.currentIndex===idx&&room.status==="result")tx.update(ref,{status:"finished"});
+    });
+  });
 });
 document.getElementById("compCopyCode").addEventListener("click",async()=>{
   const code=document.getElementById("compRoomCode").textContent.trim();
@@ -17848,6 +17958,7 @@ let last=performance.now();
 function animate(now){
   requestAnimationFrame(animate);
   const dt=Math.min(2.2,(now-last)/16.67);last=now;
+  if(document.hidden||!mount.getClientRects().length||document.querySelector(".modal.open"))return;
   updateSandPhysics(dt);
   updateProof(now);
   controls.update();
@@ -17883,6 +17994,7 @@ function classoraHasVerifiedSession(){
   return !!(authResolved && auth?.currentUser && window.PythagorasiUser?.uid && document.body.classList.contains("classora-authenticated"));
 }
 document.addEventListener("click",event=>{
+  if(event.target?.closest?.(".modal .close"))return;
   if(classoraHasVerifiedSession())return;
   const insideAuth=event.target?.closest?.("#authGate");
   if(insideAuth)return;
@@ -17959,6 +18071,17 @@ document.querySelectorAll(".modal,#authGate").forEach(el=>{
   classoraOverlayObserver.observe(el,{attributes:true,attributeFilter:["class"]});
 });
 classoraSyncOverlayState();
+document.addEventListener("click",event=>{
+  const close=event.target?.closest?.(".modal .close");
+  if(!close)return;
+  close.closest(".modal")?.classList.remove("open");
+  classoraSyncOverlayState();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key!=="Escape")return;
+  const open=classoraOpenOverlays();
+  open[open.length-1]?.querySelector(".close")?.click();
+});
 
 /* Stop wheel/touch from leaking through an open screen. */
 document.addEventListener("wheel",event=>{
