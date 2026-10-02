@@ -4523,6 +4523,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.light .support-field input,.light .support-field select,.light .support-field textarea{background:#f7fbfd;color:#173047;border-color:#d6e3eb}.light .support-secondary,.light .support-ticket-actions button{background:#edf4f8;color:#24465d;border-color:#d6e3eb}
 @media(max-width:620px){.auth-help-strip,.support-grid,.support-options{grid-template-columns:1fr}.support-box{padding:18px}.support-center-btn span.label{display:none}}
 
+
+.recovery-key-display{direction:ltr;text-align:center;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:clamp(18px,3.4vw,28px);font-weight:1000;letter-spacing:.08em;padding:18px 14px;margin:10px 0 14px;border:1px solid rgba(91,205,255,.26);border-radius:16px;background:linear-gradient(145deg,rgba(54,176,255,.12),rgba(125,83,235,.10));color:#dff7ff;user-select:all;overflow-wrap:anywhere}
+.recovery-key-confirm{display:flex;align-items:center;gap:9px;margin:12px 0;color:#b9c9d5;font-weight:800}
+.recovery-key-confirm input{width:18px;height:18px}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4563,7 +4568,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="authSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">📱 نسيت الاسم أو كلمة السر؟</button>
+        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">🗝️ نسيت الاسم أو كلمة السر؟</button>
       </div>
     </div>
 
@@ -4594,7 +4599,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="studentSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">🗝️ استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4605,7 +4610,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="teacherSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">🗝️ استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4635,47 +4640,47 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       <div class="support-field"><label for="supportAccountHint">اسم الدخول / Profile ID إن كنت تعرفه</label><input id="supportAccountHint" maxlength="100" placeholder="اختياري"></div>
       <div class="support-field full"><label for="supportMessage">اشرح المشكلة</label><textarea id="supportMessage" maxlength="1200" placeholder="اكتب شو صار معك بالتفصيل..."></textarea></div>
     </div>
-    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
+    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك مفتاح استرداد، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
     <div class="support-actions">
       <button class="support-primary" id="submitSupportRequest" type="button">📨 إرسال للدعم</button>
-      <button class="support-secondary" id="supportOpenRecovery" type="button">📱 استرجاع بالحساب بالهاتف</button>
+      <button class="support-secondary" id="supportOpenRecovery" type="button">🗝️ استرجاع بمفتاح الحساب</button>
     </div>
     <div class="support-status" id="supportRequestStatus"></div>
   </div>
 </div>
 
-<div class="support-layer hidden" id="phoneSetupLayer" aria-modal="true" role="dialog">
+<div class="support-layer hidden" id="recoveryKeySetupLayer" aria-modal="true" role="dialog">
   <div class="support-box">
-    <button class="support-close hidden" id="closePhoneSetup" type="button">×</button>
-    <div class="support-head"><h2>📱 اربط رقم هاتفك</h2><p>رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.</p></div>
-    <div class="phone-step active" id="phoneSetupNumberStep">
-      <div class="support-field"><label for="phoneSetupNumber">رقم الهاتف</label><input id="phoneSetupNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
-      <div class="phone-note">رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.</div>
-      <div id="phoneRecaptcha"></div>
-      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary hidden" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
+    <button class="support-close" id="closeRecoveryKeySetup" type="button">×</button>
+    <div class="support-head"><h2>🗝️ مفتاح استرداد الحساب</h2><p>هذا المفتاح يثبت إن الحساب إلك إذا نسيت اسم الدخول أو كلمة السر. ما في رقم هاتف ولا SMS.</p></div>
+    <div class="phone-step active" id="recoveryKeyIntroStep">
+      <div class="phone-note">كلاسورا رح ينشئ مفتاح قوي إلك. خزّنه بمكان آمن أو خذ له صورة. المفتاح ما بنعرضه للأدمن وما بنقدر نرجعه إذا ضاع؛ بتقدر تعمل مفتاح جديد وأنت داخل حسابك.</div>
+      <div class="support-actions">
+        <button class="support-primary" id="generateRecoveryKeyBtn" type="button">🗝️ إنشاء مفتاح الاسترداد</button>
+        <button class="support-secondary" id="recoveryKeySetupLater" type="button">ذكّرني لاحقًا</button>
+      </div>
     </div>
-    <div class="phone-step" id="phoneSetupCodeStep">
-      <div class="support-field"><label for="phoneSetupCode">كود التحقق</label><input id="phoneSetupCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
-      <div class="support-actions"><button class="support-primary" id="verifyPhoneSetupCode" type="button">✓ تحقق واربط الرقم</button><button class="support-secondary" id="phoneSetupBack" type="button">رجوع</button></div>
+    <div class="phone-step" id="recoveryKeyShowStep">
+      <div class="recovery-key-display" id="generatedRecoveryKey">—</div>
+      <div class="support-actions">
+        <button class="support-secondary" id="copyRecoveryKeyBtn" type="button">📋 نسخ المفتاح</button>
+      </div>
+      <label class="recovery-key-confirm"><input id="recoveryKeySavedCheck" type="checkbox"> حفظت المفتاح بمكان آمن</label>
+      <div class="support-actions"><button class="support-primary" id="confirmRecoveryKeySaved" type="button" disabled>✓ تم، حفظته</button></div>
     </div>
-    <div class="support-status" id="phoneSetupStatus"></div>
+    <div class="support-status" id="recoveryKeySetupStatus"></div>
   </div>
 </div>
 
 <div class="support-layer hidden" id="accountRecoveryLayer" aria-modal="true" role="dialog">
   <div class="support-box">
     <button class="support-close" id="closeAccountRecovery" type="button">×</button>
-    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.</p></div>
-    <div class="phone-step active" id="recoveryNumberStep">
-      <div class="support-field"><label for="recoveryPhoneNumber">رقم الهاتف المرتبط بالحساب</label><input id="recoveryPhoneNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>اكتب مفتاح الاسترداد الخاص بحسابك. إذا كان صحيح، بتقدر تشوف اسم الدخول أو تدخل للحساب وتغيّر كلمة السر.</p></div>
+    <div class="phone-step active" id="recoveryKeyVerifyStep">
+      <div class="support-field full"><label for="recoveryKeyInput">مفتاح الاسترداد</label><input id="recoveryKeyInput" autocomplete="off" spellcheck="false" maxlength="40" placeholder="CLAS-XXXX-XXXX-XXXX-XXXX"></div>
       <div class="support-field"><label for="recoveryIntent">شو بدك تسترجع؟</label><select id="recoveryIntent"><option value="name">اسم الدخول</option><option value="password">كلمة السر</option><option value="both">الاثنين</option></select></div>
-      <div class="phone-note">رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.</div>
-      <div id="recoveryRecaptcha"></div>
-      <div class="support-actions"><button class="support-primary" id="sendRecoveryCode" type="button">إرسال كود التحقق</button></div>
-    </div>
-    <div class="phone-step" id="recoveryCodeStep">
-      <div class="support-field"><label for="recoveryCode">كود التحقق</label><input id="recoveryCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
-      <div class="support-actions"><button class="support-primary" id="verifyRecoveryCode" type="button">✓ تحقق</button><button class="support-secondary" id="recoveryBack" type="button">رجوع</button></div>
+      <div class="phone-note">مفتاح الاسترداد سري مثل كلمة السر. لا تبعته لأي شخص.</div>
+      <div class="support-actions"><button class="support-primary" id="verifyRecoveryKeyBtn" type="button">✓ تحقق من المفتاح</button></div>
     </div>
     <div class="phone-step" id="recoveryResultStep">
       <div class="recovery-result show"><small>اسم الدخول</small><b id="recoveredLoginName">—</b><div class="support-ticket-meta" id="recoveredDisplayName"></div></div>
@@ -5761,6 +5766,12 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
         <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
+      <section class="settings-card" id="recoveryKeySettingsCard">
+        <h3>🗝️ مفتاح استرداد الحساب</h3>
+        <div class="settings-note" id="recoveryKeySettingsStatus">مفتاح الاسترداد مش مفعّل بعد.</div>
+        <button class="exam-secondary" id="manageRecoveryKeyBtn" type="button">إنشاء / تغيير المفتاح</button>
+      </section>
+
       <section class="settings-card notification-settings-card" id="notificationSettingsCard">
         <h3 id="notificationSettingsTitle">🔔 الإشعارات</h3>
         <div class="settings-note" id="notificationSettingsNote">فعّل إشعارات Classora للوظائف، الامتحانات، المسابقات ودخول الطلاب للصف.</div>
@@ -6499,9 +6510,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/fireba
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithCustomToken, deleteUser, updatePassword,
   reauthenticateWithCredential, EmailAuthProvider,
-  PhoneAuthProvider, RecaptchaVerifier, linkWithCredential, signInWithCredential,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -6535,6 +6545,8 @@ const createSupportTicketCall = httpsCallable(classoraFunctions,"createSupportTi
 const recordSupportEventCall = httpsCallable(classoraFunctions,"recordSupportEvent");
 const getSupportCenterCall = httpsCallable(classoraFunctions,"getSupportCenter");
 const updateSupportTicketCall = httpsCallable(classoraFunctions,"updateSupportTicket");
+const createRecoveryKeyCall = httpsCallable(classoraFunctions,"createRecoveryKey");
+const verifyRecoveryKeyCall = httpsCallable(classoraFunctions,"verifyRecoveryKey");
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -7112,7 +7124,7 @@ function paintUser(user,profile){
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
-  setTimeout(()=>maybeOpenPhoneSetup(profile,user),950);
+  setTimeout(()=>maybeOpenRecoveryKeySetup(profile,user),950);
   if(admin){
     setTimeout(startSupportCenterRealtime,250);
     if(location.hash==="#support-center")setTimeout(openSupportCenter,500);
@@ -7578,7 +7590,7 @@ onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
   authResolved=true;
   document.body.classList.add("auth-ready");
-  if(classoraPhoneRecoveryActive){
+  if(classoraRecoveryActive){
     window.dispatchEvent(new Event("classora-auth-settled"));
     return;
   }
@@ -11866,8 +11878,8 @@ const uiExactTranslations=new Map([
 
 [
   ["🎧 تواصل مع الدعم","🎧 Contact Support"],
-  ["📱 نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
-  ["📱 استرجاع الحساب","📱 Recover Account"],
+  ["🗝️ نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
+  ["🗝️ استرجاع الحساب","📱 Recover Account"],
   ["مركز الدعم","Support Center"],
   ["🎧 مركز الدعم","🎧 Support Center"],
   ["اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.","Choose the issue type and describe what happened. Your request goes directly to Support."],
@@ -12130,7 +12142,7 @@ let recoveryVerificationId="";
 let recoveryVerifier=null;
 let recoveryPendingPhone="";
 let recoveredProfile=null;
-let classoraPhoneRecoveryActive=false;
+let classoraRecoveryActive=false;
 let supportCenterRefreshTimer=null;
 let supportOpenTicketCount=0;
 
@@ -12310,12 +12322,12 @@ async function verifyRecoveryCode(){
   const btn=document.getElementById("verifyRecoveryCode");btn.disabled=true;
   try{
     const credential=PhoneAuthProvider.credential(recoveryVerificationId,code);
-    classoraPhoneRecoveryActive=true;
+    classoraRecoveryActive=true;
     const result=await signInWithCredential(auth,credential);
     const snap=await getDoc(doc(db,"users",result.user.uid));
     if(!snap.exists()){
       try{await deleteUser(result.user)}catch{}
-      classoraPhoneRecoveryActive=false;
+      classoraRecoveryActive=false;
       throw Object.assign(new Error("recovery-no-account"),{code:"recovery/no-account"});
     }
     recoveredProfile={uid:result.user.uid,...snap.data()};
@@ -12336,7 +12348,7 @@ async function verifyRecoveryCode(){
     if(intent==="name"||intent==="both")await recordSupportEventSafe("login_name_viewed","login name recovered",recoveredProfile,recoveryPendingPhone);
   }catch(err){
     console.error("recovery verify",err);
-    if(!recoveredProfile)classoraPhoneRecoveryActive=false;
+    if(!recoveredProfile)classoraRecoveryActive=false;
     const msg=String(err?.code||"")==="recovery/no-account"?supportLang("هذا الرقم مش مربوط بحساب كلاسورا.","This number is not linked to a Classora account."):friendlyPhoneError(err);
     setSupportStatus(statusId,msg,"bad");
     recordSupportEventSafe("recovery_failed",String(err?.code||"verify-failed"),recoveredProfile,recoveryPendingPhone);
@@ -12474,8 +12486,8 @@ document.getElementById("verifyPhoneSetupCode")?.addEventListener("click",verify
 document.getElementById("phoneSetupBack")?.addEventListener("click",()=>{document.getElementById("phoneSetupCodeStep").classList.remove("active");document.getElementById("phoneSetupNumberStep").classList.add("active");resetVerifier("setup")});
 document.getElementById("closeAccountRecovery")?.addEventListener("click",async()=>{
   closeLayer("accountRecoveryLayer");resetVerifier("recovery");
-  if(classoraPhoneRecoveryActive){
-    classoraPhoneRecoveryActive=false;
+  if(classoraRecoveryActive){
+    classoraRecoveryActive=false;
     try{await signOut(auth)}catch{}
     recoveredProfile=null;
   }
@@ -12486,7 +12498,7 @@ document.getElementById("recoveryBack")?.addEventListener("click",()=>{document.
 document.getElementById("saveRecoveredPassword")?.addEventListener("click",saveRecoveredPassword);
 document.getElementById("continueRecoveredAccount")?.addEventListener("click",async()=>{
   closeLayer("accountRecoveryLayer");
-  classoraPhoneRecoveryActive=false;
+  classoraRecoveryActive=false;
   if(auth.currentUser)await resolveCurrentUser(auth.currentUser);
 });
 document.getElementById("supportCenterBtn")?.addEventListener("click",openSupportCenter);
