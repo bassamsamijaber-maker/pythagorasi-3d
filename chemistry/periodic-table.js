@@ -237,7 +237,7 @@ $("#backBtn").onclick=()=>{
    return;
  }
  sessionStorage.setItem("classora_returning_from_subject","1");
- location.replace("../#lobby");
+ location.replace("../#platformLobby");
 };
 window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
 window.addEventListener("message",event=>{
