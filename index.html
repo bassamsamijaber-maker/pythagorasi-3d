@@ -7226,6 +7226,7 @@ function paintUser(user,profile){
   window.PythagorasiUser={uid:user.uid,...profile};
   activeProfile=window.PythagorasiUser;
   applySavedAccountState(window.PythagorasiUser);
+  setTimeout(()=>syncPublicProfile(window.PythagorasiUser,user),120);
   setTimeout(startClassoraRealtimeNotifications,350);
   setTimeout(()=>{
     if(classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted"){
@@ -7289,7 +7290,12 @@ async function resolveCurrentUser(user){
         await signOut(auth);
         throw new Error("student-profile-missing");
       }
-      profile={...profile,role:"student"};
+      if(profile.role==="teacher"||isSuperAdminProfile(profile)){
+        profile={...profile,role:"teacher",provider:profile.provider||"password"};
+        await saveTeacherLoginAliases(profile,user);
+      }else{
+        profile={...profile,role:"student"};
+      }
       if(!/^\d{10}$/.test(String(profile.profileId||""))){
         profile={...profile,profileId:await ensureProfileId(user,profile)};
       }
@@ -7469,6 +7475,49 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
     studentLoginButton.disabled=false;
   }
 });
+
+let teacherAuthMode="name";
+function setTeacherAuthMode(mode){
+  teacherAuthMode=mode==="email"?"email":"name";
+  document.getElementById("teacherModeName").classList.toggle("active",teacherAuthMode==="name");
+  document.getElementById("teacherModeEmail").classList.toggle("active",teacherAuthMode==="email");
+  document.getElementById("teacherIdentifierLabel").textContent=teacherAuthMode==="email"?"الإيميل":"اسم الدخول";
+  const input=document.getElementById("teacherIdentifierInput");
+  input.placeholder=teacherAuthMode==="email"?"teacher@example.com":"اسم المعلم";
+  input.autocomplete=teacherAuthMode==="email"?"email":"username";
+  setAuthError("");
+}
+document.getElementById("teacherModeName").addEventListener("click",()=>setTeacherAuthMode("name"));
+document.getElementById("teacherModeEmail").addEventListener("click",()=>setTeacherAuthMode("email"));
+
+document.getElementById("teacherPasswordLoginBtn").addEventListener("click",async()=>{
+  const identifier=document.getElementById("teacherIdentifierInput").value.trim();
+  const password=document.getElementById("teacherPasswordInput").value;
+  if(identifier.length<2){setAuthError("اكتب اسم الدخول أو الإيميل.");return}
+  if(password.length<6){setAuthError("اكتب كلمة السر.");return}
+  authBusy(true,"جاري دخول المعلم…");setAuthError("");
+  try{
+    await authPersistenceReady;
+    const email=teacherAuthMode==="email"?identifier.toLowerCase():await resolveTeacherLoginEmail(identifier);
+    if(!email)throw new Error("invalid-credential");
+    if(auth.currentUser)await signOut(auth);
+    const cred=await signInWithEmailAndPassword(auth,email,password);
+    const snap=await getDoc(doc(db,"users",cred.user.uid));
+    const profile=snap.exists()?snap.data():null;
+    if(!profile || !(profile.role==="teacher"||isSuperAdminProfile(profile))){
+      await signOut(auth);throw new Error("teacher-profile-required");
+    }
+    await saveTeacherLoginAliases(profile,cred.user);
+    rememberLoginForTwoMonths();
+    paintUser(cred.user,profile);
+    showToast("👨‍🏫 أهلًا "+(profile.displayName||"المعلم")+"!");
+  }catch(err){
+    console.error("teacher password login",err);
+    setAuthError(friendlyAuthError(err));
+  }finally{authBusy(false)}
+});
+document.getElementById("teacherPasswordInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("teacherPasswordLoginBtn").click()});
+
 document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
   await authPersistenceReady;
   authBusy(true,"جاري فتح تسجيل الدخول…");
@@ -7486,6 +7535,7 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
       email:user.email||""
     };
     const savedProfile=await saveUserProfile(user,profile);
+    await saveTeacherLoginAliases(savedProfile,user);
     rememberLoginForTwoMonths();
     paintUser(user,savedProfile);
     showToast(`👨‍🏫 أهلًا ${profile.displayName}! دخلت كمعلم.`);
