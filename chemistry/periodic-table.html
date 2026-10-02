@@ -12,10 +12,6 @@
 <header class="topbar">
   <button class="back-btn" id="backBtn" type="button">← <span data-i18n="back">Back to Classora</span></button>
   <div class="brand"><span class="brand-mark">C</span><div><b>Classora</b><small data-i18n="chemistry">Chemistry</small></div></div>
-  <div class="top-actions">
-    <button class="lang-btn" id="langEn" type="button">EN</button>
-    <button class="lang-btn" id="langAr" type="button">ع</button>
-  </div>
 </header>
 
 <main>
@@ -46,6 +42,7 @@
     <button class="mode active" data-mode="explore" type="button">🧭 <span data-i18n="explore">Explore</span></button>
     <button class="mode" data-mode="learn" type="button">📚 <span data-i18n="learn">Learn</span></button>
     <button class="mode" data-mode="quiz" type="button">⚡ <span data-i18n="quiz">Quiz</span></button>
+    <button class="mode surprise" id="randomElementBtn" type="button">🎲 <span data-i18n="randomElement">Random element</span></button>
   </div>
   <div class="filters" id="filters"></div>
 </section>
@@ -110,7 +107,11 @@
   <div class="modal-backdrop" data-close-modal></div>
   <article class="element-sheet">
     <button class="modal-close" data-close-modal type="button">×</button>
-    <div class="element-visual-wrap"><img id="elementVisual" alt=""></div>
+    <div class="element-visual-wrap" id="elementVisualWrap">
+      <span class="visual-note" data-i18n="illustration">Educational illustration</span>
+      <img id="elementVisual" alt="">
+      <button class="visual-animation-btn" id="elementAnimationBtn" type="button">⏸ <span data-i18n="pauseAnimation">Pause animation</span></button>
+    </div>
     <div class="element-detail">
       <div class="detail-head">
         <span class="detail-number" id="detailNumber"></span>
@@ -125,7 +126,10 @@
       </div>
       <div class="detail-copy"><h3 data-i18n="about">About this element</h3><p id="detailDescription"></p></div>
       <div class="detail-copy"><h3 data-i18n="uses">Common uses / importance</h3><p id="detailUses"></p></div>
-      <button class="primary" id="compareFromModal" type="button" data-i18n="addCompare">Add to comparison</button>
+      <div class="detail-actions">
+        <button class="favorite-btn" id="favoriteElementBtn" type="button">☆ <span data-i18n="favorite">Favorite</span></button>
+        <button class="primary" id="compareFromModal" type="button" data-i18n="addCompare">Add to comparison</button>
+      </div>
     </div>
   </article>
 </div>
