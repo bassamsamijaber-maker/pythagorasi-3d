@@ -6533,6 +6533,8 @@ const auth = getAuth(firebaseApp);
 const classoraFunctions = getFunctions(firebaseApp);
 const createSupportTicketCall = httpsCallable(classoraFunctions,"createSupportTicket");
 const recordSupportEventCall = httpsCallable(classoraFunctions,"recordSupportEvent");
+const getSupportCenterCall = httpsCallable(classoraFunctions,"getSupportCenter");
+const updateSupportTicketCall = httpsCallable(classoraFunctions,"updateSupportTicket");
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -7169,7 +7171,8 @@ async function resolveCurrentUser(user){
         await signOut(auth);
         throw new Error("student-profile-missing");
       }
-      profile={...profile,role:"student"};
+      const storedRole=profile.role==="teacher"?"teacher":"student";
+      profile={...profile,role:storedRole};
       if(!/^\d{10}$/.test(String(profile.profileId||""))){
         profile={...profile,profileId:await ensureProfileId(user,profile)};
       }
@@ -7574,6 +7577,10 @@ onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
   authResolved=true;
   document.body.classList.add("auth-ready");
+  if(classoraPhoneRecoveryActive){
+    window.dispatchEvent(new Event("classora-auth-settled"));
+    return;
+  }
   if(user){
     let expires=rememberedLoginExpiresAt();
     if(!expires)expires=rememberLoginForTwoMonths();
@@ -12121,7 +12128,8 @@ let recoveryVerificationId="";
 let recoveryVerifier=null;
 let recoveryPendingPhone="";
 let recoveredProfile=null;
-let supportRealtimeUnsubs=[];
+let classoraPhoneRecoveryActive=false;
+let supportCenterRefreshTimer=null;
 let supportOpenTicketCount=0;
 
 function supportLang(ar,en){return currentUILanguage==="en"?en:ar}
@@ -12289,10 +12297,12 @@ async function verifyRecoveryCode(){
   const btn=document.getElementById("verifyRecoveryCode");btn.disabled=true;
   try{
     const credential=PhoneAuthProvider.credential(recoveryVerificationId,code);
+    classoraPhoneRecoveryActive=true;
     const result=await signInWithCredential(auth,credential);
     const snap=await getDoc(doc(db,"users",result.user.uid));
     if(!snap.exists()){
       try{await deleteUser(result.user)}catch{}
+      classoraPhoneRecoveryActive=false;
       throw Object.assign(new Error("recovery-no-account"),{code:"recovery/no-account"});
     }
     recoveredProfile={uid:result.user.uid,...snap.data()};
@@ -12313,6 +12323,7 @@ async function verifyRecoveryCode(){
     if(intent==="name"||intent==="both")await recordSupportEventSafe("login_name_viewed","login name recovered",recoveredProfile,recoveryPendingPhone);
   }catch(err){
     console.error("recovery verify",err);
+    if(!recoveredProfile)classoraPhoneRecoveryActive=false;
     const msg=String(err?.code||"")==="recovery/no-account"?supportLang("هذا الرقم مش مربوط بحساب كلاسورا.","This number is not linked to a Classora account."):friendlyPhoneError(err);
     setSupportStatus(statusId,msg,"bad");
     recordSupportEventSafe("recovery_failed",String(err?.code||"verify-failed"),recoveredProfile,recoveryPendingPhone);
@@ -12350,8 +12361,11 @@ async function submitSupportRequest(){
     setSupportStatus(statusId,supportLang("تعذر إرسال الطلب حاليًا. جرّب مرة ثانية.","Could not send the request right now. Try again."),"bad");
   }finally{btn.disabled=false}
 }
-function supportDate(ts){
-  try{const d=ts?.toDate?ts.toDate():new Date();return d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false})}catch{return "—"}
+function supportDate(ts,ms){
+  try{
+    const d=Number.isFinite(ms)?new Date(ms):(ts?.toDate?ts.toDate():new Date());
+    return d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+  }catch{return "—"}
 }
 function supportTypeName(type){
   const map={
@@ -12366,11 +12380,16 @@ function renderSupportTickets(items){
   items.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).forEach(t=>{
     const card=document.createElement("article");card.className="support-ticket "+(t.status||"open");
     const statusLabel=t.status==="resolved"?supportLang("محلول","Resolved"):t.status==="working"?supportLang("قيد المعالجة","In Progress"):supportLang("مفتوح","Open");
-    card.innerHTML=`<div class="support-ticket-head"><div><h4>${escapeHtml(t.name||supportLang("بدون اسم","No name"))} • ${escapeHtml(supportTypeName(t.type))}</h4><div class="support-ticket-meta">${escapeHtml(t.role||"unknown")} • ${escapeHtml(t.profileId||t.accountHint||"—")} • ${supportDate(t.createdAt)}</div></div><b>${statusLabel}</b></div><div class="support-ticket-message">${escapeHtml(t.message||"")}</div><div class="support-ticket-actions"><button data-ticket-status="working" data-id="${t.id}">${supportLang("🟡 قيد المعالجة","🟡 In Progress")}</button><button data-ticket-status="resolved" data-id="${t.id}">${supportLang("✅ تم الحل","✅ Resolved")}</button><button data-ticket-status="open" data-id="${t.id}">${supportLang("↩ إعادة فتح","↩ Reopen")}</button></div>`;
+    card.innerHTML=`<div class="support-ticket-head"><div><h4>${escapeHtml(t.name||supportLang("بدون اسم","No name"))} • ${escapeHtml(supportTypeName(t.type))}</h4><div class="support-ticket-meta">${escapeHtml(t.role||"unknown")} • ${escapeHtml(t.profileId||t.accountHint||"—")} • ${supportDate(t.createdAt,t.createdAtMs)}</div></div><b>${statusLabel}</b></div><div class="support-ticket-message">${escapeHtml(t.message||"")}</div><div class="support-ticket-actions"><button data-ticket-status="working" data-id="${t.id}">${supportLang("🟡 قيد المعالجة","🟡 In Progress")}</button><button data-ticket-status="resolved" data-id="${t.id}">${supportLang("✅ تم الحل","✅ Resolved")}</button><button data-ticket-status="open" data-id="${t.id}">${supportLang("↩ إعادة فتح","↩ Reopen")}</button></div>`;
     host.appendChild(card);
   });
   host.querySelectorAll("[data-ticket-status]").forEach(btn=>btn.addEventListener("click",async()=>{
-    try{await updateDoc(doc(db,"supportTickets",btn.dataset.id),{status:btn.dataset.ticketStatus,updatedAt:serverTimestamp(),handledBy:auth.currentUser?.uid||""})}catch(err){console.error("ticket status",err)}
+    btn.disabled=true;
+    try{
+      await updateSupportTicketCall({ticketId:btn.dataset.id,status:btn.dataset.ticketStatus});
+      await refreshSupportCenter();
+    }catch(err){console.error("ticket status",err)}
+    finally{btn.disabled=false}
   }));
 }
 function renderSupportAudit(items){
@@ -12382,7 +12401,7 @@ function renderSupportAudit(items){
   items.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,150).forEach(x=>{
     const row=document.createElement("div");row.className="support-audit-row";
     const label=(labels[x.event]||[x.event,x.event])[currentUILanguage==="en"?1:0];
-    row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")} ${x.phoneLast4?"• ••••"+escapeHtml(x.phoneLast4):""}<div class="support-ticket-meta">${supportDate(x.createdAt)} • ${escapeHtml(x.detail||"")}</div>`;
+    row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")} ${x.phoneLast4?"• ••••"+escapeHtml(x.phoneLast4):""}<div class="support-ticket-meta">${supportDate(x.createdAt,x.createdAtMs)} • ${escapeHtml(x.detail||"")}</div>`;
     host.appendChild(row);
   });
 }
@@ -12392,17 +12411,28 @@ function updateSupportBadge(){
   badge.classList.toggle("hidden",supportOpenTicketCount<1);
 }
 function clearSupportRealtime(){
-  supportRealtimeUnsubs.forEach(fn=>{try{fn()}catch{}});supportRealtimeUnsubs=[];
+  if(supportCenterRefreshTimer){clearInterval(supportCenterRefreshTimer);supportCenterRefreshTimer=null}
+}
+async function refreshSupportCenter(){
+  if(!isSuperAdminProfile())return;
+  try{
+    const result=await getSupportCenterCall({});
+    const tickets=Array.isArray(result.data?.tickets)?result.data.tickets:[];
+    const audit=Array.isArray(result.data?.audit)?result.data.audit:[];
+    supportOpenTicketCount=tickets.filter(x=>x.status!=="resolved").length;
+    updateSupportBadge();
+    renderSupportTickets(tickets);
+    renderSupportAudit(audit);
+    setSupportStatus("supportCenterStatus","");
+  }catch(err){
+    console.error("support center load",err);
+    setSupportStatus("supportCenterStatus",supportLang("تعذر تحميل مركز الدعم.","Could not load Support Center."),"bad");
+  }
 }
 function startSupportCenterRealtime(){
-  if(!isSuperAdminProfile()||supportRealtimeUnsubs.length)return;
-  const ticketUnsub=onSnapshot(collection(db,"supportTickets"),snap=>{
-    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
-    supportOpenTicketCount=items.filter(x=>x.status!=="resolved").length;updateSupportBadge();
-    renderSupportTickets(items);
-  },err=>console.warn("support tickets realtime",err));
-  const auditUnsub=onSnapshot(collection(db,"supportAudit"),snap=>renderSupportAudit(snap.docs.map(d=>({id:d.id,...d.data()}))),err=>console.warn("support audit realtime",err));
-  supportRealtimeUnsubs=[ticketUnsub,auditUnsub];
+  if(!isSuperAdminProfile())return;
+  refreshSupportCenter();
+  if(!supportCenterRefreshTimer)supportCenterRefreshTimer=setInterval(refreshSupportCenter,12000);
 }
 function openSupportCenter(){
   if(!isSuperAdminProfile())return;
@@ -12412,6 +12442,7 @@ function openSupportCenter(){
 }
 function closeSupportCenter(){
   closeLayer("supportCenterLayer");
+  clearSupportRealtime();
   if(location.hash==="#support-center")history.replaceState(null,"",location.pathname+location.search);
 }
 document.getElementById("authSupportBtn")?.addEventListener("click",()=>openSupportRequest("unknown"));
@@ -12429,12 +12460,23 @@ document.getElementById("phoneSetupLater")?.addEventListener("click",()=>{sessio
 document.getElementById("sendPhoneSetupCode")?.addEventListener("click",sendPhoneSetupCode);
 document.getElementById("verifyPhoneSetupCode")?.addEventListener("click",verifyPhoneSetupCode);
 document.getElementById("phoneSetupBack")?.addEventListener("click",()=>{document.getElementById("phoneSetupCodeStep").classList.remove("active");document.getElementById("phoneSetupNumberStep").classList.add("active");resetVerifier("setup")});
-document.getElementById("closeAccountRecovery")?.addEventListener("click",()=>{closeLayer("accountRecoveryLayer");resetVerifier("recovery")});
+document.getElementById("closeAccountRecovery")?.addEventListener("click",async()=>{
+  closeLayer("accountRecoveryLayer");resetVerifier("recovery");
+  if(classoraPhoneRecoveryActive){
+    classoraPhoneRecoveryActive=false;
+    try{await signOut(auth)}catch{}
+    recoveredProfile=null;
+  }
+});
 document.getElementById("sendRecoveryCode")?.addEventListener("click",sendRecoveryCode);
 document.getElementById("verifyRecoveryCode")?.addEventListener("click",verifyRecoveryCode);
 document.getElementById("recoveryBack")?.addEventListener("click",()=>{document.getElementById("recoveryCodeStep").classList.remove("active");document.getElementById("recoveryNumberStep").classList.add("active");resetVerifier("recovery")});
 document.getElementById("saveRecoveredPassword")?.addEventListener("click",saveRecoveredPassword);
-document.getElementById("continueRecoveredAccount")?.addEventListener("click",()=>{closeLayer("accountRecoveryLayer");showPlatformLobby()});
+document.getElementById("continueRecoveredAccount")?.addEventListener("click",async()=>{
+  closeLayer("accountRecoveryLayer");
+  classoraPhoneRecoveryActive=false;
+  if(auth.currentUser)await resolveCurrentUser(auth.currentUser);
+});
 document.getElementById("supportCenterBtn")?.addEventListener("click",openSupportCenter);
 document.getElementById("closeSupportCenter")?.addEventListener("click",closeSupportCenter);
 document.querySelectorAll("[data-support-tab]").forEach(btn=>btn.addEventListener("click",()=>{
