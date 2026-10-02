@@ -7128,6 +7128,7 @@ async function resolveCurrentUser(user){
     document.body.classList.remove("classora-authenticated");
     activeProfile=null;
     clearClassoraRealtimeNotifications();
+    clearSupportRealtime();
     window.PythagorasiUser=null;
     if(lobbyCompetitionUnsub){try{lobbyCompetitionUnsub()}catch{} lobbyCompetitionUnsub=null}
     lobbyCompetitionCache=[];window.ClassoraLiveCompetitions=[];
@@ -12389,7 +12390,7 @@ function supportTypeName(type){
 function renderSupportTickets(items){
   const host=document.getElementById("supportTicketsList");if(!host)return;host.innerHTML="";
   if(!items.length){host.innerHTML='<div class="support-ticket-meta">'+supportLang("ما في طلبات دعم.","No support requests.")+'</div>';return}
-  items.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).forEach(t=>{
+  items.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0)).forEach(t=>{
     const card=document.createElement("article");card.className="support-ticket "+(t.status||"open");
     const statusLabel=t.status==="resolved"?supportLang("محلول","Resolved"):t.status==="working"?supportLang("قيد المعالجة","In Progress"):supportLang("مفتوح","Open");
     card.innerHTML=`<div class="support-ticket-head"><div><h4>${escapeHtml(t.name||supportLang("بدون اسم","No name"))} • ${escapeHtml(supportTypeName(t.type))}</h4><div class="support-ticket-meta">${escapeHtml(t.role||"unknown")} • ${escapeHtml(t.profileId||t.accountHint||"—")} • ${supportDate(t.createdAt,t.createdAtMs)}</div></div><b>${statusLabel}</b></div><div class="support-ticket-message">${escapeHtml(t.message||"")}</div><div class="support-ticket-actions"><button data-ticket-status="working" data-id="${t.id}">${supportLang("🟡 قيد المعالجة","🟡 In Progress")}</button><button data-ticket-status="resolved" data-id="${t.id}">${supportLang("✅ تم الحل","✅ Resolved")}</button><button data-ticket-status="open" data-id="${t.id}">${supportLang("↩ إعادة فتح","↩ Reopen")}</button></div>`;
@@ -12408,9 +12409,9 @@ function renderSupportAudit(items){
   const host=document.getElementById("supportAuditList");if(!host)return;host.innerHTML="";
   if(!items.length){host.innerHTML='<div class="support-ticket-meta">'+supportLang("ما في أحداث استرجاع مسجلة.","No recovery events recorded.")+'</div>';return}
   const labels={
-    ticket_created:["إنشاء طلب دعم","Support ticket created"],support_opened:["فتح الدعم","Support opened"],recovery_started:["بدء استرجاع","Recovery started"],sms_sent:["إرسال كود","Code sent"],recovery_verified:["نجاح التحقق","Recovery verified"],login_name_viewed:["استرجاع اسم الدخول","Login name recovered"],password_changed:["تغيير كلمة السر","Password changed"],phone_linked:["ربط هاتف","Phone linked"],recovery_failed:["فشل الاسترجاع","Recovery failed"],phone_link_failed:["فشل ربط الهاتف","Phone link failed"]
+    ticket_created:["إنشاء طلب دعم","Support ticket created"],support_opened:["فتح الدعم","Support opened"],recovery_started:["بدء استرجاع","Recovery started"],sms_sent:["إرسال كود","Code sent"],recovery_verified:["نجاح التحقق","Recovery verified"],login_name_viewed:["استرجاع اسم الدخول","Login name recovered"],password_changed:["تغيير كلمة السر","Password changed"],phone_linked:["ربط هاتف","Phone linked"],recovery_failed:["فشل الاسترجاع","Recovery failed"],phone_link_failed:["فشل ربط الهاتف","Phone link failed"],ticket_status:["تغيير حالة طلب","Ticket status changed"]
   };
-  items.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,150).forEach(x=>{
+  items.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0)).slice(0,150).forEach(x=>{
     const row=document.createElement("div");row.className="support-audit-row";
     const label=(labels[x.event]||[x.event,x.event])[currentUILanguage==="en"?1:0];
     row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")} ${x.phoneLast4?"• ••••"+escapeHtml(x.phoneLast4):""}<div class="support-ticket-meta">${supportDate(x.createdAt,x.createdAtMs)} • ${escapeHtml(x.detail||"")}</div>`;
@@ -12454,7 +12455,6 @@ function openSupportCenter(){
 }
 function closeSupportCenter(){
   closeLayer("supportCenterLayer");
-  clearSupportRealtime();
   if(location.hash==="#support-center")history.replaceState(null,"",location.pathname+location.search);
 }
 document.getElementById("authSupportBtn")?.addEventListener("click",()=>openSupportRequest("unknown"));
