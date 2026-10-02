@@ -41,7 +41,8 @@ const ui={
  en:{back:"Back to Classora",chemistry:"Chemistry",interactive:"INTERACTIVE CHEMISTRY LAB",title:"Periodic Table of Elements",subtitle:"Explore all 118 elements in a colorful 3D table. Search, compare, learn and test yourself.",elements:"Elements",groups:"Groups",periods:"Periods",search:"Search by name, symbol or atomic number…",explore:"Explore",learn:"Learn",quiz:"Quiz",tapHint:"TAP ANY ELEMENT",tableTitle:"Interactive Periodic Table",shown:"shown",learnKicker:"LEARN BY CATEGORY",families:"Element Families",metalVsNon:"Metals, nonmetals and metalloids",metalLesson:"Metals usually conduct heat and electricity well. Nonmetals often behave differently, while metalloids share properties of both groups.",quickQuiz:"QUICK QUIZ",startQuiz:"Start quiz",labTools:"CHEMISTRY TOOLS",compareCombine:"Compare & combine",compare:"Compare two elements",compareSub:"See their properties side by side",compareBtn:"Compare",combine:"Combine elements",combineSub:"Educational examples of common compounds",combineBtn:"Show example",combineNote:"Concept explanation only — not laboratory instructions. Not every pair reacts directly.",atomicNumber:"Atomic number",atomicMass:"Atomic mass",state:"State",position:"Position",about:"About this element",uses:"Common uses / importance",addCompare:"Add to comparison",all:"All",solid:"Solid",liquid:"Liquid",gas:"Gas",unknown:"Predicted / uncertain",period:"Period",group:"Group",series:"f-block series",next:"Next question",correct:"Correct!",wrong:"Not quite",quizName:"Which element has this symbol?",quizSymbol:"What is the symbol for this element?",quizCategory:"Which family does this element belong to?",noCompound:"No simple classroom example is saved for this pair. Not every two elements form a direct compound.",compoundIntro:"A common educational example is",compareEmpty:"Choose two elements to compare.",randomElement:"Random element",illustration:"Educational illustration",pauseAnimation:"Pause animation",playAnimation:"Play animation",favorite:"Favorite",favorites:"Favorites"},
  ar:{back:"الرجوع إلى كلاسورا",chemistry:"الكيمياء",interactive:"مختبر كيمياء تفاعلي",title:"الجدول الدوري للعناصر",subtitle:"استكشف كل العناصر الـ118 بجدول ملون وثلاثي الأبعاد. ابحث، قارن، تعلّم واختبر نفسك.",elements:"عنصر",groups:"مجموعة",periods:"دورات",search:"ابحث بالاسم أو الرمز أو الرقم الذري…",explore:"استكشاف",learn:"تعلّم",quiz:"اختبار",tapHint:"اضغط على أي عنصر",tableTitle:"الجدول الدوري التفاعلي",shown:"ظاهر",learnKicker:"تعلّم حسب التصنيف",families:"عائلات العناصر",metalVsNon:"الفلزات واللافلزات وأشباه الفلزات",metalLesson:"الفلزات عادةً توصل الحرارة والكهرباء بشكل جيد، واللافلزات تختلف عنها في صفاتها، بينما أشباه الفلزات تجمع صفات من الجهتين.",quickQuiz:"اختبار سريع",startQuiz:"ابدأ الاختبار",labTools:"أدوات الكيمياء",compareCombine:"قارن وادمج",compare:"قارن عنصرين",compareSub:"شوف خصائصهم جنب بعض",compareBtn:"قارن",combine:"دمج عنصرين",combineSub:"أمثلة تعليمية على مركبات شائعة",combineBtn:"اعرض مثال",combineNote:"شرح للمفهوم فقط — مش تعليمات لمختبر. مش كل عنصرين بتفاعلوا مباشرة.",atomicNumber:"الرقم الذري",atomicMass:"الكتلة الذرية",state:"الحالة",position:"الموقع",about:"عن العنصر",uses:"استخدامات / أهمية شائعة",addCompare:"أضف للمقارنة",all:"الكل",solid:"صلب",liquid:"سائل",gas:"غاز",unknown:"متوقعة / غير مؤكدة",period:"الدورة",group:"المجموعة",series:"سلسلة f",next:"السؤال التالي",correct:"صح!",wrong:"مش بالزبط",quizName:"أي عنصر عنده هذا الرمز؟",quizSymbol:"شو رمز هذا العنصر؟",quizCategory:"لأي عائلة بنتمي هذا العنصر؟",noCompound:"ما في مثال مدرسي بسيط محفوظ لهالزوج. مش كل عنصرين بكونوا مركب مباشر.",compoundIntro:"مثال تعليمي شائع هو",compareEmpty:"اختار عنصرين للمقارنة.",randomElement:"عنصر عشوائي",illustration:"صورة توضيحية تعليمية",pauseAnimation:"إيقاف الحركة",playAnimation:"تشغيل الحركة",favorite:"مفضلة",favorites:"المفضلة"}
 };
-let lang=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
+const requestedLang=new URLSearchParams(location.search).get("lang");
+let lang=requestedLang==="ar"?"ar":requestedLang==="en"?"en":(localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en");
 const $=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];
 const visualCache=new Map();
 const thumbnailCache=new Map();
@@ -231,11 +232,20 @@ $("#searchInput").addEventListener("input",e=>{search=e.target.value;scheduleTab
 $("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTableRender()};
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
 $("#backBtn").onclick=()=>{
+ if(window.parent!==window){
+   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table"},location.origin);
+   return;
+ }
  sessionStorage.setItem("classora_returning_from_subject","1");
- const sameOriginRef=(()=>{try{return document.referrer&&new URL(document.referrer).origin===location.origin}catch{return false}})();
- if(sameOriginRef&&history.length>1)history.back();
- else location.replace("../");
+ location.replace("../#lobby");
 };
 window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
+window.addEventListener("message",event=>{
+ if(event.origin!==location.origin)return;
+ if(event.data?.type==="classora-language"){
+   lang=event.data.lang==="ar"?"ar":"en";
+   applyLanguage();
+ }
+});
 applyLanguage();
 })();

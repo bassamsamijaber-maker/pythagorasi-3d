@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v56-periodic-performance-hotfix";
+const CACHE_NAME="classora-v57-embedded-periodic";
 const APP_SHELL=[
   "./",
   "./index.html",
