@@ -172,6 +172,11 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.auth.uid == uid
         && request.resource.data.profileId is string
+        && !request.resource.data.keys().hasAny([
+          "recoveryKeyHash",
+          "recoveryKeyVersion",
+          "recoveryKeySetAt"
+        ])
         && get(/databases/$(database)/documents/profileIds/$(request.resource.data.profileId)).data.uid == request.auth.uid;
 
       allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
@@ -181,6 +186,11 @@ service cloud.firestore {
         || (
           signedIn()
           && request.auth.uid == uid
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+            "recoveryKeyHash",
+            "recoveryKeyVersion",
+            "recoveryKeySetAt"
+          ])
           && (
             (
               "profileId" in resource.data
