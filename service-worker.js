@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v51-live-reliability";
+const CACHE_NAME="classora-v52-quiet-entry";
 const APP_SHELL=[
   "./",
   "./index.html",

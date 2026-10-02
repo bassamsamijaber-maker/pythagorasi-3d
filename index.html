@@ -4572,18 +4572,6 @@ button{touch-action:manipulation}
       <div class="admin-custom-buttons" id="adminCustomButtons"></div>
     </section>
 
-    <section class="lobby-live-competitions hidden" id="lobbyLiveCompetitions">
-      <div class="lobby-live-competitions-head">
-        <div>
-          <span class="live-discovery-kicker">LIVE NOW</span>
-          <h3 id="lobbyLiveCompetitionsTitle">🏆 مسابقات شغّالة هسا</h3>
-          <p id="lobbyLiveCompetitionsSub">اضغط دخول وادخل مباشرة للمسابقة عن بُعد.</p>
-        </div>
-        <span class="live-pulse-dot">● LIVE</span>
-      </div>
-      <div class="lobby-live-competitions-list" id="lobbyLiveCompetitionsList"></div>
-    </section>
-
     <section class="student-upcoming-events hidden" id="studentUpcomingEvents">
       <div class="student-upcoming-head">
         <div>
@@ -6180,7 +6168,7 @@ button{touch-action:manipulation}
             <label>طريقة العرض
               <select id="compQuickAudienceMode">
                 <option value="projector">📺 صف / بروجكتر</option>
-                <option value="remote">🌍 عن بُعد — تظهر بالموقع</option>
+                <option value="remote">🌍 عن بُعد — الدخول بالكود</option>
               </select>
             </label>
           </div>
@@ -6226,7 +6214,7 @@ button{touch-action:manipulation}
         <label>طريقة العرض
           <select id="compBuilderAudienceMode">
             <option value="projector">📺 صف / بروجكتر</option>
-            <option value="remote">🌍 عن بُعد — تظهر بالموقع</option>
+            <option value="remote">🌍 عن بُعد — الدخول بالكود</option>
           </select>
         </label>
       </div>
@@ -6689,7 +6677,7 @@ function applySavedAccountState(profile){
         document.getElementById("aInput").value=pretty(Number(state.model.a));
         document.getElementById("bInput").value=pretty(Number(state.model.b));
         document.getElementById("cInput").value=pretty(Number(state.model.c)||Math.sqrt(Number(state.model.a)**2+Number(state.model.b)**2));
-        applyChange();
+        applyChange({silent:true});
       }
       if(Array.isArray(state.aiHistory)&&state.aiHistory.length){
         const chatEl=document.getElementById("chat");
@@ -7115,7 +7103,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
         rememberLoginForTwoMonths();
         paintUser(cred.user,saved);
         await logStudentActivity("account_created",`أنشأ الحساب وانضم إلى صف ${joinData.className||""}`,"");
-        showToast(`👋 أهلًا ${displayName}! انضممت إلى ${joinData.className||"الصف"}.`);
+        showToast(`👋 أهلًا ${escapeHtml(displayName)}!`);
       }catch(joinErr){
         console.error("class join during signup",joinErr);
         try{await deleteUser(cred.user)}catch{}
@@ -8313,7 +8301,7 @@ function readTriangleValues(){
   return[a,b,c];
 }
 
-function applyChange(){
+function applyChange({silent=false}={}){
   document.getElementById("proofStatus").classList.remove("show");
   document.getElementById("proofMeter").style.width="0%";
 
@@ -8321,7 +8309,7 @@ function applyChange(){
   try{
     [a,b,c]=readTriangleValues();
   }catch(err){
-    showToast("⚠️ "+err.message);
+    if(!silent)showToast("⚠️ "+err.message);
     return;
   }
 
@@ -8340,7 +8328,7 @@ function applyChange(){
   const text=`حسبنا <b>${roleText}</b> = <b>${pretty(solved)}</b>. القيم الآن: a = <b>${pretty(a)}</b>، b = <b>${pretty(b)}</b>، c = <b>${pretty(c)}</b> <b>(الوتر)</b>.`;
   document.getElementById("changeLog").innerHTML=text.replace(/<b>/g,"").replace(/<\/b>/g,"");
   lastChangeSummary=`حسبنا ${roleText} = ${pretty(solved)}. القيم الحالية: a=${pretty(a)}، b=${pretty(b)}، c=${pretty(c)} (الوتر).`;
-  showToast(text);
+  if(!silent)showToast(text);
 
   document.querySelectorAll(".preset").forEach(x=>{
     const pa=+x.dataset.a,pb=+x.dataset.b,pc=Math.sqrt(pa*pa+pb*pb);
@@ -11343,7 +11331,7 @@ const uiExactTranslations=new Map([
   ["🎲 الموقع يوزع عشوائي","🎲 Site assigns teams randomly"],
   ["👤 فردي — بدون فرق","👤 Solo — no teams"],
   ["📺 صف / بروجكتر","📺 Classroom / Projector"],
-  ["🌍 عن بُعد — تظهر بالموقع","🌍 Remote — visible on the site"],
+  ["🌍 عن بُعد — الدخول بالكود","🌍 Remote — join by code"],
   ["اختار فريقك","Choose Your Team"],
   ["🎯 الطالب يختار","🎯 Student chooses"],
   ["🎲 عشوائي من الموقع","🎲 Random assignment"],
@@ -15914,62 +15902,12 @@ function competitionStatusText(status){
         :adminLang("مباشر","Live");
 }
 function renderLobbyLiveCompetitions(){
-  const section=document.getElementById("lobbyLiveCompetitions");
-  const host=document.getElementById("lobbyLiveCompetitionsList");
-  if(!section||!host)return;
-  const rooms=lobbyCompetitionCache
-    .filter(r=>r.publishToLobby===true&&r.status!=="finished")
-    .slice(0,9);
-  window.ClassoraLiveCompetitions=rooms;
-  host.innerHTML="";
-  if(!rooms.length){
-    section.classList.add("hidden");
-    return;
-  }
-  section.classList.remove("hidden");
-  for(const room of rooms){
-    const card=document.createElement("article");
-    card.className="lobby-live-competition-card";
-    const mode=room.teamMode||"choice";
-    card.innerHTML=`
-      <h4>🏆 ${escapeHtml(room.title||adminLang("مسابقة مباشرة","Live competition"))}</h4>
-      <p>${escapeHtml(room.ownerName||adminLang("المعلم","Teacher"))} • ${escapeHtml(competitionStatusText(room.status))}</p>
-      <div class="lobby-live-comp-meta">
-        <span>${escapeHtml(competitionTeamModeText(mode))}</span>
-        <span>${escapeHtml(competitionAudienceText(room.audienceMode||"remote"))}</span>
-        <span>${escapeHtml(String(room.code||"------"))}</span>
-      </div>
-      <button class="apply">${adminLang("🚀 دخول المسابقة","🚀 Join competition")}</button>`;
-    card.querySelector("button").addEventListener("click",()=>{
-      openCompetitionModal();
-      document.getElementById("compJoinCode").value=room.code||"";
-      configureCompetitionJoinUI(room);
-      document.getElementById("compJoinStatus").textContent=adminLang(
-        `جاهز للدخول إلى «${room.title||"المسابقة"}».`,
-        `Ready to join “${room.title||"competition"}”.`
-      );
-    });
-    host.appendChild(card);
-  }
+  window.ClassoraLiveCompetitions=[];
 }
-
 function subscribeLobbyLiveCompetitions(){
-  if(!auth.currentUser)return;
   if(lobbyCompetitionUnsub){lobbyCompetitionUnsub();lobbyCompetitionUnsub=null}
-  try{
-    const q=query(collection(db,"competitions"),where("publishToLobby","==",true));
-    lobbyCompetitionUnsub=onSnapshot(q,snap=>{
-      lobbyCompetitionCache=snap.docs
-        .map(d=>({id:d.id,...d.data()}))
-        .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-      renderLobbyLiveCompetitions();
-    },err=>{
-      console.warn("live competition discovery",err);
-      document.getElementById("lobbyLiveCompetitions")?.classList.add("hidden");
-    });
-  }catch(err){
-    console.warn("live competition discovery",err);
-  }
+  lobbyCompetitionCache=[];
+  renderLobbyLiveCompetitions();
 }
 
 let liveCompetitionId=null;
@@ -16158,7 +16096,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamMode:options.teamMode,
       audienceMode:options.audienceMode,
-      publishToLobby:options.audienceMode==="remote",
+      publishToLobby:false,
       leaderboardToPlayers:options.audienceMode==="remote",
       teamAScore:0,teamBScore:0,currentQuestion:null,correctAnswer:null,
       createdAt:serverTimestamp()
@@ -16788,7 +16726,7 @@ async function applyCompetitionRoomSettings(){
     await updateDoc(doc(db,"competitions",liveCompetitionId),{
       teamMode,
       audienceMode,
-      publishToLobby:audienceMode==="remote",
+      publishToLobby:false,
       leaderboardToPlayers:audienceMode==="remote",
       teamAScore:0,
       teamBScore:0
@@ -18430,10 +18368,10 @@ function firestoreMs(value){
   }catch{return 0}
 }
 function shouldNotifyFirestoreItem(data,baseline,initialReady){
-  if(initialReady)return true;
-  const ms=firestoreMs(data?.createdAt||data?.joinedAt);
-  return baseline>0&&ms>baseline&&ms<Date.now()+60000;
+  // Initial snapshots restore state silently; only subsequent new events notify.
+  return initialReady;
 }
+
 async function startClassoraRealtimeNotifications(){
   const user=auth.currentUser,profile=window.PythagorasiUser;
   if(!user||!profile)return;
@@ -18464,25 +18402,6 @@ async function startClassoraRealtimeNotifications(){
         classoraNotificationUnsubs.push(un);
       }catch(err){console.warn("assignment notification setup",err)}
     }
-
-    let compReady=false;
-    try{
-      const q=query(collection(db,"competitions"),where("publishToLobby","==",true));
-      const un=onSnapshot(q,snap=>{
-        for(const change of snap.docChanges()){
-          if(change.type!=="added")continue;
-          const room={id:change.doc.id,...change.doc.data()};
-          if(room.status==="finished"||room.hidden===true||room.active===false)continue;
-          if(!shouldNotifyFirestoreItem(room,baseline,compReady))continue;
-          const title=currentUILanguage==="en"?"Live competition":"مسابقة جديدة";
-          let body=room.title||(currentUILanguage==="en"?"Classora Competition":"مسابقة Classora");
-          if(room.code)body+=" • "+(currentUILanguage==="en"?"Code ":"الكود ")+room.code;
-          classoraNotify(title,body,{type:"competition",eventKey:"competition:"+room.id});
-        }
-        compReady=true;
-      },err=>console.warn("competition notifications",err));
-      classoraNotificationUnsubs.push(un);
-    }catch(err){console.warn("competition notification setup",err)}
 
     let examReady=false;
     try{
