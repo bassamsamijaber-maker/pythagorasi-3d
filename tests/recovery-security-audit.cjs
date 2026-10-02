@@ -34,6 +34,8 @@ for(const collection of [
   assert(rules.includes(`match /${collection}/`),`server-only rules missing for ${collection}`);
 }
 assert((rules.match(/allow read, write: if false;/g)||[]).length>=6,"server-only recovery/support collections must deny direct client access");
+assert(rules.includes('"recoveryKeyHash"')&&rules.includes('"recoveryKeyVersion"')&&rules.includes('"recoveryKeySetAt"'),"recovery profile metadata protection missing");
+assert(rules.includes("affectedKeys().hasAny"),"client recovery metadata mutation guard missing");
 assert.equal(firebase.firestore?.rules,"firestore.rules","firebase.json must deploy firestore.rules");
 
 new Function(functions);
