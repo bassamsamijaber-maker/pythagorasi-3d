@@ -8231,8 +8231,9 @@ function startProof(){
   const status=document.getElementById("proofStatus");
   status.classList.add("show");
   document.getElementById("proofMeter").style.width="0%";
-  document.getElementById("proofText").innerHTML=
-    `بدأنا من <b>a² = ${pretty(currentA*currentA)}</b> و <b>b² = ${pretty(currentB*currentB)}</b>. الآن الرمل ينتقل إلى مربع <b>c²</b>.`;
+  document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+    ?`We started with <b>a² = ${pretty(currentA*currentA)}</b> and <b>b² = ${pretty(currentB*currentB)}</b>. The sand is now moving into the <b>c²</b> square.`
+    :`بدأنا من <b>a² = ${pretty(currentA*currentA)}</b> و <b>b² = ${pretty(currentB*currentB)}</b>. الآن الرمل ينتقل إلى مربع <b>c²</b>.`;
 
   showToast("▶ بدأ البرهان الحي: نجمع الرمل من a² و b² داخل c².");
 }
@@ -8274,14 +8275,17 @@ function updateProof(now){
   document.getElementById("proofMeter").style.width=`${Math.round(t*100)}%`;
 
   if(t<.33){
-    document.getElementById("proofText").innerHTML=
-      `المرحلة 1/3: نفرّغ الرمل من <b>a²</b> و <b>b²</b> ونبدأ جمع المساحتين.`;
+    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+      ?`Step 1/3: Empty the sand from <b>a²</b> and <b>b²</b> and begin combining the two areas.`
+      :`المرحلة 1/3: نفرّغ الرمل من <b>a²</b> و <b>b²</b> ونبدأ جمع المساحتين.`;
   }else if(t<.78){
-    document.getElementById("proofText").innerHTML=
-      `المرحلة 2/3: كل رمل ينتقل <b>بنفس لونه</b>: الذهبي من a² والأزرق من b² إلى c².`;
+    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+      ?`Step 2/3: Each group of sand keeps <b>its color</b>: gold from a² and blue from b² move into c².`
+      :`المرحلة 2/3: كل رمل ينتقل <b>بنفس لونه</b>: الذهبي من a² والأزرق من b² إلى c².`;
   }else{
-    document.getElementById("proofText").innerHTML=
-      `المرحلة 3/3: مربع <b>c²</b> يمتلئ بمجموع الكميتين تمامًا.`;
+    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+      ?`Step 3/3: The <b>c²</b> square fills exactly with the combined amount.`
+      :`المرحلة 3/3: مربع <b>c²</b> يمتلئ بمجموع الكميتين تمامًا.`;
   }
 
   if(t>=1){
@@ -8297,8 +8301,9 @@ function updateProof(now){
     btn.textContent="↻ شغّل البرهان مرة ثانية";
 
     document.getElementById("proofMeter").style.width="100%";
-    document.getElementById("proofText").innerHTML=
-      `✅ اكتمل البرهان: <b>${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}</b>، لذلك <b>a² + b² = c²</b>. كمية الرمل وصلت تمامًا إلى مساحة مربع الوتر.`;
+    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+      ?`✅ Proof complete: <b>${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}</b>, so <b>a² + b² = c²</b>. The sand exactly fills the square on the hypotenuse.`
+      :`✅ اكتمل البرهان: <b>${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}</b>، لذلك <b>a² + b² = c²</b>. كمية الرمل وصلت تمامًا إلى مساحة مربع الوتر.`;
 
     lastBotTopic="proof";
     lastBotAnswer=`شغّلنا البرهان الحي: نقلنا الرمل من مربعي a² و b² إلى c²، وامتلأ مربع c² بالمجموع تمامًا لأن ${pretty(currentA*currentA)} + ${pretty(currentB*currentB)} = ${pretty(currentC*currentC)}.`;
@@ -10213,7 +10218,7 @@ function collectStudentAssignmentAnswers(card,a){
 
 async function leaveClassAsStudent(classId,className="الصف"){
   if(!isStudentLike()||!auth.currentUser)return;
-  if(!confirm(`متأكد بدك تطلع من «${className}»؟`))return;
+  if(!uiConfirm(`متأكد بدك تطلع من «${className}»؟`,`Are you sure you want to leave “${className}”?`))return;
   try{
     await deleteDoc(doc(db,"classes",classId,"members",auth.currentUser.uid));
     const ids=(window.PythagorasiUser.classIds||[]).filter(x=>x!==classId);
@@ -10333,7 +10338,7 @@ async function loadStudentClasses(){
             const answers=collectStudentAssignmentAnswers(card,a);
             const unanswered=answers.filter(x=>!String(x.answer).trim()).length;
             if(unanswered){
-              if(!confirm(`في ${unanswered} أسئلة بدون جواب. تسلّم الوظيفة هيك؟`))return;
+              if(!uiConfirm(`في ${unanswered} أسئلة بدون جواب. تسلّم الوظيفة هيك؟`,`There are ${unanswered} unanswered questions. Submit the assignment anyway?`))return;
             }
             const auto=gradeAssignmentAutoQuestions(a.questions||[],answers);
             const manualMax=(a.questions||[]).filter(q=>q.type==="open").reduce((s,q)=>s+(Number(q.points)||0),0);
@@ -10491,7 +10496,7 @@ function bindCurriculumManager(box,c){
   });
   manager.querySelectorAll(".delete-custom-topic").forEach(btn=>btn.addEventListener("click",async e=>{
     e.preventDefault();e.stopPropagation();
-    const id=btn.dataset.topicId;if(!confirm("تحذف الموضوع المخصص من الصف؟"))return;
+    const id=btn.dataset.topicId;if(!uiConfirm("تحذف الموضوع المخصص من الصف؟","Delete this custom topic from the class?"))return;
     const custom=(c.customTopics||[]).filter(t=>t.id!==id);hidden=hidden.filter(x=>x!==id);
     try{await updateDoc(doc(db,"classes",c.id),{customTopics:custom,hiddenTopicIds:hidden,updatedAt:serverTimestamp()});showToast("تم حذف الموضوع.");loadTeacherClasses()}
     catch(err){console.error(err);showToast("تعذر حذف الموضوع.")}
@@ -10783,7 +10788,7 @@ async function renderTeacherClassCard(host,c){
   box.querySelectorAll(".edit-member-name").forEach(btn=>btn.addEventListener("click",async()=>{
     const uid=btn.dataset.uid,m=memberRows.find(x=>x.uid===uid);if(!m)return;
     const current=memberVisibleName(m);
-    const name=prompt("الاسم اللي بدك يظهر لهذا الطالب داخل الصف:",current);
+    const name=uiPrompt("الاسم اللي بدك يظهر لهذا الطالب داخل الصف:","Name to display for this student in the class:",current);
     if(name==null)return;
     const clean=name.trim().replace(/\s+/g," ").slice(0,40);
     if(clean.length<2){showToast("الاسم قصير.");return}
@@ -10805,7 +10810,7 @@ async function renderTeacherClassCard(host,c){
   }));
   box.querySelectorAll(".kick-student").forEach(btn=>btn.addEventListener("click",async()=>{
     const uid=btn.dataset.uid,name=btn.dataset.name||"الطالب";
-    if(!confirm(`إخراج ${name} من الصف؟`))return;
+    if(!uiConfirm(`إخراج ${name} من الصف؟`,`Remove ${name} from the class?`))return;
     try{
       await deleteDoc(doc(db,"classes",c.id,"members",uid));
       showToast(`تم إخراج ${name} من الصف.`);soundFx("submit");loadTeacherClasses();
@@ -10899,7 +10904,7 @@ async function renderTeacherClassCard(host,c){
   box.querySelectorAll(".transfer-owner-btn").forEach(btn=>btn.addEventListener("click",async()=>{
     if(!isOwner)return;
     const uid=btn.dataset.uid,name=btn.dataset.name||"المعلم";
-    if(!confirm(`تنقل ملكية «${c.name}» إلى ${name}؟ أنت رح تضل معلم مساعد بالصف.`))return;
+    if(!uiConfirm(`تنقل ملكية «${c.name}» إلى ${name}؟ أنت رح تضل معلم مساعد بالصف.`,`Transfer ownership of “${c.name}” to ${name}? You will remain a co-teacher in the class.`))return;
     try{
       await setDoc(doc(db,"classes",c.id,"teachers",auth.currentUser.uid),{
         uid:auth.currentUser.uid,displayName:window.PythagorasiUser.displayName||"معلم",
@@ -10917,8 +10922,8 @@ async function renderTeacherClassCard(host,c){
 
   const del=box.querySelector(".delete-class-btn");
   if(del)del.addEventListener("click",async()=>{
-    if(!confirm(`حذف صف «${c.name}»؟ هذا الإجراء لا يمكن التراجع عنه.`))return;
-    if(!confirm("تأكيد أخير: احذف الصف نهائيًا؟"))return;
+    if(!uiConfirm(`حذف صف «${c.name}»؟ هذا الإجراء لا يمكن التراجع عنه.`,`Delete class “${c.name}”? This action cannot be undone.`))return;
+    if(!uiConfirm("تأكيد أخير: احذف الصف نهائيًا؟","Final confirmation: permanently delete the class?"))return;
     try{
       try{await deleteDoc(doc(db,"classJoinCodes",c.code))}catch{}
       await deleteDoc(doc(db,"classes",c.id));
@@ -11830,6 +11835,9 @@ function translateTextValue(arText){
   if(currentUILanguage!=="en")return raw;
   return uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw);
 }
+function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?en:ar)}
+function uiPrompt(ar,en,value=""){return prompt(currentUILanguage==="en"?en:ar,value)}
+
 function translateElementNode(el){
   if(!(el instanceof Element))return;
   if(el.matches('script,style')||el.closest('[data-no-translate]'))return;
@@ -12150,8 +12158,8 @@ document.getElementById("deleteAccountBtn").addEventListener("click",async()=>{
     status.textContent="لأمان الحساب: اعمل تسجيل خروج، ادخل من جديد، وبعدها افتح الإعدادات واحذف الحساب.";
     soundFx("wrong");return;
   }
-  if(!confirm("متأكد بدك تحذف حسابك؟"))return;
-  if(!confirm("تأكيد أخير: الحساب رح ينحذف نهائيًا. أكمل؟"))return;
+  if(!uiConfirm("متأكد بدك تحذف حسابك؟","Are you sure you want to delete your account?"))return;
+  if(!uiConfirm("تأكيد أخير: الحساب رح ينحذف نهائيًا. أكمل؟","Final confirmation: your account will be permanently deleted. Continue?"))return;
   status.textContent="⏳ جاري حذف الحساب...";
   try{
     if(p.role==="student"){
