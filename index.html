@@ -14771,6 +14771,7 @@ function adminRenderPeople(){
         <div class="admin-detail-item"><small>${adminLang("نوع الدخول","AUTH PROVIDER")}</small><span>${escapeHtml(provider)}</span></div>
         <div class="admin-detail-item"><small>EMAIL</small><span class="${teacher&&u.email?"admin-email":""}">${escapeHtml(u.email||(teacher?"—":adminLang("بريد تقني داخلي","Internal auth email")))}</span></div>
         <div class="admin-detail-item"><small>PASSWORD</small><span class="admin-password-protected">🔒 ${escapeHtml(passwordText)}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("كلمة الأمان","SECURITY PHRASE")}</small><span>${u.securityPhraseHash?"✅ "+adminLang("مفعّلة ومشفّرة","Configured + hashed"):"—"}</span></div>
         <div class="admin-detail-item"><small>${adminLang("الصفوف","CLASSES")}</small><span>${memberships.length}</span></div>
         <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
       </div>
@@ -16645,7 +16646,7 @@ document.querySelectorAll("[data-open-admin-tab]").forEach(btn=>{
 function adminShowTab(tab){
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Controls"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Support","Controls"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
@@ -16653,6 +16654,7 @@ function adminShowTab(tab){
   if(tab==="content")adminLoadContentManager();
   if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
+  if(tab==="support")adminLoadSupportRequests();
   if(tab==="controls")adminLoadControls();
 }
 function openAdminPanel(){if(!requireSuperAdmin())return;applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
@@ -16718,6 +16720,403 @@ document.getElementById("adminRefreshContentBtn").addEventListener("click",admin
 document.getElementById("adminContentTypeFilter").addEventListener("change",adminRenderContentManager);
 document.getElementById("adminContentVisibilityFilter").addEventListener("change",adminRenderContentManager);
 
+
+
+
+/* -------------------- CLASSORA CHAT + SUPPORT -------------------- */
+const chatModal=document.getElementById("chatModal");
+const supportModal=document.getElementById("supportModal");
+let chatPublicProfiles=[];
+let activeChatPerson=null;
+let activeChatUnsub=null;
+let shakeSupportLast=0;
+
+function profileAvatarStyle(p){
+  const photo=String(p?.photoData||"");
+  return photo?'background-image:url("'+photo.replace(/"/g,"%22")+'")':"";
+}
+function chatRoleLabel(role){
+  return role==="teacher"?(currentUILanguage==="en"?"Teacher":"معلم"):(currentUILanguage==="en"?"Student":"طالب");
+}
+function renderChatPeople(host,rows){
+  host.innerHTML="";
+  const filtered=rows.filter(p=>p?.uid&&p.uid!==auth.currentUser?.uid);
+  if(!filtered.length){
+    host.innerHTML='<div class="cloud-note">'+(currentUILanguage==="en"?"No people found.":"ما في أشخاص.")+'</div>';
+    return;
+  }
+  for(const p of filtered){
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="chat-contact";
+    const avatar=document.createElement("span");
+    avatar.className="chat-contact-avatar";
+    if(p.photoData)avatar.style.backgroundImage='url("'+String(p.photoData).replace(/"/g,"%22")+'")';
+    else avatar.textContent=String(p.displayName||"?")[0]||"?";
+    const info=document.createElement("span");
+    const name=document.createElement("b");name.textContent=p.displayName||"مستخدم";
+    const meta=document.createElement("small");
+    meta.textContent=chatRoleLabel(p.role)+(p.className?" • "+p.className:"");
+    info.append(name,meta);
+    const arrow=document.createElement("span");arrow.textContent="›";
+    btn.append(avatar,info,arrow);
+    btn.addEventListener("click",()=>openDirectChat(p));
+    host.appendChild(btn);
+  }
+}
+
+async function loadPublicProfiles(){
+  try{
+    const snap=await getDocs(collection(db,"publicProfiles"));
+    chatPublicProfiles=snap.docs.map(d=>({uid:d.id,...d.data()}));
+  }catch(err){
+    console.warn("public profiles",err);
+    chatPublicProfiles=[];
+  }
+}
+
+async function loadChatClassPeople(){
+  const host=document.getElementById("chatClassPeople");
+  host.innerHTML='<div class="cloud-note">⏳</div>';
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  await loadPublicProfiles();
+  const publicMap=new Map(chatPublicProfiles.map(p=>[p.uid,p]));
+  const found=new Map();
+  try{
+    const classIds=new Set();
+    if(isTeacherLike()){
+      const managed=await getOwnedClasses(auth.currentUser.uid);
+      managed.forEach(c=>classIds.add(c.id));
+    }
+    (window.PythagorasiUser.classIds||[]).forEach(id=>classIds.add(id));
+
+    for(const classId of classIds){
+      let cls={id:classId,name:""};
+      try{
+        const classSnap=await getDoc(doc(db,"classes",classId));
+        if(classSnap.exists())cls={id:classId,...classSnap.data()};
+      }catch{}
+
+      try{
+        const members=await getDocs(collection(db,"classes",classId,"members"));
+        for(const m of members.docs){
+          if(m.id===auth.currentUser.uid)continue;
+          const md=m.data()||{};
+          const base=publicMap.get(m.id)||{uid:m.id,displayName:md.displayName||"طالب",role:"student",photoData:md.photoData||""};
+          found.set(m.id,{...base,className:cls.name||""});
+        }
+      }catch{}
+
+      if(cls.ownerId&&cls.ownerId!==auth.currentUser.uid){
+        const p=publicMap.get(cls.ownerId)||{uid:cls.ownerId,displayName:cls.ownerName||"المعلم",role:"teacher"};
+        found.set(cls.ownerId,{...p,className:cls.name||""});
+      }
+
+      try{
+        const teachers=await getDocs(collection(db,"classes",classId,"teachers"));
+        for(const t of teachers.docs){
+          if(t.id===auth.currentUser.uid)continue;
+          const td=t.data()||{};
+          const p=publicMap.get(t.id)||{uid:t.id,displayName:td.displayName||"المعلم",role:"teacher"};
+          found.set(t.id,{...p,className:cls.name||""});
+        }
+      }catch{}
+    }
+  }catch(err){console.warn("class chat people",err)}
+
+  const rows=[...found.values()].sort((a,b)=>String(a.displayName||"").localeCompare(String(b.displayName||"")));
+  renderChatPeople(host,rows);
+}
+
+function searchChatPeople(){
+  const q=normalizeStudentNameKey(document.getElementById("chatPeopleSearch").value);
+  const host=document.getElementById("chatSearchResults");
+  if(q.length<2){host.innerHTML="";return}
+  const rows=chatPublicProfiles
+    .filter(p=>p.uid!==auth.currentUser?.uid&&String(p.searchName||normalizeStudentNameKey(p.displayName)).includes(q))
+    .slice(0,30);
+  renderChatPeople(host,rows);
+}
+
+function directChatId(a,b){
+  return [String(a),String(b)].sort().join("__");
+}
+function chatTime(v){
+  try{
+    const d=v?.toDate?v.toDate():new Date(v||Date.now());
+    return d.toLocaleTimeString(currentUILanguage==="en"?"en-US":"ar",{hour:"2-digit",minute:"2-digit"});
+  }catch{return ""}
+}
+
+async function openDirectChat(person){
+  if(!auth.currentUser||!person?.uid)return;
+  activeChatPerson=person;
+  document.getElementById("chatThreadEmpty").classList.add("hidden");
+  document.getElementById("chatThreadActive").classList.remove("hidden");
+  document.getElementById("chatThreadName").textContent=person.displayName||"مستخدم";
+  document.getElementById("chatThreadRole").textContent=chatRoleLabel(person.role);
+  const chatId=directChatId(auth.currentUser.uid,person.uid);
+  const participants=[auth.currentUser.uid,person.uid].sort();
+
+  try{
+    await setDoc(doc(db,"chats",chatId),{
+      participantIds:participants,
+      participantNames:{
+        [auth.currentUser.uid]:window.PythagorasiUser?.displayName||"مستخدم",
+        [person.uid]:person.displayName||"مستخدم"
+      },
+      updatedAt:serverTimestamp()
+    },{merge:true});
+  }catch(err){
+    console.error("chat create",err);
+    showToast(currentUILanguage==="en"?"Could not open chat.":"تعذر فتح المحادثة.");
+    return;
+  }
+
+  if(activeChatUnsub){try{activeChatUnsub()}catch{}}
+  activeChatUnsub=onSnapshot(collection(db,"chats",chatId,"messages"),snap=>{
+    const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+    const host=document.getElementById("chatMessages");
+    host.innerHTML="";
+    for(const m of rows.slice(-150)){
+      const div=document.createElement("div");
+      div.className="chat-bubble "+(m.senderUid===auth.currentUser.uid?"mine":"theirs");
+      const body=document.createElement("span");body.textContent=m.text||"";
+      const time=document.createElement("time");time.textContent=chatTime(m.createdAt);
+      div.append(body,time);
+      host.appendChild(div);
+    }
+    requestAnimationFrame(()=>{host.scrollTop=host.scrollHeight});
+  },err=>console.warn("chat messages",err));
+}
+
+async function sendChatMessage(){
+  if(!auth.currentUser||!activeChatPerson)return;
+  const input=document.getElementById("chatMessageInput");
+  const text=input.value.trim();
+  if(!text)return;
+  const chatId=directChatId(auth.currentUser.uid,activeChatPerson.uid);
+  input.value="";
+  try{
+    await addDoc(collection(db,"chats",chatId,"messages"),{
+      senderUid:auth.currentUser.uid,
+      text:text.slice(0,2000),
+      createdAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,"chats",chatId),{
+      lastMessage:text.slice(0,180),
+      lastSenderUid:auth.currentUser.uid,
+      updatedAt:serverTimestamp()
+    });
+  }catch(err){
+    console.error("send chat",err);
+    showToast(currentUILanguage==="en"?"Could not send message.":"تعذر إرسال الرسالة.");
+  }
+}
+
+async function openChat(){
+  if(!auth.currentUser){authGate.classList.add("show");return}
+  chatModal.classList.add("open");
+  document.getElementById("chatPeopleSearch").value="";
+  document.getElementById("chatSearchResults").innerHTML="";
+  await loadChatClassPeople();
+}
+function closeChat(){
+  chatModal.classList.remove("open");
+  if(activeChatUnsub){try{activeChatUnsub()}catch{}activeChatUnsub=null}
+}
+document.getElementById("lobbyChatBtn").addEventListener("click",openChat);
+document.getElementById("closeChatModal").addEventListener("click",closeChat);
+chatModal.addEventListener("click",e=>{if(e.target===chatModal)closeChat()});
+document.getElementById("chatPeopleSearch").addEventListener("input",searchChatPeople);
+document.getElementById("chatSendBtn").addEventListener("click",sendChatMessage);
+document.getElementById("chatMessageInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChatMessage()}
+});
+document.getElementById("chatReportUserBtn").addEventListener("click",()=>{
+  if(!activeChatPerson)return;
+  openSupport("report_user");
+  document.getElementById("supportAccountIdentifier").value=activeChatPerson.displayName||activeChatPerson.uid;
+  document.getElementById("supportMessage").value="بلاغ عن مستخدم: "+(activeChatPerson.displayName||"")+" • UID "+activeChatPerson.uid+"\n";
+});
+
+async function resolveSupportUid(identifier){
+  if(auth.currentUser)return auth.currentUser.uid;
+  const raw=String(identifier||"").trim();
+  if(raw.length<2)return "";
+  try{
+    const s=await getDoc(doc(db,"studentLoginAliases",studentLoginAliasId(raw)));
+    if(s.exists()&&s.data()?.uid)return s.data().uid;
+  }catch{}
+  try{
+    const t=await getDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(raw)));
+    if(t.exists()&&t.data()?.uid)return t.data().uid;
+  }catch{}
+  return "";
+}
+
+function openSupport(type=""){
+  if(type)document.getElementById("supportType").value=type;
+  if(auth.currentUser&&window.PythagorasiUser){
+    document.getElementById("supportAccountIdentifier").value=
+      window.PythagorasiUser.loginName||window.PythagorasiUser.displayName||auth.currentUser.email||"";
+  }
+  document.getElementById("supportStatus").textContent="";
+  document.getElementById("supportShakeToggleBtn").textContent=
+    localStorage.getItem("classora_shake_support")==="1"?"📳 هز الهاتف: مفعّل":"📳 هز الهاتف للدعم";
+  supportModal.classList.add("open");
+}
+function closeSupport(){supportModal.classList.remove("open")}
+
+async function submitSupportRequest(){
+  const type=document.getElementById("supportType").value;
+  const identifier=document.getElementById("supportAccountIdentifier").value.trim();
+  const phrase=document.getElementById("supportSecurityPhrase").value;
+  const message=document.getElementById("supportMessage").value.trim();
+  const status=document.getElementById("supportStatus");
+  if(message.length<5){status.textContent="اكتب شرح للمشكلة.";return}
+  const btn=document.getElementById("submitSupportBtn");
+  btn.disabled=true;status.textContent="⏳ جاري إرسال الطلب...";
+  try{
+    const claimedUid=await resolveSupportUid(identifier);
+    const proof=claimedUid&&normalizeSecurityPhrase(phrase).length>=4
+      ?await securityPhraseHash(claimedUid,phrase):"";
+    const createdBy=auth.currentUser?.uid||"";
+    await addDoc(collection(db,"supportRequests"),{
+      type,
+      accountIdentifier:identifier.slice(0,80),
+      claimedUid,
+      securityProofHash:proof,
+      message:message.slice(0,1500),
+      createdBy,
+      createdByName:window.PythagorasiUser?.displayName||"",
+      status:"open",
+      createdAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+
+    if(type==="forgot_password"&&identifier.includes("@")){
+      try{await sendPasswordResetEmail(auth,identifier.toLowerCase())}catch{}
+    }
+    status.textContent="تم إرسال الطلب للإدارة ✅";
+    document.getElementById("supportSecurityPhrase").value="";
+    document.getElementById("supportMessage").value="";
+  }catch(err){
+    console.error("support submit",err);
+    status.textContent="تعذر إرسال الطلب. تأكد من اتصالك وحاول مرة ثانية.";
+  }finally{btn.disabled=false}
+}
+
+async function setShakeSupportEnabled(enable=true){
+  if(enable&&typeof DeviceMotionEvent!=="undefined"&&typeof DeviceMotionEvent.requestPermission==="function"){
+    try{
+      const p=await DeviceMotionEvent.requestPermission();
+      if(p!=="granted"){showToast("لازم تسمح بحساس الحركة أولًا.");return false}
+    }catch{return false}
+  }
+  localStorage.setItem("classora_shake_support",enable?"1":"0");
+  refreshSettingsUI();
+  document.getElementById("supportShakeToggleBtn").textContent=enable?"📳 هز الهاتف: مفعّل":"📳 هز الهاتف للدعم";
+  return true;
+}
+async function toggleShakeSupport(){
+  const enabled=localStorage.getItem("classora_shake_support")==="1";
+  await setShakeSupportEnabled(!enabled);
+}
+window.addEventListener("devicemotion",e=>{
+  if(localStorage.getItem("classora_shake_support")!=="1")return;
+  const a=e.accelerationIncludingGravity;if(!a)return;
+  const strength=Math.sqrt((a.x||0)**2+(a.y||0)**2+(a.z||0)**2);
+  const now=Date.now();
+  if(strength>24&&now-shakeSupportLast>2200){
+    shakeSupportLast=now;
+    openSupport("bug");
+    document.getElementById("supportMessage").value="تم فتح الدعم عن طريق هز الهاتف.\n";
+  }
+},{passive:true});
+
+document.getElementById("authSupportBtn").addEventListener("click",()=>openSupport("forgot_password"));
+document.getElementById("lobbySupportBtn").addEventListener("click",()=>openSupport(""));
+document.getElementById("settingsSupportBtn").addEventListener("click",()=>{closeSettingsModal();openSupport("")});
+document.getElementById("settingsShakeSupportBtn").addEventListener("click",toggleShakeSupport);
+document.getElementById("supportShakeToggleBtn").addEventListener("click",toggleShakeSupport);
+document.getElementById("closeSupportModal").addEventListener("click",closeSupport);
+supportModal.addEventListener("click",e=>{if(e.target===supportModal)closeSupport()});
+document.getElementById("submitSupportBtn").addEventListener("click",submitSupportRequest);
+
+async function adminLoadSupportRequests(){
+  const host=document.getElementById("adminSupportList");
+  if(!host)return;
+  host.innerHTML='<div class="cloud-note">⏳ Loading...</div>';
+  try{
+    const snap=await getDocs(collection(db,"supportRequests"));
+    const rows=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    host.innerHTML="";
+    if(!rows.length){
+      host.innerHTML='<div class="cloud-note">'+adminLang("ما في طلبات دعم.","No support requests.")+'</div>';
+      return;
+    }
+    for(const r of rows){
+      const account=adminUsersCache.find(u=>u.uid===r.claimedUid);
+      const hasPhrase=!!account?.securityPhraseHash;
+      const proofOk=!!(hasPhrase&&r.securityProofHash&&account.securityPhraseHash===r.securityProofHash);
+      const card=document.createElement("div");
+      card.className="support-ticket";
+
+      const head=document.createElement("div");head.className="support-ticket-head";
+      const left=document.createElement("div");
+      const title=document.createElement("b");title.textContent=r.type||"support";
+      const meta=document.createElement("div");meta.className="support-ticket-meta";
+      meta.textContent=(r.accountIdentifier||r.createdByName||"—")+" • "+adminDate(r.createdAt);
+      left.append(title,meta);
+      const state=document.createElement("span");state.textContent=r.status==="resolved"?"✅":"🟡";
+      head.append(left,state);
+
+      const message=document.createElement("div");message.textContent=r.message||"";
+      const proof=document.createElement("div");
+      proof.className=proofOk?"support-proof-ok":"support-proof-no";
+      proof.textContent=proofOk
+        ?"✅ كلمة الأمان مطابقة للحساب"
+        :hasPhrase&&r.securityProofHash
+          ?"⚠️ كلمة الأمان غير مطابقة"
+          :hasPhrase?"🛡️ للحساب كلمة أمان — لم تُرسل":"— لا توجد كلمة أمان مفعّلة";
+
+      card.append(head,message,proof);
+      if(account){
+        const accountMeta=document.createElement("div");accountMeta.className="admin-meta";
+        accountMeta.textContent="Account: "+(account.displayName||"")+" • #"+(account.profileId||"—")+" • UID "+account.uid;
+        card.appendChild(accountMeta);
+      }
+      const actions=document.createElement("div");actions.className="support-ticket-actions";
+      const resolve=document.createElement("button");resolve.className="exam-secondary support-resolve";
+      resolve.textContent=r.status==="resolved"?"إعادة فتح":"✅ تم الحل";
+      const del=document.createElement("button");del.className="danger support-delete";del.textContent="🗑 حذف";
+      actions.append(resolve,del);card.appendChild(actions);
+
+      resolve.addEventListener("click",async()=>{
+        await updateDoc(doc(db,"supportRequests",r.id),{
+          status:r.status==="resolved"?"open":"resolved",
+          resolvedAt:serverTimestamp(),
+          resolvedBy:auth.currentUser.uid,
+          updatedAt:serverTimestamp()
+        });
+        adminLoadSupportRequests();
+      });
+      del.addEventListener("click",async()=>{
+        if(confirm("حذف طلب الدعم؟")){
+          await deleteDoc(doc(db,"supportRequests",r.id));
+          adminLoadSupportRequests();
+        }
+      });
+      host.appendChild(card);
+    }
+  }catch(err){
+    console.error("support admin",err);
+    host.innerHTML='<div class="cloud-note">تعذر تحميل طلبات الدعم.</div>';
+  }
+}
+document.getElementById("adminRefreshSupportBtn")?.addEventListener("click",adminLoadSupportRequests);
 
 
 /* -------------------- LIVE CLASS COMPETITION -------------------- */
@@ -18790,6 +19189,7 @@ document.addEventListener("click",event=>{
   if(classoraHasVerifiedSession())return;
   const insideAuth=event.target?.closest?.("#authGate");
   if(insideAuth)return;
+  if(event.target?.closest?.("#supportModal"))return;
   const protectedTarget=event.target?.closest?.("#platformLobby,.shell,.modal");
   if(protectedTarget){
     event.preventDefault();
@@ -18840,8 +19240,9 @@ function classoraSyncOverlayState(preferred=null){
 
     const authVisible=document.getElementById("authGate")?.classList.contains("show");
     if(authVisible&&open.length){
-      for(const modal of open)modal.classList.remove("open");
-      open=[];
+      const support=open.find(m=>m.id==="supportModal");
+      for(const modal of open)if(modal!==support)modal.classList.remove("open");
+      open=support?[support]:[];
     }
 
     if(authVisible||open.length)classoraLockBackground();
