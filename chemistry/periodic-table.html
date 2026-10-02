@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07121d">
+<title>Periodic Table • Classora</title>
+<link rel="stylesheet" href="./periodic-table.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="topbar">
+  <button class="back-btn" id="backBtn" type="button">← <span data-i18n="back">Back to Classora</span></button>
+  <div class="brand"><span class="brand-mark">C</span><div><b>Classora</b><small data-i18n="chemistry">Chemistry</small></div></div>
+  <div class="top-actions">
+    <button class="lang-btn" id="langEn" type="button">EN</button>
+    <button class="lang-btn" id="langAr" type="button">ع</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow" data-i18n="interactive">INTERACTIVE CHEMISTRY LAB</span>
+    <h1 data-i18n="title">Periodic Table of Elements</h1>
+    <p data-i18n="subtitle">Explore all 118 elements in a colorful 3D table. Search, compare, learn and test yourself.</p>
+    <div class="hero-stats">
+      <div><b>118</b><span data-i18n="elements">Elements</span></div>
+      <div><b>18</b><span data-i18n="groups">Groups</span></div>
+      <div><b>7</b><span data-i18n="periods">Periods</span></div>
+    </div>
+  </div>
+  <div class="hero-atom" aria-hidden="true">
+    <div class="nucleus"><span>⚛</span></div>
+    <i class="orbit o1"><b></b></i><i class="orbit o2"><b></b></i><i class="orbit o3"><b></b></i>
+  </div>
+</section>
+
+<section class="control-panel">
+  <div class="search-wrap">
+    <span>⌕</span>
+    <input id="searchInput" autocomplete="off" data-i18n-placeholder="search" placeholder="Search by name, symbol or atomic number…">
+    <button id="clearSearch" type="button" aria-label="Clear">×</button>
+  </div>
+  <div class="mode-tabs">
+    <button class="mode active" data-mode="explore" type="button">🧭 <span data-i18n="explore">Explore</span></button>
+    <button class="mode" data-mode="learn" type="button">📚 <span data-i18n="learn">Learn</span></button>
+    <button class="mode" data-mode="quiz" type="button">⚡ <span data-i18n="quiz">Quiz</span></button>
+  </div>
+  <div class="filters" id="filters"></div>
+</section>
+
+<section class="explore-view mode-view active" id="exploreView">
+  <div class="section-head">
+    <div><span class="kicker" data-i18n="tapHint">TAP ANY ELEMENT</span><h2 data-i18n="tableTitle">Interactive Periodic Table</h2></div>
+    <div class="visible-count"><b id="visibleCount">118</b><span data-i18n="shown">shown</span></div>
+  </div>
+  <div class="table-shell">
+    <div class="group-numbers" id="groupNumbers"></div>
+    <div class="periodic-scroll">
+      <div class="periodic-grid" id="periodicGrid" aria-label="Periodic table"></div>
+    </div>
+  </div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section class="learn-view mode-view" id="learnView">
+  <div class="section-head"><div><span class="kicker" data-i18n="learnKicker">LEARN BY CATEGORY</span><h2 data-i18n="families">Element Families</h2></div></div>
+  <div class="family-grid" id="familyGrid"></div>
+  <article class="lesson-card">
+    <div class="lesson-icon">⚗️</div>
+    <div>
+      <h3 data-i18n="metalVsNon">Metals, nonmetals and metalloids</h3>
+      <p data-i18n="metalLesson">Metals usually conduct heat and electricity well. Nonmetals often behave differently, while metalloids share properties of both groups.</p>
+    </div>
+  </article>
+</section>
+
+<section class="quiz-view mode-view" id="quizView">
+  <div class="quiz-card">
+    <div class="quiz-top"><span class="kicker" data-i18n="quickQuiz">QUICK QUIZ</span><span id="quizScore">0 / 0</span></div>
+    <h2 id="quizQuestion">Ready?</h2>
+    <div class="quiz-answers" id="quizAnswers"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <button class="primary" id="nextQuizBtn" type="button" data-i18n="startQuiz">Start quiz</button>
+  </div>
+</section>
+
+<section class="chem-tools">
+  <div class="section-head"><div><span class="kicker" data-i18n="labTools">CHEMISTRY TOOLS</span><h2 data-i18n="compareCombine">Compare & combine</h2></div></div>
+  <div class="tools-grid">
+    <article class="tool-card">
+      <div class="tool-title"><span>⇄</span><div><b data-i18n="compare">Compare two elements</b><small data-i18n="compareSub">See their properties side by side</small></div></div>
+      <div class="select-row"><select id="compareA"></select><select id="compareB"></select></div>
+      <button class="secondary" id="compareBtn" type="button" data-i18n="compareBtn">Compare</button>
+      <div class="compare-result" id="compareResult"></div>
+    </article>
+    <article class="tool-card">
+      <div class="tool-title"><span>🧪</span><div><b data-i18n="combine">Combine elements</b><small data-i18n="combineSub">Educational examples of common compounds</small></div></div>
+      <div class="select-row"><select id="combineA"></select><select id="combineB"></select></div>
+      <button class="secondary" id="combineBtn" type="button" data-i18n="combineBtn">Show example</button>
+      <div class="combine-result" id="combineResult"></div>
+      <p class="safety-note" data-i18n="combineNote">Concept explanation only — not laboratory instructions. Not every pair reacts directly.</p>
+    </article>
+  </div>
+</section>
+</main>
+
+<div class="element-modal" id="elementModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <article class="element-sheet">
+    <button class="modal-close" data-close-modal type="button">×</button>
+    <div class="element-visual-wrap"><img id="elementVisual" alt=""></div>
+    <div class="element-detail">
+      <div class="detail-head">
+        <span class="detail-number" id="detailNumber"></span>
+        <span class="detail-category" id="detailCategory"></span>
+      </div>
+      <div class="symbol-lockup"><strong id="detailSymbol"></strong><div><h2 id="detailName"></h2><span id="detailEnglish"></span></div></div>
+      <div class="property-grid">
+        <div><small data-i18n="atomicNumber">Atomic number</small><b id="detailAtomic"></b></div>
+        <div><small data-i18n="atomicMass">Atomic mass</small><b id="detailMass"></b></div>
+        <div><small data-i18n="state">State</small><b id="detailState"></b></div>
+        <div><small data-i18n="position">Position</small><b id="detailPosition"></b></div>
+      </div>
+      <div class="detail-copy"><h3 data-i18n="about">About this element</h3><p id="detailDescription"></p></div>
+      <div class="detail-copy"><h3 data-i18n="uses">Common uses / importance</h3><p id="detailUses"></p></div>
+      <button class="primary" id="compareFromModal" type="button" data-i18n="addCompare">Add to comparison</button>
+    </div>
+  </article>
+</div>
+
+<script src="./periodic-table.js"></script>
+</body>
+</html>
