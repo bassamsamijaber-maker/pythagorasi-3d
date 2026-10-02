@@ -4537,7 +4537,10 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 }
 
 </style>
-</head>
+<style>
+#supportMyTicketsSection{margin-top:20px;border-top:1px solid #ffffff20;padding-top:12px}.support-ticket textarea{width:100%;min-height:80px;margin-top:10px}.chat-contact-list{min-height:20px}#chatBackContactsBtn{display:none}#chatThreadActive{min-height:0}#chatSendBtn:disabled{opacity:.5}#chatThreadActive .chat-messages{overflow-wrap:anywhere}
+@media(max-width:700px){#chatModal .chat-thread-pane{display:none}#chatModal.chat-thread-open .chat-contacts-pane{display:none}#chatModal.chat-thread-open .chat-thread-pane{display:flex;min-height:0}#chatModal.chat-thread-open #chatThreadActive{display:flex;flex:1;flex-direction:column;min-height:0}#chatModal.chat-thread-open .chat-messages{flex:1;min-height:0;height:auto}#chatBackContactsBtn{display:inline-flex}.chat-thread-head{flex-wrap:wrap}.chat-compose{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
+</style></head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
   <div class="classora-intro-core">
@@ -5711,8 +5714,8 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <section class="settings-card" id="securityPhraseSettingsCard">
         <h3>🛡️ كلمة أمان الحساب</h3>
         <div class="settings-note">اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.</div>
-        <input id="securityPhraseInput" type="password" minlength="4" maxlength="64" autocomplete="new-password" placeholder="كلمة الأمان">
-        <input id="securityPhraseConfirm" type="password" minlength="4" maxlength="64" autocomplete="new-password" placeholder="تأكيد كلمة الأمان">
+        <input id="securityPhraseCurrentPassword" type="password" maxlength="64" autocomplete="current-password" placeholder="كلمة سر الحساب الحالية لتأكيد الحفظ"><input id="securityPhraseInput" type="password" minlength="8" maxlength="64" autocomplete="new-password" placeholder="كلمة الأمان">
+        <input id="securityPhraseConfirm" type="password" minlength="8" maxlength="64" autocomplete="new-password" placeholder="تأكيد كلمة الأمان">
         <button class="exam-secondary" id="saveSecurityPhraseBtn">حفظ كلمة الأمان</button>
         <div class="settings-note" id="securityPhraseState">غير مفعّلة بعد.</div>
       </section>
@@ -5776,7 +5779,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <div class="chat-search-wrap">
           <input id="chatPeopleSearch" maxlength="40" placeholder="ابحث عن طالب أو معلم...">
         </div>
-        <div class="chat-contact-section-title">👥 أشخاص من صفوفك</div>
+        <div class="chat-contact-section-title">💬 آخر المحادثات</div><div id="chatRecentPeople" class="chat-contact-list"></div><div class="chat-contact-section-title">👥 أشخاص من صفوفك</div>
         <div id="chatClassPeople" class="chat-contact-list"></div>
         <div class="chat-contact-section-title">🔎 نتائج البحث</div>
         <div id="chatSearchResults" class="chat-contact-list"></div>
@@ -5789,7 +5792,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
               <b id="chatThreadName">—</b>
               <small id="chatThreadRole">—</small>
             </div>
-            <button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
+            <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
           </div>
           <div class="chat-messages" id="chatMessages"></div>
           <div class="chat-compose">
@@ -5836,7 +5839,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       <button class="apply" id="submitSupportBtn">إرسال الطلب</button>
       <button class="exam-secondary" id="supportShakeToggleBtn">📳 هز الهاتف للدعم</button>
     </div>
-    <div class="cloud-note" id="supportStatus"></div>
+    <div class="cloud-note" id="supportStatus" role="status" aria-live="polite"></div><section id="supportMyTicketsSection"><h3>طلباتك وردود الدعم</h3><div id="supportMyTickets"></div></section>
   </div>
 </div>
 
@@ -6549,13 +6552,13 @@ import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
-  reauthenticateWithCredential, EmailAuthProvider, linkWithCredential, sendPasswordResetEmail,
+  reauthenticateWithCredential, reauthenticateWithPopup, EmailAuthProvider, linkWithCredential, sendPasswordResetEmail,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
   query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
-  arrayUnion, arrayRemove
+  arrayUnion, arrayRemove, orderBy, limit
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
   getMessaging, getToken, onMessage, isSupported as isMessagingSupported
@@ -6718,7 +6721,7 @@ async function saveStudentLoginAlias(name,userOrUid,email){
   if(!uid)return;
   try{
     await setDoc(doc(db,"studentLoginAliases",studentLoginAliasId(clean)),{
-      uid,loginEmail:email,updatedAt:serverTimestamp()
+      uid,loginEmail:email,securityPhraseVersion:window.PythagorasiUser?.securityPhraseVersion||1,updatedAt:serverTimestamp()
     },{merge:true});
   }catch(err){console.warn("login alias save",err)}
 }
@@ -6740,7 +6743,7 @@ async function saveTeacherLoginAlias(value,userOrUid,email){
   if(!uid)return;
   try{
     await setDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(clean)),{
-      uid,loginEmail:String(email).trim().toLowerCase(),updatedAt:serverTimestamp()
+      uid,loginEmail:String(email).trim().toLowerCase(),securityPhraseVersion:window.PythagorasiUser?.securityPhraseVersion||1,updatedAt:serverTimestamp()
     },{merge:true});
   }catch(err){console.warn("teacher alias save",err)}
 }
@@ -6768,6 +6771,12 @@ async function syncPublicProfile(profile=window.PythagorasiUser,user=auth.curren
   try{await setDoc(doc(db,"publicProfiles",user.uid),publicData,{merge:true})}catch(err){console.warn("public profile sync",err)}
 }
 
+async function securityPhraseHashV2(uid,phrase){
+ const normalized=normalizeSecurityPhrase(phrase);if(!uid||normalized.length<4)return "";
+ const encoder=new TextEncoder(),key=await crypto.subtle.importKey("raw",encoder.encode(normalized),"PBKDF2",false,["deriveBits"]);
+ const bits=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:encoder.encode("classora-security-v2|"+uid),iterations:250000},key,256);
+ return [...new Uint8Array(bits)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
 function normalizeSecurityPhrase(value){
   return String(value||"").trim().toLowerCase().replace(/\s+/g," ").slice(0,64);
 }
@@ -10651,150 +10660,9 @@ async function loadStudentClasses(){
           card.querySelector(".submit-assignment-btn").addEventListener("click",async()=>{
             await loadSiteControls();
             if(studentFeatureBlocked("assignments")){
-              showToast(adminLang("تسليم الوظائف موقوف مؤقتًا من الإدارة.","Assignment submission is temporarily paused by the admin."));
-              return;
-            }
-            const answers=collectStudentAssignmentAnswers(card,a);
-            const unanswered=answers.filter(x=>!String(x.answer).trim()).length;
-            if(unanswered){
-              if(!uiConfirm(`في ${unanswered} أسئلة بدون جواب. تسلّم الوظيفة هيك؟`,`There are ${unanswered} unanswered questions. Submit the assignment anyway?`))return;
-            }
-            const auto=gradeAssignmentAutoQuestions(a.questions||[],answers);
-            const manualMax=(a.questions||[]).filter(q=>q.type==="open").reduce((s,q)=>s+(Number(q.points)||0),0);
-            try{
-              await setDoc(doc(db,"classes",classId,"assignments",a.id,"submissions",auth.currentUser.uid),{
-                studentUid:auth.currentUser.uid,
-                studentName:p.displayName||"طالب",
-                answers,autoScore:auto.score,autoMax:auto.max,manualMax,
-                totalPoints:total,teacherReviewed:manualMax===0,
-                manualScore:0,finalScore:manualMax===0?auto.score:null,
-                submittedAt:serverTimestamp()
-              });
-              await logStudentActivity("assignment_submit",`سلّم وظيفة: ${a.title||"وظيفة"}`,"pythagoras");
-              soundFx("submit");fxElement(card,"pop");
-              showToast(manualMax?`تم التسليم ✅ • التلقائي ${auto.score}/${auto.max} والباقي للمعلم`:`تم التسليم ✅ • العلامة ${auto.score}/${total}`);
-              loadStudentClasses();
-            }catch(err){console.error(err);showToast("تعذر تسليم الوظيفة.");soundFx("wrong")}
-          });
-        }
-        assignHost.appendChild(card);
-      }
-    }catch(err){
-      console.warn("student class inaccessible",classId,err);
-    }
-  }
-
-  // Clean stale class IDs after a teacher removes the student.
-  if(validIds.length!==ids.length){
-    try{
-      await setDoc(doc(db,"users",auth.currentUser.uid),{classIds:validIds,updatedAt:serverTimestamp()},{merge:true});
-      window.PythagorasiUser={...window.PythagorasiUser,classIds:validIds};
-      activeProfile=window.PythagorasiUser;
-    }catch{}
-  }
-
-  if(!host.children.length)host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';
-  if(!assignHost.children.length)assignHost.innerHTML='<div class="cloud-note">ما عندك وظائف حاليًا 🎉</div>';
-}
-
-async function createTeacherInvite(classId,className){
-  const code=await reserveUniqueCode("teacher_invite");
-  await setDoc(doc(db,"teacherInvites",code),{
-    code,classId,className,createdBy:auth.currentUser.uid,
-    createdByName:window.PythagorasiUser.displayName||"معلم",
-    active:true,createdAt:serverTimestamp()
-  });
-  return code;
-}
-document.getElementById("joinTeacherInviteBtn").addEventListener("click",async()=>{
-  if(!isTeacherLike()||!auth.currentUser)return;
-  const code=(document.getElementById("teacherInviteJoinCode").value||"").trim().toUpperCase();
-  const status=document.getElementById("teacherInviteJoinStatus");
-  if(code.length<4){status.textContent="اكتب كود الدعوة.";return}
-  status.textContent="⏳ جاري الانضمام...";
-  try{
-    const inv=await getDoc(doc(db,"teacherInvites",code));
-    if(!inv.exists()||!inv.data().active)throw new Error("bad-invite");
-    const data=inv.data(),classId=data.classId;
-    await setDoc(doc(db,"classes",classId,"teachers",auth.currentUser.uid),{
-      uid:auth.currentUser.uid,displayName:window.PythagorasiUser.displayName||"معلم",
-      inviteCode:code,joinedAt:serverTimestamp()
-    });
-    const ids=[...new Set([...(window.PythagorasiUser.teachingClassIds||[]),classId])];
-    await setDoc(doc(db,"users",auth.currentUser.uid),{teachingClassIds:ids,updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,teachingClassIds:ids};
-    activeProfile=window.PythagorasiUser;
-    try{await deleteDoc(doc(db,"teacherInvites",code))}catch{}
-    status.textContent=`✅ صرت معلّم مساعد في ${data.className||"الصف"}`;
-    document.getElementById("teacherInviteJoinCode").value="";
-    loadTeacherClasses();
-  }catch(err){
-    console.error(err);status.textContent="كود الدعوة غير صحيح أو انتهى.";
-  }
-});
-
-async function loadTeacherClasses(){
-  const host=document.getElementById("teacherClassesList");
-  host.innerHTML='<div class="cloud-note">⏳ جاري تحميل الصفوف...</div>';
-  if(!auth.currentUser)return;
-  try{
-    currentTeacherClasses=await getManagedClasses();
-    await repairManagedClassJoinCodes(currentTeacherClasses);
-    host.innerHTML="";
-    if(!currentTeacherClasses.length){
-      host.innerHTML='<div class="cloud-note">ما عندك صفوف.</div>';return;
-    }
-    for(const c of currentTeacherClasses){
-      await renderTeacherClassCard(host,c);
-    }
-  }catch(err){
-    console.error("teacher classes",err);
-    host.innerHTML='<div class="cloud-note">تعذر تحميل الصفوف.</div>';
-  }
-}
-
-
-function curriculumManagerHtml(c){
-  const hidden=new Set(c.hiddenTopicIds||[]);
-  const customs=(c.customTopics||[]).map(t=>normalizeCustomTopic(t,c.id));
-  const sections=allCurriculumSubjects().map(subject=>{
-    const items=[...baseTopicsForSubject(subject),...customs.filter(t=>t.subject===subject)];
-    const rows=items.map(t=>`
-      <label class="curriculum-topic-toggle">
-        <input type="checkbox" class="curriculum-visibility" data-topic-id="${escapeHtml(t.id)}" ${hidden.has(t.id)?"":"checked"}>
-        <span>${t.icon||"📘"} ${escapeHtml(t.title)}</span>
-        ${t.custom?`<button type="button" class="delete-custom-topic" data-topic-id="${escapeHtml(t.id)}">×</button>`:""}
-      </label>`).join("");
-    return `<details class="curriculum-subject">
-      <summary>${escapeHtml(subjectDisplayName(subject))} • ${items.filter(t=>!hidden.has(t.id)).length}/${items.length} ظاهر</summary>
-      <div class="curriculum-topic-list">${rows}</div>
-    </details>`;
-  }).join("");
-  return `
-    <div class="curriculum-manager" data-class-id="${escapeHtml(c.id)}">
-      <div class="cloud-note">✓ يعني الموضوع ظاهر لطلاب الصف. شيل العلامة لإخفائه.</div>
-      ${sections}
-      <div class="custom-topic-add">
-        <select class="custom-topic-subject">
-          <option value="math">رياضيات</option><option value="science">علوم</option>
-          <option value="arabic">عربي</option><option value="hebrew">عبري</option>
-          <option value="english">English</option><option value="geography">جغرافيا</option>
-        </select>
-        <input class="custom-topic-title" placeholder="اسم الموضوع الجديد">
-        <input class="custom-topic-example" placeholder="مثال قصير">
-        <textarea class="custom-topic-explanation" placeholder="اكتب شرح الموضوع اللي رح يظهر للطلاب..."></textarea>
-        <button class="exam-secondary add-custom-topic">＋ إضافة الموضوع للصف</button>
-      </div>
-      <div class="curriculum-status"></div>
-    </div>`;
-}
-async function saveClassHiddenTopics(classId,hiddenTopicIds){
-  await updateDoc(doc(db,"classes",classId),{hiddenTopicIds:[...new Set(hiddenTopicIds)],updatedAt:serverTimestamp()});
-}
-function bindCurriculumManager(box,c){
-  const manager=box.querySelector(".curriculum-manager");if(!manager)return;
-  let hidden=[...(c.hiddenTopicIds||[])];
-  manager.querySelectorAll(".curriculum-visibility").forEach(input=>input.addEventListener("change",async()=>{
+              showToast(adminLang("تسليم الوظائف موقوف مؤقتًا من الإدارة.","Assignment
+... 7570 bytes omitted ...
+orAll(".curriculum-visibility").forEach(input=>input.addEventListener("change",async()=>{
     const id=input.dataset.topicId;
     if(input.checked)hidden=hidden.filter(x=>x!==id);
     else if(!hidden.includes(id))hidden.push(id);
@@ -11397,6 +11265,63 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+ ["🏫 كود الصف أولًا", "🏫 Class code first"],
+ ["اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.", "Enter your class code, then continue with your name and password."],
+ ["متابعة ←", "Continue ←"],
+ ["تغيير كود الصف", "Change class code"],
+ ["اسم + كلمة سر", "Name + password"],
+ ["إيميل + كلمة سر", "Email + password"],
+ ["اسم الدخول", "Login name"],
+ ["G&nbsp;&nbsp; دخول بحساب Google", "G&nbsp;&nbsp; Sign in with Google"],
+ ["G دخول بحساب Google", "G Sign in with Google"],
+ ["🛟 تواصل مع الدعم", "🛟 Contact support"],
+ ["الدعم", "Support"],
+ ["🛟 مركز الدعم", "🛟 Support center"],
+ ["طلبات نسيان كلمة السر، مشاكل الحساب، البلاغات والاقتراحات.", "Password recovery, account issues, reports and suggestions."],
+ ["🛡️ كلمة أمان الحساب", "🛡️ Account security phrase"],
+ ["اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.", "Choose a memorable phrase. Only its hash is saved; even the admin cannot see the original phrase."],
+ ["حفظ كلمة الأمان", "Save security phrase"],
+ ["غير مفعّلة بعد.", "Not configured yet."],
+ ["🔐 دخول المعلم بالاسم أو الإيميل", "🔐 Teacher login by name or email"],
+ ["فعّل كلمة سر لحساب المعلم، وبعدها بتقدر تدخل باسمك أو إيميلك بالإضافة إلى Google.", "Set a password for your teacher account to sign in by name or email, alongside Google."],
+ ["تفعيل / تحديث دخول كلمة السر", "Set / update password login"],
+ ["🛟 الدعم والمساعدة", "🛟 Support and help"],
+ ["نسيت كلمة السر؟ مشكلة بالحساب؟ بلّغ عن خطأ أو عن مستخدم من هون.", "Forgot your password? Account problem? Report an issue or a user here."],
+ ["فتح مركز الدعم", "Open support"],
+ ["📳 تفعيل هز الهاتف لفتح الدعم", "📳 Enable shake to open support"],
+ ["طلاب صفك، المعلمين، والبحث عن أشخاص خارج صفك.", "Your classmates, teachers and people outside your class."],
+ ["👥 أشخاص من صفوفك", "👥 People in your classes"],
+ ["🔎 نتائج البحث", "🔎 Search results"],
+ ["اختار شخص وابدأ المحادثة.", "Choose someone to start a conversation."],
+ ["🚩 إبلاغ", "🚩 Report"],
+ ["إرسال", "Send"],
+ ["اختر نوع المشكلة وابعت طلب واضح للإدارة.", "Choose an issue type and describe it for support."],
+ ["الحساب / اسم الدخول", "Account / login name"],
+ ["📳 هز الهاتف للدعم", "📳 Shake for support"],
+ ["مثال: A7K92Q", "Example: A7K92Q"],
+ ["اسم المعلم", "Teacher name"],
+ ["كلمة الأمان", "Security phrase"],
+ ["تأكيد كلمة الأمان", "Confirm security phrase"],
+ ["كلمة سر من 6 خانات أو أكثر", "Password with at least 6 characters"],
+ ["ابحث عن طالب أو معلم...", "Search for a student or teacher…"],
+ ["اكتب رسالة...", "Write a message…"],
+ ["كلمتا الأمان مش نفس بعض.", "Security phrases do not match."],
+ ["تم حفظ كلمة الأمان بشكل مشفّر ✅", "Security phrase saved securely ✅"],
+ ["تعذر حفظ كلمة الأمان.", "Could not save security phrase."],
+ ["اكتب اسم دخول للمعلم.", "Enter a teacher login name."],
+ ["حساب المعلم ما فيه إيميل صالح.", "This teacher account has no valid email."],
+ ["صار دخول المعلم بالاسم أو الإيميل + كلمة السر شغّال ✅", "Teacher login by name or email and password is ready ✅"],
+ ["اكتب شرح للمشكلة.", "Describe the problem."],
+ ["⏳ جاري إرسال الطلب...", "⏳ Sending request…"],
+ ["تعذر إرسال الطلب. تأكد من اتصالك وحاول مرة ثانية.", "Could not send request. Check your connection and retry."],
+ ["👨‍🏫 أهلًا", "👨‍🏫 Welcome"],
+ ["لازم تسمح بحساس الحركة أولًا.", "Allow motion sensor access first."],
+ ["اكتب كود الصف أولًا.", "Enter your class code first."],
+ ["ارجع واكتب كود الصف أولًا.", "Go back and enter your class code first."],
+ ["اكتب اسم الدخول أو الإيميل.", "Enter your login name or email."],
+ ["اكتب كلمة السر.", "Enter your password."],
+ ["💬 آخر المحادثات","💬 Recent conversations"],["← الأشخاص","← People"],["طلباتك وردود الدعم","Your requests and support replies"],["كلمة سر الحساب الحالية لتأكيد الحفظ","Current account password to confirm changes"],
+ ["🛟 مركز دعم Classora","🛟 Classora support"],["نوع الطلب","Request type"],["نسيت كلمة السر","Forgot password"],["مشكلة بالدخول للحساب","Account access problem"],["مشكلة أو خطأ بالموقع","Website issue"],["الإبلاغ عن مستخدم","Report a user"],["اقتراح","Suggestion"],["شيء آخر","Other"],["كلمة الأمان — إذا عندك","Security phrase — if configured"],["اشرح المشكلة","Describe the problem"],["إرسال الطلب","Send request"],
   ["أهلًا في Classora 👋","Welcome to Classora 👋"],
   ["اللوبي","Lobby"],["الرجوع للّوبي","Back to lobby"],["الإعدادات","Settings"],
   ["🔥 اختار موضوع أو نشاط","🔥 Choose a subject or activity"],
@@ -12036,6 +11961,62 @@ const uiExactTranslations=new Map([
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const uiPlaceholderTranslations=new Map([
+ ["🏫 كود الصف أولًا", "🏫 Class code first"],
+ ["اكتب كود صفك، وبعدها بنكمل للاسم وكلمة السر.", "Enter your class code, then continue with your name and password."],
+ ["متابعة ←", "Continue ←"],
+ ["تغيير كود الصف", "Change class code"],
+ ["اسم + كلمة سر", "Name + password"],
+ ["إيميل + كلمة سر", "Email + password"],
+ ["اسم الدخول", "Login name"],
+ ["G&nbsp;&nbsp; دخول بحساب Google", "G&nbsp;&nbsp; Sign in with Google"],
+ ["G دخول بحساب Google", "G Sign in with Google"],
+ ["🛟 تواصل مع الدعم", "🛟 Contact support"],
+ ["الدعم", "Support"],
+ ["🛟 مركز الدعم", "🛟 Support center"],
+ ["طلبات نسيان كلمة السر، مشاكل الحساب، البلاغات والاقتراحات.", "Password recovery, account issues, reports and suggestions."],
+ ["🛡️ كلمة أمان الحساب", "🛡️ Account security phrase"],
+ ["اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.", "Choose a memorable phrase. Only its hash is saved; even the admin cannot see the original phrase."],
+ ["حفظ كلمة الأمان", "Save security phrase"],
+ ["غير مفعّلة بعد.", "Not configured yet."],
+ ["🔐 دخول المعلم بالاسم أو الإيميل", "🔐 Teacher login by name or email"],
+ ["فعّل كلمة سر لحساب المعلم، وبعدها بتقدر تدخل باسمك أو إيميلك بالإضافة إلى Google.", "Set a password for your teacher account to sign in by name or email, alongside Google."],
+ ["تفعيل / تحديث دخول كلمة السر", "Set / update password login"],
+ ["🛟 الدعم والمساعدة", "🛟 Support and help"],
+ ["نسيت كلمة السر؟ مشكلة بالحساب؟ بلّغ عن خطأ أو عن مستخدم من هون.", "Forgot your password? Account problem? Report an issue or a user here."],
+ ["فتح مركز الدعم", "Open support"],
+ ["📳 تفعيل هز الهاتف لفتح الدعم", "📳 Enable shake to open support"],
+ ["طلاب صفك، المعلمين، والبحث عن أشخاص خارج صفك.", "Your classmates, teachers and people outside your class."],
+ ["👥 أشخاص من صفوفك", "👥 People in your classes"],
+ ["🔎 نتائج البحث", "🔎 Search results"],
+ ["اختار شخص وابدأ المحادثة.", "Choose someone to start a conversation."],
+ ["🚩 إبلاغ", "🚩 Report"],
+ ["إرسال", "Send"],
+ ["اختر نوع المشكلة وابعت طلب واضح للإدارة.", "Choose an issue type and describe it for support."],
+ ["الحساب / اسم الدخول", "Account / login name"],
+ ["📳 هز الهاتف للدعم", "📳 Shake for support"],
+ ["مثال: A7K92Q", "Example: A7K92Q"],
+ ["اسم المعلم", "Teacher name"],
+ ["كلمة الأمان", "Security phrase"],
+ ["تأكيد كلمة الأمان", "Confirm security phrase"],
+ ["كلمة سر من 6 خانات أو أكثر", "Password with at least 6 characters"],
+ ["ابحث عن طالب أو معلم...", "Search for a student or teacher…"],
+ ["اكتب رسالة...", "Write a message…"],
+ ["كلمتا الأمان مش نفس بعض.", "Security phrases do not match."],
+ ["تم حفظ كلمة الأمان بشكل مشفّر ✅", "Security phrase saved securely ✅"],
+ ["تعذر حفظ كلمة الأمان.", "Could not save security phrase."],
+ ["اكتب اسم دخول للمعلم.", "Enter a teacher login name."],
+ ["حساب المعلم ما فيه إيميل صالح.", "This teacher account has no valid email."],
+ ["صار دخول المعلم بالاسم أو الإيميل + كلمة السر شغّال ✅", "Teacher login by name or email and password is ready ✅"],
+ ["اكتب شرح للمشكلة.", "Describe the problem."],
+ ["⏳ جاري إرسال الطلب...", "⏳ Sending request…"],
+ ["تعذر إرسال الطلب. تأكد من اتصالك وحاول مرة ثانية.", "Could not send request. Check your connection and retry."],
+ ["👨‍🏫 أهلًا", "👨‍🏫 Welcome"],
+ ["لازم تسمح بحساس الحركة أولًا.", "Allow motion sensor access first."],
+ ["اكتب كود الصف أولًا.", "Enter your class code first."],
+ ["ارجع واكتب كود الصف أولًا.", "Go back and enter your class code first."],
+ ["اكتب اسم الدخول أو الإيميل.", "Enter your login name or email."],
+ ["اكتب كلمة السر.", "Enter your password."],
+ ["كلمة سر الحساب الحالية لتأكيد الحفظ","Current account password to confirm changes"],["اسم الدخول أو الإيميل","Login name or email"],["اكتب شو صار بالتفصيل...","Tell us what happened…"],["بتساعد الإدارة تتأكد إن الحساب إلك","Helps support confirm account ownership"],
   ["🔎 ابحث عن موضوع داخل المادة...","🔎 Search topics..."],
   ["اسأل عن هذا الموضوع...","Ask about this topic..."],
   ["الخيار 1","Option 1"],["الخيار 2","Option 2"],["الخيار 3","Option 3"],["الخيار 4","Option 4"],
@@ -12348,6 +12329,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
+  document.getElementById("securityPhraseCurrentPassword")?.classList.toggle("hidden",!auth.currentUser?.providerData?.some(p=>p.providerId==="password"));
   const secState=document.getElementById("securityPhraseState");
   if(secState)secState.textContent=p.securityPhraseHash?(currentUILanguage==="en"?"Security phrase is configured ✅":"كلمة الأمان مفعّلة ✅"):(currentUILanguage==="en"?"Security phrase is not set yet.":"كلمة الأمان غير مفعّلة بعد.");
   document.getElementById("teacherPasswordSettingsCard")?.classList.toggle("hidden",!isTeacherLikeProfile(p));
@@ -12419,17 +12401,25 @@ document.getElementById("saveSecurityPhraseBtn").addEventListener("click",async(
   const a=document.getElementById("securityPhraseInput").value;
   const b=document.getElementById("securityPhraseConfirm").value;
   const status=document.getElementById("settingsStatus");
-  if(normalizeSecurityPhrase(a).length<4){status.textContent="كلمة الأمان لازم تكون 4 أحرف أو أكثر.";return}
+  if(normalizeSecurityPhrase(a).length<8){status.textContent=chatText("اختار عبارة أمان من 8 أحرف أو أكثر.","Choose a security phrase of at least 8 characters.");return}
   if(a!==b){status.textContent="كلمتا الأمان مش نفس بعض.";return}
   try{
-    const hash=await securityPhraseHash(auth.currentUser.uid,a);
+    const currentUser=auth.currentUser,currentPassword=document.getElementById("securityPhraseCurrentPassword").value;
+    if(currentUser.providerData.some(p=>p.providerId==="password")){
+      if(!currentPassword){status.textContent=chatText("اكتب كلمة السر الحالية لتأكيد ملكية الحساب.","Enter your current password to confirm ownership.");return}
+      await reauthenticateWithCredential(currentUser,EmailAuthProvider.credential(currentUser.email,currentPassword));
+    }else{await reauthenticateWithPopup(currentUser,new GoogleAuthProvider())}
+    const hash=await securityPhraseHashV2(currentUser.uid,a);
     await updateDoc(doc(db,"users",auth.currentUser.uid),{
-      securityPhraseHash:hash,
+      securityPhraseHash:hash,securityPhraseVersion:2,
       securityPhraseSetAt:serverTimestamp(),
       updatedAt:serverTimestamp()
     });
-    window.PythagorasiUser={...window.PythagorasiUser,securityPhraseHash:hash};
+    window.PythagorasiUser={...window.PythagorasiUser,securityPhraseHash:hash,securityPhraseVersion:2};
+    document.getElementById("securityPhraseCurrentPassword").value="";
     activeProfile=window.PythagorasiUser;
+    if(isTeacherLike())await saveTeacherLoginAliases(activeProfile,auth.currentUser);
+    else await saveStudentLoginAlias(activeProfile.loginName||activeProfile.displayName,auth.currentUser,auth.currentUser.email);
     document.getElementById("securityPhraseInput").value="";
     document.getElementById("securityPhraseConfirm").value="";
     refreshSettingsUI();
@@ -12447,6 +12437,8 @@ document.getElementById("enableTeacherPasswordBtn").addEventListener("click",asy
   if(password.length<6){status.textContent="كلمة السر لازم تكون 6 خانات أو أكثر.";return}
   if(!user.email){status.textContent="حساب المعلم ما فيه إيميل صالح.";return}
   try{
+    const aliasSnap=await getDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(loginName)));
+    if(aliasSnap.exists()&&aliasSnap.data().uid!==user.uid){status.textContent=chatText("اسم الدخول مستخدم. اختار اسم ثاني.","This login name is taken. Choose another.");return}
     const hasPassword=user.providerData.some(p=>p.providerId==="password");
     if(hasPassword)await updatePassword(user,password);
     else await linkWithCredential(user,EmailAuthProvider.credential(user.email,password));
@@ -16729,12 +16721,18 @@ const supportModal=document.getElementById("supportModal");
 let chatPublicProfiles=[];
 let activeChatPerson=null;
 let activeChatUnsub=null;
+let chatInboxUnsub=null;
+let chatSessionUid="";
+let chatSending=false;
+let chatOpenSequence=0;
+let mySupportUnsub=null;
 let shakeSupportLast=0;
 
 function profileAvatarStyle(p){
   const photo=String(p?.photoData||"");
   return photo?'background-image:url("'+photo.replace(/"/g,"%22")+'")':"";
 }
+function chatText(ar,en){return currentUILanguage==="en"?en:ar}
 function chatRoleLabel(role){
   return role==="teacher"?(currentUILanguage==="en"?"Teacher":"معلم"):(currentUILanguage==="en"?"Student":"طالب");
 }
@@ -16850,7 +16848,9 @@ function chatTime(v){
 
 async function openDirectChat(person){
   if(!auth.currentUser||!person?.uid)return;
+  const opening=++chatOpenSequence;
   activeChatPerson=person;
+  chatModal.classList.add("chat-thread-open");
   document.getElementById("chatThreadEmpty").classList.add("hidden");
   document.getElementById("chatThreadActive").classList.remove("hidden");
   document.getElementById("chatThreadName").textContent=person.displayName||"مستخدم";
@@ -16873,8 +16873,9 @@ async function openDirectChat(person){
     return;
   }
 
+  if(opening!==chatOpenSequence||!chatModal.classList.contains("open"))return;
   if(activeChatUnsub){try{activeChatUnsub()}catch{}}
-  activeChatUnsub=onSnapshot(collection(db,"chats",chatId,"messages"),snap=>{
+  activeChatUnsub=onSnapshot(query(collection(db,"chats",chatId,"messages"),orderBy("createdAt","desc"),limit(150)),snap=>{
     const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
     const host=document.getElementById("chatMessages");
     host.innerHTML="";
@@ -16887,31 +16888,30 @@ async function openDirectChat(person){
       host.appendChild(div);
     }
     requestAnimationFrame(()=>{host.scrollTop=host.scrollHeight});
-  },err=>console.warn("chat messages",err));
+  },err=>{console.warn("chat messages",err);document.getElementById("chatMessages").textContent=chatText("تعذر تحميل الرسائل. سكّر المحادثة وافتحها مرة ثانية.","Messages could not load. Close and reopen the conversation.")});
 }
 
 async function sendChatMessage(){
-  if(!auth.currentUser||!activeChatPerson)return;
-  const input=document.getElementById("chatMessageInput");
-  const text=input.value.trim();
-  if(!text)return;
-  const chatId=directChatId(auth.currentUser.uid,activeChatPerson.uid);
-  input.value="";
-  try{
-    await addDoc(collection(db,"chats",chatId,"messages"),{
-      senderUid:auth.currentUser.uid,
-      text:text.slice(0,2000),
-      createdAt:serverTimestamp()
-    });
-    await updateDoc(doc(db,"chats",chatId),{
-      lastMessage:text.slice(0,180),
-      lastSenderUid:auth.currentUser.uid,
-      updatedAt:serverTimestamp()
-    });
-  }catch(err){
-    console.error("send chat",err);
-    showToast(currentUILanguage==="en"?"Could not send message.":"تعذر إرسال الرسالة.");
-  }
+ if(chatSending||!auth.currentUser||!activeChatPerson)return;
+ const input=document.getElementById("chatMessageInput"),text=input.value.trim();if(!text)return;
+ const uid=auth.currentUser.uid,chatId=directChatId(uid,activeChatPerson.uid),btn=document.getElementById("chatSendBtn");
+ chatSending=true;btn.disabled=true;
+ try{
+  await addDoc(collection(db,"chats",chatId,"messages"),{senderUid:uid,text:text.slice(0,2000),createdAt:serverTimestamp()});
+  if(input.value.trim()===text)input.value="";
+  try{await updateDoc(doc(db,"chats",chatId),{lastMessage:text.slice(0,180),lastSenderUid:uid,updatedAt:serverTimestamp()})}catch(err){console.warn("chat preview update",err)}
+ }catch(err){console.error("send chat",err);showToast(chatText("تعذر إرسال الرسالة. نصّك محفوظ، جرّب مرة ثانية.","Message not sent. Your text is preserved; please retry."))}
+ finally{chatSending=false;btn.disabled=false}
+}
+function listenChatInbox(){
+ if(chatInboxUnsub)chatInboxUnsub();
+ const uid=auth.currentUser?.uid;if(!uid)return;
+ chatSessionUid=uid;
+ chatInboxUnsub=onSnapshot(query(collection(db,"chats"),where("participantIds","array-contains",uid)),snap=>{
+  const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0));
+  const people=rows.slice(0,50).map(r=>{const other=r.participantIds.find(id=>id!==uid);return chatPublicProfiles.find(p=>p.uid===other)||{uid:other,displayName:r.participantNames?.[other]||chatText("مستخدم","User"),role:"student"}});
+  renderChatPeople(document.getElementById("chatRecentPeople"),people);
+ },err=>{console.warn("chat inbox",err);document.getElementById("chatRecentPeople").textContent=chatText("تعذر تحميل سجل المحادثات.","Could not load conversations.")});
 }
 
 async function openChat(){
@@ -16919,12 +16919,24 @@ async function openChat(){
   chatModal.classList.add("open");
   document.getElementById("chatPeopleSearch").value="";
   document.getElementById("chatSearchResults").innerHTML="";
-  await loadChatClassPeople();
+  if(chatSessionUid!==auth.currentUser.uid){activeChatPerson=null;document.getElementById("chatMessages").innerHTML="";document.getElementById("chatMessageInput").value="";}
+  await loadChatClassPeople();listenChatInbox();
+  if(activeChatPerson)await openDirectChat(activeChatPerson);
+  else{chatModal.classList.remove("chat-thread-open");document.getElementById("chatThreadActive").classList.add("hidden");document.getElementById("chatThreadEmpty").classList.remove("hidden");}
 }
 function closeChat(){
+  chatOpenSequence++;
   chatModal.classList.remove("open");
+  if(chatInboxUnsub){chatInboxUnsub();chatInboxUnsub=null}
   if(activeChatUnsub){try{activeChatUnsub()}catch{}activeChatUnsub=null}
 }
+document.getElementById("chatBackContactsBtn").addEventListener("click",()=>chatModal.classList.remove("chat-thread-open"));
+onAuthStateChanged(auth,user=>{
+ if(user?.uid===chatSessionUid)return;
+ closeChat();closeSupport();activeChatPerson=null;chatSessionUid=user?.uid||"";chatPublicProfiles=[];
+ document.getElementById("chatMessages").innerHTML="";document.getElementById("chatMessageInput").value="";
+ document.getElementById("chatRecentPeople").innerHTML="";document.getElementById("chatClassPeople").innerHTML="";
+});
 document.getElementById("lobbyChatBtn").addEventListener("click",openChat);
 document.getElementById("closeChatModal").addEventListener("click",closeChat);
 chatModal.addEventListener("click",e=>{if(e.target===chatModal)closeChat()});
@@ -16940,23 +16952,26 @@ document.getElementById("chatReportUserBtn").addEventListener("click",()=>{
   document.getElementById("supportMessage").value="بلاغ عن مستخدم: "+(activeChatPerson.displayName||"")+" • UID "+activeChatPerson.uid+"\n";
 });
 
+let supportProofVersion=1;
 async function resolveSupportUid(identifier){
+  supportProofVersion=window.PythagorasiUser?.securityPhraseVersion||1;
   if(auth.currentUser)return auth.currentUser.uid;
   const raw=String(identifier||"").trim();
   if(raw.length<2)return "";
   try{
     const s=await getDoc(doc(db,"studentLoginAliases",studentLoginAliasId(raw)));
-    if(s.exists()&&s.data()?.uid)return s.data().uid;
+    if(s.exists()&&s.data()?.uid){supportProofVersion=s.data().securityPhraseVersion||1;return s.data().uid;}
   }catch{}
   try{
     const t=await getDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(raw)));
-    if(t.exists()&&t.data()?.uid)return t.data().uid;
+    if(t.exists()&&t.data()?.uid){supportProofVersion=t.data().securityPhraseVersion||1;return t.data().uid;}
   }catch{}
   return "";
 }
 
 function openSupport(type=""){
   if(type)document.getElementById("supportType").value=type;
+  else document.getElementById("supportType").value=auth.currentUser?"bug":"account_access";
   if(auth.currentUser&&window.PythagorasiUser){
     document.getElementById("supportAccountIdentifier").value=
       window.PythagorasiUser.loginName||window.PythagorasiUser.displayName||auth.currentUser.email||"";
@@ -16964,9 +16979,19 @@ function openSupport(type=""){
   document.getElementById("supportStatus").textContent="";
   document.getElementById("supportShakeToggleBtn").textContent=
     localStorage.getItem("classora_shake_support")==="1"?"📳 هز الهاتف: مفعّل":"📳 هز الهاتف للدعم";
-  supportModal.classList.add("open");
+  supportModal.classList.add("open");listenMySupportTickets();
 }
-function closeSupport(){supportModal.classList.remove("open")}
+function listenMySupportTickets(){
+ if(mySupportUnsub){mySupportUnsub();mySupportUnsub=null}
+ const uid=auth.currentUser?.uid,section=document.getElementById("supportMyTicketsSection"),host=document.getElementById("supportMyTickets");section.classList.toggle("hidden",!uid);host.innerHTML="";if(!uid)return;
+ mySupportUnsub=onSnapshot(query(collection(db,"supportRequests"),where("createdBy","==",uid)),snap=>{
+  host.innerHTML="";const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,25);
+  if(!rows.length){host.textContent=chatText("ما عندك طلبات دعم بعد.","No support requests yet.");return}
+  for(const r of rows){const card=document.createElement("article");card.className="support-ticket";const title=document.createElement("b"),body=document.createElement("p"),reply=document.createElement("p");title.textContent=(r.status==="resolved"?"✅ ":"🟡 ")+"#"+r.id.slice(-8);body.textContent=r.message;reply.textContent=r.adminReply?chatText("رد الدعم: ","Support reply: ")+r.adminReply:chatText("بانتظار رد الدعم.","Waiting for support.");card.append(title,body,reply);host.append(card)}
+ },err=>{console.warn("support history",err);host.textContent=chatText("تعذر تحميل الطلبات.","Could not load requests.")});
+}
+function closeSupport(){document.getElementById("supportSecurityPhrase").value="";supportModal.classList.remove("open");if(mySupportUnsub){mySupportUnsub();mySupportUnsub=null}}
+
 
 async function submitSupportRequest(){
   const type=document.getElementById("supportType").value;
@@ -16980,9 +17005,9 @@ async function submitSupportRequest(){
   try{
     const claimedUid=await resolveSupportUid(identifier);
     const proof=claimedUid&&normalizeSecurityPhrase(phrase).length>=4
-      ?await securityPhraseHash(claimedUid,phrase):"";
+      ?await (supportProofVersion===2?securityPhraseHashV2(claimedUid,phrase):securityPhraseHash(claimedUid,phrase)):"";
     const createdBy=auth.currentUser?.uid||"";
-    await addDoc(collection(db,"supportRequests"),{
+    const ticket=await addDoc(collection(db,"supportRequests"),{
       type,
       accountIdentifier:identifier.slice(0,80),
       claimedUid,
@@ -16998,7 +17023,7 @@ async function submitSupportRequest(){
     if(type==="forgot_password"&&identifier.includes("@")){
       try{await sendPasswordResetEmail(auth,identifier.toLowerCase())}catch{}
     }
-    status.textContent="تم إرسال الطلب للإدارة ✅";
+    status.textContent=chatText("تم إرسال الطلب للإدارة ✅ رقم طلبك: ","Request sent ✅ Your reference: ")+ticket.id.slice(-8);
     document.getElementById("supportSecurityPhrase").value="";
     document.getElementById("supportMessage").value="";
   }catch(err){
@@ -17025,13 +17050,14 @@ async function toggleShakeSupport(){
 }
 window.addEventListener("devicemotion",e=>{
   if(localStorage.getItem("classora_shake_support")!=="1")return;
+  if(document.hidden||supportModal.classList.contains("open"))return;
   const a=e.accelerationIncludingGravity;if(!a)return;
   const strength=Math.sqrt((a.x||0)**2+(a.y||0)**2+(a.z||0)**2);
   const now=Date.now();
-  if(strength>24&&now-shakeSupportLast>2200){
+  if(strength>24&&now-shakeSupportLast>10000){
     shakeSupportLast=now;
     openSupport("bug");
-    document.getElementById("supportMessage").value="تم فتح الدعم عن طريق هز الهاتف.\n";
+    if(!document.getElementById("supportMessage").value)document.getElementById("supportMessage").placeholder=chatText("شو المشكلة اللي واجهتك؟","What went wrong?");
   }
 },{passive:true});
 
@@ -17060,7 +17086,8 @@ async function adminLoadSupportRequests(){
     for(const r of rows){
       const account=adminUsersCache.find(u=>u.uid===r.claimedUid);
       const hasPhrase=!!account?.securityPhraseHash;
-      const proofOk=!!(hasPhrase&&r.securityProofHash&&account.securityPhraseHash===r.securityProofHash);
+      const submittedProof=r.securityProofHash;
+      const proofOk=!!(hasPhrase&&submittedProof&&account.securityPhraseHash===submittedProof);
       const card=document.createElement("div");
       card.className="support-ticket";
 
@@ -17078,7 +17105,7 @@ async function adminLoadSupportRequests(){
       proof.className=proofOk?"support-proof-ok":"support-proof-no";
       proof.textContent=proofOk
         ?"✅ كلمة الأمان مطابقة للحساب"
-        :hasPhrase&&r.securityProofHash
+        :hasPhrase&&submittedProof
           ?"⚠️ كلمة الأمان غير مطابقة"
           :hasPhrase?"🛡️ للحساب كلمة أمان — لم تُرسل":"— لا توجد كلمة أمان مفعّلة";
 
@@ -17092,6 +17119,10 @@ async function adminLoadSupportRequests(){
       const resolve=document.createElement("button");resolve.className="exam-secondary support-resolve";
       resolve.textContent=r.status==="resolved"?"إعادة فتح":"✅ تم الحل";
       const del=document.createElement("button");del.className="danger support-delete";del.textContent="🗑 حذف";
+      const replyInput=document.createElement("textarea");replyInput.maxLength=1500;replyInput.placeholder=adminLang("رد على صاحب الطلب…","Reply to the request…");replyInput.value=r.adminReply||"";
+      const replyBtn=document.createElement("button");replyBtn.className="exam-secondary";replyBtn.textContent=adminLang("إرسال الرد","Send reply");
+      replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;replyBtn.disabled=true;try{await updateDoc(doc(db,"supportRequests",r.id),{adminReply:text,repliedAt:serverTimestamp(),repliedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
+      if(r.createdBy)card.append(replyInput,replyBtn);
       actions.append(resolve,del);card.appendChild(actions);
 
       resolve.addEventListener("click",async()=>{
@@ -17104,7 +17135,7 @@ async function adminLoadSupportRequests(){
         adminLoadSupportRequests();
       });
       del.addEventListener("click",async()=>{
-        if(confirm("حذف طلب الدعم؟")){
+        if(uiConfirm("حذف طلب الدعم؟")){
           await deleteDoc(doc(db,"supportRequests",r.id));
           adminLoadSupportRequests();
         }
@@ -19406,7 +19437,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=60",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js?v=61",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -19824,7 +19855,7 @@ pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaI
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=60",{scope:"./",updateViaCache:"none"})
+    navigator.serviceWorker.register("./service-worker.js?v=61",{scope:"./",updateViaCache:"none"})
       .catch(err=>console.warn("service worker registration",err));
   });
 }
