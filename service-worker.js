@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v61-chat-support-reliable";
+const CACHE_NAME="classora-v62-support-overlay";
 const APP_SHELL=[
   "./",
   "./index.html",

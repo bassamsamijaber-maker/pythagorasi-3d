@@ -4538,7 +4538,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 
 </style>
 <style>
-#supportMyTicketsSection{margin-top:20px;border-top:1px solid #ffffff20;padding-top:12px}.support-ticket textarea{width:100%;min-height:80px;margin-top:10px}.chat-contact-list{min-height:20px}#chatBackContactsBtn{display:none}#chatThreadActive{min-height:0}#chatSendBtn:disabled{opacity:.5}#chatThreadActive .chat-messages{overflow-wrap:anywhere}
+#supportModal{z-index:210000!important}#supportModal .modalbox{max-height:92dvh;overflow-y:auto}#supportMyTicketsSection{margin-top:20px;border-top:1px solid #ffffff20;padding-top:12px}.support-ticket textarea{width:100%;min-height:80px;margin-top:10px}.chat-contact-list{min-height:20px}#chatBackContactsBtn{display:none}#chatThreadActive{min-height:0}#chatSendBtn:disabled{opacity:.5}#chatThreadActive .chat-messages{overflow-wrap:anywhere}
 @media(max-width:700px){#chatModal .chat-thread-pane{display:none}#chatModal.chat-thread-open .chat-contacts-pane{display:none}#chatModal.chat-thread-open .chat-thread-pane{display:flex;min-height:0}#chatModal.chat-thread-open #chatThreadActive{display:flex;flex:1;flex-direction:column;min-height:0}#chatModal.chat-thread-open .chat-messages{flex:1;min-height:0;height:auto}#chatBackContactsBtn{display:inline-flex}.chat-thread-head{flex-wrap:wrap}.chat-compose{padding-bottom:max(10px,env(safe-area-inset-bottom))}}
 </style></head>
 <body class="classora-intro-active">
@@ -5805,11 +5805,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
   </div>
 </div>
 
-<div class="modal" id="supportModal">
+<div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportModalTitle">
   <div class="modalbox support-modalbox">
     <div class="modalhead">
       <div>
-        <h2>🛟 مركز دعم Classora</h2>
+        <h2 id="supportModalTitle">🛟 مركز دعم Classora</h2>
         <div class="subject-assistant-line">اختر نوع المشكلة وابعت طلب واضح للإدارة.</div>
       </div>
       <button class="close" id="closeSupportModal">×</button>
@@ -19578,7 +19578,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=61",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js?v=62",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -19996,7 +19996,7 @@ pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaI
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=61",{scope:"./",updateViaCache:"none"})
+    navigator.serviceWorker.register("./service-worker.js?v=62",{scope:"./",updateViaCache:"none"})
       .catch(err=>console.warn("service worker registration",err));
   });
 }
