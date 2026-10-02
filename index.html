@@ -4484,6 +4484,17 @@ button{touch-action:manipulation}
 .auth-language-switch button[aria-pressed="true"]{background:#176bc4;color:white;border-color:#559eed}
 @media(max-width:700px){.lab-mobile-nav{top:auto!important;bottom:12px!important;max-width:calc(100% - 24px)}.lab-mobile-nav button{min-height:44px!important}.side>.brand .lab-brand-actions{gap:8px}}
 
+
+/* V57: subjects open inside Classora, keeping the authenticated lobby alive underneath. */
+.classora-subject-page{position:fixed;inset:0;z-index:10050;background:#06111b;isolation:isolate}
+.classora-subject-page.hidden{display:none!important}
+.classora-subject-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#06111b;display:block}
+.classora-subject-loading{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:14px;background:#06111b;color:#eef9ff}
+.classora-subject-loading.hidden{display:none}
+.classora-subject-spinner{width:38px;height:38px;border:3px solid #ffffff22;border-top-color:#61d8ff;border-radius:50%;animation:classoraSubjectSpin .75s linear infinite}
+@keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
+body.classora-subject-open{overflow:hidden!important}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4669,7 +4680,7 @@ button{touch-action:manipulation}
         <button class="pythag-action-card equations" id="equationLabBtn">
           <span>🧮</span><b>معادلتان بمجهولين</b><small>حل x و y مع رسم 3D قابل للتعديل</small>
         </button>
-        <button class="pythag-action-card chemistry" id="periodicTableBtn" type="button" onclick="location.href='chemistry/periodic-table.html'">
+        <button class="pythag-action-card chemistry" id="periodicTableBtn" type="button">
           <span>⚛️</span><b>جدول العناصر</b><small>118 عنصر، صور تفاعلية، مقارنة واختبار</small>
         </button>
         <button class="pythag-action-card exam" id="lobbyExamBtn">
@@ -4700,6 +4711,14 @@ button{touch-action:manipulation}
       </div>
     </section>
   </div>
+</div>
+
+<div class="classora-subject-page hidden" id="periodicTableOverlay" aria-hidden="true">
+  <div class="classora-subject-loading" id="periodicTableLoading">
+    <div class="classora-subject-spinner" aria-hidden="true"></div>
+    <b>Classora</b>
+  </div>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -11497,6 +11516,10 @@ function applySiteLanguage(lang,save=true){
   try{refreshAIWelcome()}catch{}
   try{updateAssistantLabels()}catch{}
   try{applyAdminLanguage()}catch{}
+  try{
+    const frame=document.getElementById("periodicTableFrame");
+    if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:currentUILanguage},location.origin);
+  }catch{}
   setTimeout(()=>document.body.classList.remove('language-switching'),350);
 }
 document.getElementById("authEnglishBtn").addEventListener("click",()=>applySiteLanguage("en"));
@@ -11514,6 +11537,61 @@ setTimeout(()=>{
   applySiteLanguage(currentUILanguage,false);
   bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 },0);
+
+
+/* -------------------- V57 EMBEDDED SUBJECT PAGES -------------------- */
+const periodicTableOverlay=document.getElementById("periodicTableOverlay");
+const periodicTableFrame=document.getElementById("periodicTableFrame");
+const periodicTableLoading=document.getElementById("periodicTableLoading");
+let periodicTableOpen=false;
+
+function openPeriodicTable(){
+  if(!classoraHasVerifiedSession?.() && !(authResolved&&auth?.currentUser&&window.PythagorasiUser?.uid)){
+    authGate?.classList.add("show");
+    return;
+  }
+  periodicTableOpen=true;
+  periodicTableLoading?.classList.remove("hidden");
+  const desiredLang=currentUILanguage==="ar"?"ar":"en";
+  const wanted=`chemistry/periodic-table.html?v=57&lang=${desiredLang}`;
+  if(!periodicTableFrame.src || !periodicTableFrame.src.includes("v=57")){
+    periodicTableFrame.src=wanted;
+  }else{
+    try{periodicTableFrame.contentWindow?.postMessage({type:"classora-language",lang:desiredLang},location.origin)}catch{}
+  }
+  periodicTableOverlay?.classList.remove("hidden");
+  periodicTableOverlay?.setAttribute("aria-hidden","false");
+  document.body.classList.add("classora-subject-open");
+  if(location.hash!=="#periodic-table")history.pushState({classoraSubject:"periodic-table"},"","#periodic-table");
+}
+
+function closePeriodicTable(fromHistory=false){
+  if(!periodicTableOpen && periodicTableOverlay?.classList.contains("hidden"))return;
+  periodicTableOpen=false;
+  periodicTableOverlay?.classList.add("hidden");
+  periodicTableOverlay?.setAttribute("aria-hidden","true");
+  document.body.classList.remove("classora-subject-open");
+  showPlatformLobby();
+  if(!fromHistory && location.hash==="#periodic-table"){
+    history.back();
+  }
+}
+
+document.getElementById("periodicTableBtn")?.addEventListener("click",openPeriodicTable);
+periodicTableFrame?.addEventListener("load",()=>{
+  periodicTableLoading?.classList.add("hidden");
+  try{periodicTableFrame.contentWindow?.postMessage({type:"classora-language",lang:currentUILanguage},location.origin)}catch{}
+});
+window.addEventListener("message",event=>{
+  if(event.origin!==location.origin)return;
+  if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table")closePeriodicTable(false);
+});
+window.addEventListener("popstate",()=>{
+  if(periodicTableOpen&&location.hash!=="#periodic-table")closePeriodicTable(true);
+});
+if(location.hash==="#periodic-table"){
+  history.replaceState(null,"",location.pathname+location.search);
+}
 
 /* -------------------- V14 SETTINGS / SOUND / MOTION -------------------- */
 const settingsModal=document.getElementById("settingsModal");
