@@ -7103,12 +7103,13 @@ function showRoleChooser(){
 }
 
 
+let studentClassGateVerified="";
+
 function setStudentAuthMode(mode){
   studentAuthMode=mode==="create"?"create":"login";
-  document.getElementById("studentModeLogin").classList.toggle("active",studentAuthMode==="login");
-  document.getElementById("studentModeCreate").classList.toggle("active",studentAuthMode==="create");
-  document.getElementById("studentConfirmWrap").classList.toggle("hidden",studentAuthMode!=="create");
-  document.getElementById("studentClassCodeWrap").classList.toggle("hidden",studentAuthMode!=="create");
+  document.getElementById("studentModeLogin")?.classList.toggle("active",studentAuthMode==="login");
+  document.getElementById("studentModeCreate")?.classList.toggle("active",studentAuthMode==="create");
+  document.getElementById("studentConfirmWrap")?.classList.toggle("hidden",studentAuthMode!=="create");
   studentPasswordInput.autocomplete=studentAuthMode==="create"?"new-password":"current-password";
   document.getElementById("studentLoginBtn").textContent=studentAuthMode==="create"?"✨ إنشاء الحساب":"🚀 دخول";
   setAuthError("");
@@ -7116,13 +7117,38 @@ function setStudentAuthMode(mode){
 document.getElementById("studentModeLogin").addEventListener("click",()=>setStudentAuthMode("login"));
 document.getElementById("studentModeCreate").addEventListener("click",()=>setStudentAuthMode("create"));
 
+function resetStudentClassGate(){
+  studentClassGateVerified="";
+  document.getElementById("studentClassFirstStep")?.classList.remove("hidden");
+  document.getElementById("studentCredentialsWrap")?.classList.add("hidden");
+  const note=document.getElementById("studentClassVerifiedNote");if(note)note.textContent="";
+}
+function continueStudentClassGate(){
+  const code=(studentClassCodeInput.value||"").trim().replace(/\s+/g,"").toUpperCase();
+  if(code.length<4){
+    setAuthError("اكتب كود الصف أولًا.");
+    studentClassCodeInput.focus();
+    return;
+  }
+  studentClassCodeInput.value=code;
+  studentClassGateVerified=code;
+  document.getElementById("studentClassFirstStep")?.classList.add("hidden");
+  document.getElementById("studentCredentialsWrap")?.classList.remove("hidden");
+  setAuthError("");
+  setTimeout(()=>studentNameInput.focus(),60);
+}
+document.getElementById("studentClassVerifyBtn").addEventListener("click",continueStudentClassGate);
+document.getElementById("studentClassCodeInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();continueStudentClassGate()}});
+document.getElementById("studentChangeClassBtn").addEventListener("click",()=>{resetStudentClassGate();setTimeout(()=>studentClassCodeInput.focus(),50)});
+
 function showStudentLogin(){
   roleChooser.style.display="none";
   teacherForm.classList.remove("show");
   studentForm.classList.add("show");
   setAuthError("");
   setStudentAuthMode(studentAuthMode);
-  setTimeout(()=>studentNameInput.focus(),80);
+  resetStudentClassGate();
+  setTimeout(()=>studentClassCodeInput.focus(),80);
 }
 
 function showTeacherLogin(){
@@ -7143,6 +7169,8 @@ function friendlyAuthError(error){
   if(code.includes("popup-blocked"))return "ما قدرنا نفتح تسجيل الدخول. جرّب مرة ثانية.";
   if(code.includes("account-disabled")||code.includes("user-disabled"))return "هذا الحساب موقوف حاليًا.";
   if(code.includes("invalid-class-code"))return "كود الصف غير صحيح.";
+  if(code.includes("student-not-in-class"))return "هذا الحساب مش موجود بهذا الصف.";
+  if(code.includes("teacher-profile-required"))return "هذا الحساب مش حساب معلم.";
   return "تعذر الدخول حاليًا. جرّب مرة ثانية بعد شوي.";
 }
 async function saveUserProfile(user,profile){
@@ -7337,9 +7365,10 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
     studentLoginBusy=false;studentLoginButton.disabled=false;
     studentPasswordInput.focus();return;
   }
-  if(studentAuthMode==="create"&&classCode.length<4){
-    setAuthError("اكتب كود الصف اللي أعطاك إياه المعلم.");
+  if(classCode.length<4 || studentClassGateVerified!==classCode){
+    setAuthError("ارجع واكتب كود الصف أولًا.");
     studentLoginBusy=false;studentLoginButton.disabled=false;
+    resetStudentClassGate();
     studentClassCodeInput.focus();return;
   }
 
@@ -7408,6 +7437,15 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
 
       if(profile.nameKey && profile.nameKey!==nameKey){
         await signOut(auth);throw new Error("name-mismatch");
+      }
+      const joinSnap=await getDoc(doc(db,"classJoinCodes",classCode));
+      if(!joinSnap.exists()||joinSnap.data()?.active===false){
+        await signOut(auth);throw new Error("invalid-class-code");
+      }
+      const classId=joinSnap.data()?.classId;
+      const membership=classId?await getDoc(doc(db,"classes",classId,"members",cred.user.uid)):null;
+      if(!classId||!membership?.exists()){
+        await signOut(auth);throw new Error("student-not-in-class");
       }
       rememberLoginForTwoMonths();
       paintUser(cred.user,profile);
