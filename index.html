@@ -10660,9 +10660,150 @@ async function loadStudentClasses(){
           card.querySelector(".submit-assignment-btn").addEventListener("click",async()=>{
             await loadSiteControls();
             if(studentFeatureBlocked("assignments")){
-              showToast(adminLang("تسليم الوظائف موقوف مؤقتًا من الإدارة.","Assignment
-... 7570 bytes omitted ...
-orAll(".curriculum-visibility").forEach(input=>input.addEventListener("change",async()=>{
+              showToast(adminLang("تسليم الوظائف موقوف مؤقتًا من الإدارة.","Assignment submission is temporarily paused by the admin."));
+              return;
+            }
+            const answers=collectStudentAssignmentAnswers(card,a);
+            const unanswered=answers.filter(x=>!String(x.answer).trim()).length;
+            if(unanswered){
+              if(!uiConfirm(`في ${unanswered} أسئلة بدون جواب. تسلّم الوظيفة هيك؟`,`There are ${unanswered} unanswered questions. Submit the assignment anyway?`))return;
+            }
+            const auto=gradeAssignmentAutoQuestions(a.questions||[],answers);
+            const manualMax=(a.questions||[]).filter(q=>q.type==="open").reduce((s,q)=>s+(Number(q.points)||0),0);
+            try{
+              await setDoc(doc(db,"classes",classId,"assignments",a.id,"submissions",auth.currentUser.uid),{
+                studentUid:auth.currentUser.uid,
+                studentName:p.displayName||"طالب",
+                answers,autoScore:auto.score,autoMax:auto.max,manualMax,
+                totalPoints:total,teacherReviewed:manualMax===0,
+                manualScore:0,finalScore:manualMax===0?auto.score:null,
+                submittedAt:serverTimestamp()
+              });
+              await logStudentActivity("assignment_submit",`سلّم وظيفة: ${a.title||"وظيفة"}`,"pythagoras");
+              soundFx("submit");fxElement(card,"pop");
+              showToast(manualMax?`تم التسليم ✅ • التلقائي ${auto.score}/${auto.max} والباقي للمعلم`:`تم التسليم ✅ • العلامة ${auto.score}/${total}`);
+              loadStudentClasses();
+            }catch(err){console.error(err);showToast("تعذر تسليم الوظيفة.");soundFx("wrong")}
+          });
+        }
+        assignHost.appendChild(card);
+      }
+    }catch(err){
+      console.warn("student class inaccessible",classId,err);
+    }
+  }
+
+  // Clean stale class IDs after a teacher removes the student.
+  if(validIds.length!==ids.length){
+    try{
+      await setDoc(doc(db,"users",auth.currentUser.uid),{classIds:validIds,updatedAt:serverTimestamp()},{merge:true});
+      window.PythagorasiUser={...window.PythagorasiUser,classIds:validIds};
+      activeProfile=window.PythagorasiUser;
+    }catch{}
+  }
+
+  if(!host.children.length)host.innerHTML='<div class="cloud-note">مش منضم لأي صف.</div>';
+  if(!assignHost.children.length)assignHost.innerHTML='<div class="cloud-note">ما عندك وظائف حاليًا 🎉</div>';
+}
+
+async function createTeacherInvite(classId,className){
+  const code=await reserveUniqueCode("teacher_invite");
+  await setDoc(doc(db,"teacherInvites",code),{
+    code,classId,className,createdBy:auth.currentUser.uid,
+    createdByName:window.PythagorasiUser.displayName||"معلم",
+    active:true,createdAt:serverTimestamp()
+  });
+  return code;
+}
+document.getElementById("joinTeacherInviteBtn").addEventListener("click",async()=>{
+  if(!isTeacherLike()||!auth.currentUser)return;
+  const code=(document.getElementById("teacherInviteJoinCode").value||"").trim().toUpperCase();
+  const status=document.getElementById("teacherInviteJoinStatus");
+  if(code.length<4){status.textContent="اكتب كود الدعوة.";return}
+  status.textContent="⏳ جاري الانضمام...";
+  try{
+    const inv=await getDoc(doc(db,"teacherInvites",code));
+    if(!inv.exists()||!inv.data().active)throw new Error("bad-invite");
+    const data=inv.data(),classId=data.classId;
+    await setDoc(doc(db,"classes",classId,"teachers",auth.currentUser.uid),{
+      uid:auth.currentUser.uid,displayName:window.PythagorasiUser.displayName||"معلم",
+      inviteCode:code,joinedAt:serverTimestamp()
+    });
+    const ids=[...new Set([...(window.PythagorasiUser.teachingClassIds||[]),classId])];
+    await setDoc(doc(db,"users",auth.currentUser.uid),{teachingClassIds:ids,updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,teachingClassIds:ids};
+    activeProfile=window.PythagorasiUser;
+    try{await deleteDoc(doc(db,"teacherInvites",code))}catch{}
+    status.textContent=`✅ صرت معلّم مساعد في ${data.className||"الصف"}`;
+    document.getElementById("teacherInviteJoinCode").value="";
+    loadTeacherClasses();
+  }catch(err){
+    console.error(err);status.textContent="كود الدعوة غير صحيح أو انتهى.";
+  }
+});
+
+async function loadTeacherClasses(){
+  const host=document.getElementById("teacherClassesList");
+  host.innerHTML='<div class="cloud-note">⏳ جاري تحميل الصفوف...</div>';
+  if(!auth.currentUser)return;
+  try{
+    currentTeacherClasses=await getManagedClasses();
+    await repairManagedClassJoinCodes(currentTeacherClasses);
+    host.innerHTML="";
+    if(!currentTeacherClasses.length){
+      host.innerHTML='<div class="cloud-note">ما عندك صفوف.</div>';return;
+    }
+    for(const c of currentTeacherClasses){
+      await renderTeacherClassCard(host,c);
+    }
+  }catch(err){
+    console.error("teacher classes",err);
+    host.innerHTML='<div class="cloud-note">تعذر تحميل الصفوف.</div>';
+  }
+}
+
+
+function curriculumManagerHtml(c){
+  const hidden=new Set(c.hiddenTopicIds||[]);
+  const customs=(c.customTopics||[]).map(t=>normalizeCustomTopic(t,c.id));
+  const sections=allCurriculumSubjects().map(subject=>{
+    const items=[...baseTopicsForSubject(subject),...customs.filter(t=>t.subject===subject)];
+    const rows=items.map(t=>`
+      <label class="curriculum-topic-toggle">
+        <input type="checkbox" class="curriculum-visibility" data-topic-id="${escapeHtml(t.id)}" ${hidden.has(t.id)?"":"checked"}>
+        <span>${t.icon||"📘"} ${escapeHtml(t.title)}</span>
+        ${t.custom?`<button type="button" class="delete-custom-topic" data-topic-id="${escapeHtml(t.id)}">×</button>`:""}
+      </label>`).join("");
+    return `<details class="curriculum-subject">
+      <summary>${escapeHtml(subjectDisplayName(subject))} • ${items.filter(t=>!hidden.has(t.id)).length}/${items.length} ظاهر</summary>
+      <div class="curriculum-topic-list">${rows}</div>
+    </details>`;
+  }).join("");
+  return `
+    <div class="curriculum-manager" data-class-id="${escapeHtml(c.id)}">
+      <div class="cloud-note">✓ يعني الموضوع ظاهر لطلاب الصف. شيل العلامة لإخفائه.</div>
+      ${sections}
+      <div class="custom-topic-add">
+        <select class="custom-topic-subject">
+          <option value="math">رياضيات</option><option value="science">علوم</option>
+          <option value="arabic">عربي</option><option value="hebrew">عبري</option>
+          <option value="english">English</option><option value="geography">جغرافيا</option>
+        </select>
+        <input class="custom-topic-title" placeholder="اسم الموضوع الجديد">
+        <input class="custom-topic-example" placeholder="مثال قصير">
+        <textarea class="custom-topic-explanation" placeholder="اكتب شرح الموضوع اللي رح يظهر للطلاب..."></textarea>
+        <button class="exam-secondary add-custom-topic">＋ إضافة الموضوع للصف</button>
+      </div>
+      <div class="curriculum-status"></div>
+    </div>`;
+}
+async function saveClassHiddenTopics(classId,hiddenTopicIds){
+  await updateDoc(doc(db,"classes",classId),{hiddenTopicIds:[...new Set(hiddenTopicIds)],updatedAt:serverTimestamp()});
+}
+function bindCurriculumManager(box,c){
+  const manager=box.querySelector(".curriculum-manager");if(!manager)return;
+  let hidden=[...(c.hiddenTopicIds||[])];
+  manager.querySelectorAll(".curriculum-visibility").forEach(input=>input.addEventListener("change",async()=>{
     const id=input.dataset.topicId;
     if(input.checked)hidden=hidden.filter(x=>x!==id);
     else if(!hidden.includes(id))hidden.push(id);
