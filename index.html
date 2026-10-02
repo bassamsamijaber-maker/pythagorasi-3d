@@ -12348,6 +12348,13 @@ function refreshSettingsUI(){
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
+  const secState=document.getElementById("securityPhraseState");
+  if(secState)secState.textContent=p.securityPhraseHash?(currentUILanguage==="en"?"Security phrase is configured ✅":"كلمة الأمان مفعّلة ✅"):(currentUILanguage==="en"?"Security phrase is not set yet.":"كلمة الأمان غير مفعّلة بعد.");
+  document.getElementById("teacherPasswordSettingsCard")?.classList.toggle("hidden",!isTeacherLikeProfile(p));
+  const teacherNameInput=document.getElementById("teacherLoginNameSettings");
+  if(teacherNameInput)teacherNameInput.value=p.loginName||p.displayName||"";
+  const shakeBtn=document.getElementById("settingsShakeSupportBtn");
+  if(shakeBtn)shakeBtn.textContent=localStorage.getItem("classora_shake_support")==="1"?"📳 هز الهاتف للدعم: مفعّل":"📳 تفعيل هز الهاتف لفتح الدعم";
   updatePwaUI();
 }
 function openSettingsModal(){
@@ -12399,10 +12406,68 @@ document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>
     document.getElementById("lobbyProfileName").textContent=name;
     document.getElementById("lobbyGreeting").textContent=`أهلًا ${name.split(/\s+/)[0]} 👋`;
     if(isStudentLike())await syncStudentMemberStats();
+    await syncPublicProfile(window.PythagorasiUser,auth.currentUser);
     refreshAIWelcome();refreshSettingsUI();
     status.textContent="تم حفظ الاسم الظاهر ✅";
     soundFx("correct");
   }catch(err){console.error(err);status.textContent="تعذر حفظ الاسم."}
+});
+
+
+document.getElementById("saveSecurityPhraseBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const a=document.getElementById("securityPhraseInput").value;
+  const b=document.getElementById("securityPhraseConfirm").value;
+  const status=document.getElementById("settingsStatus");
+  if(normalizeSecurityPhrase(a).length<4){status.textContent="كلمة الأمان لازم تكون 4 أحرف أو أكثر.";return}
+  if(a!==b){status.textContent="كلمتا الأمان مش نفس بعض.";return}
+  try{
+    const hash=await securityPhraseHash(auth.currentUser.uid,a);
+    await updateDoc(doc(db,"users",auth.currentUser.uid),{
+      securityPhraseHash:hash,
+      securityPhraseSetAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    window.PythagorasiUser={...window.PythagorasiUser,securityPhraseHash:hash};
+    activeProfile=window.PythagorasiUser;
+    document.getElementById("securityPhraseInput").value="";
+    document.getElementById("securityPhraseConfirm").value="";
+    refreshSettingsUI();
+    status.textContent="تم حفظ كلمة الأمان بشكل مشفّر ✅";
+  }catch(err){console.error(err);status.textContent="تعذر حفظ كلمة الأمان."}
+});
+
+document.getElementById("enableTeacherPasswordBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!isTeacherLike())return;
+  const loginName=document.getElementById("teacherLoginNameSettings").value.trim().replace(/\s+/g," ");
+  const password=document.getElementById("teacherNewPasswordSettings").value;
+  const status=document.getElementById("settingsStatus");
+  const user=auth.currentUser;
+  if(loginName.length<2){status.textContent="اكتب اسم دخول للمعلم.";return}
+  if(password.length<6){status.textContent="كلمة السر لازم تكون 6 خانات أو أكثر.";return}
+  if(!user.email){status.textContent="حساب المعلم ما فيه إيميل صالح.";return}
+  try{
+    const hasPassword=user.providerData.some(p=>p.providerId==="password");
+    if(hasPassword)await updatePassword(user,password);
+    else await linkWithCredential(user,EmailAuthProvider.credential(user.email,password));
+    await updateDoc(doc(db,"users",user.uid),{
+      loginName,
+      teacherPasswordEnabled:true,
+      updatedAt:serverTimestamp()
+    });
+    await saveTeacherLoginAlias(loginName,user,user.email);
+    await saveTeacherLoginAlias(user.email,user,user.email);
+    window.PythagorasiUser={...window.PythagorasiUser,loginName,teacherPasswordEnabled:true};
+    activeProfile=window.PythagorasiUser;
+    document.getElementById("teacherNewPasswordSettings").value="";
+    status.textContent="صار دخول المعلم بالاسم أو الإيميل + كلمة السر شغّال ✅";
+    refreshSettingsUI();
+  }catch(err){
+    console.error("teacher password setup",err);
+    status.textContent=String(err?.code||"").includes("requires-recent-login")
+      ?"لأمان الحساب، ادخل بحساب Google من جديد وبعدها جرّب."
+      :"تعذر تفعيل دخول كلمة السر.";
+  }
 });
 
 document.getElementById("saveAINameSettingsBtn").addEventListener("click",async()=>{
