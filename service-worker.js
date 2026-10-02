@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v60-periodic-science";
+const CACHE_NAME="classora-v64-recovery-key";
 const APP_SHELL=[
   "./",
   "./index.html",

@@ -4497,7 +4497,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 @keyframes classoraSubjectSpin{to{transform:rotate(360deg)}}
 
 
-/* ================= V63 SUPPORT / PHONE RECOVERY ================= */
+/* ================= V64 SUPPORT / RECOVERY KEY ================= */
 .auth-help-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .auth-help-btn{border:1px solid rgba(85,196,255,.18);background:rgba(51,159,225,.07);color:#dff6ff;border-radius:12px;padding:10px 12px;font-weight:850;cursor:pointer}
 .auth-help-btn:hover{border-color:rgba(85,196,255,.42);background:rgba(51,159,225,.12)}
@@ -4522,6 +4522,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 #phoneRecaptcha,#recoveryRecaptcha{margin-top:10px;min-height:2px}
 body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.light .support-field input,.light .support-field select,.light .support-field textarea{background:#f7fbfd;color:#173047;border-color:#d6e3eb}.light .support-secondary,.light .support-ticket-actions button{background:#edf4f8;color:#24465d;border-color:#d6e3eb}
 @media(max-width:620px){.auth-help-strip,.support-grid,.support-options{grid-template-columns:1fr}.support-box{padding:18px}.support-center-btn span.label{display:none}}
+
+
+.recovery-key-display{direction:ltr;text-align:center;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:clamp(18px,3.4vw,28px);font-weight:1000;letter-spacing:.08em;padding:18px 14px;margin:10px 0 14px;border:1px solid rgba(91,205,255,.26);border-radius:16px;background:linear-gradient(145deg,rgba(54,176,255,.12),rgba(125,83,235,.10));color:#dff7ff;user-select:all;overflow-wrap:anywhere}
+.recovery-key-confirm{display:flex;align-items:center;gap:9px;margin:12px 0;color:#b9c9d5;font-weight:800}
+.recovery-key-confirm input{width:18px;height:18px}
 
 </style>
 </head>
@@ -4563,7 +4568,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="authSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">📱 نسيت الاسم أو كلمة السر؟</button>
+        <button class="auth-help-btn recovery" id="authRecoveryBtn" type="button">🗝️ نسيت الاسم أو كلمة السر؟</button>
       </div>
     </div>
 
@@ -4594,7 +4599,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="studentSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+        <button class="auth-help-btn recovery" id="studentRecoveryBtn" type="button">🗝️ استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4605,7 +4610,7 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       </div>
       <div class="auth-help-strip">
         <button class="auth-help-btn" id="teacherSupportBtn" type="button">🎧 تواصل مع الدعم</button>
-        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">📱 استرجاع الحساب</button>
+        <button class="auth-help-btn recovery" id="teacherRecoveryBtn" type="button">🗝️ استرجاع الحساب</button>
       </div>
     </div>
 
@@ -4635,47 +4640,47 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
       <div class="support-field"><label for="supportAccountHint">اسم الدخول / Profile ID إن كنت تعرفه</label><input id="supportAccountHint" maxlength="100" placeholder="اختياري"></div>
       <div class="support-field full"><label for="supportMessage">اشرح المشكلة</label><textarea id="supportMessage" maxlength="1200" placeholder="اكتب شو صار معك بالتفصيل..."></textarea></div>
     </div>
-    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
+    <div class="phone-note">إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك مفتاح استرداد، استخدم استرجاع الحساب بدل انتظار الدعم.</div>
     <div class="support-actions">
       <button class="support-primary" id="submitSupportRequest" type="button">📨 إرسال للدعم</button>
-      <button class="support-secondary" id="supportOpenRecovery" type="button">📱 استرجاع بالحساب بالهاتف</button>
+      <button class="support-secondary" id="supportOpenRecovery" type="button">🗝️ استرجاع بمفتاح الحساب</button>
     </div>
     <div class="support-status" id="supportRequestStatus"></div>
   </div>
 </div>
 
-<div class="support-layer hidden" id="phoneSetupLayer" aria-modal="true" role="dialog">
+<div class="support-layer hidden" id="recoveryKeySetupLayer" aria-modal="true" role="dialog">
   <div class="support-box">
-    <button class="support-close hidden" id="closePhoneSetup" type="button">×</button>
-    <div class="support-head"><h2>📱 اربط رقم هاتفك</h2><p>رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.</p></div>
-    <div class="phone-step active" id="phoneSetupNumberStep">
-      <div class="support-field"><label for="phoneSetupNumber">رقم الهاتف</label><input id="phoneSetupNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
-      <div class="phone-note">رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.</div>
-      <div id="phoneRecaptcha"></div>
-      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary hidden" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
+    <button class="support-close" id="closeRecoveryKeySetup" type="button">×</button>
+    <div class="support-head"><h2>🗝️ مفتاح استرداد الحساب</h2><p>هذا المفتاح يثبت إن الحساب إلك إذا نسيت اسم الدخول أو كلمة السر. ما في رقم هاتف ولا SMS.</p></div>
+    <div class="phone-step active" id="recoveryKeyIntroStep">
+      <div class="phone-note">كلاسورا رح ينشئ مفتاح قوي إلك. خزّنه بمكان آمن أو خذ له صورة. المفتاح ما بنعرضه للأدمن وما بنقدر نرجعه إذا ضاع؛ بتقدر تعمل مفتاح جديد وأنت داخل حسابك.</div>
+      <div class="support-actions">
+        <button class="support-primary" id="generateRecoveryKeyBtn" type="button">🗝️ إنشاء مفتاح الاسترداد</button>
+        <button class="support-secondary" id="recoveryKeySetupLater" type="button">ذكّرني لاحقًا</button>
+      </div>
     </div>
-    <div class="phone-step" id="phoneSetupCodeStep">
-      <div class="support-field"><label for="phoneSetupCode">كود التحقق</label><input id="phoneSetupCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
-      <div class="support-actions"><button class="support-primary" id="verifyPhoneSetupCode" type="button">✓ تحقق واربط الرقم</button><button class="support-secondary" id="phoneSetupBack" type="button">رجوع</button></div>
+    <div class="phone-step" id="recoveryKeyShowStep">
+      <div class="recovery-key-display" id="generatedRecoveryKey">—</div>
+      <div class="support-actions">
+        <button class="support-secondary" id="copyRecoveryKeyBtn" type="button">📋 نسخ المفتاح</button>
+      </div>
+      <label class="recovery-key-confirm"><input id="recoveryKeySavedCheck" type="checkbox"> حفظت المفتاح بمكان آمن</label>
+      <div class="support-actions"><button class="support-primary" id="confirmRecoveryKeySaved" type="button" disabled>✓ تم، حفظته</button></div>
     </div>
-    <div class="support-status" id="phoneSetupStatus"></div>
+    <div class="support-status" id="recoveryKeySetupStatus"></div>
   </div>
 </div>
 
 <div class="support-layer hidden" id="accountRecoveryLayer" aria-modal="true" role="dialog">
   <div class="support-box">
     <button class="support-close" id="closeAccountRecovery" type="button">×</button>
-    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.</p></div>
-    <div class="phone-step active" id="recoveryNumberStep">
-      <div class="support-field"><label for="recoveryPhoneNumber">رقم الهاتف المرتبط بالحساب</label><input id="recoveryPhoneNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
+    <div class="support-head"><h2>🔐 استرجاع الحساب</h2><p>اكتب مفتاح الاسترداد الخاص بحسابك. إذا كان صحيح، بتقدر تشوف اسم الدخول أو تدخل للحساب وتغيّر كلمة السر.</p></div>
+    <div class="phone-step active" id="recoveryKeyVerifyStep">
+      <div class="support-field full"><label for="recoveryKeyInput">مفتاح الاسترداد</label><input id="recoveryKeyInput" autocomplete="off" spellcheck="false" maxlength="40" placeholder="CLAS-XXXX-XXXX-XXXX-XXXX"></div>
       <div class="support-field"><label for="recoveryIntent">شو بدك تسترجع؟</label><select id="recoveryIntent"><option value="name">اسم الدخول</option><option value="password">كلمة السر</option><option value="both">الاثنين</option></select></div>
-      <div class="phone-note">رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.</div>
-      <div id="recoveryRecaptcha"></div>
-      <div class="support-actions"><button class="support-primary" id="sendRecoveryCode" type="button">إرسال كود التحقق</button></div>
-    </div>
-    <div class="phone-step" id="recoveryCodeStep">
-      <div class="support-field"><label for="recoveryCode">كود التحقق</label><input id="recoveryCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
-      <div class="support-actions"><button class="support-primary" id="verifyRecoveryCode" type="button">✓ تحقق</button><button class="support-secondary" id="recoveryBack" type="button">رجوع</button></div>
+      <div class="phone-note">مفتاح الاسترداد سري مثل كلمة السر. لا تبعته لأي شخص.</div>
+      <div class="support-actions"><button class="support-primary" id="verifyRecoveryKeyBtn" type="button">✓ تحقق من المفتاح</button></div>
     </div>
     <div class="phone-step" id="recoveryResultStep">
       <div class="recovery-result show"><small>اسم الدخول</small><b id="recoveredLoginName">—</b><div class="support-ticket-meta" id="recoveredDisplayName"></div></div>
@@ -5761,6 +5766,12 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
         <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
+      <section class="settings-card" id="recoveryKeySettingsCard">
+        <h3>🗝️ مفتاح استرداد الحساب</h3>
+        <div class="settings-note" id="recoveryKeySettingsStatus">مفتاح الاسترداد مش مفعّل بعد.</div>
+        <button class="exam-secondary" id="manageRecoveryKeyBtn" type="button">إنشاء / تغيير المفتاح</button>
+      </section>
+
       <section class="settings-card notification-settings-card" id="notificationSettingsCard">
         <h3 id="notificationSettingsTitle">🔔 الإشعارات</h3>
         <div class="settings-note" id="notificationSettingsNote">فعّل إشعارات Classora للوظائف، الامتحانات، المسابقات ودخول الطلاب للصف.</div>
@@ -6499,9 +6510,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/fireba
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithCustomToken, deleteUser, updatePassword,
   reauthenticateWithCredential, EmailAuthProvider,
-  PhoneAuthProvider, RecaptchaVerifier, linkWithCredential, signInWithCredential,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -6535,6 +6545,8 @@ const createSupportTicketCall = httpsCallable(classoraFunctions,"createSupportTi
 const recordSupportEventCall = httpsCallable(classoraFunctions,"recordSupportEvent");
 const getSupportCenterCall = httpsCallable(classoraFunctions,"getSupportCenter");
 const updateSupportTicketCall = httpsCallable(classoraFunctions,"updateSupportTicket");
+const createRecoveryKeyCall = httpsCallable(classoraFunctions,"createRecoveryKey");
+const verifyRecoveryKeyCall = httpsCallable(classoraFunctions,"verifyRecoveryKey");
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -7112,7 +7124,7 @@ function paintUser(user,profile){
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
-  setTimeout(()=>maybeOpenPhoneSetup(profile,user),950);
+  setTimeout(()=>maybeOpenRecoveryKeySetup(profile,user),950);
   if(admin){
     setTimeout(startSupportCenterRealtime,250);
     if(location.hash==="#support-center")setTimeout(openSupportCenter,500);
@@ -7578,7 +7590,7 @@ onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
   authResolved=true;
   document.body.classList.add("auth-ready");
-  if(classoraPhoneRecoveryActive){
+  if(classoraRecoveryActive){
     window.dispatchEvent(new Event("classora-auth-settled"));
     return;
   }
@@ -11866,8 +11878,8 @@ const uiExactTranslations=new Map([
 
 [
   ["🎧 تواصل مع الدعم","🎧 Contact Support"],
-  ["📱 نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
-  ["📱 استرجاع الحساب","📱 Recover Account"],
+  ["🗝️ نسيت الاسم أو كلمة السر؟","🗝️ Forgot name or password?"],
+  ["🗝️ استرجاع الحساب","🗝️ Recover Account"],
   ["مركز الدعم","Support Center"],
   ["🎧 مركز الدعم","🎧 Support Center"],
   ["اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.","Choose the issue type and describe what happened. Your request goes directly to Support."],
@@ -11881,30 +11893,32 @@ const uiExactTranslations=new Map([
   ["💬 شيء آخر","💬 Something Else"],
   ["اسم الدخول / Profile ID إن كنت تعرفه","Login name / Profile ID if known"],
   ["اشرح المشكلة","Describe the Problem"],
-  ["إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك رقم هاتف مربوط بالحساب، استخدم استرجاع الحساب بدل انتظار الدعم.","If you only forgot your login name or password and have a phone linked to the account, use Account Recovery instead of waiting for Support."],
+  ["إذا المشكلة فقط إنك ناسي اسم الدخول أو كلمة السر وعندك مفتاح استرداد، استخدم استرجاع الحساب بدل انتظار الدعم.","If you only forgot your login name or password and have a recovery key, use Account Recovery instead of waiting for Support."],
   ["📨 إرسال للدعم","📨 Send to Support"],
-  ["📱 استرجاع بالحساب بالهاتف","📱 Recover Account by Phone"],
-  ["📱 اربط رقم هاتفك","📱 Link Your Phone Number"],
-  ["رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.","Your phone helps protect your account and lets you recover your login name or password with an SMS code."],
-  ["رقم الهاتف","Phone Number"],
-  ["رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.","You'll receive an SMS verification code. Standard messaging rates may apply. Classora does not store the code or your password."],
-  ["إرسال الكود","Send Code"],
+  ["🗝️ استرجاع بمفتاح الحساب","🗝️ Recover with Account Key"],
+  ["🗝️ مفتاح استرداد الحساب","🗝️ Account Recovery Key"],
+  ["هذا المفتاح يثبت إن الحساب إلك إذا نسيت اسم الدخول أو كلمة السر. ما في رقم هاتف ولا SMS.","This key proves the account is yours if you forget your login name or password. No phone number or SMS is used."],
+  ["كلاسورا رح ينشئ مفتاح قوي إلك. خزّنه بمكان آمن أو خذ له صورة. المفتاح ما بنعرضه للأدمن وما بنقدر نرجعه إذا ضاع؛ بتقدر تعمل مفتاح جديد وأنت داخل حسابك.","Classora will create a strong key for you. Store it somewhere safe or save a picture of it. The key is never shown to admins and cannot be recovered if lost; you can create a new one while signed in."],
+  ["🗝️ إنشاء مفتاح الاسترداد","🗝️ Create Recovery Key"],
   ["ذكّرني لاحقًا","Remind Me Later"],
-  ["كود التحقق","Verification Code"],
-  ["✓ تحقق واربط الرقم","✓ Verify & Link Number"],
+  ["📋 نسخ المفتاح","📋 Copy Key"],
+  ["حفظت المفتاح بمكان آمن","I saved the key somewhere safe"],
+  ["✓ تم، حفظته","✓ Done, I Saved It"],
   ["🔐 استرجاع الحساب","🔐 Account Recovery"],
-  ["تحقق برقم الهاتف المرتبط بالحساب، وبعدها بتقدر تشوف اسم الدخول أو تغير كلمة السر.","Verify with the phone linked to your account, then you can view your login name or change your password."],
-  ["رقم الهاتف المرتبط بالحساب","Phone Number Linked to the Account"],
+  ["اكتب مفتاح الاسترداد الخاص بحسابك. إذا كان صحيح، بتقدر تشوف اسم الدخول أو تدخل للحساب وتغيّر كلمة السر.","Enter your account recovery key. If it is correct, you can view your login name or enter the account and change the password."],
+  ["مفتاح الاسترداد","Recovery Key"],
   ["شو بدك تسترجع؟","What do you want to recover?"],
   ["اسم الدخول","Login Name"],
+  ["كلمة السر","Password"],
   ["الاثنين","Both"],
-  ["رح نرسل كود SMS للتأكد إن الرقم إلك. ما منطلب منك كلمة السر القديمة.","We'll send an SMS code to confirm the number is yours. We won't ask for your old password."],
-  ["إرسال كود التحقق","Send Verification Code"],
-  ["✓ تحقق","✓ Verify"],
+  ["مفتاح الاسترداد سري مثل كلمة السر. لا تبعته لأي شخص.","Your recovery key is secret like a password. Never send it to anyone."],
+  ["✓ تحقق من المفتاح","✓ Verify Recovery Key"],
   ["كلمة السر الجديدة","New Password"],
   ["تأكيد كلمة السر الجديدة","Confirm New Password"],
   ["🔑 تغيير كلمة السر","🔑 Change Password"],
   ["متابعة بدون تغيير","Continue Without Changes"],
+  ["مفتاح الاسترداد مش مفعّل بعد.","Recovery key is not enabled yet."],
+  ["إنشاء / تغيير المفتاح","Create / Change Key"],
   ["كل طلبات الدعم وأحداث استرجاع الحساب المهمة بتظهر هون.","All support requests and important account-recovery events appear here."],
   ["طلبات الدعم","Support Requests"],
   ["سجل الاسترجاع والأمان","Recovery & Security Log"],
@@ -12120,17 +12134,12 @@ setTimeout(()=>{
 
 
 
-/* -------------------- V63 SUPPORT / PHONE RECOVERY -------------------- */
+/* -------------------- V64 SUPPORT / RECOVERY KEY -------------------- */
 let supportRoleContext="unknown";
 let supportType="login";
-let phoneSetupVerificationId="";
-let phoneSetupVerifier=null;
-let phoneSetupPendingPhone="";
-let recoveryVerificationId="";
-let recoveryVerifier=null;
-let recoveryPendingPhone="";
 let recoveredProfile=null;
-let classoraPhoneRecoveryActive=false;
+let classoraRecoveryActive=false;
+let recoveryKeyRotateMode=false;
 let supportCenterRefreshTimer=null;
 let supportOpenTicketCount=0;
 
@@ -12141,42 +12150,12 @@ function setSupportStatus(id,text,type=""){
 }
 function openLayer(id){document.getElementById(id)?.classList.remove("hidden")}
 function closeLayer(id){document.getElementById(id)?.classList.add("hidden")}
-function phoneLast4(phone){const digits=String(phone||"").replace(/\D/g,"");return digits.slice(-4)}
-function normalizeRecoveryPhone(value){
-  let s=String(value||"").trim().replace(/[\s().-]/g,"");
-  if(/^05\d{8}$/.test(s))s="+972"+s.slice(1);
-  else if(/^9725\d{8}$/.test(s))s="+"+s;
-  if(!/^\+[1-9]\d{7,14}$/.test(s))return "";
-  return s;
-}
-function friendlyPhoneError(err){
-  const code=String(err?.code||"");
-  if(code.includes("invalid-phone-number"))return supportLang("رقم الهاتف غير صحيح. اكتبه مع رمز الدولة مثل +972.","Invalid phone number. Include the country code, for example +972.");
-  if(code.includes("too-many-requests")||code.includes("quota"))return supportLang("صار في محاولات كثيرة. جرّب بعد شوي.","Too many attempts. Try again later.");
-  if(code.includes("invalid-verification-code"))return supportLang("كود التحقق غير صحيح.","The verification code is incorrect.");
-  if(code.includes("credential-already-in-use"))return supportLang("رقم الهاتف مربوط بحساب ثاني.","This phone number is linked to another account.");
-  if(code.includes("operation-not-allowed"))return supportLang("التحقق بالهاتف غير متاح حاليًا.","Phone verification is not available right now.");
-  return supportLang("تعذر إكمال التحقق. جرّب مرة ثانية.","Could not complete verification. Try again.");
-}
-function resetVerifier(which){
-  try{if(which==="setup"&&phoneSetupVerifier)phoneSetupVerifier.clear()}catch{}
-  try{if(which==="recovery"&&recoveryVerifier)recoveryVerifier.clear()}catch{}
-  if(which==="setup")phoneSetupVerifier=null;else recoveryVerifier=null;
-}
-function createPhoneVerifier(containerId,which){
-  resetVerifier(which);
-  auth.languageCode=currentUILanguage==="ar"?"ar":"en";
-  const verifier=new RecaptchaVerifier(auth,containerId,{size:"normal"});
-  if(which==="setup")phoneSetupVerifier=verifier;else recoveryVerifier=verifier;
-  return verifier;
-}
-async function recordSupportEventSafe(event,detail="",profile=window.PythagorasiUser,phone=""){
+async function recordSupportEventSafe(event,detail="",profile=window.PythagorasiUser){
   try{
     await recordSupportEventCall({
       event,
       detail:String(detail||"").slice(0,180),
-      profileId:String(profile?.profileId||""),
-      phoneLast4:phoneLast4(phone||profile?.phoneLast4||"")
+      profileId:String(profile?.profileId||"")
     });
   }catch(err){console.warn("support event",err)}
 }
@@ -12193,153 +12172,124 @@ function openSupportRequest(role="unknown"){
   document.getElementById("supportMessage").value="";
   setSupportStatus("supportRequestStatus","");
   openLayer("supportRequestLayer");
-  recordSupportEventSafe("support_opened",role,p);
+  if(auth.currentUser)recordSupportEventSafe("support_opened",role,p);
+}
+function refreshRecoveryKeySettings(){
+  const el=document.getElementById("recoveryKeySettingsStatus");if(!el)return;
+  const hasKey=!!window.PythagorasiUser?.recoveryKeySetAt;
+  el.textContent=hasKey
+    ?supportLang("مفتاح الاسترداد مفعّل ✅. تقدر تعمل مفتاح جديد، والقديم يبطل فورًا.","Recovery key is enabled ✅. You can create a new key; the old one will stop working immediately.")
+    :supportLang("مفتاح الاسترداد مش مفعّل بعد.","Recovery key is not enabled yet.");
+  const btn=document.getElementById("manageRecoveryKeyBtn");
+  if(btn)btn.textContent=hasKey?supportLang("🔄 تغيير مفتاح الاسترداد","🔄 Change recovery key"):supportLang("🗝️ إنشاء مفتاح الاسترداد","🗝️ Create recovery key");
+}
+function openRecoveryKeySetup(forceRotate=false){
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  recoveryKeyRotateMode=!!forceRotate||!!window.PythagorasiUser.recoveryKeySetAt;
+  document.getElementById("generatedRecoveryKey").textContent="—";
+  document.getElementById("recoveryKeySavedCheck").checked=false;
+  document.getElementById("confirmRecoveryKeySaved").disabled=true;
+  document.getElementById("recoveryKeyIntroStep").classList.add("active");
+  document.getElementById("recoveryKeyShowStep").classList.remove("active");
+  const gen=document.getElementById("generateRecoveryKeyBtn");
+  if(gen)gen.textContent=recoveryKeyRotateMode?supportLang("🔄 إنشاء مفتاح جديد","🔄 Create a new key"):supportLang("🗝️ إنشاء مفتاح الاسترداد","🗝️ Create recovery key");
+  setSupportStatus("recoveryKeySetupStatus",recoveryKeyRotateMode?supportLang("إذا أنشأت مفتاح جديد، المفتاح القديم رح يبطل فورًا.","Creating a new key immediately disables the old one."):"");
+  openLayer("recoveryKeySetupLayer");
+}
+function maybeOpenRecoveryKeySetup(profile=window.PythagorasiUser,user=auth.currentUser){
+  if(!user||!profile||profile.recoveryKeySetAt)return;
+  if(sessionStorage.getItem("classora_recovery_key_prompt_later")==="1")return;
+  openRecoveryKeySetup(false);
+}
+async function generateRecoveryKey(){
+  const btn=document.getElementById("generateRecoveryKeyBtn");btn.disabled=true;
+  try{
+    const result=await createRecoveryKeyCall({});
+    const key=String(result.data?.key||"").trim();
+    if(!/^CLAS-[A-Z2-9]{4}(?:-[A-Z2-9]{4}){3}$/.test(key))throw new Error("bad-recovery-key");
+    document.getElementById("generatedRecoveryKey").textContent=key;
+    document.getElementById("recoveryKeyIntroStep").classList.remove("active");
+    document.getElementById("recoveryKeyShowStep").classList.add("active");
+    setSupportStatus("recoveryKeySetupStatus",supportLang("هذا المفتاح رح يطلع مرة واحدة. خزّنه قبل ما تسكر الصفحة.","This key is shown once. Save it before closing this screen."),"good");
+    window.PythagorasiUser={...window.PythagorasiUser,recoveryKeySetAt:true};
+    activeProfile=window.PythagorasiUser;
+    refreshRecoveryKeySettings();
+  }catch(err){
+    console.error("create recovery key",err);
+    setSupportStatus("recoveryKeySetupStatus",supportLang("تعذر إنشاء المفتاح حاليًا. جرّب مرة ثانية.","Could not create the recovery key right now. Try again."),"bad");
+  }finally{btn.disabled=false}
+}
+async function copyGeneratedRecoveryKey(){
+  const key=document.getElementById("generatedRecoveryKey").textContent.trim();
+  if(!key||key==="—")return;
+  try{
+    await navigator.clipboard.writeText(key);
+    setSupportStatus("recoveryKeySetupStatus",supportLang("تم نسخ المفتاح ✅","Recovery key copied ✅"),"good");
+  }catch{
+    setSupportStatus("recoveryKeySetupStatus",supportLang("انسخ المفتاح يدويًا من المربع.","Copy the key manually from the box."),"bad");
+  }
+}
+function confirmRecoveryKeySaved(){
+  if(!document.getElementById("recoveryKeySavedCheck").checked)return;
+  document.getElementById("generatedRecoveryKey").textContent="—";
+  closeLayer("recoveryKeySetupLayer");
+  sessionStorage.removeItem("classora_recovery_key_prompt_later");
+  refreshRecoveryKeySettings();
 }
 function openAccountRecovery(){
   closeLayer("supportRequestLayer");
-  document.getElementById("recoveryPhoneNumber").value="";
-  document.getElementById("recoveryCode").value="";
-  document.getElementById("recoveryNumberStep").classList.add("active");
-  document.getElementById("recoveryCodeStep").classList.remove("active");
+  document.getElementById("recoveryKeyInput").value="";
+  document.getElementById("recoveryNewPassword").value="";
+  document.getElementById("recoveryNewPassword2").value="";
+  document.getElementById("recoveryKeyVerifyStep").classList.add("active");
   document.getElementById("recoveryResultStep").classList.remove("active");
   document.getElementById("recoveryPasswordWrap").classList.add("hidden");
   document.getElementById("saveRecoveredPassword").classList.add("hidden");
+  document.getElementById("recoveredLoginName").textContent="—";
+  document.getElementById("recoveredDisplayName").textContent="";
+  recoveredProfile=null;
   setSupportStatus("accountRecoveryStatus","");
-  resetVerifier("recovery");
   openLayer("accountRecoveryLayer");
-  recordSupportEventSafe("recovery_started","login recovery",window.PythagorasiUser||null);
 }
-function openPhoneSetup(){
-  if(!auth.currentUser)return;
-  document.getElementById("phoneSetupNumber").value=auth.currentUser.phoneNumber||"";
-  document.getElementById("phoneSetupCode").value="";
-  document.getElementById("phoneSetupNumberStep").classList.add("active");
-  document.getElementById("phoneSetupCodeStep").classList.remove("active");
-  setSupportStatus("phoneSetupStatus","");
-  document.getElementById("phoneSetupLater")?.classList.add("hidden");
-  document.getElementById("closePhoneSetup")?.classList.add("hidden");
-  resetVerifier("setup");
-  openLayer("phoneSetupLayer");
-}
-async function maybeOpenPhoneSetup(profile=window.PythagorasiUser,user=auth.currentUser){
-  if(!user||!profile)return;
-  if(user.phoneNumber){
-    if(profile.phoneLinked!==true){
-      const last4=phoneLast4(user.phoneNumber);
-      try{await setDoc(doc(db,"users",user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp()},{merge:true})}catch{}
-    }
-    return;
+async function verifyRecoveryKey(){
+  const statusId="accountRecoveryStatus";
+  const key=document.getElementById("recoveryKeyInput").value.trim();
+  if(key.replace(/[^A-Za-z0-9]/g,"").length<16){
+    setSupportStatus(statusId,supportLang("اكتب مفتاح الاسترداد كامل.","Enter the complete recovery key."),"bad");return;
   }
-  if(profile.phoneLinked===true){
-    try{await setDoc(doc(db,"users",user.uid),{phoneLinked:false,updatedAt:serverTimestamp()},{merge:true})}catch{}
-  }
-  if(sessionStorage.getItem("classora_phone_prompt_later")==="1")return;
-  openPhoneSetup();
-}
-async function sendPhoneSetupCode(){
-  const statusId="phoneSetupStatus";
-  const phone=normalizeRecoveryPhone(document.getElementById("phoneSetupNumber").value);
-  if(!phone){setSupportStatus(statusId,supportLang("اكتب رقم صحيح مع رمز الدولة.","Enter a valid number with the country code."),"bad");return}
-  if(!auth.currentUser){setSupportStatus(statusId,supportLang("سجّل دخولك أولًا.","Sign in first."),"bad");return}
-  const btn=document.getElementById("sendPhoneSetupCode");btn.disabled=true;
+  const btn=document.getElementById("verifyRecoveryKeyBtn");btn.disabled=true;
   try{
-    document.getElementById("phoneSetupLater")?.classList.add("hidden");
-    document.getElementById("closePhoneSetup")?.classList.add("hidden");
-    const verifier=createPhoneVerifier("phoneRecaptcha","setup");
-    const provider=new PhoneAuthProvider(auth);
-    phoneSetupVerificationId=await provider.verifyPhoneNumber(phone,verifier);
-    phoneSetupPendingPhone=phone;
-    document.getElementById("phoneSetupNumberStep").classList.remove("active");
-    document.getElementById("phoneSetupCodeStep").classList.add("active");
-    setSupportStatus(statusId,supportLang("تم إرسال الكود ✅","Verification code sent ✅"),"good");
-    recordSupportEventSafe("sms_sent","phone link",window.PythagorasiUser,phone);
-  }catch(err){
-    console.error("phone setup send",err);
-    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
-    const code=String(err?.code||"");
-    if(/operation-not-allowed|network|too-many-requests|quota|captcha/i.test(code)){
-      document.getElementById("phoneSetupLater")?.classList.remove("hidden");
-    }
-    recordSupportEventSafe("phone_link_failed",code||"send-failed",window.PythagorasiUser,phone);
-    resetVerifier("setup");
-  }finally{btn.disabled=false}
-}
-async function verifyPhoneSetupCode(){
-  const statusId="phoneSetupStatus",code=document.getElementById("phoneSetupCode").value.trim();
-  if(!/^\d{6}$/.test(code)||!phoneSetupVerificationId){setSupportStatus(statusId,supportLang("اكتب كود التحقق من 6 أرقام.","Enter the 6-digit verification code."),"bad");return}
-  const btn=document.getElementById("verifyPhoneSetupCode");btn.disabled=true;
-  try{
-    const credential=PhoneAuthProvider.credential(phoneSetupVerificationId,code);
-    const result=await linkWithCredential(auth.currentUser,credential);
-    const last4=phoneLast4(phoneSetupPendingPhone);
-    await setDoc(doc(db,"users",result.user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,phoneLinked:true,phoneLast4:last4};
-    activeProfile=window.PythagorasiUser;
-    setSupportStatus(statusId,supportLang("تم ربط رقم الهاتف ✅","Phone number linked ✅"),"good");
-    await recordSupportEventSafe("phone_linked","verified",window.PythagorasiUser,phoneSetupPendingPhone);
-    setTimeout(()=>closeLayer("phoneSetupLayer"),650);
-  }catch(err){
-    console.error("phone setup verify",err);
-    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
-    recordSupportEventSafe("phone_link_failed",String(err?.code||"verify-failed"),window.PythagorasiUser,phoneSetupPendingPhone);
-  }finally{btn.disabled=false}
-}
-async function sendRecoveryCode(){
-  const statusId="accountRecoveryStatus",phone=normalizeRecoveryPhone(document.getElementById("recoveryPhoneNumber").value);
-  if(!phone){setSupportStatus(statusId,supportLang("اكتب رقم صحيح مع رمز الدولة.","Enter a valid number with the country code."),"bad");return}
-  const btn=document.getElementById("sendRecoveryCode");btn.disabled=true;
-  try{
-    const verifier=createPhoneVerifier("recoveryRecaptcha","recovery");
-    const provider=new PhoneAuthProvider(auth);
-    recoveryVerificationId=await provider.verifyPhoneNumber(phone,verifier);
-    recoveryPendingPhone=phone;
-    document.getElementById("recoveryNumberStep").classList.remove("active");
-    document.getElementById("recoveryCodeStep").classList.add("active");
-    setSupportStatus(statusId,supportLang("تم إرسال كود التحقق ✅","Verification code sent ✅"),"good");
-    recordSupportEventSafe("sms_sent","account recovery",null,phone);
-  }catch(err){
-    console.error("recovery send",err);
-    setSupportStatus(statusId,friendlyPhoneError(err),"bad");
-    recordSupportEventSafe("recovery_failed",String(err?.code||"send-failed"),null,phone);
-    resetVerifier("recovery");
-  }finally{btn.disabled=false}
-}
-async function verifyRecoveryCode(){
-  const statusId="accountRecoveryStatus",code=document.getElementById("recoveryCode").value.trim();
-  if(!/^\d{6}$/.test(code)||!recoveryVerificationId){setSupportStatus(statusId,supportLang("اكتب كود التحقق من 6 أرقام.","Enter the 6-digit verification code."),"bad");return}
-  const btn=document.getElementById("verifyRecoveryCode");btn.disabled=true;
-  try{
-    const credential=PhoneAuthProvider.credential(recoveryVerificationId,code);
-    classoraPhoneRecoveryActive=true;
-    const result=await signInWithCredential(auth,credential);
-    const snap=await getDoc(doc(db,"users",result.user.uid));
-    if(!snap.exists()){
-      try{await deleteUser(result.user)}catch{}
-      classoraPhoneRecoveryActive=false;
-      throw Object.assign(new Error("recovery-no-account"),{code:"recovery/no-account"});
-    }
-    recoveredProfile={uid:result.user.uid,...snap.data()};
-    const last4=phoneLast4(recoveryPendingPhone);
-    try{await setDoc(doc(db,"users",result.user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true})}catch{}
-    const loginName=recoveredProfile.loginName||recoveredProfile.originalLoginName||recoveredProfile.displayName||supportLang("غير متوفر","Unavailable");
-    document.getElementById("recoveredLoginName").textContent=loginName;
-    document.getElementById("recoveredDisplayName").textContent=(recoveredProfile.displayName||"")+" • Profile ID "+(recoveredProfile.profileId||"—");
+    const result=await verifyRecoveryKeyCall({key});
+    const data=result.data||{};
+    if(!data.customToken)throw new Error("missing-custom-token");
+    classoraRecoveryActive=true;
+    await signInWithCustomToken(auth,data.customToken);
+    const snap=await getDoc(doc(db,"users",auth.currentUser.uid));
+    const serverProfile=data.profile||{};
+    recoveredProfile={uid:auth.currentUser.uid,...(snap.exists()?snap.data():{}),...serverProfile};
+    document.getElementById("recoveredLoginName").textContent=serverProfile.loginName||serverProfile.displayName||supportLang("غير متوفر","Unavailable");
+    document.getElementById("recoveredDisplayName").textContent=(serverProfile.displayName||"")+" • Profile ID "+(serverProfile.profileId||"—");
     const intent=document.getElementById("recoveryIntent").value;
-    const hasPasswordProvider=result.user.providerData.some(p=>p.providerId==="password");
     const wantsPassword=intent==="password"||intent==="both";
-    document.getElementById("recoveryPasswordWrap").classList.toggle("hidden",!(wantsPassword&&hasPasswordProvider));
-    document.getElementById("saveRecoveredPassword").classList.toggle("hidden",!(wantsPassword&&hasPasswordProvider));
-    document.getElementById("recoveryCodeStep").classList.remove("active");
+    const canPassword=!!data.canChangePassword;
+    document.getElementById("recoveryPasswordWrap").classList.toggle("hidden",!(wantsPassword&&canPassword));
+    document.getElementById("saveRecoveredPassword").classList.toggle("hidden",!(wantsPassword&&canPassword));
+    document.getElementById("recoveryKeyVerifyStep").classList.remove("active");
     document.getElementById("recoveryResultStep").classList.add("active");
-    setSupportStatus(statusId,wantsPassword&&!hasPasswordProvider?supportLang("هذا الحساب ما عنده كلمة سر داخل كلاسورا. تقدر تكمل للحساب بدون تغيير.","This account does not use a Classora password. You can continue without changing one."):"","good");
-    await recordSupportEventSafe("recovery_verified","verified",recoveredProfile,recoveryPendingPhone);
-    if(intent==="name"||intent==="both")await recordSupportEventSafe("login_name_viewed","login name recovered",recoveredProfile,recoveryPendingPhone);
+    if(wantsPassword&&!canPassword){
+      setSupportStatus(statusId,supportLang("هذا الحساب داخل عن طريق Google. تقدر تكمل للحساب، وتغيير كلمة سر Google بصير من حساب Google نفسه.","This account signs in with Google. You can continue to the account; Google password changes are handled by Google."),"good");
+    }else{
+      setSupportStatus(statusId,supportLang("تم التحقق من ملكية الحساب ✅","Account ownership verified ✅"),"good");
+    }
+    if(intent==="name"||intent==="both")recordSupportEventSafe("login_name_viewed","login name recovered",recoveredProfile);
   }catch(err){
-    console.error("recovery verify",err);
-    if(!recoveredProfile)classoraPhoneRecoveryActive=false;
-    const msg=String(err?.code||"")==="recovery/no-account"?supportLang("هذا الرقم مش مربوط بحساب كلاسورا.","This number is not linked to a Classora account."):friendlyPhoneError(err);
-    setSupportStatus(statusId,msg,"bad");
-    recordSupportEventSafe("recovery_failed",String(err?.code||"verify-failed"),recoveredProfile,recoveryPendingPhone);
+    console.error("recovery key verify",err);
+    classoraRecoveryActive=false;
+    const code=String(err?.code||err?.message||"");
+    const message=/resource-exhausted|too-many/i.test(code)
+      ?supportLang("محاولات كثيرة. جرّب بعد 15 دقيقة.","Too many attempts. Try again in 15 minutes.")
+      :supportLang("مفتاح الاسترداد غير صحيح أو غير فعال.","The recovery key is incorrect or no longer active.");
+    setSupportStatus(statusId,message,"bad");
   }finally{btn.disabled=false}
 }
 async function saveRecoveredPassword(){
@@ -12348,12 +12298,15 @@ async function saveRecoveredPassword(){
   if(a!==b){setSupportStatus(statusId,supportLang("كلمتا السر مش نفس بعض.","The passwords do not match."),"bad");return}
   const btn=document.getElementById("saveRecoveredPassword");btn.disabled=true;
   try{
+    if(!auth.currentUser)throw new Error("recovery-session-missing");
     await updatePassword(auth.currentUser,a);
     setSupportStatus(statusId,supportLang("تم تغيير كلمة السر ✅","Password changed ✅"),"good");
-    await recordSupportEventSafe("password_changed","phone recovery",recoveredProfile,recoveryPendingPhone);
+    await recordSupportEventSafe("password_changed","recovery key",recoveredProfile);
     btn.classList.add("hidden");
-  }catch(err){console.error(err);setSupportStatus(statusId,supportLang("تعذر تغيير كلمة السر. جرّب مرة ثانية.","Could not change the password. Try again."),"bad")}
-  finally{btn.disabled=false}
+  }catch(err){
+    console.error(err);
+    setSupportStatus(statusId,supportLang("تعذر تغيير كلمة السر. جرّب مرة ثانية.","Could not change the password. Try again."),"bad");
+  }finally{btn.disabled=false}
 }
 async function submitSupportRequest(){
   const name=document.getElementById("supportName").value.trim(),accountHint=document.getElementById("supportAccountHint").value.trim(),message=document.getElementById("supportMessage").value.trim();
@@ -12365,7 +12318,7 @@ async function submitSupportRequest(){
     const p=window.PythagorasiUser||{};
     const result=await createSupportTicketCall({
       type:supportType,role:supportRoleContext,name,accountHint,message,
-      profileId:String(p.profileId||""),phoneLast4:String(p.phoneLast4||"")
+      profileId:String(p.profileId||"")
     });
     setSupportStatus(statusId,supportLang("وصل طلبك للدعم ✅ رقم الطلب: ","Your request reached Support ✅ Ticket: ")+(result.data?.ticketId||"—"),"good");
     document.getElementById("supportMessage").value="";
@@ -12382,7 +12335,7 @@ function supportDate(ts,ms){
 }
 function supportTypeName(type){
   const map={
-    login:[ "مشكلة تسجيل دخول","Sign-in Problem"],"forgot-name":["نسي اسم الدخول","Forgot Login Name"],"forgot-password":["نسي كلمة السر","Forgot Password"],
+    login:["مشكلة تسجيل دخول","Sign-in Problem"],"forgot-name":["نسي اسم الدخول","Forgot Login Name"],"forgot-password":["نسي كلمة السر","Forgot Password"],
     class:["مشكلة صف","Class Problem"],exam:["مشكلة امتحان","Exam Problem"],competition:["مشكلة مسابقة","Competition Problem"],technical:["مشكلة تقنية","Technical Problem"],other:["طلب دعم","Support Request"]
   };
   return (map[type]||map.other)[currentUILanguage==="en"?1:0];
@@ -12409,12 +12362,15 @@ function renderSupportAudit(items){
   const host=document.getElementById("supportAuditList");if(!host)return;host.innerHTML="";
   if(!items.length){host.innerHTML='<div class="support-ticket-meta">'+supportLang("ما في أحداث استرجاع مسجلة.","No recovery events recorded.")+'</div>';return}
   const labels={
-    ticket_created:["إنشاء طلب دعم","Support ticket created"],support_opened:["فتح الدعم","Support opened"],recovery_started:["بدء استرجاع","Recovery started"],sms_sent:["إرسال كود","Code sent"],recovery_verified:["نجاح التحقق","Recovery verified"],login_name_viewed:["استرجاع اسم الدخول","Login name recovered"],password_changed:["تغيير كلمة السر","Password changed"],phone_linked:["ربط هاتف","Phone linked"],recovery_failed:["فشل الاسترجاع","Recovery failed"],phone_link_failed:["فشل ربط الهاتف","Phone link failed"],ticket_status:["تغيير حالة طلب","Ticket status changed"]
+    ticket_created:["إنشاء طلب دعم","Support ticket created"],support_opened:["فتح الدعم","Support opened"],recovery_started:["بدء استرجاع","Recovery started"],
+    recovery_key_created:["إنشاء مفتاح استرداد","Recovery key created"],recovery_key_rotated:["تغيير مفتاح الاسترداد","Recovery key changed"],
+    recovery_verified:["نجاح التحقق","Recovery verified"],login_name_viewed:["استرجاع اسم الدخول","Login name recovered"],
+    password_changed:["تغيير كلمة السر","Password changed"],recovery_failed:["فشل الاسترجاع","Recovery failed"],ticket_status:["تغيير حالة طلب","Ticket status changed"]
   };
   items.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0)).slice(0,150).forEach(x=>{
     const row=document.createElement("div");row.className="support-audit-row";
     const label=(labels[x.event]||[x.event,x.event])[currentUILanguage==="en"?1:0];
-    row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")} ${x.phoneLast4?"• ••••"+escapeHtml(x.phoneLast4):""}<div class="support-ticket-meta">${supportDate(x.createdAt,x.createdAtMs)} • ${escapeHtml(x.detail||"")}</div>`;
+    row.innerHTML=`<b>${escapeHtml(label)}</b> • ${escapeHtml(x.profileId||"—")}<div class="support-ticket-meta">${supportDate(x.createdAt,x.createdAtMs)} • ${escapeHtml(x.detail||"")}</div>`;
     host.appendChild(row);
   });
 }
@@ -12457,6 +12413,7 @@ function closeSupportCenter(){
   closeLayer("supportCenterLayer");
   if(location.hash==="#support-center")history.replaceState(null,"",location.pathname+location.search);
 }
+
 document.getElementById("authSupportBtn")?.addEventListener("click",()=>openSupportRequest("unknown"));
 document.getElementById("studentSupportBtn")?.addEventListener("click",()=>openSupportRequest("student"));
 document.getElementById("teacherSupportBtn")?.addEventListener("click",()=>openSupportRequest("teacher"));
@@ -12467,26 +12424,37 @@ document.querySelectorAll("#supportTypeOptions [data-support-type]").forEach(b=>
 document.getElementById("submitSupportRequest")?.addEventListener("click",submitSupportRequest);
 document.getElementById("supportOpenRecovery")?.addEventListener("click",openAccountRecovery);
 document.getElementById("closeSupportRequest")?.addEventListener("click",()=>closeLayer("supportRequestLayer"));
-document.getElementById("closePhoneSetup")?.addEventListener("click",()=>{sessionStorage.setItem("classora_phone_prompt_later","1");closeLayer("phoneSetupLayer");resetVerifier("setup")});
-document.getElementById("phoneSetupLater")?.addEventListener("click",()=>{sessionStorage.setItem("classora_phone_prompt_later","1");closeLayer("phoneSetupLayer");resetVerifier("setup")});
-document.getElementById("sendPhoneSetupCode")?.addEventListener("click",sendPhoneSetupCode);
-document.getElementById("verifyPhoneSetupCode")?.addEventListener("click",verifyPhoneSetupCode);
-document.getElementById("phoneSetupBack")?.addEventListener("click",()=>{document.getElementById("phoneSetupCodeStep").classList.remove("active");document.getElementById("phoneSetupNumberStep").classList.add("active");resetVerifier("setup")});
+
+document.getElementById("generateRecoveryKeyBtn")?.addEventListener("click",generateRecoveryKey);
+document.getElementById("copyRecoveryKeyBtn")?.addEventListener("click",copyGeneratedRecoveryKey);
+document.getElementById("recoveryKeySavedCheck")?.addEventListener("change",e=>{document.getElementById("confirmRecoveryKeySaved").disabled=!e.target.checked});
+document.getElementById("confirmRecoveryKeySaved")?.addEventListener("click",confirmRecoveryKeySaved);
+document.getElementById("recoveryKeySetupLater")?.addEventListener("click",()=>{sessionStorage.setItem("classora_recovery_key_prompt_later","1");closeLayer("recoveryKeySetupLayer")});
+document.getElementById("closeRecoveryKeySetup")?.addEventListener("click",()=>{
+  if(document.getElementById("generatedRecoveryKey")?.textContent.trim()!=="—"&&!document.getElementById("recoveryKeySavedCheck")?.checked){
+    setSupportStatus("recoveryKeySetupStatus",supportLang("قبل ما تسكر، خزّن المفتاح وعلّم إنك حفظته.","Before closing, save the key and confirm that you stored it."),"bad");
+    return;
+  }
+  closeLayer("recoveryKeySetupLayer");
+});
+document.getElementById("manageRecoveryKeyBtn")?.addEventListener("click",()=>openRecoveryKeySetup(true));
+document.getElementById("lobbySettingsBtn")?.addEventListener("click",()=>setTimeout(refreshRecoveryKeySettings,0));
+
 document.getElementById("closeAccountRecovery")?.addEventListener("click",async()=>{
-  closeLayer("accountRecoveryLayer");resetVerifier("recovery");
-  if(classoraPhoneRecoveryActive){
-    classoraPhoneRecoveryActive=false;
+  closeLayer("accountRecoveryLayer");
+  if(classoraRecoveryActive){
+    classoraRecoveryActive=false;
     try{await signOut(auth)}catch{}
     recoveredProfile=null;
   }
 });
-document.getElementById("sendRecoveryCode")?.addEventListener("click",sendRecoveryCode);
-document.getElementById("verifyRecoveryCode")?.addEventListener("click",verifyRecoveryCode);
-document.getElementById("recoveryBack")?.addEventListener("click",()=>{document.getElementById("recoveryCodeStep").classList.remove("active");document.getElementById("recoveryNumberStep").classList.add("active");resetVerifier("recovery")});
+document.getElementById("verifyRecoveryKeyBtn")?.addEventListener("click",verifyRecoveryKey);
+document.getElementById("recoveryKeyInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyRecoveryKey()}});
 document.getElementById("saveRecoveredPassword")?.addEventListener("click",saveRecoveredPassword);
 document.getElementById("continueRecoveredAccount")?.addEventListener("click",async()=>{
   closeLayer("accountRecoveryLayer");
-  classoraPhoneRecoveryActive=false;
+  classoraRecoveryActive=false;
+  rememberLoginForTwoMonths();
   if(auth.currentUser)await resolveCurrentUser(auth.currentUser);
 });
 document.getElementById("supportCenterBtn")?.addEventListener("click",openSupportCenter);
@@ -19196,7 +19164,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=60",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js?v=64",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -19614,7 +19582,7 @@ pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaI
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=60",{scope:"./",updateViaCache:"none"})
+    navigator.serviceWorker.register("./service-worker.js?v=64",{scope:"./",updateViaCache:"none"})
       .catch(err=>console.warn("service worker registration",err));
   });
 }

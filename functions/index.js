@@ -5,11 +5,13 @@ const crypto = require("crypto");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
 const { getMessaging } = require("firebase-admin/messaging");
+const { getAuth } = require("firebase-admin/auth");
 
 initializeApp();
 
 const db = getFirestore();
 const messaging = getMessaging();
+const adminAuth = getAuth();
 
 const APP_URL = "https://bassamsamijaber-maker.github.io/pythagorasi-3d/";
 const ICON_URL = APP_URL + "icons/classora-192.png";
@@ -19,9 +21,59 @@ const SUPER_ADMIN_PROFILE_ID = "3228667330";
 const SUPPORT_TYPES = new Set(["login","forgot-name","forgot-password","class","exam","competition","technical","other"]);
 const SUPPORT_ROLES = new Set(["student","teacher","unknown"]);
 const SUPPORT_EVENTS = new Set([
-  "support_opened","ticket_created","recovery_started","sms_sent","recovery_verified",
-  "login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"
+  "support_opened","ticket_created","recovery_started","recovery_key_created","recovery_key_rotated",
+  "recovery_verified","login_name_viewed","password_changed","recovery_failed"
 ]);
+
+const RECOVERY_KEY_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+function normalizeRecoveryKey(value) {
+  let s = String(value || "").toUpperCase().replace(/[^A-Z2-9]/g, "");
+  if (s.startsWith("CLAS")) s = s.slice(4);
+  return s;
+}
+function hashRecoveryKey(value) {
+  const normalized = normalizeRecoveryKey(value);
+  if (!/^[A-Z2-9]{16}$/.test(normalized)) return "";
+  return crypto.createHash("sha256").update("classora-recovery-v1|" + normalized).digest("hex");
+}
+function generateRecoveryKey() {
+  const bytes = crypto.randomBytes(16);
+  let body = "";
+  for (let i = 0; i < 16; i++) body += RECOVERY_KEY_ALPHABET[bytes[i] & 31];
+  return "CLAS-" + body.match(/.{1,4}/g).join("-");
+}
+function recoveryRateKey(request) {
+  const forwarded = String(request.rawRequest?.headers?.["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = forwarded || String(request.rawRequest?.ip || "unknown");
+  return crypto.createHash("sha256").update("classora-recovery-rate-v1|" + ip).digest("hex").slice(0, 40);
+}
+async function enforceRecoveryRateLimit(request) {
+  const ref = db.collection("_recoveryRate").doc(recoveryRateKey(request));
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const data = snap.exists ? (snap.data() || {}) : {};
+    let windowStart = Number(data.windowStartMs || 0);
+    let attempts = Number(data.attempts || 0);
+    if (!windowStart || now - windowStart > 15 * 60 * 1000) {
+      windowStart = now;
+      attempts = 0;
+    }
+    attempts += 1;
+    if (attempts > 7) throw new HttpsError("resource-exhausted", "too-many-recovery-attempts");
+    tx.set(ref, { windowStartMs: windowStart, attempts, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+  });
+}
+async function writeRecoveryAudit({ event, uid = null, profileId = "", detail = "" }) {
+  const ref = await db.collection("supportAudit").add({
+    event,
+    userUid: uid,
+    profileId: /^\d{10}$/.test(String(profileId || "")) ? String(profileId) : "",
+    detail: cleanSupportText(detail, 180),
+    createdAt: FieldValue.serverTimestamp()
+  });
+  return ref;
+}
 
 function cleanSupportText(value, max = 500) {
   return String(value || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
@@ -332,7 +384,6 @@ exports.createSupportTicket = onCall({ cors: true }, async (request) => {
   const accountHint = cleanSupportText(data.accountHint, 100);
   const message = cleanSupportText(data.message, 1200);
   let profileId = "";
-  let phoneLast4 = "";
   let serverName = name;
   let serverRole = role;
   if (request.auth?.uid) {
@@ -340,7 +391,6 @@ exports.createSupportTicket = onCall({ cors: true }, async (request) => {
     if (userSnap.exists) {
       const profile = userSnap.data() || {};
       profileId = /^\d{10}$/.test(String(profile.profileId || "")) ? String(profile.profileId) : "";
-      phoneLast4 = /^\d{4}$/.test(String(profile.phoneLast4 || "")) ? String(profile.phoneLast4) : "";
       serverName = cleanSupportText(profile.displayName || name, 80);
       serverRole = profile.role === "teacher" ? "teacher" : profile.role === "student" ? "student" : role;
     }
@@ -356,7 +406,6 @@ exports.createSupportTicket = onCall({ cors: true }, async (request) => {
     accountHint,
     message,
     profileId,
-    phoneLast4,
     userUid: request.auth?.uid || null,
     status: "open",
     source: request.auth?.uid ? "signed-in" : "login",
@@ -369,7 +418,6 @@ exports.createSupportTicket = onCall({ cors: true }, async (request) => {
     ticketId: ref.id,
     userUid: request.auth?.uid || null,
     profileId,
-    phoneLast4,
     detail: supportTypeLabel(type),
     createdAt: FieldValue.serverTimestamp()
   });
@@ -389,44 +437,132 @@ exports.recordSupportEvent = onCall({ cors: true }, async (request) => {
   if (!event) throw new HttpsError("invalid-argument", "invalid-event");
 
   let profileId = "";
-  let phoneLast4 = "";
   if (request.auth?.uid) {
     const userSnap = await db.collection("users").doc(request.auth.uid).get();
     if (userSnap.exists) {
       const profile = userSnap.data() || {};
       profileId = /^\d{10}$/.test(String(profile.profileId || "")) ? String(profile.profileId) : "";
-      phoneLast4 = /^\d{4}$/.test(String(profile.phoneLast4 || "")) ? String(profile.phoneLast4) : "";
     }
   }
   const detail = cleanSupportText(data.detail, 180);
+  const ref = await writeRecoveryAudit({ event, uid: request.auth?.uid || null, profileId, detail });
 
-  const ref = await db.collection("supportAudit").add({
-    event,
-    userUid: request.auth?.uid || null,
-    profileId,
-    phoneLast4,
-    detail,
-    createdAt: FieldValue.serverTimestamp()
-  });
-
-  const pushable = new Set(["recovery_verified","login_name_viewed","password_changed","phone_linked","recovery_failed","phone_link_failed"]);
-  if (request.auth?.uid && pushable.has(event)) {
+  const pushable = new Set(["recovery_key_created","recovery_key_rotated","recovery_verified","login_name_viewed","password_changed","recovery_failed"]);
+  if (pushable.has(event)) {
     const labels = {
-      recovery_verified:"تم التحقق من استرجاع حساب",
+      recovery_key_created:"تم إنشاء مفتاح استرداد",
+      recovery_key_rotated:"تم تغيير مفتاح الاسترداد",
+      recovery_verified:"تم التحقق من استرداد حساب",
       login_name_viewed:"تم استرجاع اسم دخول",
-      password_changed:"تم تغيير كلمة سر بالهاتف",
-      phone_linked:"تم ربط رقم هاتف",
-      recovery_failed:"فشل استرجاع حساب",
-      phone_link_failed:"فشل ربط رقم هاتف"
+      password_changed:"تم تغيير كلمة سر بمفتاح الاسترداد",
+      recovery_failed:"فشل استرداد حساب"
     };
     await pushSupportEvent(
       "🔐 " + (labels[event] || "حدث أمان"),
-      (profileId ? "Profile ID " + profileId : "مستخدم") + (phoneLast4 ? " • ••••" + phoneLast4 : ""),
+      profileId ? "Profile ID " + profileId : "مستخدم",
       "support-event:" + ref.id
     );
   }
 
   return { ok: true };
+});
+
+exports.createRecoveryKey = onCall({ cors: true }, async (request) => {
+  const uid = request.auth?.uid || "";
+  if (!uid) throw new HttpsError("unauthenticated", "sign-in-required");
+
+  const userRef = db.collection("users").doc(uid);
+  const userSnap = await userRef.get();
+  if (!userSnap.exists) throw new HttpsError("not-found", "profile-not-found");
+  const profile = userSnap.data() || {};
+  const oldHash = String(profile.recoveryKeyHash || "");
+  const key = generateRecoveryKey();
+  const hash = hashRecoveryKey(key);
+  if (!hash) throw new HttpsError("internal", "recovery-key-generation-failed");
+
+  const lookupRef = db.collection("recoveryKeyLookup").doc(hash);
+  await db.runTransaction(async (tx) => {
+    const lookupSnap = await tx.get(lookupRef);
+    if (lookupSnap.exists) throw new HttpsError("already-exists", "recovery-key-collision");
+    tx.set(lookupRef, {
+      uid,
+      active: true,
+      createdAt: FieldValue.serverTimestamp()
+    });
+    tx.set(userRef, {
+      recoveryKeyHash: hash,
+      recoveryKeySetAt: FieldValue.serverTimestamp(),
+      recoveryKeyVersion: 1,
+      updatedAt: FieldValue.serverTimestamp()
+    }, { merge: true });
+    if (oldHash && oldHash !== hash) {
+      tx.delete(db.collection("recoveryKeyLookup").doc(oldHash));
+    }
+  });
+
+  const event = oldHash ? "recovery_key_rotated" : "recovery_key_created";
+  const auditRef = await writeRecoveryAudit({
+    event,
+    uid,
+    profileId: profile.profileId || "",
+    detail: oldHash ? "recovery key rotated" : "recovery key created"
+  });
+  await pushSupportEvent(
+    oldHash ? "🔐 تم تغيير مفتاح استرداد" : "🔐 تم إنشاء مفتاح استرداد",
+    /^\d{10}$/.test(String(profile.profileId || "")) ? "Profile ID " + profile.profileId : (profile.displayName || "مستخدم"),
+    "support-event:" + auditRef.id
+  );
+
+  return { ok: true, key };
+});
+
+exports.verifyRecoveryKey = onCall({ cors: true }, async (request) => {
+  await enforceRecoveryRateLimit(request);
+  const rawKey = String(request.data?.key || "");
+  const hash = hashRecoveryKey(rawKey);
+  if (!hash) throw new HttpsError("invalid-argument", "invalid-recovery-key");
+
+  const lookupSnap = await db.collection("recoveryKeyLookup").doc(hash).get();
+  if (!lookupSnap.exists || lookupSnap.data()?.active === false) {
+    await writeRecoveryAudit({ event: "recovery_failed", detail: "invalid recovery key" });
+    throw new HttpsError("permission-denied", "invalid-recovery-key");
+  }
+
+  const uid = String(lookupSnap.data()?.uid || "");
+  if (!uid) throw new HttpsError("permission-denied", "invalid-recovery-key");
+  const userSnap = await db.collection("users").doc(uid).get();
+  if (!userSnap.exists) throw new HttpsError("permission-denied", "invalid-recovery-key");
+  const profile = userSnap.data() || {};
+  if (String(profile.recoveryKeyHash || "") !== hash) throw new HttpsError("permission-denied", "invalid-recovery-key");
+
+  const userRecord = await adminAuth.getUser(uid);
+  const customToken = await adminAuth.createCustomToken(uid, { classoraRecovery: true });
+  const canChangePassword = profile.provider === "password" || profile.role === "student";
+
+  const auditRef = await writeRecoveryAudit({
+    event: "recovery_verified",
+    uid,
+    profileId: profile.profileId || "",
+    detail: "recovery key verified"
+  });
+  await pushSupportEvent(
+    "🔐 تم التحقق من استرداد حساب",
+    /^\d{10}$/.test(String(profile.profileId || "")) ? "Profile ID " + profile.profileId : (profile.displayName || "مستخدم"),
+    "support-event:" + auditRef.id
+  );
+
+  return {
+    ok: true,
+    customToken,
+    profile: {
+      displayName: cleanSupportText(profile.displayName || userRecord.displayName || "", 80),
+      loginName: cleanSupportText(profile.loginName || profile.originalLoginName || profile.displayName || userRecord.email || "", 100),
+      profileId: /^\d{10}$/.test(String(profile.profileId || "")) ? String(profile.profileId) : "",
+      role: profile.role === "teacher" ? "teacher" : "student",
+      provider: cleanSupportText(profile.provider || "", 30)
+    },
+    canChangePassword
+  };
 });
 
 
@@ -466,7 +602,6 @@ exports.updateSupportTicket = onCall({ cors: true }, async (request) => {
     ticketId,
     userUid: adminUid,
     profileId: SUPER_ADMIN_PROFILE_ID,
-    phoneLast4: "",
     detail: status,
     createdAt: FieldValue.serverTimestamp()
   });
