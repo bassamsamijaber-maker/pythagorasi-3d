@@ -9,6 +9,7 @@ function extract(start,end){return html.slice(html.indexOf(start),html.indexOf(e
  assert.notEqual(hash,await cryptoContext.securityPhraseHashV2('u2','a memorable phrase'));assert.notEqual(hash,await cryptoContext.securityPhraseHash('u1','a memorable phrase'));
  const input={value:'keep this message'},button={disabled:false};let writes=0,resolveWrite;
  const ctx={chatSending:false,activeChatPerson:{uid:'u2'},auth:{currentUser:{uid:'u1'}},document:{getElementById:id=>id==='chatMessageInput'?input:button},db:{},collection:()=>({}),doc:()=>({}),directChatId:()=> 'chat',serverTimestamp:()=>({}),updateDoc:async()=>{},showToast:()=>{},chatText:(a,b)=>b,console:{error(){},warn(){}},addDoc:async()=>{writes++;throw Error('offline')}};
+ ctx.updateConversationTools=()=>{};ctx.writeSocialMessage=async(p,text)=>ctx.addDoc({}, {text});
  vm.createContext(ctx);vm.runInContext(extract('async function sendChatMessage','function listenChatInbox'),ctx);
  await ctx.sendChatMessage();assert.equal(input.value,'keep this message');assert.equal(button.disabled,false);
  ctx.addDoc=()=>{writes++;return new Promise(r=>resolveWrite=r)};

@@ -9,8 +9,9 @@ const extract=(a,b)=>html.slice(html.indexOf(a),html.indexOf(b,html.indexOf(a)))
  ctx.window.PythagorasiUser={uid:'u1',securityPhraseHash:'already-set'};persisted={};await ctx.maybeShowSecurityReminder('u1');assert.equal(shown,1);
  const fields={supportType:{value:'report_user'},supportAccountIdentifier:{value:'User'},supportSecurityPhrase:{value:''},supportMessage:{value:'Please review this report'},supportStatus:{textContent:''},submitSupportBtn:{disabled:false}};let writes=0,release;
  const sc={document:{getElementById:id=>fields[id]},auth:{currentUser:{uid:'u1'}},window:{PythagorasiUser:{displayName:'A'.repeat(100)}},db:{},collection:()=>({}),resolveSupportUid:async()=> 'u1',normalizeSecurityPhrase:s=>s,chatText:(a,b)=>b,serverTimestamp:()=>1,console:{error(){}},addDoc:async(ref,data)=>{writes++;assert.equal(data.createdByName.length,80);return new Promise(r=>release=r)}};
+ sc.supportLanguageAllowed=()=>true;sc.supportSession=async()=>({db:{},uid:'u1'});sc.closeSupport=()=>{};sc.listenSupportChatInbox=async()=>{};sc.openSupportConversation=async()=>{};
  vm.createContext(sc);vm.runInContext(extract('let supportSubmitting=false;','async function setShakeSupportEnabled'),sc);
- const first=sc.submitSupportRequest();await Promise.resolve();await sc.submitSupportRequest();assert.equal(writes,1);release({id:'ticket123'});await first;assert.equal(fields.supportMessage.value,'');
+ const first=sc.submitSupportRequest();await new Promise(r=>setImmediate(r));await sc.submitSupportRequest();assert.equal(writes,1);release({id:'ticket123'});await first;assert.equal(fields.supportMessage.value,'');
  fields.supportMessage.value='Keep report on failure';sc.addDoc=async()=>{throw {code:'permission-denied'}};await sc.submitSupportRequest();assert.equal(fields.supportMessage.value,'Keep report on failure');assert(fields.supportStatus.textContent.includes('kept'));assert.equal(fields.submitSupportBtn.disabled,false);
  console.log('PASS: account-wide reminder once, existing phrase skip, duplicate request guard, name limit and failure draft preservation.');
 })().catch(e=>{console.error(e);process.exitCode=1});

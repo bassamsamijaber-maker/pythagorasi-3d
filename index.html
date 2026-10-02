@@ -4577,6 +4577,19 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 #chatModal .chat-compose button{min-width:64px}
 }
 
+
+/* V65 social conversations */
+#chatModal{z-index:210001}#supportModal{z-index:210002!important}
+.chat-group-actions,.chat-social-tools{display:flex;gap:7px;flex-wrap:wrap;padding:8px}
+.chat-social-tools{border-bottom:1px solid #ffffff14;flex-shrink:0}
+.chat-social-tools button{font-size:12px!important;min-height:38px;padding:8px 10px;border-radius:12px}
+.chat-follow-notice{font-size:12px;color:#a5d8f2;background:#288cd412;padding:10px 14px;line-height:1.7;flex-shrink:0}
+.chat-follow-notice:empty{display:none}
+#chatStreak{color:#ffc574;font-weight:800;font-size:13px}
+.chat-bubble>b{display:block;font-size:11px;color:inherit;opacity:.8;margin-bottom:5px}
+.chat-contact.support-chat-entry{display:flex!important;align-items:center;min-height:50px!important;color:#85d8ff}
+#chatThreadActive.hidden{display:none!important}
+@media(max-width:700px){.chat-social-tools{gap:5px;padding:6px}.chat-social-tools button{font-size:10px!important;padding:6px!important;min-height:34px!important}.chat-thread-head small{max-width:75vw;overflow-wrap:anywhere}.chat-follow-notice{font-size:11px;padding:8px}}
 </style></head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -5817,7 +5830,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <div class="chat-search-wrap">
           <input id="chatPeopleSearch" maxlength="40" placeholder="ابحث عن طالب أو معلم...">
         </div>
-        <div class="chat-contact-section-title">💬 آخر المحادثات</div><div id="chatRecentPeople" class="chat-contact-list"></div><div class="chat-contact-section-title">👥 أشخاص من صفوفك</div>
+        <div class="chat-group-actions"><button class="exam-secondary" id="chatCreateGroupBtn">＋ مجموعة</button><button class="exam-secondary" id="chatJoinGroupBtn">انضم بكود</button></div><div class="chat-contact-section-title">🛟 الدعم</div><div id="chatSupportPeople" class="chat-contact-list"></div><div class="chat-contact-section-title">👥 المجموعات</div><div id="chatGroupPeople" class="chat-contact-list"></div><div class="chat-contact-section-title">💬 آخر المحادثات</div><div id="chatRecentPeople" class="chat-contact-list"></div><div class="chat-contact-section-title">👥 أشخاص من صفوفك</div>
         <div id="chatClassPeople" class="chat-contact-list"></div>
         <div class="chat-contact-section-title">🔎 نتائج البحث</div>
         <div id="chatSearchResults" class="chat-contact-list"></div>
@@ -5828,11 +5841,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
           <div class="chat-thread-head">
             <div>
               <b id="chatThreadName">—</b>
-              <small id="chatThreadRole">—</small>
+              <small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span>
             </div>
             <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
           </div>
-          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button></div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><div class="chat-messages" id="chatMessages"></div>
           <div class="chat-compose">
             <textarea id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
             <button class="apply" id="chatSendBtn">إرسال</button>
@@ -5854,7 +5867,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       </div>
       <button class="close" id="closeSupportModal">×</button>
     </div>
-    <div class="support-guide">اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.</div><div class="support-grid">
+    <div class="support-guide"><p>التواصل مع الدعم بالعربية أو الإنجليزية فقط.</p>اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.</div><div class="support-grid">
       <label>نوع الطلب
         <select id="supportType">
           <option value="forgot_password">نسيت كلمة السر</option>
@@ -5876,7 +5889,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
       </label>
     </div>
     <div class="support-actions">
-      <button class="apply" id="submitSupportBtn">إرسال الطلب</button>
+      <button class="exam-secondary" id="supportFollowChatBtn" type="button">متابعة ردود الدعم</button><button class="apply" id="submitSupportBtn">إرسال الطلب</button>
       <button class="exam-secondary" id="supportShakeToggleBtn">📳 هز الهاتف للدعم</button>
     </div>
     <div class="cloud-note" id="supportStatus" role="status" aria-live="polite"></div><section id="supportMyTicketsSection"><h3>طلباتك وردود الدعم</h3><div id="supportMyTickets"></div></section>
@@ -6598,7 +6611,7 @@ import {
 import {
   getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
   query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
-  arrayUnion, arrayRemove, orderBy, limit
+  arrayUnion, arrayRemove, orderBy, limit, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
   getMessaging, getToken, onMessage, isSupported as isMessagingSupported
@@ -11467,6 +11480,18 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["＋ مجموعة","\uff0b Group"],
+["انضم بكود","Join by code"],
+["🛟 الدعم","\ud83d\udedf Support"],
+["👥 المجموعات","\ud83d\udc65 Groups"],
+["☆ أفضل صديق","\u2606 Best friend"],
+["لقب خاص","Nickname"],
+["حظر الخاص","Block DMs"],
+["حذف من عندي","Delete for me"],
+["مغادرة المجموعة","Leave group"],
+["التواصل مع الدعم بالعربية أو الإنجليزية فقط.","Support is available in Arabic and English only."],
+["متابعة ردود الدعم","Follow support replies"],
+
  ["المتابعة بدون كود صف","Continue without a class code"],
  ["طلبات الدعم","Support requests"],
  ["إدارة فريق الموقع","Site team management"],
@@ -12425,6 +12450,7 @@ function applySiteLanguage(lang,save=true){
   try{refreshAIWelcome()}catch{}
   try{updateAssistantLabels()}catch{}
   try{applyAdminLanguage()}catch{}
+  try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
   try{
     const frame=document.getElementById("periodicTableFrame");
     if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:currentUILanguage},location.origin);
@@ -17014,6 +17040,132 @@ let chatOpenSequence=0;
 let mySupportUnsub=null;
 let shakeSupportLast=0;
 
+// Personal chat preferences stay private; blocks are enforced by database rules.
+let chatPrefs={},chatBlocks=new Set(),chatPrefsUnsub=null,chatBlocksUnsub=null,groupInboxUnsub=null,supportInboxUnsub=null,chatActivityUnsub=null;
+let recentChatRows=[],groupChatRows=[],chatLastMessages=[];
+let guestSupportApp=null,guestSupportAuth=null,guestSupportDb=null;
+function supportLanguageAllowed(text){
+ const letters=String(text).normalize('NFC').match(/\p{L}/gu)||[];
+ return letters.every(c=>/[A-Za-z\u0621-\u063A\u0641-\u064A\u0671]/u.test(c)) && /^[\u0009\u000A\u000D\u0020-\u007Eء-غف-يٱً-ْ٠-٩؟،؛«»–—…•’“”✅⚠🌀-🫿☀-⛿❤©®°×÷€£₪\u200D\uFE0F\u{1F1E6}-\u{1F1FF}]*$/u.test(text);
+}
+function supportLanguageNotice(){return chatText('التواصل مع الدعم بالعربية أو الإنجليزية فقط.','Support is available in Arabic and English only.')}
+async function supportSession(){
+ if(auth.currentUser)return {db,uid:auth.currentUser.uid};
+ if(!guestSupportApp){guestSupportApp=initializeApp(firebaseConfig,'classora-support-guest');guestSupportAuth=getAuth(guestSupportApp);guestSupportDb=getFirestore(guestSupportApp);await setPersistence(guestSupportAuth,browserLocalPersistence)}
+ await guestSupportAuth.authStateReady();
+ if(!guestSupportAuth.currentUser)await signInAnonymously(guestSupportAuth);
+ return {db:guestSupportDb,uid:guestSupportAuth.currentUser.uid};
+}
+function conversationKey(p){return p.kind==='group'?p.groupId:p.kind==='support'?'support_'+p.ticketId:directChatId(auth.currentUser.uid,p.uid)}
+function conversationName(p){return p.kind==='support'?chatText('الدعم','Support'):chatPrefs[conversationKey(p)]?.nickname||p.displayName||chatText('مستخدم','User')}
+function stopConversation(){chatOpenSequence++;if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null}if(chatActivityUnsub){chatActivityUnsub();chatActivityUnsub=null}}
+function showChatThread(p){
+ activeChatPerson=p;chatLastMessages=[];chatModal.classList.add('open','chat-thread-open');
+ document.getElementById('chatThreadEmpty').classList.add('hidden');document.getElementById('chatThreadActive').classList.remove('hidden');
+ document.getElementById('chatMessages').textContent='⏳';document.getElementById('chatMessageInput').value='';document.getElementById('chatStreak').textContent='';
+ updateConversationTools();
+}
+function updateConversationTools(){
+ const p=activeChatPerson;if(!p)return;const group=p.kind==='group',support=p.kind==='support',key=conversationKey(p),pref=chatPrefs[key]||{};
+ document.getElementById('chatThreadName').textContent=conversationName(p);document.getElementById('chatThreadName').toggleAttribute('data-no-translate',!support);
+ document.getElementById('chatThreadRole').textContent=support?supportLanguageNotice():group?chatText('مجموعة • كود الانضمام: ','Group • Join code: ')+p.groupId:chatRoleLabel(p.role);
+ const blocked=!group&&!support&&chatBlocks.has(p.uid);
+ document.getElementById('chatFavoriteBtn').textContent=pref.favorite?chatText('⭐ من المفضّلين','⭐ Favorite'):chatText('☆ أفضل صديق','☆ Best friend');
+ document.getElementById('chatBlockBtn').textContent=blocked?chatText('إلغاء الحظر','Unblock'):chatText('حظر الخاص','Block DMs');
+ for(const id of ['chatFavoriteBtn','chatNicknameBtn','chatDeleteBtn'])document.getElementById(id).classList.toggle('hidden',support);
+ document.getElementById('chatBlockBtn').classList.toggle('hidden',group||support);
+ document.getElementById('chatLeaveGroupBtn').classList.toggle('hidden',!group);
+ document.getElementById('chatReportUserBtn').classList.toggle('hidden',support||group);
+ document.getElementById('chatMessageInput').disabled=blocked;document.getElementById('chatSendBtn').disabled=blocked||chatSending;
+ document.getElementById('chatFollowNotice').textContent=support?chatText('تم استلام طلبك. تابع هذه الصفحة لتلقّي الردود، ويمكنك إضافة تفاصيل هنا.','Your request was received. Follow this page for replies; you can add details here.'):blocked?chatText('الرسائل الخاصة محظورة. تبقى المجموعات المشتركة منفصلة.','Direct messages are blocked. Shared groups are separate.'):'';
+}
+function renderConversationMessages(rows,p=activeChatPerson){
+ if(!p||p!==activeChatPerson)return;chatLastMessages=rows;const host=document.getElementById('chatMessages');host.innerHTML='';
+ const hiddenAt=chatPrefs[conversationKey(p)]?.hiddenAt?.toMillis?.()||0,viewer=p.viewerUid||auth.currentUser?.uid;
+ for(const m of rows){if((m.createdAt?.toMillis?.()||Date.now())<=hiddenAt)continue;if(p.kind==='group'&&chatBlocks.has(m.senderUid))continue;
+ const bubble=document.createElement('div');bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
+ if(p.kind==='group'||p.kind==='support'){const who=document.createElement('b');who.textContent=m.staff?chatText('الدعم','Support'):m.senderName||chatPublicProfiles.find(person=>person.uid===m.senderUid)?.displayName||p.participantNames?.[m.senderUid]||chatText('مستخدم','User');bubble.append(who)}
+ const text=document.createElement('span'),time=document.createElement('time');text.textContent=m.text||'';text.dir='auto';text.setAttribute('data-no-translate','');time.textContent=chatTime(m.createdAt);bubble.append(text,time);host.append(bubble);
+ }requestAnimationFrame(()=>host.scrollTop=host.scrollHeight);
+}
+function calculateChatStreak(rows,now=Date.now()){
+ const days=new Map();for(const r of rows){const t=r.day?.toMillis?.()??r.day?.getTime?.()??Number(r.day);if(!Number.isFinite(t))continue;const day=Math.floor(t/86400000);if(!days.has(day))days.set(day,new Set());days.get(day).add(r.senderUid)}
+ const today=Math.floor(now/86400000);let day=days.get(today)?.size>=2?today:today-1,count=0;
+ while(days.get(day)?.size>=2){count++;day--}return count;
+}
+function watchStreak(root,id){
+ if(chatActivityUnsub)chatActivityUnsub();
+ chatActivityUnsub=onSnapshot(query(collection(db,root,id,'activity'),where('day','>=',new Date(Date.now()-366*86400000))),snap=>{
+  const count=calculateChatStreak(snap.docs.map(d=>d.data()));document.getElementById('chatStreak').textContent=count?'🔥 '+count+' '+chatText('يوم','days'):'';
+ },()=>{document.getElementById('chatStreak').textContent=''});
+}
+async function writeSocialMessage(p,text){
+ const uid=auth.currentUser.uid,root=p.kind==='group'?'groupChats':'chats',id=conversationKey(p),messageRef=doc(collection(db,root,id,'messages'));
+ const day=new Date();day.setUTCHours(0,0,0,0);const batch=writeBatch(db);
+ batch.set(messageRef,{senderUid:uid,text:text.slice(0,2000),createdAt:serverTimestamp()});
+ batch.set(doc(db,root,id,'activity',day.toISOString().slice(0,10)+'_'+uid),{senderUid:uid,day,messageId:messageRef.id,updatedAt:serverTimestamp()});
+ await batch.commit();
+ try{await updateDoc(doc(db,root,id),{lastMessage:text.slice(0,180),lastSenderUid:uid,updatedAt:serverTimestamp()})}catch(err){console.warn('chat preview',err.code)}
+}
+async function saveChatPreference(patch){
+ if(!activeChatPerson||!auth.currentUser)return;
+ await setDoc(doc(db,'users',auth.currentUser.uid,'chatPreferences',conversationKey(activeChatPerson)),patch,{merge:true});
+}
+function renderSocialInbox(){
+ const uid=auth.currentUser?.uid;if(!uid)return;
+ const people=recentChatRows.filter(r=>!chatPrefs[r.id]?.hiddenAt||(r.updatedAt?.toMillis?.()||0)>chatPrefs[r.id].hiddenAt.toMillis()).map(r=>{const other=r.participantIds.find(id=>id!==uid);return {...(chatPublicProfiles.find(p=>p.uid===other)||{uid:other,displayName:r.participantNames?.[other],role:'student'}),chatId:r.id}});
+ people.sort((a,b)=>Number(!!chatPrefs[conversationKey(b)]?.favorite)-Number(!!chatPrefs[conversationKey(a)]?.favorite));renderChatPeople(document.getElementById('chatRecentPeople'),people.slice(0,50));
+ renderChatPeople(document.getElementById('chatGroupPeople'),groupChatRows.filter(r=>!chatPrefs[r.id]?.hiddenAt||(r.updatedAt?.toMillis?.()||0)>chatPrefs[r.id].hiddenAt.toMillis()).map(r=>({...r,uid:r.id,groupId:r.id,kind:'group',displayName:r.name})));
+}
+function listenSocialPreferences(){
+ if(chatPrefsUnsub)chatPrefsUnsub();if(chatBlocksUnsub)chatBlocksUnsub();if(groupInboxUnsub)groupInboxUnsub();
+ const uid=auth.currentUser?.uid;if(!uid)return;
+ chatPrefsUnsub=onSnapshot(collection(db,'users',uid,'chatPreferences'),snap=>{chatPrefs=Object.fromEntries(snap.docs.map(d=>[d.id,d.data()]));renderSocialInbox();updateConversationTools();if(activeChatPerson)renderConversationMessages(chatLastMessages)},err=>console.warn('chat preferences',err.code));
+ chatBlocksUnsub=onSnapshot(collection(db,'users',uid,'chatBlocks'),snap=>{chatBlocks=new Set(snap.docs.map(d=>d.id));updateConversationTools();if(activeChatPerson)renderConversationMessages(chatLastMessages)},err=>console.warn('chat blocks',err.code));
+ groupInboxUnsub=onSnapshot(query(collection(db,'groupChats'),where('participantIds','array-contains',uid)),snap=>{groupChatRows=snap.docs.map(d=>({id:d.id,...d.data()}));renderSocialInbox()},err=>{document.getElementById('chatGroupPeople').textContent=chatText('تعذر تحميل المجموعات.','Could not load groups.')});
+}
+async function openGroupChat(p){
+ stopConversation();const sequence=chatOpenSequence;showChatThread(p);
+ try{const snap=await getDoc(doc(db,'groupChats',p.groupId));if(!snap.exists()||!snap.data().participantIds.includes(auth.currentUser.uid))throw Error('not-member');if(sequence!==chatOpenSequence)return;
+ Object.assign(p,snap.data(),{displayName:snap.data().name});updateConversationTools();
+ activeChatUnsub=onSnapshot(query(collection(db,'groupChats',p.groupId,'messages'),orderBy('createdAt','desc'),limit(150)),snap=>renderConversationMessages(snap.docs.map(d=>d.data()).reverse(),p),()=>showToast(chatText('تعذر تحميل المجموعة.','Could not load group.')));watchStreak('groupChats',p.groupId);
+ }catch(err){showToast(chatText('المجموعة غير متاحة أو لم تعد عضوًا فيها.','Group unavailable or you are no longer a member.'))}
+}
+async function createChatGroup(){
+ const name=uiPrompt('اسم المجموعة:','Group name:','');if(!name?.trim()||!auth.currentUser)return;
+ try{const uid=auth.currentUser.uid,ref=doc(collection(db,'groupChats'));await setDoc(ref,{name:name.trim().slice(0,60),ownerId:uid,participantIds:[uid],createdAt:serverTimestamp(),updatedAt:serverTimestamp()});await openGroupChat({kind:'group',uid:ref.id,groupId:ref.id,displayName:name.trim()})}catch(err){showToast(chatText('تعذر إنشاء المجموعة.','Could not create group.'))}
+}
+async function joinChatGroup(){
+ const code=uiPrompt('كود المجموعة:','Group code:','')?.trim();if(!code||!auth.currentUser)return;if(!/^[A-Za-z0-9]{20}$/.test(code)){showToast(chatText('كود المجموعة غير صحيح.','Invalid group code.'));return}
+ try{await updateDoc(doc(db,'groupChats',code),{participantIds:arrayUnion(auth.currentUser.uid)});await openGroupChat({kind:'group',uid:code,groupId:code})}catch(err){showToast(chatText('تعذر الانضمام. تحقق من الكود؛ الحد الأقصى 20 عضوًا.','Could not join. Check the code; groups have a 20-member limit.'))}
+}
+async function openSupportConversation(ticketId,context){
+ stopConversation();const sequence=chatOpenSequence;const session=context||await supportSession();if(sequence!==chatOpenSequence)return;
+ const p={kind:'support',uid:'support',ticketId,channelDb:session.db,viewerUid:session.uid};showChatThread(p);
+ const parent=doc(session.db,'supportRequests',ticketId);let ticket=null,rows=[];
+ const paint=()=>{if(!ticket)return;const messages=[{senderUid:ticket.createdBy,text:ticket.message,createdAt:ticket.createdAt,senderName:ticket.createdByName}];
+  if(ticket.adminReply&&!rows.some(m=>m.text===ticket.adminReply&&m.staff))messages.push({senderUid:ticket.repliedBy,staff:true,text:ticket.adminReply,createdAt:ticket.repliedAt});
+  renderConversationMessages([...messages,...rows].sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)),p)};
+ const off1=onSnapshot(parent,snap=>{if(snap.exists()){ticket=snap.data();paint()}},()=>showToast(chatText('تعذر فتح طلب الدعم.','Could not open support request.')));
+ const off2=onSnapshot(query(collection(session.db,'supportRequests',ticketId,'messages'),orderBy('createdAt','desc'),limit(150)),snap=>{rows=snap.docs.map(d=>d.data()).reverse();paint()},()=>showToast(chatText('تعذر تحميل ردود الدعم.','Could not load support replies.')));
+ activeChatUnsub=()=>{off1();off2()};
+}
+async function listenSupportChatInbox(){
+ if(supportInboxUnsub)supportInboxUnsub();document.querySelector('.chat-group-actions').classList.toggle('hidden',!auth.currentUser);const sessionOwner=auth.currentUser?.uid||'';try{const session=await supportSession();if(!chatModal.classList.contains('open')||sessionOwner!==(auth.currentUser?.uid||''))return;supportInboxUnsub=onSnapshot(query(collection(session.db,'supportRequests'),where('createdBy','==',session.uid)),snap=>{
+  const host=document.getElementById('chatSupportPeople');host.innerHTML='';for(const r of snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0))){const b=document.createElement('button');b.className='chat-contact support-chat-entry';b.textContent='🛟 '+chatText('الدعم','Support')+' • #'+r.id.slice(-8)+(r.status==='resolved'?' ✅':'');b.onclick=()=>openSupportConversation(r.id,session);host.append(b)}
+ },()=>{})}catch(err){console.warn('support inbox',err.code)}
+}
+async function sendSupportChatMessage(p,text){
+ if(!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return false}
+ await addDoc(collection(p.channelDb,'supportRequests',p.ticketId,'messages'),{senderUid:p.viewerUid,text:text.slice(0,1500),staff:!!(auth.currentUser&&canManageSupport()),senderName:String(window.PythagorasiUser?.displayName||chatText('زائر','Guest')).slice(0,80),createdAt:serverTimestamp()});return true;
+}
+for(const [id,handler] of [['chatCreateGroupBtn',createChatGroup],['chatJoinGroupBtn',joinChatGroup]])document.getElementById(id).addEventListener('click',handler);
+document.getElementById('chatFavoriteBtn').onclick=async()=>{try{await saveChatPreference({favorite:!chatPrefs[conversationKey(activeChatPerson)]?.favorite})}catch{showToast(chatText('تعذر حفظ المفضّل.','Could not save favorite.'))}};
+document.getElementById('chatNicknameBtn').onclick=async()=>{const nickname=uiPrompt('لقب خاص يظهر إلك فقط (اتركه فارغًا لإزالته):','Private nickname, visible only to you (leave empty to clear):',chatPrefs[conversationKey(activeChatPerson)]?.nickname||'');if(nickname===null)return;try{await saveChatPreference({nickname:nickname.trim().slice(0,40)})}catch{showToast(chatText('تعذر حفظ اللقب.','Could not save nickname.'))}};
+document.getElementById('chatDeleteBtn').onclick=async()=>{if(!uiConfirm('إخفاء المحادثة ومسح عرض الرسائل السابقة من عندك؟ تبقى عند الطرف الآخر، وتظهر المحادثة إذا وصلت رسالة جديدة.','Hide this conversation and its past messages for you? Others keep their copies. A new message will bring the conversation back.'))return;try{await saveChatPreference({hiddenAt:serverTimestamp()});chatModal.classList.remove('chat-thread-open');document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');stopConversation();activeChatPerson=null}catch{showToast(chatText('تعذر إخفاء المحادثة.','Could not hide conversation.'))}};
+document.getElementById('chatBlockBtn').onclick=async()=>{const p=activeChatPerson;if(!p||p.kind)return;const ref=doc(db,'users',auth.currentUser.uid,'chatBlocks',p.uid);try{if(chatBlocks.has(p.uid))await deleteDoc(ref);else await setDoc(ref,{createdAt:serverTimestamp()})}catch{showToast(chatText('تعذر تعديل الحظر.','Could not change block.'))}};
+document.getElementById('chatLeaveGroupBtn').onclick=async()=>{if(!activeChatPerson||!uiConfirm('مغادرة المجموعة؟','Leave this group?'))return;try{await updateDoc(doc(db,'groupChats',activeChatPerson.groupId),{participantIds:arrayRemove(auth.currentUser.uid)});stopConversation();activeChatPerson=null;document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');chatModal.classList.remove('chat-thread-open')}catch{showToast(chatText('تعذر مغادرة المجموعة.','Could not leave group.'))}};
+
 function profileAvatarStyle(p){
   const photo=String(p?.photoData||"");
   return photo?'background-image:url("'+photo.replace(/"/g,"%22")+'")':"";
@@ -17038,9 +17190,9 @@ function renderChatPeople(host,rows){
     if(p.photoData)avatar.style.backgroundImage='url("'+String(p.photoData).replace(/"/g,"%22")+'")';
     else avatar.textContent=String(p.displayName||"?")[0]||"?";
     const info=document.createElement("span");
-    const name=document.createElement("b");name.textContent=p.displayName||p.loginName||chatText("مستخدم","User");name.dir="auto";name.title=name.textContent;
+    const name=document.createElement("b");name.textContent=(chatPrefs[conversationKey(p)]?.favorite?"⭐ ":"")+conversationName(p);name.dir="auto";name.setAttribute('data-no-translate','');name.title=name.textContent;
     const meta=document.createElement("small");
-    meta.textContent=chatRoleLabel(p.role)+(p.className?" • "+p.className:"");
+    meta.textContent=p.kind==="group"?chatText("مجموعة","Group"):chatRoleLabel(p.role)+(p.className?" • "+p.className:"");
     info.append(name,meta);
     const arrow=document.createElement("span");arrow.textContent="›";
     btn.append(avatar,info,arrow);
@@ -17134,18 +17286,21 @@ function chatTime(v){
 
 async function openDirectChat(person){
   if(!auth.currentUser||!person?.uid)return;
+  if(person.kind==='group')return openGroupChat(person);
+  stopConversation();showChatThread(person);
   const opening=++chatOpenSequence;
   activeChatPerson=person;
   chatModal.classList.add("chat-thread-open");
   document.getElementById("chatThreadEmpty").classList.add("hidden");
   document.getElementById("chatThreadActive").classList.remove("hidden");
-  document.getElementById("chatThreadName").textContent=person.displayName||"مستخدم";
+  document.getElementById("chatThreadName").textContent=conversationName(person);
   document.getElementById("chatThreadRole").textContent=chatRoleLabel(person.role);
   const chatId=directChatId(auth.currentUser.uid,person.uid);
   const participants=[auth.currentUser.uid,person.uid].sort();
 
   try{
-    await setDoc(doc(db,"chats",chatId),{
+    const existing=await getDoc(doc(db,"chats",chatId));
+    if(!existing.exists())await setDoc(doc(db,"chats",chatId),{
       participantIds:participants,
       participantNames:{
         [auth.currentUser.uid]:window.PythagorasiUser?.displayName||"مستخدم",
@@ -17163,31 +17318,21 @@ async function openDirectChat(person){
   if(activeChatUnsub){try{activeChatUnsub()}catch{}}
   activeChatUnsub=onSnapshot(query(collection(db,"chats",chatId,"messages"),orderBy("createdAt","desc"),limit(150)),snap=>{
     const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
-    const host=document.getElementById("chatMessages");
-    host.innerHTML="";
-    for(const m of rows.slice(-150)){
-      const div=document.createElement("div");
-      div.className="chat-bubble "+(m.senderUid===auth.currentUser.uid?"mine":"theirs");
-      const body=document.createElement("span");body.textContent=m.text||"";
-      const time=document.createElement("time");time.textContent=chatTime(m.createdAt);
-      div.append(body,time);
-      host.appendChild(div);
-    }
-    requestAnimationFrame(()=>{host.scrollTop=host.scrollHeight});
+    renderConversationMessages(rows.slice(-150),person);
   },err=>{console.warn("chat messages",err);document.getElementById("chatMessages").textContent=chatText("تعذر تحميل الرسائل. سكّر المحادثة وافتحها مرة ثانية.","Messages could not load. Close and reopen the conversation.")});
+  watchStreak("chats",chatId);updateConversationTools();
 }
 
 async function sendChatMessage(){
- if(chatSending||!auth.currentUser||!activeChatPerson)return;
- const input=document.getElementById("chatMessageInput"),text=input.value.trim();if(!text)return;
- const uid=auth.currentUser.uid,chatId=directChatId(uid,activeChatPerson.uid),btn=document.getElementById("chatSendBtn");
- chatSending=true;btn.disabled=true;
+ if(chatSending||!activeChatPerson)return;
+ const p=activeChatPerson;if(p.kind!=='support'&&!auth.currentUser)return;
+ const input=document.getElementById('chatMessageInput'),text=input.value.trim();if(!text)return;
+ const btn=document.getElementById('chatSendBtn');chatSending=true;btn.disabled=true;
  try{
-  await addDoc(collection(db,"chats",chatId,"messages"),{senderUid:uid,text:text.slice(0,2000),createdAt:serverTimestamp()});
-  if(input.value.trim()===text)input.value="";
-  try{await updateDoc(doc(db,"chats",chatId),{lastMessage:text.slice(0,180),lastSenderUid:uid,updatedAt:serverTimestamp()})}catch(err){console.warn("chat preview update",err)}
- }catch(err){console.error("send chat",err);showToast(chatText("تعذر إرسال الرسالة. نصّك محفوظ، جرّب مرة ثانية.","Message not sent. Your text is preserved; please retry."))}
- finally{chatSending=false;btn.disabled=false}
+  const sent=p.kind==='support'?await sendSupportChatMessage(p,text):(await writeSocialMessage(p,text),true);
+  if(sent&&input.value.trim()===text)input.value='';
+ }catch(err){console.error('send chat',err);showToast(chatText('تعذر إرسال الرسالة. قد تكون المحادثة محظورة أو غير متاحة. نصّك محفوظ.','Message not sent. The conversation may be blocked or unavailable. Your draft is preserved.'))}
+ finally{chatSending=false;btn.disabled=false;updateConversationTools()}
 }
 function listenChatInbox(){
  if(chatInboxUnsub)chatInboxUnsub();
@@ -17195,8 +17340,7 @@ function listenChatInbox(){
  chatSessionUid=uid;
  chatInboxUnsub=onSnapshot(query(collection(db,"chats"),where("participantIds","array-contains",uid)),snap=>{
   const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0));
-  const people=rows.slice(0,50).map(r=>{const other=r.participantIds.find(id=>id!==uid);return chatPublicProfiles.find(p=>p.uid===other)||{uid:other,displayName:r.participantNames?.[other]||chatText("مستخدم","User"),role:"student"}});
-  renderChatPeople(document.getElementById("chatRecentPeople"),people);
+  recentChatRows=rows;renderSocialInbox();
  },err=>{console.warn("chat inbox",err);document.getElementById("chatRecentPeople").textContent=chatText("تعذر تحميل سجل المحادثات.","Could not load conversations.")});
 }
 
@@ -17206,12 +17350,15 @@ async function openChat(){
   document.getElementById("chatPeopleSearch").value="";
   document.getElementById("chatSearchResults").innerHTML="";
   if(chatSessionUid!==auth.currentUser.uid){activeChatPerson=null;document.getElementById("chatMessages").innerHTML="";document.getElementById("chatMessageInput").value="";}
-  await loadChatClassPeople();listenChatInbox();
-  if(activeChatPerson)await openDirectChat(activeChatPerson);
+  const openingUid=auth.currentUser.uid;await loadChatClassPeople();if(!chatModal.classList.contains("open")||auth.currentUser?.uid!==openingUid)return;listenChatInbox();listenSocialPreferences();listenSupportChatInbox();
+  if(activeChatPerson?.kind==='support')await openSupportConversation(activeChatPerson.ticketId);
+  else if(activeChatPerson)await openDirectChat(activeChatPerson);
   else{chatModal.classList.remove("chat-thread-open");document.getElementById("chatThreadActive").classList.add("hidden");document.getElementById("chatThreadEmpty").classList.remove("hidden");}
 }
 function closeChat(){
-  chatOpenSequence++;
+  stopConversation();
+  for(const off of [chatPrefsUnsub,chatBlocksUnsub,groupInboxUnsub,supportInboxUnsub])if(off)off();
+  chatPrefsUnsub=chatBlocksUnsub=groupInboxUnsub=supportInboxUnsub=null;
   chatModal.classList.remove("open");
   if(chatInboxUnsub){chatInboxUnsub();chatInboxUnsub=null}
   if(activeChatUnsub){try{activeChatUnsub()}catch{}activeChatUnsub=null}
@@ -17219,9 +17366,9 @@ function closeChat(){
 document.getElementById("chatBackContactsBtn").addEventListener("click",()=>chatModal.classList.remove("chat-thread-open"));
 onAuthStateChanged(auth,user=>{
  if(user?.uid===chatSessionUid)return;
- closeChat();closeSupport();activeChatPerson=null;chatSessionUid=user?.uid||"";chatPublicProfiles=[];
+ closeChat();closeSupport();chatPrefs={};chatBlocks=new Set();recentChatRows=[];groupChatRows=[];activeChatPerson=null;chatSessionUid=user?.uid||"";chatPublicProfiles=[];
  document.getElementById("chatMessages").innerHTML="";document.getElementById("chatMessageInput").value="";
- document.getElementById("chatRecentPeople").innerHTML="";document.getElementById("chatClassPeople").innerHTML="";
+ document.getElementById("chatRecentPeople").innerHTML="";document.getElementById("chatClassPeople").innerHTML="";document.getElementById("chatSupportPeople").innerHTML="";document.getElementById("chatGroupPeople").innerHTML="";
 });
 document.getElementById("lobbyChatBtn").addEventListener("click",openChat);
 document.getElementById("closeChatModal").addEventListener("click",closeChat);
@@ -17234,8 +17381,7 @@ document.getElementById("chatMessageInput").addEventListener("keydown",e=>{
 document.getElementById("chatReportUserBtn").addEventListener("click",()=>{
   if(!activeChatPerson)return;
   openSupport("report_user");
-  document.getElementById("supportAccountIdentifier").value=activeChatPerson.displayName||activeChatPerson.uid;
-  document.getElementById("supportMessage").value="بلاغ عن مستخدم: "+(activeChatPerson.displayName||"")+" • UID "+activeChatPerson.uid+"\n";
+  document.getElementById("supportMessage").value=chatText("بلاغ عن مستخدم • UID ","Report user • UID ")+activeChatPerson.uid+"\n";
 });
 
 let supportProofVersion=1;
@@ -17273,7 +17419,7 @@ function listenMySupportTickets(){
  mySupportUnsub=onSnapshot(query(collection(db,"supportRequests"),where("createdBy","==",uid)),snap=>{
   host.innerHTML="";const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,25);
   if(!rows.length){host.textContent=chatText("ما عندك طلبات دعم بعد.","No support requests yet.");return}
-  for(const r of rows){const card=document.createElement("article");card.className="support-ticket";const title=document.createElement("b"),body=document.createElement("p"),reply=document.createElement("p");title.textContent=(r.status==="resolved"?"✅ ":"🟡 ")+"#"+r.id.slice(-8);body.textContent=r.message;reply.textContent=r.adminReply?chatText("رد الدعم: ","Support reply: ")+r.adminReply:chatText("بانتظار رد الدعم.","Waiting for support.");card.append(title,body,reply);host.append(card)}
+  for(const r of rows){const card=document.createElement("article");card.className="support-ticket";const title=document.createElement("b"),body=document.createElement("p"),reply=document.createElement("p");title.textContent=(r.status==="resolved"?"✅ ":"🟡 ")+"#"+r.id.slice(-8);body.textContent=r.message;reply.textContent=chatText("تابع الردود في محادثة الدعم.","Follow replies in the support conversation.");const follow=document.createElement("button");follow.className="exam-secondary";follow.textContent=chatText("فتح المحادثة","Open conversation");follow.onclick=()=>{closeSupport();openSupportConversation(r.id)};card.append(title,body,reply,follow);host.append(card)}
  },err=>{console.warn("support history",err);host.textContent=chatText("تعذر تحميل الطلبات.","Could not load requests.")});
 }
 function closeSupport(){document.getElementById("supportSecurityPhrase").value="";supportModal.classList.remove("open");if(mySupportUnsub){mySupportUnsub();mySupportUnsub=null}}
@@ -17288,14 +17434,16 @@ async function submitSupportRequest(){
   const message=document.getElementById("supportMessage").value.trim();
   const status=document.getElementById("supportStatus");
   if(message.length<5){status.textContent="اكتب شرح للمشكلة.";return}
+  if(!supportLanguageAllowed(message)){status.textContent=supportLanguageNotice();return}
   const btn=document.getElementById("submitSupportBtn");
   supportSubmitting=true;btn.disabled=true;status.textContent=chatText("⏳ جاري إرسال الطلب...","⏳ Sending your request...");
   try{
     const claimedUid=await resolveSupportUid(identifier);
     const proof=claimedUid&&normalizeSecurityPhrase(phrase).length>=4
       ?await (supportProofVersion===2?securityPhraseHashV2(claimedUid,phrase):securityPhraseHash(claimedUid,phrase)):"";
-    const createdBy=auth.currentUser?.uid||"";
-    const ticket=await addDoc(collection(db,"supportRequests"),{
+    const session=await supportSession();
+    const createdBy=session.uid;
+    const ticket=await addDoc(collection(session.db,"supportRequests"),{
       type,
       accountIdentifier:identifier.slice(0,80),
       claimedUid,
@@ -17314,9 +17462,10 @@ async function submitSupportRequest(){
     status.textContent=chatText("تم إرسال الطلب للإدارة ✅ رقم طلبك: ","Request sent ✅ Your reference: ")+ticket.id.slice(-8);
     document.getElementById("supportSecurityPhrase").value="";
     document.getElementById("supportMessage").value="";
+    closeSupport();await openSupportConversation(ticket.id,session);await listenSupportChatInbox();
   }catch(err){
     console.error("support submit",err);
-    status.textContent=String(err?.code||"").includes("permission-denied")
+    status.textContent=String(err?.code||'').includes('operation-not-allowed')?chatText('متابعة الدعم للزائر غير متاحة حاليًا. يمكنك الدخول بحسابك والمحاولة مجددًا.','Guest support is currently unavailable. Sign in to your account and try again.'):String(err?.code||"").includes("permission-denied")
       ?chatText("تعذر إرسال الطلب بسبب صلاحيات الخدمة. تم الاحتفاظ بالنص، حاول لاحقًا.","The support service could not accept this request. Your text has been kept; please try later.")
       :chatText("تعذر إرسال الطلب. تأكد من اتصالك وحاول مرة ثانية.","Could not send your request. Check your connection and try again.");
   }finally{supportSubmitting=false;btn.disabled=false}
@@ -17359,6 +17508,8 @@ document.getElementById("supportShakeToggleBtn").addEventListener("click",toggle
 document.getElementById("closeSupportModal").addEventListener("click",closeSupport);
 supportModal.addEventListener("click",e=>{if(e.target===supportModal)closeSupport()});
 document.getElementById("submitSupportBtn").addEventListener("click",submitSupportRequest);
+document.getElementById('supportMessage').addEventListener('input',()=>{const valid=supportLanguageAllowed(document.getElementById('supportMessage').value);document.getElementById('submitSupportBtn').disabled=!valid||supportSubmitting;document.getElementById('supportStatus').textContent=valid?'':supportLanguageNotice()});
+document.getElementById('supportFollowChatBtn').onclick=async()=>{closeSupport();chatModal.classList.add('open');chatModal.classList.remove('chat-thread-open');await listenSupportChatInbox()};
 
 async function adminLoadSupportRequests(host=document.getElementById("adminSupportList")){
   if(!canManageSupport())return;
@@ -17413,8 +17564,8 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
       const del=document.createElement("button");del.className="danger support-delete";del.textContent="🗑 حذف";
       const replyInput=document.createElement("textarea");replyInput.maxLength=1500;replyInput.placeholder=adminLang("رد على صاحب الطلب…","Reply to the request…");replyInput.value=r.adminReply||"";
       const replyBtn=document.createElement("button");replyBtn.className="exam-secondary";replyBtn.textContent=adminLang("إرسال الرد","Send reply");
-      replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;replyBtn.disabled=true;try{await updateDoc(doc(db,"supportRequests",r.id),{adminReply:text,repliedAt:serverTimestamp(),repliedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
-      if(r.createdBy)card.append(replyInput,replyBtn);
+      replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;if(!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return;}replyBtn.disabled=true;try{await addDoc(collection(db,"supportRequests",r.id,"messages"),{senderUid:auth.currentUser.uid,staff:true,senderName:String(window.PythagorasiUser?.displayName||"Support").slice(0,80),text,createdAt:serverTimestamp()});replyInput.value="";showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
+      if(r.createdBy){card.append(replyInput,replyBtn);const threadBtn=document.createElement('button');threadBtn.className='exam-secondary';threadBtn.textContent=chatText('فتح محادثة الدعم','Open support conversation');threadBtn.onclick=()=>openSupportConversation(r.id,{db,uid:auth.currentUser.uid});card.append(threadBtn)}
       actions.append(resolve);if(isSuperAdminProfile())actions.append(del);card.appendChild(actions);
 
       resolve.addEventListener("click",async()=>{

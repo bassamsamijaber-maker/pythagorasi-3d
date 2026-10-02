@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
+const extract=(a,b)=>html.slice(html.indexOf(a),html.indexOf(b,html.indexOf(a)));
+const ctx={};vm.createContext(ctx);vm.runInContext(extract('function supportLanguageAllowed','function supportLanguageNotice'),ctx);vm.runInContext(extract('function calculateChatStreak','function watchStreak'),ctx);
+for(const text of ['مرحبا بدي مساعدة','بلاغ عن مستخدم • UID abc123','Hello, I can\'t log in!','Report #25 — شكراً ✅','Hi\nشكراً 🙂','שלום','Привет','你好','école','فارسی'])assert.equal(ctx.supportLanguageAllowed(text),!['שלום','Привет','你好','école','فارسی'].includes(text),text);
+const today=Date.UTC(2026,9,3),day=86400000,entry=(offset,uid)=>({day:today-offset*day,senderUid:uid});
+assert.equal(ctx.calculateChatStreak([entry(0,'a')],today),0,'one person alone does not create a streak');
+assert.equal(ctx.calculateChatStreak([entry(0,'a'),entry(0,'a')],today),0,'duplicate activity is not a second sender');
+assert.equal(ctx.calculateChatStreak([entry(0,'a'),entry(0,'b'),entry(1,'a'),entry(1,'b')],today),2);
+assert.equal(ctx.calculateChatStreak([entry(1,'a'),entry(1,'b')],today),1,'yesterday remains active while today is incomplete');
+assert.equal(ctx.calculateChatStreak([entry(2,'a'),entry(2,'b')],today),0,'a missed day resets streak');
+console.log('PASS: support script filtering and two-way UTC streak accounting, duplicates, continuity and expiration.');
