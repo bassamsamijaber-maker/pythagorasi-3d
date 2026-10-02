@@ -4646,13 +4646,13 @@ body.light .support-box{background:#fff;color:#173047;border-color:#d7e4ec}.ligh
 
 <div class="support-layer hidden" id="phoneSetupLayer" aria-modal="true" role="dialog">
   <div class="support-box">
-    <button class="support-close" id="closePhoneSetup" type="button">×</button>
+    <button class="support-close hidden" id="closePhoneSetup" type="button">×</button>
     <div class="support-head"><h2>📱 اربط رقم هاتفك</h2><p>رقم الهاتف بحمي حسابك وبيخليك تسترجع اسم الدخول أو كلمة السر بكود SMS.</p></div>
     <div class="phone-step active" id="phoneSetupNumberStep">
       <div class="support-field"><label for="phoneSetupNumber">رقم الهاتف</label><input id="phoneSetupNumber" inputmode="tel" autocomplete="tel" placeholder="+9725XXXXXXXX"></div>
       <div class="phone-note">رح توصلك رسالة SMS فيها كود تحقق. ممكن تنطبق رسوم الرسائل العادية حسب شركة الاتصال. كلاسورا ما بتحفظ الكود أو كلمة السر.</div>
       <div id="phoneRecaptcha"></div>
-      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
+      <div class="support-actions"><button class="support-primary" id="sendPhoneSetupCode" type="button">إرسال الكود</button><button class="support-secondary hidden" id="phoneSetupLater" type="button">ذكّرني لاحقًا</button></div>
     </div>
     <div class="phone-step" id="phoneSetupCodeStep">
       <div class="support-field"><label for="phoneSetupCode">كود التحقق</label><input id="phoneSetupCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></div>
@@ -11868,6 +11868,7 @@ const uiExactTranslations=new Map([
   ["📱 نسيت الاسم أو كلمة السر؟","📱 Forgot name or password?"],
   ["📱 استرجاع الحساب","📱 Recover Account"],
   ["مركز الدعم","Support Center"],
+  ["🎧 مركز الدعم","🎧 Support Center"],
   ["اختار نوع المشكلة واكتب التفاصيل. الطلب بوصل مباشرة لمركز الدعم.","Choose the issue type and describe what happened. Your request goes directly to Support."],
   ["🔐 مشكلة تسجيل دخول","🔐 Sign-in Problem"],
   ["👤 نسيت اسم الدخول","👤 Forgot Login Name"],
@@ -12214,17 +12215,22 @@ function openPhoneSetup(){
   document.getElementById("phoneSetupNumberStep").classList.add("active");
   document.getElementById("phoneSetupCodeStep").classList.remove("active");
   setSupportStatus("phoneSetupStatus","");
+  document.getElementById("phoneSetupLater")?.classList.add("hidden");
+  document.getElementById("closePhoneSetup")?.classList.add("hidden");
   resetVerifier("setup");
   openLayer("phoneSetupLayer");
 }
 async function maybeOpenPhoneSetup(profile=window.PythagorasiUser,user=auth.currentUser){
   if(!user||!profile)return;
-  if(user.phoneNumber||profile.phoneLinked===true){
-    if(user.phoneNumber&&profile.phoneLinked!==true){
+  if(user.phoneNumber){
+    if(profile.phoneLinked!==true){
       const last4=phoneLast4(user.phoneNumber);
       try{await setDoc(doc(db,"users",user.uid),{phoneLinked:true,phoneLast4:last4,phoneVerifiedAt:serverTimestamp()},{merge:true})}catch{}
     }
     return;
+  }
+  if(profile.phoneLinked===true){
+    try{await setDoc(doc(db,"users",user.uid),{phoneLinked:false,updatedAt:serverTimestamp()},{merge:true})}catch{}
   }
   if(sessionStorage.getItem("classora_phone_prompt_later")==="1")return;
   openPhoneSetup();
@@ -12236,6 +12242,8 @@ async function sendPhoneSetupCode(){
   if(!auth.currentUser){setSupportStatus(statusId,supportLang("سجّل دخولك أولًا.","Sign in first."),"bad");return}
   const btn=document.getElementById("sendPhoneSetupCode");btn.disabled=true;
   try{
+    document.getElementById("phoneSetupLater")?.classList.add("hidden");
+    document.getElementById("closePhoneSetup")?.classList.add("hidden");
     const verifier=createPhoneVerifier("phoneRecaptcha","setup");
     const provider=new PhoneAuthProvider(auth);
     phoneSetupVerificationId=await provider.verifyPhoneNumber(phone,verifier);
@@ -12247,7 +12255,11 @@ async function sendPhoneSetupCode(){
   }catch(err){
     console.error("phone setup send",err);
     setSupportStatus(statusId,friendlyPhoneError(err),"bad");
-    recordSupportEventSafe("phone_link_failed",String(err?.code||"send-failed"),window.PythagorasiUser,phone);
+    const code=String(err?.code||"");
+    if(/operation-not-allowed|network|too-many-requests|quota|captcha/i.test(code)){
+      document.getElementById("phoneSetupLater")?.classList.remove("hidden");
+    }
+    recordSupportEventSafe("phone_link_failed",code||"send-failed",window.PythagorasiUser,phone);
     resetVerifier("setup");
   }finally{btn.disabled=false}
 }
