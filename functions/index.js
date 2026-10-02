@@ -472,10 +472,12 @@ exports.createRecoveryKey = onCall({ cors: true }, async (request) => {
   if (!uid) throw new HttpsError("unauthenticated", "sign-in-required");
 
   const userRef = db.collection("users").doc(uid);
-  const userSnap = await userRef.get();
+  const secretRef = db.collection("recoverySecrets").doc(uid);
+  const [userSnap, secretSnap] = await Promise.all([userRef.get(), secretRef.get()]);
   if (!userSnap.exists) throw new HttpsError("not-found", "profile-not-found");
+
   const profile = userSnap.data() || {};
-  const oldHash = String(profile.recoveryKeyHash || "");
+  const oldHash = String(secretSnap.data()?.hash || profile.recoveryKeyHash || "");
   const key = generateRecoveryKey();
   const hash = hashRecoveryKey(key);
   if (!hash) throw new HttpsError("internal", "recovery-key-generation-failed");
@@ -484,17 +486,26 @@ exports.createRecoveryKey = onCall({ cors: true }, async (request) => {
   await db.runTransaction(async (tx) => {
     const lookupSnap = await tx.get(lookupRef);
     if (lookupSnap.exists) throw new HttpsError("already-exists", "recovery-key-collision");
+
     tx.set(lookupRef, {
       uid,
       active: true,
       createdAt: FieldValue.serverTimestamp()
     });
-    tx.set(userRef, {
-      recoveryKeyHash: hash,
-      recoveryKeySetAt: FieldValue.serverTimestamp(),
-      recoveryKeyVersion: 1,
+
+    tx.set(secretRef, {
+      hash,
+      version: 2,
       updatedAt: FieldValue.serverTimestamp()
     }, { merge: true });
+
+    tx.set(userRef, {
+      recoveryKeyHash: FieldValue.delete(),
+      recoveryKeySetAt: FieldValue.serverTimestamp(),
+      recoveryKeyVersion: 2,
+      updatedAt: FieldValue.serverTimestamp()
+    }, { merge: true });
+
     if (oldHash && oldHash !== hash) {
       tx.delete(db.collection("recoveryKeyLookup").doc(oldHash));
     }
@@ -530,10 +541,40 @@ exports.verifyRecoveryKey = onCall({ cors: true }, async (request) => {
 
   const uid = String(lookupSnap.data()?.uid || "");
   if (!uid) throw new HttpsError("permission-denied", "invalid-recovery-key");
-  const userSnap = await db.collection("users").doc(uid).get();
+
+  const userRef = db.collection("users").doc(uid);
+  const secretRef = db.collection("recoverySecrets").doc(uid);
+  const [userSnap, secretSnap] = await Promise.all([userRef.get(), secretRef.get()]);
   if (!userSnap.exists) throw new HttpsError("permission-denied", "invalid-recovery-key");
+
   const profile = userSnap.data() || {};
-  if (String(profile.recoveryKeyHash || "") !== hash) throw new HttpsError("permission-denied", "invalid-recovery-key");
+  const serverHash = String(secretSnap.data()?.hash || "");
+  const legacyHash = String(profile.recoveryKeyHash || "");
+  if (serverHash !== hash && legacyHash !== hash) {
+    await writeRecoveryAudit({
+      event: "recovery_failed",
+      uid,
+      profileId: profile.profileId || "",
+      detail: "recovery key mismatch"
+    });
+    throw new HttpsError("permission-denied", "invalid-recovery-key");
+  }
+
+  // One-time migration for keys created before recoverySecrets existed.
+  if (!serverHash && legacyHash === hash) {
+    await db.runTransaction(async (tx) => {
+      tx.set(secretRef, {
+        hash,
+        version: 2,
+        updatedAt: FieldValue.serverTimestamp()
+      }, { merge: true });
+      tx.set(userRef, {
+        recoveryKeyHash: FieldValue.delete(),
+        recoveryKeyVersion: 2,
+        updatedAt: FieldValue.serverTimestamp()
+      }, { merge: true });
+    });
+  }
 
   const userRecord = await adminAuth.getUser(uid);
   const customToken = await adminAuth.createCustomToken(uid, { classoraRecovery: true });
