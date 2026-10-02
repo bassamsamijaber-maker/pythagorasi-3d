@@ -11710,6 +11710,40 @@ const uiPlaceholderTranslations=new Map([
 
 uiPlaceholderTranslations.set("مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?");
 uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?");
+
+[
+  ["اكتب الاسم أو Profile ID...","Type a name or Profile ID..."],
+  ["حل الأسئلة وسلّم قبل الموعد...","Complete the questions and submit before the deadline..."],
+  ["مثال: افتح صفوفي","Example: Open My Classes"],
+  ["اختياري","Optional"],
+  ["مثال: تذكير مهم","Example: Important reminder"],
+  ["اكتب الملاحظة...","Write the notice..."],
+  ["مثال: امتحان فيثاغورس","Example: Pythagoras Exam"],
+  ["رسالة صيانة الموقع","Site maintenance message"],
+  ["اكتب إجابتك...","Enter your answer..."],
+  ["العلامة","Points"],
+  ["اكتب الخيار","Enter an option"],
+  ["كلمات الإجابة الأساسية مفصولة بـ |","Key answer words separated by |"],
+  ["اسم الموضوع الجديد","New topic name"],
+  ["مثال قصير","Short example"],
+  ["اكتب شرح الموضوع اللي رح يظهر للطلاب...","Write the topic explanation that students will see..."],
+  ["ملاحظة/إجابة نموذجية للمعلم فقط — اختياري","Teacher-only note / model answer — optional"],
+  ["ملاحظة للطالب — اختياري","Note to the student — optional"],
+  ["مثال: تدريب المعادلات","Example: Equations practice"],
+  ["اكتب المطلوب من الطلاب بشكل واضح...","Clearly describe what students should do..."],
+  ["اكتب جوابك","Enter your answer"],
+  ["احكي هسا...","Speak now..."]
+].forEach(([ar,en])=>uiPlaceholderTranslations.set(ar,en));
+
+[
+  ["تبديل الوضع","Toggle theme"],
+  ["الإشعارات","Notifications"],
+  ["تثبيت Classora","Install Classora"],
+  ["الصوت","Voice"],
+  ["سرعة الصوت","Voice speed"],
+  ["سرعة القراءة","Reading speed"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
   s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
