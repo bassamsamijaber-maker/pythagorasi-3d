@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -4469,6 +4469,19 @@ button{touch-action:manipulation}
  .modal.open .modalbox{animation:none!important}
  button.super-press,button.ui-pop{animation:none!important}
 }
+
+/* V53: navigation has its own row, independent of the brand width. */
+.side>.brand{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:10px;min-width:0}
+.side>.brand h1{font-size:clamp(28px,3vw,48px)!important;min-width:0;max-width:100%;margin:0}
+.side>.brand .ai-chip{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.side>.brand .lab-brand-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));flex:0 0 100%;width:100%;min-width:0;margin-top:6px}
+#returnLobbyBtn,#labSettingsBtn{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;width:100%;min-height:46px;height:auto;padding:12px 8px!important;font-size:15px!important;line-height:1.4;white-space:normal;overflow:visible}
+#returnLobbyBtn span,#labSettingsBtn span{display:inline!important;white-space:normal;overflow-wrap:normal}
+.auth-language-switch{display:flex;justify-content:center;gap:8px;margin:0 0 14px}
+.auth-language-switch button{min-height:42px;min-width:100px;padding:8px 16px;border:1px solid #667d94;border-radius:10px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.auth-language-switch button[aria-pressed="true"]{background:#176bc4;color:white;border-color:#559eed}
+@media(max-width:700px){.lab-mobile-nav{top:auto!important;bottom:12px!important;max-width:calc(100% - 24px)}.lab-mobile-nav button{min-height:44px!important}.side>.brand .lab-brand-actions{gap:8px}}
+
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4477,7 +4490,7 @@ button{touch-action:manipulation}
     <div class="classora-intro-mark" aria-hidden="true">C</div>
     <h1 class="classora-intro-title">Classora</h1>
     <div class="classora-intro-rotator">
-      <span class="classora-intro-word" id="classoraIntroWord">رياضيات</span>
+      <span class="classora-intro-word" id="classoraIntroWord">Mathematics</span>
     </div>
     <div class="classora-intro-dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
@@ -4486,6 +4499,10 @@ button{touch-action:manipulation}
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
+    <div class="auth-language-switch" role="group" aria-label="Language">
+      <button id="authEnglishBtn" type="button" lang="en" data-no-translate>English</button>
+      <button id="authArabicBtn" type="button" lang="ar" data-no-translate>العربية</button>
+    </div>
     <div class="auth-logo">∟</div>
     <h2>أهلًا في Classora 👋</h2>
     <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
@@ -6525,7 +6542,7 @@ function applyAvatar(el,profile,name){
   }
 }
 function updateAssistantLabels(){
-  const fixedName="Classora AI Assistant";
+  const fixedName=currentUILanguage==="en"?"Classora AI Assistant":"مساعد كلاسورا AI";
   document.getElementById("lobbyAIName")?.replaceChildren(document.createTextNode(fixedName));
   document.querySelectorAll("[data-ai-label]").forEach(el=>{el.textContent=fixedName});
   const chip=document.getElementById("pythagAIChip");
@@ -6595,7 +6612,7 @@ function queueAccountStateSave(patch={}){
 }
 function collectAccountPreferences(){
   return {
-    language:typeof currentUILanguage!=="undefined"?currentUILanguage:(localStorage.getItem("pythagorasi_language")==="en"?"en":"ar"),
+    language:typeof currentUILanguage!=="undefined"?currentUILanguage:(localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en"),
     theme:document.body.classList.contains("light")?"light":"dark",
     sound:typeof soundEnabled!=="undefined"?!!soundEnabled:localStorage.getItem("pythagorasi_sound")!=="off",
     motion:typeof motionEnabled!=="undefined"?!!motionEnabled:localStorage.getItem("pythagorasi_motion")!=="off"
@@ -6684,6 +6701,7 @@ function applySavedAccountState(profile){
         if(chatEl){
           chatEl.innerHTML="";
           state.aiHistory.slice(-24).forEach(m=>addMsg(String(m.text||""),m.who||"bot",false,false));
+          refreshAIWelcome();
           document.getElementById("aiMemoryStatus").textContent=currentUILanguage==="en"?`Restored ${Math.min(state.aiHistory.length,24)} messages`:`رجّعنا آخر ${Math.min(state.aiHistory.length,24)} رسالة`;
         }
       }
@@ -6750,7 +6768,7 @@ function classoraRotateIntroWord(){
   classoraIntroWord.classList.add("swap");
   setTimeout(()=>{
     classoraIntroIndex=(classoraIntroIndex+1)%CLASSORA_INTRO_WORDS.length;
-    classoraIntroWord.textContent=CLASSORA_INTRO_WORDS[classoraIntroIndex];
+    classoraIntroWord.textContent=localStorage.getItem("pythagorasi_language")==="ar"?CLASSORA_INTRO_WORDS[classoraIntroIndex]:["Mathematics","Artificial Intelligence","Pythagoras","Competitions","Exams","Interactive Learning"][classoraIntroIndex];
     classoraIntroWord.classList.remove("swap");
   },220);
 }
@@ -9354,7 +9372,7 @@ async function joinCloudExamByCode(){
     document.getElementById("examModalTitle").textContent=`☁️ ${data.title||"امتحان المعلم"}`;
   }catch(err){
     console.error("joinCloudExam",err);
-    status.textContent="تعذر تحميل الامتحان. تأكد من الإنترنت وصلاحيات الحفظ.";
+    status.textContent="تعذر تحميل الامتحان. حاول مرة ثانية.";
   }
 }
 document.getElementById("joinCloudExam").addEventListener("click",joinCloudExamByCode);
@@ -9429,7 +9447,7 @@ async function loadTeacherResults(){
     }
   }catch(err){
     console.error("teacher results",err);
-    list.innerHTML='<div class="cloud-note">تعذر تحميل النتائج. تأكد من صلاحيات الحساب وحاول مرة ثانية.</div>';
+    list.innerHTML='<div class="cloud-note">تعذر تحميل النتائج. حاول مرة ثانية.</div>';
   }
 }
 
@@ -9656,7 +9674,7 @@ document.getElementById("publishCloudExam")?.addEventListener("click",async()=>{
     showToast(`☁️ تم حفظ الامتحان. الكود: ${code}`);
   }catch(err){
     console.error(err);
-    builderMessage("تعذر حفظ الامتحان أونلاين. تأكد من صلاحيات الحفظ ودخول المعلم.");
+    builderMessage("تعذر حفظ الامتحان. حاول مرة ثانية.");
   }finally{
     btn.disabled=false;btn.textContent="☁️ حفظ وإنشاء كود";
   }
@@ -11007,10 +11025,11 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 
 
 /* -------------------- V15 BILINGUAL UI -------------------- */
-let currentUILanguage=localStorage.getItem("pythagorasi_language")==="en"?"en":"ar";
+let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
   ["أهلًا في Classora 👋","Welcome to Classora 👋"],
+  ["اللوبي","Lobby"],["الرجوع للّوبي","Back to lobby"],["الإعدادات","Settings"],
   ["نظرية فيثاغورس","Pythagorean Theorem"],
   ["📐 موضوع المنصة","📐 Platform Topic"],
   ["تعلّم النظرية بالمجسم ثلاثي الأبعاد، الرمل، الأمثلة، التحديات، الأسئلة، الامتحانات والمسابقات المباشرة.","Learn the theorem with the 3D model, sand proof, examples, challenges, practice, exams and live competitions."],
@@ -11024,7 +11043,7 @@ const uiExactTranslations=new Map([
   ["دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.","Teacher sign-in for classes, exams, competitions and the question bank."],
   ["عند إنشاء الحساب لازم تدخل كود صف صحيح. بعدين بتقدر تنضم لصفوف إضافية من اللوبي.","A valid class code is required when creating an account. You can join more classes later."],
   ["حسابك يحفظ تقدمك وإعداداتك على أجهزتك.","Your account saves your progress and settings across devices."],
-  ["إذا ظهر خطأ إن كلمة السر غير مفعلة: لازم المعلم/صاحب المشروع يفعّل Email/Password مرة واحدة من إعدادات Authentication.","If password sign-in is disabled, the project owner must enable Email/Password once in Authentication settings."],
+  ["تعذر تسجيل الدخول حاليًا. حاول لاحقًا.","Sign-in is currently unavailable. Please try again later."],
   ["العجلة، الرمل، حساب الأضلاع والبرهان الحي","Wheel, sand, side calculations and live proof"],
   ["حل بسرعة واجمع نقاط","Solve quickly and collect points"],
   ["أسئلة متغيرة مع تصحيح مباشر","Changing questions with instant checking"],
@@ -11427,7 +11446,7 @@ function translateTextValue(arText){
 }
 function translateElementNode(el){
   if(!(el instanceof Element))return;
-  if(el.matches('script,style'))return;
+  if(el.matches('script,style')||el.closest('[data-no-translate]'))return;
   if(el.closest?.('#adminPanelModal,#siteUpdatesSection,#adminPanelBtn'))return;
   for(const node of [...el.childNodes]){
     if(node.nodeType===Node.TEXT_NODE){
@@ -11464,10 +11483,15 @@ function applySiteLanguage(lang,save=true){
   if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
+  document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
+  document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
+  try{refreshAIWelcome()}catch{}
   try{updateAssistantLabels()}catch{}
   try{applyAdminLanguage()}catch{}
   setTimeout(()=>document.body.classList.remove('language-switching'),350);
 }
+document.getElementById("authEnglishBtn").addEventListener("click",()=>applySiteLanguage("en"));
+document.getElementById("authArabicBtn").addEventListener("click",()=>applySiteLanguage("ar"));
 const bilingualObserver=new MutationObserver(records=>{
   for(const record of records){
     record.addedNodes.forEach(n=>{
@@ -16113,7 +16137,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
     showCompetitionView("competitionLobby");
   }catch(err){
     console.error("create competition",err);
-    document.getElementById("compJoinStatus").textContent="تعذر إنشاء الغرفة. تأكد من صلاحيات الحفظ الجديدة.";
+    document.getElementById("compJoinStatus").textContent="تعذر إنشاء المسابقة. حاول مرة ثانية.";
   }finally{
     btn.disabled=false;btn.textContent="＋ إنشاء غرفة جديدة";
   }
@@ -16335,7 +16359,7 @@ async function joinLiveCompetition(){
       ?"أنت داخل كمعلم. اعمل تسجيل خروج إذا بدك تدخل كطالب."
       :err.message==="login-required"
         ?"سجّل دخول كطالب أولًا."
-        :"تعذر الدخول. تأكد من الإنترنت وصلاحيات الحفظ.";
+        :"تعذر الدخول. افحص الاتصال وحاول مرة ثانية.";
   }
 }
 document.getElementById("compJoinBtn").addEventListener("click",joinLiveCompetition);
@@ -17004,7 +17028,7 @@ function firstAIName(){
 }
 function helloForUser(){
   const name=firstAIName();
-  return name?`هلا ${name} 👋`:"هلا فيك 👋";
+  return currentUILanguage==="en"?(name?`Hi ${name} 👋`:"Hi there 👋"):(name?`هلا ${name} 👋`:"هلا فيك 👋");
 }
 function saveAIName(name){
   const clean=String(name||"").trim().replace(/\s+/g," ").slice(0,40);
@@ -17019,12 +17043,20 @@ function saveAIName(name){
   return true;
 }
 function refreshAIWelcome(){
-  const el=document.getElementById("aiWelcome");
-  if(!el)return;
+  const host=document.getElementById("chat");
+  if(!host)return;
+  let el=document.getElementById("aiWelcome");
+  if(!el){el=document.createElement("div");el.id="aiWelcome";el.className="msg bot";host.prepend(el)}
   el.innerHTML=currentUILanguage==="en"
-    ?`${helloForUser()} I am <b>Classora AI Assistant</b>. Ask me about a lesson, a math problem, equations, or ask me to open part of Classora.`
-    :`${helloForUser()} أنا <b>Classora AI Assistant</b>. اسألني عن درس، مسألة، معادلات، أو اطلب مني أفتحلك جزء من Classora.`;
+    ?`${escapeHtml(helloForUser())} I am <b>Classora AI Assistant</b>. Ask me about a lesson, a math problem, or equations.`
+    :`${escapeHtml(helloForUser())} أنا <b>مساعد كلاسورا AI</b>. اسألني عن درس، مسألة أو معادلات.`;
 }
+function personalizeAssistantText(text){
+  return String(text||"")
+    .replace(/هلا\s+بطلاب\s+ال[لا]*هف/gi,helloForUser())
+    .replace(/(?:يا\s+)?طلاب\s+ال[لا]*هف/gi,firstAIName()||"فيك");
+}
+
 function persistAIContext(){
   try{
     const savedContext={...aiContext,savedAt:Date.now(),displayName:savedAIName()};
@@ -17728,6 +17760,7 @@ function attachSpeaker(d,text){
   d.appendChild(b);
 }
 function addMsg(text,who="bot",html=false,persist=true){
+  if(who==="bot")text=personalizeAssistantText(text);
   const d=document.createElement("div");d.className=`msg ${who}`;
   if(html)d.innerHTML=text;else d.textContent=text;
   let speakButton=null;
@@ -18174,8 +18207,8 @@ async function registerClassoraPushToken(){
     const note=document.getElementById("notificationCenterNote");
     if(note){
       note.textContent=currentUILanguage==="en"
-        ?"Push setup needs the Firebase Web Push key."
-        :"إعداد Push يحتاج مفتاح Web Push من Firebase.";
+        ?"Notifications are temporarily unavailable. Please try again later."
+        :"الإشعارات غير متاحة مؤقتًا. جرّب لاحقًا.";
     }
     return null;
   }
@@ -18322,7 +18355,7 @@ async function enableClassoraNotifications(){
   updateClassoraNotificationSettings();
   if(ok){
     showToast(pushToken
-      ?(currentUILanguage==="en"?"Push notifications enabled ✅":"تم تفعيل Push Notifications ✅")
+      ?(currentUILanguage==="en"?"Notifications enabled ✅":"تم تفعيل الإشعارات ✅")
       :(currentUILanguage==="en"?"Notifications enabled on this device ✅":"تم تفعيل إشعارات الجهاز ✅"));
     await showClassoraDeviceNotification(
       currentUILanguage==="en"?"Classora notifications ready":"إشعارات Classora جاهزة",
@@ -18340,11 +18373,11 @@ function updateClassoraNotificationSettings(){
   const modalBtn=document.getElementById("notificationCenterEnableBtn");
   const badge=document.getElementById("notificationsEnabledBadge");
   const note=document.getElementById("notificationSettingsNote");
-  if(btn)btn.textContent=pushReady?(en?"🔔 Push enabled":"🔔 Push مفعّل"):enabled?(en?"🔔 Device alerts enabled":"🔔 إشعارات الجهاز مفعّلة"):(en?"🔔 Enable notifications":"🔔 تفعيل الإشعارات");
-  if(modalBtn)modalBtn.textContent=pushReady?(en?"✓ Push notifications enabled":"✓ Push Notifications مفعّلة"):enabled?(en?"✓ Device alerts enabled":"✓ إشعارات الجهاز مفعّلة"):(en?"🔔 Enable device notifications":"🔔 تفعيل إشعارات الجهاز");
+  if(btn)btn.textContent=pushReady?(en?"🔔 Notifications enabled":"🔔 الإشعارات مفعّلة"):enabled?(en?"🔔 Device alerts enabled":"🔔 إشعارات الجهاز مفعّلة"):(en?"🔔 Enable notifications":"🔔 تفعيل الإشعارات");
+  if(modalBtn)modalBtn.textContent=pushReady?(en?"✓ Notifications enabled":"✓ الإشعارات مفعّلة"):enabled?(en?"✓ Device alerts enabled":"✓ إشعارات الجهاز مفعّلة"):(en?"🔔 Enable device notifications":"🔔 تفعيل إشعارات الجهاز");
   badge?.classList.toggle("hidden",!enabled);
   if(note)note.textContent=pushReady
-    ?(en?"Push is connected to this device — alerts can arrive in the background.":"Push مربوط بهذا الجهاز — التنبيهات ممكن توصل بالخلفية.")
+    ?(en?"Notifications are enabled on this device.":"الإشعارات مفعّلة على هذا الجهاز.")
     :(en?"Get alerts for assignments, exams, competitions and students joining a class.":"استقبل تنبيهات عند وصول وظيفة أو امتحان أو مسابقة، وعند دخول طالب جديد للصف.");
   renderClassoraNotificationBadge();
 }
