@@ -11689,6 +11689,20 @@ const uiExactTranslations=new Map([
   ["🎒 طالب","🎒 Student"]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
+
+[
+  ["3D is unavailable on this device. You can still use the lobby and learning sections. / العرض ثلاثي الأبعاد غير متاح على هذا الجهاز. يمكنك استخدام اللوبي والأقسام التعليمية.","3D is unavailable on this device. You can still use the lobby and learning sections."],
+  ["▶ بدأ البرهان الحي: نجمع الرمل من a² و b² داخل c².","▶ Live proof started: combining the sand from a² and b² inside c²."],
+  ["⏳ تم تحريك الرمل من جديد، والحبيبات تسقط وتستقر داخل كل مربع حسب مساحته.","⏳ The sand was reset; particles fall and settle inside each square according to its area."],
+  ["تعذر حفظ التسليم أونلاين. جرّب مرة ثانية.","Could not save the submission online. Try again."],
+  ["اكتب/اختار جواب أولًا.","Enter or choose an answer first."],
+  ["الإجابة الصحيحة","Correct Answer"],
+  ["الإجابة الرقمية الصحيحة","Correct Numeric Answer"],
+  ["هذا السؤال ما بينفحص تلقائيًا؛ المعلم يعطي علامته بعد التسليم.","This question is not graded automatically; the teacher assigns its score after submission."],
+  ["تم حفظ الاسم الظاهر ✅","Display name saved ✅"],
+  ["ركّز على الفكرة والمثال.","Focus on the idea and the example."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
 const uiPlaceholderTranslations=new Map([
   ["🔎 ابحث عن موضوع داخل المادة...","🔎 Search topics..."],
   ["اسأل عن هذا الموضوع...","Ask about this topic..."],
@@ -11787,6 +11801,28 @@ function uiDynamicEnglish(text){
   s=s.replace(/^المرحلة\s+(\d+)\/(\d+):/u,"Step $1/$2:");
   s=s.replace(/^✅\s*البرهان اكتمل:/u,"✅ Proof complete:");
   s=s.replace(/^⏳\s*تم تحريك الرمل من جديد/u,"⏳ The sand was reset");
+  s=s.replace(/^(.+?)\s*•\s*(\d+)\s*أسئلة$/u,"$1 • $2 questions");
+  s=s.replace(/^انحفظت\s+(\d+)\s+إجابة\s+من\s+(\d+)\.\s*المعلم يقدر يشوف النتيجة من لوحة النتائج\.$/u,"Saved $1 of $2 answers. The teacher can view the result from the results dashboard.");
+  s=s.replace(/^جاوبت\s+(\d+)\s+من\s+(\d+)\s*•\s*النسبة\s+(\d+)%\s*•\s*الوقت\s+(.+)$/u,"Answered $1 of $2 • Score $3% • Time $4");
+  s=s.replace(/^✅\s*صرت معلّم مساعد في\s+(.+)$/u,"✅ You are now a co-teacher in $1");
+  s=s.replace(/^💡\s*تذكّر:\s*(.+)$/u,"💡 Remember: $1");
+  s=s.replace(/^مركزك الآن\s+#(\d+)\s*•\s*(\d+)\s*نقطة\s*•\s*المتقدم\s+(.+)$/u,"Your current rank is #$1 • $2 points • Leader: $3");
+  s=s.replace(/^مركزك الآن\s+#(\d+)\s*•\s*(\d+)\s*نقطة\s*•\s*أنت بالمقدمة\s*🔥$/u,"Your current rank is #$1 • $2 points • You are leading 🔥");
+  s=s.replace(/^رجّعنا آخر\s+(\d+)\s+رسالة$/u,"Restored the last $1 messages");
+  s=s.replace(/^☁️\s*تم حفظ الامتحان\.\s*الكود:\s*(.+)$/u,"☁️ Exam saved. Code: $1");
+  s=s.replace(/^✅\s*بدأ الامتحان:\s*(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة$/u,"✅ Exam started: $1 questions • $2 points");
+  s=s.replace(/^🏫\s*عملنالك صفك الأول تلقائيًا\s*•\s*الكود\s*(.+)$/u,"🏫 Your first class was created automatically • code $1");
+  s=s.replace(/^تمت إضافة\s*«(.+)»\s*✅$/u,"Added “$1” ✅");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب نص السؤال\.$/u,"Question $1: enter the question text.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب الخيارات الأربعة\.$/u,"Question $1: enter all four options.");
+  s=s.replace(/^السؤال\s+(\d+):\s*في خيارات مكررة\.$/u,"Question $1: some options are duplicated.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اختر الإجابة الصحيحة\.$/u,"Question $1: choose the correct answer.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب الإجابة الرقمية\.$/u,"Question $1: enter the numeric answer.");
+  s=s.replace(/^تم إخراج\s+(.+)\s+من الصف\.$/u,"Removed $1 from the class.");
+  s=s.replace(/^تم نقل الملكية إلى\s+(.+)\s*✅$/u,"Ownership transferred to $1 ✅");
+  s=s.replace(/^الكود:\s*(.+)$/u,"Code: $1");
+  s=s.replace(/^🎤\s*تعذر فهم الصوت\s*\((.+)\)\.\s*جرّب تحكي أوضح\.$/u,"🎤 Could not understand the voice input ($1). Try speaking more clearly.");
+  s=s.replace(/^✅\s*البرهان اكتمل:\s*(.+)\.$/u,"✅ Proof complete: $1.");
   return uiExactTranslations.get(s.trim())||s;
 }
 function translateTextValue(arText){
