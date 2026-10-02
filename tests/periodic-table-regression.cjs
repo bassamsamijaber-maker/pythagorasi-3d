@@ -39,3 +39,8 @@ assert(sw.includes("./chemistry/periodic-table.html"),"periodic table must be ca
 assert(sw.includes("cache.put(event.request,copy)"),"navigation cache must keep page identity");
 
 console.log("PASS: periodic table has 118 unique elements, valid JavaScript and required Classora chemistry tools.");
+
+assert(html.includes('periodic-table.css?v=57'),"periodic CSS must be version-busted");
+assert(html.includes('periodic-table.js?v=57'),"periodic JS must be version-busted");
+assert(js.includes('classora-close-subject'),"embedded periodic page must close back to Classora");
+assert(js.includes('new URLSearchParams(location.search).get("lang")'),"periodic language must accept Classora language parameter");
