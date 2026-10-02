@@ -6549,7 +6549,7 @@ import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
   signInAnonymously, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser, updatePassword,
-  reauthenticateWithCredential, EmailAuthProvider,
+  reauthenticateWithCredential, EmailAuthProvider, linkWithCredential, sendPasswordResetEmail,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
@@ -6722,6 +6722,63 @@ async function saveStudentLoginAlias(name,userOrUid,email){
     },{merge:true});
   }catch(err){console.warn("login alias save",err)}
 }
+function teacherLoginAliasId(value){
+  return studentNameHash64(normalizeStudentNameKey(value));
+}
+async function resolveTeacherLoginEmail(value){
+  const raw=String(value||"").trim();
+  if(raw.includes("@"))return raw.toLowerCase();
+  try{
+    const snap=await getDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(raw)));
+    return snap.exists()?String(snap.data()?.loginEmail||"").trim():"";
+  }catch{return ""}
+}
+async function saveTeacherLoginAlias(value,userOrUid,email){
+  const clean=String(value||"").trim().replace(/\s+/g," ");
+  if(clean.length<2||!email)return;
+  const uid=typeof userOrUid==="string"?userOrUid:userOrUid?.uid;
+  if(!uid)return;
+  try{
+    await setDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(clean)),{
+      uid,loginEmail:String(email).trim().toLowerCase(),updatedAt:serverTimestamp()
+    },{merge:true});
+  }catch(err){console.warn("teacher alias save",err)}
+}
+async function saveTeacherLoginAliases(profile,user){
+  const email=String(user?.email||profile?.email||"").trim();
+  if(!email||!user?.uid)return;
+  const name=profile?.loginName||profile?.displayName||user.displayName||"";
+  if(name)await saveTeacherLoginAlias(name,user,email);
+  await saveTeacherLoginAlias(email,user,email);
+}
+
+async function syncPublicProfile(profile=window.PythagorasiUser,user=auth.currentUser){
+  if(!user||!profile)return;
+  const displayName=String(profile.displayName||user.displayName||"مستخدم").trim().slice(0,40);
+  const role=isTeacherLikeProfile(profile)?"teacher":"student";
+  const publicData={
+    uid:user.uid,
+    displayName,
+    searchName:normalizeStudentNameKey(displayName),
+    role,
+    profileId:String(profile.profileId||""),
+    photoData:String(profile.photoData||"").slice(0,140000),
+    updatedAt:serverTimestamp()
+  };
+  try{await setDoc(doc(db,"publicProfiles",user.uid),publicData,{merge:true})}catch(err){console.warn("public profile sync",err)}
+}
+
+function normalizeSecurityPhrase(value){
+  return String(value||"").trim().toLowerCase().replace(/\s+/g," ").slice(0,64);
+}
+async function securityPhraseHash(uid,phrase){
+  const normalized=normalizeSecurityPhrase(phrase);
+  if(!uid||normalized.length<4)return "";
+  const bytes=new TextEncoder().encode("classora-security-v1|"+uid+"|"+normalized);
+  const digest=await crypto.subtle.digest("SHA-256",bytes);
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
 function assistantNames(){
   return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
 }
