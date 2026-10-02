@@ -11705,7 +11705,15 @@ const uiExactTranslations=new Map([
   ["الإجابة الرقمية الصحيحة","Correct Numeric Answer"],
   ["هذا السؤال ما بينفحص تلقائيًا؛ المعلم يعطي علامته بعد التسليم.","This question is not graded automatically; the teacher assigns its score after submission."],
   ["تم حفظ الاسم الظاهر ✅","Display name saved ✅"],
-  ["ركّز على الفكرة والمثال.","Focus on the idea and the example."]
+  ["ركّز على الفكرة والمثال.","Focus on the idea and the example."],
+  ["سؤال أمريكي","Multiple-Choice Question"],
+  ["سؤال رقمي","Numeric Question"],
+  ["سؤال مفتوح","Open Question"],
+  ["حدد الدائرة بجانب الإجابة الصحيحة. تقدر تضيف لحد 8 خيارات.","Select the circle next to the correct answer. You can add up to 8 options."],
+  ["＋ إضافة خيار","＋ Add Option"],
+  ["للإمتحان","For Exam"],
+  ["للمسابقة","For Competition"],
+  ["حذف","Delete"]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const uiPlaceholderTranslations=new Map([
@@ -11828,6 +11836,13 @@ function uiDynamicEnglish(text){
   s=s.replace(/^الكود:\s*(.+)$/u,"Code: $1");
   s=s.replace(/^🎤\s*تعذر فهم الصوت\s*\((.+)\)\.\s*جرّب تحكي أوضح\.$/u,"🎤 Could not understand the voice input ($1). Try speaking more clearly.");
   s=s.replace(/^✅\s*البرهان اكتمل:\s*(.+)\.$/u,"✅ Proof complete: $1.");
+  s=s.replace(/^(\d+)\s*علامات$/u,"$1 points");
+  s=s.replace(/^إجابتك:\s*(.+?)\s*•\s*العلامة:\s*(.+)$/u,"Your answer: $1 • Score: $2");
+  s=s.replace(/^الإجابة\/الشرح:\s*(.+)$/u,"Answer / explanation: $1");
+  s=s.replace(/^(\d+)\s*أسئلة$/u,"$1 questions");
+  s=s.replace(/^(.+?)\s*•\s*الصحيح:\s*(.+)$/u,"$1 • Correct: $2");
+  s=s.replace(/^هلا\s*👋\s*أنا\s+(.+?)\.\s*هسا مركزين على\s*«(.+?)»\.\s*اسألني عن الشرح أو المثال أو اطلب سؤال تدريب\.$/u,"Hi 👋 I'm $1. We're focusing on “$2” now. Ask me for an explanation, an example or a practice question.");
+  s=s.replace(/^(\d+)\s*نقطة$/u,"$1 point");
   return uiExactTranslations.get(s.trim())||s;
 }
 function translateTextValue(arText){
