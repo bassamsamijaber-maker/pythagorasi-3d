@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07121d">
 <title>Periodic Table • Classora</title>
-<link rel="stylesheet" href="./periodic-table.css?v=59">
+<link rel="stylesheet" href="./periodic-table.css?v=60">
 </head>
 <body>
 <div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
 <header class="topbar">
   <button class="back-btn" id="backBtn" type="button">← <span data-i18n="back">Back to Classora</span></button>
   <div class="brand"><span class="brand-mark">C</span><div><b>Classora</b><small data-i18n="chemistry">Chemistry</small></div></div>
-  <div class="top-actions" aria-label="Language"><button class="lang-btn" data-lang="en" type="button">English</button><button class="lang-btn" data-lang="ar" type="button">العربية</button></div>
 </header>
 
 <main>
@@ -45,7 +44,7 @@
     <button class="mode" data-mode="quiz" type="button">⚡ <span data-i18n="quiz">Quiz</span></button>
     <button class="mode surprise" id="randomElementBtn" type="button">🎲 <span data-i18n="randomElement">Random element</span></button>
   </div>
-  <div class="filters" id="filters"></div>
+  <div class="filters" id="filters"></div><div class="filters property-filters" id="propertyFilters"></div>
 </section>
 
 <section class="explore-view mode-view active" id="exploreView">
@@ -53,12 +52,12 @@
     <div><span class="kicker" data-i18n="tapHint">TAP ANY ELEMENT</span><h2 data-i18n="tableTitle">Interactive Periodic Table</h2></div>
     <div class="visible-count"><b id="visibleCount">118</b><span data-i18n="shown">shown</span></div>
   </div>
-  <div class="layout-switch"><button class="lang-btn active" data-layout="gallery" aria-pressed="true" data-i18n="gallery">Image gallery</button><button class="lang-btn" data-layout="periodic" aria-pressed="false" data-i18n="periodic">Periodic table</button></div>
+  <div class="layout-switch"><button class="lang-btn" data-layout="gallery" aria-pressed="false" data-i18n="gallery">Image gallery</button><button class="lang-btn active" data-layout="periodic" aria-pressed="true" data-i18n="periodic">Periodic table</button></div>
   <p class="gallery-note" data-i18n="illustration">Educational illustration</p>
   <div class="table-shell">
-    <div class="group-numbers" id="groupNumbers"></div>
+    
     <div class="periodic-scroll">
-      <div class="periodic-grid" id="periodicGrid" aria-label="Periodic table"></div>
+      <div class="group-numbers" id="groupNumbers" aria-hidden="true"></div><div class="periodic-grid" id="periodicGrid" aria-label="Periodic table"></div>
     </div>
   </div>
   <p id="emptyState" data-i18n="empty" hidden></p>
@@ -138,6 +137,6 @@
   </article>
 </div>
 
-<script src="./periodic-table.js?v=59"></script>
+<script src="./periodic-table.js?v=60"></script>
 </body>
 </html>
