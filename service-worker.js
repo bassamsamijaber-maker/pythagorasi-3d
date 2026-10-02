@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v60-periodic-science";
+const CACHE_NAME="classora-v60-chat-support-auth";
 const APP_SHELL=[
   "./",
   "./index.html",
