@@ -16,7 +16,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #91dc
 @supports not(height:100dvh){.platform-lobby{height:100vh!important;min-height:100vh!important;max-height:100vh!important}.modal{height:100vh!important}}
 .case-dialog-fallback{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%);z-index:2147483646;display:block;box-shadow:0 0 0 100vmax #020915bb,0 24px 80px #0008;max-height:85vh;overflow:auto}.auth-role .ico:empty{display:none}#chatModal .chat-bubble.has-voice{width:min(320px,86%);box-sizing:border-box}
 
-/* ================= CLASSORA MOBILE + VECTOR POLISH V76 ================= */
+/* ================= CLASSORA MOBILE + VECTOR POLISH V77 ================= */
 :root{--classora-mobile-gap:12px}
 html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-height:100dvh;overflow-x:hidden}
@@ -184,4 +184,67 @@ h1 .classora-inline-art-wrap,h2 .classora-inline-art-wrap,h3 .classora-inline-ar
   #notificationOnboardingModal{align-items:center!important;justify-content:center!important;padding:16px!important}
   #notificationOnboardingModal .notification-onboarding-box{width:min(92vw,420px)!important;height:auto!important;min-height:0!important;max-height:82dvh!important;border-radius:24px!important;padding:24px 18px max(20px,env(safe-area-inset-bottom))!important}
   .notification-onboarding-actions{grid-template-columns:1fr}
+}
+
+/* ================= CLASSORA V77 MOBILE CHAT + PAGE NAV ================= */
+.classora-mobile-page-nav{display:none}
+@media(max-width:760px){
+  /* On phones, navigation replaces the little X close buttons. */
+  body.classora-authenticated .modalhead .close{display:none!important}
+  body.classora-authenticated .classora-mobile-page-nav{
+    position:fixed;z-index:1000005;left:50%;bottom:max(10px,env(safe-area-inset-bottom));
+    transform:translateX(-50%);width:min(330px,calc(100vw - 24px));
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:7px;
+    border:1px solid rgba(135,202,255,.18);border-radius:18px;
+    background:rgba(7,18,30,.92);box-shadow:0 16px 46px rgba(0,0,0,.42);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+  }
+  .classora-mobile-page-nav button{
+    min-width:0;min-height:46px;border:1px solid rgba(255,255,255,.09);
+    border-radius:13px;background:rgba(255,255,255,.045);color:#eef8ff;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:900;font-size:13px;padding:8px 10px
+  }
+  .classora-mobile-page-nav button:last-child{background:linear-gradient(135deg,rgba(27,132,232,.18),rgba(122,77,229,.15))}
+  .classora-mobile-page-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  /* Keep normal phone pages above the navigation bar. */
+  body.classora-authenticated .modalbox{padding-bottom:max(82px,calc(env(safe-area-inset-bottom) + 72px))!important}
+  body.classora-authenticated .platform-lobby{padding-bottom:max(92px,calc(env(safe-area-inset-bottom) + 82px))!important}
+  body.classora-authenticated .side{padding-bottom:88px!important}
+  body.classora-authenticated .classora-subject-page{padding-bottom:72px!important}
+
+  /* Chat stays compact instead of taking the whole phone screen. */
+  #chatModal.open{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    padding:12px!important;background:rgba(2,8,14,.62)!important
+  }
+  #chatModal .classora-chat-box{
+    width:min(94vw,480px)!important;max-width:min(94vw,480px)!important;
+    height:min(76dvh,650px)!important;max-height:min(76dvh,650px)!important;min-height:0!important;
+    margin:0!important;border-radius:22px!important;padding:14px!important;
+    padding-bottom:14px!important;overflow:hidden!important;
+    border:1px solid rgba(121,193,255,.15)!important;
+    box-shadow:0 26px 80px rgba(0,0,0,.55)!important
+  }
+  #chatModal .modalhead{
+    position:relative!important;top:auto!important;margin:0 0 8px!important;
+    padding:2px 2px 10px!important;background:transparent!important;backdrop-filter:none!important
+  }
+  #chatModal .modalhead h2{font-size:18px!important}
+  #chatModal .classora-chat-layout{height:auto!important;flex:1!important;min-height:0!important}
+  #chatModal .chat-contacts-pane{max-height:none!important;height:100%!important}
+  #chatModal .chat-thread-pane{min-height:0!important;height:100%!important}
+  #chatModal .chat-search-wrap{padding-bottom:6px!important}
+  #chatModal .chat-contact{padding:7px!important}
+  #chatModal .chat-compose{padding:8px!important;padding-bottom:8px!important}
+
+  /* Don't duplicate navigation inside the 3D lab on phones. */
+  body.classora-authenticated .lab-mobile-nav{display:none!important}
+}
+@media(max-width:420px){
+  #chatModal .classora-chat-box{
+    width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;
+    height:min(74dvh,600px)!important;max-height:min(74dvh,600px)!important;border-radius:20px!important
+  }
 }
