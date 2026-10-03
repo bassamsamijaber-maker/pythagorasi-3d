@@ -141,7 +141,30 @@ export function scienceLiveQuestions(count=10,lang='en',topic=''){
  return shuffled([...general.slice(0,generalCount),...periodic.slice(0,periodicCount)]).map(q=>({...q,options:shuffled(q.options)}));
 }
 const paths={
- math:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',atom:'<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="2"/>',book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',settings:'<path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/>',chat:'<path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/>',shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/>',bell:'<path d="M5 17h14l-2-4V9a5 5 0 0 0-10 0v4zM10 21h4"/>',user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>',trophy:'<path d="M7 3h10v6a5 5 0 0 1-10 0zM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 14v6M7 21h10"/>',leaf:'<path d="M20 3C2 2 1 16 9 19s13-8 11-16zM4 22 16 9"/>',heart:'<path d="M12 21 3 12C-2 4 7 0 12 7c5-7 14-3 9 5z"/>',motion:'<path d="M2 8h8M2 16h5M7 12h15m-6-6 6 6-6 6"/>',bolt:'<path d="m14 2-10 12h8l-2 8 10-12h-8z"/>',photo:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8" cy="9" r="2"/><path d="m3 18 6-5 4 3 4-6 4 8"/>',mic:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 0 1 6 0c0 3-3 2-3 5M12 17h.01"/>',trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>'
+ math:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',atom:'<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="2"/>',book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',settings:'<path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/>',chat:'<path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/>',shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/>',bell:'<path d="M5 17h14l-2-4V9a5 5 0 0 0-10 0v4zM10 21h4"/>',user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>',trophy:'<path d="M7 3h10v6a5 5 0 0 1-10 0zM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 14v6M7 21h10"/>',leaf:'<path d="M20 3C2 2 1 16 9 19s13-8 11-16zM4 22 16 9"/>',heart:'<path d="M12 21 3 12C-2 4 7 0 12 7c5-7 14-3 9 5z"/>',motion:'<path d="M2 8h8M2 16h5M7 12h15m-6-6 6 6-6 6"/>',bolt:'<path d="m14 2-10 12h8l-2 8 10-12h-8z"/>',photo:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8" cy="9" r="2"/><path d="m3 18 6-5 4 3 4-6 4 8"/>',mic:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 0 1 6 0c0 3-3 2-3 5M12 17h.01"/>',trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>',
+ school:'<path d="m3 10 9-6 9 6-9 6-9-6zM5 13v5m14-5v5M8 15v5h8v-5"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',
+ folder:'<path d="M3 7h7l2 2h9v10H3z"/>',
+ eye:'<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/>',
+ edit:'<path d="m4 20 4-1 11-11-3-3L5 16zM14 6l3 3"/>',
+ lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+ warn:'<path d="M12 3 2 21h20L12 3zM12 9v5M12 18h.01"/>',
+ check:'<path d="m4 12 5 5L20 6"/>',
+ close:'<path d="M5 5l14 14M19 5 5 19"/>',
+ bulb:'<path d="M9 18h6M10 22h4M8 14a7 7 0 1 1 8 0c-1 1-1 2-1 3H9c0-1 0-2-1-3z"/>',
+ brain:'<path d="M9 4a4 4 0 0 0-4 4v1a4 4 0 0 0 0 7v1a3 3 0 0 0 5 2M15 4a4 4 0 0 1 4 4v1a4 4 0 0 1 0 7v1a3 3 0 0 1-5 2M12 4v16M8 9h4M12 14h4"/>',
+ sparkle:'<path d="m12 2 2 6 6 2-6 2-2 6-2-6-6-2 6-2zM19 16l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/>',
+ group:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M14 15a5 5 0 0 1 7 4v1"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+ inbox:'<path d="M4 4h16v16H4zM4 14h5l2 3h2l2-3h5"/>',
+ play:'<path d="m8 5 11 7-11 7z"/>',
+ pause:'<path d="M8 5v14M16 5v14"/>',
+ flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/>',
+ dot:'<circle cx="12" cy="12" r="5"/>'
 };
 export function icon(name='book'){return `<svg class="classora-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.book}</svg>`}
 const features=[['search','البحث في المواضيع والأدوات','Search topics and tools'],['science','قسم العلوم','Science section'],['scienceLab','مختبر الجسيمات','Particle lab'],['sciencePractice','تدريب واختبار العلوم','Science practice and self-test'],['scienceLive','مسابقات العلوم','Science live competitions'],['scienceExam','امتحانات صفية للعلوم','Science class exams'],['social','حساباتنا','Our accounts'],['desktopDock','شريط الكمبيوتر السفلي','Desktop bottom dock'],['motion','حركة البطاقات','Card animations']];
@@ -197,11 +220,99 @@ export function mountLearningHub(api){
 }
 export function installVectorIcons(){
  const emoji=/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu;
- const rules=[[/setting|إعداد|اعداد/,'settings'],[/chat|شات|محادث/,'chat'],[/support|دعم/,'help'],[/admin|أدمن|صلاح/,'shield'],[/notif|إشعار/,'bell'],[/voice|صوت|تسجيل/,'mic'],[/photo|image|صورة/,'photo'],[/install|تثبيت/,'download'],[/delete|حذف/,'trash'],[/competition|challenge|مسابق|تحد/,'trophy'],[/profile|account|حساب|طالب|معلم/,'user'],[/science|atom|عنصر|علوم/,'atom'],[/lab|معادل|فيثاغورس|رياض/,'math'],[/search|بحث/,'search']];
- function clean(root){const elements=[];if(root?.matches?.('button,a.pythag-action-card,.auth-role .ico'))elements.push(root);root?.querySelectorAll?.('button,a.pythag-action-card,.auth-role .ico').forEach(x=>elements.push(x));for(const el of elements){if(el.closest('[data-no-translate],.chat-bubble,.msg,.hub-dialog-body'))continue;const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n,found=false;while((n=walker.nextNode())){if(n.parentElement.closest('svg'))continue;emoji.lastIndex=0;if(emoji.test(n.nodeValue)){found=true;const value=n.nodeValue.replace(emoji,'').trim();if(n.__arOriginal!=null)n.__arOriginal=n.__arOriginal.replace(emoji,'').trim();n.nodeValue=value}}
- if(found&&!el.querySelector('.classora-icon')){const name=rules.find(([re])=>re.test((el.id+' '+el.textContent+' '+el.title).toLowerCase()))?.[1]||'book';el.insertAdjacentHTML('afterbegin',icon(name));if(!el.textContent.trim()&&!el.getAttribute('aria-label'))el.setAttribute('aria-label',el.title||name)}
- }}
- clean(document.body);let queued=new Set(),timer;new MutationObserver(records=>{for(const r of records){const el=r.target.nodeType===1?r.target:r.target.parentElement;if(el)queued.add(el);for(const n of r.addedNodes)if(n.nodeType===1)queued.add(n)}clearTimeout(timer);timer=setTimeout(()=>{const roots=[...queued];queued.clear();roots.forEach(clean)},40)}).observe(document.body,{subtree:true,childList:true,characterData:true});
+ const rules=[[/setting|إعداد|اعداد/,'settings'],[/chat|شات|محادث/,'chat'],[/support|دعم/,'help'],[/admin|أدمن|صلاح/,'shield'],[/notif|إشعار/,'bell'],[/voice|صوت|تسجيل/,'mic'],[/photo|image|صورة/,'photo'],[/install|تثبيت/,'download'],[/delete|حذف/,'trash'],[/competition|challenge|مسابق|تحد/,'trophy'],[/profile|account|حساب|طالب|معلم/,'user'],[/science|atom|عنصر|علوم/,'atom'],[/lab|معادل|فيثاغورس|رياض/,'math'],[/search|بحث/,'search'],[/class|صف|مدرس/,'school'],[/result|نتيج|احص|إحص|stat/,'chart'],[/time|وقت|مؤقت/,'clock'],[/calendar|تاريخ|موعد/,'calendar'],[/file|folder|ملف|محفوظ/,'folder'],[/view|show|عرض/,'eye'],[/edit|تعديل|صمم|صمّم/,'edit'],[/lock|أمان|حماية|كلمة سر/,'lock'],[/world|remote|عالم|عن بعد|جغراف/,'globe']];
+ const emojiGroups=[
+  ['sun','☀🌞'],['moon','🌙🌓'],['school','🏫🎒👨‍🏫'],['user','👤🙂😊😄👌👇👋👏'],['group','👥👫🤝'],
+  ['motion','🚀🏃'],['help','🛟❓'],['shield','🛡🔐🔒⛔'],['chat','💬'],['mail','📥📬📤'],['bell','🔔'],
+  ['download','📲⬇'],['settings','⚙🎛'],['clock','⏳⏱⏰🕘⏪'],['chart','📊📈'],['trash','🗑🧹'],
+  ['math','📐🧮📏⚖💯🔢⬛➕➖'],['atom','🧪⚛🔬🧊'],['trophy','🏆🏅⭐🌟'],['folder','🗃📂📋📅'],
+  ['sparkle','✨🔥🎉🌈'],['eye','👁👀'],['edit','📝🗒✍✏☑'],['lock','🔑'],['globe','🌐🌍🌎🗺⛰🏙🌦'],
+  ['target','🎯🎲'],['photo','📷🖼'],['mic','🎙🎤🔊'],['book','📚📘📖'],['bulb','💡'],['brain','🧠🤖'],
+  ['leaf','🌱'],['heart','❤'],['warn','⚠❌'],['check','✅'],['play','▶'],['pause','⏸⏹'],['inbox','📡'],
+  ['dot','🔵🔴🟢🟡🟨🟦'],['search','🔎'],['flask','🧪']
+ ];
+ const emojiName=(mark,context='')=>{
+  if(mark==='©'||mark==='®')return null;
+  for(const [name,marks] of emojiGroups)if(marks.includes(mark))return name;
+  const byText=rules.find(([re])=>re.test(String(context).toLowerCase()))?.[1];
+  return byText||'sparkle';
+ };
+ const svgFor=(name,cls='classora-inline-art')=>icon(name).replace('classora-icon',cls);
+ const skipSelector='script,style,noscript,textarea,input,svg,code,pre,.chat-bubble,.msg,[contenteditable="true"]';
+
+ function cleanButtons(root){
+  const elements=[];
+  if(root?.matches?.('button,a.pythag-action-card,.auth-role .ico'))elements.push(root);
+  root?.querySelectorAll?.('button,a.pythag-action-card,.auth-role .ico').forEach(x=>elements.push(x));
+  for(const el of elements){
+   if(el.closest('.chat-bubble,.msg'))continue;
+   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n,found=false;
+   while((n=walker.nextNode())){
+    if(n.parentElement.closest('svg'))continue;
+    emoji.lastIndex=0;
+    if(emoji.test(n.nodeValue)){
+     found=true;emoji.lastIndex=0;
+     const value=n.nodeValue.replace(emoji,' ').replace(/\s{2,}/g,' ').trim();
+     if(n.__arOriginal!=null){emoji.lastIndex=0;n.__arOriginal=n.__arOriginal.replace(emoji,' ').replace(/\s{2,}/g,' ').trim()}
+     n.nodeValue=value;
+    }
+   }
+   if(found&&!el.querySelector('.classora-icon')){
+    const name=rules.find(([re])=>re.test((el.id+' '+el.textContent+' '+el.title).toLowerCase()))?.[1]||'sparkle';
+    el.insertAdjacentHTML('afterbegin',icon(name));
+    if(!el.textContent.trim()&&!el.getAttribute('aria-label'))el.setAttribute('aria-label',el.title||name);
+   }
+  }
+ }
+
+ function cleanOptions(root){
+  const options=[];
+  if(root?.matches?.('option'))options.push(root);
+  root?.querySelectorAll?.('option').forEach(x=>options.push(x));
+  for(const opt of options){
+   emoji.lastIndex=0;
+   if(emoji.test(opt.textContent)){emoji.lastIndex=0;opt.textContent=opt.textContent.replace(emoji,' ').replace(/\s{2,}/g,' ').trim()}
+  }
+ }
+
+ function replaceLooseEmoji(root){
+  if(!root)return;
+  const base=root.nodeType===1?root:root.parentElement;
+  if(!base||base.closest?.(skipSelector))return;
+  const nodes=[];
+  const walker=document.createTreeWalker(base,NodeFilter.SHOW_TEXT,{
+   acceptNode(n){
+    const p=n.parentElement;if(!p||p.closest(skipSelector)||p.closest('button,a.pythag-action-card,.auth-role .ico,.classora-inline-art'))return NodeFilter.FILTER_REJECT;
+    emoji.lastIndex=0;return emoji.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+   }
+  });
+  let n;while((n=walker.nextNode()))nodes.push(n);
+  for(const textNode of nodes){
+   const raw=textNode.nodeValue,frag=document.createDocumentFragment();let last=0,match;
+   emoji.lastIndex=0;
+   while((match=emoji.exec(raw))){
+    if(match.index>last)frag.append(document.createTextNode(raw.slice(last,match.index)));
+    const mark=match[0],name=emojiName(mark,textNode.parentElement?.textContent||'');
+    if(name){
+     const span=document.createElement('span');span.className='classora-inline-art-wrap';span.setAttribute('aria-hidden','true');span.innerHTML=svgFor(name);frag.append(span);
+    }else frag.append(document.createTextNode(mark));
+    last=match.index+mark.length;
+   }
+   if(last<raw.length)frag.append(document.createTextNode(raw.slice(last)));
+   textNode.replaceWith(frag);
+  }
+ }
+
+ function clean(root){cleanButtons(root);cleanOptions(root);replaceLooseEmoji(root)}
+ clean(document.body);
+ let queued=new Set(),timer;
+ new MutationObserver(records=>{
+  for(const r of records){
+   const el=r.target.nodeType===1?r.target:r.target.parentElement;if(el)queued.add(el);
+   for(const n of r.addedNodes)if(n.nodeType===1||n.nodeType===3)queued.add(n.nodeType===1?n:n.parentElement);
+  }
+  clearTimeout(timer);timer=setTimeout(()=>{const roots=[...queued];queued.clear();roots.forEach(clean)},45);
+ }).observe(document.body,{subtree:true,childList:true,characterData:true});
 }
 export function localizeScienceQuestion(q,lang='en'){
  if(q?.elementNumber&&String(q?.questionKind||'').startsWith('periodic_')){
