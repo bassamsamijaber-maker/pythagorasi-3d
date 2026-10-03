@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v74-static-intro";
+const CACHE_NAME="classora-v75-mobile-first-paint";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=74",
-  "./assets/learning-hub.css?v=74",
+  "./assets/learning-hub.js?v=75",
+  "./assets/learning-hub.css?v=75",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
