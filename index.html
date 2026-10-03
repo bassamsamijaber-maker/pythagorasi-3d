@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b1422">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4612,15 +4612,23 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
 @media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
 #chatRecordingPanel{grid-column:1/-1;display:flex;align-items:center;gap:10px;min-height:52px;background:#1d343e;border-radius:25px;padding:6px 12px}#chatRecordingPanel[hidden],#chatMessageInput[hidden],#chatSendBtn[hidden],#chatMessageSearch[hidden]{display:none!important}#chatRecordingPanel button{width:auto!important;min-width:44px!important;padding:6px!important;height:38px!important;font-size:12px!important}#chatRecordingPanel .voice-wave-bars{flex:1;min-width:20px}.voice-wave-bars{display:flex;align-items:center;justify-content:space-between;gap:2px;height:34px;overflow:hidden;direction:ltr}.voice-wave-bars i{display:block;min-width:2px;flex:1;max-width:4px;background:#82aea7;border-radius:4px}.voice-wave-bars i.played{background:#93ffe1}.voice-attachment{width:280px;max-width:100%;min-width:0}.voice-player{display:flex;align-items:center;gap:10px;direction:ltr}.voice-player-body{flex:1;min-width:0}.voice-player button{flex-shrink:0;border:0;background:#d6fff019;color:#eafff9;cursor:pointer;padding:0}.voice-play{width:42px;height:42px;border-radius:50%}.voice-speed{width:38px;height:32px;border-radius:12px;font-size:12px}.voice-player input[type=range]{display:block;width:100%;height:12px;padding:0;margin:0;accent-color:#6de3be}.voice-time{display:block;font-size:10px;white-space:nowrap;color:#c5e5dc;font-variant-numeric:tabular-nums}.voice-attachment audio{display:none}#chatModal .chat-bubble:has(.voice-attachment){width:min(320px,86%);box-sizing:border-box}.chat-message-options{float:inline-end;border:0;background:transparent;color:inherit;font-size:20px;padding:0 5px;line-height:24px;cursor:pointer}.chat-edited{display:block;font-size:10px;opacity:.7;margin-top:5px}.message-option-list{display:grid;gap:8px}.message-option-list button{width:100%;min-height:44px;text-align:start}.admin-chat-features{padding:18px;border:1px solid #ffffff20;border-radius:18px;margin-bottom:18px;display:grid;gap:14px}.admin-chat-features label{display:flex;align-items:center;gap:12px}#chatMessageSearch{margin:7px 10px;width:calc(100% - 20px);min-height:40px;font-size:13px;flex-shrink:0}@media(max-width:480px){.voice-attachment{width:230px}.voice-player{gap:7px}.voice-play{width:36px;height:36px}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=72">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=73">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
   <div class="classora-intro-core">
-    <div class="classora-intro-mark" aria-hidden="true">C</div>
+    <div class="classora-intro-orbit" aria-hidden="true">
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 20V4l16 16H4zM4 15h5v5"/></svg></span>
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="1.7"/></svg></span>
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 5q5-2 8 1 3-3 8-1v14q-5-2-8 1-3-3-8-1zM12 6v14"/></svg></span>
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M21 19H3"/></svg></span>
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/></svg></span>
+      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg></span>
+    </div>
+    <div class="classora-intro-mark" aria-hidden="true"><img src="./icons/classora-512.png" alt=""></div>
     <h1 class="classora-intro-title">Classora</h1>
     <div class="classora-intro-rotator">
-      <span class="classora-intro-word" id="classoraIntroWord" hidden></span><div class="intro-learning-art" aria-hidden="true"><svg viewBox="0 0 240 100" fill="none" stroke-width="3"><path stroke="#70baff" d="M15 78V22l56 56H15zm0-13h13v13"/><g stroke="#72e6c0"><ellipse cx="120" cy="50" rx="34" ry="12" transform="rotate(40 120 50)"/><ellipse cx="120" cy="50" rx="34" ry="12" transform="rotate(-40 120 50)"/><circle cx="120" cy="50" r="5" fill="#72e6c0"/></g><path stroke="#c0a6ff" d="M183 25q17-5 27 5 10-10 27-5v49q-17-5-27 5-10-10-27-5zM210 30v49"/></svg></div>
+      <span class="classora-intro-word" id="classoraIntroWord">Learn. Compete. Connect.</span>
     </div>
     <div class="classora-intro-dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
@@ -6640,7 +6648,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=72";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=73";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -7145,7 +7153,7 @@ const CLASSORA_INTRO_WORDS=[
   "امتحانات",
   "تعلّم تفاعلي"
 ];
-const CLASSORA_INTRO_MIN_MS=3800;
+const CLASSORA_INTRO_MIN_MS=2800;
 const classoraIntroStart=performance.now();
 let classoraIntroIndex=0;
 let classoraIntroTimer=null;
@@ -20703,7 +20711,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='72';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='73';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
