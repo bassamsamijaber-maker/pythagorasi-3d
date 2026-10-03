@@ -66,3 +66,11 @@ Review any proposed removal of existing production indexes before accepting it; 
 - The site is dark-only; appearance controls are hidden and saved light preferences resolve to dark.
 
 Validation: all inline JavaScript parses; bilingual audit and regression suites pass; isolated Firestore emulator tests cover private atomic media, message ownership, receipts, support appeals under chat restriction, private deletion markers, group access and self-escalation rejection. Callable tests cover case scope, delegated capabilities, approval fallback, owner protection and deletion tombstones. No real messages, accounts, staff grants or deletions were used for these tests.
+
+
+## V67: support action diagnostics and writing UI
+The configured us-central1 classoraSupportAction endpoint returned HTTP 404 during a read-only check on 2026-10-03. This means the endpoint is not available there; the earlier generic permission toast did not establish that the administrator lacked access. The callable must still be deployed using the V66 instructions. No Firebase production changes were performed.
+
+Administrators now skip the reason form; the audit reason defaults to Administrator action. Support staff enter a reason in an accessible in-app dialog. Permanent deletion retains explicit confirmation. Service-unavailable and authentication/authorization failures have separate messages, without deployment instructions inside the product. View account opens a real account details dialog, using the private user profile for authorized admins or the public profile for staff, and distinguishing missing profiles from saved ticket identity. No credential hashes are displayed.
+
+Chat uses a local SVG line-art wallpaper, an expanding composer, quiet teal bubbles and unified dark writing fields. Tests verify role-sensitive reason prompts and service-error classification, plus the existing delivery and translation checks.

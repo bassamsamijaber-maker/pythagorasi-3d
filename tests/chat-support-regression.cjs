@@ -7,7 +7,7 @@ function extract(start,end){return html.slice(html.indexOf(start),html.indexOf(e
  const hash=await cryptoContext.securityPhraseHashV2('u1','  a memorable phrase  ');
  assert.equal(hash.length,64);assert.equal(hash,await cryptoContext.securityPhraseHashV2('u1','a memorable phrase'));
  assert.notEqual(hash,await cryptoContext.securityPhraseHashV2('u2','a memorable phrase'));assert.notEqual(hash,await cryptoContext.securityPhraseHash('u1','a memorable phrase'));
- const input={value:'keep this message'},button={disabled:false};let writes=0,resolveWrite;
+ const input={value:'keep this message',style:{}},button={disabled:false};let writes=0,resolveWrite;
  const ctx={chatSending:false,activeChatPerson:{uid:'u2'},auth:{currentUser:{uid:'u1'}},document:{getElementById:id=>id==='chatMessageInput'?input:button},db:{},collection:()=>({}),doc:()=>({}),directChatId:()=> 'chat',serverTimestamp:()=>({}),updateDoc:async()=>{},showToast:()=>{},chatText:(a,b)=>b,console:{error(){},warn(){}},addDoc:async()=>{writes++;throw Error('offline')}};
  ctx.markFailedMessage=()=>{};ctx.voiceRecorder=null;ctx.pendingChatMedia=null;ctx.publishTyping=()=>{};ctx.paintMediaDraft=()=>{};ctx.updateConversationTools=()=>{};ctx.commitReliableMessage=async(p,text)=>{await ctx.addDoc({}, {text});return true};
  vm.createContext(ctx);vm.runInContext(extract('async function sendChatMessage','function listenChatInbox'),ctx);

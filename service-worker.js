@@ -1,7 +1,8 @@
-const CACHE_NAME="classora-v66-messaging";
+const CACHE_NAME="classora-v67-support-design";
 const APP_SHELL=[
   "./",
   "./index.html",
+  "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
   "./chemistry/periodic-table.css",
