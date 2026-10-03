@@ -7,6 +7,34 @@ export const scienceTopics=[
  {id:'body',title:['جسم الإنسان','Human body'],summary:['اربط كل عضو بوظيفته.','Connect each organ with its function.'],lesson:['القلب يضخ الدم. الرئتان تتبادلان الأكسجين وثاني أكسيد الكربون مع الدم. الجهاز الهضمي يحلل الطعام، والأمعاء الدقيقة تمتص معظم المغذيات. هذه الأجهزة تعمل معًا لتزويد الخلايا بما تحتاجه.','The heart pumps blood. The lungs exchange oxygen and carbon dioxide with the blood. The digestive system breaks down food, and the small intestine absorbs most nutrients. These systems work together to supply cells.'],example:['الأكسجين يدخل الرئتين، ينتقل إلى الدم ثم يصل للخلايا.','Oxygen enters the lungs, passes into the blood and travels to cells.'],icon:'heart'},
  {id:'energy',title:['الطاقة وتحولاتها','Energy & transformations'],summary:['تتبّع الطاقة قبل التغيير وبعده.','Track energy before and after a change.'],lesson:['الطاقة تتحول بين أشكال مثل الحركية والحرارية والكيميائية والكهربائية. الطاقة الكلية محفوظة في نظام معزول. عند تشغيل الأجهزة، يتحول جزء من الطاقة عادةً إلى حرارة تنتقل للمحيط.','Energy changes between forms such as kinetic, thermal, chemical and electrical energy. Total energy is conserved in an isolated system. Devices commonly transfer some energy to their surroundings as heat.'],example:['المصباح: طاقة كهربائية → ضوء وحرارة. البطارية تخزن طاقة كيميائية.','Lamp: electrical energy → light and heat. A battery stores chemical energy.'],icon:'bolt'}
 ];
+
+// Shared periodic-table facts used to generate fresh science exam and competition questions.
+// Tuple: atomic number, symbol, English name, Arabic name, period, group (0 = f-block).
+export const periodicElements=[[1,"H","Hydrogen","هيدروجين",1,1],[2,"He","Helium","هيليوم",1,18],[3,"Li","Lithium","ليثيوم",2,1],[4,"Be","Beryllium","بيريليوم",2,2],[5,"B","Boron","بورون",2,13],[6,"C","Carbon","كربون",2,14],[7,"N","Nitrogen","نيتروجين",2,15],[8,"O","Oxygen","أكسجين",2,16],[9,"F","Fluorine","فلور",2,17],[10,"Ne","Neon","نيون",2,18],[11,"Na","Sodium","صوديوم",3,1],[12,"Mg","Magnesium","مغنيسيوم",3,2],[13,"Al","Aluminium","ألومنيوم",3,13],[14,"Si","Silicon","سيليكون",3,14],[15,"P","Phosphorus","فوسفور",3,15],[16,"S","Sulfur","كبريت",3,16],[17,"Cl","Chlorine","كلور",3,17],[18,"Ar","Argon","أرجون",3,18],[19,"K","Potassium","بوتاسيوم",4,1],[20,"Ca","Calcium","كالسيوم",4,2],[21,"Sc","Scandium","سكانديوم",4,3],[22,"Ti","Titanium","تيتانيوم",4,4],[23,"V","Vanadium","فاناديوم",4,5],[24,"Cr","Chromium","كروم",4,6],[25,"Mn","Manganese","منغنيز",4,7],[26,"Fe","Iron","حديد",4,8],[27,"Co","Cobalt","كوبالت",4,9],[28,"Ni","Nickel","نيكل",4,10],[29,"Cu","Copper","نحاس",4,11],[30,"Zn","Zinc","زنك",4,12],[31,"Ga","Gallium","غاليوم",4,13],[32,"Ge","Germanium","جرمانيوم",4,14],[33,"As","Arsenic","زرنيخ",4,15],[34,"Se","Selenium","سيلينيوم",4,16],[35,"Br","Bromine","بروم",4,17],[36,"Kr","Krypton","كريبتون",4,18],[37,"Rb","Rubidium","روبيديوم",5,1],[38,"Sr","Strontium","سترونشيوم",5,2],[39,"Y","Yttrium","إيتريوم",5,3],[40,"Zr","Zirconium","زركونيوم",5,4],[41,"Nb","Niobium","نيوبيوم",5,5],[42,"Mo","Molybdenum","موليبدينوم",5,6],[43,"Tc","Technetium","تكنيتيوم",5,7],[44,"Ru","Ruthenium","روثينيوم",5,8],[45,"Rh","Rhodium","روديوم",5,9],[46,"Pd","Palladium","بلاديوم",5,10],[47,"Ag","Silver","فضة",5,11],[48,"Cd","Cadmium","كادميوم",5,12],[49,"In","Indium","إنديوم",5,13],[50,"Sn","Tin","قصدير",5,14],[51,"Sb","Antimony","أنتيمون",5,15],[52,"Te","Tellurium","تيلوريوم",5,16],[53,"I","Iodine","يود",5,17],[54,"Xe","Xenon","زينون",5,18],[55,"Cs","Cesium","سيزيوم",6,1],[56,"Ba","Barium","باريوم",6,2],[57,"La","Lanthanum","لانثانوم",6,0],[58,"Ce","Cerium","سيريوم",6,0],[59,"Pr","Praseodymium","براسيوديميوم",6,0],[60,"Nd","Neodymium","نيوديميوم",6,0],[61,"Pm","Promethium","بروميثيوم",6,0],[62,"Sm","Samarium","ساماريوم",6,0],[63,"Eu","Europium","يوروبيوم",6,0],[64,"Gd","Gadolinium","غادولينيوم",6,0],[65,"Tb","Terbium","تيربيوم",6,0],[66,"Dy","Dysprosium","ديسبروسيوم",6,0],[67,"Ho","Holmium","هولميوم",6,0],[68,"Er","Erbium","إربيوم",6,0],[69,"Tm","Thulium","ثوليوم",6,0],[70,"Yb","Ytterbium","إيتربيوم",6,0],[71,"Lu","Lutetium","لوتيتيوم",6,0],[72,"Hf","Hafnium","هافنيوم",6,4],[73,"Ta","Tantalum","تانتالوم",6,5],[74,"W","Tungsten","تنغستن",6,6],[75,"Re","Rhenium","رينيوم",6,7],[76,"Os","Osmium","أوزميوم",6,8],[77,"Ir","Iridium","إيريديوم",6,9],[78,"Pt","Platinum","بلاتين",6,10],[79,"Au","Gold","ذهب",6,11],[80,"Hg","Mercury","زئبق",6,12],[81,"Tl","Thallium","ثاليوم",6,13],[82,"Pb","Lead","رصاص",6,14],[83,"Bi","Bismuth","بزموت",6,15],[84,"Po","Polonium","بولونيوم",6,16],[85,"At","Astatine","أستاتين",6,17],[86,"Rn","Radon","رادون",6,18],[87,"Fr","Francium","فرانسيوم",7,1],[88,"Ra","Radium","راديوم",7,2],[89,"Ac","Actinium","أكتينيوم",7,0],[90,"Th","Thorium","ثوريوم",7,0],[91,"Pa","Protactinium","بروتكتينيوم",7,0],[92,"U","Uranium","يورانيوم",7,0],[93,"Np","Neptunium","نبتونيوم",7,0],[94,"Pu","Plutonium","بلوتونيوم",7,0],[95,"Am","Americium","أمريسيوم",7,0],[96,"Cm","Curium","كوريوم",7,0],[97,"Bk","Berkelium","بركيليوم",7,0],[98,"Cf","Californium","كاليفورنيوم",7,0],[99,"Es","Einsteinium","أينشتينيوم",7,0],[100,"Fm","Fermium","فيرميوم",7,0],[101,"Md","Mendelevium","مندليفيوم",7,0],[102,"No","Nobelium","نوبليوم",7,0],[103,"Lr","Lawrencium","لورنسيوم",7,0],[104,"Rf","Rutherfordium","رذرفورديوم",7,4],[105,"Db","Dubnium","دوبنيوم",7,5],[106,"Sg","Seaborgium","سيبورغيوم",7,6],[107,"Bh","Bohrium","بوهريوم",7,7],[108,"Hs","Hassium","هاسيوم",7,8],[109,"Mt","Meitnerium","مايتنريوم",7,9],[110,"Ds","Darmstadtium","دارمشتاتيوم",7,10],[111,"Rg","Roentgenium","رونتغينيوم",7,11],[112,"Cn","Copernicium","كوبرنيسيوم",7,12],[113,"Nh","Nihonium","نيهونيوم",7,13],[114,"Fl","Flerovium","فليروفيوم",7,14],[115,"Mc","Moscovium","موسكوفيوم",7,15],[116,"Lv","Livermorium","ليفرموريوم",7,16],[117,"Ts","Tennessine","تينيسين",7,17],[118,"Og","Oganesson","أوغانيسون",7,18]];
+const periodicFamilies={
+ alkali:["الفلزات القلوية","Alkali metals"],alkaline:["الفلزات القلوية الترابية","Alkaline earth metals"],
+ transition:["الفلزات الانتقالية","Transition metals"],post:["فلزات بعد انتقالية","Post-transition metals"],
+ metalloid:["أشباه الفلزات","Metalloids"],nonmetal:["اللافلزات","Nonmetals"],halogen:["الهالوجينات","Halogens"],
+ noble:["الغازات النبيلة","Noble gases"],lanthanide:["اللانثانيدات","Lanthanides"],actinide:["الأكتينيدات","Actinides"]
+};
+const familySets={
+ alkali:new Set([3,11,19,37,55,87]),alkaline:new Set([4,12,20,38,56,88]),
+ metalloid:new Set([5,14,32,33,51,52]),nonmetal:new Set([1,6,7,8,15,16,34]),
+ halogen:new Set([9,17,35,53,85,117]),noble:new Set([2,10,18,36,54,86,118]),
+ post:new Set([13,31,49,50,81,82,83,84,113,114,115,116])
+};
+function periodicFamilyKey(e){
+ const n=e[0];if(n>=57&&n<=71)return"lanthanide";if(n>=89&&n<=103)return"actinide";
+ for(const key of["alkali","alkaline","metalloid","nonmetal","halogen","noble","post"])if(familySets[key].has(n))return key;
+ return"transition";
+}
+function periodicName(e,lang){return lang==="ar"?e[3]:e[2]}
+function periodicFamilyName(key,lang){const pair=periodicFamilies[key]||periodicFamilies.transition;return pair[lang==="ar"?0:1]}
+function periodicElementByAny(value){
+ const s=String(value??"").trim().toLowerCase();
+ return periodicElements.find(e=>String(e[0])===s||e[1].toLowerCase()===s||e[2].toLowerCase()===s||e[3].toLowerCase()===s)||null;
+}
+
 // Each answer is a stable index: switching language cannot change correctness.
 const facts=[
  ['matter',['أي حالة لها شكل وحجم ثابتان؟','Which state has a fixed shape and volume?'],[['الصلب','Solid'],['السائل','Liquid'],['الغاز','Gas'],['كل الحالات','All states']],0,['الجسيمات في الصلب تهتز حول مواضع ثابتة.','Particles in a solid vibrate around fixed positions.']],
@@ -36,10 +64,65 @@ const facts=[
 ];
 const pickLang=(pair,lang)=>pair[lang==='ar'?0:1];
 const shuffled=items=>{const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+function uniquePeriodicChoices(correct,values){
+ const c=String(correct),rest=shuffled([...new Set(values.map(String).filter(v=>v!==c))]);
+ return shuffled([c,...rest.slice(0,3)]);
+}
+function periodicPrompt(kind,e,lang){
+ const name=periodicName(e,lang),n=e[0],s=e[1],period=e[4],group=e[5],family=periodicFamilyName(periodicFamilyKey(e),lang);
+ if(kind==="periodic_symbol_name")return lang==="ar"?`أي عنصر رمزه ${s}؟`:`Which element has the symbol ${s}?`;
+ if(kind==="periodic_name_symbol")return lang==="ar"?`ما رمز عنصر ${name}؟`:`What is the symbol for ${name}?`;
+ if(kind==="periodic_atomic_number")return lang==="ar"?`ما العدد الذري لعنصر ${name}؟`:`What is the atomic number of ${name}?`;
+ if(kind==="periodic_number_name")return lang==="ar"?`ما العنصر الذي عدده الذري ${n}؟`:`Which element has atomic number ${n}?`;
+ if(kind==="periodic_period")return lang==="ar"?`في أي دورة يقع عنصر ${name}؟`:`Which period contains ${name}?`;
+ if(kind==="periodic_group")return lang==="ar"?`في أي مجموعة يقع عنصر ${name}؟`:`Which group contains ${name}?`;
+ if(kind==="periodic_family")return lang==="ar"?`إلى أي عائلة ينتمي عنصر ${name}؟`:`Which family does ${name} belong to?`;
+ return name;
+}
+function periodicQuestion(kind,e,lang){
+ const name=periodicName(e,lang),n=String(e[0]),s=e[1],period=String(e[4]),group=String(e[5]),familyKey=periodicFamilyKey(e),family=periodicFamilyName(familyKey,lang);
+ let answer,options,optionKind,explanation;
+ if(kind==="periodic_symbol_name"||kind==="periodic_number_name"){
+   answer=name;optionKind="elementName";options=uniquePeriodicChoices(answer,periodicElements.map(x=>periodicName(x,lang)));
+   explanation=lang==="ar"?`${s} هو رمز ${name} وعدده الذري ${n}.`:`${s} is the symbol for ${name}, atomic number ${n}.`;
+ }else if(kind==="periodic_name_symbol"){
+   answer=s;optionKind="symbol";options=uniquePeriodicChoices(answer,periodicElements.map(x=>x[1]));
+   explanation=lang==="ar"?`رمز ${name} هو ${s}.`:`The symbol for ${name} is ${s}.`;
+ }else if(kind==="periodic_atomic_number"){
+   answer=n;optionKind="number";options=uniquePeriodicChoices(answer,periodicElements.map(x=>x[0]));
+   explanation=lang==="ar"?`العدد الذري لعنصر ${name} هو ${n}.`:`${name} has atomic number ${n}.`;
+ }else if(kind==="periodic_period"){
+   answer=period;optionKind="number";options=uniquePeriodicChoices(answer,[1,2,3,4,5,6,7]);
+   explanation=lang==="ar"?`${name} يقع في الدورة ${period}.`:`${name} is in period ${period}.`;
+ }else if(kind==="periodic_group"){
+   answer=group;optionKind="number";options=uniquePeriodicChoices(answer,Array.from({length:18},(_,i)=>i+1));
+   explanation=lang==="ar"?`${name} يقع في المجموعة ${group}.`:`${name} is in group ${group}.`;
+ }else{
+   answer=family;optionKind="family";options=uniquePeriodicChoices(answer,Object.keys(periodicFamilies).map(k=>periodicFamilyName(k,lang)));
+   explanation=lang==="ar"?`${name} ينتمي إلى ${family}.`:`${name} belongs to the ${family} family.`;
+ }
+ return {id:`${kind}-${e[0]}`,topic:"periodic",topicKey:"science",questionKind:kind,elementNumber:e[0],optionKind,type:"mcq",prompt:periodicPrompt(kind,e,lang),options,answer,explanation,points:1000};
+}
+function periodicQuestionPool(lang="en"){
+ const pool=[];
+ for(const e of periodicElements){
+   pool.push(periodicQuestion("periodic_symbol_name",e,lang),periodicQuestion("periodic_name_symbol",e,lang),periodicQuestion("periodic_atomic_number",e,lang),periodicQuestion("periodic_number_name",e,lang),periodicQuestion("periodic_period",e,lang),periodicQuestion("periodic_family",e,lang));
+   if(e[5]>0)pool.push(periodicQuestion("periodic_group",e,lang));
+ }
+ return pool;
+}
+
 export function scienceLiveQuestions(count=10,lang='en',topic=''){
- const pool=facts.filter(q=>!topic||q[0]===topic).map((q,i)=>({id:'science-'+q[0]+'-'+i,topic:q[0],topicKey:'science',questionKind:'general',type:'mcq',prompt:pickLang(q[1],lang),options:q[2].map(p=>pickLang(p,lang)),answer:pickLang(q[2][q[3]],lang),explanation:pickLang(q[4],lang),points:1000}));
- if(!topic||topic==='motion')for(let i=1;i<=30;i++){const speed=i+2,time=(i%6+2)*5,distance=speed*time;pool.push({id:'speed-'+i,topic:'motion',topicKey:'science',questionKind:'general',type:'mcq',prompt:lang==='ar'?`جسم يقطع ${distance} متر خلال ${time} ثانية. ما سرعته المتوسطة بالمتر/ثانية؟`:`An object travels ${distance} m in ${time} s. What is its average speed in m/s?`,options:[speed,speed+1,speed+3,Math.max(1,speed-1)].map(String),answer:String(speed),explanation:`${distance} ÷ ${time} = ${speed} ${lang==='ar'?'م/ث':'m/s'}`,points:1000})}
- return shuffled(pool).slice(0,Math.max(1,Math.min(30,count))).map(q=>({...q,options:shuffled(q.options)}));
+ const normalizedTopic=topic==="elements"||topic==="periodic-table"?"periodic":topic;
+ const pool=[];
+ if(!normalizedTopic||normalizedTopic!=="periodic"){
+   pool.push(...facts.filter(q=>!normalizedTopic||q[0]===normalizedTopic).map((q,i)=>({id:'science-'+q[0]+'-'+i,topic:q[0],topicKey:'science',questionKind:'general',type:'mcq',prompt:pickLang(q[1],lang),options:q[2].map(p=>pickLang(p,lang)),answer:pickLang(q[2][q[3]],lang),explanation:pickLang(q[4],lang),points:1000})));
+ }
+ if(!normalizedTopic||normalizedTopic==='motion')for(let i=1;i<=60;i++){const speed=i+2,time=(i%6+2)*5,distance=speed*time;pool.push({id:'speed-'+i,topic:'motion',topicKey:'science',questionKind:'general',type:'mcq',prompt:lang==='ar'?`جسم يقطع ${distance} متر خلال ${time} ثانية. ما سرعته المتوسطة بالمتر/ثانية؟`:`An object travels ${distance} m in ${time} s. What is its average speed in m/s?`,options:[speed,speed+1,speed+3,Math.max(1,speed-1)].map(String),answer:String(speed),explanation:`${distance} ÷ ${time} = ${speed} ${lang==='ar'?'م/ث':'m/s'}`,points:1000})}
+ if(!normalizedTopic||normalizedTopic==='periodic'||normalizedTopic==='atoms')pool.push(...periodicQuestionPool(lang));
+ const wanted=Math.max(1,Math.min(30,Number(count)||10));
+ return shuffled(pool).slice(0,wanted).map(q=>({...q,options:shuffled(q.options)}));
 }
 const paths={
  math:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',atom:'<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="2"/>',book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',settings:'<path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/>',chat:'<path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/>',shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/>',bell:'<path d="M5 17h14l-2-4V9a5 5 0 0 0-10 0v4zM10 21h4"/>',user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>',trophy:'<path d="M7 3h10v6a5 5 0 0 1-10 0zM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 14v6M7 21h10"/>',leaf:'<path d="M20 3C2 2 1 16 9 19s13-8 11-16zM4 22 16 9"/>',heart:'<path d="M12 21 3 12C-2 4 7 0 12 7c5-7 14-3 9 5z"/>',motion:'<path d="M2 8h8M2 16h5M7 12h15m-6-6 6 6-6 6"/>',bolt:'<path d="m14 2-10 12h8l-2 8 10-12h-8z"/>',photo:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8" cy="9" r="2"/><path d="m3 18 6-5 4 3 4-6 4 8"/>',mic:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 0 1 6 0c0 3-3 2-3 5M12 17h.01"/>',trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>'
@@ -105,9 +188,23 @@ export function installVectorIcons(){
  clean(document.body);let queued=new Set(),timer;new MutationObserver(records=>{for(const r of records){const el=r.target.nodeType===1?r.target:r.target.parentElement;if(el)queued.add(el);for(const n of r.addedNodes)if(n.nodeType===1)queued.add(n)}clearTimeout(timer);timer=setTimeout(()=>{const roots=[...queued];queued.clear();roots.forEach(clean)},40)}).observe(document.body,{subtree:true,childList:true,characterData:true});
 }
 export function localizeScienceQuestion(q,lang='en'){
+ if(q?.elementNumber&&String(q?.questionKind||'').startsWith('periodic_')){
+   const e=periodicElements.find(x=>x[0]===Number(q.elementNumber));
+   if(e){
+     const label=value=>{
+       if(q.optionKind==='elementName'){const found=periodicElementByAny(value);return found?periodicName(found,lang):value}
+       if(q.optionKind==='family'){
+         const entry=Object.entries(periodicFamilies).find(([,pair])=>pair.includes(value));
+         return entry?periodicFamilyName(entry[0],lang):value;
+       }
+       return value;
+     };
+     return {prompt:periodicPrompt(q.questionKind,e,lang),label};
+   }
+ }
  const fact=facts.find(f=>f[1].includes(q?.prompt));
  if(fact)return {prompt:pickLang(fact[1],lang),label:value=>{const pair=fact[2].find(p=>p.includes(value));return pair?pickLang(pair,lang):value}};
  const prompt=String(q?.prompt||'');const match=prompt.match(/^(?:An object travels (\d+) m in (\d+) s\.|جسم يقطع (\d+) متر خلال (\d+) ثانية\.)/);
  if(match){const d=match[1]||match[3],t=match[2]||match[4];return {prompt:lang==='ar'?`جسم يقطع ${d} متر خلال ${t} ثانية. ما سرعته المتوسطة بالمتر/ثانية؟`:`An object travels ${d} m in ${t} s. What is its average speed in m/s?`,label:value=>value}}
- return {prompt:prompt,label:value=>value};
+ return {prompt,label:value=>value};
 }
