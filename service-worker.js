@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v76-startup-install-notify";
+const CACHE_NAME="classora-v77-mobile-nav-chat";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=76",
-  "./assets/learning-hub.css?v=76",
+  "./assets/learning-hub.js?v=77",
+  "./assets/learning-hub.css?v=77",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
