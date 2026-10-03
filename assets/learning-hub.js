@@ -115,14 +115,30 @@ function periodicQuestionPool(lang="en"){
 
 export function scienceLiveQuestions(count=10,lang='en',topic=''){
  const normalizedTopic=topic==="elements"||topic==="periodic-table"?"periodic":topic;
- const pool=[];
- if(!normalizedTopic||normalizedTopic!=="periodic"){
-   pool.push(...facts.filter(q=>!normalizedTopic||q[0]===normalizedTopic).map((q,i)=>({id:'science-'+q[0]+'-'+i,topic:q[0],topicKey:'science',questionKind:'general',type:'mcq',prompt:pickLang(q[1],lang),options:q[2].map(p=>pickLang(p,lang)),answer:pickLang(q[2][q[3]],lang),explanation:pickLang(q[4],lang),points:1000})));
- }
- if(!normalizedTopic||normalizedTopic==='motion')for(let i=1;i<=60;i++){const speed=i+2,time=(i%6+2)*5,distance=speed*time;pool.push({id:'speed-'+i,topic:'motion',topicKey:'science',questionKind:'general',type:'mcq',prompt:lang==='ar'?`جسم يقطع ${distance} متر خلال ${time} ثانية. ما سرعته المتوسطة بالمتر/ثانية؟`:`An object travels ${distance} m in ${time} s. What is its average speed in m/s?`,options:[speed,speed+1,speed+3,Math.max(1,speed-1)].map(String),answer:String(speed),explanation:`${distance} ÷ ${time} = ${speed} ${lang==='ar'?'م/ث':'m/s'}`,points:1000})}
- if(!normalizedTopic||normalizedTopic==='periodic'||normalizedTopic==='atoms')pool.push(...periodicQuestionPool(lang));
  const wanted=Math.max(1,Math.min(30,Number(count)||10));
- return shuffled(pool).slice(0,wanted).map(q=>({...q,options:shuffled(q.options)}));
+ const baseFacts=key=>facts.filter(q=>!key||q[0]===key).map((q,i)=>({id:'science-'+q[0]+'-'+i,topic:q[0],topicKey:'science',questionKind:'general',type:'mcq',prompt:pickLang(q[1],lang),options:q[2].map(p=>pickLang(p,lang)),answer:pickLang(q[2][q[3]],lang),explanation:pickLang(q[4],lang),points:1000}));
+ const motionPool=()=>{
+   const pool=baseFacts('motion');
+   for(let i=1;i<=60;i++){const speed=i+2,time=(i%6+2)*5,distance=speed*time;pool.push({id:'speed-'+i,topic:'motion',topicKey:'science',questionKind:'general',type:'mcq',prompt:lang==='ar'?`جسم يقطع ${distance} متر خلال ${time} ثانية. ما سرعته المتوسطة بالمتر/ثانية؟`:`An object travels ${distance} m in ${time} s. What is its average speed in m/s?`,options:[speed,speed+1,speed+3,Math.max(1,speed-1)].map(String),answer:String(speed),explanation:`${distance} ÷ ${time} = ${speed} ${lang==='ar'?'م/ث':'m/s'}`,points:1000})}
+   return pool;
+ };
+ const finish=pool=>shuffled(pool).slice(0,wanted).map(q=>({...q,options:shuffled(q.options)}));
+ if(normalizedTopic==='periodic')return finish(periodicQuestionPool(lang));
+ if(normalizedTopic==='motion')return finish(motionPool());
+ if(normalizedTopic==='atoms'){
+   const conceptual=shuffled(baseFacts('atoms'));
+   const periodic=shuffled(periodicQuestionPool(lang));
+   const conceptCount=Math.min(conceptual.length,Math.max(1,Math.round(wanted*.4)));
+   return shuffled([...conceptual.slice(0,conceptCount),...periodic.slice(0,Math.max(0,wanted-conceptCount))]).map(q=>({...q,options:shuffled(q.options)}));
+ }
+ if(normalizedTopic)return finish(baseFacts(normalizedTopic));
+ // General science deliberately stays balanced instead of letting the much larger
+ // periodic-table bank crowd out matter, motion, biology and energy.
+ const general=shuffled([...baseFacts(),...motionPool().filter(q=>q.id.startsWith('speed-'))]);
+ const periodic=shuffled(periodicQuestionPool(lang));
+ const periodicCount=Math.min(periodic.length,Math.max(1,Math.round(wanted*.4)));
+ const generalCount=Math.max(0,wanted-periodicCount);
+ return shuffled([...general.slice(0,generalCount),...periodic.slice(0,periodicCount)]).map(q=>({...q,options:shuffled(q.options)}));
 }
 const paths={
  math:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',atom:'<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="2"/>',book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',settings:'<path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/>',chat:'<path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/>',shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/>',bell:'<path d="M5 17h14l-2-4V9a5 5 0 0 0-10 0v4zM10 21h4"/>',user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>',trophy:'<path d="M7 3h10v6a5 5 0 0 1-10 0zM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 14v6M7 21h10"/>',leaf:'<path d="M20 3C2 2 1 16 9 19s13-8 11-16zM4 22 16 9"/>',heart:'<path d="M12 21 3 12C-2 4 7 0 12 7c5-7 14-3 9 5z"/>',motion:'<path d="M2 8h8M2 16h5M7 12h15m-6-6 6 6-6 6"/>',bolt:'<path d="m14 2-10 12h8l-2 8 10-12h-8z"/>',photo:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8" cy="9" r="2"/><path d="m3 18 6-5 4 3 4-6 4 8"/>',mic:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 0 1 6 0c0 3-3 2-3 5M12 17h.01"/>',trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>'
