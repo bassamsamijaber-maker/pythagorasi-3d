@@ -16,7 +16,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #91dc
 @supports not(height:100dvh){.platform-lobby{height:100vh!important;min-height:100vh!important;max-height:100vh!important}.modal{height:100vh!important}}
 .case-dialog-fallback{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%);z-index:2147483646;display:block;box-shadow:0 0 0 100vmax #020915bb,0 24px 80px #0008;max-height:85vh;overflow:auto}.auth-role .ico:empty{display:none}#chatModal .chat-bubble.has-voice{width:min(320px,86%);box-sizing:border-box}
 
-/* ================= CLASSORA MOBILE + VECTOR POLISH V73 ================= */
+/* ================= CLASSORA MOBILE + VECTOR POLISH V74 ================= */
 :root{--classora-mobile-gap:12px}
 html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-height:100dvh;overflow-x:hidden}
