@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v67-support-design";
+const CACHE_NAME="classora-v68-chat-updates";
 const APP_SHELL=[
   "./",
   "./index.html",
@@ -25,7 +25,7 @@ self.addEventListener("install",event=>{
 self.addEventListener("activate",event=>{
   event.waitUntil(
     caches.keys()
-      .then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))))
+      .then(keys=>Promise.all(keys.filter(k=>k.startsWith("classora-")&&k!==CACHE_NAME).map(k=>caches.delete(k))))
       .then(()=>self.clients.claim())
   );
 });
@@ -34,10 +34,11 @@ self.addEventListener("fetch",event=>{
   if(event.request.method!=="GET")return;
 
   const url=new URL(event.request.url);
+  if(url.origin===self.location.origin&&(url.pathname.endsWith("/release.json")||url.pathname.endsWith("/service-worker.js")))return;
 
   if(event.request.mode==="navigate"){
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request,{cache:"no-store"})
         .then(response=>{
           if(response&&response.ok){
             const copy=response.clone();

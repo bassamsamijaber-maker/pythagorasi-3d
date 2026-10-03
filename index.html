@@ -4601,6 +4601,16 @@ input::placeholder,textarea::placeholder{color:#93a8b6;opacity:1}input:focus-vis
 #chatModal .chat-media-tools{background:#10212a;padding:8px 14px 0;margin:0;flex-shrink:0}#chatModal .chat-media-tools button{border:1px solid #ffffff0c;background:#1c3039;border-radius:18px;padding:6px 12px;color:#c3d9df;min-height:34px}#chatModal .chat-delivery,#chatModal .chat-typing{background:#10212a}#chatModal .chat-follow-notice{max-height:70px;overflow:auto}
 .classora-case-dialog{width:min(480px,calc(100vw - 28px));max-height:85dvh;overflow:auto;border:1px solid #7cafbf40;border-radius:24px;background:#10222e;color:#eaf4fa;padding:24px;box-shadow:0 24px 100px #0009}.classora-case-dialog::backdrop{background:#020b14b8;backdrop-filter:blur(5px)}.classora-case-dialog h2{font-size:21px;margin:0 0 18px}.case-dialog-content{line-height:1.8;overflow-wrap:anywhere}.case-dialog-content label{display:grid;gap:10px}.case-dialog-content textarea{min-height:140px}.case-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.case-dialog-actions button{min-height:44px;padding:9px 20px;border-radius:14px}.case-account-avatar{width:64px;height:64px;display:grid;place-items:center;border-radius:20px;background:#23675e;color:#d1fff1;font-size:28px;margin-bottom:15px}.case-account-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid #ffffff0d}.case-account-row span{color:#9bb5c4;flex-shrink:0}.case-account-row strong{min-width:0;text-align:end;overflow-wrap:anywhere;user-select:text}
 @media(max-width:700px){#chatModal .chat-compose{padding-bottom:max(12px,env(safe-area-inset-bottom))}#chatMessages{padding:14px 10px}#chatModal .chat-bubble{max-width:86%}input,textarea,select{font-size:16px}.classora-case-dialog{padding:20px}}
+/* V68: explicit composer sizing prevents global .apply width from swallowing input. */
+#chatModal .chat-compose{display:grid!important;grid-template-columns:minmax(0,1fr) 76px!important;align-items:end;gap:9px;width:100%;box-sizing:border-box}
+#chatModal #chatMessageInput{width:100%!important;min-width:0!important;min-height:50px;max-height:144px;margin:0!important;flex:none;box-sizing:border-box;overflow-x:hidden;scrollbar-width:thin}
+#chatModal #chatSendBtn{width:76px!important;min-width:76px!important;max-width:76px!important;margin:0!important;flex:none;box-shadow:none}
+#chatModal .classora-chat-layout{min-height:0}#chatModal .chat-thread-pane,#chatModal #chatThreadActive{min-height:0;min-width:0;overflow:hidden}#chatModal #chatMessages{min-height:60px;overscroll-behavior:contain}
+#chatModal .chat-thread-head{position:relative;flex-shrink:0}#chatPersonMenuBtn{display:flex;align-items:center;gap:10px;min-width:0;max-width:80%;border:0;background:transparent;color:inherit;text-align:start;padding:2px;cursor:pointer}#chatPersonMenuBtn>span{min-width:0}#chatThreadName{overflow-wrap:anywhere}#chatPersonPhoto{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:#286759;background-size:cover;background-position:center;display:grid;place-items:center}#chatPersonMenu{position:absolute;inset-inline-start:10px;top:62px;width:min(300px,calc(100% - 20px));max-height:65dvh;overflow:auto;z-index:5;background:#182e39;border:1px solid #9acbd132;border-radius:19px;padding:8px;box-shadow:0 16px 44px #0007;animation:chatMenuIn .16s ease-out}#chatPersonMenu[hidden]{display:none!important}#chatPersonMenu .chat-social-tools{display:grid;padding:0;border:0;gap:4px}#chatPersonMenu button{width:100%;text-align:start;padding:11px 13px!important;min-height:43px;border-radius:12px;background:transparent;border:0;color:#e5f5f4}#chatPersonMenu button:hover{background:#ffffff0a}.chat-profile-photo{display:block;max-width:100%;max-height:60dvh;object-fit:contain;border-radius:20px;margin:auto}.chat-profile-photo:not(img){font-size:80px;text-align:center;background:#285c50;padding:40px}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;caret-color:#70dfc4}input:focus-visible,textarea:focus-visible{background-color:#142b36;box-shadow:0 0 0 3px #55c7ad20;outline:none}#chatMessageInput{transition:border-color .2s,box-shadow .2s,background-color .2s,height .12s ease!important}@keyframes chatMenuIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+#classoraUpdateNotice{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:2147483000;max-width:calc(100vw - 32px);padding:12px 18px;background:#163e38;color:#dcfff5;border:1px solid #5acfad66;border-radius:16px;box-shadow:0 8px 28px #0007;font-size:13px;text-align:center;pointer-events:none}
+@media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
+@media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
 </style></head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -5850,13 +5860,10 @@ input::placeholder,textarea::placeholder{color:#93a8b6;opacity:1}input:focus-vis
         <div class="chat-thread-empty" id="chatThreadEmpty">اختار شخص وابدأ المحادثة.</div>
         <div class="hidden" id="chatThreadActive">
           <div class="chat-thread-head">
-            <div>
-              <b id="chatThreadName">—</b>
-              <small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span>
-            </div>
-            <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
-          </div>
-          <div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button></div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
+            <button id="chatPersonMenuBtn" type="button" aria-expanded="false" aria-controls="chatPersonMenu"><span id="chatPersonPhoto"></span><span><b id="chatThreadName">—</b><small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span></span></button>
+            <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button>
+            <div id="chatPersonMenu" hidden><button id="chatPersonPhotoBtn" type="button">عرض الصورة</button><div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button></div></div>
+          </div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
           <div class="chat-compose">
             <textarea rows="1" id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
             <button class="apply" id="chatSendBtn">إرسال</button>
@@ -11492,6 +11499,7 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["عرض الصورة","View photo"],
 ["رسائل أقدم","Earlier messages"],
 ["يكتب الآن","Typing"],
 ["📷 صورة","\ud83d\udcf7 Image"],
@@ -12591,7 +12599,7 @@ document.addEventListener("click",e=>{
   }
 },true);
 document.addEventListener("keydown",e=>{
-  if(!soundEnabled||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!soundEnabled||e.ctrlKey||e.metaKey||e.altKey||e.target.closest("#chatModal"))return;
   if(!e.target.matches("input,textarea"))return;
   const now=Date.now();if(now-lastTypingSound<55)return;
   if(e.key.length===1||e.key==="Backspace"){lastTypingSound=now;soundFx("type")}
@@ -17163,6 +17171,35 @@ async function deleteConversationForMe(){
  try{const c=channelFor(p);await setDoc(doc(c.database,'users',c.uid,'chatPreferences',conversationKey(p)),{hiddenAt:serverTimestamp()},{merge:true});stopConversation();activeChatPerson=null;chatModal.classList.remove('chat-thread-open');document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');listenSupportChatInbox();if(canManageSupport())adminLoadSupportRequests(document.getElementById('supportQueueList'))}catch{showToast(chatText('تعذر حذف المحادثة من عندك.','Could not delete the conversation view.'))}
 }
 function beginPrivatePreferenceWatch(p){const c=channelFor(p);if(p.kind!=='support')return ()=>{};return onSnapshot(doc(c.database,'users',c.uid,'chatPreferences',conversationKey(p)),snap=>{chatPrefs[conversationKey(p)]=snap.data()||{};renderConversationMessages(chatLastMessages,p)},()=>{})}
+// Owner/admin actions that use existing protected Firestore permissions.
+async function runDirectAdminSupportAction(ticket,action,targetUid){
+ const allowed=['review','requestPassword','requestSecurityPhrase','requestName','suspend','restore'];
+ if(!isSuperAdminProfile()||!allowed.includes(action))return null;
+ const ticketRef=doc(db,'supportRequests',ticket.id),caseSnap=await getDoc(ticketRef);if(!caseSnap.exists())throw {code:'not-found'};
+ const saved=caseSnap.data();if(![saved.createdBy,saved.reportedUid].includes(targetUid))throw {code:'permission-denied'};
+ const userRef=doc(db,'users',targetUid),userSnap=await getDoc(userRef);if(!userSnap.exists())throw {code:'failed-precondition'};
+ const person=userSnap.data(),batch=writeBatch(db),auditRef=doc(collection(db,'adminAudit'));
+ if(['suspend','restore'].includes(action)){
+  if(person.profileId==='3228667330'||targetUid===auth.currentUser.uid)throw {code:'permission-denied'};
+  const blockRef=doc(db,'blockedUsers',targetUid),block=await getDoc(blockRef);if(block.data()?.deleted||block.data()?.deletedFromSite)throw {code:'failed-precondition'};
+  if(action==='suspend')batch.set(blockRef,{uid:targetUid,profileId:person.profileId||'',displayName:person.displayName||'',blockedBy:auth.currentUser.uid,blockedAt:serverTimestamp()});else batch.delete(blockRef);
+ }else{
+  // Advisory inbox only; these fields never grant access or reset a credential.
+  batch.update(userRef,{['supportInbox.'+auditRef.id]:{action,ticketId:ticket.id,status:'pending',createdBy:auth.currentUser.uid,createdAt:serverTimestamp()}});
+  if(action==='review')batch.update(ticketRef,{reviewStatus:'reviewing',reviewedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});
+ }
+ batch.set(auditRef,{action,actor:auth.currentUser.uid,targetUid,ticketId:ticket.id,reason:'Administrator action',createdAt:serverTimestamp()});await batch.commit();return {data:{ok:true}};
+}
+function setupChatPersonMenu(){
+ const menu=document.getElementById('chatPersonMenu'),button=document.getElementById('chatPersonMenuBtn');
+ button.onclick=()=>{const open=menu.hidden;menu.hidden=!open;button.setAttribute('aria-expanded',String(open));if(open){const p=activeChatPerson;applyAvatar(document.getElementById('chatPersonPhoto'),p,conversationName(p));document.getElementById('chatPersonPhotoBtn').classList.toggle('hidden',p.kind==='support'||p.kind==='group')}};
+ document.getElementById('chatPersonPhotoBtn').onclick=async()=>{const p=activeChatPerson;if(!p)return;const modal=supportDialog(conversationName(p));let profile=p;try{const snap=await getDoc(doc(db,'publicProfiles',p.uid));if(snap.exists())profile={...p,...snap.data()}}catch{}if(!modal.dialog.isConnected)return;const photo=profile.photoData||profile.photoURL;const node=document.createElement(photo?'img':'div');node.className='chat-profile-photo';if(photo&&/^(data:image\/(png|jpeg|webp);base64,|https:\/\/)/i.test(photo)){node.src=photo;node.alt=conversationName(p)}else node.textContent=conversationName(p).slice(0,1);modal.body.append(node)};
+ document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target)&&!button.contains(e.target)){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
+ menu.addEventListener('click',e=>{if(e.target.closest('button')){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
+ button.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
+}
+setupChatPersonMenu();
+
 function staffCan(permission){return isSuperAdminProfile()||!!classoraStaffPermissions?.[permission]}
 function supportDialog(title,{reason=false,destructive=false,confirm=false}={}){
  const dialog=document.createElement('dialog');dialog.className='classora-case-dialog';dialog.dir=currentUILanguage==='en'?'ltr':'rtl';
@@ -17188,7 +17225,7 @@ async function performSupportAction(ticket,action,targetUid){
  if(!isSuperAdminProfile()){reason=await supportDialog(chatText('إجراء دعم','Support action'),{reason:true,confirm:true}).done;if(!reason)return}
  if(action==='deleteAccount'){const modal=supportDialog(chatText('حذف الحساب نهائيًا؟','Permanently delete account?'),{confirm:true,destructive:true});modal.body.textContent=chatText('سيتم حذف الحساب وتعطيل دخوله. تبقى نسخ الرسائل عند الآخرين. لا يمكن التراجع عن هذا الإجراء.','The account and sign-in will be deleted. Other people keep their message copies. This action cannot be undone.');if(!await modal.done)return}
  supportActionBusy=true;
- try{const result=await httpsCallable(getFunctions(firebaseApp,'us-central1'),'classoraSupportAction')({ticketId:ticket.id,action,targetUid,reason:String(reason).slice(0,500)});showToast(result.data?.pending?chatText('تم إرسال طلب الحذف للأدمن.','Deletion request sent to admin.'):chatText('تم تنفيذ الإجراء.','Action completed.'))}catch(e){console.warn('support action',e.code);const modal=supportDialog(chatText('حالة الإجراء','Action status'));modal.body.textContent=supportActionError(e)}finally{supportActionBusy=false}
+ try{const result=await runDirectAdminSupportAction(ticket,action,targetUid)||await httpsCallable(getFunctions(firebaseApp,'us-central1'),'classoraSupportAction')({ticketId:ticket.id,action,targetUid,reason:String(reason).slice(0,500)});showToast(result.data?.pending?chatText('تم إرسال طلب الحذف للأدمن.','Deletion request sent to admin.'):chatText('تم تنفيذ الإجراء.','Action completed.'))}catch(e){console.warn('support action',e.code);const modal=supportDialog(chatText('حالة الإجراء','Action status'));modal.body.textContent=supportActionError(e)}finally{supportActionBusy=false}
 }
 async function viewSupportAccount(ticket,target){
  const modal=supportDialog(chatText('عرض الحساب','Account details'));modal.body.textContent=chatText('جاري تحميل الحساب…','Loading account…');
@@ -17204,7 +17241,7 @@ async function viewSupportAccount(ticket,target){
  }catch(e){modal.body.textContent=chatText('تعذر تحميل معلومات الحساب.','Could not load account details.');console.warn('support account',e.code)}
 }
 function appendAuditButton(host,ticket){
- const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('سجل الإجراءات','Action history');const list=document.createElement('div');host.append(b,list);b.onclick=async()=>{b.disabled=true;try{const constraints=[where('ticketId','==',ticket.id)];if(!isSuperAdminProfile())constraints.push(where('actor','==',auth.currentUser.uid));const snap=await getDocs(query(collection(db,'supportAudit'),...constraints));list.textContent='';const names={review:['بدء الفحص','Review started'],requestPassword:['طلب تغيير الباسورد','Password change requested'],requestName:['طلب تغيير الاسم','Name change requested'],requestSecurityPhrase:['طلب تغيير كلمة الأمان','Security phrase change requested'],restrictChat:['حظر الشات','Chat restricted'],restoreChat:['رفع حظر الشات','Chat restored'],suspend:['إيقاف الحساب','Account suspended'],restore:['رفع الإيقاف','Account restored'],deleteAccount:['حذف الحساب','Account deletion'],requestDeletion:['طلب حذف الحساب','Deletion requested']};for(const d of snap.docs.sort((a,b)=>(b.data().createdAt?.seconds||0)-(a.data().createdAt?.seconds||0))){const r=d.data(),row=document.createElement('p');row.textContent=chatText(...(names[r.action]||[r.action,r.action]))+' • '+adminDate(r.createdAt)+' • '+r.actor+' → '+r.targetUid+' • '+r.reason;list.append(row)}if(!snap.size)list.textContent=chatText('لا توجد إجراءات مسجلة.','No actions recorded.')}catch{list.textContent=chatText('تعذر تحميل السجل.','Could not load history.')}finally{b.disabled=false}};
+ const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('سجل الإجراءات','Action history');const list=document.createElement('div');host.append(b,list);b.onclick=async()=>{b.disabled=true;try{const constraints=[where('ticketId','==',ticket.id)];if(!isSuperAdminProfile())constraints.push(where('actor','==',auth.currentUser.uid));const primary=await getDocs(query(collection(db,'supportAudit'),...constraints));const direct=isSuperAdminProfile()?await getDocs(query(collection(db,'adminAudit'),where('ticketId','==',ticket.id))):{docs:[],size:0};const snap={docs:[...primary.docs,...direct.docs],size:primary.size+direct.size};list.textContent='';const names={review:['بدء الفحص','Review started'],requestPassword:['طلب تغيير الباسورد','Password change requested'],requestName:['طلب تغيير الاسم','Name change requested'],requestSecurityPhrase:['طلب تغيير كلمة الأمان','Security phrase change requested'],restrictChat:['حظر الشات','Chat restricted'],restoreChat:['رفع حظر الشات','Chat restored'],suspend:['إيقاف الحساب','Account suspended'],restore:['رفع الإيقاف','Account restored'],deleteAccount:['حذف الحساب','Account deletion'],requestDeletion:['طلب حذف الحساب','Deletion requested']};for(const d of snap.docs.sort((a,b)=>(b.data().createdAt?.seconds||0)-(a.data().createdAt?.seconds||0))){const r=d.data(),row=document.createElement('p');row.textContent=chatText(...(names[r.action]||[r.action,r.action]))+' • '+adminDate(r.createdAt)+' • '+r.actor+' → '+r.targetUid+' • '+r.reason;list.append(row)}if(!snap.size)list.textContent=chatText('لا توجد إجراءات مسجلة.','No actions recorded.')}catch{list.textContent=chatText('تعذر تحميل السجل.','Could not load history.')}finally{b.disabled=false}};
 }
 function appendCaseActions(host,ticket){
  const target=ticket.reportedUid||ticket.createdBy;if(!target)return;
@@ -17218,10 +17255,13 @@ function appendCaseActions(host,ticket){
  add(staffCan('deleteAccounts')?'حذف الحساب':'طلب حذف الحساب',staffCan('deleteAccounts')?'Delete account':'Request account deletion',()=>performSupportAction(ticket,'deleteAccount',target));host.append(panel);
 }
 function watchAccountActionRequests(uid){
- if(caseActionUnsub)caseActionUnsub();if(!uid)return;
- caseActionUnsub=onSnapshot(query(collection(db,'accountActionRequests'),where('targetUid','==',uid),where('status','==','pending')),snap=>{
- const host=document.getElementById('accountActionRequests');host.innerHTML='';for(const d of snap.docs){const r=d.data(),card=document.createElement('div');card.className='support-ticket';const label=document.createElement('p');const names={requestPassword:chatText('الدعم يطلب منك تغيير الباسورد.','Support asks you to change your password.'),requestSecurityPhrase:chatText('الدعم يطلب منك تغيير كلمة الأمان.','Support asks you to change your security phrase.'),requestName:chatText('الدعم يطلب منك تحديث اسمك.','Support asks you to update your name.'),review:chatText('حسابك قيد المراجعة.','Your account is under review.')};label.textContent=names[r.action]||r.action;card.append(label);if(r.action!=='review'){const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('فتح الإعدادات','Open settings');b.onclick=()=>{openSettingsModal();document.getElementById(r.action==='requestSecurityPhrase'?'securityPhraseSettingsCard':r.action==='requestPassword'?'accountPasswordCard':'settingsDisplayName').scrollIntoView({block:'center',behavior:'smooth'})};card.append(b)}const dismiss=document.createElement('button');dismiss.className='exam-secondary';dismiss.textContent=chatText('تم الاطلاع','Acknowledge');dismiss.onclick=()=>updateDoc(d.ref,{status:'acknowledged'});card.append(dismiss);host.append(card)}
- },e=>console.warn('account actions',e.code));
+ if(caseActionUnsub)caseActionUnsub();if(!uid)return;let remote=[],local=[];
+ const render=()=>{
+ const host=document.getElementById('accountActionRequests');host.innerHTML='';for(const d of [...remote,...local]){const r=d.data(),card=document.createElement('div');card.className='support-ticket';const label=document.createElement('p');const names={requestPassword:chatText('الدعم يطلب منك تغيير الباسورد.','Support asks you to change your password.'),requestSecurityPhrase:chatText('الدعم يطلب منك تغيير كلمة الأمان.','Support asks you to change your security phrase.'),requestName:chatText('الدعم يطلب منك تحديث اسمك.','Support asks you to update your name.'),review:chatText('حسابك قيد المراجعة.','Your account is under review.')};label.textContent=names[r.action]||r.action;card.append(label);if(r.action!=='review'){const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('فتح الإعدادات','Open settings');b.onclick=()=>{openSettingsModal();document.getElementById(r.action==='requestSecurityPhrase'?'securityPhraseSettingsCard':r.action==='requestPassword'?'accountPasswordCard':'settingsDisplayName').scrollIntoView({block:'center',behavior:'smooth'})};card.append(b)}const dismiss=document.createElement('button');dismiss.className='exam-secondary';dismiss.textContent=chatText('تم الاطلاع','Acknowledge');dismiss.onclick=()=>d.ack().catch(()=>showToast(chatText('تعذر حفظ الاطلاع.','Could not save acknowledgement.')));card.append(dismiss);host.append(card)}
+ };
+ const offRemote=onSnapshot(query(collection(db,'accountActionRequests'),where('targetUid','==',uid),where('status','==','pending')),snap=>{remote=snap.docs.map(d=>({data:()=>d.data(),ack:()=>updateDoc(d.ref,{status:'acknowledged'})}));render()},e=>console.warn('account actions',e.code));
+ const ownRef=doc(db,'users',uid);const offLocal=onSnapshot(ownRef,snap=>{local=Object.entries(snap.data()?.supportInbox||{}).filter(([,r])=>r.status==='pending').map(([id,r])=>({data:()=>r,ack:()=>updateDoc(ownRef,{['supportInbox.'+id+'.status']:'acknowledged'})}));render()},e=>console.warn('support inbox',e.code));
+ caseActionUnsub=()=>{offRemote();offLocal()};
 }
 document.getElementById('chatMessageInput').addEventListener('input',()=>{const input=document.getElementById('chatMessageInput');input.style.height='50px';input.style.height=Math.min(150,input.scrollHeight)+'px';publishTyping(true);clearTimeout(typingTimer);typingTimer=setTimeout(()=>publishTyping(false),3000)});
 document.getElementById('chatMessageInput').addEventListener('blur',()=>publishTyping(false));
@@ -17251,6 +17291,7 @@ function conversationKey(p){return p.kind==='group'?p.groupId:p.kind==='support'
 function conversationName(p){return p.kind==='support'?(canManageSupport()&&p.ticket?supportRequestTitle(p.ticket):chatText('الدعم','Support')):chatPrefs[conversationKey(p)]?.nickname||p.displayName||chatText('مستخدم','User')}
 function stopConversation(){publishTyping(false);stopPresence();chatOpenSequence++;if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null}if(chatActivityUnsub){chatActivityUnsub();chatActivityUnsub=null}}
 function showChatThread(p){
+ document.getElementById('chatPersonMenu').hidden=true;document.getElementById('chatPersonMenuBtn').setAttribute('aria-expanded','false');
  activeChatPerson=p;chatLastMessages=[];pendingChatMedia=null;paintMediaDraft();mediaCache.clear();document.getElementById("chatDeliveryStatus").textContent="";chatModal.classList.add('open','chat-thread-open');
  document.getElementById('chatThreadEmpty').classList.add('hidden');document.getElementById('chatThreadActive').classList.remove('hidden');
  document.getElementById('chatMessages').textContent='⏳';document.getElementById('chatMessageInput').value='';document.getElementById('chatStreak').textContent='';
@@ -17258,7 +17299,7 @@ function showChatThread(p){
 }
 function updateConversationTools(){
  const p=activeChatPerson;if(!p)return;const group=p.kind==='group',support=p.kind==='support',key=conversationKey(p),pref=chatPrefs[key]||{};
- document.getElementById('chatThreadName').textContent=conversationName(p);document.getElementById('chatThreadName').toggleAttribute('data-no-translate',!support);
+ applyAvatar(document.getElementById('chatPersonPhoto'),p,conversationName(p));document.getElementById('chatPersonPhotoBtn').textContent=chatText('عرض الصورة','View photo');document.getElementById('chatThreadName').textContent=conversationName(p);document.getElementById('chatThreadName').toggleAttribute('data-no-translate',!support);
  document.getElementById('chatThreadRole').textContent=support?supportLanguageNotice():group?chatText('مجموعة • كود الانضمام: ','Group • Join code: ')+p.groupId:chatRoleLabel(p.role);
  const blocked=!group&&!support&&chatBlocks.has(p.uid);
  document.getElementById('chatFavoriteBtn').textContent=pref.favorite?chatText('⭐ من المفضّلين','⭐ Favorite'):chatText('☆ أفضل صديق','☆ Best friend');
@@ -20072,7 +20113,7 @@ async function registerClassoraPushToken(){
     if(!messaging)return null;
     let registration=await navigator.serviceWorker?.getRegistration("./");
     if(!registration){
-      registration=await navigator.serviceWorker.register("./service-worker.js?v=63",{scope:"./",updateViaCache:"none"});
+      registration=await navigator.serviceWorker.register("./service-worker.js",{scope:"./",updateViaCache:"none"});
     }
     const options={serviceWorkerRegistration:registration};
     if(CLASSORA_VAPID_KEY)options.vapidKey=CLASSORA_VAPID_KEY;
@@ -20488,12 +20529,33 @@ document.getElementById("settingsInstallAppBtn")?.addEventListener("click",insta
 document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pwaInstallModal?.classList.remove("open"));
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
-if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js?v=63",{scope:"./",updateViaCache:"none"})
-      .catch(err=>console.warn("service worker registration",err));
-  });
+// Update installed Android/iOS PWAs when online, without interrupting active work.
+const CLASSORA_RELEASE='68';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+function classoraCanRefresh(){
+ if(document.hidden||!navigator.onLine)return false;
+ if(document.querySelector('.modal.open,dialog[open]'))return false;
+ if(typeof chatSending!=='undefined'&&chatSending)return false;
+ if(typeof pendingChatMedia!=='undefined'&&pendingChatMedia)return false;
+ if(typeof voiceRecorder!=='undefined'&&voiceRecorder?.state==='recording')return false;
+ return ![...document.querySelectorAll('input,textarea')].some(el=>el.getClientRects().length&&(document.activeElement===el||el.value!==el.defaultValue&&el.value.trim()));
 }
+function classoraApplyPendingUpdate(){
+ if(!classoraPendingUpdate||classoraReloading)return;
+ if(classoraCanRefresh()){classoraReloading=true;location.reload();return}
+ let notice=document.getElementById('classoraUpdateNotice');if(!notice){notice=document.createElement('div');notice.id='classoraUpdateNotice';notice.setAttribute('role','status');document.body.append(notice)}notice.textContent=currentUILanguage==='en'?'Update ready. It will apply after you finish and close the current screen.':'التحديث جاهز، رح يشتغل بعد ما تخلص وتسكر الصفحة المفتوحة.';
+}
+async function classoraCheckForUpdate(){
+ if(document.hidden||!navigator.onLine)return;
+ try{await classoraRegistration?.update();const response=await fetch('./release.json',{cache:'no-store'});if(response.ok&&(await response.json()).version!==CLASSORA_RELEASE){classoraPendingUpdate=true;classoraApplyPendingUpdate()}}catch{}
+}
+if('serviceWorker' in navigator){
+ let hadController=!!navigator.serviceWorker.controller;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadController){classoraPendingUpdate=true;classoraApplyPendingUpdate()}hadController=true});
+ window.addEventListener('load',async()=>{try{classoraRegistration=await navigator.serviceWorker.register('./service-worker.js',{scope:'./',updateViaCache:'none'});await classoraCheckForUpdate()}catch(e){console.warn('service worker registration',e)}});
+ window.addEventListener('online',classoraCheckForUpdate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)classoraCheckForUpdate()});
+ setInterval(classoraCheckForUpdate,300000);setInterval(classoraApplyPendingUpdate,10000);
+}
+const resizeChatViewport=()=>document.documentElement.style.setProperty('--chat-viewport-height',Math.round(window.visualViewport?.height||window.innerHeight)+'px');window.visualViewport?.addEventListener('resize',resizeChatViewport);window.addEventListener('resize',resizeChatViewport);resizeChatViewport();
 updatePwaUI();
 
 </script>
