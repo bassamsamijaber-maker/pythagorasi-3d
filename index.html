@@ -4612,14 +4612,15 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
 @media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
 #chatRecordingPanel{grid-column:1/-1;display:flex;align-items:center;gap:10px;min-height:52px;background:#1d343e;border-radius:25px;padding:6px 12px}#chatRecordingPanel[hidden],#chatMessageInput[hidden],#chatSendBtn[hidden],#chatMessageSearch[hidden]{display:none!important}#chatRecordingPanel button{width:auto!important;min-width:44px!important;padding:6px!important;height:38px!important;font-size:12px!important}#chatRecordingPanel .voice-wave-bars{flex:1;min-width:20px}.voice-wave-bars{display:flex;align-items:center;justify-content:space-between;gap:2px;height:34px;overflow:hidden;direction:ltr}.voice-wave-bars i{display:block;min-width:2px;flex:1;max-width:4px;background:#82aea7;border-radius:4px}.voice-wave-bars i.played{background:#93ffe1}.voice-attachment{width:280px;max-width:100%;min-width:0}.voice-player{display:flex;align-items:center;gap:10px;direction:ltr}.voice-player-body{flex:1;min-width:0}.voice-player button{flex-shrink:0;border:0;background:#d6fff019;color:#eafff9;cursor:pointer;padding:0}.voice-play{width:42px;height:42px;border-radius:50%}.voice-speed{width:38px;height:32px;border-radius:12px;font-size:12px}.voice-player input[type=range]{display:block;width:100%;height:12px;padding:0;margin:0;accent-color:#6de3be}.voice-time{display:block;font-size:10px;white-space:nowrap;color:#c5e5dc;font-variant-numeric:tabular-nums}.voice-attachment audio{display:none}#chatModal .chat-bubble:has(.voice-attachment){width:min(320px,86%);box-sizing:border-box}.chat-message-options{float:inline-end;border:0;background:transparent;color:inherit;font-size:20px;padding:0 5px;line-height:24px;cursor:pointer}.chat-edited{display:block;font-size:10px;opacity:.7;margin-top:5px}.message-option-list{display:grid;gap:8px}.message-option-list button{width:100%;min-height:44px;text-align:start}.admin-chat-features{padding:18px;border:1px solid #ffffff20;border-radius:18px;margin-bottom:18px;display:grid;gap:14px}.admin-chat-features label{display:flex;align-items:center;gap:12px}#chatMessageSearch{margin:7px 10px;width:calc(100% - 20px);min-height:40px;font-size:13px;flex-shrink:0}@media(max-width:480px){.voice-attachment{width:230px}.voice-player{gap:7px}.voice-play{width:36px;height:36px}}
-</style></head>
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=70">
+</head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
   <div class="classora-intro-core">
     <div class="classora-intro-mark" aria-hidden="true">C</div>
     <h1 class="classora-intro-title">Classora</h1>
     <div class="classora-intro-rotator">
-      <span class="classora-intro-word" id="classoraIntroWord">Mathematics</span>
+      <span class="classora-intro-word" id="classoraIntroWord" hidden></span><div class="intro-learning-art" aria-hidden="true"><svg viewBox="0 0 240 100" fill="none" stroke-width="3"><path stroke="#70baff" d="M15 78V22l56 56H15zm0-13h13v13"/><g stroke="#72e6c0"><ellipse cx="120" cy="50" rx="34" ry="12" transform="rotate(40 120 50)"/><ellipse cx="120" cy="50" rx="34" ry="12" transform="rotate(-40 120 50)"/><circle cx="120" cy="50" r="5" fill="#72e6c0"/></g><path stroke="#c0a6ff" d="M183 25q17-5 27 5 10-10 27-5v49q-17-5-27 5-10-10-27-5zM210 30v49"/></svg></div>
     </div>
     <div class="classora-intro-dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
@@ -4682,7 +4683,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
         <div class="auth-form-actions">
           <button class="auth-primary" id="studentLoginBtn" type="button">🚀 دخول</button>
-          <button class="auth-back" id="studentChangeClassBtn" type="button">تغيير كود الصف</button>
+          <button class="auth-back" id="studentChangeClassBtn" type="button">كود الصف — اختياري</button>
           <button class="auth-back" id="studentBackBtn" type="button">رجوع</button>
         </div>
       </div>
@@ -4717,20 +4718,20 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     <div id="accountActionRequests" aria-live="polite"></div><div class="lobby-topbar">
       <div>
         <div class="lobby-brand">Classora</div>
-        <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
+        <div class="lobby-sub" id="lobbyGreeting" data-no-translate>أهلًا 👋</div>
       </div>
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
         <button class="lobby-icon-btn hidden" id="lobbySupportRequestsBtn" type="button">📥 <span>طلبات الدعم</span></button><button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
-        <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
+        <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" aria-label="الإشعارات" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي"><span aria-hidden="true">🏫</span> <span>صفوفي</span></button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
-          <span id="lobbyProfileName">حسابي</span>
+          <span id="lobbyProfileName" data-no-translate>حسابي</span>
         </button>
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
@@ -5731,7 +5732,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     <div class="settings-profile-row">
       <div class="settings-avatar" id="settingsAvatar">؟</div>
       <div class="settings-profile-info">
-        <b id="settingsCurrentName">—</b>
+        <b id="settingsCurrentName" data-no-translate>—</b>
         <span id="settingsLoginName">اسم الدخول: —</span>
         <div class="settings-account-meta">
           <span>Profile ID: <b id="settingsProfileId" class="numeric-latin">----------</b></span>
@@ -5861,11 +5862,11 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
         <div class="chat-thread-empty" id="chatThreadEmpty">اختار شخص وابدأ المحادثة.</div>
         <div class="hidden" id="chatThreadActive">
           <div class="chat-thread-head">
-            <button id="chatPersonMenuBtn" type="button" aria-expanded="false" aria-controls="chatPersonMenu"><span id="chatPersonPhoto"></span><span><b id="chatThreadName">—</b><small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span></span></button>
+            <button id="chatPersonMenuBtn" type="button" aria-expanded="false" aria-controls="chatPersonMenu"><span id="chatPersonPhoto"></span><span><b id="chatThreadName" data-no-translate>—</b><small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span></span></button>
             <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button>
             <div id="chatPersonMenu" hidden><button id="chatPersonPhotoBtn" type="button">عرض الصورة</button><div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button></div></div>
           </div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><input id="chatMessageSearch" type="search" placeholder="ابحث في الرسائل المحمّلة…"><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
-          <div class="chat-compose"><div id="chatRecordingPanel" hidden></div>
+          <div class="chat-compose"><div id="chatRecordingPanel" hidden></div><div id="chatVoicePreview" hidden></div>
             <textarea rows="1" id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
             <button class="apply" id="chatSendBtn">إرسال</button>
           </div>
@@ -6441,7 +6442,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
           <p>اعمل مسابقة Mixed أو عن فيثاغورس أو المعادلتين بمجهولين، واختار عدد الأسئلة.</p>
           <div class="competition-create-settings competition-advanced-create">
             <label>موضوع المسابقة
-              <select id="compQuickSubject">
+              <select id="compQuickSubject"><option value="science">علوم</option>
                 <option value="mixed" selected>✨ Mixed — فيثاغورس + معادلتين</option>
                 <option value="pythagoras">📐 فيثاغورس فقط</option>
                 <option value="equations2">🧮 معادلتان بمجهولين فقط</option>
@@ -6617,6 +6618,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=70";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -6920,7 +6922,7 @@ function showPlatformLobby(){
   const p=window.PythagorasiUser||{};
   const name=p.displayName||"مستخدم";
   const first=name.split(/\s+/)[0]||name;
-  document.getElementById("lobbyGreeting").textContent=`أهلًا ${first} 👋`;
+  document.getElementById("lobbyGreeting").textContent=currentUILanguage==="en"?`Welcome, ${first}`:`أهلًا ${first}`;
   document.getElementById("lobbyProfileName").textContent=name;
   applyAvatar(document.getElementById("lobbyAvatar"),p,name);
   const teacherLike=isTeacherLikeProfile(p);
@@ -7211,17 +7213,20 @@ function setStudentAuthMode(mode){
   document.getElementById("studentConfirmWrap")?.classList.toggle("hidden",studentAuthMode!=="create");
   studentPasswordInput.autocomplete=studentAuthMode==="create"?"new-password":"current-password";
   document.getElementById("studentLoginBtn").textContent=studentAuthMode==="create"?"✨ إنشاء الحساب":"🚀 دخول";
+  syncStudentClassCodeUI();
   setAuthError("");
 }
 document.getElementById("studentModeLogin").addEventListener("click",()=>setStudentAuthMode("login"));
 document.getElementById("studentModeCreate").addEventListener("click",()=>setStudentAuthMode("create"));
 
-function resetStudentClassGate(){
-  studentClassGateVerified="";
-  document.getElementById("studentClassFirstStep")?.classList.remove("hidden");
-  document.getElementById("studentCredentialsWrap")?.classList.add("hidden");
-  const note=document.getElementById("studentClassVerifiedNote");if(note)note.textContent="";
+function syncStudentClassCodeUI(){
+ const creating=studentAuthMode==='create';
+ document.getElementById('studentCredentialsWrap').classList.remove('hidden');
+ document.getElementById('studentClassFirstStep').classList.add('hidden');
+ document.getElementById('studentChangeClassBtn').hidden=!creating;
+ if(!creating){studentClassCodeInput.value='';studentClassGateVerified=''}
 }
+function resetStudentClassGate(){studentClassGateVerified='';syncStudentClassCodeUI();}
 function continueStudentClassGate(){
   const code=(studentClassCodeInput.value||"").trim().replace(/\s+/g,"").toUpperCase();
   if(code&&code.length<4){
@@ -7239,7 +7244,7 @@ function continueStudentClassGate(){
 document.getElementById("studentSkipClassBtn").addEventListener("click",()=>{studentClassCodeInput.value="";continueStudentClassGate()});
 document.getElementById("studentClassVerifyBtn").addEventListener("click",continueStudentClassGate);
 document.getElementById("studentClassCodeInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();continueStudentClassGate()}});
-document.getElementById("studentChangeClassBtn").addEventListener("click",()=>{resetStudentClassGate();setTimeout(()=>studentClassCodeInput.focus(),50)});
+document.getElementById("studentChangeClassBtn").addEventListener("click",()=>{if(studentAuthMode!=="create")return;document.getElementById("studentClassFirstStep").classList.toggle("hidden");if(!document.getElementById("studentClassFirstStep").classList.contains("hidden"))studentClassCodeInput.focus()});
 
 function showStudentLogin(){
   roleChooser.style.display="none";
@@ -7248,7 +7253,7 @@ function showStudentLogin(){
   setAuthError("");
   setStudentAuthMode(studentAuthMode);
   resetStudentClassGate();
-  setTimeout(()=>studentClassCodeInput.focus(),80);
+  setTimeout(()=>studentNameInput.focus(),80);
 }
 
 function showTeacherLogin(){
@@ -7463,7 +7468,7 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
   const displayName=studentNameInput.value.trim().replace(/\s+/g," ");
   const nameKey=normalizeStudentNameKey(displayName);
   const password=studentPasswordInput.value;
-  const classCode=(studentClassCodeInput.value||"").trim().toUpperCase();
+  const classCode=studentAuthMode==="create"?(studentClassCodeInput.value||"").trim().replace(/\s+/g,"").toUpperCase():"";
 
   if(displayName.length<2 || nameKey.length<2){
     setAuthError("اكتب اسمك أولًا — حرفين على الأقل.");
@@ -7475,11 +7480,11 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
     studentLoginBusy=false;studentLoginButton.disabled=false;
     studentPasswordInput.focus();return;
   }
-  if(classCode&&(classCode.length<4 || studentClassGateVerified!==classCode)){
+  if(classCode&&classCode.length<4){
     setAuthError("ارجع واكتب كود الصف أولًا.");
     studentLoginBusy=false;studentLoginButton.disabled=false;
     resetStudentClassGate();
-    studentClassCodeInput.focus();return;
+    document.getElementById("studentClassFirstStep").classList.remove("hidden");studentClassCodeInput.focus();return;
   }
 
   authBusy(true,studentAuthMode==="create"?"جاري إنشاء الحساب والانضمام للصف…":"جاري الدخول…");
@@ -8100,7 +8105,8 @@ const plaque=new THREE.Mesh(plaqueGeo,brassMat);
 plaque.position.set(0,-4.70,.05);
 plaque.castShadow=true;
 root.add(plaque);
-const plaqueTxt=makeTextSprite("نظرية فيثاغورس","#241a0a",57,.90);
+const plaqueTxt=makeTextSprite(localStorage.getItem("pythagorasi_language")==="ar"?"نظرية فيثاغورس":"Pythagorean Theorem","#241a0a",42,.90);
+function updatePlaqueLanguage(){const canvas=plaqueTxt.material.map.image,ctx=canvas.getContext("2d");ctx.clearRect(0,0,512,256);ctx.fillStyle="#241a0a";ctx.font="900 42px Arial";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(currentUILanguage==="en"?"Pythagorean Theorem":"نظرية فيثاغورس",256,130);plaqueTxt.material.map.needsUpdate=true;}
 plaqueTxt.position.set(0,-4.69,.16);
 root.add(plaqueTxt);
 
@@ -8740,6 +8746,7 @@ function showToast(text){
   if(!el)return;
   if(el.parentElement!==document.body)document.body.appendChild(el);
   el.innerHTML=text;
+  translateSubtree(el);
   el.classList.remove("show");
   void el.offsetWidth;
   el.classList.add("show");
@@ -8791,6 +8798,13 @@ function readTriangleValues(){
   return[a,b,c];
 }
 
+function updateModelChangeText(){
+ const a=currentA,b=currentB,c=currentC,solved={a,b,c}[unknownSide];
+ const role=currentUILanguage==='en'?(unknownSide==='c'?'hypotenuse c':'side '+unknownSide):(unknownSide==='c'?'الوتر c':'الضلع '+unknownSide);
+ lastChangeSummary=currentUILanguage==='en'?`Calculated ${role} = ${pretty(solved)}. Current values: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (hypotenuse).`:`حسبنا ${role} = ${pretty(solved)}. القيم الحالية: a = ${pretty(a)}، b = ${pretty(b)}، c = ${pretty(c)} (الوتر).`;
+ const log=document.getElementById('changeLog');log.setAttribute('data-no-translate','');log.textContent=lastChangeSummary;
+ const result=document.getElementById('result');result.setAttribute('data-no-translate','');result.textContent=(unknownSide==='c'?(currentUILanguage==='en'?'Hypotenuse c':'الوتر c'):unknownSide)+' = '+pretty(solved);
+}
 function applyChange({silent=false}={}){
   document.getElementById("proofStatus").classList.remove("show");
   document.getElementById("proofMeter").style.width="0%";
@@ -8814,11 +8828,8 @@ function applyChange({silent=false}={}){
   document.getElementById("cStat").textContent=pretty(c*c);
 
   const solved={a,b,c}[unknownSide];
-  const roleText = unknownSide==="c" ? "الوتر c" : `الضلع ${unknownSide}`;
-  const text=`حسبنا <b>${roleText}</b> = <b>${pretty(solved)}</b>. القيم الآن: a = <b>${pretty(a)}</b>، b = <b>${pretty(b)}</b>، c = <b>${pretty(c)}</b> <b>(الوتر)</b>.`;
-  document.getElementById("changeLog").innerHTML=text.replace(/<b>/g,"").replace(/<\/b>/g,"");
-  lastChangeSummary=`حسبنا ${roleText} = ${pretty(solved)}. القيم الحالية: a=${pretty(a)}، b=${pretty(b)}، c=${pretty(c)} (الوتر).`;
-  if(!silent)showToast(text);
+  updateModelChangeText();
+  if(!silent)showToast(lastChangeSummary);
 
   document.querySelectorAll(".preset").forEach(x=>{
     const pa=+x.dataset.a,pb=+x.dataset.b,pc=Math.sqrt(pa*pa+pb*pb);
@@ -11500,6 +11511,14 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["كود الصف — اختياري","Class code — optional"],
+["علوم","Science"],
+["⚠️ اكتب قيم صحيحة لـ a و b.","Enter valid positive values for a and b."],
+["⚠️ اكتب قيم صحيحة لـ b و c.","Enter valid positive values for b and c."],
+["⚠️ اكتب قيم صحيحة لـ a و c.","Enter valid positive values for a and c."],
+["⚠️ الوتر c لازم يكون أكبر من b.","The hypotenuse c must be greater than b."],
+["⚠️ الوتر c لازم يكون أكبر من a.","The hypotenuse c must be greater than a."],
+
 ["📝 عنوان الوظيفة", "📝 Assignment title"],
 ["📅 موعد التسليم", "📅 Due date"],
 ["📌 تعليمات للطلاب", "📌 Student instructions"],
@@ -12379,6 +12398,9 @@ uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثا�
   ["اقرأ الرد بصوت","Read Reply Aloud"]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
+const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu,'').trim();
+for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
+const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
   s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
@@ -12455,7 +12477,7 @@ function uiDynamicEnglish(text){
 }
 function translateTextValue(arText){
   const raw=latinDigits(arText);
-  if(currentUILanguage!=="en")return raw;
+  if(currentUILanguage!=="en")return uiEnglishToArabic.get(raw.trim())||raw;
   return uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw);
 }
 function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?en:ar)}
@@ -12479,7 +12501,11 @@ function translateElementNode(el){
     if(!el.dataset.arPlaceholder)el.dataset.arPlaceholder=latinDigits(el.placeholder);
     el.placeholder=currentUILanguage==='en'
       ?(uiPlaceholderTranslations.get(el.dataset.arPlaceholder)||uiDynamicEnglish(el.dataset.arPlaceholder))
-      :el.dataset.arPlaceholder;
+      :(uiEnglishToArabic.get(el.dataset.arPlaceholder)||[...uiPlaceholderTranslations].find(([ar,en])=>en===el.dataset.arPlaceholder)?.[0]||el.dataset.arPlaceholder);
+  }
+  if(el.hasAttribute('aria-label')){
+    if(!el.dataset.arAria)el.dataset.arAria=el.getAttribute('aria-label');
+    el.setAttribute('aria-label',currentUILanguage==='en'?(uiExactTranslations.get(el.dataset.arAria)||uiDynamicEnglish(el.dataset.arAria)):el.dataset.arAria);
   }
   if(el.hasAttribute('title')){
     if(!el.dataset.arTitle)el.dataset.arTitle=latinDigits(el.getAttribute('title')||'');
@@ -12497,12 +12523,13 @@ function applySiteLanguage(lang,save=true){
   document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
   document.body.classList.toggle('lang-en',currentUILanguage==='en');
   document.title='Classora';
+  const firstName=String(window.PythagorasiUser?.displayName||'').trim().split(/\s+/)[0];if(firstName)document.getElementById('lobbyGreeting').textContent=currentUILanguage==='en'?`Welcome, ${firstName}`:`أهلًا ${firstName}`;
   if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
   document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
-  try{refreshAIWelcome()}catch{}
+  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh()}catch{}
   try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
   try{applyAdminLanguage()}catch{}
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
@@ -13749,12 +13776,26 @@ equationInputs.forEach(id=>{
   });
 });
 
+function classoraLearningAnswer(raw){
+ const en=currentUILanguage==='en',q=latinDigits(String(raw)).toLowerCase(),index=en?1:0;
+ const speed=q.match(/(?:distance|مساف[ةه])\s*[=:]?\s*(\d+(?:\.\d+)?)[\s\S]*?(?:time|زمن|وقت)\s*[=:]?\s*(\d+(?:\.\d+)?)/i);
+ if(speed){const d=Number(speed[1]),t=Number(speed[2]);if(!t)return en?'Time must be greater than zero.':'الزمن لازم يكون أكبر من صفر.';return en?`Average speed = distance ÷ time = ${d} ÷ ${t} = ${pretty(d/t)}. Use compatible units: metres and seconds give m/s.`:`السرعة المتوسطة = المسافة ÷ الزمن = ${d} ÷ ${t} = ${pretty(d/t)}. استعمل وحدات متناسقة: متر وثانية يعطوا م/ث.`;}
+ const patterns=[/matter|solid|liquid|gas|مادة|الماده|صلب|سائل|غاز/,/force|speed|motion|قوة|سرعة|حركة/,/atom|proton|electron|element|ذرة|بروتون|إلكترون|عنصر/,/photosynth|plant|بناء ضوئي|نبات/,/heart|lung|body|قلب|رئة|جسم/,/energy|طاقة|الطاقه/];
+ const found=patterns.findIndex(re=>re.test(q));if(found>=0){const topic=hubScienceTopics[found];return topic.title[index]+'\n'+(/example|مثال/.test(q)?topic.example[index]:topic.lesson[index]+'\n\n'+topic.example[index]);}
+ const vals={};for(const match of q.matchAll(/\b([abc])\s*=\s*(-?\d+(?:\.\d+)?)/g))vals[match[1]]=Number(match[2]);
+ if(Object.keys(vals).length>=2){if(Object.values(vals).some(n=>!Number.isFinite(n)||n<=0))return en?'Side lengths must be positive numbers.':'أطوال الأضلاع لازم تكون أعداد موجبة.';
+ if(vals.a!=null&&vals.b!=null&&vals.c!=null){const correct=Math.abs(vals.a**2+vals.b**2-vals.c**2)<.0001;return en?(correct?'Yes, these lengths satisfy a² + b² = c².':'These lengths do not satisfy a² + b² = c².'):(correct?'نعم، هذه الأطوال تحقق a² + b² = c².':'هذه الأطوال لا تحقق a² + b² = c².');}
+ if(vals.c!=null&&(vals.a!=null||vals.b!=null)){const known=vals.a??vals.b,unknown=vals.a!=null?'b':'a';if(vals.c<=known)return en?'c is the hypotenuse and must be longer than either leg.':'الوتر c لازم يكون أطول من كل ضلع قائم.';return `${unknown} = √(c² − ${known}²) = √(${vals.c}² − ${known}²) = ${pretty(Math.sqrt(vals.c**2-known**2))}.`;}
+ if(vals.a!=null&&vals.b!=null)return `c = √(a² + b²) = √(${vals.a}² + ${vals.b}²) = ${pretty(Math.hypot(vals.a,vals.b))}.`;
+ }
+ return pythagorasiAnswer(raw);
+}
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";
-  const reply=document.getElementById("lobbyAIReply");
+  const reply=document.getElementById("lobbyAIReply");reply.setAttribute("data-no-translate","");
   reply.textContent=currentUILanguage==="en"?"Thinking…":"يفكّر…";
-  setTimeout(()=>{reply.textContent=pythagorasiAnswer(raw)},120);
+  setTimeout(()=>{reply.textContent=classoraLearningAnswer(raw)},120);
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
 document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
@@ -17149,7 +17190,7 @@ async function attachPrivateMedia(container,m,p){
  const c=channelFor(p),key=c.root+'/'+c.id+'/'+m.mediaId;container.textContent=chatText('تحميل المرفق…','Loading attachment…');
  try{let value=mediaCache.get(key);if(!value){const snap=await getDoc(doc(c.database,c.root,c.id,'media',m.mediaId));if(!snap.exists())throw Error('missing');value=snap.data();if(!['image/jpeg','image/png','image/webp','audio/webm','audio/ogg','audio/mp4'].includes(value.contentType)||typeof value.data!=='string')throw Error('invalid');mediaCache.set(key,value)}
   if(!container.isConnected||p!==activeChatPerson)return;container.textContent='';const src='data:'+value.contentType+';base64,'+value.data;
-  if(value.contentType.startsWith('image/')){const node=document.createElement('img');node.src=src;node.alt=chatText('صورة بالمحادثة','Chat image');node.loading='lazy';node.className='chat-photo';container.append(node)}else renderVoicePlayer(container,src);
+  if(value.contentType.startsWith('image/')){const node=document.createElement('img');node.src=src;node.alt=chatText('صورة بالمحادثة','Chat image');node.loading='lazy';node.className='chat-photo';container.append(node)}else{container.closest('.chat-bubble')?.classList.add('has-voice');renderVoicePlayer(container,src);}
 
  }catch{container.textContent=chatText('تعذر تحميل المرفق. أعد فتح المحادثة للمحاولة.','Attachment could not load. Reopen the conversation to retry.')}
 }
@@ -17158,17 +17199,28 @@ async function prepareImage(file){
  const bitmap=await createImageBitmap(file),scale=Math.min(1,1280/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
  let blob;for(const quality of [.8,.65,.45,.3]){blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',quality));if(blob&&blob.size<=480*1024)break}if(!blob||blob.size>480*1024)throw Error('image-large');return mediaFromBlob(blob,'image/jpeg',chatText('صورة جاهزة للإرسال','Image ready to send'));
 }
-async function mediaFromBlob(blob,contentType,label){if(blob.size>480*1024)throw Error('media-large');const bytes=new Uint8Array(await blob.arrayBuffer());let raw='';for(let i=0;i<bytes.length;i+=16384)raw+=String.fromCharCode(...bytes.subarray(i,i+16384));return {contentType,data:btoa(raw),label,token:crypto.randomUUID()}}
-function paintMediaDraft(){document.getElementById('chatMediaDraft').textContent=pendingChatMedia?.label||'';document.getElementById('chatDiscardMediaBtn').classList.toggle('hidden',!pendingChatMedia)}
+async function mediaFromBlob(blob,contentType,label){if(blob.size>480*1024)throw Error('media-large');const bytes=new Uint8Array(await blob.arrayBuffer());let raw='';for(let i=0;i<bytes.length;i+=16384)raw+=String.fromCharCode(...bytes.subarray(i,i+16384));return {contentType,data:btoa(raw),label,token:classoraRandomId()}}
+function classoraRandomId(){const bytes=new Uint8Array(16);crypto.getRandomValues(bytes);return [...bytes].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function paintMediaDraft(){
+ const host=document.getElementById('chatMediaDraft'),preview=document.getElementById('chatVoicePreview');
+ preview.querySelectorAll('audio').forEach(a=>a.pause());preview.replaceChildren();
+ const voice=!!pendingChatMedia?.contentType?.startsWith('audio/');preview.hidden=!voice;
+ document.getElementById('chatMessageInput').hidden=voice;
+ host.textContent=pendingChatMedia?.label||'';
+ if(voice){renderVoicePlayer(preview,'data:'+pendingChatMedia.contentType+';base64,'+pendingChatMedia.data);host.textContent=chatText('تم التسجيل — اسمعه قبل الإرسال.','Recorded — listen before sending.');const caption=document.getElementById('chatMessageInput').value.trim();if(caption)host.textContent+=' '+chatText('النص المرفق: ','Caption: ')+caption}
+ document.getElementById('chatDiscardMediaBtn').classList.toggle('hidden',!pendingChatMedia);
+}
 function stopVoiceRecording(cancel=false){stopVoiceVisual();clearTimeout(voiceTimeout);if(voiceRecorder&&voiceRecorder.state!=='inactive'){voiceRecorder._cancel=cancel;voiceRecorder.stop()}voiceStream?.getTracks().forEach(t=>t.stop());voiceStream=null;document.getElementById('chatVoiceBtn')?.classList.remove('recording')}
+let voiceStarting=false;
 async function toggleVoiceRecording(){
+ if(voiceStarting||chatSending)return;
  if(voiceRecorder?.state==='recording'){stopVoiceRecording();return}if(!activeChatPerson||!chatFeatureEnabled('voice'))return;
  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){showToast(chatText('تسجيل الصوت غير متاح بهذا المتصفح.','Voice recording is unavailable in this browser.'));return}
- const p=activeChatPerson;try{voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});if(p!==activeChatPerson){stopVoiceRecording(true);return}
+ const p=activeChatPerson;voiceStarting=true;try{voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});if(p!==activeChatPerson){stopVoiceRecording(true);return}
  const mime=['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));if(!mime)throw Error('format');const chunks=[];voiceRecorder=new MediaRecorder(voiceStream,{mimeType:mime,audioBitsPerSecond:32000});const recorder=voiceRecorder;
- recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{if(recorder._cancel||p!==activeChatPerson)return;try{pendingChatMedia=await mediaFromBlob(new Blob(chunks,{type:mime}),mime.split(';')[0],chatText('رسالة صوتية جاهزة للإرسال','Voice message ready to send'));paintMediaDraft()}catch{showToast(chatText('التسجيل كبير جدًا. جرّب تسجيلًا أقصر.','Recording is too large. Try a shorter one.'))}};
+ recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{if(recorder._cancel||p!==activeChatPerson){if(p===activeChatPerson)paintMediaDraft();return;}try{pendingChatMedia=await mediaFromBlob(new Blob(chunks,{type:mime}),mime.split(';')[0],chatText('رسالة صوتية جاهزة للإرسال','Voice message ready to send'));paintMediaDraft()}catch{showToast(chatText('التسجيل كبير جدًا. جرّب تسجيلًا أقصر.','Recording is too large. Try a shorter one.'))}};
  recorder.start();startVoiceVisual(voiceStream);document.getElementById('chatVoiceBtn').classList.add('recording');document.getElementById('chatMediaDraft').textContent=chatText('🔴 جاري التسجيل… اضغط الميكروفون للإيقاف (60 ثانية كحد أقصى).','🔴 Recording… Tap the microphone to stop (up to 60 seconds).');voiceTimeout=setTimeout(()=>stopVoiceRecording(),60000);
- }catch{stopVoiceRecording(true);showToast(chatText('تعذر تسجيل الصوت. تحقق من إذن الميكروفون.','Could not record audio. Check microphone permission.'))}
+ }catch{stopVoiceRecording(true);showToast(chatText('تعذر تسجيل الصوت. تحقق من إذن الميكروفون.','Could not record audio. Check microphone permission.'))}finally{voiceStarting=false}
 }
 async function commitReliableMessage(p,text,media){
  const c=channelFor(p),key=c.uid+':'+c.root+':'+c.id,signature=text+'|'+(media?.token||'');let pending=retryMessages.get(key);
@@ -17219,10 +17271,10 @@ setupChatPersonMenu();
 const chatFeatureDefinitions=[['voice','الرسائل الصوتية والموجات','Voice messages and waveforms'],['edit','تعديل الرسائل','Edit messages'],['delete','حذف الرسائل من عندي','Delete messages for me'],['copy','نسخ الرسائل','Copy messages'],['search','البحث في المحادثة','Search conversation']];
 function chatFeatureEnabled(key){return siteControlsCache.chatFeatures?.[key]!==false}
 function renderChatFeatureControls(){const host=document.getElementById('adminChatFeatures');if(!host)return;host.textContent='';const title=document.createElement('h3');title.textContent=chatText('خيارات الشات','Chat features');host.append(title);for(const [key,ar,en] of chatFeatureDefinitions){const label=document.createElement('label'),box=document.createElement('input');box.type='checkbox';box.checked=chatFeatureEnabled(key);label.append(box,document.createTextNode(chatText(ar,en)));host.append(label);box.onchange=async()=>{box.disabled=true;try{await setDoc(doc(db,'siteControls','main'),{chatFeatures:{[key]:box.checked}},{merge:true});siteControlsCache.chatFeatures={...siteControlsCache.chatFeatures,[key]:box.checked};applyChatFeatures()}catch{box.checked=!box.checked;showToast(chatText('تعذر حفظ الخيار.','Could not save this setting.'))}finally{box.disabled=false}}}}
-function applyChatFeatures(){document.getElementById('chatVoiceBtn').classList.toggle('hidden',!chatFeatureEnabled('voice'));document.getElementById('chatMessageSearch').hidden=!chatFeatureEnabled('search');if(activeChatPerson)renderConversationMessages(chatLastMessages)}
+function applyChatFeatures(){window.classoraLearningHub?.refresh();document.getElementById('chatVoiceBtn').classList.toggle('hidden',!chatFeatureEnabled('voice'));document.getElementById('chatMessageSearch').hidden=!chatFeatureEnabled('search');if(activeChatPerson)renderConversationMessages(chatLastMessages)}
 function messageVisibleForMe(m,p){return !(chatPrefs[conversationKey(p)]?.hiddenMessages||[]).includes(m.id)}
 async function messageOptions(m,p){
- const modal=supportDialog(chatText('خيارات الرسالة','Message options'));const add=(ar,en,fn)=>{const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText(ar,en);b.onclick=async()=>{modal.dialog.close();await fn()};modal.body.append(b)};modal.body.classList.add('message-option-list');
+ const modal=supportDialog(chatText('خيارات الرسالة','Message options'));const add=(ar,en,fn)=>{const b=document.createElement('button');b.type='button';b.className='exam-secondary';b.textContent=chatText(ar,en);b.onclick=async()=>{modal.dialog.close('selected');await fn()};modal.body.append(b)};modal.body.classList.add('message-option-list');
  if(m.text&&chatFeatureEnabled('copy'))add('نسخ النص','Copy text',async()=>{try{await navigator.clipboard.writeText(m.text);showToast(chatText('تم النسخ.','Copied.'))}catch{showToast(chatText('تعذر النسخ. يمكنك تحديد النص ونسخه.','Could not copy. Select and copy the text.'))}});
  if(m.senderUid===channelFor(p).uid&&m.text&&!m.pending&&!m.failed&&!['original','legacy-reply'].includes(m.id)&&chatFeatureEnabled('edit'))add('تعديل الرسالة','Edit message',async()=>{
  const editor=supportDialog(chatText('تعديل الرسالة','Edit message'),{reason:true,confirm:true});const label=editor.body.querySelector('label');label.firstChild.textContent=chatText('نص الرسالة','Message text');const input=editor.body.querySelector('textarea');input.value=m.text;input.minLength=1;input.maxLength=p.kind==='support'?1500:2000;input.placeholder=chatText('اكتب الرسالة…','Write your message…');const text=await editor.done;if(!text||text===m.text)return;if(p.kind==='support'&&!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return}try{const c=channelFor(p);await updateDoc(doc(c.database,c.root,c.id,'messages',m.id),{text,editedAt:serverTimestamp()})}catch{showToast(chatText('تعذر حفظ التعديل. بقيت الرسالة الأصلية كما هي.','Could not save the edit. The original message is unchanged.'))}
@@ -17238,7 +17290,7 @@ function renderVoicePlayer(container,src){
 let voiceVisualContext=null,voiceVisualFrame=0,voiceRecordingStarted=0;
 function stopVoiceVisual(){cancelAnimationFrame(voiceVisualFrame);voiceVisualContext?.close().catch(()=>{});voiceVisualContext=null;document.getElementById('chatRecordingPanel').hidden=true;document.getElementById('chatMessageInput').hidden=false;document.getElementById('chatSendBtn').hidden=false}
 function startVoiceVisual(stream){
- const panel=document.getElementById('chatRecordingPanel');panel.textContent='';panel.hidden=false;document.getElementById('chatMessageInput').hidden=true;document.getElementById('chatSendBtn').hidden=true;const wave=makeWaveBars(),time=document.createElement('span'),stop=document.createElement('button'),cancel=document.createElement('button');time.className='voice-time';stop.type=cancel.type='button';stop.textContent=chatText('إيقاف','Stop');cancel.textContent=chatText('إلغاء','Cancel');stop.onclick=()=>stopVoiceRecording();cancel.onclick=()=>stopVoiceRecording(true);panel.append(cancel,wave,time,stop);voiceRecordingStarted=Date.now();let analyser=null,data=null;try{voiceVisualContext=new (window.AudioContext||window.webkitAudioContext)();analyser=voiceVisualContext.createAnalyser();analyser.fftSize=256;voiceVisualContext.createMediaStreamSource(stream).connect(analyser);data=new Uint8Array(analyser.frequencyBinCount)}catch{}
+ const panel=document.getElementById('chatRecordingPanel');panel.textContent='';panel.hidden=false;document.getElementById('chatVoicePreview').hidden=true;document.querySelectorAll('#chatVoicePreview audio').forEach(a=>a.pause());document.getElementById('chatMessageInput').hidden=true;document.getElementById('chatSendBtn').hidden=true;const wave=makeWaveBars(),time=document.createElement('span'),stop=document.createElement('button'),cancel=document.createElement('button');time.className='voice-time';stop.type=cancel.type='button';stop.textContent=chatText('إيقاف','Stop');cancel.textContent=chatText('إلغاء','Cancel');stop.onclick=()=>stopVoiceRecording();cancel.onclick=()=>stopVoiceRecording(true);panel.append(cancel,wave,time,stop);voiceRecordingStarted=Date.now();let analyser=null,data=null;try{voiceVisualContext=new (window.AudioContext||window.webkitAudioContext)();analyser=voiceVisualContext.createAnalyser();analyser.fftSize=256;voiceVisualContext.createMediaStreamSource(stream).connect(analyser);data=new Uint8Array(analyser.frequencyBinCount)}catch{}
  const frame=()=>{time.textContent='0:'+String(Math.min(60,Math.floor((Date.now()-voiceRecordingStarted)/1000))).padStart(2,'0');if(analyser){analyser.getByteFrequencyData(data);[...wave.children].forEach((bar,i)=>bar.style.height=(4+data[Math.floor(i*data.length/36)]/255*28)+'px')}voiceVisualFrame=requestAnimationFrame(frame)};frame();
 }
 
@@ -17250,7 +17302,7 @@ function supportDialog(title,{reason=false,destructive=false,confirm=false}={}){
  let input;if(reason){const label=document.createElement('label');label.textContent=chatText('سبب الإجراء','Reason for this action');input=document.createElement('textarea');input.maxLength=500;input.minLength=2;input.required=true;input.placeholder=chatText('اكتب السبب بوضوح…','Explain the reason…');label.append(input);body.append(label)}
  const actions=document.createElement('div');actions.className='case-dialog-actions';const cancel=document.createElement('button');cancel.type='button';cancel.className='exam-secondary';cancel.textContent=chatText(confirm?'إلغاء':'إغلاق',confirm?'Cancel':'Close');cancel.onclick=()=>dialog.close('cancel');actions.append(cancel);
  if(confirm){const submit=document.createElement('button');submit.type='submit';submit.className=destructive?'danger':'apply';submit.textContent=chatText(destructive?'تأكيد الحذف':'متابعة',destructive?'Confirm deletion':'Continue');actions.append(submit)}
- form.append(actions);dialog.append(form);document.body.append(dialog);const done=new Promise(resolve=>{form.onsubmit=e=>{e.preventDefault();if(reason&&input.value.trim().length<input.minLength){input.focus();return}dialog.close('confirm')};dialog.addEventListener('close',()=>{resolve(dialog.returnValue==='confirm'?(input?.value.trim()||true):null);dialog.remove()},{once:true})});dialog.showModal();(input||cancel).focus();return {dialog,body,done};
+ form.append(actions);dialog.append(form);document.body.append(dialog);const done=new Promise(resolve=>{form.onsubmit=e=>{e.preventDefault();if(reason&&input.value.trim().length<input.minLength){input.focus();return}dialog.close('confirm')};dialog.addEventListener('close',()=>{resolve(dialog.returnValue==='confirm'?(input?.value.trim()||true):null);dialog.remove()},{once:true})});if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.classList.add('case-dialog-fallback');dialog.setAttribute('open','');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.close=value=>{dialog.returnValue=value||'';dialog.removeAttribute('open');dialog.dispatchEvent(new Event('close'))};} (input||cancel).focus();return {dialog,body,done};
 }
 function supportActionError(error){
  const code=String(error?.code||'').replace('functions/','');
@@ -17360,7 +17412,7 @@ function renderConversationMessages(rows,p=activeChatPerson){
  const hiddenAt=chatPrefs[conversationKey(p)]?.hiddenAt?.toMillis?.()||0,viewer=p.viewerUid||auth.currentUser?.uid;
  for(const m of rows){if(!messageVisibleForMe(m,p))continue;const search=chatFeatureEnabled('search')?document.getElementById('chatMessageSearch').value.trim().toLocaleLowerCase():'';if(search&&!String(m.text||'').toLocaleLowerCase().includes(search))continue;if((m.createdAt?.toMillis?.()||Date.now())<=hiddenAt)continue;if(p.kind==='group'&&chatBlocks.has(m.senderUid))continue;
  const key=m.id,signature=JSON.stringify([m.text,m.mediaId,m.senderName,m.staff,m.failed,m.editedAt?.seconds,currentUILanguage,JSON.stringify(siteControlsCache.chatFeatures)]);let bubble=previous.get(key);if(bubble&&bubble.dataset.signature===signature){retained.add(key);const time=bubble.querySelector('time');if(time)time.textContent=chatTime(m.createdAt);const receipt=bubble.querySelector('.chat-receipt');if(receipt){receipt.textContent=m.failed?chatText('لم يتم الإرسال — أعد المحاولة','Not sent — retry'):m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.failed&&!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis()}const next=host.children[retained.size-1];if(next!==bubble)host.insertBefore(bubble,next||null);continue}if(bubble){bubble.querySelectorAll('audio').forEach(a=>a.pause());bubble.remove()}bubble=document.createElement('div');bubble.dataset.messageId=key;bubble.dataset.signature=signature;retained.add(key);bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
- if(chatFeatureEnabled('delete')||(m.text&&chatFeatureEnabled('copy'))||(m.text&&m.senderUid===viewer&&chatFeatureEnabled('edit'))){const options=document.createElement('button');options.type='button';options.className='chat-message-options';options.textContent='⋮';options.setAttribute('aria-label',chatText('خيارات الرسالة','Message options'));options.onclick=()=>messageOptions(m,p);bubble.append(options)}
+ if(chatFeatureEnabled('delete')||(m.text&&chatFeatureEnabled('copy'))||(m.text&&m.senderUid===viewer&&chatFeatureEnabled('edit'))){const options=document.createElement('button');options.type='button';options.className='chat-message-options';options.textContent='⋮';options.setAttribute('aria-label',chatText('خيارات الرسالة','Message options'));options.onclick=e=>{e.preventDefault();e.stopPropagation();messageOptions(chatLastMessages.find(x=>x.id===m.id)||m,p)};bubble.append(options)}
  if(p.kind==='group'||p.kind==='support'){const who=document.createElement('b');who.textContent=m.staff?chatText('الدعم','Support'):m.senderName||chatPublicProfiles.find(person=>person.uid===m.senderUid)?.displayName||chatText('مستخدم','User');bubble.append(who)}
  if(m.text){const text=document.createElement('span');text.textContent=m.text;text.dir='auto';text.setAttribute('data-no-translate','');bubble.append(text)}
  if(m.mediaId){const media=document.createElement('div');media.className='chat-attachment';bubble.append(media);queueMicrotask(()=>attachPrivateMedia(media,m,p))}
@@ -18007,7 +18059,7 @@ function competitionQuestionTypeLabel(q){
   const key=q?.topicKey||q?.subject||"general";
   const kind=q?.questionKind||"general";
   const topic=key==="pythagoras"?(en?"Pythagoras":"فيثاغورس")
-    :key==="equations2"?(en?"Two-Variable Equations":"معادلتان بمجهولين")
+    :key==="science"?(en?"Science":"علوم"):key==="equations2"?(en?"Two-Variable Equations":"معادلتان بمجهولين")
     :(en?"Mixed":"مكس");
   const kinds={
     hypotenuse:["Hypotenuse","الوتر"],leg:["Missing Leg","ضلع ناقص"],formula:["Formula","القانون"],
@@ -18053,6 +18105,7 @@ function generatedEquationSystemLiveQuestion(i=0){
   return {topicKey:"equations2",questionKind:"system_type",prompt:`النظام: ${base} — كم عدد الحلول؟`,options:shuffle(["حل واحد","لا يوجد حل","حلول لا نهائية","حلّان"]),answer:"حل واحد",points:1000};
 }
 function makeLiveQuestions(subject="mixed",count=10){
+  if(subject==="science")return scienceLiveQuestions(count,currentUILanguage);
   const n=Math.max(3,Math.min(30,Number(count)||10));
   const pool=[],seen=new Set();
   for(let i=0;i<140;i++){
@@ -18087,7 +18140,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
-      title:customTitle||`مسابقة ${quickSubject==="equations2"?"المعادلتين":quickSubject==="pythagoras"?"فيثاغورس":"Classora Mixed"}`,
+      title:customTitle||`مسابقة ${quickSubject==="science"?"العلوم":quickSubject==="equations2"?"المعادلتين":quickSubject==="pythagoras"?"فيثاغورس":"Classora Mixed"}`,
       topicMode:customQuestions?.length?"custom":quickSubject,
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamMode:options.teamMode,
@@ -18597,15 +18650,16 @@ function renderLiveRoom(){
   document.getElementById("compQuestionNo").textContent=`سؤال ${(r.currentIndex||0)+1} / ${r.questionCount||8}`;
   document.getElementById("compGameState").textContent=r.status==="result"?adminLang("النتيجة","Result"):adminLang("مباشر","Live");
   const typeBadge=document.getElementById("compQuestionTypeBadge");
-  if(typeBadge)typeBadge.textContent=r.currentQuestion?.typeLabel||competitionQuestionTypeLabel(r.currentQuestion||{});
-  document.getElementById("compQuestionText").textContent=r.currentQuestion?.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
+  if(typeBadge)typeBadge.textContent=competitionQuestionTypeLabel(r.currentQuestion||{});
+  const localizedScience=localizeScienceQuestion(r.currentQuestion,currentUILanguage);
+  document.getElementById("compQuestionText").textContent=localizedScience.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
   document.getElementById("compRevealBtn").classList.toggle("hidden",!["question","grading"].includes(r.status));
   document.getElementById("compNextBtn").classList.toggle("hidden",r.status!=="result");
 
   const host=document.getElementById("compOptions");host.innerHTML="";
   (r.currentQuestion?.options||[]).forEach(opt=>{
-    const b=document.createElement("button");b.className="live-option";b.textContent=opt;
+    const b=document.createElement("button");b.className="live-option";b.textContent=localizedScience.label(opt);
     if(liveCompetitionRole==="host"||r.status!=="question")b.disabled=true;
     if(liveCompetitionRole==="player"&&liveAnsweredIndex===r.currentIndex)b.disabled=true;
     if(r.status==="result"){
@@ -18618,7 +18672,7 @@ function renderLiveRoom(){
 
   const st=document.getElementById("compAnswerStatus");
   if(r.status==="result"){
-    st.textContent=`✅ الإجابة الصحيحة: ${r.correctAnswer||"—"}`;
+    st.textContent=adminLang("الإجابة الصحيحة: ","Correct answer: ")+localizedScience.label(r.correctAnswer||"—");
     if(liveCompetitionRole==="player"&&liveLastRenderedStatus!=="result"){
       const myAns=liveLastAnswerByIndex[r.currentIndex];
       const ok=myAns!=null&&normExam(myAns)===normExam(r.correctAnswer||"");
@@ -20502,7 +20556,7 @@ function updatePwaUI(){
   const title=document.getElementById("pwaSettingsTitle");
   const en=currentUILanguage==="en";
 
-  const canInstall=!!deferredInstallPrompt || isIOSDevice();
+  const canInstall=true;
   lobbyBtn?.classList.toggle("hidden",installed||!canInstall);
   settingsBtn?.classList.toggle("hidden",installed);
   badge?.classList.toggle("hidden",!installed);
@@ -20528,9 +20582,9 @@ function showPwaInstallInstructions(){
     ?"After installation, Classora opens from its own icon in standalone mode."
     :"بعد التثبيت بيفتح Classora من الأيقونة مثل تطبيق مستقل.";
 
-  const labels=en
+  const labels=isIOSDevice()?(en
     ?["Open Classora in Safari.","Tap the Share button.","Choose Add to Home Screen.","Tap Add, then open Classora from its icon."]
-    :["افتح Classora من Safari.","اضغط زر المشاركة Share.","اختار Add to Home Screen.","اضغط Add، وبعدها افتحه من أيقونة Classora."];
+    :["افتح Classora من Safari.","اضغط زر المشاركة Share.","اختار Add to Home Screen.","اضغط Add، وبعدها افتحه من أيقونة Classora."]):/SamsungBrowser/i.test(navigator.userAgent)?(en?["Open Classora in Samsung Internet.","Open the browser menu.","Choose Add page to, then Home screen (or Install app).","Confirm, then open Classora from its icon."]:["افتح Classora في Samsung Internet.","افتح قائمة المتصفح.","اختار إضافة الصفحة إلى، ثم الشاشة الرئيسية أو تثبيت التطبيق.","أكد الإضافة وافتح Classora من أيقونته."]):(en?["Open Classora in Chrome or your usual browser.","Open the browser menu.","Choose Install app or Add to Home screen.","Confirm the installation. You can also keep using the website."]:["افتح Classora في Chrome أو متصفحك المعتاد.","افتح قائمة المتصفح.","اختار تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.","أكد التثبيت. بتقدر كمان تستعمل الموقع من المتصفح."]);
   document.querySelectorAll("#pwaInstallSteps .pwa-install-step span").forEach((el,i)=>el.textContent=labels[i]||"");
   pwaInstallModal?.classList.add("open");
 }
@@ -20552,9 +20606,7 @@ async function installClassoraApp(){
     showPwaInstallInstructions();
     return;
   }
-  showToast(currentUILanguage==="en"
-    ?"Open your browser menu and choose Install app or Add to Home Screen."
-    :"افتح قائمة المتصفح واختار Install app أو Add to Home Screen.");
+  showPwaInstallInstructions();
 }
 
 window.addEventListener("beforeinstallprompt",event=>{
@@ -20575,7 +20627,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='69';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='70';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
@@ -20602,6 +20654,26 @@ if('serviceWorker' in navigator){
 }
 const resizeChatViewport=()=>document.documentElement.style.setProperty('--chat-viewport-height',Math.round(window.visualViewport?.height||window.innerHeight)+'px');window.visualViewport?.addEventListener('resize',resizeChatViewport);window.addEventListener('resize',resizeChatViewport);resizeChatViewport();
 updatePwaUI();
+
+window.classoraLearningHub=mountLearningHub({
+ language:()=>currentUILanguage,
+ flags:()=>siteControlsCache.learningFeatures||{},
+ saveFlag:async(key,value)=>{if(!isSuperAdminProfile())throw Error('permission');await setDoc(doc(db,'siteControls','main'),{learningFeatures:{[key]:value}},{merge:true});siteControlsCache.learningFeatures={...siteControlsCache.learningFeatures,[key]:value}},
+ toast:showToast,
+ dialog:title=>{const modal=supportDialog(title);modal.close=()=>modal.dialog.close('close');return modal},
+ action:async key=>{
+  const ids={lab:'lobbyLabCard',equations:'equationLabBtn',practice:'lobbyQuestionBtn',challenge:'lobbyChallengeBtn',periodic:'periodicTableBtn',exam:'lobbyExamBtn',competition:'competitionBtn',classes:'lobbyJoinClassBtn',chat:'lobbyChatBtn',support:'lobbySupportBtn',settings:'lobbySettingsBtn'};
+  if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم','Science exam');scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
+  if(key==='scienceLive'){document.getElementById('compQuickSubject').value='science';document.getElementById('competitionBtn').click();return}
+  document.getElementById(ids[key])?.click();
+ }
+});
+installVectorIcons();
+// Keep learning controls in sync even when chat has never been opened.
+onAuthStateChanged(auth,user=>{
+ window.classoraLearningFlagsStop?.();window.classoraLearningFlagsStop=null;
+ if(user)window.classoraLearningFlagsStop=onSnapshot(doc(db,'siteControls','main'),snap=>{siteControlsCache.learningFeatures=snap.data()?.learningFeatures||{};window.classoraLearningHub?.refresh()},()=>{});
+});
 
 </script>
 </body>

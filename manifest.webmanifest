@@ -3,8 +3,8 @@
   "name": "Classora",
   "short_name": "Classora",
   "description": "Interactive learning, classes, assignments, exams and live competitions.",
-  "lang": "ar",
-  "dir": "rtl",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -34,5 +34,6 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }

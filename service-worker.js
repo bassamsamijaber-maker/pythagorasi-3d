@@ -1,7 +1,9 @@
-const CACHE_NAME="classora-v69-voice-messages";
+const CACHE_NAME="classora-v70-learning-hub";
 const APP_SHELL=[
   "./",
   "./index.html",
+  "./assets/learning-hub.js?v=70",
+  "./assets/learning-hub.css?v=70",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
@@ -101,6 +103,7 @@ self.addEventListener("notificationclick",event=>{
 
 /* Firebase Cloud Messaging background handler.
    Keep notificationclick above these imports so our click behavior wins. */
+try {
 importScripts("https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging-compat.js");
 
@@ -130,3 +133,5 @@ classoraMessaging.onBackgroundMessage(payload=>{
   };
   return self.registration.showNotification(title,options);
 });
+
+} catch(error) { console.warn("Optional push messaging unavailable",error?.message); }
