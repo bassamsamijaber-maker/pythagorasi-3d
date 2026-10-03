@@ -577,6 +577,19 @@ service cloud.firestore {
 
 
 
+    function chatFeatureEnabled(key) {
+      return !exists(/databases/$(database)/documents/siteControls/main)
+        || get(/databases/$(database)/documents/siteControls/main).data.get('chatFeatures',{}).get(key,true) != false;
+    }
+    function validMessageEdit(root,id) {
+      return channelCanSend(root,id) && chatFeatureEnabled('edit')
+        && resource.data.senderUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text','editedAt'])
+        && request.resource.data.editedAt == request.time
+        && request.resource.data.text is string && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= (root == 'supportRequests' ? 1500 : 2000)
+        && (root != 'supportRequests' || supportTextAllowed(request.resource.data.text));
+    }
     function canUseChat() { return signedIn() && !exists(/databases/$(database)/documents/chatRestrictions/$(request.auth.uid)); }
     function channelMember(root, id) {
       let channel = get(/databases/$(database)/documents/$(root)/$(id)).data;
@@ -597,6 +610,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['senderUid','contentType','data','createdAt'])
         && request.resource.data.senderUid == request.auth.uid && request.resource.data.createdAt == request.time
         && request.resource.data.contentType in ['image/jpeg','image/png','image/webp','audio/webm','audio/ogg','audio/mp4']
+        && (!(request.resource.data.contentType in ['audio/webm','audio/ogg','audio/mp4']) || chatFeatureEnabled('voice'))
         && request.resource.data.data is string && request.resource.data.data.size() > 0 && request.resource.data.data.size() <= 655360
         && getAfter(/databases/$(database)/documents/$(chatRoot)/$(chatId)/messages/$(mediaId)).data.mediaId == mediaId
         && getAfter(/databases/$(database)/documents/$(chatRoot)/$(chatId)/messages/$(mediaId)).data.senderUid == request.auth.uid;
@@ -631,10 +645,12 @@ service cloud.firestore {
     match /users/{uid}/chatPreferences/{chatId} {
       allow read: if signedIn() && request.auth.uid == uid;
       allow create, update: if signedIn() && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['nickname','favorite','hiddenAt'])
+        && request.resource.data.keys().hasOnly(['nickname','favorite','hiddenAt','hiddenMessages'])
         && (!('nickname' in request.resource.data) || (request.resource.data.nickname is string && request.resource.data.nickname.size() <= 40))
         && (!('favorite' in request.resource.data) || request.resource.data.favorite is bool)
-        && (!('hiddenAt' in request.resource.data) || request.resource.data.hiddenAt is timestamp);
+        && (!('hiddenAt' in request.resource.data) || request.resource.data.hiddenAt is timestamp)
+        && (!('hiddenMessages' in request.resource.data) || (request.resource.data.hiddenMessages is list && request.resource.data.hiddenMessages.size() <= 1000))
+        && (!request.resource.data.diff(resource == null ? {} : resource.data).affectedKeys().hasAny(['hiddenMessages']) || chatFeatureEnabled('delete'));
       allow delete: if signedIn() && request.auth.uid == uid;
     }
     match /users/{uid}/chatBlocks/{otherUid} {
@@ -673,7 +689,8 @@ service cloud.firestore {
           && request.resource.data.keys().hasOnly(['senderUid','text','createdAt','mediaId'])
           && request.resource.data.senderUid == request.auth.uid && request.resource.data.createdAt == request.time
           && request.resource.data.text is string && (request.resource.data.text.size() > 0 || 'mediaId' in request.resource.data) && request.resource.data.text.size() <= 2000;
-        allow update, delete: if false;
+        allow update: if validMessageEdit('groupChats',groupId);
+        allow delete: if false;
       }
     }
     match /{chatRoot}/{chatId}/activity/{activityId} {
@@ -746,7 +763,8 @@ service cloud.firestore {
             "createdAt"
           ]);
 
-        allow update, delete: if false;
+        allow update: if validMessageEdit('chats',chatId);
+        allow delete: if false;
       }
     }
 
@@ -833,7 +851,8 @@ service cloud.firestore {
           && request.resource.data.createdAt == request.time
           && (supportTextAllowed(request.resource.data.text) || (request.resource.data.text == '' && 'mediaId' in request.resource.data))
           && validMessageMedia('supportRequests',requestId,request.resource.data);
-        allow update, delete: if false;
+        allow update: if validMessageEdit('supportRequests',requestId);
+        allow delete: if false;
       }
     }
 

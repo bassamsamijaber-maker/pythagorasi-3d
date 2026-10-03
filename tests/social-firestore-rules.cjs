@@ -44,6 +44,21 @@ const fs=require('node:fs');const {initializeTestEnvironment,assertSucceeds,asse
  await assertFails(setDoc(doc(a,'chats','a__b','activity','fake'),receipt));
  const batch=writeBatch(a);batch.set(doc(a,'chats','a__b','messages','batch'),dm('a'));batch.set(doc(a,'chats','a__b','activity','today-a'),receipt);await assertSucceeds(batch.commit());
  await assertFails(setDoc(doc(b,'chats','a__b','activity','today-a'),{...receipt,senderUid:'b'}));
+ // V69: author-only text edits, immutable sender/media and personal-only deletion.
+ await assertSucceeds(updateDoc(doc(a,'chats','a__b','messages','first'),{text:'Updated hello',editedAt:serverTimestamp()}));
+ await assertFails(updateDoc(doc(b,'chats','a__b','messages','first'),{text:'Someone else edit',editedAt:serverTimestamp()}));
+ await assertFails(updateDoc(doc(a,'chats','a__b','messages','first'),{senderUid:'b',editedAt:serverTimestamp()}));
+ await assertFails(updateDoc(doc(a,'chats','a__b','messages','first'),{text:'Wrong time',editedAt:new Date('2099-01-01')}));
+ await assertSucceeds(setDoc(doc(a,'users','a','chatPreferences','a__b'),{hiddenMessages:['first']},{merge:true}));
+ await assertSucceeds(getDoc(doc(b,'chats','a__b','messages','first')));
+ await assertFails(updateDoc(doc(a,'supportRequests','ticket','messages','m1'),{text:'שלום',editedAt:serverTimestamp()}));
+ await assertSucceeds(updateDoc(doc(staff,'supportRequests','ticket','messages','reply'),{text:'Updated support reply',editedAt:serverTimestamp()}));
+ await env.withSecurityRulesDisabled(async context=>setDoc(doc(context.firestore(),'siteControls','main'),{chatFeatures:{edit:false,delete:false,voice:false}}));
+ await assertFails(updateDoc(doc(a,'chats','a__b','messages','first'),{text:'Admin disabled edits',editedAt:serverTimestamp()}));
+ await assertFails(setDoc(doc(a,'users','a','chatPreferences','a__b'),{hiddenMessages:['first','batch']},{merge:true}));
+ const disabledVoice=writeBatch(a);disabledVoice.set(doc(a,'chats','a__b','messages','disabledVoice'),{...dm('a'),text:'',mediaId:'disabledVoice'});disabledVoice.set(doc(a,'chats','a__b','media','disabledVoice'),{senderUid:'a',contentType:'audio/webm',data:'YWJj',createdAt:serverTimestamp()});await assertFails(disabledVoice.commit());
+ await env.withSecurityRulesDisabled(async context=>setDoc(doc(context.firestore(),'siteControls','main'),{chatFeatures:{edit:true,delete:true,voice:true}}));
+ console.log('PASS: author-only edits, immutable authors, edit timestamps, private message hiding, support language and admin feature gates.');
  // V66: attachment/message consistency, private receipts and moderation.
  const media={senderUid:'a',contentType:'image/jpeg',data:'YWJj',createdAt:serverTimestamp()};
  const imageBatch=writeBatch(a);imageBatch.set(doc(a,'chats','a__b','messages','photo'),{...dm('a'),text:'',mediaId:'photo'});imageBatch.set(doc(a,'chats','a__b','media','photo'),media);await assertSucceeds(imageBatch.commit());

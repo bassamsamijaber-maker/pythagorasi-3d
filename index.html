@@ -4611,6 +4611,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 #classoraUpdateNotice{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:2147483000;max-width:calc(100vw - 32px);padding:12px 18px;background:#163e38;color:#dcfff5;border:1px solid #5acfad66;border-radius:16px;box-shadow:0 8px 28px #0007;font-size:13px;text-align:center;pointer-events:none}
 @media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
 @media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
+#chatRecordingPanel{grid-column:1/-1;display:flex;align-items:center;gap:10px;min-height:52px;background:#1d343e;border-radius:25px;padding:6px 12px}#chatRecordingPanel[hidden],#chatMessageInput[hidden],#chatSendBtn[hidden],#chatMessageSearch[hidden]{display:none!important}#chatRecordingPanel button{width:auto!important;min-width:44px!important;padding:6px!important;height:38px!important;font-size:12px!important}#chatRecordingPanel .voice-wave-bars{flex:1;min-width:20px}.voice-wave-bars{display:flex;align-items:center;justify-content:space-between;gap:2px;height:34px;overflow:hidden;direction:ltr}.voice-wave-bars i{display:block;min-width:2px;flex:1;max-width:4px;background:#82aea7;border-radius:4px}.voice-wave-bars i.played{background:#93ffe1}.voice-attachment{width:280px;max-width:100%;min-width:0}.voice-player{display:flex;align-items:center;gap:10px;direction:ltr}.voice-player-body{flex:1;min-width:0}.voice-player button{flex-shrink:0;border:0;background:#d6fff019;color:#eafff9;cursor:pointer;padding:0}.voice-play{width:42px;height:42px;border-radius:50%}.voice-speed{width:38px;height:32px;border-radius:12px;font-size:12px}.voice-player input[type=range]{display:block;width:100%;height:12px;padding:0;margin:0;accent-color:#6de3be}.voice-time{display:block;font-size:10px;white-space:nowrap;color:#c5e5dc;font-variant-numeric:tabular-nums}.voice-attachment audio{display:none}#chatModal .chat-bubble:has(.voice-attachment){width:min(320px,86%);box-sizing:border-box}.chat-message-options{float:inline-end;border:0;background:transparent;color:inherit;font-size:20px;padding:0 5px;line-height:24px;cursor:pointer}.chat-edited{display:block;font-size:10px;opacity:.7;margin-top:5px}.message-option-list{display:grid;gap:8px}.message-option-list button{width:100%;min-height:44px;text-align:start}.admin-chat-features{padding:18px;border:1px solid #ffffff20;border-radius:18px;margin-bottom:18px;display:grid;gap:14px}.admin-chat-features label{display:flex;align-items:center;gap:12px}#chatMessageSearch{margin:7px 10px;width:calc(100% - 20px);min-height:40px;font-size:13px;flex-shrink:0}@media(max-width:480px){.voice-attachment{width:230px}.voice-player{gap:7px}.voice-play{width:36px;height:36px}}
 </style></head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -5222,7 +5223,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
       <div class="admin-list" id="adminPollList"></div>
     </div>
 
-    <div class="admin-view hidden" id="adminViewControls">
+    <div class="admin-view hidden" id="adminViewControls"><section id="adminChatFeatures" class="admin-chat-features"></section>
       <section class="admin-control-live-panel">
         <div class="admin-control-live-head">
           <div>
@@ -5863,8 +5864,8 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
             <button id="chatPersonMenuBtn" type="button" aria-expanded="false" aria-controls="chatPersonMenu"><span id="chatPersonPhoto"></span><span><b id="chatThreadName">—</b><small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span></span></button>
             <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button>
             <div id="chatPersonMenu" hidden><button id="chatPersonPhotoBtn" type="button">عرض الصورة</button><div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button></div></div>
-          </div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
-          <div class="chat-compose">
+          </div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><input id="chatMessageSearch" type="search" placeholder="ابحث في الرسائل المحمّلة…"><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
+          <div class="chat-compose"><div id="chatRecordingPanel" hidden></div>
             <textarea rows="1" id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
             <button class="apply" id="chatSendBtn">إرسال</button>
           </div>
@@ -11499,6 +11500,17 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["📝 عنوان الوظيفة", "📝 Assignment title"],
+["📅 موعد التسليم", "📅 Due date"],
+["📌 تعليمات للطلاب", "📌 Student instructions"],
+["➕ أضف سؤال", "➕ Add question"],
+["اختار نوع السؤال، وبعدها عبّي التفاصيل تحته.", "Choose a question type, then fill in its details below."],
+["☑️ اختيار من متعدد", "☑️ Multiple choice"],
+["🔢 سؤال رقمي", "🔢 Numeric question"],
+["✍️ سؤال مفتوح", "✍️ Open question"],
+["راجع الأسئلة قبل النشر", "Review the questions before publishing"],
+["الإشعارات مفعّلة على هذا الجهاز.", "Notifications are enabled on this device."],
+["🔔 الإشعارات مفعّلة", "🔔 Notifications enabled"],
 ["عرض الصورة","View photo"],
 ["رسائل أقدم","Earlier messages"],
 ["يكتب الآن","Typing"],
@@ -12231,6 +12243,7 @@ const uiExactTranslations=new Map([
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const uiPlaceholderTranslations=new Map([
+["ابحث في الرسائل المحمّلة…","Search loaded messages…"],
 ["رسائل أقدم","Earlier messages"],
 ["يكتب الآن","Typing"],
 ["📷 صورة","\ud83d\udcf7 Image"],
@@ -12490,7 +12503,7 @@ function applySiteLanguage(lang,save=true){
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
   document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
   try{refreshAIWelcome()}catch{}
-  try{updateAssistantLabels()}catch{}
+  try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
   try{applyAdminLanguage()}catch{}
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
   try{
@@ -16471,6 +16484,7 @@ async function adminLoadControls(){
     siteControlsCache=s.exists()?{...siteControlsCache,...s.data()}:siteControlsCache;
   }catch{}
 
+  renderChatFeatureControls();
   setControlField("adminGlobalPause","globalPause");
   setControlField("adminLockExams","lockExams");
   setControlField("adminLockCompetitions","lockCompetitions");
@@ -17091,14 +17105,15 @@ let mySupportUnsub=null;
 let shakeSupportLast=0;
 
 // V66: acknowledged delivery, private media, read receipts and expiring typing state.
+let chatFeatureUnsub=null;
 let conversationPresence={},presenceOff=null,presenceTimer=null,typingTimer=null,lastTypingWrite=0,lastReadKey='',liveMessageMap=new Map(),olderCursor=null,olderDone=false;
 let pendingChatMedia=null,voiceRecorder=null,voiceStream=null,voiceTimeout=null,voiceChunks=[],mediaCache=new Map(),retryMessages=new Map(),caseActionUnsub=null;
 let pendingReportTarget=null;
 function channelFor(p){return {database:p.channelDb||db,root:p.kind==='support'?'supportRequests':p.kind==='group'?'groupChats':'chats',id:p.kind==='support'?p.ticketId:conversationKey(p),uid:p.viewerUid||auth.currentUser?.uid}}
 function supportRequestTitle(ticket){return chatText('طلب دعم من ','Support request from ')+(ticket.createdByName||ticket.accountIdentifier||chatText('زائر','Guest'))}
-function stopPresence(){clearTimeout(typingTimer);clearInterval(presenceTimer);if(presenceOff)presenceOff();presenceOff=null;conversationPresence={};lastReadKey='';stopVoiceRecording(true)}
+function stopPresence(){document.querySelectorAll('.voice-attachment audio').forEach(a=>a.pause());if(chatFeatureUnsub)chatFeatureUnsub();chatFeatureUnsub=null;clearTimeout(typingTimer);clearInterval(presenceTimer);if(presenceOff)presenceOff();presenceOff=null;conversationPresence={};lastReadKey='';stopVoiceRecording(true)}
 function startPresence(p){
- stopPresence();const c=channelFor(p);if(!c.uid)return;
+ stopPresence();const c=channelFor(p);if(!c.uid)return;chatFeatureUnsub=onSnapshot(doc(c.database,'siteControls','main'),snap=>{siteControlsCache.chatFeatures=snap.data()?.chatFeatures||{};applyChatFeatures()},()=>{});
  presenceOff=onSnapshot(collection(c.database,c.root,c.id,'presence'),snap=>{conversationPresence=Object.fromEntries(snap.docs.map(d=>[d.id,d.data()]));paintPresence(p)},()=>{});
  presenceTimer=setInterval(()=>paintPresence(p),2000);
 }
@@ -17133,8 +17148,9 @@ async function loadOlderChat(){
 async function attachPrivateMedia(container,m,p){
  const c=channelFor(p),key=c.root+'/'+c.id+'/'+m.mediaId;container.textContent=chatText('تحميل المرفق…','Loading attachment…');
  try{let value=mediaCache.get(key);if(!value){const snap=await getDoc(doc(c.database,c.root,c.id,'media',m.mediaId));if(!snap.exists())throw Error('missing');value=snap.data();if(!['image/jpeg','image/png','image/webp','audio/webm','audio/ogg','audio/mp4'].includes(value.contentType)||typeof value.data!=='string')throw Error('invalid');mediaCache.set(key,value)}
-  if(!container.isConnected||p!==activeChatPerson)return;container.textContent='';const image=value.contentType.startsWith('image/'),node=document.createElement(image?'img':'audio');node.src='data:'+value.contentType+';base64,'+value.data;
-  if(image){node.alt=chatText('صورة بالمحادثة','Chat image');node.loading='lazy';node.className='chat-photo'}else{node.controls=true;node.preload='metadata'}container.append(node);
+  if(!container.isConnected||p!==activeChatPerson)return;container.textContent='';const src='data:'+value.contentType+';base64,'+value.data;
+  if(value.contentType.startsWith('image/')){const node=document.createElement('img');node.src=src;node.alt=chatText('صورة بالمحادثة','Chat image');node.loading='lazy';node.className='chat-photo';container.append(node)}else renderVoicePlayer(container,src);
+
  }catch{container.textContent=chatText('تعذر تحميل المرفق. أعد فتح المحادثة للمحاولة.','Attachment could not load. Reopen the conversation to retry.')}
 }
 async function prepareImage(file){
@@ -17144,14 +17160,14 @@ async function prepareImage(file){
 }
 async function mediaFromBlob(blob,contentType,label){if(blob.size>480*1024)throw Error('media-large');const bytes=new Uint8Array(await blob.arrayBuffer());let raw='';for(let i=0;i<bytes.length;i+=16384)raw+=String.fromCharCode(...bytes.subarray(i,i+16384));return {contentType,data:btoa(raw),label,token:crypto.randomUUID()}}
 function paintMediaDraft(){document.getElementById('chatMediaDraft').textContent=pendingChatMedia?.label||'';document.getElementById('chatDiscardMediaBtn').classList.toggle('hidden',!pendingChatMedia)}
-function stopVoiceRecording(cancel=false){clearTimeout(voiceTimeout);if(voiceRecorder&&voiceRecorder.state!=='inactive'){voiceRecorder._cancel=cancel;voiceRecorder.stop()}voiceStream?.getTracks().forEach(t=>t.stop());voiceStream=null;document.getElementById('chatVoiceBtn')?.classList.remove('recording')}
+function stopVoiceRecording(cancel=false){stopVoiceVisual();clearTimeout(voiceTimeout);if(voiceRecorder&&voiceRecorder.state!=='inactive'){voiceRecorder._cancel=cancel;voiceRecorder.stop()}voiceStream?.getTracks().forEach(t=>t.stop());voiceStream=null;document.getElementById('chatVoiceBtn')?.classList.remove('recording')}
 async function toggleVoiceRecording(){
- if(voiceRecorder?.state==='recording'){stopVoiceRecording();return}if(!activeChatPerson)return;
+ if(voiceRecorder?.state==='recording'){stopVoiceRecording();return}if(!activeChatPerson||!chatFeatureEnabled('voice'))return;
  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){showToast(chatText('تسجيل الصوت غير متاح بهذا المتصفح.','Voice recording is unavailable in this browser.'));return}
  const p=activeChatPerson;try{voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});if(p!==activeChatPerson){stopVoiceRecording(true);return}
  const mime=['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));if(!mime)throw Error('format');const chunks=[];voiceRecorder=new MediaRecorder(voiceStream,{mimeType:mime,audioBitsPerSecond:32000});const recorder=voiceRecorder;
  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{if(recorder._cancel||p!==activeChatPerson)return;try{pendingChatMedia=await mediaFromBlob(new Blob(chunks,{type:mime}),mime.split(';')[0],chatText('رسالة صوتية جاهزة للإرسال','Voice message ready to send'));paintMediaDraft()}catch{showToast(chatText('التسجيل كبير جدًا. جرّب تسجيلًا أقصر.','Recording is too large. Try a shorter one.'))}};
- recorder.start();document.getElementById('chatVoiceBtn').classList.add('recording');document.getElementById('chatMediaDraft').textContent=chatText('🔴 جاري التسجيل… اضغط الميكروفون للإيقاف (60 ثانية كحد أقصى).','🔴 Recording… Tap the microphone to stop (up to 60 seconds).');voiceTimeout=setTimeout(()=>stopVoiceRecording(),60000);
+ recorder.start();startVoiceVisual(voiceStream);document.getElementById('chatVoiceBtn').classList.add('recording');document.getElementById('chatMediaDraft').textContent=chatText('🔴 جاري التسجيل… اضغط الميكروفون للإيقاف (60 ثانية كحد أقصى).','🔴 Recording… Tap the microphone to stop (up to 60 seconds).');voiceTimeout=setTimeout(()=>stopVoiceRecording(),60000);
  }catch{stopVoiceRecording(true);showToast(chatText('تعذر تسجيل الصوت. تحقق من إذن الميكروفون.','Could not record audio. Check microphone permission.'))}
 }
 async function commitReliableMessage(p,text,media){
@@ -17200,6 +17216,32 @@ function setupChatPersonMenu(){
 }
 setupChatPersonMenu();
 
+const chatFeatureDefinitions=[['voice','الرسائل الصوتية والموجات','Voice messages and waveforms'],['edit','تعديل الرسائل','Edit messages'],['delete','حذف الرسائل من عندي','Delete messages for me'],['copy','نسخ الرسائل','Copy messages'],['search','البحث في المحادثة','Search conversation']];
+function chatFeatureEnabled(key){return siteControlsCache.chatFeatures?.[key]!==false}
+function renderChatFeatureControls(){const host=document.getElementById('adminChatFeatures');if(!host)return;host.textContent='';const title=document.createElement('h3');title.textContent=chatText('خيارات الشات','Chat features');host.append(title);for(const [key,ar,en] of chatFeatureDefinitions){const label=document.createElement('label'),box=document.createElement('input');box.type='checkbox';box.checked=chatFeatureEnabled(key);label.append(box,document.createTextNode(chatText(ar,en)));host.append(label);box.onchange=async()=>{box.disabled=true;try{await setDoc(doc(db,'siteControls','main'),{chatFeatures:{[key]:box.checked}},{merge:true});siteControlsCache.chatFeatures={...siteControlsCache.chatFeatures,[key]:box.checked};applyChatFeatures()}catch{box.checked=!box.checked;showToast(chatText('تعذر حفظ الخيار.','Could not save this setting.'))}finally{box.disabled=false}}}}
+function applyChatFeatures(){document.getElementById('chatVoiceBtn').classList.toggle('hidden',!chatFeatureEnabled('voice'));document.getElementById('chatMessageSearch').hidden=!chatFeatureEnabled('search');if(activeChatPerson)renderConversationMessages(chatLastMessages)}
+function messageVisibleForMe(m,p){return !(chatPrefs[conversationKey(p)]?.hiddenMessages||[]).includes(m.id)}
+async function messageOptions(m,p){
+ const modal=supportDialog(chatText('خيارات الرسالة','Message options'));const add=(ar,en,fn)=>{const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText(ar,en);b.onclick=async()=>{modal.dialog.close();await fn()};modal.body.append(b)};modal.body.classList.add('message-option-list');
+ if(m.text&&chatFeatureEnabled('copy'))add('نسخ النص','Copy text',async()=>{try{await navigator.clipboard.writeText(m.text);showToast(chatText('تم النسخ.','Copied.'))}catch{showToast(chatText('تعذر النسخ. يمكنك تحديد النص ونسخه.','Could not copy. Select and copy the text.'))}});
+ if(m.senderUid===channelFor(p).uid&&m.text&&!m.pending&&!m.failed&&!['original','legacy-reply'].includes(m.id)&&chatFeatureEnabled('edit'))add('تعديل الرسالة','Edit message',async()=>{
+ const editor=supportDialog(chatText('تعديل الرسالة','Edit message'),{reason:true,confirm:true});const label=editor.body.querySelector('label');label.firstChild.textContent=chatText('نص الرسالة','Message text');const input=editor.body.querySelector('textarea');input.value=m.text;input.minLength=1;input.maxLength=p.kind==='support'?1500:2000;input.placeholder=chatText('اكتب الرسالة…','Write your message…');const text=await editor.done;if(!text||text===m.text)return;if(p.kind==='support'&&!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return}try{const c=channelFor(p);await updateDoc(doc(c.database,c.root,c.id,'messages',m.id),{text,editedAt:serverTimestamp()})}catch{showToast(chatText('تعذر حفظ التعديل. بقيت الرسالة الأصلية كما هي.','Could not save the edit. The original message is unchanged.'))}
+ });
+ if(chatFeatureEnabled('delete'))add('حذف من عندي','Delete for me',async()=>{try{const c=channelFor(p);await setDoc(doc(c.database,'users',c.uid,'chatPreferences',conversationKey(p)),{hiddenMessages:arrayUnion(m.id)},{merge:true})}catch{showToast(chatText('تعذر حذف الرسالة من عندك.','Could not hide this message.'))}});
+}
+function makeWaveBars(){const wave=document.createElement('div');wave.className='voice-wave-bars';wave.setAttribute('aria-hidden','true');for(let i=0;i<36;i++){const bar=document.createElement('i');bar.style.height='5px';wave.append(bar)}return wave}
+function renderVoicePlayer(container,src){
+ container.classList.add('voice-attachment');const audio=document.createElement('audio');audio.src=src;audio.preload='metadata';const player=document.createElement('div');player.className='voice-player';const play=document.createElement('button');play.type='button';play.className='voice-play';play.textContent='▶';play.setAttribute('aria-label',chatText('تشغيل الرسالة الصوتية','Play voice message'));const body=document.createElement('div');body.className='voice-player-body';const wave=makeWaveBars(),seek=document.createElement('input');seek.type='range';seek.min=0;seek.max=100;seek.value=0;seek.step=.1;seek.setAttribute('aria-label',chatText('موضع التشغيل','Playback position'));const time=document.createElement('span');time.className='voice-time';time.textContent='0:00';const speed=document.createElement('button');speed.type='button';speed.className='voice-speed';speed.textContent='1×';speed.setAttribute('aria-label',chatText('سرعة التشغيل','Playback speed'));speed.onclick=()=>{audio.playbackRate=audio.playbackRate===1?1.5:audio.playbackRate===1.5?2:1;speed.textContent=audio.playbackRate+'×'};body.append(wave,seek,time);player.append(play,body,speed);container.append(player,audio);
+ let decodedDuration=0;const durationValue=()=>Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:decodedDuration;const clock=n=>Math.floor((n||0)/60)+':'+String(Math.floor((n||0)%60)).padStart(2,'0');const update=()=>{const duration=durationValue();seek.disabled=!duration;seek.value=duration?audio.currentTime/duration*100:0;time.textContent=clock(audio.currentTime)+' / '+clock(duration);[...wave.children].forEach((bar,i)=>bar.classList.toggle('played',i/36<=Number(seek.value)/100))};audio.ontimeupdate=update;audio.onloadedmetadata=update;audio.onended=()=>{play.textContent='▶';play.setAttribute('aria-label',chatText('تشغيل الرسالة الصوتية','Play voice message'))};audio.onpause=()=>play.textContent='▶';play.onclick=async()=>{if(audio.paused){try{document.querySelectorAll('.voice-attachment audio').forEach(a=>{if(a!==audio)a.pause()});await audio.play();play.textContent='Ⅱ';play.setAttribute('aria-label',chatText('إيقاف مؤقت','Pause'))}catch{showToast(chatText('تعذر تشغيل التسجيل.','Could not play this recording.'))}}else audio.pause()};seek.oninput=()=>{if(durationValue())audio.currentTime=Number(seek.value)/100*durationValue()};
+ try{const raw=atob(src.split(',')[1]),bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));const decoder=new OfflineAudioContext(1,1,22050);decoder.decodeAudioData(bytes.buffer).then(buffer=>{decodedDuration=buffer.duration;update();const data=buffer.getChannelData(0),step=Math.max(1,Math.floor(data.length/36));let peaks=[];for(let i=0;i<36;i++){let sum=0,count=0;for(let j=i*step;j<Math.min(data.length,(i+1)*step);j+=16){sum+=data[j]*data[j];count++}peaks.push(Math.sqrt(sum/Math.max(count,1)))}const max=Math.max(...peaks,.01);[...wave.children].forEach((bar,i)=>bar.style.height=(5+25*peaks[i]/max)+'px')}).catch(()=>{})}catch{}
+}
+let voiceVisualContext=null,voiceVisualFrame=0,voiceRecordingStarted=0;
+function stopVoiceVisual(){cancelAnimationFrame(voiceVisualFrame);voiceVisualContext?.close().catch(()=>{});voiceVisualContext=null;document.getElementById('chatRecordingPanel').hidden=true;document.getElementById('chatMessageInput').hidden=false;document.getElementById('chatSendBtn').hidden=false}
+function startVoiceVisual(stream){
+ const panel=document.getElementById('chatRecordingPanel');panel.textContent='';panel.hidden=false;document.getElementById('chatMessageInput').hidden=true;document.getElementById('chatSendBtn').hidden=true;const wave=makeWaveBars(),time=document.createElement('span'),stop=document.createElement('button'),cancel=document.createElement('button');time.className='voice-time';stop.type=cancel.type='button';stop.textContent=chatText('إيقاف','Stop');cancel.textContent=chatText('إلغاء','Cancel');stop.onclick=()=>stopVoiceRecording();cancel.onclick=()=>stopVoiceRecording(true);panel.append(cancel,wave,time,stop);voiceRecordingStarted=Date.now();let analyser=null,data=null;try{voiceVisualContext=new (window.AudioContext||window.webkitAudioContext)();analyser=voiceVisualContext.createAnalyser();analyser.fftSize=256;voiceVisualContext.createMediaStreamSource(stream).connect(analyser);data=new Uint8Array(analyser.frequencyBinCount)}catch{}
+ const frame=()=>{time.textContent='0:'+String(Math.min(60,Math.floor((Date.now()-voiceRecordingStarted)/1000))).padStart(2,'0');if(analyser){analyser.getByteFrequencyData(data);[...wave.children].forEach((bar,i)=>bar.style.height=(4+data[Math.floor(i*data.length/36)]/255*28)+'px')}voiceVisualFrame=requestAnimationFrame(frame)};frame();
+}
+
 function staffCan(permission){return isSuperAdminProfile()||!!classoraStaffPermissions?.[permission]}
 function supportDialog(title,{reason=false,destructive=false,confirm=false}={}){
  const dialog=document.createElement('dialog');dialog.className='classora-case-dialog';dialog.dir=currentUILanguage==='en'?'ltr':'rtl';
@@ -17208,7 +17250,7 @@ function supportDialog(title,{reason=false,destructive=false,confirm=false}={}){
  let input;if(reason){const label=document.createElement('label');label.textContent=chatText('سبب الإجراء','Reason for this action');input=document.createElement('textarea');input.maxLength=500;input.minLength=2;input.required=true;input.placeholder=chatText('اكتب السبب بوضوح…','Explain the reason…');label.append(input);body.append(label)}
  const actions=document.createElement('div');actions.className='case-dialog-actions';const cancel=document.createElement('button');cancel.type='button';cancel.className='exam-secondary';cancel.textContent=chatText(confirm?'إلغاء':'إغلاق',confirm?'Cancel':'Close');cancel.onclick=()=>dialog.close('cancel');actions.append(cancel);
  if(confirm){const submit=document.createElement('button');submit.type='submit';submit.className=destructive?'danger':'apply';submit.textContent=chatText(destructive?'تأكيد الحذف':'متابعة',destructive?'Confirm deletion':'Continue');actions.append(submit)}
- form.append(actions);dialog.append(form);document.body.append(dialog);const done=new Promise(resolve=>{form.onsubmit=e=>{e.preventDefault();if(reason&&input.value.trim().length<2){input.focus();return}dialog.close('confirm')};dialog.addEventListener('close',()=>{resolve(dialog.returnValue==='confirm'?(input?.value.trim()||true):null);dialog.remove()},{once:true})});dialog.showModal();(input||cancel).focus();return {dialog,body,done};
+ form.append(actions);dialog.append(form);document.body.append(dialog);const done=new Promise(resolve=>{form.onsubmit=e=>{e.preventDefault();if(reason&&input.value.trim().length<input.minLength){input.focus();return}dialog.close('confirm')};dialog.addEventListener('close',()=>{resolve(dialog.returnValue==='confirm'?(input?.value.trim()||true):null);dialog.remove()},{once:true})});dialog.showModal();(input||cancel).focus();return {dialog,body,done};
 }
 function supportActionError(error){
  const code=String(error?.code||'').replace('functions/','');
@@ -17267,6 +17309,7 @@ document.getElementById('chatMessageInput').addEventListener('input',()=>{const 
 document.getElementById('chatMessageInput').addEventListener('blur',()=>publishTyping(false));
 document.getElementById('chatMessages').addEventListener('scroll',markConversationRead);document.addEventListener('visibilitychange',()=>{if(document.hidden)publishTyping(false);else markConversationRead()});window.addEventListener('focus',markConversationRead);
 document.getElementById('chatOlderBtn').onclick=loadOlderChat;
+document.getElementById('chatMessageSearch').oninput=()=>renderConversationMessages(chatLastMessages);
 document.getElementById('chatPhotoBtn').onclick=()=>document.getElementById('chatPhotoInput').click();
 document.getElementById('chatPhotoInput').onchange=async e=>{const file=e.target.files[0],p=activeChatPerson;try{const result=await prepareImage(file);if(p!==activeChatPerson)return;pendingChatMedia=result;paintMediaDraft()}catch{showToast(chatText('اختار صورة JPG أو PNG أو WebP بحجم أصغر.','Choose a smaller JPG, PNG or WebP image.'))}finally{e.target.value=''}};
 document.getElementById('chatVoiceBtn').onclick=toggleVoiceRecording;document.getElementById('chatDiscardMediaBtn').onclick=()=>{pendingChatMedia=null;paintMediaDraft()};
@@ -17291,6 +17334,7 @@ function conversationKey(p){return p.kind==='group'?p.groupId:p.kind==='support'
 function conversationName(p){return p.kind==='support'?(canManageSupport()&&p.ticket?supportRequestTitle(p.ticket):chatText('الدعم','Support')):chatPrefs[conversationKey(p)]?.nickname||p.displayName||chatText('مستخدم','User')}
 function stopConversation(){publishTyping(false);stopPresence();chatOpenSequence++;if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null}if(chatActivityUnsub){chatActivityUnsub();chatActivityUnsub=null}}
 function showChatThread(p){
+ document.getElementById('chatMessageSearch').value='';
  document.getElementById('chatPersonMenu').hidden=true;document.getElementById('chatPersonMenuBtn').setAttribute('aria-expanded','false');
  activeChatPerson=p;chatLastMessages=[];pendingChatMedia=null;paintMediaDraft();mediaCache.clear();document.getElementById("chatDeliveryStatus").textContent="";chatModal.classList.add('open','chat-thread-open');
  document.getElementById('chatThreadEmpty').classList.add('hidden');document.getElementById('chatThreadActive').classList.remove('hidden');
@@ -17314,14 +17358,15 @@ function updateConversationTools(){
 function renderConversationMessages(rows,p=activeChatPerson){
  if(!p||p!==activeChatPerson)return;const host=document.getElementById('chatMessages'),nearBottom=!chatLastMessages.length||host.scrollHeight-host.scrollTop-host.clientHeight<100,oldHeight=host.scrollHeight,oldTop=host.scrollTop;chatLastMessages=rows;const previous=new Map([...host.children].map(el=>[el.dataset.messageId,el]));if(!host.children.length)host.textContent='';const retained=new Set();
  const hiddenAt=chatPrefs[conversationKey(p)]?.hiddenAt?.toMillis?.()||0,viewer=p.viewerUid||auth.currentUser?.uid;
- for(const m of rows){if((m.createdAt?.toMillis?.()||Date.now())<=hiddenAt)continue;if(p.kind==='group'&&chatBlocks.has(m.senderUid))continue;
- const key=m.id,signature=JSON.stringify([m.text,m.mediaId,m.senderName,m.staff,m.failed,currentUILanguage]);let bubble=previous.get(key);if(bubble&&bubble.dataset.signature===signature){retained.add(key);const time=bubble.querySelector('time');if(time)time.textContent=chatTime(m.createdAt);const receipt=bubble.querySelector('.chat-receipt');if(receipt){receipt.textContent=m.failed?chatText('لم يتم الإرسال — أعد المحاولة','Not sent — retry'):m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.failed&&!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis()}const next=host.children[retained.size-1];if(next!==bubble)host.insertBefore(bubble,next||null);continue}if(bubble)bubble.remove();bubble=document.createElement('div');bubble.dataset.messageId=key;bubble.dataset.signature=signature;retained.add(key);bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
+ for(const m of rows){if(!messageVisibleForMe(m,p))continue;const search=chatFeatureEnabled('search')?document.getElementById('chatMessageSearch').value.trim().toLocaleLowerCase():'';if(search&&!String(m.text||'').toLocaleLowerCase().includes(search))continue;if((m.createdAt?.toMillis?.()||Date.now())<=hiddenAt)continue;if(p.kind==='group'&&chatBlocks.has(m.senderUid))continue;
+ const key=m.id,signature=JSON.stringify([m.text,m.mediaId,m.senderName,m.staff,m.failed,m.editedAt?.seconds,currentUILanguage,JSON.stringify(siteControlsCache.chatFeatures)]);let bubble=previous.get(key);if(bubble&&bubble.dataset.signature===signature){retained.add(key);const time=bubble.querySelector('time');if(time)time.textContent=chatTime(m.createdAt);const receipt=bubble.querySelector('.chat-receipt');if(receipt){receipt.textContent=m.failed?chatText('لم يتم الإرسال — أعد المحاولة','Not sent — retry'):m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.failed&&!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis()}const next=host.children[retained.size-1];if(next!==bubble)host.insertBefore(bubble,next||null);continue}if(bubble){bubble.querySelectorAll('audio').forEach(a=>a.pause());bubble.remove()}bubble=document.createElement('div');bubble.dataset.messageId=key;bubble.dataset.signature=signature;retained.add(key);bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
+ if(chatFeatureEnabled('delete')||(m.text&&chatFeatureEnabled('copy'))||(m.text&&m.senderUid===viewer&&chatFeatureEnabled('edit'))){const options=document.createElement('button');options.type='button';options.className='chat-message-options';options.textContent='⋮';options.setAttribute('aria-label',chatText('خيارات الرسالة','Message options'));options.onclick=()=>messageOptions(m,p);bubble.append(options)}
  if(p.kind==='group'||p.kind==='support'){const who=document.createElement('b');who.textContent=m.staff?chatText('الدعم','Support'):m.senderName||chatPublicProfiles.find(person=>person.uid===m.senderUid)?.displayName||chatText('مستخدم','User');bubble.append(who)}
  if(m.text){const text=document.createElement('span');text.textContent=m.text;text.dir='auto';text.setAttribute('data-no-translate','');bubble.append(text)}
  if(m.mediaId){const media=document.createElement('div');media.className='chat-attachment';bubble.append(media);queueMicrotask(()=>attachPrivateMedia(media,m,p))}
- const time=document.createElement('time');time.textContent=chatTime(m.createdAt);bubble.append(time);
+ if(m.editedAt){const edited=document.createElement('small');edited.className='chat-edited';edited.textContent=chatText('تم تعديلها','Edited');bubble.append(edited)}const time=document.createElement('time');time.textContent=chatTime(m.createdAt);bubble.append(time);
  if(m.senderUid===viewer){const receipt=document.createElement('small');receipt.className='chat-receipt';receipt.textContent=m.failed?chatText('لم يتم الإرسال — أعد المحاولة','Not sent — retry'):m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.failed&&!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis();bubble.append(receipt)}host.insertBefore(bubble,host.children[retained.size-1]||null);
- }for(const el of [...host.children])if(!retained.has(el.dataset.messageId))el.remove();requestAnimationFrame(()=>{host.scrollTop=nearBottom?host.scrollHeight:oldTop+(host.scrollHeight-oldHeight);paintPresence(p);markConversationRead()});
+ }for(const el of [...host.children])if(!retained.has(el.dataset.messageId)){el.querySelectorAll('audio').forEach(a=>a.pause());el.remove()}requestAnimationFrame(()=>{host.scrollTop=nearBottom?host.scrollHeight:oldTop+(host.scrollHeight-oldHeight);paintPresence(p);markConversationRead()});
 }
 function calculateChatStreak(rows,now=Date.now()){
  const days=new Map();for(const r of rows){const t=r.day?.toMillis?.()??r.day?.getTime?.()??Number(r.day);if(!Number.isFinite(t))continue;const day=Math.floor(t/86400000);if(!days.has(day))days.set(day,new Set());days.get(day).add(r.senderUid)}
@@ -20530,7 +20575,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='68';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='69';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
