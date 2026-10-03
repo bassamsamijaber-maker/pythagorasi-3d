@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v75-mobile-first-paint";
+const CACHE_NAME="classora-v76-startup-install-notify";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=75",
-  "./assets/learning-hub.css?v=75",
+  "./assets/learning-hub.js?v=76",
+  "./assets/learning-hub.css?v=76",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
