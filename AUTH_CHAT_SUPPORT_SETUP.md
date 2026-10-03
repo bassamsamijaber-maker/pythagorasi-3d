@@ -39,3 +39,30 @@ Deploy `firestore.rules` again for support message subcollections, private chat 
 - Streaks use UTC days with at least two distinct senders; no activity for a full day resets the streak. Activity receipts are written atomically with a real message. Display covers the most recent 366 days.
 
 Validation: JavaScript regression tests plus Firestore emulator permission tests cover support ownership, staff impersonation rejection, script restrictions, private preferences, block/unblock, group join/leave, guest support and forged activity rejection. Production end-to-end verification remains pending rules deployment.
+
+
+## V66: reliable messaging, private media and delegated support actions
+This section supersedes the older deployment notes above. Publish the latest rules and the new callable before using these features. From this repository with your Firebase project selected:
+
+```sh
+firebase deploy --only firestore:rules,firestore:indexes
+cd functions
+npm install
+cd ..
+firebase deploy --only functions:classoraSupportAction
+```
+
+Review any proposed removal of existing production indexes before accepting it; preserve indexes used by other features. Wait for the `members.uid` collection-group index to finish building before account deletion. The media `data` field is excluded from indexing. Deploying Functions may require an eligible billing plan; no billing settings were changed by this work. The callable is in `us-central1`. Guest support still requires Anonymous Authentication. Firebase deployment was not possible in this session, so production two-account verification remains pending.
+
+- Text and attachments commit atomically. A stable message ID avoids duplicate writes after an uncertain acknowledgement. Drafts remain on failure. Streak and preview updates cannot reject an already-saved social message.
+- Messages stay in the open conversation when the latest-100 window advances; Load earlier messages pages older history. Audio DOM nodes survive incoming messages, avoiding playback interruption.
+- Images are resized to 1280 pixels and compressed; attachments are limited to 480 KiB. Voice recording is up to 60 seconds and requires browser microphone support/permission. Media lives in protected Firestore documents, with no public download URLs or new Storage setup. This uses Firestore storage and reads; it is not end-to-end encryption. Support's Arabic/English script filter applies to typed text, not speech transcription or text inside images.
+- Typing indicators expire, and read receipts are written when the conversation is visible, focused and at its latest messages. In groups, Read means at least one other participant has read the message.
+- Delete for me writes a private history cutoff for users and staff. It does not delete shared messages or the other participant's history. New activity restores a hidden conversation in the inbox. The support queue no longer exposes shared-ticket deletion.
+- Support ticket titles identify the requester in Arabic/English. Reports created from a DM include the reported account UID/profile ID/name; staff can view public account details and start a review notification. Legacy reports without a target still identify their requester.
+- Support can send requests to change password, name or security phrase. The user performs the change in Settings; secret phrases and passwords are never shown to staff.
+- The owner assigns separate chat-restriction, account-suspension and account-deletion capabilities in Team. Server checks enforce every action and protect the owner. Staff without deletion capability submit an admin approval request. Staff with capability can delete without another owner approval, with a confirmation and reason. Each action is audited. Support sees its own audit entries; admins see all.
+- Account deletion disables access first, removes the Firebase Auth identity, login aliases, profile IDs, class membership documents, staff access, public profile and private user document/subcollections. Shared message copies and case/audit history are retained. Failed deletion can be retried. Deleted-account blocks cannot be restored as a normal suspension.
+- The site is dark-only; appearance controls are hidden and saved light preferences resolve to dark.
+
+Validation: all inline JavaScript parses; bilingual audit and regression suites pass; isolated Firestore emulator tests cover private atomic media, message ownership, receipts, support appeals under chat restriction, private deletion markers, group access and self-escalation rejection. Callable tests cover case scope, delegated capabilities, approval fallback, owner protection and deletion tombstones. No real messages, accounts, staff grants or deletions were used for these tests.

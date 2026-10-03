@@ -4590,6 +4590,8 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 .chat-contact.support-chat-entry{display:flex!important;align-items:center;min-height:50px!important;color:#85d8ff}
 #chatThreadActive.hidden{display:none!important}
 @media(max-width:700px){.chat-social-tools{gap:5px;padding:6px}.chat-social-tools button{font-size:10px!important;padding:6px!important;min-height:34px!important}.chat-thread-head small{max-width:75vw;overflow-wrap:anywhere}.chat-follow-notice{font-size:11px;padding:8px}}
+
+#themeBtn,#authThemeBtn,#lobbyThemeBtn,#settingsAppearanceTitle,#settingsDarkBtn,#settingsLightBtn{display:none!important}.chat-media-tools{display:flex;gap:6px;flex-wrap:wrap;padding:5px 10px}.chat-media-tools button{min-height:38px;font-size:12px}.chat-photo{max-height:320px;border-radius:12px;object-fit:contain}.chat-attachment audio{width:min(280px,100%);max-width:100%}.chat-receipt{display:block;font-size:10px;opacity:.8;margin-top:5px}.chat-receipt.read{color:#9ceaff}.chat-delivery{font-size:11px;padding:4px 12px;line-height:1.5}.chat-delivery:empty{display:none}.chat-typing{display:flex;align-items:center;gap:4px;padding:6px 12px;color:#9ddaff;font-size:12px}.chat-typing i{width:5px;height:5px;background:currentColor;border-radius:50%;animation:typingPulse 1s infinite}.chat-typing i:nth-child(3){animation-delay:.15s}.chat-typing i:nth-child(4){animation-delay:.3s}@keyframes typingPulse{50%{opacity:.3;transform:translateY(-3px)}}.recording{background:#8d283c!important}.case-actions{display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px solid #ffffff20;border-radius:12px}.case-actions>div{flex-basis:100%;overflow-wrap:anywhere}.staff-permissions{display:grid;gap:10px;padding:12px}.staff-permissions label{display:flex;gap:8px;align-items:center}#accountActionRequests:empty{display:none}@media(prefers-reduced-motion:reduce){.chat-typing i{animation:none}}
 </style></head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -4692,7 +4694,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
 
 <div class="platform-lobby" id="platformLobby">
   <div class="lobby-shell">
-    <div class="lobby-topbar">
+    <div id="accountActionRequests" aria-live="polite"></div><div class="lobby-topbar">
       <div>
         <div class="lobby-brand">Classora</div>
         <div class="lobby-sub" id="lobbyGreeting">أهلًا 👋</div>
@@ -5740,11 +5742,11 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <button class="exam-secondary hidden" id="saveAINameSettingsBtn">Save assistant name</button>
       </section>
 
-      <section class="settings-card">
-        <h3 id="settingsAppearanceTitle">🌓 المظهر</h3>
+      <section class="settings-card hidden">
+        <h3 hidden id="settingsAppearanceTitle">🌓 المظهر</h3>
         <div class="settings-choice-row">
-          <button class="exam-secondary" id="settingsDarkBtn">🌙 ليل</button>
-          <button class="exam-secondary" id="settingsLightBtn">☀️ نهار</button>
+          <button class="exam-secondary hidden" id="settingsDarkBtn">🌙 ليل</button>
+          <button class="exam-secondary hidden" id="settingsLightBtn">☀️ نهار</button>
         </div>
       </section>
 
@@ -5762,7 +5764,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
         <button class="exam-secondary" id="settingsOpenProfileBtn">فتح الملف الشخصي والإحصائيات</button>
       </section>
 
-      <section class="settings-card" id="securityPhraseSettingsCard">
+      <section class="settings-card" id="accountPasswordCard"><h3>تغيير كلمة السر</h3><input id="accountOldPassword" type="password" autocomplete="current-password" placeholder="كلمة السر الحالية"><input id="accountNewPassword" type="password" autocomplete="new-password" placeholder="كلمة السر الجديدة"><input id="accountConfirmPassword" type="password" autocomplete="new-password" placeholder="تأكيد كلمة السر الجديدة"><button id="saveAccountPasswordBtn" class="exam-secondary">حفظ كلمة السر</button></section><section class="settings-card" id="securityPhraseSettingsCard">
         <h3>🛡️ كلمة أمان الحساب</h3>
         <div class="settings-note">اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.</div>
         <input id="securityPhraseCurrentPassword" type="password" maxlength="64" autocomplete="current-password" placeholder="كلمة سر الحساب الحالية لتأكيد الحفظ"><input id="securityPhraseInput" type="password" minlength="8" maxlength="64" autocomplete="new-password" placeholder="كلمة الأمان">
@@ -5845,7 +5847,7 @@ html[dir="rtl"] .classora-subject-back{left:auto;right:12px}
             </div>
             <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button>
           </div>
-          <div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button></div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button></div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
           <div class="chat-compose">
             <textarea id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
             <button class="apply" id="chatSendBtn">إرسال</button>
@@ -6611,12 +6613,13 @@ import {
 import {
   getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
   query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
-  arrayUnion, arrayRemove, orderBy, limit, writeBatch
+  arrayUnion, arrayRemove, orderBy, limit, startAfter, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
   getMessaging, getToken, onMessage, isSupported as isMessagingSupported
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
 
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",
@@ -6703,7 +6706,7 @@ async function ensureProfileId(user,profile={}){
 const SUPER_ADMIN_PROFILE_ID="3228667330";
 let classoraStaffUnsub=null;
 let classoraStaffUid="";
-let classoraStaffRole="";
+let classoraStaffRole="",classoraStaffPermissions={};
 function isOwnerAdminProfile(profile=window.PythagorasiUser){return String(profile?.profileId||"")===SUPER_ADMIN_PROFILE_ID}
 function isSuperAdminProfile(profile=window.PythagorasiUser){return isOwnerAdminProfile(profile)||!!(profile?.uid&&profile.uid===classoraStaffUid&&classoraStaffRole==="admin")}
 function canManageSupport(){return isSuperAdminProfile()||!!(auth.currentUser?.uid===classoraStaffUid&&classoraStaffRole==="support")}
@@ -6713,10 +6716,10 @@ function refreshTeamAccessButtons(){
  document.querySelector('[data-admin-tab="team"]')?.classList.toggle("hidden",!isOwnerAdminProfile());
 }
 function listenTeamAccess(uid){
- if(classoraStaffUnsub)classoraStaffUnsub();classoraStaffUid=uid||"";classoraStaffRole="";refreshTeamAccessButtons();if(!uid)return;
+ if(classoraStaffUnsub)classoraStaffUnsub();classoraStaffUid=uid||"";classoraStaffRole="";classoraStaffPermissions={};refreshTeamAccessButtons();if(!uid)return;
  classoraStaffUnsub=onSnapshot(doc(db,"staffAccess",uid),snap=>{
   classoraStaffRole=snap.exists()&&snap.data()?.active!==false?snap.data()?.role||"":"";
-  refreshTeamAccessButtons();
+  classoraStaffPermissions=snap.data()?.permissions||{};refreshTeamAccessButtons();
   if(!isSuperAdminProfile())document.getElementById("adminPanelModal")?.classList.remove("open");
   if(!canManageSupport())document.getElementById("supportQueueModal")?.classList.remove("open");
  },err=>{console.warn("staff access",err);classoraStaffRole="";refreshTeamAccessButtons()});
@@ -7305,7 +7308,7 @@ function paintUser(user,profile){
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user.uid,...profile};
   activeProfile=window.PythagorasiUser;
-  listenTeamAccess(user.uid);
+  listenTeamAccess(user.uid);watchAccountActionRequests(user.uid);
   applySavedAccountState(window.PythagorasiUser);
   setTimeout(()=>syncPublicProfile(window.PythagorasiUser,user),120);
   setTimeout(startClassoraRealtimeNotifications,350);
@@ -7327,7 +7330,7 @@ function paintUser(user,profile){
 async function resolveCurrentUser(user){
   if(!user){
     dismissSecurityReminder();
-    listenTeamAccess("");
+    listenTeamAccess("");watchAccountActionRequests("");document.getElementById("accountActionRequests").innerHTML="";
     document.body.classList.remove("classora-authenticated");
     activeProfile=null;
     clearClassoraRealtimeNotifications();
@@ -8829,7 +8832,7 @@ document.getElementById("resetBtn").addEventListener("click",()=>{
   camera.position.copy(initialCam);controls.target.set(0,.15,0);root.rotation.set(-.02,-.03,0);controls.update();
 });
 function applySiteTheme(mode,save=true){
-  const isLight=mode==="light";
+  const isLight=false;mode="dark";
   document.body.classList.toggle("light",isLight);
 
   const labBtn=document.getElementById("themeBtn");
@@ -11480,6 +11483,17 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["رسائل أقدم","Earlier messages"],
+["يكتب الآن","Typing"],
+["📷 صورة","\ud83d\udcf7 Image"],
+["🎙️ رسالة صوتية","\ud83c\udf99\ufe0f Voice message"],
+["إلغاء المرفق","Remove attachment"],
+["تغيير كلمة السر","Change password"],
+["كلمة السر الحالية","Current password"],
+["كلمة السر الجديدة","New password"],
+["تأكيد كلمة السر الجديدة","Confirm new password"],
+["حفظ كلمة السر","Save password"],
+
 ["＋ مجموعة","\uff0b Group"],
 ["انضم بكود","Join by code"],
 ["🛟 الدعم","\ud83d\udedf Support"],
@@ -12200,6 +12214,17 @@ const uiExactTranslations=new Map([
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const uiPlaceholderTranslations=new Map([
+["رسائل أقدم","Earlier messages"],
+["يكتب الآن","Typing"],
+["📷 صورة","\ud83d\udcf7 Image"],
+["🎙️ رسالة صوتية","\ud83c\udf99\ufe0f Voice message"],
+["إلغاء المرفق","Remove attachment"],
+["تغيير كلمة السر","Change password"],
+["كلمة السر الحالية","Current password"],
+["كلمة السر الجديدة","New password"],
+["تأكيد كلمة السر الجديدة","Confirm new password"],
+["حفظ كلمة السر","Save password"],
+
  ["المتابعة بدون كود صف","Continue without a class code"],
  ["طلبات الدعم","Support requests"],
  ["إدارة فريق الموقع","Site team management"],
@@ -12622,6 +12647,11 @@ function dismissSecurityReminder(){document.getElementById("securityReminderModa
 document.getElementById("securityReminderLater").addEventListener("click",dismissSecurityReminder);
 document.getElementById("securityReminderSetup").addEventListener("click",()=>{dismissSecurityReminder();openSettingsModal();document.getElementById("securityPhraseSettingsCard").scrollIntoView({block:"center",behavior:"smooth"})});
 
+document.getElementById('saveAccountPasswordBtn').onclick=async()=>{
+ const user=auth.currentUser,old=document.getElementById('accountOldPassword'),next=document.getElementById('accountNewPassword'),confirm=document.getElementById('accountConfirmPassword'),btn=document.getElementById('saveAccountPasswordBtn');if(!user)return;
+ if(next.value.length<8||next.value!==confirm.value){showToast(chatText('اكتب كلمة سر من 8 أحرف على الأقل وتأكد من تطابقها.','Use at least 8 characters and matching passwords.'));return}btn.disabled=true;
+ try{if(user.providerData.some(p=>p.providerId==='password'))await reauthenticateWithCredential(user,EmailAuthProvider.credential(user.email,old.value));else await reauthenticateWithPopup(user,new GoogleAuthProvider());await updatePassword(user,next.value);old.value=next.value=confirm.value='';showToast(chatText('تم تغيير كلمة السر.','Password changed.'))}catch{showToast(chatText('تعذر تغيير كلمة السر. تحقق من بياناتك وأعد المحاولة.','Could not change password. Check your details and retry.'))}finally{btn.disabled=false}
+};
 function closeSettingsModal(){settingsModal.classList.remove("open")}
 document.getElementById("lobbySettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
@@ -17009,8 +17039,11 @@ async function adminRenderTeam(){
    title.textContent=adminUserDisplay(u);meta.textContent="#"+(u.profileId||"—")+" • "+adminLang(u.securityPhraseHash?"كلمة الأمان مفعّلة":"كلمة الأمان غير مفعّلة",u.securityPhraseHash?"Security phrase configured":"Security phrase not set");
    for(const [value,ar,en] of [["none","بدون صلاحية إضافية","No extra access"],["support","دعم — الرد على الطلبات فقط","Support — tickets only"],["admin","أدمن — إدارة الموقع","Admin — site management"]]){const opt=document.createElement("option");opt.value=value;opt.textContent=adminLang(ar,en);select.append(opt)}
    select.value=roles.get(u.uid)?.active===false?"none":roles.get(u.uid)?.role||"none";save.className="exam-secondary";save.textContent=adminLang("حفظ الصلاحية","Save access");
+   const permissions={};const accessBox=document.createElement('div');accessBox.className='staff-permissions';
+   for(const [key,ar,en] of [['chatModeration','حظر الشات','Restrict chat'],['banAccounts','إيقاف الحسابات','Suspend accounts'],['deleteAccounts','حذف حسابات بدون طلب موافقتي','Delete accounts without my approval']]){const label=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=!!roles.get(u.uid)?.permissions?.[key];permissions[key]=check;label.append(check,document.createTextNode(adminLang(ar,en)));accessBox.append(label)}
+   card.append(accessBox);
    save.onclick=async()=>{if(!isOwnerAdminProfile())return;const role=select.value;const description=select.options[select.selectedIndex].textContent;if(!uiConfirm(adminLang("تأكيد تعيين "+adminUserDisplay(u)+": "+description+"؟","Set "+adminUserDisplay(u)+" to "+description+"?")))return;save.disabled=true;try{
-    const ref=doc(db,"staffAccess",u.uid);if(role==="none")await deleteDoc(ref);else await setDoc(ref,{role,active:true,displayName:adminUserDisplay(u),grantedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});
+    const ref=doc(db,"staffAccess",u.uid);if(role==="none")await deleteDoc(ref);else await setDoc(ref,{role,active:true,displayName:adminUserDisplay(u),permissions:Object.fromEntries(Object.entries(permissions).map(([key,check])=>[key,check.checked])),grantedBy:auth.currentUser.uid,updatedAt:serverTimestamp()});
     await adminAudit("staff_access",u.uid+" • "+role);showToast(adminLang("تم حفظ الصلاحية","Access saved"));
    }catch(err){console.error(err);showToast(adminLang("تعذر حفظ الصلاحية. تحقق من الاتصال وصلاحيات الإدارة.","Could not save access. Check your connection and admin permissions."))}finally{save.disabled=false}};
    card.append(title,meta,select,save);host.append(card);
@@ -17040,6 +17073,120 @@ let chatOpenSequence=0;
 let mySupportUnsub=null;
 let shakeSupportLast=0;
 
+// V66: acknowledged delivery, private media, read receipts and expiring typing state.
+let conversationPresence={},presenceOff=null,presenceTimer=null,typingTimer=null,lastTypingWrite=0,lastReadKey='',liveMessageMap=new Map(),olderCursor=null,olderDone=false;
+let pendingChatMedia=null,voiceRecorder=null,voiceStream=null,voiceTimeout=null,voiceChunks=[],mediaCache=new Map(),retryMessages=new Map(),caseActionUnsub=null;
+let pendingReportTarget=null;
+function channelFor(p){return {database:p.channelDb||db,root:p.kind==='support'?'supportRequests':p.kind==='group'?'groupChats':'chats',id:p.kind==='support'?p.ticketId:conversationKey(p),uid:p.viewerUid||auth.currentUser?.uid}}
+function supportRequestTitle(ticket){return chatText('طلب دعم من ','Support request from ')+(ticket.createdByName||ticket.accountIdentifier||chatText('زائر','Guest'))}
+function stopPresence(){clearTimeout(typingTimer);clearInterval(presenceTimer);if(presenceOff)presenceOff();presenceOff=null;conversationPresence={};lastReadKey='';stopVoiceRecording(true)}
+function startPresence(p){
+ stopPresence();const c=channelFor(p);if(!c.uid)return;
+ presenceOff=onSnapshot(collection(c.database,c.root,c.id,'presence'),snap=>{conversationPresence=Object.fromEntries(snap.docs.map(d=>[d.id,d.data()]));paintPresence(p)},()=>{});
+ presenceTimer=setInterval(()=>paintPresence(p),2000);
+}
+function paintPresence(p){
+ if(p!==activeChatPerson)return;const c=channelFor(p),now=Date.now();
+ const typing=Object.entries(conversationPresence).some(([uid,v])=>uid!==c.uid&&v.typing&&now-(v.typingAt?.toMillis?.()||0)<8000);
+ const el=document.getElementById('chatTyping');el.classList.toggle('hidden',!typing);el.setAttribute('aria-label',chatText('يكتب الآن','Typing'));
+ document.querySelectorAll('#chatMessages [data-read-time]').forEach(el=>{const ms=Number(el.dataset.readTime);const read=Object.entries(conversationPresence).some(([uid,v])=>uid!==c.uid&&(v.lastReadAt?.toMillis?.()||0)>=ms);el.textContent=read?chatText('✓✓ تمت القراءة','✓✓ Read'):chatText('✓ تم الإرسال','✓ Sent');el.classList.toggle('read',read)});
+}
+async function publishTyping(typing){
+ const p=activeChatPerson;if(!p)return;const c=channelFor(p);if(!c.uid)return;const now=Date.now();if(typing&&now-lastTypingWrite<2500)return;lastTypingWrite=now;
+ try{await setDoc(doc(c.database,c.root,c.id,'presence',c.uid),{typing,typingAt:serverTimestamp()},{merge:true})}catch{}
+}
+async function markConversationRead(){
+ const p=activeChatPerson,host=document.getElementById('chatMessages');if(!p||!chatModal.classList.contains('open')||document.hidden||!document.hasFocus()||host.scrollHeight-host.scrollTop-host.clientHeight>100)return;
+ const last=chatLastMessages.filter(m=>!m.pending).at(-1);if(!last?.createdAt)return;const key=conversationKey(p)+':'+(last.id||last.createdAt.seconds);if(lastReadKey===key)return;
+ const c=channelFor(p);lastReadKey=key;try{await setDoc(doc(c.database,c.root,c.id,'presence',c.uid),{lastReadAt:serverTimestamp()},{merge:true})}catch{lastReadKey=''}
+}
+function watchLiveMessages(p,extra=[]){
+ const c=channelFor(p);liveMessageMap=new Map(extra.map((m,i)=>[m.id||'legacy-'+i,m]));olderCursor=null;olderDone=false;startPresence(p);
+ return onSnapshot(query(collection(c.database,c.root,c.id,'messages'),orderBy('createdAt','desc'),limit(100)),{includeMetadataChanges:true},snap=>{
+  if(p!==activeChatPerson)return;if(!olderCursor&&snap.docs.length)olderCursor=snap.docs.at(-1);if(snap.size<100)olderDone=true;
+  for(const d of snap.docs)liveMessageMap.set(d.id,{id:d.id,...d.data(),pending:d.metadata.hasPendingWrites});
+  renderConversationMessages([...liveMessageMap.values()].sort((a,b)=>(a.createdAt?.toMillis?.()||Date.now())-(b.createdAt?.toMillis?.()||Date.now())),p);
+  document.getElementById('chatOlderBtn').classList.toggle('hidden',olderDone);
+ },err=>{document.getElementById('chatDeliveryStatus').textContent=chatText('تعذر تحديث المحادثة. الرسائل المعروضة محفوظة؛ حاول إعادة فتحها.','Could not refresh this conversation. Displayed messages are preserved; try reopening it.');console.warn('chat stream',err.code)});
+}
+async function loadOlderChat(){
+ const p=activeChatPerson;if(!p||!olderCursor||olderDone)return;const c=channelFor(p),btn=document.getElementById('chatOlderBtn');btn.disabled=true;
+ try{const snap=await getDocs(query(collection(c.database,c.root,c.id,'messages'),orderBy('createdAt','desc'),startAfter(olderCursor),limit(100)));if(p!==activeChatPerson)return;if(snap.docs.length)olderCursor=snap.docs.at(-1);olderDone=snap.size<100;for(const d of snap.docs)liveMessageMap.set(d.id,{id:d.id,...d.data()});renderConversationMessages([...liveMessageMap.values()].sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)),p);btn.classList.toggle('hidden',olderDone)}catch{showToast(chatText('تعذر تحميل الرسائل السابقة.','Could not load earlier messages.'))}finally{btn.disabled=false}
+}
+async function attachPrivateMedia(container,m,p){
+ const c=channelFor(p),key=c.root+'/'+c.id+'/'+m.mediaId;container.textContent=chatText('تحميل المرفق…','Loading attachment…');
+ try{let value=mediaCache.get(key);if(!value){const snap=await getDoc(doc(c.database,c.root,c.id,'media',m.mediaId));if(!snap.exists())throw Error('missing');value=snap.data();if(!['image/jpeg','image/png','image/webp','audio/webm','audio/ogg','audio/mp4'].includes(value.contentType)||typeof value.data!=='string')throw Error('invalid');mediaCache.set(key,value)}
+  if(!container.isConnected||p!==activeChatPerson)return;container.textContent='';const image=value.contentType.startsWith('image/'),node=document.createElement(image?'img':'audio');node.src='data:'+value.contentType+';base64,'+value.data;
+  if(image){node.alt=chatText('صورة بالمحادثة','Chat image');node.loading='lazy';node.className='chat-photo'}else{node.controls=true;node.preload='metadata'}container.append(node);
+ }catch{container.textContent=chatText('تعذر تحميل المرفق. أعد فتح المحادثة للمحاولة.','Attachment could not load. Reopen the conversation to retry.')}
+}
+async function prepareImage(file){
+ if(!file||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('image-type');if(file.size>12*1024*1024)throw Error('image-large');
+ const bitmap=await createImageBitmap(file),scale=Math.min(1,1280/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+ let blob;for(const quality of [.8,.65,.45,.3]){blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',quality));if(blob&&blob.size<=480*1024)break}if(!blob||blob.size>480*1024)throw Error('image-large');return mediaFromBlob(blob,'image/jpeg',chatText('صورة جاهزة للإرسال','Image ready to send'));
+}
+async function mediaFromBlob(blob,contentType,label){if(blob.size>480*1024)throw Error('media-large');const bytes=new Uint8Array(await blob.arrayBuffer());let raw='';for(let i=0;i<bytes.length;i+=16384)raw+=String.fromCharCode(...bytes.subarray(i,i+16384));return {contentType,data:btoa(raw),label,token:crypto.randomUUID()}}
+function paintMediaDraft(){document.getElementById('chatMediaDraft').textContent=pendingChatMedia?.label||'';document.getElementById('chatDiscardMediaBtn').classList.toggle('hidden',!pendingChatMedia)}
+function stopVoiceRecording(cancel=false){clearTimeout(voiceTimeout);if(voiceRecorder&&voiceRecorder.state!=='inactive'){voiceRecorder._cancel=cancel;voiceRecorder.stop()}voiceStream?.getTracks().forEach(t=>t.stop());voiceStream=null;document.getElementById('chatVoiceBtn')?.classList.remove('recording')}
+async function toggleVoiceRecording(){
+ if(voiceRecorder?.state==='recording'){stopVoiceRecording();return}if(!activeChatPerson)return;
+ if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){showToast(chatText('تسجيل الصوت غير متاح بهذا المتصفح.','Voice recording is unavailable in this browser.'));return}
+ const p=activeChatPerson;try{voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});if(p!==activeChatPerson){stopVoiceRecording(true);return}
+ const mime=['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));if(!mime)throw Error('format');const chunks=[];voiceRecorder=new MediaRecorder(voiceStream,{mimeType:mime,audioBitsPerSecond:32000});const recorder=voiceRecorder;
+ recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{if(recorder._cancel||p!==activeChatPerson)return;try{pendingChatMedia=await mediaFromBlob(new Blob(chunks,{type:mime}),mime.split(';')[0],chatText('رسالة صوتية جاهزة للإرسال','Voice message ready to send'));paintMediaDraft()}catch{showToast(chatText('التسجيل كبير جدًا. جرّب تسجيلًا أقصر.','Recording is too large. Try a shorter one.'))}};
+ recorder.start();document.getElementById('chatVoiceBtn').classList.add('recording');document.getElementById('chatMediaDraft').textContent=chatText('🔴 جاري التسجيل… اضغط الميكروفون للإيقاف (60 ثانية كحد أقصى).','🔴 Recording… Tap the microphone to stop (up to 60 seconds).');voiceTimeout=setTimeout(()=>stopVoiceRecording(),60000);
+ }catch{stopVoiceRecording(true);showToast(chatText('تعذر تسجيل الصوت. تحقق من إذن الميكروفون.','Could not record audio. Check microphone permission.'))}
+}
+async function commitReliableMessage(p,text,media){
+ const c=channelFor(p),key=c.uid+':'+c.root+':'+c.id,signature=text+'|'+(media?.token||'');let pending=retryMessages.get(key);
+ if(!pending||pending.signature!==signature){pending={signature,id:doc(collection(c.database,c.root,c.id,'messages')).id};retryMessages.set(key,pending)}
+ const messageRef=doc(c.database,c.root,c.id,'messages',pending.id),existing=await getDoc(messageRef);if(existing.exists()){retryMessages.delete(key);return true}
+ if(p.kind==='support'&&text&&!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return false}
+ const message={senderUid:c.uid,text:text.slice(0,p.kind==='support'?1500:2000),createdAt:serverTimestamp()};
+ if(p.kind==='support')Object.assign(message,{staff:!!(auth.currentUser&&canManageSupport()),senderName:String(window.PythagorasiUser?.displayName||chatText('زائر','Guest')).slice(0,80)});
+ const batch=writeBatch(c.database);if(media){message.mediaId=pending.id;batch.set(doc(c.database,c.root,c.id,'media',pending.id),{senderUid:c.uid,contentType:media.contentType,data:media.data,createdAt:serverTimestamp()})}batch.set(messageRef,message);if(p.kind==='support')batch.update(doc(c.database,c.root,c.id),{updatedAt:serverTimestamp()});await batch.commit();retryMessages.delete(key);
+ if(p.kind!=='support'){const day=new Date();day.setUTCHours(0,0,0,0);try{await setDoc(doc(c.database,c.root,c.id,'activity',day.toISOString().slice(0,10)+'_'+c.uid),{senderUid:c.uid,day,messageId:pending.id,updatedAt:serverTimestamp()})}catch(e){console.warn('activity update',e.code)}}
+ try{if(p.kind!=='support')await updateDoc(doc(c.database,c.root,c.id),{lastMessage:(text||chatText('مرفق','Attachment')).slice(0,180),lastSenderUid:c.uid,updatedAt:serverTimestamp()})}catch(e){console.warn('inbox update',e.code)}return true;
+}
+async function deleteConversationForMe(){
+ const p=activeChatPerson;if(!p)return;if(!uiConfirm('حذف عرض هذه المحادثة من عندك فقط؟ لن تُحذف أي رسالة من عند الطرف الآخر.','Delete this conversation view for you only? No messages will be deleted for anyone else.'))return;
+ try{const c=channelFor(p);await setDoc(doc(c.database,'users',c.uid,'chatPreferences',conversationKey(p)),{hiddenAt:serverTimestamp()},{merge:true});stopConversation();activeChatPerson=null;chatModal.classList.remove('chat-thread-open');document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');listenSupportChatInbox();if(canManageSupport())adminLoadSupportRequests(document.getElementById('supportQueueList'))}catch{showToast(chatText('تعذر حذف المحادثة من عندك.','Could not delete the conversation view.'))}
+}
+function beginPrivatePreferenceWatch(p){const c=channelFor(p);if(p.kind!=='support')return ()=>{};return onSnapshot(doc(c.database,'users',c.uid,'chatPreferences',conversationKey(p)),snap=>{chatPrefs[conversationKey(p)]=snap.data()||{};renderConversationMessages(chatLastMessages,p)},()=>{})}
+function staffCan(permission){return isSuperAdminProfile()||!!classoraStaffPermissions?.[permission]}
+async function performSupportAction(ticket,action,targetUid){
+ const reason=uiPrompt('سبب الإجراء:','Reason for this action:','');if(!reason?.trim())return;
+ if(action==='deleteAccount'&&!uiConfirm('حذف هذا الحساب نهائيًا وتعطيل دخوله؟ هذا لا يحذف نسخ الرسائل من حسابات الآخرين.','Permanently delete this account and disable sign-in? Other people keep their message copies.'))return;
+ try{const result=await httpsCallable(getFunctions(firebaseApp),'classoraSupportAction')({ticketId:ticket.id,action,targetUid,reason:reason.trim().slice(0,500)});showToast(result.data?.pending?chatText('تم إرسال طلب الحذف للأدمن.','Deletion request sent to admin.'):chatText('تم تنفيذ الإجراء.','Action completed.'))}catch(e){console.warn('support action',e.code);showToast(chatText('تعذر تنفيذ الإجراء. تحقق من صلاحيتك وحاول لاحقًا.','Action could not be completed. Check your access and try later.'))}
+}
+function appendAuditButton(host,ticket){
+ const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('سجل الإجراءات','Action history');const list=document.createElement('div');host.append(b,list);b.onclick=async()=>{b.disabled=true;try{const constraints=[where('ticketId','==',ticket.id)];if(!isSuperAdminProfile())constraints.push(where('actor','==',auth.currentUser.uid));const snap=await getDocs(query(collection(db,'supportAudit'),...constraints));list.textContent='';const names={review:['بدء الفحص','Review started'],requestPassword:['طلب تغيير الباسورد','Password change requested'],requestName:['طلب تغيير الاسم','Name change requested'],requestSecurityPhrase:['طلب تغيير كلمة الأمان','Security phrase change requested'],restrictChat:['حظر الشات','Chat restricted'],restoreChat:['رفع حظر الشات','Chat restored'],suspend:['إيقاف الحساب','Account suspended'],restore:['رفع الإيقاف','Account restored'],deleteAccount:['حذف الحساب','Account deletion'],requestDeletion:['طلب حذف الحساب','Deletion requested']};for(const d of snap.docs.sort((a,b)=>(b.data().createdAt?.seconds||0)-(a.data().createdAt?.seconds||0))){const r=d.data(),row=document.createElement('p');row.textContent=chatText(...(names[r.action]||[r.action,r.action]))+' • '+adminDate(r.createdAt)+' • '+r.actor+' → '+r.targetUid+' • '+r.reason;list.append(row)}if(!snap.size)list.textContent=chatText('لا توجد إجراءات مسجلة.','No actions recorded.')}catch{list.textContent=chatText('تعذر تحميل السجل.','Could not load history.')}finally{b.disabled=false}};
+}
+function appendCaseActions(host,ticket){
+ const target=ticket.reportedUid||ticket.createdBy;if(!target)return;
+ const panel=document.createElement('div');panel.className='case-actions';const info=document.createElement('div');info.textContent=(ticket.reportedUid?chatText('الحساب المبلّغ عنه: ','Reported account: '):chatText('صاحب الطلب: ','Requester: '))+(ticket.reportedName||ticket.createdByName||target)+' • '+(ticket.reportedProfileId||ticket.createdByProfileId||target);panel.append(info);
+ const add=(ar,en,fn)=>{const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText(ar,en);b.onclick=fn;panel.append(b)};
+ add('عرض الحساب','View account',async()=>{try{const snap=await getDoc(doc(db,'publicProfiles',target));const p=snap.data()||{};info.textContent=[p.displayName||target,'ID: '+(p.profileId||target),chatRoleLabel(p.role)].join(' • ')}catch{showToast(chatText('تعذر عرض الحساب.','Could not load account.'))}});
+ add('بدء الفحص','Start review',()=>performSupportAction(ticket,'review',target));
+ for(const [action,ar,en] of [['requestPassword','طلب تغيير الباسورد','Request password change'],['requestSecurityPhrase','طلب تغيير كلمة الأمان','Request security phrase change'],['requestName','طلب تغيير الاسم','Request name change']])add(ar,en,()=>performSupportAction(ticket,action,ticket.createdBy));
+ if(staffCan('chatModeration')){add('حظر من الشات','Restrict chat',()=>performSupportAction(ticket,'restrictChat',target));add('رفع حظر الشات','Restore chat',()=>performSupportAction(ticket,'restoreChat',target))}
+ if(staffCan('banAccounts')){add('إيقاف الحساب','Suspend account',()=>performSupportAction(ticket,'suspend',target));add('رفع الإيقاف','Restore account',()=>performSupportAction(ticket,'restore',target))}
+ add(staffCan('deleteAccounts')?'حذف الحساب':'طلب حذف الحساب',staffCan('deleteAccounts')?'Delete account':'Request account deletion',()=>performSupportAction(ticket,'deleteAccount',target));host.append(panel);
+}
+function watchAccountActionRequests(uid){
+ if(caseActionUnsub)caseActionUnsub();if(!uid)return;
+ caseActionUnsub=onSnapshot(query(collection(db,'accountActionRequests'),where('targetUid','==',uid),where('status','==','pending')),snap=>{
+ const host=document.getElementById('accountActionRequests');host.innerHTML='';for(const d of snap.docs){const r=d.data(),card=document.createElement('div');card.className='support-ticket';const label=document.createElement('p');const names={requestPassword:chatText('الدعم يطلب منك تغيير الباسورد.','Support asks you to change your password.'),requestSecurityPhrase:chatText('الدعم يطلب منك تغيير كلمة الأمان.','Support asks you to change your security phrase.'),requestName:chatText('الدعم يطلب منك تحديث اسمك.','Support asks you to update your name.'),review:chatText('حسابك قيد المراجعة.','Your account is under review.')};label.textContent=names[r.action]||r.action;card.append(label);if(r.action!=='review'){const b=document.createElement('button');b.className='exam-secondary';b.textContent=chatText('فتح الإعدادات','Open settings');b.onclick=()=>{openSettingsModal();document.getElementById(r.action==='requestSecurityPhrase'?'securityPhraseSettingsCard':r.action==='requestPassword'?'accountPasswordCard':'settingsDisplayName').scrollIntoView({block:'center',behavior:'smooth'})};card.append(b)}const dismiss=document.createElement('button');dismiss.className='exam-secondary';dismiss.textContent=chatText('تم الاطلاع','Acknowledge');dismiss.onclick=()=>updateDoc(d.ref,{status:'acknowledged'});card.append(dismiss);host.append(card)}
+ },e=>console.warn('account actions',e.code));
+}
+document.getElementById('chatMessageInput').addEventListener('input',()=>{publishTyping(true);clearTimeout(typingTimer);typingTimer=setTimeout(()=>publishTyping(false),3000)});
+document.getElementById('chatMessageInput').addEventListener('blur',()=>publishTyping(false));
+document.getElementById('chatMessages').addEventListener('scroll',markConversationRead);document.addEventListener('visibilitychange',()=>{if(document.hidden)publishTyping(false);else markConversationRead()});window.addEventListener('focus',markConversationRead);
+document.getElementById('chatOlderBtn').onclick=loadOlderChat;
+document.getElementById('chatPhotoBtn').onclick=()=>document.getElementById('chatPhotoInput').click();
+document.getElementById('chatPhotoInput').onchange=async e=>{const file=e.target.files[0],p=activeChatPerson;try{const result=await prepareImage(file);if(p!==activeChatPerson)return;pendingChatMedia=result;paintMediaDraft()}catch{showToast(chatText('اختار صورة JPG أو PNG أو WebP بحجم أصغر.','Choose a smaller JPG, PNG or WebP image.'))}finally{e.target.value=''}};
+document.getElementById('chatVoiceBtn').onclick=toggleVoiceRecording;document.getElementById('chatDiscardMediaBtn').onclick=()=>{pendingChatMedia=null;paintMediaDraft()};
+
 // Personal chat preferences stay private; blocks are enforced by database rules.
 let chatPrefs={},chatBlocks=new Set(),chatPrefsUnsub=null,chatBlocksUnsub=null,groupInboxUnsub=null,supportInboxUnsub=null,chatActivityUnsub=null;
 let recentChatRows=[],groupChatRows=[],chatLastMessages=[];
@@ -17057,10 +17204,10 @@ async function supportSession(){
  return {db:guestSupportDb,uid:guestSupportAuth.currentUser.uid};
 }
 function conversationKey(p){return p.kind==='group'?p.groupId:p.kind==='support'?'support_'+p.ticketId:directChatId(auth.currentUser.uid,p.uid)}
-function conversationName(p){return p.kind==='support'?chatText('الدعم','Support'):chatPrefs[conversationKey(p)]?.nickname||p.displayName||chatText('مستخدم','User')}
-function stopConversation(){chatOpenSequence++;if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null}if(chatActivityUnsub){chatActivityUnsub();chatActivityUnsub=null}}
+function conversationName(p){return p.kind==='support'?(canManageSupport()&&p.ticket?supportRequestTitle(p.ticket):chatText('الدعم','Support')):chatPrefs[conversationKey(p)]?.nickname||p.displayName||chatText('مستخدم','User')}
+function stopConversation(){publishTyping(false);stopPresence();chatOpenSequence++;if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null}if(chatActivityUnsub){chatActivityUnsub();chatActivityUnsub=null}}
 function showChatThread(p){
- activeChatPerson=p;chatLastMessages=[];chatModal.classList.add('open','chat-thread-open');
+ activeChatPerson=p;chatLastMessages=[];pendingChatMedia=null;paintMediaDraft();mediaCache.clear();document.getElementById("chatDeliveryStatus").textContent="";chatModal.classList.add('open','chat-thread-open');
  document.getElementById('chatThreadEmpty').classList.add('hidden');document.getElementById('chatThreadActive').classList.remove('hidden');
  document.getElementById('chatMessages').textContent='⏳';document.getElementById('chatMessageInput').value='';document.getElementById('chatStreak').textContent='';
  updateConversationTools();
@@ -17072,7 +17219,7 @@ function updateConversationTools(){
  const blocked=!group&&!support&&chatBlocks.has(p.uid);
  document.getElementById('chatFavoriteBtn').textContent=pref.favorite?chatText('⭐ من المفضّلين','⭐ Favorite'):chatText('☆ أفضل صديق','☆ Best friend');
  document.getElementById('chatBlockBtn').textContent=blocked?chatText('إلغاء الحظر','Unblock'):chatText('حظر الخاص','Block DMs');
- for(const id of ['chatFavoriteBtn','chatNicknameBtn','chatDeleteBtn'])document.getElementById(id).classList.toggle('hidden',support);
+ for(const id of ['chatFavoriteBtn','chatNicknameBtn'])document.getElementById(id).classList.toggle('hidden',support);
  document.getElementById('chatBlockBtn').classList.toggle('hidden',group||support);
  document.getElementById('chatLeaveGroupBtn').classList.toggle('hidden',!group);
  document.getElementById('chatReportUserBtn').classList.toggle('hidden',support||group);
@@ -17080,13 +17227,16 @@ function updateConversationTools(){
  document.getElementById('chatFollowNotice').textContent=support?chatText('تم استلام طلبك. تابع هذه الصفحة لتلقّي الردود، ويمكنك إضافة تفاصيل هنا.','Your request was received. Follow this page for replies; you can add details here.'):blocked?chatText('الرسائل الخاصة محظورة. تبقى المجموعات المشتركة منفصلة.','Direct messages are blocked. Shared groups are separate.'):'';
 }
 function renderConversationMessages(rows,p=activeChatPerson){
- if(!p||p!==activeChatPerson)return;chatLastMessages=rows;const host=document.getElementById('chatMessages');host.innerHTML='';
+ if(!p||p!==activeChatPerson)return;const host=document.getElementById('chatMessages'),nearBottom=!chatLastMessages.length||host.scrollHeight-host.scrollTop-host.clientHeight<100,oldHeight=host.scrollHeight,oldTop=host.scrollTop;chatLastMessages=rows;const previous=new Map([...host.children].map(el=>[el.dataset.messageId,el]));if(!host.children.length)host.textContent='';const retained=new Set();
  const hiddenAt=chatPrefs[conversationKey(p)]?.hiddenAt?.toMillis?.()||0,viewer=p.viewerUid||auth.currentUser?.uid;
  for(const m of rows){if((m.createdAt?.toMillis?.()||Date.now())<=hiddenAt)continue;if(p.kind==='group'&&chatBlocks.has(m.senderUid))continue;
- const bubble=document.createElement('div');bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
- if(p.kind==='group'||p.kind==='support'){const who=document.createElement('b');who.textContent=m.staff?chatText('الدعم','Support'):m.senderName||chatPublicProfiles.find(person=>person.uid===m.senderUid)?.displayName||p.participantNames?.[m.senderUid]||chatText('مستخدم','User');bubble.append(who)}
- const text=document.createElement('span'),time=document.createElement('time');text.textContent=m.text||'';text.dir='auto';text.setAttribute('data-no-translate','');time.textContent=chatTime(m.createdAt);bubble.append(text,time);host.append(bubble);
- }requestAnimationFrame(()=>host.scrollTop=host.scrollHeight);
+ const key=m.id,signature=JSON.stringify([m.text,m.mediaId,m.senderName,m.staff,currentUILanguage]);let bubble=previous.get(key);if(bubble&&bubble.dataset.signature===signature){retained.add(key);const time=bubble.querySelector('time');if(time)time.textContent=chatTime(m.createdAt);const receipt=bubble.querySelector('.chat-receipt');if(receipt){receipt.textContent=m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis()}const next=host.children[retained.size-1];if(next!==bubble)host.insertBefore(bubble,next||null);continue}if(bubble)bubble.remove();bubble=document.createElement('div');bubble.dataset.messageId=key;bubble.dataset.signature=signature;retained.add(key);bubble.className='chat-bubble '+(m.senderUid===viewer?'mine':'theirs');
+ if(p.kind==='group'||p.kind==='support'){const who=document.createElement('b');who.textContent=m.staff?chatText('الدعم','Support'):m.senderName||chatPublicProfiles.find(person=>person.uid===m.senderUid)?.displayName||chatText('مستخدم','User');bubble.append(who)}
+ if(m.text){const text=document.createElement('span');text.textContent=m.text;text.dir='auto';text.setAttribute('data-no-translate','');bubble.append(text)}
+ if(m.mediaId){const media=document.createElement('div');media.className='chat-attachment';bubble.append(media);queueMicrotask(()=>attachPrivateMedia(media,m,p))}
+ const time=document.createElement('time');time.textContent=chatTime(m.createdAt);bubble.append(time);
+ if(m.senderUid===viewer){const receipt=document.createElement('small');receipt.className='chat-receipt';receipt.textContent=m.pending?chatText('جاري الإرسال…','Sending…'):chatText('✓ تم الإرسال','✓ Sent');if(!m.pending&&m.createdAt?.toMillis)receipt.dataset.readTime=m.createdAt.toMillis();bubble.append(receipt)}host.insertBefore(bubble,host.children[retained.size-1]||null);
+ }for(const el of [...host.children])if(!retained.has(el.dataset.messageId))el.remove();requestAnimationFrame(()=>{host.scrollTop=nearBottom?host.scrollHeight:oldTop+(host.scrollHeight-oldHeight);paintPresence(p);markConversationRead()});
 }
 function calculateChatStreak(rows,now=Date.now()){
  const days=new Map();for(const r of rows){const t=r.day?.toMillis?.()??r.day?.getTime?.()??Number(r.day);if(!Number.isFinite(t))continue;const day=Math.floor(t/86400000);if(!days.has(day))days.set(day,new Set());days.get(day).add(r.senderUid)}
@@ -17128,7 +17278,7 @@ async function openGroupChat(p){
  stopConversation();const sequence=chatOpenSequence;showChatThread(p);
  try{const snap=await getDoc(doc(db,'groupChats',p.groupId));if(!snap.exists()||!snap.data().participantIds.includes(auth.currentUser.uid))throw Error('not-member');if(sequence!==chatOpenSequence)return;
  Object.assign(p,snap.data(),{displayName:snap.data().name});updateConversationTools();
- activeChatUnsub=onSnapshot(query(collection(db,'groupChats',p.groupId,'messages'),orderBy('createdAt','desc'),limit(150)),snap=>renderConversationMessages(snap.docs.map(d=>d.data()).reverse(),p),()=>showToast(chatText('تعذر تحميل المجموعة.','Could not load group.')));watchStreak('groupChats',p.groupId);
+ activeChatUnsub=watchLiveMessages(p);watchStreak('groupChats',p.groupId);
  }catch(err){showToast(chatText('المجموعة غير متاحة أو لم تعد عضوًا فيها.','Group unavailable or you are no longer a member.'))}
 }
 async function createChatGroup(){
@@ -17140,19 +17290,16 @@ async function joinChatGroup(){
  try{await updateDoc(doc(db,'groupChats',code),{participantIds:arrayUnion(auth.currentUser.uid)});await openGroupChat({kind:'group',uid:code,groupId:code})}catch(err){showToast(chatText('تعذر الانضمام. تحقق من الكود؛ الحد الأقصى 20 عضوًا.','Could not join. Check the code; groups have a 20-member limit.'))}
 }
 async function openSupportConversation(ticketId,context){
- stopConversation();const sequence=chatOpenSequence;const session=context||await supportSession();if(sequence!==chatOpenSequence)return;
+ stopConversation();const sequence=chatOpenSequence,session=context||await supportSession();if(sequence!==chatOpenSequence)return;
  const p={kind:'support',uid:'support',ticketId,channelDb:session.db,viewerUid:session.uid};showChatThread(p);
- const parent=doc(session.db,'supportRequests',ticketId);let ticket=null,rows=[];
- const paint=()=>{if(!ticket)return;const messages=[{senderUid:ticket.createdBy,text:ticket.message,createdAt:ticket.createdAt,senderName:ticket.createdByName}];
-  if(ticket.adminReply&&!rows.some(m=>m.text===ticket.adminReply&&m.staff))messages.push({senderUid:ticket.repliedBy,staff:true,text:ticket.adminReply,createdAt:ticket.repliedAt});
-  renderConversationMessages([...messages,...rows].sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)),p)};
- const off1=onSnapshot(parent,snap=>{if(snap.exists()){ticket=snap.data();paint()}},()=>showToast(chatText('تعذر فتح طلب الدعم.','Could not open support request.')));
- const off2=onSnapshot(query(collection(session.db,'supportRequests',ticketId,'messages'),orderBy('createdAt','desc'),limit(150)),snap=>{rows=snap.docs.map(d=>d.data()).reverse();paint()},()=>showToast(chatText('تعذر تحميل ردود الدعم.','Could not load support replies.')));
- activeChatUnsub=()=>{off1();off2()};
+ try{const snap=await getDoc(doc(session.db,'supportRequests',ticketId));if(!snap.exists())throw Error('missing');if(sequence!==chatOpenSequence)return;
+ p.ticket={id:ticketId,...snap.data()};updateConversationTools();const t=p.ticket,legacy=[{id:'original',senderUid:t.createdBy,text:t.message,createdAt:t.createdAt,senderName:t.createdByName}];if(t.adminReply)legacy.push({id:'legacy-reply',senderUid:t.repliedBy,staff:true,text:t.adminReply,createdAt:t.repliedAt});
+ const offMessages=watchLiveMessages(p,legacy),offPrefs=beginPrivatePreferenceWatch(p);activeChatUnsub=()=>{offMessages();offPrefs()};
+ }catch{document.getElementById('chatDeliveryStatus').textContent=chatText('تعذر فتح طلب الدعم.','Could not open support request.')}
 }
 async function listenSupportChatInbox(){
  if(supportInboxUnsub)supportInboxUnsub();document.querySelector('.chat-group-actions').classList.toggle('hidden',!auth.currentUser);const sessionOwner=auth.currentUser?.uid||'';try{const session=await supportSession();if(!chatModal.classList.contains('open')||sessionOwner!==(auth.currentUser?.uid||''))return;supportInboxUnsub=onSnapshot(query(collection(session.db,'supportRequests'),where('createdBy','==',session.uid)),snap=>{
-  const host=document.getElementById('chatSupportPeople');host.innerHTML='';for(const r of snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0))){const b=document.createElement('button');b.className='chat-contact support-chat-entry';b.textContent='🛟 '+chatText('الدعم','Support')+' • #'+r.id.slice(-8)+(r.status==='resolved'?' ✅':'');b.onclick=()=>openSupportConversation(r.id,session);host.append(b)}
+  const host=document.getElementById('chatSupportPeople');host.innerHTML='';for(const r of snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0))){if(chatPrefs['support_'+r.id]?.hiddenAt&&(r.updatedAt?.toMillis?.()||0)<=chatPrefs['support_'+r.id].hiddenAt.toMillis())continue;const b=document.createElement('button');b.className='chat-contact support-chat-entry';b.textContent='🛟 '+supportRequestTitle(r)+' • #'+r.id.slice(-8)+(r.status==='resolved'?' ✅':'');b.onclick=()=>openSupportConversation(r.id,session);host.append(b)}
  },()=>{})}catch(err){console.warn('support inbox',err.code)}
 }
 async function sendSupportChatMessage(p,text){
@@ -17162,7 +17309,7 @@ async function sendSupportChatMessage(p,text){
 for(const [id,handler] of [['chatCreateGroupBtn',createChatGroup],['chatJoinGroupBtn',joinChatGroup]])document.getElementById(id).addEventListener('click',handler);
 document.getElementById('chatFavoriteBtn').onclick=async()=>{try{await saveChatPreference({favorite:!chatPrefs[conversationKey(activeChatPerson)]?.favorite})}catch{showToast(chatText('تعذر حفظ المفضّل.','Could not save favorite.'))}};
 document.getElementById('chatNicknameBtn').onclick=async()=>{const nickname=uiPrompt('لقب خاص يظهر إلك فقط (اتركه فارغًا لإزالته):','Private nickname, visible only to you (leave empty to clear):',chatPrefs[conversationKey(activeChatPerson)]?.nickname||'');if(nickname===null)return;try{await saveChatPreference({nickname:nickname.trim().slice(0,40)})}catch{showToast(chatText('تعذر حفظ اللقب.','Could not save nickname.'))}};
-document.getElementById('chatDeleteBtn').onclick=async()=>{if(!uiConfirm('إخفاء المحادثة ومسح عرض الرسائل السابقة من عندك؟ تبقى عند الطرف الآخر، وتظهر المحادثة إذا وصلت رسالة جديدة.','Hide this conversation and its past messages for you? Others keep their copies. A new message will bring the conversation back.'))return;try{await saveChatPreference({hiddenAt:serverTimestamp()});chatModal.classList.remove('chat-thread-open');document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');stopConversation();activeChatPerson=null}catch{showToast(chatText('تعذر إخفاء المحادثة.','Could not hide conversation.'))}};
+document.getElementById('chatDeleteBtn').onclick=deleteConversationForMe;
 document.getElementById('chatBlockBtn').onclick=async()=>{const p=activeChatPerson;if(!p||p.kind)return;const ref=doc(db,'users',auth.currentUser.uid,'chatBlocks',p.uid);try{if(chatBlocks.has(p.uid))await deleteDoc(ref);else await setDoc(ref,{createdAt:serverTimestamp()})}catch{showToast(chatText('تعذر تعديل الحظر.','Could not change block.'))}};
 document.getElementById('chatLeaveGroupBtn').onclick=async()=>{if(!activeChatPerson||!uiConfirm('مغادرة المجموعة؟','Leave this group?'))return;try{await updateDoc(doc(db,'groupChats',activeChatPerson.groupId),{participantIds:arrayRemove(auth.currentUser.uid)});stopConversation();activeChatPerson=null;document.getElementById('chatThreadActive').classList.add('hidden');document.getElementById('chatThreadEmpty').classList.remove('hidden');chatModal.classList.remove('chat-thread-open')}catch{showToast(chatText('تعذر مغادرة المجموعة.','Could not leave group.'))}};
 
@@ -17316,22 +17463,18 @@ async function openDirectChat(person){
 
   if(opening!==chatOpenSequence||!chatModal.classList.contains("open"))return;
   if(activeChatUnsub){try{activeChatUnsub()}catch{}}
-  activeChatUnsub=onSnapshot(query(collection(db,"chats",chatId,"messages"),orderBy("createdAt","desc"),limit(150)),snap=>{
-    const rows=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
-    renderConversationMessages(rows.slice(-150),person);
-  },err=>{console.warn("chat messages",err);document.getElementById("chatMessages").textContent=chatText("تعذر تحميل الرسائل. سكّر المحادثة وافتحها مرة ثانية.","Messages could not load. Close and reopen the conversation.")});
+  activeChatUnsub=watchLiveMessages(person);
   watchStreak("chats",chatId);updateConversationTools();
 }
 
 async function sendChatMessage(){
  if(chatSending||!activeChatPerson)return;
+ if(voiceRecorder?.state==='recording'){showToast(chatText('أوقف التسجيل أولًا.','Stop recording first.'));return}
  const p=activeChatPerson;if(p.kind!=='support'&&!auth.currentUser)return;
- const input=document.getElementById('chatMessageInput'),text=input.value.trim();if(!text)return;
- const btn=document.getElementById('chatSendBtn');chatSending=true;btn.disabled=true;
- try{
-  const sent=p.kind==='support'?await sendSupportChatMessage(p,text):(await writeSocialMessage(p,text),true);
-  if(sent&&input.value.trim()===text)input.value='';
- }catch(err){console.error('send chat',err);showToast(chatText('تعذر إرسال الرسالة. قد تكون المحادثة محظورة أو غير متاحة. نصّك محفوظ.','Message not sent. The conversation may be blocked or unavailable. Your draft is preserved.'))}
+ const input=document.getElementById('chatMessageInput'),text=input.value.trim(),media=pendingChatMedia;if(!text&&!media)return;
+ const btn=document.getElementById('chatSendBtn');chatSending=true;btn.disabled=true;document.getElementById('chatDeliveryStatus').textContent=chatText('جاري الإرسال…','Sending…');publishTyping(false);
+ try{const sent=await commitReliableMessage(p,text,media);if(sent&&p===activeChatPerson){if(input.value.trim()===text)input.value='';if(pendingChatMedia===media){pendingChatMedia=null;paintMediaDraft()}document.getElementById('chatDeliveryStatus').textContent=chatText('تم حفظ الرسالة وإرسالها ✓','Message saved and sent ✓')}}
+ catch(err){console.warn('send chat',err.code);if(p===activeChatPerson)document.getElementById('chatDeliveryStatus').textContent=chatText('لم يتم تأكيد الإرسال. نصّك ومرفقك محفوظان؛ اضغط إرسال للمحاولة مجددًا.','Delivery was not confirmed. Your text and attachment are preserved; press Send to retry.')}
  finally{chatSending=false;btn.disabled=false;updateConversationTools()}
 }
 function listenChatInbox(){
@@ -17380,6 +17523,7 @@ document.getElementById("chatMessageInput").addEventListener("keydown",e=>{
 });
 document.getElementById("chatReportUserBtn").addEventListener("click",()=>{
   if(!activeChatPerson)return;
+  pendingReportTarget={uid:activeChatPerson.uid,name:activeChatPerson.displayName||"",profileId:activeChatPerson.profileId||""};
   openSupport("report_user");
   document.getElementById("supportMessage").value=chatText("بلاغ عن مستخدم • UID ","Report user • UID ")+activeChatPerson.uid+"\n";
 });
@@ -17402,6 +17546,7 @@ async function resolveSupportUid(identifier){
 }
 
 function openSupport(type=""){
+  if(type!=="report_user")pendingReportTarget=null;
   if(type)document.getElementById("supportType").value=type;
   else document.getElementById("supportType").value=auth.currentUser?"bug":"account_access";
   if(auth.currentUser&&window.PythagorasiUser){
@@ -17445,6 +17590,7 @@ async function submitSupportRequest(){
     const createdBy=session.uid;
     const ticket=await addDoc(collection(session.db,"supportRequests"),{
       type,
+      reportedUid:type==="report_user"?pendingReportTarget?.uid||"":"",reportedName:type==="report_user"?String(pendingReportTarget?.name||"").slice(0,80):"",reportedProfileId:type==="report_user"?pendingReportTarget?.profileId||"":"",createdByProfileId:window.PythagorasiUser?.profileId||"",
       accountIdentifier:identifier.slice(0,80),
       claimedUid,
       securityProofHash:proof,
@@ -17517,6 +17663,7 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
   host.innerHTML='<div class="cloud-note">⏳ Loading...</div>';
   try{
     if(isSuperAdminProfile()&&!adminUsersCache.length){const users=await getDocs(collection(db,"users"));adminUsersCache=users.docs.map(d=>({uid:d.id,...d.data()}))}
+    const prefs=await getDocs(collection(db,"users",auth.currentUser.uid,"chatPreferences"));for(const d of prefs.docs)chatPrefs[d.id]=d.data();
     const snap=await getDocs(collection(db,"supportRequests"));
     const rows=snap.docs.map(d=>({id:d.id,...d.data()}))
       .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
@@ -17526,6 +17673,7 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
       return;
     }
     for(const r of rows){
+      if((r.updatedAt?.toMillis?.()||0)<=(chatPrefs["support_"+r.id]?.hiddenAt?.toMillis?.()||-1))continue;
       const account=isSuperAdminProfile()?adminUsersCache.find(u=>u.uid===r.claimedUid):null;
       const hasPhrase=!!account?.securityPhraseHash;
       const submittedProof=r.securityProofHash;
@@ -17535,7 +17683,7 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
 
       const head=document.createElement("div");head.className="support-ticket-head";
       const left=document.createElement("div");
-      const title=document.createElement("b");title.textContent=supportTypeLabel(r.type)+" • #"+r.id.slice(-8);
+      const title=document.createElement("b");title.textContent=supportRequestTitle(r)+" • #"+r.id.slice(-8);
       const meta=document.createElement("div");meta.className="support-ticket-meta";
       meta.textContent=(r.accountIdentifier||r.createdByName||"—")+" • "+adminDate(r.createdAt);
       left.append(title,meta);
@@ -17552,7 +17700,7 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
           ?"⚠️ كلمة الأمان غير مطابقة"
           :hasPhrase?"🛡️ للحساب كلمة أمان — لم تُرسل":"— لا توجد كلمة أمان مفعّلة";
 
-      card.append(head,message,proof);
+      card.append(head,message,proof);appendCaseActions(card,r);appendAuditButton(card,r);if(r.deletionRequestedBy){const note=document.createElement("p");note.textContent=chatText("بانتظار موافقة الأدمن على حذف الحساب.","Awaiting admin approval to delete the account.");card.append(note)}
       if(account){
         const accountMeta=document.createElement("div");accountMeta.className="admin-meta";
         accountMeta.textContent="Account: "+(account.displayName||"")+" • #"+(account.profileId||"—")+" • UID "+account.uid;
@@ -17564,9 +17712,9 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
       const del=document.createElement("button");del.className="danger support-delete";del.textContent="🗑 حذف";
       const replyInput=document.createElement("textarea");replyInput.maxLength=1500;replyInput.placeholder=adminLang("رد على صاحب الطلب…","Reply to the request…");replyInput.value=r.adminReply||"";
       const replyBtn=document.createElement("button");replyBtn.className="exam-secondary";replyBtn.textContent=adminLang("إرسال الرد","Send reply");
-      replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;if(!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return;}replyBtn.disabled=true;try{await addDoc(collection(db,"supportRequests",r.id,"messages"),{senderUid:auth.currentUser.uid,staff:true,senderName:String(window.PythagorasiUser?.displayName||"Support").slice(0,80),text,createdAt:serverTimestamp()});replyInput.value="";showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
+      replyBtn.onclick=async()=>{const text=replyInput.value.trim();if(text.length<2)return;if(!supportLanguageAllowed(text)){showToast(supportLanguageNotice());return;}replyBtn.disabled=true;try{await commitReliableMessage({kind:"support",ticketId:r.id,channelDb:db,viewerUid:auth.currentUser.uid},text,null);replyInput.value="";showToast(adminLang("تم حفظ رد الدعم","Support reply saved"))}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الرد","Could not save reply"))}finally{replyBtn.disabled=false}};
       if(r.createdBy){card.append(replyInput,replyBtn);const threadBtn=document.createElement('button');threadBtn.className='exam-secondary';threadBtn.textContent=chatText('فتح محادثة الدعم','Open support conversation');threadBtn.onclick=()=>openSupportConversation(r.id,{db,uid:auth.currentUser.uid});card.append(threadBtn)}
-      actions.append(resolve);if(isSuperAdminProfile())actions.append(del);card.appendChild(actions);
+      actions.append(resolve,del);card.appendChild(actions);del.textContent=chatText("حذف من عندي","Delete for me");
 
       resolve.addEventListener("click",async()=>{
         await updateDoc(doc(db,"supportRequests",r.id),{
@@ -17578,8 +17726,8 @@ async function adminLoadSupportRequests(host=document.getElementById("adminSuppo
         await adminLoadSupportRequests(host);if(host.id==="supportQueueList")filterSupportQueue();
       });
       del.addEventListener("click",async()=>{
-        if(uiConfirm("حذف طلب الدعم؟")){
-          await deleteDoc(doc(db,"supportRequests",r.id));
+        if(uiConfirm("حذف المحادثة من عندك فقط؟","Delete this conversation for you only?")){
+          await setDoc(doc(db,"users",auth.currentUser.uid,"chatPreferences","support_"+r.id),{hiddenAt:serverTimestamp()},{merge:true});
           await adminLoadSupportRequests(host);if(host.id==="supportQueueList")filterSupportQueue();
         }
       });

@@ -242,3 +242,5 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
     });
   }
 );
+
+Object.assign(exports, require('./support-admin'));

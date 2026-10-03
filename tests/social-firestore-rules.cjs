@@ -44,6 +44,27 @@ const fs=require('node:fs');const {initializeTestEnvironment,assertSucceeds,asse
  await assertFails(setDoc(doc(a,'chats','a__b','activity','fake'),receipt));
  const batch=writeBatch(a);batch.set(doc(a,'chats','a__b','messages','batch'),dm('a'));batch.set(doc(a,'chats','a__b','activity','today-a'),receipt);await assertSucceeds(batch.commit());
  await assertFails(setDoc(doc(b,'chats','a__b','activity','today-a'),{...receipt,senderUid:'b'}));
+ // V66: attachment/message consistency, private receipts and moderation.
+ const media={senderUid:'a',contentType:'image/jpeg',data:'YWJj',createdAt:serverTimestamp()};
+ const imageBatch=writeBatch(a);imageBatch.set(doc(a,'chats','a__b','messages','photo'),{...dm('a'),text:'',mediaId:'photo'});imageBatch.set(doc(a,'chats','a__b','media','photo'),media);await assertSucceeds(imageBatch.commit());
+ await assertSucceeds(getDoc(doc(b,'chats','a__b','media','photo')));await assertFails(getDoc(doc(c,'chats','a__b','media','photo')));
+ await assertFails(setDoc(doc(a,'chats','a__b','media','orphan'),media));await assertFails(setDoc(doc(a,'chats','a__b','messages','broken'),{...dm('a'),mediaId:'missing'}));
+ await assertSucceeds(setDoc(doc(a,'chats','a__b','presence','a'),{typing:true,typingAt:serverTimestamp()}));
+ await assertSucceeds(setDoc(doc(a,'chats','a__b','presence','a'),{lastReadAt:serverTimestamp()},{merge:true}));
+ await assertFails(setDoc(doc(b,'chats','a__b','presence','a'),{lastReadAt:serverTimestamp()},{merge:true}));
+ await assertFails(setDoc(doc(b,'chats','a__b','presence','b'),{lastReadAt:new Date('2099-01-01')}));
+ const voiceBatch=writeBatch(a);voiceBatch.set(doc(a,'supportRequests','ticket','messages','voice'),{...message('a',false,''),mediaId:'voice'});voiceBatch.set(doc(a,'supportRequests','ticket','media','voice'),{...media,contentType:'audio/webm'});voiceBatch.update(doc(a,'supportRequests','ticket'),{updatedAt:serverTimestamp()});await assertSucceeds(voiceBatch.commit());
+ await assertSucceeds(getDoc(doc(staff,'supportRequests','ticket','media','voice')));await assertFails(getDoc(doc(c,'supportRequests','ticket','media','voice')));
+ await assertFails(updateDoc(doc(a,'supportRequests','ticket'),{reviewStatus:'reviewing'}));
+ await assertSucceeds(setDoc(doc(a,'users','a','chatPreferences','support_ticket'),{hiddenAt:serverTimestamp()}));
+ await assertSucceeds(getDoc(doc(staff,'supportRequests','ticket','messages','voice')));
+ await assertFails(deleteDoc(doc(a,'chats','a__b','messages','first')));
+ await env.withSecurityRulesDisabled(async context=>{await setDoc(doc(context.firestore(),'chatRestrictions','a'),{reason:'test'});await setDoc(doc(context.firestore(),'accountActionRequests','request'),{targetUid:'a',status:'pending',action:'requestName'})});
+ await assertFails(setDoc(doc(a,'chats','a__b','messages','restricted'),dm('a')));
+ await assertSucceeds(setDoc(doc(a,'supportRequests','ticket','messages','appeal'),message('a',false,'Please review')));
+ await assertSucceeds(updateDoc(doc(a,'accountActionRequests','request'),{status:'acknowledged'}));await assertFails(updateDoc(doc(a,'accountActionRequests','request'),{targetUid:'b'}));
+ await assertFails(updateDoc(doc(staff,'staffAccess','staff'),{permissions:{deleteAccounts:true}}));
+ console.log('PASS: private atomic media, own read/typing receipts, personal-only deletion, moderation restrictions, support appeals and capability protection.');
  console.log('PASS: support ownership/languages, staff impersonation, private preferences, bidirectional blocks, group consent/leave and message-backed streak receipts.');
  }finally{await env.cleanup()}
 })().catch(e=>{console.error(e);process.exitCode=1});

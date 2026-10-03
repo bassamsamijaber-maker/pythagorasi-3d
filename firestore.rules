@@ -25,8 +25,13 @@ service cloud.firestore {
       allow get: if rawSignedIn() && (request.auth.uid == uid || isOwnerAdmin());
       allow list: if isOwnerAdmin();
       allow create, update: if isOwnerAdmin()
-        && request.resource.data.keys().hasOnly(["role","active","displayName","grantedBy","updatedAt"])
+        && request.resource.data.keys().hasOnly(["role","active","displayName","permissions","grantedBy","updatedAt"])
         && request.resource.data.role in ["admin","support"]
+        && (!('permissions' in request.resource.data) || (request.resource.data.permissions is map
+          && request.resource.data.permissions.keys().hasOnly(['chatModeration','banAccounts','deleteAccounts'])
+          && request.resource.data.permissions.get('chatModeration',false) is bool
+          && request.resource.data.permissions.get('banAccounts',false) is bool
+          && request.resource.data.permissions.get('deleteAccounts',false) is bool))
         && request.resource.data.active is bool
         && request.resource.data.displayName is string
         && request.resource.data.displayName.size() <= 80
@@ -571,6 +576,50 @@ service cloud.firestore {
 
 
 
+
+    function canUseChat() { return signedIn() && !exists(/databases/$(database)/documents/chatRestrictions/$(request.auth.uid)); }
+    function channelMember(root, id) {
+      let channel = get(/databases/$(database)/documents/$(root)/$(id)).data;
+      return signedIn() && ((root == 'supportRequests' && (isSupportAgent() || channel.createdBy == request.auth.uid))
+        || (root in ['chats','groupChats'] && request.auth.uid in channel.participantIds));
+    }
+    function channelCanSend(root,id) {
+      return channelMember(root,id) && (root == 'supportRequests' || (canUseChat()
+        && (root != 'chats' || directChatUnblocked(get(/databases/$(database)/documents/chats/$(id)).data))));
+    }
+    function validMessageMedia(root,id,data) {
+      return !('mediaId' in data) || (data.mediaId is string
+        && getAfter(/databases/$(database)/documents/$(root)/$(id)/media/$(data.mediaId)).data.senderUid == request.auth.uid);
+    }
+    match /{chatRoot}/{chatId}/media/{mediaId} {
+      allow read: if chatRoot in ['chats','groupChats','supportRequests'] && channelMember(chatRoot,chatId);
+      allow create: if chatRoot in ['chats','groupChats','supportRequests'] && channelCanSend(chatRoot,chatId)
+        && request.resource.data.keys().hasOnly(['senderUid','contentType','data','createdAt'])
+        && request.resource.data.senderUid == request.auth.uid && request.resource.data.createdAt == request.time
+        && request.resource.data.contentType in ['image/jpeg','image/png','image/webp','audio/webm','audio/ogg','audio/mp4']
+        && request.resource.data.data is string && request.resource.data.data.size() > 0 && request.resource.data.data.size() <= 655360
+        && getAfter(/databases/$(database)/documents/$(chatRoot)/$(chatId)/messages/$(mediaId)).data.mediaId == mediaId
+        && getAfter(/databases/$(database)/documents/$(chatRoot)/$(chatId)/messages/$(mediaId)).data.senderUid == request.auth.uid;
+      allow update,delete: if false;
+    }
+    match /{chatRoot}/{chatId}/presence/{uid} {
+      function fresh(field) { return !(field in request.resource.data) || request.resource.data[field] == request.time
+        || (resource != null && resource.data.get(field,null) == request.resource.data[field]); }
+      allow read: if chatRoot in ['chats','groupChats','supportRequests'] && channelMember(chatRoot,chatId);
+      allow create,update: if chatRoot in ['chats','groupChats','supportRequests'] && request.auth.uid == uid && channelCanSend(chatRoot,chatId)
+        && request.resource.data.keys().hasOnly(['typing','typingAt','lastReadAt'])
+        && (!('typing' in request.resource.data) || request.resource.data.typing is bool)
+        && fresh('typingAt') && fresh('lastReadAt');
+      allow delete: if false;
+    }
+    match /chatRestrictions/{uid} { allow read: if signedIn() && (request.auth.uid == uid || isSuperAdmin()); allow write: if false; }
+    match /accountActionRequests/{id} {
+      allow read: if signedIn() && (resource.data.targetUid == request.auth.uid || isSuperAdmin());
+      allow update: if signedIn() && resource.data.targetUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']) && request.resource.data.status == 'acknowledged';
+      allow create,delete: if false;
+    }
+
     function supportTextAllowed(text) {
       return text is string && text.size() > 0 && text.size() <= 1500
         && text.matches('^[\\x{0009}\\x{000A}\\x{000D}\\x{0020}-\\x{007E}\\x{0621}-\\x{063A}\\x{0641}-\\x{0652}\\x{0671}\\x{0660}-\\x{0669}\\x{061F}\\x{060C}\\x{061B}\\x{00A9}\\x{00AE}\\x{00AB}\\x{00BB}\\x{2013}-\\x{2014}\\x{2026}\\x{2022}\\x{2019}\\x{201C}-\\x{201D}\\x{2705}\\x{26A0}\\x{1F300}-\\x{1FAFF}\\x{2600}-\\x{26FF}\\x{2764}\\x{00B0}\\x{00D7}\\x{00F7}\\x{20AC}\\x{00A3}\\x{20AA}\\x{200D}\\x{FE0F}\\x{1F1E6}-\\x{1F1FF}]*$');
@@ -619,10 +668,11 @@ service cloud.firestore {
       match /messages/{messageId} {
         function parentGroup() { return get(/databases/$(database)/documents/groupChats/$(groupId)).data; }
         allow read: if signedIn() && request.auth.uid in parentGroup().participantIds;
-        allow create: if signedIn() && request.auth.uid in parentGroup().participantIds
-          && request.resource.data.keys().hasOnly(['senderUid','text','createdAt'])
+        allow create: if canUseChat() && request.auth.uid in parentGroup().participantIds
+          && validMessageMedia('groupChats',groupId,request.resource.data)
+          && request.resource.data.keys().hasOnly(['senderUid','text','createdAt','mediaId'])
           && request.resource.data.senderUid == request.auth.uid && request.resource.data.createdAt == request.time
-          && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000;
+          && request.resource.data.text is string && (request.resource.data.text.size() > 0 || 'mediaId' in request.resource.data) && request.resource.data.text.size() <= 2000;
         allow update, delete: if false;
       }
     }
@@ -635,7 +685,7 @@ service cloud.firestore {
         && request.resource.data.senderUid == request.auth.uid
         && request.resource.data.day == request.time.date() && request.resource.data.updatedAt == request.time
         && (!exists(/databases/$(database)/documents/$(chatRoot)/$(chatId)/activity/$(activityId)) || resource.data.senderUid == request.auth.uid)
-        && linkedMessage().senderUid == request.auth.uid && linkedMessage().createdAt == request.time;
+        && linkedMessage().senderUid == request.auth.uid && linkedMessage().createdAt.date() == request.time.date();
       allow delete: if false;
     }
 
@@ -680,17 +730,19 @@ service cloud.firestore {
         allow read: if signedIn()
           && request.auth.uid in parentChat().participantIds;
 
-        allow create: if signedIn()
+        allow create: if canUseChat()
+          && validMessageMedia("chats",chatId,request.resource.data)
           && request.auth.uid in parentChat().participantIds
           && directChatUnblocked(parentChat())
           && request.resource.data.createdAt == request.time
           && request.resource.data.senderUid == request.auth.uid
           && request.resource.data.text is string
-          && request.resource.data.text.size() > 0
+          && (request.resource.data.text.size() > 0 || "mediaId" in request.resource.data)
           && request.resource.data.text.size() <= 2000
           && request.resource.data.keys().hasOnly([
             "senderUid",
             "text",
+            "mediaId",
             "createdAt"
           ]);
 
@@ -703,6 +755,7 @@ service cloud.firestore {
       // It is strictly field-limited and is never publicly readable.
       allow create: if request.resource.data.keys().hasOnly([
           "type",
+          "reportedUid", "reportedName", "reportedProfileId", "createdByProfileId",
           "accountIdentifier",
           "claimedUid",
           "securityProofHash",
@@ -721,6 +774,10 @@ service cloud.firestore {
           "suggestion",
           "other"
         ]
+        && (!('reportedUid' in request.resource.data) || (request.resource.data.reportedUid is string && request.resource.data.reportedUid.size() <= 128))
+        && (!('reportedName' in request.resource.data) || (request.resource.data.reportedName is string && request.resource.data.reportedName.size() <= 80))
+        && (!('reportedProfileId' in request.resource.data) || (request.resource.data.reportedProfileId is string && request.resource.data.reportedProfileId.size() <= 40))
+        && (!('createdByProfileId' in request.resource.data) || (request.resource.data.createdByProfileId is string && request.resource.data.createdByProfileId.size() <= 40))
         && request.resource.data.status == "open"
         && request.resource.data.accountIdentifier is string
         && request.resource.data.accountIdentifier.size() <= 80
@@ -750,7 +807,9 @@ service cloud.firestore {
           && resource.data.createdBy == request.auth.uid
         );
 
-      allow update: if isSuperAdmin() || (
+      allow update: if (signedIn() && resource.data.createdBy == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt'])
+        && request.resource.data.updatedAt == request.time) || isSuperAdmin() || (
         isSupportAgent()
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
           "adminReply", "repliedAt", "repliedBy", "status", "resolvedAt", "resolvedBy", "updatedAt"
@@ -766,12 +825,14 @@ service cloud.firestore {
         function ticket() { return get(/databases/$(database)/documents/supportRequests/$(requestId)).data; }
         allow read: if signedIn() && (isSupportAgent() || ticket().createdBy == request.auth.uid);
         allow create: if signedIn() && (isSupportAgent() || ticket().createdBy == request.auth.uid)
-          && request.resource.data.keys().hasOnly(['senderUid','text','staff','senderName','createdAt'])
+          && request.resource.data.keys().hasOnly(['senderUid','text','staff','senderName','createdAt','mediaId'])
           && request.resource.data.senderUid == request.auth.uid
           && request.resource.data.staff is bool
           && request.resource.data.staff == isSupportAgent()
           && request.resource.data.senderName is string && request.resource.data.senderName.size() <= 80
-          && request.resource.data.createdAt == request.time && supportTextAllowed(request.resource.data.text);
+          && request.resource.data.createdAt == request.time
+          && (supportTextAllowed(request.resource.data.text) || (request.resource.data.text == '' && 'mediaId' in request.resource.data))
+          && validMessageMedia('supportRequests',requestId,request.resource.data);
         allow update, delete: if false;
       }
     }
@@ -794,7 +855,8 @@ service cloud.firestore {
     }
 
     match /supportAudit/{eventId} {
-      allow read, write: if false;
+      allow read: if isSuperAdmin() || (isSupportAgent() && resource.data.actor == request.auth.uid);
+      allow write: if false;
     }
 
     match /recoveryKeyLookup/{keyHash} {
