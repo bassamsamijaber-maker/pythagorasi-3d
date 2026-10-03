@@ -4612,7 +4612,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
 @media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
 #chatRecordingPanel{grid-column:1/-1;display:flex;align-items:center;gap:10px;min-height:52px;background:#1d343e;border-radius:25px;padding:6px 12px}#chatRecordingPanel[hidden],#chatMessageInput[hidden],#chatSendBtn[hidden],#chatMessageSearch[hidden]{display:none!important}#chatRecordingPanel button{width:auto!important;min-width:44px!important;padding:6px!important;height:38px!important;font-size:12px!important}#chatRecordingPanel .voice-wave-bars{flex:1;min-width:20px}.voice-wave-bars{display:flex;align-items:center;justify-content:space-between;gap:2px;height:34px;overflow:hidden;direction:ltr}.voice-wave-bars i{display:block;min-width:2px;flex:1;max-width:4px;background:#82aea7;border-radius:4px}.voice-wave-bars i.played{background:#93ffe1}.voice-attachment{width:280px;max-width:100%;min-width:0}.voice-player{display:flex;align-items:center;gap:10px;direction:ltr}.voice-player-body{flex:1;min-width:0}.voice-player button{flex-shrink:0;border:0;background:#d6fff019;color:#eafff9;cursor:pointer;padding:0}.voice-play{width:42px;height:42px;border-radius:50%}.voice-speed{width:38px;height:32px;border-radius:12px;font-size:12px}.voice-player input[type=range]{display:block;width:100%;height:12px;padding:0;margin:0;accent-color:#6de3be}.voice-time{display:block;font-size:10px;white-space:nowrap;color:#c5e5dc;font-variant-numeric:tabular-nums}.voice-attachment audio{display:none}#chatModal .chat-bubble:has(.voice-attachment){width:min(320px,86%);box-sizing:border-box}.chat-message-options{float:inline-end;border:0;background:transparent;color:inherit;font-size:20px;padding:0 5px;line-height:24px;cursor:pointer}.chat-edited{display:block;font-size:10px;opacity:.7;margin-top:5px}.message-option-list{display:grid;gap:8px}.message-option-list button{width:100%;min-height:44px;text-align:start}.admin-chat-features{padding:18px;border:1px solid #ffffff20;border-radius:18px;margin-bottom:18px;display:grid;gap:14px}.admin-chat-features label{display:flex;align-items:center;gap:12px}#chatMessageSearch{margin:7px 10px;width:calc(100% - 20px);min-height:40px;font-size:13px;flex-shrink:0}@media(max-width:480px){.voice-attachment{width:230px}.voice-player{gap:7px}.voice-play{width:36px;height:36px}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=70">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=71">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -6291,8 +6291,12 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     <div id="examHome">
     <div class="subject-strip">
       <label for="examSubject">📚 مادة الامتحان</label>
-      <select id="examSubject" class="hidden">
-        <option value="pythagoras" selected>فيثاغورس</option>
+      <select id="examSubject">
+        <option value="pythagoras" selected>📐 فيثاغورس</option>
+        <option value="science">🧪 علوم — متنوع</option>
+        <option value="science-periodic">⚛️ علوم — الجدول الدوري والعناصر</option>
+        <option value="science-atoms">🔬 علوم — الذرة والعناصر</option>
+        <option value="science-motion">🚀 علوم — القوة والحركة</option>
       </select>
     </div>
     <div class="resume-box" id="resumeExamBox">
@@ -6313,8 +6317,8 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     
       <div class="exam-home teacher-exam-tools" id="teacherExamCreateTools">
         <div class="exam-choice">
-          <h3>⚡ معاينة امتحان فيثاغورس</h3>
-          <p>معاينة للمعلم: 10 أسئلة فيثاغورس متغيّرة، حتى يجرّب الامتحان قبل نشره.</p>
+          <h3 id="autoExamPreviewTitle">⚡ امتحان تلقائي</h3>
+          <p id="autoExamPreviewText">اختار المادة فوق، وكلاسورا يولّد 10 أسئلة جديدة تلقائيًا.</p>
           <button id="startSurpriseExam">ابدأ الامتحان المفاجئ</button>
         </div>
         <div class="exam-choice custom">
@@ -6385,6 +6389,20 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
         </select>
       </div>
       <div class="builder-help">للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.</div>
+      <div class="competition-create-settings competition-advanced-create" id="scienceExamGenerator">
+        <label>توليد أسئلة علوم تلقائيًا
+          <select id="scienceExamTopic">
+            <option value="">🧪 علوم — متنوع</option>
+            <option value="periodic">⚛️ الجدول الدوري والعناصر</option>
+            <option value="atoms">🔬 الذرة والعناصر</option>
+            <option value="motion">🚀 القوة والحركة</option>
+          </select>
+        </label>
+        <label>عدد الأسئلة
+          <input id="scienceExamQuestionCount" type="number" min="1" max="10" value="10">
+        </label>
+        <button class="exam-secondary" id="generateScienceExamQuestions" type="button">⚛️ ولّد أسئلة علوم</button>
+      </div>
       <div class="builder-error" id="builderError"></div>
       <div id="builderQuestions"></div>
       <div class="teacher-cloud-box" id="teacherCloudBox">
@@ -6439,10 +6457,14 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
         </div>
         <div class="live-card" id="competitionTeacherCard">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>اعمل مسابقة Mixed أو عن فيثاغورس أو المعادلتين بمجهولين، واختار عدد الأسئلة.</p>
+          <p>اعمل مسابقة رياضيات أو علوم، واختار موضوع مثل الجدول الدوري والعناصر، وكلاسورا يولّد الأسئلة تلقائيًا.</p>
           <div class="competition-create-settings competition-advanced-create">
             <label>موضوع المسابقة
-              <select id="compQuickSubject"><option value="science">علوم</option>
+              <select id="compQuickSubject">
+                <option value="science">🧪 علوم — متنوع</option>
+                <option value="science-periodic">⚛️ علوم — الجدول الدوري والعناصر</option>
+                <option value="science-atoms">🔬 علوم — الذرة والعناصر</option>
+                <option value="science-motion">🚀 علوم — القوة والحركة</option>
                 <option value="mixed" selected>✨ Mixed — فيثاغورس + معادلتين</option>
                 <option value="pythagoras">📐 فيثاغورس فقط</option>
                 <option value="equations2">🧮 معادلتان بمجهولين فقط</option>
@@ -6618,7 +6640,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=70";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=71";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -9210,7 +9232,8 @@ function hardQuestionPool(){
 
 
 const subjectNames={
-  mixed:"مختلط",math:"رياضيات",science:"علوم",arabic:"لغة عربية",hebrew:"عبري",
+  mixed:"مختلط",math:"رياضيات",science:"علوم","science-periodic":"الجدول الدوري والعناصر",
+  "science-atoms":"الذرة والعناصر","science-motion":"القوة والحركة",arabic:"لغة عربية",hebrew:"عبري",
   geography:"جغرافيا",english:"إنجليزي",pythagoras:"فيثاغورس"
 };
 
@@ -9448,6 +9471,20 @@ function makeTopicExam(topic){
 }
 
 function createSurpriseExam(){
+  const selected=document.getElementById("examSubject")?.value||examSubject||"pythagoras";
+  examSubject=selected;
+  if(selected==="science"||selected.startsWith("science-")){
+    const topic=selected==="science"?"":selected.slice("science-".length);
+    const qs=scienceLiveQuestions(10,currentUILanguage,topic).map((q,i)=>({...q,id:`science_${Date.now()}_${i}`,points:10}));
+    const labels={
+      "":currentUILanguage==="en"?"General Science":"علوم متنوعة",
+      periodic:currentUILanguage==="en"?"Periodic Table & Elements":"الجدول الدوري والعناصر",
+      atoms:currentUILanguage==="en"?"Atoms & Elements":"الذرة والعناصر",
+      motion:currentUILanguage==="en"?"Forces & Motion":"القوة والحركة"
+    };
+    return {title:`⚡ ${labels[topic]||labels[""]}`,questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:true,level:"auto",subject:selected,scienceTopic:topic};
+  }
+
   examSubject="pythagoras";
   const all=hardQuestionPool();
   let usable=[...all];
@@ -9490,11 +9527,22 @@ document.querySelectorAll("#examLevels button").forEach(btn=>{
     document.getElementById("examLevelDesc").textContent=levelDescriptions[examDifficulty];
   });
 });
-document.getElementById("examSubject").addEventListener("change",e=>{
-  examSubject=e.target.value;
+function syncExamSubjectUI(){
+  const select=document.getElementById("examSubject");if(!select)return;
+  examSubject=select.value||"pythagoras";
+  const science=examSubject==="science"||examSubject.startsWith("science-");
+  const teacher=isTeacherLike();
+  document.getElementById("examLevels").classList.toggle("hidden",!teacher||science);
+  document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
   const name=subjectNames[examSubject]||"مختلط";
-  document.getElementById("examLevelDesc").textContent=`${name} • ${levelDescriptions[examDifficulty]}`;
-});
+  document.getElementById("examLevelDesc").textContent=science
+    ?chatText(`${name} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${name} • Classora generates a fresh question set every time.`)
+    :`${name} • ${levelDescriptions[examDifficulty]}`;
+  const title=document.getElementById("autoExamPreviewTitle"),desc=document.getElementById("autoExamPreviewText");
+  if(title)title.textContent=science?chatText("⚡ معاينة امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
+  if(desc)desc.textContent=science?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected science topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
+}
+document.getElementById("examSubject").addEventListener("change",syncExamSubjectUI);
 
 
 function getSavedAttempt(){
@@ -9554,8 +9602,8 @@ function openExamCenter(){
   document.getElementById("teacherExamCreateTools").classList.toggle("hidden",!teacher);
   document.getElementById("teacherExamResultsCard").classList.toggle("hidden",!teacher);
   document.getElementById("studentExamJoinCard").classList.toggle("hidden",teacher&&!hybrid);
-  document.getElementById("examLevels").classList.toggle("hidden",!teacher);
-  document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
+  document.getElementById("examSubject")?.closest(".subject-strip")?.classList.toggle("hidden",!teacher);
+  syncExamSubjectUI();
 }
 async function openExamWithIdentity(){
   await loadSiteControls();
@@ -9970,6 +10018,17 @@ function openBuilder(){
 document.getElementById("openExamBuilder").addEventListener("click",openBuilder);
 document.getElementById("builderBack").addEventListener("click",()=>showExamView("examHome"));
 document.getElementById("addBuilderQuestion").addEventListener("click",()=>addBuilderQuestion("mcq"));
+document.getElementById("generateScienceExamQuestions")?.addEventListener("click",()=>{
+  if(!isTeacherLike()){showToast(chatText("توليد الامتحان للمعلم فقط.","Only teachers can generate exams."));return}
+  const topic=document.getElementById("scienceExamTopic")?.value||"";
+  const count=Math.max(1,Math.min(10,Number(document.getElementById("scienceExamQuestionCount")?.value)||10));
+  const qs=scienceLiveQuestions(count,currentUILanguage,topic);
+  const host=document.getElementById("builderQuestions");host.replaceChildren();
+  qs.forEach(q=>addBuilderQuestion("mcq",{...q,points:10}));
+  const names={periodic:chatText("الجدول الدوري والعناصر","Periodic Table & Elements"),atoms:chatText("الذرة والعناصر","Atoms & Elements"),motion:chatText("القوة والحركة","Forces & Motion")};
+  document.getElementById("builderTitle").value=chatText("اختبار علوم — ","Science Exam — ")+(names[topic]||chatText("متنوع","General"));
+  showToast(chatText(`تم توليد ${qs.length} أسئلة علوم جديدة.`,`Generated ${qs.length} fresh science questions.`));
+});
 
 function addBuilderQuestion(type="mcq",data={}){
   const host=document.getElementById("builderQuestions");
@@ -18105,7 +18164,10 @@ function generatedEquationSystemLiveQuestion(i=0){
   return {topicKey:"equations2",questionKind:"system_type",prompt:`النظام: ${base} — كم عدد الحلول؟`,options:shuffle(["حل واحد","لا يوجد حل","حلول لا نهائية","حلّان"]),answer:"حل واحد",points:1000};
 }
 function makeLiveQuestions(subject="mixed",count=10){
-  if(subject==="science")return scienceLiveQuestions(count,currentUILanguage);
+  if(subject==="science"||subject.startsWith("science-")){
+    const topic=subject==="science"?"":subject.slice("science-".length);
+    return scienceLiveQuestions(count,currentUILanguage,topic);
+  }
   const n=Math.max(3,Math.min(30,Number(count)||10));
   const pool=[],seen=new Set();
   for(let i=0;i<140;i++){
@@ -18193,7 +18255,7 @@ async function loadCompetitionLibrary(){
         <div class="saved-comp-top">
           <div>
             <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة Classora")}</div>
-            <div class="saved-comp-meta">${room.questionCount||0} ${adminLang("أسئلة","questions")} • ${escapeHtml(room.topicMode==="equations2"?adminLang("معادلتان بمجهولين","Two-variable equations"):room.topicMode==="pythagoras"?adminLang("فيثاغورس","Pythagoras"):room.topicMode==="mixed"?"Mixed":adminLang("مخصص","Custom"))} • ${escapeHtml(statusText)}</div>
+            <div class="saved-comp-meta">${room.questionCount||0} ${adminLang("أسئلة","questions")} • ${escapeHtml(room.topicMode==="equations2"?adminLang("معادلتان بمجهولين","Two-variable equations"):room.topicMode==="pythagoras"?adminLang("فيثاغورس","Pythagoras"):room.topicMode==="mixed"?"Mixed":room.topicMode==="science"?adminLang("علوم","Science"):room.topicMode==="science-periodic"?adminLang("الجدول الدوري والعناصر","Periodic Table & Elements"):room.topicMode==="science-atoms"?adminLang("الذرة والعناصر","Atoms & Elements"):room.topicMode==="science-motion"?adminLang("القوة والحركة","Forces & Motion"):adminLang("مخصص","Custom"))} • ${escapeHtml(statusText)}</div>
           </div>
           <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
         </div>
@@ -20663,7 +20725,7 @@ window.classoraLearningHub=mountLearningHub({
  dialog:title=>{const modal=supportDialog(title);modal.close=()=>modal.dialog.close('close');return modal},
  action:async key=>{
   const ids={lab:'lobbyLabCard',equations:'equationLabBtn',practice:'lobbyQuestionBtn',challenge:'lobbyChallengeBtn',periodic:'periodicTableBtn',exam:'lobbyExamBtn',competition:'competitionBtn',classes:'lobbyJoinClassBtn',chat:'lobbyChatBtn',support:'lobbySupportBtn',settings:'lobbySettingsBtn'};
-  if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم','Science exam');scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
+  if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم — متنوع','Science exam — General');document.getElementById('scienceExamTopic').value='';document.getElementById('scienceExamQuestionCount').value='10';scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
   if(key==='scienceLive'){document.getElementById('compQuickSubject').value='science';document.getElementById('competitionBtn').click();return}
   document.getElementById(ids[key])?.click();
  }
