@@ -9535,9 +9535,11 @@ function syncExamSubjectUI(){
   document.getElementById("examLevels").classList.toggle("hidden",!teacher||science);
   document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
   const name=subjectNames[examSubject]||"مختلط";
+  const englishNames={pythagoras:"Pythagoras",science:"General Science","science-periodic":"Periodic Table & Elements","science-atoms":"Atoms & Elements","science-motion":"Forces & Motion"};
+  const displayName=currentUILanguage==="en"?(englishNames[examSubject]||name):name;
   document.getElementById("examLevelDesc").textContent=science
-    ?chatText(`${name} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${name} • Classora generates a fresh question set every time.`)
-    :`${name} • ${levelDescriptions[examDifficulty]}`;
+    ?chatText(`${displayName} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${displayName} • Classora generates a fresh question set every time.`)
+    :`${displayName} • ${levelDescriptions[examDifficulty]}`;
   const title=document.getElementById("autoExamPreviewTitle"),desc=document.getElementById("autoExamPreviewText");
   if(title)title.textContent=science?chatText("⚡ معاينة امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
   if(desc)desc.textContent=science?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected science topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
@@ -18181,7 +18183,19 @@ function makeLiveQuestions(subject="mixed",count=10){
   }
   return shuffle(pool).slice(0,n).map((q,i)=>({...q,index:i,typeLabel:competitionQuestionTypeLabel(q)}));
 }
-async function createLiveCompetition(customQuestions=null,customTitle="مسابقة Classora",createOptions=null){
+function competitionSubjectTitle(subject){
+  const names={
+    science:adminLang("مسابقة العلوم","Science Competition"),
+    "science-periodic":adminLang("مسابقة الجدول الدوري والعناصر","Periodic Table & Elements Competition"),
+    "science-atoms":adminLang("مسابقة الذرة والعناصر","Atoms & Elements Competition"),
+    "science-motion":adminLang("مسابقة القوة والحركة","Forces & Motion Competition"),
+    equations2:adminLang("مسابقة المعادلتين","Two-Variable Equations Competition"),
+    pythagoras:adminLang("مسابقة فيثاغورس","Pythagoras Competition"),
+    mixed:"Classora Mixed"
+  };
+  return names[subject]||adminLang("مسابقة Classora","Classora Competition");
+}
+async function createLiveCompetition(customQuestions=null,customTitle="",createOptions=null){
   if(!isTeacherLike() || !auth.currentUser){
     authPendingAction="competitionHost";
     competitionModal.classList.remove("open");
@@ -18202,7 +18216,7 @@ async function createLiveCompetition(customQuestions=null,customTitle="مساب�
     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
-      title:customTitle||`مسابقة ${quickSubject==="science"?"العلوم":quickSubject==="equations2"?"المعادلتين":quickSubject==="pythagoras"?"فيثاغورس":"Classora Mixed"}`,
+      title:customTitle||competitionSubjectTitle(quickSubject),
       topicMode:customQuestions?.length?"custom":quickSubject,
       code,status:"lobby",currentIndex:-1,questionCount:questions.length,
       teamMode:options.teamMode,
@@ -20689,7 +20703,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='70';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='71';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
