@@ -16,7 +16,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #91dc
 @supports not(height:100dvh){.platform-lobby{height:100vh!important;min-height:100vh!important;max-height:100vh!important}.modal{height:100vh!important}}
 .case-dialog-fallback{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%);z-index:2147483646;display:block;box-shadow:0 0 0 100vmax #020915bb,0 24px 80px #0008;max-height:85vh;overflow:auto}.auth-role .ico:empty{display:none}#chatModal .chat-bubble.has-voice{width:min(320px,86%);box-sizing:border-box}
 
-/* ================= CLASSORA MOBILE + VECTOR POLISH V75 ================= */
+/* ================= CLASSORA MOBILE + VECTOR POLISH V76 ================= */
 :root{--classora-mobile-gap:12px}
 html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-height:100dvh;overflow-x:hidden}
@@ -169,4 +169,19 @@ h1 .classora-inline-art-wrap,h2 .classora-inline-art-wrap,h3 .classora-inline-ar
 }
 @media(prefers-reduced-motion:reduce){
   .classora-intro-orbit,.intro-orbit-item svg,.classora-intro-mark{animation:none!important}
+}
+
+/* ================= CLASSORA V76 INSTALL + NOTIFICATION ONBOARDING ================= */
+.auth-install-link{margin-top:8px;border-color:rgba(89,202,255,.16)!important;background:linear-gradient(135deg,rgba(24,137,238,.09),rgba(121,79,226,.07))!important;color:#cceeff!important}
+.notification-onboarding-box{width:min(460px,92vw)!important;text-align:center!important;padding:28px!important;border-radius:24px!important}
+.notification-onboarding-art{width:74px;height:74px;margin:0 auto 16px;border-radius:22px;display:grid;place-items:center;color:#8de8ff;background:linear-gradient(145deg,rgba(31,139,236,.18),rgba(121,78,226,.15));border:1px solid rgba(105,197,255,.18);box-shadow:0 16px 45px rgba(0,0,0,.22)}
+.notification-onboarding-art svg{width:37px;height:37px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notification-onboarding-box h2{margin:0 0 8px;font-size:25px}
+.notification-onboarding-box p{margin:0 auto 18px;max-width:380px;color:#94aabd;line-height:1.75;font-size:14px}
+.notification-onboarding-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.notification-onboarding-actions button{min-height:48px;margin:0!important}
+@media(max-width:760px){
+  #notificationOnboardingModal{align-items:center!important;justify-content:center!important;padding:16px!important}
+  #notificationOnboardingModal .notification-onboarding-box{width:min(92vw,420px)!important;height:auto!important;min-height:0!important;max-height:82dvh!important;border-radius:24px!important;padding:24px 18px max(20px,env(safe-area-inset-bottom))!important}
+  .notification-onboarding-actions{grid-template-columns:1fr}
 }
