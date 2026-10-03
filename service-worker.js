@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v70-learning-hub";
+const CACHE_NAME="classora-v71-science-generator";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=70",
-  "./assets/learning-hub.css?v=70",
+  "./assets/learning-hub.js?v=71",
+  "./assets/learning-hub.css?v=71",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
