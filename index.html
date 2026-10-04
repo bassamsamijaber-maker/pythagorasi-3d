@@ -4647,9 +4647,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=86"><link rel="stylesheet" href="./assets/learning-plus.css?v=86">
-<script id="classora-sw-early-update">if("serviceWorker" in navigator){navigator.serviceWorker.getRegistration().then(r=>r&&r.update()).catch(()=>{})}</script>
-</head>
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=87"><link rel="stylesheet" href="./assets/learning-plus.css?v=87"></head>
 <body>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
@@ -6740,9 +6738,9 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=86";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=86";
-import {createLearningStore} from "./assets/learning-store.js?v=86";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=87";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=87";
+import {createLearningStore} from "./assets/learning-store.js?v=87";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -21093,31 +21091,12 @@ document.getElementById("settingsInstallAppBtn")?.addEventListener("click",insta
 document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pwaInstallModal?.classList.remove("open"));
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
-// Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='80';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
-function classoraCanRefresh(){
- if(document.hidden||!navigator.onLine)return false;
- if(document.querySelector('.modal.open,dialog[open]'))return false;
- if(typeof chatSending!=='undefined'&&chatSending)return false;
- if(typeof pendingChatMedia!=='undefined'&&pendingChatMedia)return false;
- if(typeof voiceRecorder!=='undefined'&&voiceRecorder?.state==='recording')return false;
- return ![...document.querySelectorAll('input,textarea')].some(el=>el.getClientRects().length&&(document.activeElement===el||el.value!==el.defaultValue&&el.value.trim()));
-}
-function classoraApplyPendingUpdate(){
- if(!classoraPendingUpdate||classoraReloading)return;
- if(classoraCanRefresh()){classoraReloading=true;location.reload();return}
- let notice=document.getElementById('classoraUpdateNotice');if(!notice){notice=document.createElement('div');notice.id='classoraUpdateNotice';notice.setAttribute('role','status');document.body.append(notice)}notice.textContent=currentUILanguage==='en'?'Update ready. It will apply after you finish and close the current screen.':'التحديث جاهز، رح يشتغل بعد ما تخلص وتسكر الصفحة المفتوحة.';
-}
-async function classoraCheckForUpdate(){
- if(document.hidden||!navigator.onLine)return;
- try{await classoraRegistration?.update();const response=await fetch('./release.json',{cache:'no-store'});if(response.ok&&(await response.json()).version!==CLASSORA_RELEASE){classoraPendingUpdate=true;classoraApplyPendingUpdate()}}catch{}
-}
+// V87: safe service-worker registration. Never auto-reload the page.
 if('serviceWorker' in navigator){
- let hadController=!!navigator.serviceWorker.controller;
- navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadController){classoraPendingUpdate=true;classoraApplyPendingUpdate()}hadController=true});
- window.addEventListener('load',async()=>{try{classoraRegistration=await navigator.serviceWorker.register('./service-worker.js',{scope:'./',updateViaCache:'none'});await classoraCheckForUpdate()}catch(e){console.warn('service worker registration',e)}});
- window.addEventListener('online',classoraCheckForUpdate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)classoraCheckForUpdate()});
- setInterval(classoraCheckForUpdate,300000);setInterval(classoraApplyPendingUpdate,10000);
+ window.addEventListener('load',async()=>{
+  try{await navigator.serviceWorker.register('./service-worker.js',{scope:'./',updateViaCache:'none'})}
+  catch(e){console.warn('service worker registration',e)}
+ });
 }
 const resizeChatViewport=()=>document.documentElement.style.setProperty('--chat-viewport-height',Math.round(window.visualViewport?.height||window.innerHeight)+'px');window.visualViewport?.addEventListener('resize',resizeChatViewport);window.addEventListener('resize',resizeChatViewport);resizeChatViewport();
 updatePwaUI();
