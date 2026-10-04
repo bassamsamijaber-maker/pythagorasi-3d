@@ -226,10 +226,10 @@ export function installVectorIcons(){
   ['motion','🚀🏃📳'],['help','🛟❓'],['shield','🛡🔐🔒⛔'],['chat','💬'],['mail','📥📬📤'],['bell','🔔'],
   ['download','📲⬇'],['settings','⚙🎛'],['clock','⏳⏱⏰🕘⏪'],['chart','📊📈'],['trash','🗑🧹'],
   ['math','📐🧮📏⚖💯🔢⬛➕➖'],['atom','🧪⚛🔬🧊'],['trophy','🏆🏅⭐🌟'],['folder','🗃📂📋📅'],
-  ['sparkle','✨🔥🎉🌈'],['eye','👁👀'],['edit','📝🗒✍✏☑'],['lock','🔑'],['globe','🌐🌍🌎🗺⛰🏙🌦'],
+  ['sparkle','✨🔥🎉🌈'],['eye','👁👀'],['edit','📝🗒✍✏☑'],['lock','🔑'],['globe','🧭🌐🌍🌎🗺⛰🏙🌦'],
   ['target','🎯🎲'],['photo','📷🖼'],['mic','🎙🎤🔊'],['book','📚📘📖'],['bulb','💡'],['brain','🧠🤖'],
   ['leaf','🌱'],['heart','❤'],['warn','⚠❌'],['check','✅'],['play','▶'],['pause','⏸⏹'],['bolt','⚡'],['inbox','📡'],
-  ['dot','🔵🔴🟢🟡🟨🟦'],['search','🔎'],['flask','🧪⚗'],['globe','🧭🌐🌍🌎🗺']
+  ['dot','🔵🔴🟢🟡🟨🟦'],['search','🔎'],['flask','🧪⚗']
  ];
  const emojiName=(mark,context='')=>{
   if(mark==='©'||mark==='®')return null;
@@ -238,7 +238,7 @@ export function installVectorIcons(){
   return byText||'sparkle';
  };
  const svgFor=(name,cls='classora-inline-art')=>icon(name).replace('classora-icon',cls);
- const skipSelector='script,style,noscript,textarea,input,svg,code,pre,.chat-bubble,.msg,[contenteditable="true"]';
+ const skipSelector='script,style,noscript,textarea,input,svg,code,pre,.chat-bubble,.msg.user,[contenteditable="true"]';
 
  function cleanButtons(root){
   const elements=[];
