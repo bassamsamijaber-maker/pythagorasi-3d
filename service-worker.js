@@ -1,14 +1,12 @@
-const CACHE_NAME="classora-v84-startup-hard-failsafe";
+const CACHE_NAME="classora-v85-no-stale-home";
 const APP_SHELL=[
-  "./",
-  "./index.html",
-  "./assets/learning-plus.js?v=81",
-  "./assets/learning-plus.css?v=81",
-  "./assets/learning-content.js?v=81",
-  "./assets/learning-store.js?v=81",
-  "./assets/ph-lab.js?v=81",
-  "./assets/learning-hub.js?v=81",
-  "./assets/learning-hub.css?v=81",
+  "./assets/learning-plus.js?v=85",
+  "./assets/learning-plus.css?v=85",
+  "./assets/learning-content.js?v=85",
+  "./assets/learning-store.js?v=85",
+  "./assets/ph-lab.js?v=85",
+  "./assets/learning-hub.js?v=85",
+  "./assets/learning-hub.css?v=85",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
@@ -60,7 +58,7 @@ self.addEventListener("fetch",event=>{
           }
           return response;
         })
-        .catch(()=>caches.match(event.request).then(cached=>cached||caches.match("./index.html")))
+        .catch(()=>caches.match("./offline.html"))
     );
     return;
   }

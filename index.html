@@ -4647,7 +4647,8 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=81"><link rel="stylesheet" href="./assets/learning-plus.css?v=81">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=85"><link rel="stylesheet" href="./assets/learning-plus.css?v=85">
+<script id="classora-sw-early-update">if("serviceWorker" in navigator){navigator.serviceWorker.getRegistration().then(r=>r&&r.update()).catch(()=>{})}</script>
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -6758,9 +6759,9 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 <script id="classora-intro-failsafe">(()=>{let released=false;const release=()=>{if(released)return;released=true;const intro=document.getElementById("classoraIntro");document.body.classList.remove("classora-intro-active");if(intro){intro.classList.add("hide");intro.style.pointerEvents="none";setTimeout(()=>intro.remove(),450)}};setTimeout(release,2600);window.addEventListener("error",release,{once:true});window.addEventListener("unhandledrejection",release,{once:true})})();</script>
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=81";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=81";
-import {createLearningStore} from "./assets/learning-store.js?v=78";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=85";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=85";
+import {createLearningStore} from "./assets/learning-store.js?v=85";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
