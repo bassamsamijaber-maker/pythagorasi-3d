@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v78-touch-periodic-voice";
+const CACHE_NAME="classora-v78-final-touch-periodic-voice";
 const APP_SHELL=[
   "./",
   "./index.html",
