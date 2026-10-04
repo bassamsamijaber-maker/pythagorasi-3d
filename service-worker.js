@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v77-mobile-nav-chat";
+const CACHE_NAME="classora-v78-touch-periodic-voice";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=77",
-  "./assets/learning-hub.css?v=77",
+  "./assets/learning-hub.js?v=78",
+  "./assets/learning-hub.css?v=78",
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
