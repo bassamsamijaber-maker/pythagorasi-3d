@@ -1,14 +1,14 @@
-const CACHE_NAME="classora-v79-learning-offline";
+const CACHE_NAME="classora-v80-login-recovery";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-plus.js?v=79",
-  "./assets/learning-plus.css?v=79",
-  "./assets/learning-content.js?v=79",
-  "./assets/learning-store.js?v=79",
-  "./assets/ph-lab.js?v=79",
-  "./assets/learning-hub.js?v=79",
-  "./assets/learning-hub.css?v=79",
+  "./assets/learning-plus.js?v=80",
+  "./assets/learning-plus.css?v=80",
+  "./assets/learning-content.js?v=80",
+  "./assets/learning-store.js?v=80",
+  "./assets/ph-lab.js?v=80",
+  "./assets/learning-hub.js?v=80",
+  "./assets/learning-hub.css?v=80",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
