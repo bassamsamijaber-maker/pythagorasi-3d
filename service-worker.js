@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v81-auth-spacing";
+const CACHE_NAME="classora-v82-startup-recovery";
 const APP_SHELL=[
   "./",
   "./index.html",
