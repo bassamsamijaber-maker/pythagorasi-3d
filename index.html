@@ -4642,7 +4642,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=79"><link rel="stylesheet" href="./assets/learning-plus.css?v=79">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=80"><link rel="stylesheet" href="./assets/learning-plus.css?v=80">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -6752,8 +6752,8 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=79";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=79";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=80";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=80";
 import {createLearningStore} from "./assets/learning-store.js?v=78";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -7407,6 +7407,9 @@ function showTeacherLogin(){
 
 function friendlyAuthError(error){
   const code=String(error?.code||error?.message||"").toLowerCase();
+  if(code.includes("unauthorized-domain"))return "تسجيل الدخول من هذا النطاق غير مفعّل في Firebase. أضف classora.pages.dev إلى النطاقات المسموح بها في Firebase Authentication.";
+  if(code.includes("operation-not-allowed"))return "تسجيل Google غير مفعّل في Firebase Authentication.";
+  if(code.includes("network-request-failed"))return "تعذر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت وحاول مجددًا.";
   if(code.includes("too-many-requests"))return "محاولات كثيرة. استنى شوي وجرب مرة ثانية.";
   if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found")||code.includes("name-mismatch"))return "الاسم أو كلمة السر غير صحيحة.";
   if(code.includes("network"))return "في مشكلة بالاتصال. تأكد من الإنترنت وجرب مرة ثانية.";
@@ -11865,6 +11868,17 @@ const uiExactTranslations=new Map([
 ["اكتب إيميل صحيح.","Enter a valid email address."],
 ["اسم المعلم مستخدم من قبل. اختار اسم دخول ثاني.","That teacher name is already taken. Choose another username."],
 ["في حساب موجود بهذا الإيميل. اختار تسجيل الدخول.","An account already uses this email. Choose Sign in."],
+["محاولات كثيرة. استنى شوي وجرب مرة ثانية.","Too many attempts. Wait a little and try again."],
+["الاسم أو كلمة السر غير صحيحة.","The name or password is incorrect."],
+["في مشكلة بالاتصال. تأكد من الإنترنت وجرب مرة ثانية.","There is a connection problem. Check your internet and try again."],
+["ما اكتمل تسجيل الدخول. جرّب مرة ثانية.","Sign-in was not completed. Please try again."],
+["ما قدرنا نفتح تسجيل الدخول. جرّب مرة ثانية.","We couldn't open sign-in. Please try again."],
+["هذا الحساب موقوف حاليًا.","This account is currently disabled."],
+["هذا الحساب مش حساب معلم.","This account is not a teacher account."],
+["تعذر الدخول حاليًا. جرّب مرة ثانية بعد شوي.","Sign-in is temporarily unavailable. Please try again shortly."],
+["تسجيل الدخول من هذا النطاق غير مفعّل في Firebase. أضف classora.pages.dev إلى النطاقات المسموح بها في Firebase Authentication.","Google sign-in is not enabled for this domain in Firebase. Add classora.pages.dev to Firebase Authentication's authorized domains."],
+["تسجيل Google غير مفعّل في Firebase Authentication.","Google sign-in is not enabled in Firebase Authentication."],
+["تعذر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت وحاول مجددًا.","Could not connect to the sign-in service. Check your internet and try again."],
 ["الدخول كضيف", "Continue as Guest"],
 ["تصفّح كلاسورا بدون حساب. الحل والامتحانات والمسابقات تحتاج تسجيل دخول.", "Browse Classora without an account. Solving questions, exams and competitions require sign-in."],
 ["خيارات حساب المعلم", "Teacher account options"],
@@ -21127,7 +21141,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='79';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='80';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
