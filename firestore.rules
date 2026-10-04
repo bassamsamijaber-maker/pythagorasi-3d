@@ -253,7 +253,11 @@ service cloud.firestore {
     match /users/{uid} {
       allow create: if signedIn()
         && request.resource.data.role in ["student", "teacher"]
-        && (request.resource.data.role != "teacher" || request.auth.token.firebase.sign_in_provider == "google.com" || isSuperAdmin())
+        && (
+          request.resource.data.role != "teacher"
+          || request.auth.token.firebase.sign_in_provider in ["google.com", "password"]
+          || isSuperAdmin()
+        )
         && request.auth.uid == uid
         && request.resource.data.profileId is string
         && !request.resource.data.keys().hasAny([
