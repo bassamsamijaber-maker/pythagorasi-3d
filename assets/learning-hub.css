@@ -304,3 +304,9 @@ h1 .classora-inline-art-wrap,h2 .classora-inline-art-wrap,h3 .classora-inline-ar
   #guestLoginReminderModal{align-items:center!important;justify-content:center!important;padding:14px!important}
   #guestLoginReminderModal .guest-login-reminder-box{width:min(92vw,440px)!important;height:auto!important;min-height:0!important;max-height:82dvh!important;border-radius:24px!important;padding:22px 18px!important}
 }
+
+
+/* V83: fail-safe removal for a startup overlay if inline scripts are blocked. */
+body.classora-intro-active{overflow:auto!important}
+body.classora-intro-active #classoraIntro{animation:classoraIntroEmergencyHide 0s linear 4s forwards!important}
+@keyframes classoraIntroEmergencyHide{to{opacity:0;visibility:hidden;pointer-events:none}}
