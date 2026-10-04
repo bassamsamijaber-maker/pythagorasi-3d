@@ -1,12 +1,12 @@
-const CACHE_NAME="classora-v85-no-stale-home";
+const CACHE_NAME="classora-v86-no-intro";
 const APP_SHELL=[
-  "./assets/learning-plus.js?v=85",
-  "./assets/learning-plus.css?v=85",
-  "./assets/learning-content.js?v=85",
-  "./assets/learning-store.js?v=85",
-  "./assets/ph-lab.js?v=85",
-  "./assets/learning-hub.js?v=85",
-  "./assets/learning-hub.css?v=85",
+  "./assets/learning-plus.js?v=86",
+  "./assets/learning-plus.css?v=86",
+  "./assets/learning-content.js?v=86",
+  "./assets/learning-store.js?v=86",
+  "./assets/ph-lab.js?v=86",
+  "./assets/learning-hub.js?v=86",
+  "./assets/learning-hub.css?v=86",
   "./offline.html",
 
   "./assets/chat-doodles.svg",

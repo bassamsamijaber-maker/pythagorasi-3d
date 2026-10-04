@@ -4647,28 +4647,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=85"><link rel="stylesheet" href="./assets/learning-plus.css?v=85">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=86"><link rel="stylesheet" href="./assets/learning-plus.css?v=86">
 <script id="classora-sw-early-update">if("serviceWorker" in navigator){navigator.serviceWorker.getRegistration().then(r=>r&&r.update()).catch(()=>{})}</script>
 </head>
-<body class="classora-intro-active">
-<div class="classora-intro" id="classoraIntro">
-  <div class="classora-intro-core">
-    <div class="classora-intro-orbit" aria-hidden="true">
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 20V4l16 16H4zM4 15h5v5"/></svg></span>
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="1.7"/></svg></span>
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 5q5-2 8 1 3-3 8-1v14q-5-2-8 1-3-3-8-1zM12 6v14"/></svg></span>
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M21 19H3"/></svg></span>
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4zM8 9h8M8 13h5"/></svg></span>
-      <span class="intro-orbit-item"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg></span>
-    </div>
-    <div class="classora-intro-mark" aria-hidden="true"><img src="./icons/classora-512.png" alt=""></div>
-    <h1 class="classora-intro-title">Classora</h1>
-    <div class="classora-intro-rotator">
-      <span class="classora-intro-word" id="classoraIntroWord">Learn. Compete. Connect.</span>
-    </div>
-    <div class="classora-intro-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-  </div>
-</div>
+<body>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
@@ -6757,11 +6739,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 
-<script id="classora-intro-failsafe">(()=>{let released=false;const release=()=>{if(released)return;released=true;const intro=document.getElementById("classoraIntro");document.body.classList.remove("classora-intro-active");if(intro){intro.classList.add("hide");intro.style.pointerEvents="none";setTimeout(()=>intro.remove(),450)}};setTimeout(release,2600);window.addEventListener("error",release,{once:true});window.addEventListener("unhandledrejection",release,{once:true})})();</script>
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=85";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=85";
-import {createLearningStore} from "./assets/learning-store.js?v=85";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=86";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=86";
+import {createLearningStore} from "./assets/learning-store.js?v=86";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -7258,42 +7239,6 @@ async function reserveUniqueCode(kind){
 
 
 
-
-/* ================= V50 CLASSORA STARTUP INTRO CONTROLLER ================= */
-const classoraIntro=document.getElementById("classoraIntro");
-const CLASSORA_INTRO_MIN_MS=1800;
-const classoraIntroStart=performance.now();
-let classoraIntroDone=false;
-let classoraAuthSettled=false;
-
-function classoraFinishIntroWhenReady(){
-  if(classoraIntroDone||!classoraAuthSettled)return;
-  const elapsed=performance.now()-classoraIntroStart;
-  const wait=Math.max(0,CLASSORA_INTRO_MIN_MS-elapsed);
-  setTimeout(()=>{
-    if(classoraIntroDone)return;
-    classoraIntroDone=true;
-    classoraIntro?.classList.add("hide");
-    document.body.classList.remove("classora-intro-active");
-    setTimeout(()=>classoraIntro?.remove(),520);
-  },wait);
-}
-
-window.addEventListener("classora-auth-settled",()=>{
-  classoraAuthSettled=true;
-  classoraFinishIntroWhenReady();
-},{once:true});
-
-// Never let a slow/failed auth request trap the visitor behind the splash screen.
-setTimeout(()=>{
-  if(classoraIntroDone)return;
-  classoraIntroDone=true;
-  classoraIntro?.classList.add("hide");
-  document.body.classList.remove("classora-intro-active");
-  setTimeout(()=>classoraIntro?.remove(),520);
-},3200);
-
-/* Auth settlement is dispatched by onAuthStateChanged below. */
 
 const authGate=document.getElementById("authGate");
 const authPanel=document.getElementById("authPanel");
