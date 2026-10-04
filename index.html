@@ -10,6 +10,11 @@ html,body{margin:0!important;width:100%!important;min-width:100%!important;min-h
 html{background:#06101b!important}
 body.classora-intro-active{background:#06101b!important;overflow:hidden!important}
 #classoraIntro{position:fixed!important;inset:-2px 0 -2px 0!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;background:#06101b!important}
+
+/* V84: hard fail-safe. The intro can never block login, even if modules/Firebase fail. */
+body.classora-intro-active{overflow:auto!important}
+#classoraIntro{pointer-events:none!important;animation:classoraIntroHardExit .01s linear 2.6s forwards!important}
+@keyframes classoraIntroHardExit{to{opacity:0;visibility:hidden;pointer-events:none}}
 </style>
 <link rel="preload" href="./icons/classora-512.png" as="image" fetchpriority="high">
 <script id="classora-touch-zoom-guard">
@@ -6751,7 +6756,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 
-<script id="classora-intro-failsafe">setTimeout(()=>{const intro=document.getElementById("classoraIntro");intro?.classList.add("hide");document.body.classList.remove("classora-intro-active")},3200);</script>
+<script id="classora-intro-failsafe">(()=>{let released=false;const release=()=>{if(released)return;released=true;const intro=document.getElementById("classoraIntro");document.body.classList.remove("classora-intro-active");if(intro){intro.classList.add("hide");intro.style.pointerEvents="none";setTimeout(()=>intro.remove(),450)}};setTimeout(release,2600);window.addEventListener("error",release,{once:true});window.addEventListener("unhandledrejection",release,{once:true})})();</script>
 <script type="module">
 import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=81";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=81";

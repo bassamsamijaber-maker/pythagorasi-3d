@@ -306,7 +306,7 @@ h1 .classora-inline-art-wrap,h2 .classora-inline-art-wrap,h3 .classora-inline-ar
 }
 
 
-/* V83: fail-safe removal for a startup overlay if inline scripts are blocked. */
+/* V84: startup overlay must never trap the visitor. */
 body.classora-intro-active{overflow:auto!important}
-body.classora-intro-active #classoraIntro{animation:classoraIntroEmergencyHide 0s linear 4s forwards!important}
+#classoraIntro{pointer-events:none!important;animation:classoraIntroEmergencyHide .01s linear 2.6s forwards!important}
 @keyframes classoraIntroEmergencyHide{to{opacity:0;visibility:hidden;pointer-events:none}}
