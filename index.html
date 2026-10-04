@@ -7407,8 +7407,8 @@ function showTeacherLogin(){
 
 function friendlyAuthError(error){
   const code=String(error?.code||error?.message||"").toLowerCase();
-  if(code.includes("unauthorized-domain"))return "تسجيل الدخول من هذا النطاق غير مفعّل في Firebase. أضف classora.pages.dev إلى النطاقات المسموح بها في Firebase Authentication.";
-  if(code.includes("operation-not-allowed"))return "تسجيل Google غير مفعّل في Firebase Authentication.";
+  if(code.includes("unauthorized-domain"))return "دخول Google غير مفعّل لهذا الموقع. أضف classora.pages.dev إلى النطاقات المسموح بها لتسجيل الدخول.";
+  if(code.includes("operation-not-allowed"))return "تسجيل الدخول بحساب Google غير مفعّل. تواصل مع إدارة الموقع.";
   if(code.includes("network-request-failed"))return "تعذر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت وحاول مجددًا.";
   if(code.includes("too-many-requests"))return "محاولات كثيرة. استنى شوي وجرب مرة ثانية.";
   if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found")||code.includes("name-mismatch"))return "الاسم أو كلمة السر غير صحيحة.";
@@ -7977,6 +7977,7 @@ document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
     }
   }finally{
     authBusy(false);
+    if(!auth.currentUser)authStatusText.textContent="";
   }
 });
 document.getElementById("authLogoutBtn").addEventListener("click",async()=>{
@@ -11876,8 +11877,8 @@ const uiExactTranslations=new Map([
 ["هذا الحساب موقوف حاليًا.","This account is currently disabled."],
 ["هذا الحساب مش حساب معلم.","This account is not a teacher account."],
 ["تعذر الدخول حاليًا. جرّب مرة ثانية بعد شوي.","Sign-in is temporarily unavailable. Please try again shortly."],
-["تسجيل الدخول من هذا النطاق غير مفعّل في Firebase. أضف classora.pages.dev إلى النطاقات المسموح بها في Firebase Authentication.","Google sign-in is not enabled for this domain in Firebase. Add classora.pages.dev to Firebase Authentication's authorized domains."],
-["تسجيل Google غير مفعّل في Firebase Authentication.","Google sign-in is not enabled in Firebase Authentication."],
+["دخول Google غير مفعّل لهذا الموقع. أضف classora.pages.dev إلى النطاقات المسموح بها لتسجيل الدخول.","Google sign-in is not enabled for this website. Add classora.pages.dev to the authorized sign-in domains."],
+["تسجيل الدخول بحساب Google غير مفعّل. تواصل مع إدارة الموقع.","Google sign-in is disabled. Contact the site administrator."],
 ["تعذر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت وحاول مجددًا.","Could not connect to the sign-in service. Check your internet and try again."],
 ["الدخول كضيف", "Continue as Guest"],
 ["تصفّح كلاسورا بدون حساب. الحل والامتحانات والمسابقات تحتاج تسجيل دخول.", "Browse Classora without an account. Solving questions, exams and competitions require sign-in."],
