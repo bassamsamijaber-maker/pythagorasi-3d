@@ -12,7 +12,7 @@
 })();
 </script>
 <title>Periodic Table • Classora</title>
-<link rel="stylesheet" href="./periodic-table.css?v=78">
+<link rel="stylesheet" href="./periodic-table.css?v=79">
 </head>
 <body>
 <div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -59,12 +59,12 @@
     <div><span class="kicker" data-i18n="tapHint">TAP ANY ELEMENT</span><h2 data-i18n="tableTitle">Interactive Periodic Table</h2></div>
     <div class="visible-count"><b id="visibleCount">118</b><span data-i18n="shown">shown</span></div>
   </div>
-  <div class="layout-switch"><button class="lang-btn" data-layout="gallery" aria-pressed="false" data-i18n="gallery">Image gallery</button><button class="lang-btn active" data-layout="periodic" aria-pressed="true" data-i18n="periodic">Periodic table</button></div>
+  <div class="layout-switch"><button class="lang-btn" type="button" id="tableFitToggle" aria-pressed="true">Fit full table</button><button class="lang-btn" data-layout="gallery" aria-pressed="false" data-i18n="gallery">Image gallery</button><button class="lang-btn active" data-layout="periodic" aria-pressed="true" data-i18n="periodic">Periodic table</button></div>
   <p class="gallery-note" data-i18n="illustration">Educational illustration</p>
   <div class="table-shell">
     
-    <div class="periodic-scroll">
-      <div class="group-numbers" id="groupNumbers" aria-hidden="true"></div><div class="periodic-grid" id="periodicGrid" aria-label="Periodic table"></div>
+    <div class="periodic-scroll"><div class="periodic-fit-content">
+      <div class="group-numbers" id="groupNumbers" aria-hidden="true"></div><div class="periodic-grid" id="periodicGrid" aria-label="Periodic table"></div></div>
     </div>
   </div>
   <p id="emptyState" data-i18n="empty" hidden></p>
@@ -144,6 +144,6 @@
   </article>
 </div>
 
-<script src="./periodic-table.js?v=78"></script>
+<script src="./periodic-table.js?v=79"></script>
 </body>
 </html>

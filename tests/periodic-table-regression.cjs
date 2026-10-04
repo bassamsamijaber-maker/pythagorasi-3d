@@ -39,5 +39,6 @@ for(const stored of ['[]','broken JSON','{}']){
  ids.get('#backBtn').click();assert(messages.some(m=>m.type==='classora-close-subject'));
 }
 assert(!html.includes('data-lang='));
-assert(html.includes('periodic-table.css?v=60')&&html.includes('periodic-table.js?v=60'));
+assert(html.includes('periodic-table.css?v=79')&&html.includes('periodic-table.js?v=79'));
 console.log('PASS: actual initialization, 118 illustrated cards, bilingual names/details, search, empty state, layouts, animation pause, lobby message and corrupt-storage recovery.');
+

@@ -123,3 +123,5 @@ html,body{touch-action:manipulation;-ms-touch-action:manipulation}
   .periodic-grid:not(.gallery-grid) .el-symbol{font-size:9px!important;margin-top:10px!important}
   .periodic-grid:not(.gallery-grid) .el-name{font-size:4px!important}
 }
+
+.periodic-fit-content{direction:ltr}.periodic-scroll{max-width:100%;box-sizing:border-box}.table-shell{min-width:0;overflow:hidden}#tableFitToggle{min-height:44px}.gallery-grid .element-card{min-height:44px}

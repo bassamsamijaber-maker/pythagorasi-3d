@@ -250,6 +250,103 @@ service cloud.firestore {
         || (isTeacher() && managesClass(resource.data.classId));
     }
 
+    match /topicVotes/{voteId} {
+      allow get: if signedIn() && (isSuperAdmin() || voteId.matches('^[a-f0-9]{64}_' + request.auth.uid + '$'));
+      allow list: if isSuperAdmin();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['topicKey','topicTitle','normalized','uid','displayName','profileId','createdAt'])
+        && request.resource.data.topicKey.matches('^[a-f0-9]{64}$')
+        && voteId == request.resource.data.topicKey + '_' + request.auth.uid
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.topicTitle is string && request.resource.data.topicTitle.size() >= 2 && request.resource.data.topicTitle.size() <= 100
+        && request.resource.data.normalized is string && request.resource.data.normalized.size() >= 2 && request.resource.data.normalized.size() <= 100
+        && request.resource.data.displayName == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.displayName
+        && request.resource.data.profileId == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.profileId
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if isSuperAdmin();
+    }
+    match /topicRequestStates/{topicKey} {
+      allow read: if isSuperAdmin();
+      allow create, update: if isSuperAdmin()
+        && request.resource.data.keys().hasOnly(['status','updatedAt','updatedBy'])
+        && request.resource.data.status in ['new','working','added','rejected']
+        && request.resource.data.updatedBy == request.auth.uid
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isSuperAdmin();
+    }
+    match /users/{uid}/learningSessions/{sessionId} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['topic','subject','correct','total','pct','xp','createdAt'])
+        && request.resource.data.topic in ['pythagoras','equations','acids','matter','motion','atoms','plants','body','energy','periodic']
+        && request.resource.data.subject in ['math','science']
+        && request.resource.data.total is int && request.resource.data.total > 0 && request.resource.data.total <= 30
+        && request.resource.data.correct is int && request.resource.data.correct >= 0 && request.resource.data.correct <= request.resource.data.total
+        && request.resource.data.pct is int && request.resource.data.pct >= 0 && request.resource.data.pct <= 100
+        && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp <= 20
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /users/{uid}/learningRewards/{rewardId} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['topic','xp','createdAt'])
+        && request.resource.data.topic is string && request.resource.data.topic.size() <= 40
+        && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp <= 20
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /classes/{classId}/learningProgress/{uid} {
+      allow read: if managesClass(classId) || (signedIn() && request.auth.uid == uid && isClassMember(classId));
+      allow create, update: if signedIn() && request.auth.uid == uid && isClassMember(classId)
+        && request.resource.data.keys().hasOnly(['uid','displayName','profileId','xp','examCount','totalScorePct','subjectStats','learningStats','updatedAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.displayName == getAfter(/databases/$(database)/documents/users/$(uid)).data.displayName
+        && request.resource.data.profileId == getAfter(/databases/$(database)/documents/users/$(uid)).data.profileId
+        && request.resource.data.xp == getAfter(/databases/$(database)/documents/users/$(uid)).data.xp
+        && request.resource.data.examCount == getAfter(/databases/$(database)/documents/users/$(uid)).data.examCount
+        && request.resource.data.totalScorePct == getAfter(/databases/$(database)/documents/users/$(uid)).data.totalScorePct
+        && request.resource.data.subjectStats == getAfter(/databases/$(database)/documents/users/$(uid)).data.subjectStats
+        && request.resource.data.learningStats == getAfter(/databases/$(database)/documents/users/$(uid)).data.get('learningStats',{})
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if managesClass(classId) || (signedIn() && request.auth.uid == uid);
+    }
+
+    match /topicVotes/{voteId} {
+      allow get: if signedIn() && (isSuperAdmin() || voteId.matches('^[a-f0-9]{64}_' + request.auth.uid + '$'));
+      allow list: if isSuperAdmin();
+      allow create: if signedIn() && request.resource.data.keys().hasOnly(['topicKey','topicTitle','normalized','uid','displayName','profileId','createdAt'])
+        && request.resource.data.topicKey.matches('^[a-f0-9]{64}$') && voteId == request.resource.data.topicKey + '_' + request.auth.uid && request.resource.data.uid == request.auth.uid
+        && request.resource.data.topicTitle is string && request.resource.data.topicTitle.size() >= 2 && request.resource.data.topicTitle.size() <= 100
+        && request.resource.data.normalized is string && request.resource.data.normalized.size() >= 2 && request.resource.data.normalized.size() <= 100
+        && request.resource.data.displayName == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.displayName
+        && request.resource.data.profileId == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.profileId && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if isSuperAdmin();
+    }
+    match /topicRequestStates/{topicKey} {
+      allow read: if isSuperAdmin();
+      allow create, update: if isSuperAdmin() && request.resource.data.keys().hasOnly(['status','updatedAt','updatedBy']) && request.resource.data.status in ['new','working','added','rejected'] && request.resource.data.updatedBy == request.auth.uid && request.resource.data.updatedAt == request.time;
+      allow delete: if isSuperAdmin();
+    }
+    match /users/{uid}/learningSessions/{sessionId} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow create: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['topic','subject','correct','total','pct','xp','createdAt']) && request.resource.data.topic in ['pythagoras','equations','acids','matter','motion','atoms','plants','body','energy','periodic'] && request.resource.data.subject in ['math','science'] && request.resource.data.total is int && request.resource.data.total > 0 && request.resource.data.total <= 30 && request.resource.data.correct is int && request.resource.data.correct >= 0 && request.resource.data.correct <= request.resource.data.total && request.resource.data.pct is int && request.resource.data.pct >= 0 && request.resource.data.pct <= 100 && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp <= 20 && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /users/{uid}/learningRewards/{rewardId} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['topic','xp','createdAt']) && request.resource.data.topic is string && request.resource.data.topic.size() <= 40 && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp <= 20 && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /classes/{classId}/learningProgress/{uid} {
+      allow read: if managesClass(classId) || (signedIn() && request.auth.uid == uid && isClassMember(classId));
+      allow create, update: if signedIn() && request.auth.uid == uid && isClassMember(classId) && request.resource.data.keys().hasOnly(['uid','displayName','profileId','xp','examCount','totalScorePct','subjectStats','learningStats','updatedAt']) && request.resource.data.uid == uid
+        && request.resource.data.displayName == getAfter(/databases/$(database)/documents/users/$(uid)).data.displayName && request.resource.data.profileId == getAfter(/databases/$(database)/documents/users/$(uid)).data.profileId
+        && request.resource.data.xp == getAfter(/databases/$(database)/documents/users/$(uid)).data.xp && request.resource.data.examCount == getAfter(/databases/$(database)/documents/users/$(uid)).data.examCount && request.resource.data.totalScorePct == getAfter(/databases/$(database)/documents/users/$(uid)).data.totalScorePct && request.resource.data.subjectStats == getAfter(/databases/$(database)/documents/users/$(uid)).data.subjectStats && request.resource.data.learningStats == getAfter(/databases/$(database)/documents/users/$(uid)).data.get('learningStats',{}) && request.resource.data.updatedAt == request.time;
+      allow delete: if managesClass(classId) || (signedIn() && request.auth.uid == uid);
+    }
     match /users/{uid} {
       allow create: if signedIn()
         && request.resource.data.role in ["student", "teacher"]

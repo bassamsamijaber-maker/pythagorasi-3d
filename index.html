@@ -4642,7 +4642,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=78">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=79"><link rel="stylesheet" href="./assets/learning-plus.css?v=79">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -4776,6 +4776,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
     <button class="auth-support-link" id="authSupportBtn" type="button">🛟 تواصل مع الدعم</button>
     <button class="auth-support-link auth-install-link" id="authInstallAppBtn" type="button">📲 تثبيت Classora على الهاتف</button>
+    <a class="auth-support-link" href="./offline.html" id="offlineLessonsLink">Offline lessons</a>
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText"></div>
 </div>
@@ -5135,6 +5136,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
             <option value="assignment">Assignment</option>
             <option value="generatedAssignment">Generated Pythagoras exam as assignment</option>
             <option value="competition">Competition</option>
+            <option value="scienceAssignment">Science assignment</option>
           </select>
         </label>
         <label class="admin-wide">Title <input id="adminSendTitle" maxlength="80" placeholder="Title"></label>
@@ -5146,6 +5148,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
         </label>
       </div>
       <button class="apply" id="adminSendBtn">🚀 Send / Publish</button>
+      <button type="button" class="exam-secondary" id="manageSentAssignments" data-no-translate>Manage / delete sent assignments</button>
       <div class="cloud-note" id="adminSendStatus"></div>
     </div>
 
@@ -6749,7 +6752,9 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=78";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=79";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=79";
+import {createLearningStore} from "./assets/learning-store.js?v=78";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -11854,6 +11859,53 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
 
 const uiExactTranslations=new Map([
+["أهلًا","Welcome"],
+["تم إنشاء حساب المعلم بنجاح.","Teacher account created successfully."],
+["اكتب اسم المعلم — حرفين على الأقل.","Enter a teacher name with at least 2 characters."],
+["اكتب إيميل صحيح.","Enter a valid email address."],
+["اسم المعلم مستخدم من قبل. اختار اسم دخول ثاني.","That teacher name is already taken. Choose another username."],
+["في حساب موجود بهذا الإيميل. اختار تسجيل الدخول.","An account already uses this email. Choose Sign in."],
+["الدخول كضيف", "Continue as Guest"],
+["تصفّح كلاسورا بدون حساب. الحل والامتحانات والمسابقات تحتاج تسجيل دخول.", "Browse Classora without an account. Solving questions, exams and competitions require sign-in."],
+["خيارات حساب المعلم", "Teacher account options"],
+["تسجيل الدخول", "Sign in"],
+["بالاسم أو الإيميل + كلمة السر", "Username or email + password"],
+["إنشاء حساب", "Create account"],
+["حساب معلم جديد", "New teacher account"],
+["دخول بحساب Google", "Continue with Google"],
+["الاسم أو الإيميل", "Username or email"],
+["اسم المعلم أو teacher@example.com", "Teacher name or teacher@example.com"],
+["كلمة السر", "Password"],
+["دخول المعلم", "Teacher sign in"],
+["اسم المعلم", "Teacher name"],
+["الإيميل", "Email"],
+["تأكيد كلمة السر", "Confirm password"],
+["إنشاء حساب المعلم", "Create teacher account"],
+["مثال: أحمد محمد", "Example: Alex Morgan"],
+["6 خانات أو أكثر", "At least 6 characters"],
+["اكتب كلمة السر مرة ثانية", "Enter your password again"],
+["سجّل دخولك في Classora", "Sign in to Classora"],
+["بحسابك بنحفظ تقدمك وبتقدر تحل الأسئلة وتدخل الامتحانات والمسابقات.", "Your account saves progress and lets you answer questions and join exams and competitions."],
+["لا تذكرني كل ساعة مرة ثانية", "Do not remind me every hour again"],
+["لاحقًا", "Later"],
+["📲 تثبيت Classora على الهاتف","📲 Install Classora on your phone"],
+["فعّل إشعارات Classora","Enable Classora notifications"],
+["حتى توصلك الوظائف والامتحانات والمسابقات وتنبيهات الصف أول بأول.","Get timely notifications for assignments, exams, competitions and class alerts."],
+["تفعيل الإشعارات","Enable notifications"],
+["مش هسا","Not now"],
+["📐 فيثاغورس","📐 Pythagoras"],
+["🧪 علوم — متنوع","🧪 Science — General"],
+["⚛️ علوم — الجدول الدوري والعناصر","⚛️ Science — Periodic table and elements"],
+["🔬 علوم — الذرة والعناصر","🔬 Science — Atoms and elements"],
+["🚀 علوم — القوة والحركة","🚀 Science — Forces and motion"],
+["⚡ امتحان تلقائي","⚡ Automatic exam"],
+["اختار المادة فوق، وكلاسورا يولّد 10 أسئلة جديدة تلقائيًا.","Choose a subject above and Classora will automatically create 10 fresh questions."],
+["توليد أسئلة علوم تلقائيًا","Automatically generate science questions"],
+["⚛️ الجدول الدوري والعناصر","⚛️ Periodic table and elements"],
+["🔬 الذرة والعناصر","🔬 Atoms and elements"],
+["🚀 القوة والحركة","🚀 Forces and motion"],
+["⚛️ ولّد أسئلة علوم","⚛️ Generate science questions"],
+["اعمل مسابقة رياضيات أو علوم، واختار موضوع مثل الجدول الدوري والعناصر، وكلاسورا يولّد الأسئلة تلقائيًا.","Create a math or science competition, choose a topic such as the periodic table, and Classora will automatically generate questions."],
 ["كود الصف — اختياري","Class code — optional"],
 ["علوم","Science"],
 ["⚠️ اكتب قيم صحيحة لـ a و b.","Enter valid positive values for a and b."],
@@ -14272,9 +14324,9 @@ function applyAdminLanguage(){
 
   label("adminTargetClass","الهدف","Target");label("adminSendType","النوع","Type");label("adminSendTitle","العنوان","Title");label("adminSendBody","الرسالة / التعليمات","Message / instructions");label("adminSendDueDate","تاريخ التسليم","Due date");label("adminQuestionCount","عدد الأسئلة","Questions");label("adminDifficulty","الصعوبة","Difficulty");
   ph("adminSendTitle","العنوان","Title");ph("adminSendBody","اكتب الرسالة أو تعليمات الوظيفة...","Write the message or assignment instructions...");
-  const sendType=document.getElementById("adminSendType");if(sendType){const v=en?["Announcement","Assignment","Generated Pythagoras exam as assignment","Competition"]:["إعلان","وظيفة","امتحان فيثاغورس مولّد كوظيفة","مسابقة"];[...sendType.options].forEach((o,i)=>o.textContent=v[i])}
+  const sendType=document.getElementById("adminSendType");if(sendType){const v=en?["Announcement","Assignment","Generated Pythagoras exam as assignment","Competition","Science assignment"]:["إعلان","وظيفة","امتحان فيثاغورس مولّد كوظيفة","مسابقة","وظيفة علوم"];[...sendType.options].forEach((o,i)=>o.textContent=v[i])}
   const diff=document.getElementById("adminDifficulty");if(diff){const v=en?["Easy","Medium","Hard","Expert"]:["سهل","متوسط","صعب","خبير"];[...diff.options].forEach((o,i)=>o.textContent=v[i])}
-  const sendBtn=document.getElementById("adminSendBtn");if(sendBtn)sendBtn.textContent=en?"🚀 Send / Publish":"🚀 إرسال / نشر";
+  const sendBtn=document.getElementById("adminSendBtn");if(sendBtn)sendBtn.textContent=en?"🚀 Send / Publish":"🚀 إرسال / نشر";const sentBtn=document.getElementById("manageSentAssignments");if(sentBtn)sentBtn.textContent=en?"Manage / delete sent assignments":"إدارة / حذف الوظائف المرسلة";
   label("adminPollTarget","الهدف","Target");label("adminPollTitle","عنوان التصويت","Poll title");label("adminPollQuestion","السؤال","Question");
   ph("adminPollTitle","عنوان التصويت","Poll title");ph("adminPollQuestion","شو بدك تسأل؟","What do you want to ask?");
   document.querySelectorAll(".admin-poll-opt").forEach((el,i)=>el.placeholder=en?`Option ${i+1}`:`الخيار ${i+1}`);
@@ -16035,7 +16087,7 @@ function adminRenderGeneratedAssignmentPreview(questions,difficulty){
     host.appendChild(d);
   });
 }
-async function adminCreateAssignmentForClass(classId,title,description,dueDate,generated,count,difficulty="medium",questionsOverride=null){
+async function adminCreateAssignmentForClass(classId,title,description,dueDate,generated,count,difficulty="medium",questionsOverride=null,subject="pythagoras"){
   let questions=questionsOverride
     ? questionsOverride.map(q=>({...q}))
     : generated
@@ -16044,7 +16096,7 @@ async function adminCreateAssignmentForClass(classId,title,description,dueDate,g
   const totalPoints=questions.reduce((s,q)=>s+(q.points||0),0);
   const pub=questions.map(({_answer,_guide,...q})=>q);
   const ref=await addDoc(collection(db,"classes",classId,"assignments"),{
-    title,description,subject:"pythagoras",dueDate,questions:pub,totalPoints,
+    title,description,subject,dueDate,questions:pub,totalPoints,
     difficulty:generated?difficulty:"custom",
     autoGenerated:!!generated,
     createdBy:auth.currentUser.uid,
@@ -16081,7 +16133,8 @@ async function adminSendContent(){
     }else{
       const targets=target==="all"?adminClassesCache:[adminClassById(target)].filter(Boolean);
       if(!targets.length)throw new Error("no-target-class");
-      for(const c of targets)await adminCreateAssignmentForClass(c.id,title,body,due,type==="generatedAssignment",count,difficulty);
+      const scienceQuestions=type==="scienceAssignment"?scienceLiveQuestions(count,currentUILanguage).map((q,i)=>({id:`science_${Date.now()}_${i}`,type:"mcq",prompt:q.prompt,options:q.options,points:10,answerHash:assignmentHash(q.answer),_answer:q.answer,_guide:q.explanation})):null;
+      for(const c of targets)await adminCreateAssignmentForClass(c.id,title,body,due,type==="generatedAssignment"||type==="scienceAssignment",count,difficulty,scienceQuestions,type==="scienceAssignment"?"science":"pythagoras");
       await adminPostAnnouncement(title,body||adminLang("تم إرسال وظيفة جديدة.","A new assignment was sent."),target,{kind:"assignment"});
     }
     await adminAudit(`admin_send_${type}`,`${title} • ${target}`);status.textContent=adminLang("تم النشر بنجاح ✅","Published successfully ✅");showToast(status.textContent);await adminLoadAllData();
@@ -16183,7 +16236,7 @@ async function sendAutoAssignment(){
 }
 
 function adminUpdateSendFields(){
-  const type=document.getElementById("adminSendType").value,assignment=type==="assignment"||type==="generatedAssignment",generated=type==="generatedAssignment"||type==="competition";
+  const type=document.getElementById("adminSendType").value,assignment=type==="assignment"||type==="generatedAssignment"||type==="scienceAssignment",generated=type==="generatedAssignment"||type==="scienceAssignment"||type==="competition";
   document.getElementById("adminDueDateWrap").classList.toggle("hidden",!assignment);
   document.getElementById("adminQuestionCountWrap").classList.toggle("hidden",!generated);
   document.getElementById("adminDifficultyWrap").classList.toggle("hidden",!generated);
@@ -17403,6 +17456,7 @@ document.getElementById("adminQuickAddStudentSearch").addEventListener("keydown"
 document.getElementById("adminQuickAddConfirmBtn").addEventListener("click",adminQuickAddStudentToSelectedClass);
 document.getElementById("adminSendType").addEventListener("change",adminUpdateSendFields);adminUpdateSendFields();
 document.getElementById("adminSendBtn").addEventListener("click",adminSendContent);
+document.getElementById("manageSentAssignments").addEventListener("click",()=>adminShowTab("content"));
 document.getElementById("autoAssignPreviewBtn").addEventListener("click",previewAutoAssignment);
 document.getElementById("autoAssignSendBtn").addEventListener("click",sendAutoAssignment);
 document.getElementById("autoAssignDifficulty").addEventListener("change",()=>{
@@ -21073,7 +21127,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='78';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='79';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
@@ -21104,6 +21158,7 @@ updatePwaUI();
 window.classoraLearningHub=mountLearningHub({
  language:()=>currentUILanguage,
  flags:()=>siteControlsCache.learningFeatures||{},
+ requestTopic:q=>{if(isGuestSession()){showGuestLoginReminder('protected');return Promise.reject(Error('login-required'))}return window.classoraLearningPlus?.requestTopic(q)},
  saveFlag:async(key,value)=>{if(!isSuperAdminProfile())throw Error('permission');await setDoc(doc(db,'siteControls','main'),{learningFeatures:{[key]:value}},{merge:true});siteControlsCache.learningFeatures={...siteControlsCache.learningFeatures,[key]:value}},
  toast:showToast,
  dialog:title=>{const modal=supportDialog(title);modal.close=()=>modal.dialog.close('close');return modal},

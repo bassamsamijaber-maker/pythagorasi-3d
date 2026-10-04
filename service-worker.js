@@ -1,9 +1,16 @@
-const CACHE_NAME="classora-v78-auth-guest-ipad";
+const CACHE_NAME="classora-v79-learning-offline";
 const APP_SHELL=[
   "./",
   "./index.html",
-  "./assets/learning-hub.js?v=78",
-  "./assets/learning-hub.css?v=78",
+  "./assets/learning-plus.js?v=79",
+  "./assets/learning-plus.css?v=79",
+  "./assets/learning-content.js?v=79",
+  "./assets/learning-store.js?v=79",
+  "./assets/ph-lab.js?v=79",
+  "./assets/learning-hub.js?v=79",
+  "./assets/learning-hub.css?v=79",
+  "./offline.html",
+
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
@@ -38,6 +45,11 @@ self.addEventListener("fetch",event=>{
   const url=new URL(event.request.url);
   if(url.origin===self.location.origin&&(url.pathname.endsWith("/release.json")||url.pathname.endsWith("/service-worker.js")))return;
 
+  const sameOrigin=url.origin===self.location.origin;
+  const publicNavigation=sameOrigin&&(url.pathname==='/'||/\/(index|offline|periodic-table)\.html$/.test(url.pathname));
+  const staticAsset=sameOrigin&&/\.(js|css|svg|png|jpg|jpeg|webp|webmanifest)$/.test(url.pathname);
+  const publicCDN=(url.hostname==='www.gstatic.com'&&url.pathname.startsWith('/firebasejs/'))||(url.hostname==='cdn.jsdelivr.net'&&/\.(js|css)$/.test(url.pathname))||(url.hostname==='unpkg.com'&&/\.js$/.test(url.pathname));
+  if(!publicNavigation&&!staticAsset&&!publicCDN)return;
   if(event.request.mode==="navigate"){
     event.respondWith(
       fetch(event.request,{cache:"no-store"})

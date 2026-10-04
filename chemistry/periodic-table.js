@@ -196,13 +196,19 @@ function matches(e){
  const q=search.trim().toLowerCase();const catOk=filter==="all"||(filter==="favorites"?favorites.has(e.n):e.category===filter);if(!catOk)return false;if(!q)return true;
  return e.s.toLowerCase().includes(q)||e.en.toLowerCase().includes(q)||e.ar.includes(search.trim())||String(e.n)===q;
 }
+let fitWholeTable=true;
+function fitPeriodicTable(){
+ const shell=document.querySelector('.periodic-scroll'),content=document.querySelector('.periodic-fit-content'),toggle=document.querySelector('#tableFitToggle');if(!shell||!content||!toggle)return;
+ toggle.hidden=layout!=='periodic';toggle.textContent=fitWholeTable?(lang==='ar'?'تكبير الجدول':'Zoom in'):(lang==='ar'?'عرض الجدول كاملًا':'Fit full table');toggle.setAttribute('aria-pressed',String(fitWholeTable));content.style.transform='';content.style.width='';shell.style.height='';shell.style.overflowX='';
+ if(layout==='periodic'&&fitWholeTable){const width=Math.max(1,shell.clientWidth),natural=1240,scale=Math.min(1,width/natural);content.style.width=natural+'px';content.style.transformOrigin='top left';content.style.transform=`scale(${scale})`;shell.style.height=Math.ceil(content.scrollHeight*scale+20)+'px';shell.style.overflowX='hidden'}
+}
 function renderTable(){
  const host=$("#periodicGrid");host.innerHTML="";host.classList.toggle("gallery-grid",layout==="gallery");$("#groupNumbers").hidden=layout==="gallery";$("#groupNumbers").innerHTML=Array.from({length:18},(_,i)=>`<span>${i+1}</span>`).join("");
  const marker1=document.createElement("div");marker1.className="series-marker";marker1.style.gridColumn="3";marker1.style.gridRow="6";marker1.textContent="57–71";if(layout==="periodic")host.append(marker1);
  const marker2=document.createElement("div");marker2.className="series-marker";marker2.style.gridColumn="3";marker2.style.gridRow="7";marker2.textContent="89–103";if(layout==="periodic")host.append(marker2);
  let shown=0;
  elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;if(!ok&&layout==="gallery")return;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" src="${visual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span><span class="el-family">${catName(e)}</span>${favorites.has(e.n)?`<span class="favorite-indicator" aria-label="favorite">${ptIconMarkup("star")}</span>`:""}`;b.onclick=()=>{b.classList.add("selected-element");openElement(e)};host.append(b)});
- $("#visibleCount").textContent=shown;$("#emptyState").hidden=shown!==0;
+ $("#visibleCount").textContent=shown;$("#emptyState").hidden=shown!==0;requestAnimationFrame(fitPeriodicTable);
 }
 function buildLegend(){const h=$("#legend");h.innerHTML="";catOrder.forEach(k=>{const b=document.createElement("button");b.type="button";b.style.setProperty("--legend",cats[k].color);b.innerHTML=`<i></i>${cats[k][lang]}`;b.onclick=()=>{filter=k;buildFilters();renderTable();window.scrollTo({top:$("#exploreView").offsetTop-100,behavior:"smooth"})};h.append(b)})}
 function buildFamilies(){const h=$("#familyGrid");h.innerHTML="";catOrder.forEach(k=>{const card=document.createElement("article");card.className="family-card";card.style.setProperty("--family",cats[k].color);card.innerHTML=`<div class="family-dot"></div><h3>${cats[k][lang]}</h3><p>${categoryText[k][lang]}</p>`;h.append(card)})}
@@ -269,4 +275,5 @@ window.addEventListener("message",event=>{
 });
 qa("[data-layout]").forEach(b=>b.onclick=()=>{layout=b.dataset.layout;qa("[data-layout]").forEach(x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b))});renderTable()});
 applyLanguage();
+$("#tableFitToggle").addEventListener("click",()=>{fitWholeTable=!fitWholeTable;fitPeriodicTable()});window.addEventListener("resize",fitPeriodicTable);if(typeof ResizeObserver!=="undefined")new ResizeObserver(fitPeriodicTable).observe($(".table-shell"));
 })();

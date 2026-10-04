@@ -5,7 +5,7 @@ function extract(source,name){const start=source.indexOf('function '+name+'(');a
  const {JSDOM}=require(process.env.CLASSORA_JSDOM||'jsdom');const source=fs.readFileSync(path.join(root,'index.html'),'utf8');const dom=new JSDOM(source,{url:'https://classora.test/'});
  for(const k of ['window','document','NodeFilter','MutationObserver','Element','Node'])global[k]=dom.window[k];
  dom.window.HTMLMediaElement.prototype.pause=function(){};
- const mod=await import('data:text/javascript;base64,'+Buffer.from(fs.readFileSync(path.join(root,'assets/learning-hub.js'),'utf8')).toString('base64'));
+ const mod=await import(require('node:url').pathToFileURL(path.join(root,'assets/learning-hub.js')).href);
  let lang='en',flags={},actions=[],toast='',lastModal;
  function dialog(title){const d=document.createElement('dialog'),body=document.createElement('div');d.append(body);document.body.append(d);d.close=()=>{d.dispatchEvent(new dom.window.Event('close'));d.remove()};lastModal={dialog:d,body,close:d.close};return lastModal}
  const hub=mod.mountLearningHub({language:()=>lang,flags:()=>flags,saveFlag:async(k,v)=>flags[k]=v,action:k=>actions.push(k),toast:t=>toast=t,dialog});
@@ -39,3 +39,4 @@ function extract(source,name){const start=source.indexOf('function '+name+'(');a
  mod.installVectorIcons();await new Promise(r=>setTimeout(r,150));assert(document.getElementById('chooseStudent').querySelector('svg'));assert(!/\p{Extended_Pictographic}/u.test(document.getElementById('chooseStudent').textContent));
  console.log('PASS: bilingual hub, science exams and competitions, 118-element periodic generator, balanced science banks, subject filters, quiz grading, chat actions, voice drafts and optional class-code flow.');dom.window.close();
 })().catch(e=>{console.error(e);process.exitCode=1});
+
