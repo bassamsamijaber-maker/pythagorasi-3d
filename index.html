@@ -4642,7 +4642,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=80"><link rel="stylesheet" href="./assets/learning-plus.css?v=80">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=81"><link rel="stylesheet" href="./assets/learning-plus.css?v=81">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -6751,9 +6751,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 
+<script id="classora-intro-failsafe">setTimeout(()=>{const intro=document.getElementById("classoraIntro");intro?.classList.add("hide");document.body.classList.remove("classora-intro-active")},3200);</script>
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=80";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=80";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=81";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=81";
 import {createLearningStore} from "./assets/learning-store.js?v=78";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
