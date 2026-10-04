@@ -222,14 +222,14 @@ export function installVectorIcons(){
  const emoji=/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu;
  const rules=[[/setting|إعداد|اعداد/,'settings'],[/chat|شات|محادث/,'chat'],[/support|دعم/,'help'],[/admin|أدمن|صلاح/,'shield'],[/notif|إشعار/,'bell'],[/voice|صوت|تسجيل/,'mic'],[/photo|image|صورة/,'photo'],[/install|تثبيت/,'download'],[/delete|حذف/,'trash'],[/competition|challenge|مسابق|تحد/,'trophy'],[/profile|account|حساب|طالب|معلم/,'user'],[/science|atom|عنصر|علوم/,'atom'],[/lab|معادل|فيثاغورس|رياض/,'math'],[/search|بحث/,'search'],[/class|صف|مدرس/,'school'],[/result|نتيج|احص|إحص|stat/,'chart'],[/time|وقت|مؤقت/,'clock'],[/calendar|تاريخ|موعد/,'calendar'],[/file|folder|ملف|محفوظ/,'folder'],[/view|show|عرض/,'eye'],[/edit|تعديل|صمم|صمّم/,'edit'],[/lock|أمان|حماية|كلمة سر/,'lock'],[/world|remote|عالم|عن بعد|جغراف/,'globe']];
  const emojiGroups=[
-  ['sun','☀🌞'],['moon','🌙🌓'],['school','🏫🎒👨‍🏫'],['user','👤🙂😊😄👌👇👋👏'],['group','👥👫🤝'],
-  ['motion','🚀🏃'],['help','🛟❓'],['shield','🛡🔐🔒⛔'],['chat','💬'],['mail','📥📬📤'],['bell','🔔'],
+  ['sun','☀🌞'],['moon','🌙🌓'],['school','🏫🎒👨‍🏫🎓'],['user','👤🙂😊😄👌👇👋👏'],['group','👥👫🤝'],
+  ['motion','🚀🏃📳'],['help','🛟❓'],['shield','🛡🔐🔒⛔'],['chat','💬'],['mail','📥📬📤'],['bell','🔔'],
   ['download','📲⬇'],['settings','⚙🎛'],['clock','⏳⏱⏰🕘⏪'],['chart','📊📈'],['trash','🗑🧹'],
   ['math','📐🧮📏⚖💯🔢⬛➕➖'],['atom','🧪⚛🔬🧊'],['trophy','🏆🏅⭐🌟'],['folder','🗃📂📋📅'],
   ['sparkle','✨🔥🎉🌈'],['eye','👁👀'],['edit','📝🗒✍✏☑'],['lock','🔑'],['globe','🌐🌍🌎🗺⛰🏙🌦'],
   ['target','🎯🎲'],['photo','📷🖼'],['mic','🎙🎤🔊'],['book','📚📘📖'],['bulb','💡'],['brain','🧠🤖'],
-  ['leaf','🌱'],['heart','❤'],['warn','⚠❌'],['check','✅'],['play','▶'],['pause','⏸⏹'],['inbox','📡'],
-  ['dot','🔵🔴🟢🟡🟨🟦'],['search','🔎'],['flask','🧪']
+  ['leaf','🌱'],['heart','❤'],['warn','⚠❌'],['check','✅'],['play','▶'],['pause','⏸⏹'],['bolt','⚡'],['inbox','📡'],
+  ['dot','🔵🔴🟢🟡🟨🟦'],['search','🔎'],['flask','🧪⚗'],['globe','🧭🌐🌍🌎🗺']
  ];
  const emojiName=(mark,context='')=>{
   if(mark==='©'||mark==='®')return null;
