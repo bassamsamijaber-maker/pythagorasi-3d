@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#06101b">
 <meta name="color-scheme" content="dark">
 <style id="classora-critical-first-paint">
@@ -12,6 +12,13 @@ body.classora-intro-active{background:#06101b!important;overflow:hidden!importan
 #classoraIntro{position:fixed!important;inset:-2px 0 -2px 0!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;background:#06101b!important}
 </style>
 <link rel="preload" href="./icons/classora-512.png" as="image" fetchpriority="high">
+<script id="classora-touch-zoom-guard">
+(()=>{if(!(navigator.maxTouchPoints>0))return;
+ const stop=e=>{if(e.cancelable)e.preventDefault()};
+ ["gesturestart","gesturechange","gestureend"].forEach(type=>document.addEventListener(type,stop,{passive:false}));
+ document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1)stop(e)},{passive:false});
+})();
+</script>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Classora">
@@ -4620,7 +4627,22 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @media(max-width:700px){#chatModal .classora-chat-box{height:var(--chat-viewport-height,100dvh)!important;max-height:var(--chat-viewport-height,100dvh)!important}#chatModal .chat-compose{grid-template-columns:minmax(0,1fr) 64px!important}#chatModal #chatSendBtn{width:64px!important;min-width:64px!important;max-width:64px!important}#chatPersonMenu{top:58px}#chatModal .chat-thread-head{flex-wrap:nowrap}#chatBackContactsBtn{max-width:92px;min-width:0;font-size:11px;padding:6px}}
 @media(prefers-reduced-motion:reduce){input,textarea,#chatMessageInput,#chatPersonMenu{animation:none!important;transition:none!important}}
 #chatRecordingPanel{grid-column:1/-1;display:flex;align-items:center;gap:10px;min-height:52px;background:#1d343e;border-radius:25px;padding:6px 12px}#chatRecordingPanel[hidden],#chatMessageInput[hidden],#chatSendBtn[hidden],#chatMessageSearch[hidden]{display:none!important}#chatRecordingPanel button{width:auto!important;min-width:44px!important;padding:6px!important;height:38px!important;font-size:12px!important}#chatRecordingPanel .voice-wave-bars{flex:1;min-width:20px}.voice-wave-bars{display:flex;align-items:center;justify-content:space-between;gap:2px;height:34px;overflow:hidden;direction:ltr}.voice-wave-bars i{display:block;min-width:2px;flex:1;max-width:4px;background:#82aea7;border-radius:4px}.voice-wave-bars i.played{background:#93ffe1}.voice-attachment{width:280px;max-width:100%;min-width:0}.voice-player{display:flex;align-items:center;gap:10px;direction:ltr}.voice-player-body{flex:1;min-width:0}.voice-player button{flex-shrink:0;border:0;background:#d6fff019;color:#eafff9;cursor:pointer;padding:0}.voice-play{width:42px;height:42px;border-radius:50%}.voice-speed{width:38px;height:32px;border-radius:12px;font-size:12px}.voice-player input[type=range]{display:block;width:100%;height:12px;padding:0;margin:0;accent-color:#6de3be}.voice-time{display:block;font-size:10px;white-space:nowrap;color:#c5e5dc;font-variant-numeric:tabular-nums}.voice-attachment audio{display:none}#chatModal .chat-bubble:has(.voice-attachment){width:min(320px,86%);box-sizing:border-box}.chat-message-options{float:inline-end;border:0;background:transparent;color:inherit;font-size:20px;padding:0 5px;line-height:24px;cursor:pointer}.chat-edited{display:block;font-size:10px;opacity:.7;margin-top:5px}.message-option-list{display:grid;gap:8px}.message-option-list button{width:100%;min-height:44px;text-align:start}.admin-chat-features{padding:18px;border:1px solid #ffffff20;border-radius:18px;margin-bottom:18px;display:grid;gap:14px}.admin-chat-features label{display:flex;align-items:center;gap:12px}#chatMessageSearch{margin:7px 10px;width:calc(100% - 20px);min-height:40px;font-size:13px;flex-shrink:0}@media(max-width:480px){.voice-attachment{width:230px}.voice-player{gap:7px}.voice-play{width:36px;height:36px}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=77">
+/* CLASSORA V78 VOICE DRAWING CONTROL */
+.voice-play{display:grid!important;place-items:center!important;position:relative;overflow:visible!important;transition:transform .16s ease,background .2s ease,box-shadow .2s ease!important}
+.voice-play svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.voice-play::after{content:"";position:absolute;inset:-4px;border:1px solid #7cf0d477;border-radius:50%;opacity:0;transform:scale(.72);pointer-events:none}
+.voice-play.pressed{animation:voiceButtonPress .32s cubic-bezier(.2,.8,.2,1)}
+.voice-player.is-playing .voice-play{background:#66e2c62b!important;color:#a7ffe9;box-shadow:0 0 0 4px #5ee2bf12,0 0 24px #5ee2bf28}
+.voice-player.is-playing .voice-play::after{animation:voicePlayRing 1.25s ease-out infinite}
+.voice-player.is-playing .voice-wave-bars i{animation:voiceBarLive .72s ease-in-out infinite alternate}
+.voice-player.is-playing .voice-wave-bars i:nth-child(3n+1){animation-delay:-.18s}.voice-player.is-playing .voice-wave-bars i:nth-child(3n+2){animation-delay:-.36s}
+.voice-speed.tap{animation:voiceSpeedTap .28s ease}
+@keyframes voiceButtonPress{45%{transform:scale(.84)}100%{transform:scale(1)}}
+@keyframes voicePlayRing{0%{opacity:.7;transform:scale(.72)}100%{opacity:0;transform:scale(1.42)}}
+@keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
+@keyframes voiceSpeedTap{50%{transform:scale(.88)}}
+@media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=78">
 </head>
 <body class="classora-intro-active">
 <div class="classora-intro" id="classoraIntro">
@@ -4876,7 +4898,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=60"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=78"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -6682,7 +6704,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=77";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=78";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -17372,9 +17394,36 @@ async function messageOptions(m,p){
 }
 function makeWaveBars(){const wave=document.createElement('div');wave.className='voice-wave-bars';wave.setAttribute('aria-hidden','true');for(let i=0;i<36;i++){const bar=document.createElement('i');bar.style.height='5px';wave.append(bar)}return wave}
 function renderVoicePlayer(container,src){
- container.classList.add('voice-attachment');const audio=document.createElement('audio');audio.src=src;audio.preload='metadata';const player=document.createElement('div');player.className='voice-player';const play=document.createElement('button');play.type='button';play.className='voice-play';play.textContent='▶';play.setAttribute('aria-label',chatText('تشغيل الرسالة الصوتية','Play voice message'));const body=document.createElement('div');body.className='voice-player-body';const wave=makeWaveBars(),seek=document.createElement('input');seek.type='range';seek.min=0;seek.max=100;seek.value=0;seek.step=.1;seek.setAttribute('aria-label',chatText('موضع التشغيل','Playback position'));const time=document.createElement('span');time.className='voice-time';time.textContent='0:00';const speed=document.createElement('button');speed.type='button';speed.className='voice-speed';speed.textContent='1×';speed.setAttribute('aria-label',chatText('سرعة التشغيل','Playback speed'));speed.onclick=()=>{audio.playbackRate=audio.playbackRate===1?1.5:audio.playbackRate===1.5?2:1;speed.textContent=audio.playbackRate+'×'};body.append(wave,seek,time);player.append(play,body,speed);container.append(player,audio);
- let decodedDuration=0;const durationValue=()=>Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:decodedDuration;const clock=n=>Math.floor((n||0)/60)+':'+String(Math.floor((n||0)%60)).padStart(2,'0');const update=()=>{const duration=durationValue();seek.disabled=!duration;seek.value=duration?audio.currentTime/duration*100:0;time.textContent=clock(audio.currentTime)+' / '+clock(duration);[...wave.children].forEach((bar,i)=>bar.classList.toggle('played',i/36<=Number(seek.value)/100))};audio.ontimeupdate=update;audio.onloadedmetadata=update;audio.onended=()=>{play.textContent='▶';play.setAttribute('aria-label',chatText('تشغيل الرسالة الصوتية','Play voice message'))};audio.onpause=()=>play.textContent='▶';play.onclick=async()=>{if(audio.paused){try{document.querySelectorAll('.voice-attachment audio').forEach(a=>{if(a!==audio)a.pause()});await audio.play();play.textContent='Ⅱ';play.setAttribute('aria-label',chatText('إيقاف مؤقت','Pause'))}catch{showToast(chatText('تعذر تشغيل التسجيل.','Could not play this recording.'))}}else audio.pause()};seek.oninput=()=>{if(durationValue())audio.currentTime=Number(seek.value)/100*durationValue()};
- try{const raw=atob(src.split(',')[1]),bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));const decoder=new OfflineAudioContext(1,1,22050);decoder.decodeAudioData(bytes.buffer).then(buffer=>{decodedDuration=buffer.duration;update();const data=buffer.getChannelData(0),step=Math.max(1,Math.floor(data.length/36));let peaks=[];for(let i=0;i<36;i++){let sum=0,count=0;for(let j=i*step;j<Math.min(data.length,(i+1)*step);j+=16){sum+=data[j]*data[j];count++}peaks.push(Math.sqrt(sum/Math.max(count,1)))}const max=Math.max(...peaks,.01);[...wave.children].forEach((bar,i)=>bar.style.height=(5+25*peaks[i]/max)+'px')}).catch(()=>{})}catch{}
+ container.classList.add('voice-attachment');
+ const audio=document.createElement('audio');audio.src=src;audio.preload='metadata';
+ const player=document.createElement('div');player.className='voice-player';
+ const play=document.createElement('button');play.type='button';play.className='voice-play';
+ const voiceIcon=playing=>playing
+   ?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6v12M16 6v12"/></svg>'
+   :'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6z"/></svg>';
+ const setPlayState=playing=>{
+   player.classList.toggle('is-playing',playing);
+   play.innerHTML=voiceIcon(playing);
+   play.setAttribute('aria-label',chatText(playing?'إيقاف مؤقت':'تشغيل الرسالة الصوتية',playing?'Pause':'Play voice message'));
+ };
+ setPlayState(false);
+ const body=document.createElement('div');body.className='voice-player-body';
+ const wave=makeWaveBars(),seek=document.createElement('input');seek.type='range';seek.min=0;seek.max=100;seek.value=0;seek.step=.1;seek.setAttribute('aria-label',chatText('موضع التشغيل','Playback position'));
+ const time=document.createElement('span');time.className='voice-time';time.textContent='0:00';
+ const speed=document.createElement('button');speed.type='button';speed.className='voice-speed';speed.textContent='1×';speed.setAttribute('aria-label',chatText('سرعة التشغيل','Playback speed'));
+ speed.onclick=()=>{audio.playbackRate=audio.playbackRate===1?1.5:audio.playbackRate===1.5?2:1;speed.textContent=audio.playbackRate+'×';speed.classList.remove('tap');void speed.offsetWidth;speed.classList.add('tap')};
+ body.append(wave,seek,time);player.append(play,body,speed);container.append(player,audio);
+ let decodedDuration=0;
+ const durationValue=()=>Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:decodedDuration;
+ const clock=n=>Math.floor((n||0)/60)+':'+String(Math.floor((n||0)%60)).padStart(2,'0');
+ const update=()=>{const duration=durationValue();seek.disabled=!duration;seek.value=duration?audio.currentTime/duration*100:0;time.textContent=clock(audio.currentTime)+' / '+clock(duration);[...wave.children].forEach((bar,i)=>bar.classList.toggle('played',i/36<=Number(seek.value)/100))};
+ audio.ontimeupdate=update;audio.onloadedmetadata=update;
+ audio.onplay=()=>setPlayState(true);
+ audio.onended=()=>setPlayState(false);
+ audio.onpause=()=>setPlayState(false);
+ play.onclick=async()=>{play.classList.remove('pressed');void play.offsetWidth;play.classList.add('pressed');if(audio.paused){try{document.querySelectorAll('.voice-attachment audio').forEach(a=>{if(a!==audio)a.pause()});await audio.play()}catch{setPlayState(false);showToast(chatText('تعذر تشغيل التسجيل.','Could not play this recording.'))}}else audio.pause()};
+ seek.oninput=()=>{if(durationValue())audio.currentTime=Number(seek.value)/100*durationValue()};
+ try{const raw=atob(src.split(',')[1]),bytes=Uint8Array.from(raw,ch=>ch.charCodeAt(0));const decoder=new OfflineAudioContext(1,1,22050);decoder.decodeAudioData(bytes.buffer).then(buffer=>{decodedDuration=buffer.duration;update();const data=buffer.getChannelData(0),step=Math.max(1,Math.floor(data.length/36));let peaks=[];for(let i=0;i<36;i++){let sum=0,count=0;for(let j=i*step;j<Math.min(data.length,(i+1)*step);j+=16){sum+=data[j]*data[j];count++}peaks.push(Math.sqrt(sum/Math.max(count,1)))}const max=Math.max(...peaks,.01);[...wave.children].forEach((bar,i)=>bar.style.height=(5+25*peaks[i]/max)+'px')}).catch(()=>{})}catch{}
 }
 let voiceVisualContext=null,voiceVisualFrame=0,voiceRecordingStarted=0;
 function stopVoiceVisual(){cancelAnimationFrame(voiceVisualFrame);voiceVisualContext?.close().catch(()=>{});voiceVisualContext=null;document.getElementById('chatRecordingPanel').hidden=true;document.getElementById('chatMessageInput').hidden=false;document.getElementById('chatSendBtn').hidden=false}
@@ -20789,7 +20838,7 @@ document.getElementById("closePwaInstallModal")?.addEventListener("click",()=>pw
 pwaInstallModal?.addEventListener("click",e=>{if(e.target===pwaInstallModal)pwaInstallModal.classList.remove("open")});
 
 // Update installed Android/iOS PWAs when online, without interrupting active work.
-const CLASSORA_RELEASE='77';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
+const CLASSORA_RELEASE='78';let classoraPendingUpdate=false,classoraReloading=false,classoraRegistration=null;
 function classoraCanRefresh(){
  if(document.hidden||!navigator.onLine)return false;
  if(document.querySelector('.modal.open,dialog[open]'))return false;
