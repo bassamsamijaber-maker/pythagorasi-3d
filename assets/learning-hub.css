@@ -16,7 +16,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #91dc
 @supports not(height:100dvh){.platform-lobby{height:100vh!important;min-height:100vh!important;max-height:100vh!important}.modal{height:100vh!important}}
 .case-dialog-fallback{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%);z-index:2147483646;display:block;box-shadow:0 0 0 100vmax #020915bb,0 24px 80px #0008;max-height:85vh;overflow:auto}.auth-role .ico:empty{display:none}#chatModal .chat-bubble.has-voice{width:min(320px,86%);box-sizing:border-box}
 
-/* ================= CLASSORA MOBILE + VECTOR POLISH V77 ================= */
+/* ================= CLASSORA MOBILE + VECTOR POLISH V78 ================= */
 :root{--classora-mobile-gap:12px}
 html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-height:100dvh;overflow-x:hidden}
@@ -247,4 +247,60 @@ h1 .classora-inline-art-wrap,h2 .classora-inline-art-wrap,h3 .classora-inline-ar
     width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;
     height:min(74dvh,600px)!important;max-height:min(74dvh,600px)!important;border-radius:20px!important
   }
+}
+
+/* ================= CLASSORA V78 TEACHER AUTH + GUEST + IPAD DESKTOP ================= */
+.teacher-entry-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:4px 0 16px}
+.teacher-entry-option{min-width:0;min-height:86px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(255,255,255,.035);color:#eaf5ff;padding:11px;display:flex;align-items:center;gap:10px;text-align:start;cursor:pointer;transition:.18s}
+.teacher-entry-option:hover,.teacher-entry-option.active{border-color:rgba(91,203,255,.42);background:linear-gradient(135deg,rgba(29,139,239,.13),rgba(124,81,230,.10));transform:translateY(-1px)}
+.teacher-entry-option.google{border-color:rgba(255,255,255,.14)}
+.teacher-entry-option>span:last-child{display:grid;gap:3px;min-width:0}.teacher-entry-option b{font-size:13px}.teacher-entry-option small{font-size:10px;line-height:1.4;color:#8fa7bb}
+.teacher-entry-art{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:11px;background:rgba(100,201,255,.10);color:#9de5ff}
+.teacher-entry-art svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.teacher-google-mark{width:34px;height:34px;flex:0 0 34px;border-radius:11px;display:grid;place-items:center;background:#fff;color:#244c87;font-weight:1000;font-size:18px}
+.teacher-entry-fields{display:grid;gap:7px;padding:14px;border:1px solid rgba(255,255,255,.075);border-radius:16px;background:rgba(255,255,255,.022)}
+.teacher-entry-fields.hidden{display:none!important}.teacher-entry-fields label{font-size:12px;color:#a9bbca}.teacher-entry-fields .auth-primary{margin-top:4px}
+.auth-guest-entry{width:100%;margin-top:11px;border:1px solid rgba(103,201,255,.14);border-radius:16px;background:linear-gradient(135deg,rgba(32,129,218,.07),rgba(104,72,200,.05));color:#dcecf7;padding:12px 14px;display:flex;align-items:center;gap:11px;text-align:start;cursor:pointer}
+.auth-guest-entry:hover{border-color:rgba(103,201,255,.32);background:linear-gradient(135deg,rgba(32,129,218,.12),rgba(104,72,200,.09))}
+.auth-guest-entry>span:last-child{display:grid;gap:3px}.auth-guest-entry b{font-size:13px}.auth-guest-entry small{font-size:10px;line-height:1.5;color:#8da4b6}
+.auth-guest-icon{width:36px;height:36px;flex:0 0 36px;border-radius:12px;display:grid;place-items:center;background:rgba(91,207,255,.10);color:#9fe9ff}
+.auth-guest-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.guest-login-reminder-box{width:min(470px,92vw)!important;height:auto!important;min-height:0!important;max-height:88dvh!important;border-radius:24px!important;text-align:center!important;padding:26px!important}
+.guest-reminder-art{width:70px;height:70px;margin:0 auto 15px;border-radius:22px;display:grid;place-items:center;color:#8be4ff;background:linear-gradient(145deg,rgba(31,139,236,.17),rgba(121,78,226,.13));border:1px solid rgba(105,197,255,.18)}
+.guest-reminder-art svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.guest-login-reminder-box h2{margin:0 0 8px;font-size:24px}.guest-login-reminder-box p{margin:0 auto 16px;max-width:390px;color:#9db0c0;line-height:1.75;font-size:13px}
+.guest-reminder-never{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:#9fb2c0;margin:12px 0 16px}.guest-reminder-never input{width:17px;height:17px}
+.guest-reminder-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.guest-reminder-actions button{min-height:46px;margin:0!important}
+
+/* iPad/tablets intentionally use the desktop composition instead of the phone UI. */
+@media (min-width:700px) and (max-width:1366px) and (pointer:coarse){
+  .classora-mobile-page-nav{display:none!important}
+  .platform-lobby{width:100%!important;height:100dvh!important;min-height:100dvh!important;max-height:none!important;padding:18px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .lobby-shell{width:min(1500px,100%)!important;max-width:1500px!important;margin:0 auto!important}
+  .lobby-topbar{display:flex!important;grid-template-columns:none!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;margin-bottom:18px!important}
+  .lobby-top-actions{width:auto!important;display:flex!important;grid-template-columns:none!important;flex-wrap:wrap!important;justify-content:flex-end!important;gap:7px!important}
+  .lobby-top-actions .lobby-icon-btn,.lobby-top-actions .admin-panel-btn,.lobby-top-actions .lobby-profile-btn,.lobby-top-actions .lobby-logout-btn{width:auto!important;max-width:none!important;min-width:44px!important;height:auto!important;min-height:44px!important;padding:8px 10px!important}
+  .lobby-top-actions .lobby-icon-btn span:not(.classora-notify-badge),.lobby-top-actions .admin-panel-btn span,.lobby-profile-btn>span:not(.lobby-avatar){display:inline!important}
+  .lobby-hero,.pythag-lobby-hero{grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr)!important;padding:22px!important;gap:18px!important}
+  .subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.pythag-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.lobby-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .hub-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.hub-hero{grid-template-columns:minmax(0,1fr) minmax(260px,.7fr)!important}.hub-hero-art{display:block!important;scale:1!important}
+  .modal{width:100vw!important;height:100dvh!important;max-width:100vw!important;max-height:100dvh!important;padding:18px!important;align-items:center!important;justify-content:center!important}
+  .modalbox,.profile-modalbox,.settings-modalbox,.exam-modalbox,.live-modalbox,.support-modalbox,.pythag-question-modalbox,.admin-panel-box{width:min(1040px,96vw)!important;max-width:96vw!important;height:auto!important;min-height:0!important;max-height:92dvh!important;margin:auto!important;border-radius:24px!important;padding:20px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .modalhead{position:sticky!important;top:0!important;margin:-6px -6px 14px!important;padding:10px 6px!important;background:rgba(7,16,27,.90)!important;border-radius:16px!important}
+  .modalhead .close{display:grid!important;width:42px!important;height:42px!important}
+  #chatModal.open{padding:18px!important;align-items:center!important;justify-content:center!important}
+  #chatModal .classora-chat-box{width:min(1120px,96vw)!important;max-width:96vw!important;height:min(720px,88dvh)!important;max-height:88dvh!important;border-radius:24px!important;padding:16px!important}
+  .settings-grid,.admin-form-grid,.admin-control-grid,.cloud-home-grid,.live-home-grid,.competition-create-settings,.competition-builder-settings,.builder-top{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .profile-stats,.admin-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .shell{display:grid!important;grid-template-columns:minmax(0,1.35fr) minmax(320px,.8fr)!important;gap:12px!important;padding:12px!important;min-height:100dvh!important}
+  .stage{width:auto!important;height:auto!important;min-height:calc(100dvh - 24px)!important;border-radius:24px!important}.side{width:auto!important;max-height:calc(100dvh - 24px)!important;overflow:auto!important;border-radius:24px!important;padding:18px!important}
+  .auth-gate{width:100vw!important;height:100dvh!important;min-height:100dvh!important;padding:18px!important;place-items:center!important;overflow:auto!important}
+  .auth-panel{width:min(760px,94vw)!important;max-width:760px!important;min-height:0!important;height:auto!important;max-height:92dvh!important;border-radius:24px!important;padding:24px!important;overflow-y:auto!important}
+  .auth-role-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:699px){
+  .teacher-entry-options{grid-template-columns:1fr!important}.teacher-entry-option{min-height:62px}
+  .guest-reminder-actions{grid-template-columns:1fr}
+  #guestLoginReminderModal{align-items:center!important;justify-content:center!important;padding:14px!important}
+  #guestLoginReminderModal .guest-login-reminder-box{width:min(92vw,440px)!important;height:auto!important;min-height:0!important;max-height:82dvh!important;border-radius:24px!important;padding:22px 18px!important}
 }
