@@ -4688,6 +4688,12 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
           <span>دخول المعلم لإدارة الصفوف والامتحانات والمسابقات وبنك الأسئلة.</span>
         </button>
       </div>
+      <button class="auth-guest-entry" id="guestLoginBtn" type="button">
+        <span class="auth-guest-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 21a7.5 7.5 0 0 1 15 0M18.5 7.5h3M20 6v3"/></svg>
+        </span>
+        <span><b>الدخول كضيف</b><small>تصفّح كلاسورا بدون حساب. الحل والامتحانات والمسابقات تحتاج تسجيل دخول.</small></span>
+      </button>
     </div>
 
     <div class="auth-form" id="studentLoginForm">
@@ -4728,17 +4734,41 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     </div>
 
     <div class="auth-form" id="teacherLoginForm">
-      <div class="teacher-auth-tabs">
-        <button type="button" class="active" id="teacherModeName">اسم + كلمة سر</button>
-        <button type="button" id="teacherModeEmail">إيميل + كلمة سر</button>
+      <div class="teacher-entry-options" role="group" aria-label="خيارات حساب المعلم">
+        <button type="button" class="teacher-entry-option active" id="teacherEntryLogin">
+          <span class="teacher-entry-art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h12M12 6l6 6-6 6M20 4v16"/></svg></span>
+          <span><b>تسجيل الدخول</b><small>بالاسم أو الإيميل + كلمة السر</small></span>
+        </button>
+        <button type="button" class="teacher-entry-option" id="teacherEntryCreate">
+          <span class="teacher-entry-art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 13.5-5.8M19 14v6M16 17h6"/></svg></span>
+          <span><b>إنشاء حساب</b><small>حساب معلم جديد</small></span>
+        </button>
+        <button type="button" class="teacher-entry-option google" id="teacherGoogleBtn">
+          <span class="teacher-google-mark" aria-hidden="true">G</span>
+          <span><b>Google</b><small>دخول بحساب Google</small></span>
+        </button>
       </div>
-      <label for="teacherIdentifierInput" id="teacherIdentifierLabel">اسم الدخول</label>
-      <input id="teacherIdentifierInput" maxlength="80" autocomplete="username" placeholder="اسم المعلم">
-      <label for="teacherPasswordInput">كلمة السر</label>
-      <input id="teacherPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="كلمة السر">
-      <button class="auth-primary" id="teacherPasswordLoginBtn" type="button">👨‍🏫 دخول المعلم</button>
-      <div class="auth-divider"><span>أو</span></div>
-      <button class="auth-google" id="teacherGoogleBtn" type="button">G&nbsp;&nbsp; دخول بحساب Google</button>
+
+      <div class="teacher-entry-fields" id="teacherLoginFields">
+        <label for="teacherIdentifierInput" id="teacherIdentifierLabel">الاسم أو الإيميل</label>
+        <input id="teacherIdentifierInput" maxlength="80" autocomplete="username" placeholder="اسم المعلم أو teacher@example.com">
+        <label for="teacherPasswordInput">كلمة السر</label>
+        <input id="teacherPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="كلمة السر">
+        <button class="auth-primary" id="teacherPasswordLoginBtn" type="button">دخول المعلم</button>
+      </div>
+
+      <div class="teacher-entry-fields hidden" id="teacherCreateFields">
+        <label for="teacherCreateName">اسم المعلم</label>
+        <input id="teacherCreateName" maxlength="40" autocomplete="name" placeholder="مثال: أحمد محمد">
+        <label for="teacherCreateEmail">الإيميل</label>
+        <input id="teacherCreateEmail" type="email" maxlength="100" autocomplete="email" placeholder="teacher@example.com">
+        <label for="teacherCreatePassword">كلمة السر</label>
+        <input id="teacherCreatePassword" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="6 خانات أو أكثر">
+        <label for="teacherCreateConfirm">تأكيد كلمة السر</label>
+        <input id="teacherCreateConfirm" type="password" minlength="6" maxlength="64" autocomplete="new-password" placeholder="اكتب كلمة السر مرة ثانية">
+        <button class="auth-primary" id="teacherCreateAccountBtn" type="button">إنشاء حساب المعلم</button>
+      </div>
+
       <div class="auth-form-actions">
         <button class="auth-back" id="teacherBackBtn" type="button">رجوع</button>
       </div>
@@ -4749,6 +4779,21 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText"></div>
 </div>
+</div>
+
+<div class="modal" id="guestLoginReminderModal" role="dialog" aria-modal="true" aria-labelledby="guestLoginReminderTitle">
+  <div class="modalbox guest-login-reminder-box">
+    <div class="guest-reminder-art" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 21a7.5 7.5 0 0 1 15 0M18 8h4M20 6v4"/></svg>
+    </div>
+    <h2 id="guestLoginReminderTitle">سجّل دخولك في Classora</h2>
+    <p id="guestLoginReminderText">بحسابك بنحفظ تقدمك وبتقدر تحل الأسئلة وتدخل الامتحانات والمسابقات.</p>
+    <label class="guest-reminder-never"><input id="guestReminderNever" type="checkbox"> لا تذكرني كل ساعة مرة ثانية</label>
+    <div class="guest-reminder-actions">
+      <button class="apply" id="guestReminderLoginBtn" type="button">تسجيل الدخول</button>
+      <button class="exam-secondary" id="guestReminderLaterBtn" type="button">لاحقًا</button>
+    </div>
+  </div>
 </div>
 
 
@@ -6997,7 +7042,8 @@ function updateAssistantLabels(){
   if(topic)topic.textContent=fixedName;
 }
 function showPlatformLobby(){
-  if(!auth?.currentUser || !window.PythagorasiUser || !window.PythagorasiUser.uid){
+  const guest=window.PythagorasiUser?.role==="guest";
+  if((!auth?.currentUser&&!guest) || !window.PythagorasiUser || !window.PythagorasiUser.uid){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
     authGate?.classList.add("show");
@@ -7007,6 +7053,9 @@ function showPlatformLobby(){
   document.getElementById("platformLobby")?.classList.remove("hidden");
   const p=window.PythagorasiUser||{};
   const name=p.displayName||"مستخدم";
+  const guestViewer=p.role==="guest";
+  const logoutBtn=document.getElementById("lobbyLogoutBtn");
+  if(logoutBtn)logoutBtn.textContent=guestViewer?(currentUILanguage==="en"?"Sign in":"تسجيل الدخول"):(currentUILanguage==="en"?"Sign out":"تسجيل خروج");
   const first=name.split(/\s+/)[0]||name;
   document.getElementById("lobbyGreeting").textContent=currentUILanguage==="en"?`Welcome, ${first}`:`أهلًا ${first}`;
   document.getElementById("lobbyProfileName").textContent=name;
@@ -7247,6 +7296,7 @@ const studentPasswordConfirm=document.getElementById("studentPasswordConfirm");
 const studentClassCodeInput=document.getElementById("studentClassCodeInput");
 let studentAuthMode="login";
 let studentAccountCreationInProgress=false;
+let teacherAccountCreationInProgress=false;
 
 const authUserBar=document.getElementById("authUserBar");
 
@@ -7328,10 +7378,25 @@ function showStudentLogin(){
   setTimeout(()=>studentNameInput.focus(),80);
 }
 
+let teacherEntryMode="login";
+function setTeacherEntryMode(mode="login"){
+  teacherEntryMode=mode==="create"?"create":"login";
+  document.getElementById("teacherEntryLogin")?.classList.toggle("active",teacherEntryMode==="login");
+  document.getElementById("teacherEntryCreate")?.classList.toggle("active",teacherEntryMode==="create");
+  document.getElementById("teacherLoginFields")?.classList.toggle("hidden",teacherEntryMode!=="login");
+  document.getElementById("teacherCreateFields")?.classList.toggle("hidden",teacherEntryMode!=="create");
+  setAuthError("");
+  setTimeout(()=>{
+    (teacherEntryMode==="create"
+      ?document.getElementById("teacherCreateName")
+      :document.getElementById("teacherIdentifierInput"))?.focus();
+  },60);
+}
 function showTeacherLogin(){
   roleChooser.style.display="none";
   studentForm.classList.remove("show");
   teacherForm.classList.add("show");
+  setTeacherEntryMode("login");
   setAuthError("");
 }
 
@@ -7389,40 +7454,54 @@ function finishAuthIntent(){
 }
 
 function paintUser(user,profile){
+  sessionStorage.removeItem("classora_guest_session");
+  stopGuestReminderLoop?.();
   activeProfile=profile;
   const name=profile?.displayName||user?.displayName||"مستخدم";
   const teacher=isTeacherLikeProfile(profile);
   const admin=isSuperAdminProfile(profile);
+  const guest=profile?.role==="guest"||profile?.guest===true;
   document.getElementById("authDisplayName").textContent=name;
-  document.getElementById("authRoleText").textContent=admin?"🛡️ Super Admin • 👨‍🏫 معلم • 🎒 طالب":teacher?"👨‍🏫 معلم":"🎒 طالب";
+  document.getElementById("authRoleText").textContent=guest?"ضيف":admin?"🛡️ Super Admin • 👨‍🏫 معلم • 🎒 طالب":teacher?"👨‍🏫 معلم":"🎒 طالب";
   applyAvatar(document.getElementById("authAvatar"),profile,name);
   authUserBar.classList.add("show");
   document.body.classList.add("classora-authenticated");
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
-  window.PythagorasiUser={uid:user.uid,...profile};
+  window.PythagorasiUser={uid:user?.uid||"guest-local",...profile};
   activeProfile=window.PythagorasiUser;
-  listenTeamAccess(user.uid);watchAccountActionRequests(user.uid);
-  applySavedAccountState(window.PythagorasiUser);
-  setTimeout(()=>syncPublicProfile(window.PythagorasiUser,user),120);
-  setTimeout(startClassoraRealtimeNotifications,350);
-  setTimeout(()=>{
-    if(classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted"){
-      registerClassoraPushToken();
-    }
-  },900);
+
+  if(!guest){
+    listenTeamAccess(user.uid);watchAccountActionRequests(user.uid);
+    applySavedAccountState(window.PythagorasiUser);
+    setTimeout(()=>syncPublicProfile(window.PythagorasiUser,user),120);
+    setTimeout(startClassoraRealtimeNotifications,350);
+    setTimeout(()=>{
+      if(classoraNotificationsEnabled()&&("Notification" in window)&&Notification.permission==="granted"){
+        registerClassoraPushToken();
+      }
+    },900);
+  }else{
+    listenTeamAccess("");watchAccountActionRequests("");
+    clearClassoraRealtimeNotifications();
+  }
+
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
   if(teacher)setTimeout(()=>ensureTeacherStarterClass(),180);
   if(profile?.role==="student"&&profile?.forcePasswordReset)setTimeout(()=>openForcedPasswordReset(),160);
 
   const pending=authPendingAction;
   if(!pending)showPlatformLobby();
-  finishAuthIntent();
-  setTimeout(()=>maybeShowSecurityReminder(user.uid),1400);
+  if(!guest)finishAuthIntent(); else authPendingAction=null;
+  if(!guest)setTimeout(()=>maybeShowSecurityReminder(user.uid),1400);
 }
 
 async function resolveCurrentUser(user){
   if(!user){
+    if(sessionStorage.getItem("classora_guest_session")==="1"){
+      paintGuestSession();
+      return;
+    }
     dismissSecurityReminder();
     listenTeamAccess("");watchAccountActionRequests("");document.getElementById("accountActionRequests").innerHTML="";
     document.body.classList.remove("classora-authenticated");
@@ -7464,7 +7543,7 @@ async function resolveCurrentUser(user){
       profile=await saveUserProfile(user,{...profile,...base});
     }else{
       if(!profile){
-        if(studentAccountCreationInProgress){
+        if(studentAccountCreationInProgress||teacherAccountCreationInProgress){
           authGate.classList.add("show");
           return;
         }
@@ -7521,6 +7600,121 @@ document.getElementById("chooseStudent").addEventListener("click",()=>{
   showStudentLogin();
 });
 document.getElementById("chooseTeacher").addEventListener("click",showTeacherLogin);
+
+const GUEST_REMINDER_NEVER_KEY="classora_guest_reminder_never_v1";
+const GUEST_REMINDER_LAST_KEY="classora_guest_reminder_last_v1";
+const GUEST_REMINDER_MS=60*60*1000;
+let guestReminderTimeout=null,guestReminderInterval=null;
+
+function isGuestSession(){return window.PythagorasiUser?.role==="guest"||sessionStorage.getItem("classora_guest_session")==="1"}
+function stopGuestReminderLoop(){
+  if(guestReminderTimeout){clearTimeout(guestReminderTimeout);guestReminderTimeout=null}
+  if(guestReminderInterval){clearInterval(guestReminderInterval);guestReminderInterval=null}
+}
+function paintGuestSession(){
+  const en=localStorage.getItem("pythagorasi_language")!=="ar";
+  const profile={displayName:en?"Guest":"ضيف",role:"guest",provider:"local-guest",guest:true};
+  sessionStorage.setItem("classora_guest_session","1");
+  document.getElementById("authDisplayName").textContent=profile.displayName;
+  document.getElementById("authRoleText").textContent=en?"Guest":"ضيف";
+  applyAvatar(document.getElementById("authAvatar"),profile,profile.displayName);
+  authUserBar.classList.add("show");
+  document.body.classList.add("classora-authenticated");
+  document.body.dataset.userRole="guest";
+  authGate.classList.remove("show");
+  window.PythagorasiUser={uid:"guest-local",...profile};
+  activeProfile=window.PythagorasiUser;
+  listenTeamAccess("");watchAccountActionRequests("");
+  clearClassoraRealtimeNotifications();
+  document.getElementById("lobbyLogoutBtn").textContent=en?"Sign in":"تسجيل الدخول";
+  showPlatformLobby();
+  startGuestReminderLoop();
+  setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
+}
+function guestReminderText(reason="hourly"){
+  const en=localStorage.getItem("pythagorasi_language")!=="ar";
+  if(reason==="protected")return en
+    ?"Sign in to solve questions, submit work, join exams, or enter competitions. Your progress will be saved to your account."
+    :"سجّل دخولك عشان تحل الأسئلة، تسلّم الوظائف، تدخل الامتحانات أو المسابقات، وينحفظ تقدمك بحسابك.";
+  return en
+    ?"Sign in to save your progress and unlock questions, exams, competitions, assignments and class features."
+    :"سجّل دخولك حتى ينحفظ تقدمك وتفتح الأسئلة والامتحانات والمسابقات والوظائف وميزات الصف.";
+}
+function showGuestLoginReminder(reason="hourly"){
+  if(!isGuestSession())return;
+  const modal=document.getElementById("guestLoginReminderModal");
+  const en=localStorage.getItem("pythagorasi_language")!=="ar";
+  document.getElementById("guestLoginReminderTitle").textContent=en?"Sign in to Classora":"سجّل دخولك في Classora";
+  document.getElementById("guestLoginReminderText").textContent=guestReminderText(reason);
+  document.getElementById("guestReminderNever").parentElement.lastChild.textContent=en?" Don't remind me every hour again":" لا تذكرني كل ساعة مرة ثانية";
+  document.getElementById("guestReminderLoginBtn").textContent=en?"Sign in":"تسجيل الدخول";
+  document.getElementById("guestReminderLaterBtn").textContent=en?"Later":"لاحقًا";
+  modal?.classList.add("open");
+  if(reason==="hourly")localStorage.setItem(GUEST_REMINDER_LAST_KEY,String(Date.now()));
+}
+function startGuestReminderLoop(){
+  stopGuestReminderLoop();
+  if(localStorage.getItem(GUEST_REMINDER_NEVER_KEY)==="1"||!isGuestSession())return;
+  const last=Number(localStorage.getItem(GUEST_REMINDER_LAST_KEY)||Date.now());
+  if(!localStorage.getItem(GUEST_REMINDER_LAST_KEY))localStorage.setItem(GUEST_REMINDER_LAST_KEY,String(last));
+  const delay=Math.max(1500,GUEST_REMINDER_MS-Math.max(0,Date.now()-last));
+  guestReminderTimeout=setTimeout(()=>{
+    if(isGuestSession()&&localStorage.getItem(GUEST_REMINDER_NEVER_KEY)!=="1")showGuestLoginReminder("hourly");
+    guestReminderInterval=setInterval(()=>{
+      if(isGuestSession()&&localStorage.getItem(GUEST_REMINDER_NEVER_KEY)!=="1")showGuestLoginReminder("hourly");
+    },GUEST_REMINDER_MS);
+  },delay);
+}
+function exitGuestToLogin(){
+  stopGuestReminderLoop();
+  sessionStorage.removeItem("classora_guest_session");
+  document.getElementById("guestLoginReminderModal")?.classList.remove("open");
+  window.PythagorasiUser=null;activeProfile=null;
+  document.body.classList.remove("classora-authenticated");
+  document.body.dataset.userRole="";
+  authUserBar.classList.remove("show");
+  hidePlatformLobby();
+  authGate.classList.add("show");
+  showRoleChooser();
+}
+document.getElementById("guestLoginBtn").addEventListener("click",()=>{
+  setAuthError("");
+  paintGuestSession();
+});
+document.getElementById("guestReminderLoginBtn").addEventListener("click",exitGuestToLogin);
+document.getElementById("guestReminderLaterBtn").addEventListener("click",()=>{
+  if(document.getElementById("guestReminderNever").checked){
+    localStorage.setItem(GUEST_REMINDER_NEVER_KEY,"1");
+    stopGuestReminderLoop();
+  }else{
+    localStorage.setItem(GUEST_REMINDER_LAST_KEY,String(Date.now()));
+    startGuestReminderLoop();
+  }
+  document.getElementById("guestLoginReminderModal").classList.remove("open");
+});
+document.getElementById("guestLoginReminderModal").addEventListener("click",e=>{
+  if(e.target===e.currentTarget)document.getElementById("guestReminderLaterBtn").click();
+});
+
+// Guest can browse the learning content, but anything that submits an answer or needs an account asks for sign-in.
+document.addEventListener("click",e=>{
+  if(!isGuestSession())return;
+  const target=e.target.closest("button,a,[role=button]");
+  if(!target)return;
+  if(target.closest("#guestLoginReminderModal,#authGate,.classora-mobile-page-nav"))return;
+  if(target.matches("#lobbyLogoutBtn")){e.preventDefault();e.stopImmediatePropagation();exitGuestToLogin();return}
+  const id=target.id||"";
+  const protectedId=/Exam|exam|Competition|competition|Question|question|Challenge|challenge|Assignment|assignment|JoinClass|ClassBtn|ChatBtn|NotificationsBtn|ProfileBtn|ProfileQuick|SupportRequests/i.test(id);
+  const protectedArea=!!target.closest("#examModal,#competitionModal,#pythagQuestionsModal,#topicPracticeOptions,#classModal,.quiz-card,.assignment-card,.site-poll-options");
+  const words=(target.textContent||"").trim();
+  const protectedWords=/(حل|تحقق|فحص|اختبار|امتحان|مسابقة|تحدي|سؤال|واجب|وظيفة|إرسال الإجابة|ابدأ التدريب|تصويت|answer|check|quiz|exam|competition|challenge|assignment|submit|vote)/i.test(words);
+  const safeNav=target.matches(".close,[data-close-modal],#returnLobbyBtn,#mobileReturnLobbyBtn,#classoraMobileLobbyBtn,#classoraMobileSettingsBtn");
+  if(!safeNav&&(protectedId||protectedArea||protectedWords)){
+    e.preventDefault();e.stopImmediatePropagation();
+    showGuestLoginReminder("protected");
+  }
+},true);
+
 document.getElementById("studentBackBtn").addEventListener("click",()=>{
   document.activeElement?.blur?.();
   showRoleChooser();
@@ -7656,19 +7850,8 @@ document.getElementById("studentLoginBtn").addEventListener("click",async()=>{
   }
 });
 
-let teacherAuthMode="name";
-function setTeacherAuthMode(mode){
-  teacherAuthMode=mode==="email"?"email":"name";
-  document.getElementById("teacherModeName").classList.toggle("active",teacherAuthMode==="name");
-  document.getElementById("teacherModeEmail").classList.toggle("active",teacherAuthMode==="email");
-  document.getElementById("teacherIdentifierLabel").textContent=teacherAuthMode==="email"?"الإيميل":"اسم الدخول";
-  const input=document.getElementById("teacherIdentifierInput");
-  input.placeholder=teacherAuthMode==="email"?"teacher@example.com":"اسم المعلم";
-  input.autocomplete=teacherAuthMode==="email"?"email":"username";
-  setAuthError("");
-}
-document.getElementById("teacherModeName").addEventListener("click",()=>setTeacherAuthMode("name"));
-document.getElementById("teacherModeEmail").addEventListener("click",()=>setTeacherAuthMode("email"));
+document.getElementById("teacherEntryLogin").addEventListener("click",()=>setTeacherEntryMode("login"));
+document.getElementById("teacherEntryCreate").addEventListener("click",()=>setTeacherEntryMode("create"));
 
 document.getElementById("teacherPasswordLoginBtn").addEventListener("click",async()=>{
   const identifier=document.getElementById("teacherIdentifierInput").value.trim();
@@ -7678,7 +7861,7 @@ document.getElementById("teacherPasswordLoginBtn").addEventListener("click",asyn
   authBusy(true,"جاري دخول المعلم…");setAuthError("");
   try{
     await authPersistenceReady;
-    const email=teacherAuthMode==="email"?identifier.toLowerCase():await resolveTeacherLoginEmail(identifier);
+    const email=identifier.includes("@")?identifier.toLowerCase():await resolveTeacherLoginEmail(identifier);
     if(!email)throw new Error("invalid-credential");
     if(auth.currentUser)await signOut(auth);
     const cred=await signInWithEmailAndPassword(auth,email,password);
@@ -7690,13 +7873,62 @@ document.getElementById("teacherPasswordLoginBtn").addEventListener("click",asyn
     await saveTeacherLoginAliases(profile,cred.user);
     rememberLoginForTwoMonths();
     paintUser(cred.user,profile);
-    showToast("👨‍🏫 أهلًا "+(profile.displayName||"المعلم")+"!");
+    showToast("أهلًا "+(profile.displayName||"المعلم")+"!");
   }catch(err){
     console.error("teacher password login",err);
     setAuthError(friendlyAuthError(err));
   }finally{authBusy(false)}
 });
 document.getElementById("teacherPasswordInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("teacherPasswordLoginBtn").click()});
+
+document.getElementById("teacherCreateAccountBtn").addEventListener("click",async()=>{
+  if(teacherAccountCreationInProgress)return;
+  const displayName=document.getElementById("teacherCreateName").value.trim().replace(/\s+/g," ");
+  const email=document.getElementById("teacherCreateEmail").value.trim().toLowerCase();
+  const password=document.getElementById("teacherCreatePassword").value;
+  const confirmPassword=document.getElementById("teacherCreateConfirm").value;
+  if(displayName.length<2){setAuthError("اكتب اسم المعلم — حرفين على الأقل.");return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setAuthError("اكتب إيميل صحيح.");return}
+  if(password.length<6){setAuthError("كلمة السر لازم تكون 6 خانات أو أكثر.");return}
+  if(password!==confirmPassword){setAuthError("كلمتا السر مش نفس بعض.");return}
+
+  teacherAccountCreationInProgress=true;
+  authBusy(true,"جاري إنشاء حساب المعلم…");setAuthError("");
+  let createdUser=null;
+  try{
+    await authPersistenceReady;
+    const aliasSnap=await getDoc(doc(db,"teacherLoginAliases",teacherLoginAliasId(displayName)));
+    if(aliasSnap.exists())throw new Error("teacher-name-taken");
+    if(auth.currentUser)await signOut(auth);
+    const cred=await createUserWithEmailAndPassword(auth,email,password);
+    createdUser=cred.user;
+    const profile={
+      displayName,loginName:displayName,role:"teacher",provider:"password",email,
+      assistantNames:{...defaultAssistantNames},
+      xp:0,examCount:0,totalScorePct:0,subjectStats:{}
+    };
+    const saved=await saveUserProfile(cred.user,profile);
+    await saveTeacherLoginAliases(saved,cred.user);
+    teacherAccountCreationInProgress=false;
+    rememberLoginForTwoMonths();
+    paintUser(cred.user,saved);
+    showToast("تم إنشاء حساب المعلم بنجاح.");
+  }catch(err){
+    console.error("teacher account create",err);
+    if(createdUser){try{await deleteUser(createdUser)}catch{}}
+    if(String(err?.message||"")==="teacher-name-taken")setAuthError("اسم المعلم مستخدم من قبل. اختار اسم دخول ثاني.");
+    else if(err?.code==="auth/email-already-in-use")setAuthError("في حساب موجود بهذا الإيميل. اختار تسجيل الدخول.");
+    else setAuthError(friendlyAuthError(err));
+  }finally{
+    teacherAccountCreationInProgress=false;
+    authBusy(false);
+  }
+});
+["teacherCreateName","teacherCreateEmail","teacherCreatePassword","teacherCreateConfirm"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();document.getElementById("teacherCreateAccountBtn").click()}
+  });
+});
 
 document.getElementById("teacherGoogleBtn").addEventListener("click",async()=>{
   await authPersistenceReady;
@@ -13208,7 +13440,10 @@ document.getElementById("quickPythagExamBtn").addEventListener("click",()=>{
   examSubject="pythagoras";
   openExamWithIdentity();
 });
-document.getElementById("lobbyLogoutBtn").addEventListener("click",()=>document.getElementById("authLogoutBtn").click());
+document.getElementById("lobbyLogoutBtn").addEventListener("click",()=>{
+  if(isGuestSession()){exitGuestToLogin();return}
+  document.getElementById("authLogoutBtn").click();
+});
 
 /* -------------------- PLATFORM LOBBY -------------------- */
 const subjectModal=document.getElementById("subjectModal");
