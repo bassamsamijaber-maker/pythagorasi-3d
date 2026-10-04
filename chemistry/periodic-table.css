@@ -74,3 +74,52 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .modal-close{right:auto;le
 .periodic-scroll{direction:ltr;padding-top:10px}.periodic-grid{direction:ltr;grid-template-columns:repeat(18,minmax(62px,1fr));grid-template-rows:repeat(7,112px) 22px 112px 112px;gap:7px;min-width:1240px}.group-numbers{display:grid;direction:ltr;grid-template-columns:repeat(18,minmax(62px,1fr));gap:7px;min-width:1240px;text-align:center;color:#92afbf;font-size:11px;padding-bottom:10px}.group-numbers[hidden]{display:none}.periodic-grid:not(.gallery-grid) .element-card{border-radius:9px;padding:8px 3px;display:flex;flex-direction:column;justify-content:center;align-items:center;animation:tileIn .4s backwards;animation-delay:calc(min(var(--i),18)*15ms)}.periodic-grid:not(.gallery-grid) .element-card.hit{box-shadow:inset 1px 1px 0 #ffffff9c,0 5px 12px #0005}.periodic-grid:not(.gallery-grid) .atomic-num{position:absolute;left:5px;top:5px;font-size:10px}.periodic-grid:not(.gallery-grid) .el-thumb{position:absolute;top:4px;right:4px;left:auto;width:25px;height:25px;border-radius:7px}.periodic-grid:not(.gallery-grid) .el-symbol{font-size:27px;margin:24px 0 5px;line-height:1;font-weight:900}.periodic-grid:not(.gallery-grid) .el-name{font-size:10px;line-height:1.2;white-space:normal;overflow-wrap:anywhere;max-width:100%;min-height:24px}.periodic-grid:not(.gallery-grid) .dim{opacity:.17;animation:none;filter:grayscale(.9)}.periodic-grid:not(.gallery-grid) .element-card:hover,.periodic-grid:not(.gallery-grid) .element-card:focus-visible,.periodic-grid:not(.gallery-grid) .selected-element{transform:translateY(-10px) scale(1.1);z-index:5;box-shadow:0 16px 25px #0008,0 0 20px var(--element);outline:2px solid #fff}.element-modal.open .element-sheet{animation:sheetLift .35s cubic-bezier(.18,.85,.25,1) both}.element-modal.open .modal-backdrop{animation:backdropIn .25s both}@keyframes sheetLift{from{opacity:0;transform:translate(-50%,calc(-50% + 65px)) scale(.94)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}@keyframes backdropIn{from{opacity:0}to{opacity:1}}.property-filters{border-top:1px solid #ffffff12;padding-top:12px}.gallery-grid{min-width:0;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));grid-template-rows:none;direction:inherit}.gallery-grid .el-symbol{display:block;font-size:25px;margin:0 0 5px}.gallery-grid .el-name{font-size:17px}.hero{min-height:240px;padding-block:28px}.hero h1{font-size:clamp(36px,4vw,60px)}.hero-atom{width:210px}.hero p{font-size:17px}.series-marker{color:#b6d5e3;font-size:12px}.element-card:active{transform:translateY(-10px) scale(1.04)}
 @media(max-width:600px){.periodic-scroll{overscroll-behavior-x:contain}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-atom{width:90px}.hero h1{font-size:32px}.hero p{font-size:15px}.brand{display:flex}.brand small{display:block}.topbar{flex-wrap:nowrap}.property-filters{gap:6px}.filter-chip{min-height:38px}.element-modal.open .element-sheet{animation:sheetLift .32s ease both}}
 @media(prefers-reduced-motion:reduce){.element-card,.element-sheet,.modal-backdrop{animation:none!important;transition:none!important}}
+
+/* ================= CLASSORA V78 FIT-TABLE + TOUCH ================= */
+html,body{touch-action:manipulation;-ms-touch-action:manipulation}
+.pt-icon{width:1.05em;height:1.05em;display:inline-block;vertical-align:-.16em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.nucleus .pt-icon{width:34px;height:34px;vertical-align:middle}
+.mode .pt-icon,.visual-animation-btn .pt-icon{width:18px;height:18px;margin-inline-end:6px}
+.lesson-icon .pt-icon,.tool-title>span .pt-icon{width:34px;height:34px}
+.visual-animation-btn{display:flex;align-items:center;justify-content:center;gap:5px}
+
+/* Keep all 18 columns visible on tablets and phones instead of horizontal scrolling. */
+@media(max-width:1100px){
+  .periodic-scroll{overflow-x:hidden!important;overflow-y:visible!important;padding-inline:0!important}
+  .periodic-grid,.group-numbers{
+    width:100%!important;min-width:0!important;
+    grid-template-columns:repeat(18,minmax(0,1fr))!important;
+    gap:3px!important
+  }
+  .periodic-grid{grid-template-rows:repeat(7,70px) 16px 70px 70px!important}
+  .group-numbers{font-size:7px!important;gap:3px!important}
+  .periodic-grid:not(.gallery-grid) .element-card{
+    min-width:0!important;border-radius:5px!important;padding:3px 1px!important;overflow:hidden!important
+  }
+  .periodic-grid:not(.gallery-grid) .atomic-num{left:2px!important;top:2px!important;font-size:6px!important}
+  .periodic-grid:not(.gallery-grid) .el-thumb{top:2px!important;right:2px!important;width:13px!important;height:13px!important;border-radius:4px!important}
+  .periodic-grid:not(.gallery-grid) .el-symbol{font-size:16px!important;margin:17px 0 2px!important}
+  .periodic-grid:not(.gallery-grid) .el-name{font-size:6px!important;line-height:1.05!important;min-height:12px!important;overflow:hidden!important}
+  .series-marker{font-size:7px!important;border-radius:5px!important}
+}
+@media(max-width:700px){
+  main{width:calc(100vw - 10px)!important;max-width:none!important}
+  .table-shell{padding:4px!important;border-radius:14px!important}
+  .periodic-grid,.group-numbers{gap:1.5px!important}
+  .periodic-grid{grid-template-rows:repeat(7,48px) 10px 48px 48px!important}
+  .group-numbers{font-size:5px!important;gap:1.5px!important;padding-bottom:5px!important}
+  .periodic-grid:not(.gallery-grid) .element-card{border-radius:3px!important;padding:1px!important;border-width:1px!important}
+  .periodic-grid:not(.gallery-grid) .atomic-num{font-size:4.7px!important;left:1px!important;top:1px!important}
+  .periodic-grid:not(.gallery-grid) .el-thumb{width:8px!important;height:8px!important;top:1px!important;right:1px!important;border-radius:2px!important}
+  .periodic-grid:not(.gallery-grid) .el-symbol{font-size:10px!important;margin:12px 0 1px!important;letter-spacing:-.5px}
+  .periodic-grid:not(.gallery-grid) .el-name{font-size:4.4px!important;line-height:1!important;min-height:8px!important;white-space:nowrap!important;text-overflow:clip!important}
+  .series-marker{font-size:5px!important;border-radius:3px!important}
+  .periodic-grid:not(.gallery-grid) .element-card:hover,
+  .periodic-grid:not(.gallery-grid) .element-card:focus-visible,
+  .periodic-grid:not(.gallery-grid) .selected-element{transform:scale(1.22)!important}
+}
+@media(max-width:430px){
+  .periodic-grid{grid-template-rows:repeat(7,42px) 8px 42px 42px!important}
+  .periodic-grid:not(.gallery-grid) .el-symbol{font-size:9px!important;margin-top:10px!important}
+  .periodic-grid:not(.gallery-grid) .el-name{font-size:4px!important}
+}
