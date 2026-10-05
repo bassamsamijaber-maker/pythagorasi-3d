@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v89-labs-navigation-auth";
+const CACHE_NAME="classora-v90-arabic-science-assignments";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=89",
   "./assets/subject-labs.css?v=89",
