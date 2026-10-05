@@ -41,17 +41,62 @@ export function mountSubjectLabs(api){
   function setPH(p){slider.value=String(p);view.setPH(p);if(fallback)fallback.style.setProperty('--solution',phColor(p));readout.textContent='pH '+p+' · '+(p<7?L('حمضي','Acidic'):p>7?L('قاعدي','Basic'):L('متعادل','Neutral'));explanation.textContent=p<7?L('هذا المحلول حمضي. كل درجة أقل تعني نشاطًا أكبر لأيونات الهيدروجين بعشرة أضعاف.','This solution is acidic. Each one-unit decrease means ten times greater hydrogen-ion activity.'):p>7?L('هذا المحلول قاعدي. اللون هنا لون المؤشر العام، وليس لون المادة الحقيقي.','This solution is basic. The color represents a universal indicator, not the substance’s natural color.'):L('هذا المحلول متعادل عند نحو 25°م، مثل الماء النقي.','This solution is neutral at about 25°C, like pure water.');[...scale.children].forEach((b,n)=>b.setAttribute('aria-pressed',String(p===n)))}
   slider.oninput=()=>setPH(Number(slider.value));setPH(7);return()=>view.dispose();
  }
+
  function idafaLab(visual,info){
-  const examples=[['كِتابُ','الطالبِ','The student’s book','كتابُ: مضاف مرفوع بالضمة. الطالبِ: مضاف إليه مجرور بالكسرة.'],['بابُ','المدرسةِ','The school’s door','بابُ: مضاف مرفوع بالضمة. المدرسةِ: مضاف إليه مجرور بالكسرة.'],['قَلَمُ','المعلّمِ','The teacher’s pen','قلمُ: مضاف مرفوع بالضمة. المعلّمِ: مضاف إليه مجرور بالكسرة.']];
+  const examples=[
+   {pair:['كتابُ','الطالبِ'],sentence:['هذا','كتابُ','الطالبِ','الجديدُ'],pairIndexes:[1,2],translation:'The student’s new book',parse:'كتابُ: مضاف مرفوع بالضمة. الطالبِ: مضاف إليه مجرور بالكسرة.'},
+   {pair:['بابُ','المدرسةِ'],sentence:['فُتِحَ','بابُ','المدرسةِ','صباحًا'],pairIndexes:[1,2],translation:'The school door was opened in the morning',parse:'بابُ: مضاف مرفوع بالضمة. المدرسةِ: مضاف إليه مجرور بالكسرة.'},
+   {pair:['قلمُ','المعلّمِ'],sentence:['ضاعَ','قلمُ','المعلّمِ','في','الصفِّ'],pairIndexes:[1,2],translation:'The teacher’s pen was lost in class',parse:'قلمُ: مضاف مرفوع بالضمة. المعلّمِ: مضاف إليه مجرور بالكسرة.'},
+   {pair:['حديقةُ','البيتِ'],sentence:['حديقةُ','البيتِ','جميلةٌ'],pairIndexes:[0,1],translation:'The house garden is beautiful',parse:'حديقةُ: مضاف مرفوع بالضمة. البيتِ: مضاف إليه مجرور بالكسرة.'},
+   {pair:['نافذةَ','الغرفةِ'],sentence:['فتحتُ','نافذةَ','الغرفةِ','صباحًا'],pairIndexes:[1,2],translation:'I opened the room window in the morning',parse:'نافذةَ: مضاف منصوب بالفتحة حسب موقعه في الجملة. الغرفةِ: مضاف إليه مجرور بالكسرة.'},
+   {pair:['مفتاحُ','السيارةِ'],sentence:['مفتاحُ','السيارةِ','على','الطاولةِ'],pairIndexes:[0,1],translation:'The car key is on the table',parse:'مفتاحُ: مضاف مرفوع بالضمة. السيارةِ: مضاف إليه مجرور بالكسرة.'}
+  ];
   const scene=node('div','sl-book-space'),book=node('div','sl-book');book.setAttribute('role','group');book.setAttribute('aria-label',L('كتاب ثلاثي الأبعاد تفاعلي','Interactive three-dimensional book'));
-  const cover=node('div','sl-book-cover'),left=button('',()=>select(0)),right=button('',()=>select(1));left.className='sl-book-leaf first';right.className='sl-book-leaf second';book.append(cover,left,right);scene.append(book);visual.append(scene);
-  let which=0,part=0;const sentence=node('p','sl-sentence');sentence.dir='rtl';sentence.lang='ar';sentence.dataset.noTranslate='';visual.append(sentence);
-  const label=node('label','sl-label',L('دوّر الكتاب','Rotate the book')),turn=node('input');turn.type='range';turn.min=-40;turn.max=40;turn.value=-12;turn.setAttribute('aria-label',L('زاوية الكتاب','Book rotation'));label.append(turn);visual.append(label,node('p','sl-muted',L('اضغط على صفحة من الكتاب لتفهم دور الكلمة.','Tap either page to explore that word’s role.')));turn.oninput=()=>book.style.setProperty('--book-y',turn.value+'deg');
-  const picker=node('div','sl-samples');examples.forEach((x,n)=>picker.append(button(L(x[0]+' '+x[1],x[2]),()=>{which=n;render()})));
-  const role=node('h2'),detail=node('p','sl-explanation'),translation=node('p','sl-muted'),parse=node('p','sl-note');detail.setAttribute('aria-live','polite');info.append(node('h2','',L('ركّب المعنى','Build the meaning')),picker,role,detail,translation,node('h2','',L('القاعدة','The rule')),node('p','',L('الإضافة اسمين مرتبطين: الأول مضاف، والثاني مضاف إليه مجرور. المضاف في الإضافة المعنوية لا يأخذ أل أو تنوينًا. حركة آخر المضاف تتحدد حسب موقعه في الجملة.','Idafa joins two nouns: the first is the muḍāf, and the second is the genitive muḍāf ilayh. In a semantic idafa, the first noun has neither the definite article nor tanwīn. Its case depends on its role in the sentence.')),parse);
-  function select(p){part=p;render()}
-  function render(){const x=examples[which];left.textContent=x[0];right.textContent=x[1];left.lang=right.lang='ar';left.setAttribute('aria-pressed',String(part===0));right.setAttribute('aria-pressed',String(part===1));sentence.textContent=x[0]+' '+x[1];translation.textContent=x[2];role.textContent=part===0?L('المضاف: '+x[0],'Muḍāf: '+x[0]):L('المضاف إليه: '+x[1],'Muḍāf ilayh: '+x[1]);detail.textContent=part===0?L('الاسم الأول: الشيء الذي ننسبه إلى ما بعده. نسأل: كتابُ مَن؟ بابُ ماذا؟','The first noun is the thing being specified. Ask: whose book? Which door?'):L('الاسم الثاني يكمل المعنى ويكون مجرورًا. هنا تدل الكسرة على الجر.','The second noun completes the meaning and is genitive. Here, kasra marks the genitive case.');parse.textContent=L('في جملة «'+x[0]+' '+x[1]+' جديدٌ»: '+x[3],'In a sentence meaning “'+x[2]+' is new”, the first noun is nominative; the second is genitive with kasra.');[...picker.children].forEach((b,n)=>b.setAttribute('aria-pressed',String(n===which)))}render();
-  let start=0,angle=-12;scene.onpointerdown=e=>{if(e.target.closest('button'))return;start=e.clientX;angle=Number(turn.value);scene.setPointerCapture(e.pointerId)};scene.onpointermove=e=>{if(!scene.hasPointerCapture(e.pointerId))return;turn.value=String(Math.max(-40,Math.min(40,angle+(e.clientX-start)/3)));turn.oninput()};return()=>{};
+  const cover=node('div','sl-book-cover'),left=button('',()=>selectPage(0)),right=button('',()=>selectPage(1));left.className='sl-book-leaf first';right.className='sl-book-leaf second';book.append(cover,left,right);scene.append(book);visual.append(scene);
+  let which=0,part=0,mode='sentence',selectedWords=new Set();
+  const modeToolbar=node('div','sl-mode-toolbar'),sentenceMode=button(L('جملة','Sentence'),()=>setMode('sentence')),pairMode=button(L('كلمتين','Two words'),()=>setMode('pair')),nextExample=button(L('مثال جديد','New example'),()=>setExample((which+1)%examples.length));
+  modeToolbar.append(sentenceMode,pairMode,nextExample);visual.append(modeToolbar);
+  const prompt=node('p','sl-muted',L('حدّد الكلمتين اللتين تكوّنان المضاف والمضاف إليه. أحيانًا ستظهر جملة كاملة وأحيانًا كلمتان فقط.','Select the two words that form the idafa. Sometimes you will see a full sentence and sometimes only two words.'));
+  const wordPicker=node('div','sl-word-picker');wordPicker.dir='rtl';wordPicker.lang='ar';wordPicker.dataset.noTranslate='';
+  const pairFeedback=node('p','sl-pair-feedback');pairFeedback.setAttribute('role','status');visual.append(prompt,wordPicker,pairFeedback);
+  const label=node('label','sl-label',L('دوّر الكتاب','Rotate the book')),turn=node('input');turn.type='range';turn.min=-40;turn.max=40;turn.value=-12;turn.setAttribute('aria-label',L('زاوية الكتاب','Book rotation'));label.append(turn);visual.append(label,node('p','sl-muted',L('اضغط على إحدى صفحتي الكتاب لشرح دور كل كلمة.','Tap either book page to explain the role of each word.')));turn.oninput=()=>book.style.setProperty('--book-y',turn.value+'deg');
+  const picker=node('div','sl-samples');examples.forEach((x,n)=>picker.append(button(x.pair.join(' '),()=>setExample(n))));
+  const role=node('h2'),detail=node('p','sl-explanation'),translation=node('p','sl-muted'),parse=node('p','sl-note');detail.setAttribute('aria-live','polite');
+  info.append(node('h2','',L('اختَر مثالًا','Choose an example')),picker,role,detail,translation,node('h2','',L('الشرح والقاعدة','Explanation & rule')),node('p','',L('الإضافة اسمين مرتبطين: الأول مضاف، والثاني مضاف إليه مجرور. المضاف في الإضافة المعنوية لا يأخذ أل أو تنوينًا، وحركة آخر المضاف تتحدد حسب موقعه في الجملة.','Idafa joins two nouns: the first is the mudaf, and the second is the genitive mudaf ilayh. In a regular idafa, the first noun has neither the definite article nor tanween; its case depends on its role in the sentence.')),parse);
+  function expectedIndexes(){return mode==='pair'?[0,1]:examples[which].pairIndexes}
+  function setMode(next){mode=next;selectedWords.clear();renderWords();renderControls()}
+  function setExample(n){which=n;part=0;mode=n%2===0?'sentence':'pair';selectedWords.clear();render()}
+  function selectPage(p){part=p;renderRole()}
+  function toggleWord(index){
+   if(selectedWords.has(index))selectedWords.delete(index);else{if(selectedWords.size>=2)selectedWords.clear();selectedWords.add(index)}
+   renderWords();
+  }
+  function renderWords(){
+   const x=examples[which],words=mode==='pair'?x.pair:x.sentence,expected=expectedIndexes();
+   wordPicker.replaceChildren();pairFeedback.textContent='';pairFeedback.dataset.state='';
+   words.forEach((word,index)=>{
+    const b=button(word,()=>toggleWord(index));b.className='sl-word-chip';b.setAttribute('aria-pressed',String(selectedWords.has(index)));if(selectedWords.has(index))b.classList.add('is-selected');wordPicker.append(b);
+   });
+   if(selectedWords.size===2){
+    const picked=[...selectedWords].sort((a,b)=>a-b),correct=[...expected].sort((a,b)=>a-b),ok=picked.length===correct.length&&picked.every((v,i)=>v===correct[i]);
+    pairFeedback.dataset.state=ok?'correct':'wrong';
+    pairFeedback.textContent=ok?L('ممتاز! هاتان الكلمتان هما المضاف والمضاف إليه.','Great! Those two words form the idafa.'):L('مش هذول مع بعض. جرّب كلمتين ثانيات.','Those two do not form the idafa. Try another pair.');
+    if(ok)[...wordPicker.children].forEach((b,i)=>{if(correct.includes(i))b.classList.add('is-correct')});
+   }else pairFeedback.textContent=L('اختَر كلمتين.','Select two words.');
+  }
+  function renderControls(){sentenceMode.setAttribute('aria-pressed',String(mode==='sentence'));pairMode.setAttribute('aria-pressed',String(mode==='pair'))}
+  function renderRole(){
+   const x=examples[which];left.setAttribute('aria-pressed',String(part===0));right.setAttribute('aria-pressed',String(part===1));
+   role.textContent=part===0?L('المضاف: '+x.pair[0],'Mudaf: '+x.pair[0]):L('المضاف إليه: '+x.pair[1],'Mudaf ilayh: '+x.pair[1]);
+   detail.textContent=part===0?L('الاسم الأول هو الشيء الذي نضيفه لما بعده لتحديده أو بيان ملكيته. لا يأخذ أل أو تنوينًا في الإضافة المعنوية.','The first noun is specified by the noun after it. In a regular idafa it takes neither al- nor tanween.'):L('الاسم الثاني يكمل المعنى ويكون مجرورًا دائمًا. غالبًا تظهر الكسرة علامةً للجر.','The second noun completes the meaning and is always genitive; kasra commonly marks it.');
+  }
+  function render(){
+   const x=examples[which];left.textContent=x.pair[0];right.textContent=x.pair[1];left.lang=right.lang='ar';translation.textContent=x.translation;parse.textContent=x.parse;
+   [...picker.children].forEach((b,n)=>b.setAttribute('aria-pressed',String(n===which)));renderRole();renderWords();renderControls();
+  }
+  let startX=0,angle=-12;scene.onpointerdown=e=>{if(e.target.closest('button'))return;startX=e.clientX;angle=Number(turn.value);scene.setPointerCapture(e.pointerId)};scene.onpointermove=e=>{if(!scene.hasPointerCapture(e.pointerId))return;turn.value=String(Math.max(-40,Math.min(40,angle+(e.clientX-startX)/3)));turn.oninput()};
+  render();return()=>{};
  }
+
  return {open};
 }
