@@ -4646,7 +4646,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=89"><link rel="stylesheet" href="./assets/learning-plus.css?v=89"><link rel="stylesheet" href="./assets/subject-labs.css?v=89">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=91"><link rel="stylesheet" href="./assets/learning-plus.css?v=91"><link rel="stylesheet" href="./assets/subject-labs.css?v=91">
 <style>
 body:not(.auth-ready) #authGate,body.classora-session-restoring #authGate{visibility:hidden!important;pointer-events:none!important}body.classora-authenticated #authGate{display:none!important}
 button[data-return-control]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto!important;min-width:78px!important;height:40px!important;font-size:13px!important;padding:8px 12px!important;border-radius:12px!important;flex-shrink:0}button[data-return-control] span{display:inline!important}
@@ -4654,10 +4654,70 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 @media(max-width:350px){.hub-card-grid{grid-template-columns:1fr!important}}
 #classoraIntro{z-index:2147483600!important}#classoraIntro .classora-intro-mark{width:140px!important;height:140px!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important}#classoraIntro .classora-intro-mark img{width:100%;height:100%;object-fit:contain;border-radius:28px}#classoraIntro strong{font-size:32px!important}#sessionRecovery{position:fixed;inset:0;z-index:99999;background:#07111e;display:grid;place-content:center;text-align:center;gap:20px;padding:24px;color:#eaf5ff}#sessionRecovery[hidden]{display:none}#sessionRecovery button{padding:14px;border-radius:12px;background:#26579a;color:white;border:1px solid #83c7ff}
 </style>
+
+<style id="classora-cinematic-intro">
+#classoraIntro.classora-cinematic-intro{
+  pointer-events:auto!important;overflow:hidden!important;isolation:isolate!important;
+  background:
+   radial-gradient(circle at 50% 42%,rgba(37,193,255,.18),transparent 23%),
+   radial-gradient(circle at 18% 20%,rgba(45,255,176,.10),transparent 30%),
+   radial-gradient(circle at 82% 78%,rgba(67,139,255,.12),transparent 30%),
+   linear-gradient(145deg,#02090f,#061723 55%,#031017)!important;
+  gap:0!important;letter-spacing:normal!important
+}
+#classoraIntro .intro-film-grid{position:absolute;inset:-25%;z-index:-4;background-image:linear-gradient(#79d6ff0d 1px,transparent 1px),linear-gradient(90deg,#79d6ff0d 1px,transparent 1px);background-size:54px 54px;transform:perspective(800px) rotateX(58deg) translateY(24%);mask-image:linear-gradient(to bottom,transparent,#000 26%,#000 75%,transparent)}
+#classoraIntro .intro-film-glow{position:absolute;width:min(62vw,700px);aspect-ratio:1;border-radius:50%;background:#30cfa622;filter:blur(80px);z-index:-3;animation:introGlowDrift 5s ease-in-out infinite alternate}
+#classoraIntro .intro-orbit-ring{position:absolute;left:50%;top:50%;width:min(68vw,720px);aspect-ratio:1;border:1px solid #9eefff1a;border-radius:50%;animation:introOrbitSpin 15s linear infinite}
+#classoraIntro .intro-orbit-ring.r2{width:min(88vw,940px);border-style:dashed;animation-duration:23s;animation-direction:reverse}
+#classoraIntro .intro-float-card{position:absolute;display:flex;align-items:center;gap:9px;min-width:118px;padding:10px 13px;border:1px solid #a5eaff24;border-radius:16px;background:#071824c9;color:#def8ff;box-shadow:0 14px 34px #0007,0 0 24px #39c9ff10;backdrop-filter:blur(12px);font:800 12px/1.2 system-ui;letter-spacing:0}
+#classoraIntro .intro-float-card svg{width:23px;height:23px;fill:none;stroke:#78e7cc;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(1){left:50%;top:-22px;transform:translateX(-50%)}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(2){right:-54px;top:50%;transform:translateY(-50%)}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(3){left:50%;bottom:-22px;transform:translateX(-50%)}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(1){left:7%;top:12%;transform:none}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(2){right:5%;top:72%;transform:none}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(3){left:8%;bottom:9%;transform:none}
+#classoraIntro .intro-center-launch{position:relative;z-index:7;display:grid;justify-items:center;gap:9px;border:0;background:transparent;color:#fff;cursor:pointer;padding:18px;overflow:visible;animation:introCenterIn .8s cubic-bezier(.16,.9,.24,1.12) both}
+#classoraIntro .intro-logo-shell{position:relative;width:146px;height:146px;display:grid;place-items:center;border-radius:38px;background:linear-gradient(145deg,#ffffff16,#ffffff05);border:1px solid #b8f5ff2c;box-shadow:0 24px 65px #0009,0 0 70px #34dfb633;backdrop-filter:blur(18px)}
+#classoraIntro .intro-logo-shell::before{content:"";position:absolute;inset:-12px;border:1px solid #70e7cf35;border-radius:48px;animation:introLogoPulse 2.2s ease-in-out infinite}
+#classoraIntro .intro-logo-shell img{width:112px!important;height:112px!important;object-fit:contain!important;border-radius:29px!important;filter:drop-shadow(0 10px 22px #0008)}
+#classoraIntro .intro-center-launch strong{font:1000 clamp(32px,5vw,55px)/1 system-ui!important;letter-spacing:-1.8px!important}
+#classoraIntro .intro-center-launch small{font:650 clamp(12px,1.6vw,17px)/1.4 system-ui;color:#9ec7d6;letter-spacing:.02em}
+#classoraIntro .intro-enter-pill{margin-top:5px;padding:8px 14px;border-radius:999px;border:1px solid #6ae6c44a;background:#4de0ad12;color:#9bffdf;font:850 12px system-ui}
+#classoraIntro .intro-demo-cursor{position:absolute;z-index:12;width:42px;height:42px;left:calc(50% + min(31vw,310px));top:calc(50% + min(25vh,190px));filter:drop-shadow(0 8px 10px #000a);animation:introCursorDemo 3.35s cubic-bezier(.35,.05,.18,1) .45s both;pointer-events:none}
+#classoraIntro .intro-demo-cursor svg{width:100%;height:100%;fill:#f4ffff;stroke:#061019;stroke-width:1.5}
+#classoraIntro .intro-click-ripple{position:absolute;z-index:6;left:50%;top:50%;width:24px;height:24px;border:2px solid #8bffe0;border-radius:50%;opacity:0;transform:translate(-50%,-50%) scale(.3);animation:introTapRipple .65s ease-out 2.75s}
+#classoraIntro .intro-skip{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:15;border:1px solid #ffffff22;border-radius:999px;background:#ffffff09;color:#c9dce5;padding:9px 13px;font:750 11px system-ui;cursor:pointer;backdrop-filter:blur(8px)}
+#classoraIntro .intro-skip:hover{background:#ffffff12}
+#classoraIntro.demo-press .intro-logo-shell{animation:introDemoPress .42s ease}
+#classoraIntro.classora-intro-exit{opacity:0!important;visibility:hidden!important;transform:scale(1.035);transition:opacity .48s ease,visibility .48s ease,transform .55s ease!important}
+@keyframes introOrbitSpin{to{transform:rotate(360deg)}}@keyframes introGlowDrift{to{transform:translate(7vw,-4vh) scale(1.12)}}@keyframes introCenterIn{from{opacity:0;transform:scale(.82) translateY(16px)}to{opacity:1;transform:none}}@keyframes introLogoPulse{50%{transform:scale(1.055);opacity:.55}}@keyframes introDemoPress{45%{transform:scale(.92)}75%{transform:scale(1.04)}}@keyframes introTapRipple{30%{opacity:1}to{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}@keyframes introCursorDemo{0%{opacity:0;transform:translate(0,0) rotate(-12deg)}12%{opacity:1}72%{transform:translate(calc(-1 * min(31vw,310px) + 25px),calc(-1 * min(25vh,190px) + 24px)) rotate(-12deg)}82%{transform:translate(calc(-1 * min(31vw,310px) + 25px),calc(-1 * min(25vh,190px) + 24px)) rotate(-12deg) scale(.82)}92%{transform:translate(calc(-1 * min(31vw,310px) + 25px),calc(-1 * min(25vh,190px) + 24px)) rotate(-12deg) scale(1)}100%{opacity:0;transform:translate(calc(-1 * min(31vw,310px) + 25px),calc(-1 * min(25vh,190px) + 24px)) rotate(-12deg)}}
+@media(max-width:700px){#classoraIntro .intro-orbit-ring{width:78vw}#classoraIntro .intro-orbit-ring.r2{width:108vw}#classoraIntro .intro-float-card{min-width:92px;padding:8px 10px;font-size:10px}#classoraIntro .intro-float-card svg{width:19px;height:19px}#classoraIntro .intro-logo-shell{width:118px;height:118px;border-radius:31px}#classoraIntro .intro-logo-shell img{width:90px!important;height:90px!important;border-radius:24px!important}#classoraIntro .intro-demo-cursor{display:none}}
+@media(prefers-reduced-motion:reduce){#classoraIntro .intro-orbit-ring,#classoraIntro .intro-film-glow,#classoraIntro .intro-logo-shell::before,#classoraIntro .intro-demo-cursor,#classoraIntro .intro-click-ripple{animation:none!important}}
+</style>
 </head>
 <body class="classora-intro-active">
-<div id="classoraIntro" role="status" aria-live="polite"><div class="classora-intro-mark"><img src="./icons/classora-192.png" alt=""></div><strong>CLASSORA</strong><span class="classora-intro-tagline">Learn. Explore. Discover.</span></div>
-<script>(function(){var e=document.getElementById('classoraIntro'),done=false,start=Date.now();try{if(localStorage.getItem('pythagorasi_language')==='ar')e.querySelector('.classora-intro-tagline').textContent='تعلّم. جرّب. اكتشف.'}catch{}function close(){if(done)return;done=true;setTimeout(function(){document.body.classList.remove('classora-intro-active');e.classList.add('classora-intro-exit');setTimeout(function(){e.remove()},300)},Math.max(0,2600-(Date.now()-start)))}window.addEventListener('classora-auth-settled',close,{once:true});setTimeout(close,6000)})();</script>
+<div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
+  <div class="intro-film-grid" aria-hidden="true"></div><div class="intro-film-glow" aria-hidden="true"></div>
+  <div class="intro-orbit-ring" aria-hidden="true">
+    <div class="intro-float-card" data-intro-ar="علوم" data-intro-en="Science"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="1.6"/></svg><span>Science</span></div>
+    <div class="intro-float-card" data-intro-ar="عربي" data-intro-en="Arabic"><svg viewBox="0 0 24 24"><path d="M4 5q4-2 8 1 4-3 8-1v14q-4-2-8 1-4-3-8-1zM12 6v14"/></svg><span>Arabic</span></div>
+    <div class="intro-float-card" data-intro-ar="رياضيات" data-intro-en="Math"><svg viewBox="0 0 24 24"><path d="M4 19 12 5l8 14H4Z"/><path d="M8 17h8"/></svg><span>Math</span></div>
+  </div>
+  <div class="intro-orbit-ring r2" aria-hidden="true">
+    <div class="intro-float-card" data-intro-ar="مسابقات" data-intro-en="Live quiz"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4M12 14v4M8 21h8"/></svg><span>Live quiz</span></div>
+    <div class="intro-float-card" data-intro-ar="مختبرات" data-intro-en="Labs"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg><span>Labs</span></div>
+    <div class="intro-float-card" data-intro-ar="كلاسورا AI" data-intro-en="Classora AI"><svg viewBox="0 0 24 24"><path d="m12 3 2.2 6.1L20 11l-5.8 2L12 19l-2.2-6L4 11l5.8-1.9L12 3Z"/></svg><span>Classora AI</span></div>
+  </div>
+  <button type="button" class="intro-center-launch" id="classoraIntroOpen">
+    <span class="intro-logo-shell"><img src="./icons/classora-192.png" alt=""></span>
+    <strong>CLASSORA</strong><small class="classora-intro-tagline">Think. Try. Understand.</small><span class="intro-enter-pill">Enter Classora</span>
+  </button>
+  <span class="intro-click-ripple" aria-hidden="true"></span>
+  <span class="intro-demo-cursor" aria-hidden="true"><svg viewBox="0 0 38 44"><path d="M4 3 31 25l-13 2 8 11-7 4-7-12-8 9V3Z"/></svg></span>
+  <button type="button" class="intro-skip" id="classoraIntroSkip">Skip</button>
+</div>
+<script>(function(){var e=document.getElementById('classoraIntro'),open=document.getElementById('classoraIntroOpen'),skip=document.getElementById('classoraIntroSkip'),done=false,authReady=false,filmDone=false;try{if(sessionStorage.getItem('classora_returning_from_subject')==='1'){sessionStorage.removeItem('classora_returning_from_subject');filmDone=true;authReady=true}}catch{}var ar=false;try{ar=localStorage.getItem('pythagorasi_language')==='ar'}catch{}if(ar){e.querySelector('.classora-intro-tagline').textContent='فكّر. جرّب. افهم.';e.querySelector('.intro-enter-pill').textContent='ادخل كلاسورا';skip.textContent='تخطي';e.querySelectorAll('[data-intro-ar]').forEach(function(x){x.querySelector('span').textContent=x.dataset.introAr})}function close(force){if(done||(!force&&(!filmDone||!authReady)))return;done=true;document.body.classList.remove('classora-intro-active');e.classList.add('classora-intro-exit');setTimeout(function(){e.remove()},560)}function maybe(){close(false)}open.addEventListener('click',function(){close(true)});skip.addEventListener('click',function(){close(true)});window.addEventListener('classora-auth-settled',function(){authReady=true;maybe()},{once:true});setTimeout(function(){e.classList.add('demo-press')},2750);setTimeout(function(){filmDone=true;maybe()},3650);setTimeout(function(){close(true)},6500);if(filmDone&&authReady)setTimeout(function(){close(true)},80)})();</script>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
@@ -6394,6 +6454,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <option value="science-periodic">⚛️ علوم — الجدول الدوري والعناصر</option>
         <option value="science-atoms">🔬 علوم — الذرة والعناصر</option>
         <option value="science-motion">🚀 علوم — القوة والحركة</option>
+        <option value="arabic-idafa">📘 عربي — المضاف والمضاف إليه</option>
       </select>
     </div>
     <div class="resume-box" id="resumeExamBox">
@@ -6487,18 +6548,19 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
       </div>
       <div class="builder-help">للأسئلة المفتوحة: اكتب كلمات الإجابة الأساسية مفصولة بعلامة | مثل: مساحة|مجموع|الوتر. الموقع يعطي علامة حسب الكلمات الموجودة.</div>
       <div class="competition-create-settings competition-advanced-create" id="scienceExamGenerator">
-        <label>توليد أسئلة علوم تلقائيًا
+        <label>توليد أسئلة تلقائيًا
           <select id="scienceExamTopic">
             <option value="">🧪 علوم — متنوع</option>
             <option value="periodic">⚛️ الجدول الدوري والعناصر</option>
             <option value="atoms">🔬 الذرة والعناصر</option>
             <option value="motion">🚀 القوة والحركة</option>
+            <option value="arabic-idafa">📘 عربي — المضاف والمضاف إليه</option>
           </select>
         </label>
         <label>عدد الأسئلة
           <input id="scienceExamQuestionCount" type="number" min="1" max="10" value="10">
         </label>
-        <button class="exam-secondary" id="generateScienceExamQuestions" type="button">⚛️ ولّد أسئلة علوم</button>
+        <button class="exam-secondary" id="generateScienceExamQuestions" type="button">✦ ولّد الأسئلة</button>
       </div>
       <div class="builder-error" id="builderError"></div>
       <div id="builderQuestions"></div>
@@ -6554,7 +6616,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         </div>
         <div class="live-card" id="competitionTeacherCard">
           <h3>👨‍🏫 إنشاء مسابقة</h3>
-          <p>اعمل مسابقة رياضيات أو علوم، واختار موضوع مثل الجدول الدوري والعناصر، وكلاسورا يولّد الأسئلة تلقائيًا.</p>
+          <p>اعمل مسابقة رياضيات أو علوم أو عربي، واختار الموضوع، وكلاسورا يولّد الأسئلة تلقائيًا.</p>
           <div class="competition-create-settings competition-advanced-create">
             <label>موضوع المسابقة
               <select id="compQuickSubject">
@@ -6562,6 +6624,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
                 <option value="science-periodic">⚛️ علوم — الجدول الدوري والعناصر</option>
                 <option value="science-atoms">🔬 علوم — الذرة والعناصر</option>
                 <option value="science-motion">🚀 علوم — القوة والحركة</option>
+                <option value="arabic-idafa">📘 عربي — المضاف والمضاف إليه</option>
                 <option value="mixed" selected>✨ Mixed — فيثاغورس + معادلتين</option>
                 <option value="pythagoras">📐 فيثاغورس فقط</option>
                 <option value="equations2">🧮 معادلتان بمجهولين فقط</option>
@@ -6748,11 +6811,11 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=89";
-import {mountSubjectLabs} from "./assets/subject-labs.js?v=89";
-import {mountReturnNavigation} from "./assets/return-navigation.js?v=89";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=89";
-import {createLearningStore} from "./assets/learning-store.js?v=89";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=91";
+import {mountSubjectLabs} from "./assets/subject-labs.js?v=91";
+import {mountReturnNavigation} from "./assets/return-navigation.js?v=91";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=91";
+import {createLearningStore} from "./assets/learning-store.js?v=91";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -9497,7 +9560,7 @@ function hardQuestionPool(){
 
 const subjectNames={
   mixed:"مختلط",math:"رياضيات",science:"علوم","science-periodic":"الجدول الدوري والعناصر",
-  "science-atoms":"الذرة والعناصر","science-motion":"القوة والحركة",arabic:"لغة عربية",hebrew:"عبري",
+  "science-atoms":"الذرة والعناصر","science-motion":"القوة والحركة","arabic-idafa":"المضاف والمضاف إليه",arabic:"لغة عربية",hebrew:"عبري",
   geography:"جغرافيا",english:"إنجليزي",pythagoras:"فيثاغورس"
 };
 
@@ -9737,6 +9800,10 @@ function makeTopicExam(topic){
 function createSurpriseExam(){
   const selected=document.getElementById("examSubject")?.value||examSubject||"pythagoras";
   examSubject=selected;
+  if(selected==="arabic-idafa"){
+    const qs=idafaLiveQuestions(10,currentUILanguage).map((q,i)=>({...q,type:"mcq",id:`arabic_idafa_${Date.now()}_${i}`,points:10}));
+    return {title:currentUILanguage==="en"?"⚡ Arabic — Idafa":"⚡ عربي — المضاف والمضاف إليه",questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:true,level:"auto",subject:selected,arabicTopic:"idafa"};
+  }
   if(selected==="science"||selected.startsWith("science-")){
     const topic=selected==="science"?"":selected.slice("science-".length);
     const qs=scienceLiveQuestions(10,currentUILanguage,topic).map((q,i)=>({...q,id:`science_${Date.now()}_${i}`,points:10}));
@@ -9795,18 +9862,20 @@ function syncExamSubjectUI(){
   const select=document.getElementById("examSubject");if(!select)return;
   examSubject=select.value||"pythagoras";
   const science=examSubject==="science"||examSubject.startsWith("science-");
+  const arabic=examSubject==="arabic-idafa";
+  const generated=science||arabic;
   const teacher=isTeacherLike();
-  document.getElementById("examLevels").classList.toggle("hidden",!teacher||science);
+  document.getElementById("examLevels").classList.toggle("hidden",!teacher||generated);
   document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
   const name=subjectNames[examSubject]||"مختلط";
-  const englishNames={pythagoras:"Pythagoras",science:"General Science","science-periodic":"Periodic Table & Elements","science-atoms":"Atoms & Elements","science-motion":"Forces & Motion"};
+  const englishNames={pythagoras:"Pythagoras",science:"General Science","science-periodic":"Periodic Table & Elements","science-atoms":"Atoms & Elements","science-motion":"Forces & Motion","arabic-idafa":"Arabic — Idafa"};
   const displayName=currentUILanguage==="en"?(englishNames[examSubject]||name):name;
-  document.getElementById("examLevelDesc").textContent=science
+  document.getElementById("examLevelDesc").textContent=generated
     ?chatText(`${displayName} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${displayName} • Classora generates a fresh question set every time.`)
     :`${displayName} • ${levelDescriptions[examDifficulty]}`;
   const title=document.getElementById("autoExamPreviewTitle"),desc=document.getElementById("autoExamPreviewText");
-  if(title)title.textContent=science?chatText("⚡ معاينة امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
-  if(desc)desc.textContent=science?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected science topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
+  if(title)title.textContent=arabic?chatText("⚡ امتحان عربي تلقائي","⚡ Auto-generated Arabic exam"):science?chatText("⚡ امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
+  if(desc)desc.textContent=generated?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
 }
 document.getElementById("examSubject").addEventListener("change",syncExamSubjectUI);
 
@@ -10288,12 +10357,13 @@ document.getElementById("generateScienceExamQuestions")?.addEventListener("click
   if(!isTeacherLike()){showToast(chatText("توليد الامتحان للمعلم فقط.","Only teachers can generate exams."));return}
   const topic=document.getElementById("scienceExamTopic")?.value||"";
   const count=Math.max(1,Math.min(10,Number(document.getElementById("scienceExamQuestionCount")?.value)||10));
-  const qs=scienceLiveQuestions(count,currentUILanguage,topic);
+  const isArabic=topic==="arabic-idafa";
+  const qs=(isArabic?idafaLiveQuestions(count,currentUILanguage):scienceLiveQuestions(count,currentUILanguage,topic)).map(q=>({...q,type:"mcq"}));
   const host=document.getElementById("builderQuestions");host.replaceChildren();
   qs.forEach(q=>addBuilderQuestion("mcq",{...q,points:10}));
   const names={periodic:chatText("الجدول الدوري والعناصر","Periodic Table & Elements"),atoms:chatText("الذرة والعناصر","Atoms & Elements"),motion:chatText("القوة والحركة","Forces & Motion")};
-  document.getElementById("builderTitle").value=chatText("اختبار علوم — ","Science Exam — ")+(names[topic]||chatText("متنوع","General"));
-  showToast(chatText(`تم توليد ${qs.length} أسئلة علوم جديدة.`,`Generated ${qs.length} fresh science questions.`));
+  document.getElementById("builderTitle").value=isArabic?chatText("اختبار عربي — المضاف والمضاف إليه","Arabic Exam — Idafa"):chatText("اختبار علوم — ","Science Exam — ")+(names[topic]||chatText("متنوع","General"));
+  showToast(isArabic?chatText(`تم توليد ${qs.length} أسئلة عربي جديدة.`,`Generated ${qs.length} fresh Arabic questions.`):chatText(`تم توليد ${qs.length} أسئلة علوم جديدة.`,`Generated ${qs.length} fresh science questions.`));
 });
 
 function addBuilderQuestion(type="mcq",data={}){
@@ -18477,6 +18547,7 @@ function competitionQuestionTypeLabel(q){
   const kind=q?.questionKind||"general";
   const topic=key==="pythagoras"?(en?"Pythagoras":"فيثاغورس")
     :key==="science"?(en?"Science":"علوم"):key==="equations2"?(en?"Two-Variable Equations":"معادلتان بمجهولين")
+    :(key==="idafa"||key==="arabic-idafa"||q?.subject==="arabic")?(en?"Arabic — Idafa":"عربي — المضاف والمضاف إليه")
     :(en?"Mixed":"مكس");
   const kinds={
     hypotenuse:["Hypotenuse","الوتر"],leg:["Missing Leg","ضلع ناقص"],formula:["Formula","القانون"],
@@ -18484,7 +18555,7 @@ function competitionQuestionTypeLabel(q){
     system_type:["Solution Type","نوع الحل"],custom:["Custom Question","سؤال مخصص"],general:["Question","سؤال"]
   };
   const k=kinds[kind]||kinds.general;
-  return `${key==="pythagoras"?"📐":key==="equations2"?"🧮":"📚"} ${topic} • ${en?k[0]:k[1]}`;
+  return `${key==="pythagoras"?"📐":key==="equations2"?"🧮":(key==="idafa"||key==="arabic-idafa"||q?.subject==="arabic")?"📘":"📚"} ${topic} • ${en?k[0]:k[1]}`;
 }
 
 function numberOptions(correct,spread=1){
@@ -18522,6 +18593,7 @@ function generatedEquationSystemLiveQuestion(i=0){
   return {topicKey:"equations2",questionKind:"system_type",prompt:`النظام: ${base} — كم عدد الحلول؟`,options:shuffle(["حل واحد","لا يوجد حل","حلول لا نهائية","حلّان"]),answer:"حل واحد",points:1000};
 }
 function makeLiveQuestions(subject="mixed",count=10){
+  if(subject==="arabic-idafa")return idafaLiveQuestions(count,currentUILanguage).map((q,i)=>({...q,type:"mcq",index:i,points:q.points||1000,typeLabel:competitionQuestionTypeLabel(q)}));
   if(subject==="science"||subject.startsWith("science-")){
     const topic=subject==="science"?"":subject.slice("science-".length);
     return scienceLiveQuestions(count,currentUILanguage,topic);
@@ -18545,6 +18617,7 @@ function competitionSubjectTitle(subject){
     "science-periodic":adminLang("مسابقة الجدول الدوري والعناصر","Periodic Table & Elements Competition"),
     "science-atoms":adminLang("مسابقة الذرة والعناصر","Atoms & Elements Competition"),
     "science-motion":adminLang("مسابقة القوة والحركة","Forces & Motion Competition"),
+    "arabic-idafa":adminLang("مسابقة عربي — المضاف والمضاف إليه","Arabic — Idafa Competition"),
     equations2:adminLang("مسابقة المعادلتين","Two-Variable Equations Competition"),
     pythagoras:adminLang("مسابقة فيثاغورس","Pythagoras Competition"),
     mixed:"Classora Mixed"
@@ -18625,7 +18698,7 @@ async function loadCompetitionLibrary(){
         <div class="saved-comp-top">
           <div>
             <div class="saved-comp-title">${escapeHtml(room.title||"مسابقة Classora")}</div>
-            <div class="saved-comp-meta">${room.questionCount||0} ${adminLang("أسئلة","questions")} • ${escapeHtml(room.topicMode==="equations2"?adminLang("معادلتان بمجهولين","Two-variable equations"):room.topicMode==="pythagoras"?adminLang("فيثاغورس","Pythagoras"):room.topicMode==="mixed"?"Mixed":room.topicMode==="science"?adminLang("علوم","Science"):room.topicMode==="science-periodic"?adminLang("الجدول الدوري والعناصر","Periodic Table & Elements"):room.topicMode==="science-atoms"?adminLang("الذرة والعناصر","Atoms & Elements"):room.topicMode==="science-motion"?adminLang("القوة والحركة","Forces & Motion"):adminLang("مخصص","Custom"))} • ${escapeHtml(statusText)}</div>
+            <div class="saved-comp-meta">${room.questionCount||0} ${adminLang("أسئلة","questions")} • ${escapeHtml(room.topicMode==="equations2"?adminLang("معادلتان بمجهولين","Two-variable equations"):room.topicMode==="pythagoras"?adminLang("فيثاغورس","Pythagoras"):room.topicMode==="mixed"?"Mixed":room.topicMode==="science"?adminLang("علوم","Science"):room.topicMode==="science-periodic"?adminLang("الجدول الدوري والعناصر","Periodic Table & Elements"):room.topicMode==="science-atoms"?adminLang("الذرة والعناصر","Atoms & Elements"):room.topicMode==="science-motion"?adminLang("القوة والحركة","Forces & Motion"):room.topicMode==="arabic-idafa"?adminLang("المضاف والمضاف إليه","Idafa"):adminLang("مخصص","Custom"))} • ${escapeHtml(statusText)}</div>
           </div>
           <div class="saved-comp-code">${escapeHtml(room.code||"------")}</div>
         </div>
