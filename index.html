@@ -4652,6 +4652,64 @@ body:not(.auth-ready) #authGate,body.classora-session-restoring #authGate{visibi
 button[data-return-control]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto!important;min-width:78px!important;height:40px!important;font-size:13px!important;padding:8px 12px!important;border-radius:12px!important;flex-shrink:0}button[data-return-control] span{display:inline!important}
 @media(max-width:760px){body.classora-authenticated .modalhead .close[data-return-control]{display:inline-flex!important}.lobby-topbar{display:flex!important;flex-wrap:wrap;gap:14px!important}.lobby-top-actions{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:10px!important;width:100%!important}.lobby-top-actions button{min-height:44px!important;width:auto!important;flex:0 1 auto;padding:10px!important}.lobby-top-actions span{display:inline!important}.hub-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hub-topic-card{min-width:0!important;padding:14px!important}.hub-topic-card h3{font-size:17px!important}.hub-hero-art{display:block!important}#chatModal .classora-chat-box{width:calc(100vw - 20px)!important;max-width:none!important;height:calc(100dvh - 105px)!important;max-height:none!important}.modalhead{gap:10px!important;flex-wrap:wrap}.classora-mobile-page-nav{max-width:400px}.modalbox{width:calc(100vw - 20px)!important;max-width:100%!important}.hub-subject-tabs{display:flex!important;flex-wrap:wrap!important}}
 @media(max-width:350px){.hub-card-grid{grid-template-columns:1fr!important}}
+<style id="classora-mobile-controls-fix">
+.classora-mobile-page-nav{display:none}
+@media(max-width:760px){
+  .classora-mobile-page-nav{
+    position:fixed!important;
+    z-index:2147483500!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:max(10px,env(safe-area-inset-bottom))!important;
+    transform:translateX(-50%)!important;
+    width:min(390px,calc(100vw - 20px))!important;
+    min-height:62px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    padding:8px!important;
+    border:1px solid rgba(164,220,255,.18)!important;
+    border-radius:19px!important;
+    background:rgba(5,18,28,.92)!important;
+    box-shadow:0 16px 42px rgba(0,0,0,.48),0 0 30px rgba(54,194,255,.08)!important;
+    backdrop-filter:blur(18px)!important;
+    -webkit-backdrop-filter:blur(18px)!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+  }
+  body:not(.classora-authenticated) .classora-mobile-page-nav,
+  body.classora-intro-active .classora-mobile-page-nav,
+  body:has(#authGate.show) .classora-mobile-page-nav{display:none!important}
+  .classora-mobile-page-nav button{
+    flex:1 1 0!important;
+    min-width:0!important;
+    min-height:46px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    border:1px solid rgba(164,220,255,.12)!important;
+    border-radius:13px!important;
+    background:rgba(255,255,255,.045)!important;
+    color:#ecf9ff!important;
+    font-size:13px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    padding:10px 12px!important;
+    cursor:pointer!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+  .classora-mobile-page-nav button:active{transform:scale(.96)!important;background:rgba(89,197,255,.13)!important}
+  .classora-mobile-page-nav svg{width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 auto!important}
+  .platform-lobby{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
+  .modalbox,.classora-chat-box{padding-bottom:calc(86px + env(safe-area-inset-bottom))!important}
+  #classoraIntro.classora-cinematic-intro{touch-action:manipulation!important}
+  #classoraIntro .intro-center-launch,#classoraIntro .intro-skip{pointer-events:auto!important;touch-action:manipulation!important}
+}
+</style>
 #classoraIntro{z-index:2147483600!important}#classoraIntro .classora-intro-mark{width:140px!important;height:140px!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important}#classoraIntro .classora-intro-mark img{width:100%;height:100%;object-fit:contain;border-radius:28px}#classoraIntro strong{font-size:32px!important}#sessionRecovery{position:fixed;inset:0;z-index:99999;background:#07111e;display:grid;place-content:center;text-align:center;gap:20px;padding:24px;color:#eaf5ff}#sessionRecovery[hidden]{display:none}#sessionRecovery button{padding:14px;border-radius:12px;background:#26579a;color:white;border:1px solid #83c7ff}
 </style>
 
@@ -20609,6 +20667,16 @@ function mobileGoSettings(){
 }
 document.getElementById("classoraMobileLobbyBtn")?.addEventListener("click",mobileGoLobby);
 document.getElementById("classoraMobileSettingsBtn")?.addEventListener("click",mobileGoSettings);
+function syncMobileControlBar(){
+  const nav=document.getElementById("classoraMobilePageNav");
+  if(!nav)return;
+  const blocked=document.body.classList.contains("classora-intro-active")||document.getElementById("authGate")?.classList.contains("show")||!document.body.classList.contains("classora-authenticated");
+  nav.setAttribute("aria-hidden",String(blocked));
+}
+new MutationObserver(syncMobileControlBar).observe(document.body,{attributes:true,attributeFilter:["class"]});
+new MutationObserver(syncMobileControlBar).observe(document.getElementById("authGate"),{attributes:true,attributeFilter:["class"]});
+window.addEventListener("resize",syncMobileControlBar);
+syncMobileControlBar();
 
 /* Stop wheel/touch from leaking through an open screen. */
 document.addEventListener("wheel",event=>{
