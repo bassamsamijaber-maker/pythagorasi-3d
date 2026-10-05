@@ -307,7 +307,7 @@ export function mountLearningHub(api){
    for(const value of ['pythagoras','science','science-periodic','science-atoms','science-motion','arabic-idafa']){const o=node('option');o.value=value;select.append(o)}
    label.append(select);
    const grid=target.closest('.admin-form-grid');if(grid)grid.insertBefore(label,target.closest('label')?.nextSibling||grid.firstChild);
-   select.addEventListener('change',()=>{document.getElementById('autoAssignPreview')?.classList.add('hidden');syncAdminAssignmentGenerator()});
+   select.addEventListener('change',()=>{document.getElementById('autoAssignPreview')?.classList.add('hidden');const title=document.getElementById('autoAssignTitle');if(title){const names={pythagoras:L('وظيفة فيثاغورس','Pythagoras Practice'),science:L('وظيفة علوم — متنوع','Science Assignment — General'),'science-periodic':L('وظيفة علوم — الجدول الدوري والعناصر','Science Assignment — Periodic Table'),'science-atoms':L('وظيفة علوم — الذرة والعناصر','Science Assignment — Atoms'),'science-motion':L('وظيفة علوم — القوة والحركة','Science Assignment — Forces & Motion'),'arabic-idafa':L('وظيفة عربي — المضاف والمضاف إليه','Arabic Assignment — Idafa')};title.value=names[select.value]||title.value}syncAdminAssignmentGenerator()});
    previewBtn.addEventListener('click',event=>{
     if(select.value==='pythagoras')return;
     event.preventDefault();event.stopImmediatePropagation();
