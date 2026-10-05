@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v93-mobile-controls";
+const CACHE_NAME="classora-v94-auto-intro";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=92",
   "./assets/subject-labs.css?v=92",
