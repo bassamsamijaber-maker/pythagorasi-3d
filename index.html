@@ -7680,13 +7680,13 @@ document.addEventListener("click",e=>{
   if(!isGuestSession())return;
   const target=e.target.closest("button,a,[role=button]");
   if(!target)return;
-  if(target.closest("#guestLoginReminderModal,#authGate,.classora-mobile-page-nav"))return;
+  if(target.closest("#guestLoginReminderModal,#authGate,.classora-mobile-page-nav,[data-learning-page],.hub-subject-tabs"))return;
   if(target.matches("#lobbyLogoutBtn")){e.preventDefault();e.stopImmediatePropagation();exitGuestToLogin();return}
   const id=target.id||"";
   const protectedId=/Exam|exam|Competition|competition|Question|question|Challenge|challenge|Assignment|assignment|JoinClass|ClassBtn|ChatBtn|NotificationsBtn|ProfileBtn|ProfileQuick|SupportRequests/i.test(id);
   const protectedArea=!!target.closest("#examModal,#competitionModal,#pythagQuestionsModal,#topicPracticeOptions,#classModal,.quiz-card,.assignment-card,.site-poll-options");
   const words=(target.textContent||"").trim();
-  const protectedWords=/(حل|تحقق|فحص|اختبار|امتحان|مسابقة|تحدي|سؤال|واجب|وظيفة|إرسال الإجابة|ابدأ التدريب|تصويت|answer|check|quiz|exam|competition|challenge|assignment|submit|vote)/i.test(words);
+  const protectedWords=/(حل|تحقق|فحص|اختبار|امتحان|مسابقة|تحدي|سؤال|واجب|وظيفة|إرسال الإجابة|ابدأ التدريب|تصويت|\b(?:answer|check|quiz|exam|competition|challenge|assignment|submit|vote)\b)/i.test(words);
   const safeNav=target.matches(".close,[data-close-modal],#returnLobbyBtn,#mobileReturnLobbyBtn,#classoraMobileLobbyBtn,#classoraMobileSettingsBtn");
   if(!safeNav&&(protectedId||protectedArea||protectedWords)){
     e.preventDefault();e.stopImmediatePropagation();
