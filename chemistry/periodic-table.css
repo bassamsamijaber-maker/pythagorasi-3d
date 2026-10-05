@@ -125,3 +125,26 @@ html,body{touch-action:manipulation;-ms-touch-action:manipulation}
 }
 
 .periodic-fit-content{direction:ltr}.periodic-scroll{max-width:100%;box-sizing:border-box}.table-shell{min-width:0;overflow:hidden}#tableFitToggle{min-height:44px}.gallery-grid .element-card{min-height:44px}
+
+
+/* V91: viewport-fit periodic table. The full 18-column table stays centered and scales to the device. */
+main{width:min(1640px,calc(100vw - 20px))}
+.explore-view{min-width:0}
+.table-shell{width:100%;padding:clamp(6px,1.1vw,16px)}
+.periodic-scroll{width:100%;max-width:100%;padding:clamp(4px,.8vw,12px) 2px 8px;overscroll-behavior:contain}
+.periodic-fit-content{width:max-content;max-width:none;will-change:transform}
+@media(max-height:900px) and (min-width:760px){
+  .section-head{margin:18px 4px 10px}
+  .layout-switch{margin-bottom:4px}
+  .gallery-note{margin:5px 0}
+  .control-panel{padding:10px;margin-bottom:16px}
+}
+@media(max-width:700px){
+  main{width:calc(100vw - 6px)!important}
+  .section-head{margin:14px 3px 8px}
+  .section-head h2{font-size:22px}
+  .layout-switch{gap:5px}
+  .layout-switch .lang-btn{min-height:38px;padding:7px 9px;font-size:11px}
+  .gallery-note{margin:4px 2px 7px}
+  .periodic-scroll{padding:2px 0 4px}
+}
