@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v92-intro-arabic-kahoot-periodic-fit";
+const CACHE_NAME="classora-v93-mobile-controls";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=92",
   "./assets/subject-labs.css?v=92",
