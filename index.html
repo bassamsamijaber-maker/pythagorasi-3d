@@ -13082,7 +13082,7 @@ window.addEventListener("message",event=>{
   if(event.source!==periodicTableFrame?.contentWindow)return;
   if(event.data?.type==="classora-subject-language"){applySiteLanguage(event.data.lang==="ar"?"ar":"en");}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
-    location.hash="platformLobby";
+    classoraGoLobby();
   }
 });
 window.addEventListener("hashchange",()=>{
@@ -13090,6 +13090,7 @@ window.addEventListener("hashchange",()=>{
     try{periodicTableFrame?.contentWindow?.postMessage({type:"classora-language",lang:currentUILanguage},location.origin)}catch{}
   }else if(location.hash==="#platformLobby"){
     showPlatformLobby();
+    classoraRestoreLobbyPosition();
   }
 });
 
@@ -13661,8 +13662,6 @@ async function openSubject(subject){
   }
 }
 document.querySelectorAll("[data-subject-open]").forEach(btn=>btn.addEventListener("click",()=>openSubject(btn.dataset.subjectOpen)));
-document.getElementById("returnLobbyBtn").addEventListener("click",showPlatformLobby);
-document.getElementById("mobileReturnLobbyBtn").addEventListener("click",showPlatformLobby);
 document.getElementById("closeSubjectModal").addEventListener("click",()=>subjectModal.classList.remove("open"));
 
 function renderTopicBrowser(topics){
@@ -20649,26 +20648,68 @@ document.addEventListener("keydown",event=>{
   open[open.length-1]?.querySelector(".close")?.click();
 });
 
-/* ================= V77 MOBILE PAGE NAV ================= */
+/* ================= V96 UNIVERSAL LOBBY RETURN ================= */
+const CLASSORA_LOBBY_SCROLL_KEY="classora_lobby_scroll_v1";
+let classoraLobbyReturnScroll=0;
+function classoraRememberLobbyPosition(){
+  const lobby=document.querySelector(".platform-lobby");
+  const value=Math.max(0,Number(lobby?.scrollTop||classoraOverlayScrollTop||window.scrollY||0));
+  classoraLobbyReturnScroll=value;
+  classoraOverlayScrollTop=value;
+  try{sessionStorage.setItem(CLASSORA_LOBBY_SCROLL_KEY,String(value))}catch{}
+  return value;
+}
+function classoraSavedLobbyPosition(){
+  let stored=0;
+  try{stored=Number(sessionStorage.getItem(CLASSORA_LOBBY_SCROLL_KEY)||0)}catch{}
+  return Math.max(0,Number.isFinite(stored)?stored:0,classoraLobbyReturnScroll||0,classoraOverlayScrollTop||0);
+}
+function classoraRestoreLobbyPosition(){
+  const top=classoraSavedLobbyPosition();
+  const restore=()=>{
+    const lobby=document.querySelector(".platform-lobby");
+    if(lobby)lobby.scrollTo({top,behavior:"auto"});
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(restore));
+  setTimeout(restore,90);
+}
 function closeAllClassoraScreensForMobile(){
   document.querySelectorAll(".modal.open").forEach(modal=>modal.classList.remove("open"));
   document.getElementById("chatModal")?.classList.remove("chat-thread-open");
-  if(location.hash){
-    try{history.replaceState(null,"",location.pathname+location.search)}catch{location.hash=""}
+  if(location.hash&&location.hash!=="#platformLobby"){
+    try{history.replaceState(null,"",location.pathname+location.search+"#platformLobby")}catch{location.hash="platformLobby"}
   }
   classoraSyncOverlayState();
 }
-function mobileGoLobby(){
+function classoraGoLobby(){
   closeAllClassoraScreensForMobile();
   showPlatformLobby();
-  document.querySelector(".platform-lobby")?.scrollTo?.({top:classoraOverlayScrollTop||0,behavior:"auto"});
+  classoraRestoreLobbyPosition();
+  return false;
 }
+function mobileGoLobby(){return classoraGoLobby()}
 function mobileGoSettings(){
-  closeAllClassoraScreensForMobile();
-  showPlatformLobby();
-  setTimeout(()=>document.getElementById("lobbySettingsBtn")?.click(),40);
+  classoraGoLobby();
+  setTimeout(()=>document.getElementById("lobbySettingsBtn")?.click(),60);
 }
-document.getElementById("classoraMobileLobbyBtn")?.addEventListener("click",mobileGoLobby);
+
+/* Save the exact lobby position before entering any section, modal or embedded subject. */
+document.addEventListener("click",event=>{
+  const target=event.target?.closest?.("#platformLobby button,#platformLobby a");
+  if(!target)return;
+  if(target.closest(".classora-mobile-page-nav"))return;
+  classoraRememberLobbyPosition();
+},true);
+
+/* Every Lobby/Back-to-lobby control uses one route, no matter where it appears. */
+document.addEventListener("click",event=>{
+  const target=event.target?.closest?.("#classoraMobileLobbyBtn,#mobileReturnLobbyBtn,#returnLobbyBtn,[data-return-control][data-return-target='lobby']");
+  if(!target)return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  classoraGoLobby();
+},true);
+
 document.getElementById("classoraMobileSettingsBtn")?.addEventListener("click",mobileGoSettings);
 function syncMobileControlBar(){
   const nav=document.getElementById("classoraMobilePageNav");
