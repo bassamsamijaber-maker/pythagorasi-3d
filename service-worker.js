@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v95-no-tap-intro";
+const CACHE_NAME="classora-v96-universal-lobby-return";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=92",
   "./assets/subject-labs.css?v=92",
