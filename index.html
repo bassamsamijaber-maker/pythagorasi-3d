@@ -4705,15 +4705,16 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
   .classora-mobile-page-nav svg{width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 auto!important}
   .platform-lobby{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
   .modalbox,.classora-chat-box{padding-bottom:calc(86px + env(safe-area-inset-bottom))!important}
-  #classoraIntro.classora-cinematic-intro{touch-action:manipulation!important}
-  #classoraIntro .intro-center-launch{pointer-events:none!important}#classoraIntro .intro-skip{pointer-events:auto!important;touch-action:manipulation!important}
+  #classoraIntro.classora-cinematic-intro{touch-action:none!important;pointer-events:none!important}
+  #classoraIntro .intro-center-launch,#classoraIntro .intro-skip{pointer-events:none!important}
 }
 #classoraIntro{z-index:2147483600!important}#classoraIntro .classora-intro-mark{width:140px!important;height:140px!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important}#classoraIntro .classora-intro-mark img{width:100%;height:100%;object-fit:contain;border-radius:28px}#classoraIntro strong{font-size:32px!important}#sessionRecovery{position:fixed;inset:0;z-index:99999;background:#07111e;display:grid;place-content:center;text-align:center;gap:20px;padding:24px;color:#eaf5ff}#sessionRecovery[hidden]{display:none}#sessionRecovery button{padding:14px;border-radius:12px;background:#26579a;color:white;border:1px solid #83c7ff}
 </style>
 
 <style id="classora-cinematic-intro">
 #classoraIntro.classora-cinematic-intro{
-  pointer-events:auto!important;overflow:hidden!important;isolation:isolate!important;
+  pointer-events:none!important;overflow:hidden!important;isolation:isolate!important;
+  animation:classoraIntroAutoExit 4.2s linear both!important;
   background:
    radial-gradient(circle at 50% 42%,rgba(37,193,255,.18),transparent 23%),
    radial-gradient(circle at 18% 20%,rgba(45,255,176,.10),transparent 30%),
@@ -4747,9 +4748,14 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 #classoraIntro .intro-skip:hover{background:#ffffff12}
 #classoraIntro.demo-press .intro-logo-shell{animation:introDemoPress .42s ease}
 #classoraIntro.classora-intro-exit{opacity:0!important;visibility:hidden!important;transform:scale(1.035);transition:opacity .48s ease,visibility .48s ease,transform .55s ease!important}
+@keyframes classoraIntroAutoExit{
+  0%,82%{opacity:1;visibility:visible}
+  92%{opacity:0}
+  100%{opacity:0;visibility:hidden}
+}
 @keyframes introOrbitSpin{to{transform:rotate(360deg)}}@keyframes introGlowDrift{to{transform:translate(7vw,-4vh) scale(1.12)}}@keyframes introCenterIn{from{opacity:0;transform:scale(.82) translateY(16px)}to{opacity:1;transform:none}}@keyframes introLogoPulse{50%{transform:scale(1.055);opacity:.55}}@keyframes introDemoPress{45%{transform:scale(.92)}75%{transform:scale(1.04)}}@keyframes introTapRipple{30%{opacity:1}to{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}@keyframes introCursorDemo{0%{opacity:0;transform:translate(0,0) rotate(-12deg)}12%{opacity:1}72%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg)}82%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg) scale(.82)}92%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg) scale(1)}100%{opacity:0;transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg)}}
 @media(max-width:700px){#classoraIntro .intro-orbit-ring{width:78vw}#classoraIntro .intro-orbit-ring.r2{width:108vw}#classoraIntro .intro-float-card{min-width:92px;padding:8px 10px;font-size:10px}#classoraIntro .intro-float-card svg{width:19px;height:19px}#classoraIntro .intro-logo-shell{width:118px;height:118px;border-radius:31px}#classoraIntro .intro-logo-shell img{width:90px!important;height:90px!important;border-radius:24px!important}#classoraIntro .intro-demo-cursor{display:none}}
-@media(prefers-reduced-motion:reduce){#classoraIntro .intro-orbit-ring,#classoraIntro .intro-film-glow,#classoraIntro .intro-logo-shell::before,#classoraIntro .intro-demo-cursor,#classoraIntro .intro-click-ripple{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#classoraIntro .intro-orbit-ring,#classoraIntro .intro-film-glow,#classoraIntro .intro-logo-shell::before,#classoraIntro .intro-demo-cursor,#classoraIntro .intro-click-ripple{animation-duration:1.8s!important}#classoraIntro.classora-cinematic-intro{animation:classoraIntroAutoExit 3s linear both!important}}
 </style>
 </head>
 <body class="classora-intro-active">
@@ -4765,15 +4771,14 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <div class="intro-float-card" data-intro-ar="مختبرات" data-intro-en="Labs"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg><span>Labs</span></div>
     <div class="intro-float-card" data-intro-ar="كلاسورا AI" data-intro-en="Classora AI"><svg viewBox="0 0 24 24"><path d="m12 3 2.2 6.1L20 11l-5.8 2L12 19l-2.2-6L4 11l5.8-1.9L12 3Z"/></svg><span>Classora AI</span></div>
   </div>
-  <button type="button" class="intro-center-launch" id="classoraIntroOpen">
+  <div class="intro-center-launch" id="classoraIntroOpen">
     <span class="intro-logo-shell"><img src="./icons/classora-192.png" alt=""></span>
     <strong>CLASSORA</strong><small class="classora-intro-tagline">Think. Try. Understand.</small><span class="intro-enter-pill">Enter Classora</span>
-  </button>
+  </div>
   <span class="intro-click-ripple" aria-hidden="true"></span>
   <span class="intro-demo-cursor" aria-hidden="true"><svg viewBox="0 0 38 44"><path d="M4 3 31 25l-13 2 8 11-7 4-7-12-8 9V3Z"/></svg></span>
-  <button type="button" class="intro-skip" id="classoraIntroSkip">Skip</button>
 </div>
-<script>(function(){var e=document.getElementById('classoraIntro'),skip=document.getElementById('classoraIntroSkip'),done=false,returning=false;try{if(sessionStorage.getItem('classora_returning_from_subject')==='1'){sessionStorage.removeItem('classora_returning_from_subject');returning=true}}catch{}var ar=false;try{ar=localStorage.getItem('pythagorasi_language')==='ar'}catch{}if(ar){e.querySelector('.classora-intro-tagline').textContent='فكّر. جرّب. افهم.';e.querySelector('.intro-enter-pill').textContent='جاري الدخول…';skip.textContent='تخطي';e.querySelectorAll('[data-intro-ar]').forEach(function(x){x.querySelector('span').textContent=x.dataset.introAr})}else{e.querySelector('.intro-enter-pill').textContent='Opening…'}function close(){if(done)return;done=true;document.body.classList.remove('classora-intro-active');e.classList.add('classora-intro-exit');setTimeout(function(){e.remove()},560)}skip.addEventListener('click',close);if(returning){setTimeout(close,80);return}requestAnimationFrame(function(){e.classList.add('intro-auto-running')});setTimeout(function(){e.classList.add('demo-press')},2550);setTimeout(close,3850);setTimeout(close,5200)})();</script>
+<script>(function(){var e=document.getElementById('classoraIntro');if(!e)return;var returning=false;try{if(sessionStorage.getItem('classora_returning_from_subject')==='1'){sessionStorage.removeItem('classora_returning_from_subject');returning=true}}catch{}var ar=false;try{ar=localStorage.getItem('pythagorasi_language')==='ar'}catch{}if(ar){var t=e.querySelector('.classora-intro-tagline'),p=e.querySelector('.intro-enter-pill');if(t)t.textContent='فكّر. جرّب. افهم.';if(p)p.textContent='جاري الدخول…';e.querySelectorAll('[data-intro-ar]').forEach(function(x){var s=x.querySelector('span');if(s)s.textContent=x.dataset.introAr})}else{var p=e.querySelector('.intro-enter-pill');if(p)p.textContent='Opening…'}function finish(){document.body.classList.remove('classora-intro-active');e.classList.add('classora-intro-exit');setTimeout(function(){e.remove()},350)}if(returning){finish();return}setTimeout(function(){e.classList.add('demo-press')},2550);setTimeout(finish,4000);setTimeout(finish,5200)})();</script>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
