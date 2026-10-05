@@ -1,12 +1,12 @@
-const CACHE_NAME="classora-v87-stable-no-autoreload";
+const CACHE_NAME="classora-v88-stable-splash-chem-arabic";
 const APP_SHELL=[
-  "./assets/learning-plus.js?v=87",
-  "./assets/learning-plus.css?v=87",
-  "./assets/learning-content.js?v=87",
-  "./assets/learning-store.js?v=87",
-  "./assets/ph-lab.js?v=87",
-  "./assets/learning-hub.js?v=87",
-  "./assets/learning-hub.css?v=87",
+  "./assets/learning-plus.js?v=88",
+  "./assets/learning-plus.css?v=88",
+  "./assets/learning-content.js?v=88",
+  "./assets/learning-store.js?v=88",
+  "./assets/ph-lab.js?v=88",
+  "./assets/learning-hub.js?v=88",
+  "./assets/learning-hub.css?v=88",
   "./offline.html",
 
   "./assets/chat-doodles.svg",

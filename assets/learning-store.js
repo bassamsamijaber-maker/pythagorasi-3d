@@ -1,4 +1,4 @@
-import {normalizeTopic} from './learning-content.js?v=79';
+import {normalizeTopic} from './learning-content.js?v=88';
 export function createLearningStore(c){
  const {db,doc,collection,getDoc,getDocs,setDoc,deleteDoc,runTransaction,serverTimestamp,writeBatch}=c;
  function identity(){const p=c.profile(),uid=c.uid();if(!uid||!p)throw Error('login-required');if(!navigator.onLine)throw Error('offline');return {...p,uid}}

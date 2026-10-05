@@ -13,8 +13,7 @@ body.classora-intro-active{background:#06101b!important;overflow:hidden!importan
 
 /* V84: hard fail-safe. The intro can never block login, even if modules/Firebase fail. */
 body.classora-intro-active{overflow:auto!important}
-#classoraIntro{pointer-events:none!important;animation:classoraIntroHardExit .01s linear 2.6s forwards!important}
-@keyframes classoraIntroHardExit{to{opacity:0;visibility:hidden;pointer-events:none}}
+#classoraIntro{pointer-events:none!important;position:fixed;z-index:99999;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(ellipse at 50% 45%,#10285c 0%,#071426 48%,#040914 100%);color:#f5f8ff;font:700 15px system-ui;letter-spacing:.22em;transition:opacity .24s ease,visibility .24s ease}.classora-intro-mark{width:100px;height:100px;filter:drop-shadow(0 0 24px #315cff99);animation:introMarkIn .65s cubic-bezier(.2,.8,.2,1) both}.classora-intro-mark svg{width:100%;height:100%}#classoraIntro strong{font-size:19px;letter-spacing:.32em}.classora-intro-tagline{font:500 13px system-ui;letter-spacing:.04em;color:#afc5ef}#classoraIntro.classora-intro-exit{opacity:0;visibility:hidden}@keyframes introMarkIn{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}@media(prefers-reduced-motion:reduce){.classora-intro-mark{animation:none}#classoraIntro{transition:none}}
 </style>
 <link rel="preload" href="./icons/classora-512.png" as="image" fetchpriority="high">
 <script id="classora-touch-zoom-guard">
@@ -4648,7 +4647,9 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
 </style><link rel="stylesheet" href="./assets/learning-hub.css?v=87"><link rel="stylesheet" href="./assets/learning-plus.css?v=87"></head>
-<body>
+<body class="classora-intro-active">
+<div id="classoraIntro" role="status" aria-live="polite"><div class="classora-intro-mark"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M72 17a36 36 0 1 0 9 55A31 31 0 0 1 72 17Z" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/><path d="m50 39 4 9 10 3-10 4-4 10-4-10-10-4 10-3Z" fill="#fff"/><path d="M31 66h38M50 66v15M35 71l15 10 15-10" fill="none" stroke="#a8dfff" stroke-width="4" stroke-linecap="round"/><defs><linearGradient id="g" x1="12" y1="15" x2="88" y2="83"><stop stop-color="#25e4ff"/><stop offset=".55" stop-color="#396bff"/><stop offset="1" stop-color="#c25dff"/></linearGradient></defs></svg></div><strong>CLASSORA</strong><span class="classora-intro-tagline">Learn by exploring</span></div>
+<script>(function(){var e=document.getElementById("classoraIntro"),b=document.body;try{if(localStorage.getItem("pythagorasi_language")==="ar")e.querySelector(".classora-intro-tagline").textContent="تعلّم بالاكتشاف"}catch{}var done=false;function close(){if(done)return;done=true;b.classList.remove("classora-intro-active");e.classList.add("classora-intro-exit");setTimeout(function(){e.remove()},260)}setTimeout(close,1450);setTimeout(close,4500)})();</script>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
@@ -6738,9 +6739,9 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=87";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=87";
-import {createLearningStore} from "./assets/learning-store.js?v=87";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=88";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=88";
+import {createLearningStore} from "./assets/learning-store.js?v=88";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -11814,6 +11815,8 @@ let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"
 
 const uiExactTranslations=new Map([
 ["أهلًا","Welcome"],
+["📲 تثبيت Classora على الهاتف","📲 Install Classora on your phone"],
+["Offline lessons","الدروس دون إنترنت"],
 ["تم إنشاء حساب المعلم بنجاح.","Teacher account created successfully."],
 ["اكتب اسم المعلم — حرفين على الأقل.","Enter a teacher name with at least 2 characters."],
 ["اكتب إيميل صحيح.","Enter a valid email address."],
@@ -21111,9 +21114,32 @@ window.classoraLearningHub=mountLearningHub({
  action:async key=>{
   const ids={lab:'lobbyLabCard',equations:'equationLabBtn',practice:'lobbyQuestionBtn',challenge:'lobbyChallengeBtn',periodic:'periodicTableBtn',exam:'lobbyExamBtn',competition:'competitionBtn',classes:'lobbyJoinClassBtn',chat:'lobbyChatBtn',support:'lobbySupportBtn',settings:'lobbySettingsBtn'};
   if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم — متنوع','Science exam — General');document.getElementById('scienceExamTopic').value='';document.getElementById('scienceExamQuestionCount').value='10';scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
+  if(key==='acids'){window.classoraLearningPlus?.acids();return}
+  if(key==='study'){window.classoraLearningPlus?.study();return}
+  if(key==='flashcards'){window.classoraLearningPlus?.flashcards();return}
+  if(key==='progress'){window.classoraLearningPlus?.progress();return}
   if(key==='scienceLive'){document.getElementById('compQuickSubject').value='science';document.getElementById('competitionBtn').click();return}
   document.getElementById(ids[key])?.click();
  }
+});
+const classoraLearningStore=createLearningStore({
+ db,doc,collection,getDoc,getDocs,setDoc,deleteDoc,runTransaction,serverTimestamp,writeBatch,
+ uid:()=>auth.currentUser?.uid,profile:()=>window.PythagorasiUser,
+ setProfile:p=>{window.PythagorasiUser=p;activeProfile=p},changed:()=>{},
+ managedClasses:async()=>{const p=window.PythagorasiUser;if(!p)return[];const ids=Array.isArray(p.classIds)?p.classIds:[];return Promise.all(ids.map(async id=>{try{const s=await getDoc(doc(db,"classes",id));return s.exists()?{id,...s.data()}:{id}}catch{return{id}}}))},
+ isAdmin:()=>isSuperAdminProfile()
+});
+window.classoraLearningPlus=mountLearningPlus({
+ language:()=>currentUILanguage,flags:()=>({...siteControlsCache.learningFeatures,acids:true}),
+ topics:()=>hubScienceTopics,questions:scienceLiveQuestions,THREE,profile:()=>window.PythagorasiUser,
+ record:data=>classoraLearningStore.record(data),
+ getProgress:async()=>{const u=auth.currentUser;if(!u)throw Error("login-required");const s=await getDoc(doc(db,"users",u.uid));if(!s.exists())throw Error("profile-missing");return{...s.data(),uid:u.uid}},
+ isTeacher:()=>isTeacherLike(),classProgress:()=>classoraLearningStore.classProgress(),
+ action:key=>{const ids={lobby:"learningHubTopBtn",hub:"learningHubTopBtn"};document.getElementById(ids[key]||key)?.click()},
+ saveFlag:async(key,value)=>{if(!isSuperAdminProfile())throw Error("permission");await setDoc(doc(db,"siteControls","main"),{learningFeatures:{[key]:value}},{merge:true});siteControlsCache.learningFeatures={...siteControlsCache.learningFeatures,[key]:value}},
+ toast:showToast,requestTopic:title=>classoraLearningStore.requestTopic(title),isAdmin:()=>isSuperAdminProfile(),
+ setRequestStatus:(key,status)=>classoraLearningStore.setRequestStatus(key,status),
+ deleteRequest:(key,rows)=>classoraLearningStore.deleteRequest(key,rows),daily:async()=>[]
 });
 installVectorIcons();
 // Keep learning controls in sync even when chat has never been opened.
