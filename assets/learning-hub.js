@@ -177,7 +177,11 @@ const idafaPracticeExamples=[
  {mudaf:'قلمُ',mudafIlayh:'المعلّمِ',sentence:'ضاعَ قلمُ المعلّمِ اليومَ',sentenceWords:['ضاعَ','قلمُ','المعلّمِ','اليومَ'],pairIndexes:[1,2],parse:'قلمُ مضاف، والمعلّمِ مضاف إليه مجرور بالكسرة.'},
  {mudaf:'حديقةُ',mudafIlayh:'البيتِ',sentence:'حديقةُ البيتِ جميلةٌ',sentenceWords:['حديقةُ','البيتِ','جميلةٌ'],pairIndexes:[0,1],parse:'حديقةُ مضاف، والبيتِ مضاف إليه مجرور بالكسرة.'},
  {mudaf:'نافذةَ',mudafIlayh:'الغرفةِ',sentence:'فتحتُ نافذةَ الغرفةِ صباحًا',sentenceWords:['فتحتُ','نافذةَ','الغرفةِ','صباحًا'],pairIndexes:[1,2],parse:'نافذةَ مضاف، والغرفةِ مضاف إليه مجرور بالكسرة.'},
- {mudaf:'مفتاحُ',mudafIlayh:'السيارةِ',sentence:'مفتاحُ السيارةِ على الطاولةِ',sentenceWords:['مفتاحُ','السيارةِ','على','الطاولةِ'],pairIndexes:[0,1],parse:'مفتاحُ مضاف، والسيارةِ مضاف إليه مجرور بالكسرة.'}
+ {mudaf:'مفتاحُ',mudafIlayh:'السيارةِ',sentence:'مفتاحُ السيارةِ على الطاولةِ',sentenceWords:['مفتاحُ','السيارةِ','على','الطاولةِ'],pairIndexes:[0,1],parse:'مفتاحُ مضاف، والسيارةِ مضاف إليه مجرور بالكسرة.'},
+ {mudaf:'دفترُ',mudafIlayh:'الطالبةِ',sentence:'دفترُ الطالبةِ مرتبٌ',sentenceWords:['دفترُ','الطالبةِ','مرتبٌ'],pairIndexes:[0,1],parse:'دفترُ مضاف، والطالبةِ مضاف إليه مجرور بالكسرة.'},
+ {mudaf:'ساحةُ',mudafIlayh:'المدرسةِ',sentence:'ازدحمتْ ساحةُ المدرسةِ صباحًا',sentenceWords:['ازدحمتْ','ساحةُ','المدرسةِ','صباحًا'],pairIndexes:[1,2],parse:'ساحةُ مضاف، والمدرسةِ مضاف إليه مجرور بالكسرة.'},
+ {mudaf:'لونُ',mudafIlayh:'السماءِ',sentence:'لونُ السماءِ جميلٌ',sentenceWords:['لونُ','السماءِ','جميلٌ'],pairIndexes:[0,1],parse:'لونُ مضاف، والسماءِ مضاف إليه مجرور بالكسرة.'},
+ {mudaf:'صوتُ',mudafIlayh:'المطرِ',sentence:'سمعتُ صوتَ المطرِ ليلًا',sentenceWords:['سمعتُ','صوتَ','المطرِ','ليلًا'],pairIndexes:[1,2],parse:'صوتَ مضاف منصوب بحسب موقعه، والمطرِ مضاف إليه مجرور بالكسرة.'}
 ];
 function classoraShuffle(list){return [...list].sort(()=>Math.random()-.5)}
 export function idafaLiveQuestions(count=10,lang='ar'){
@@ -198,7 +202,7 @@ export function idafaLiveQuestions(count=10,lang='ar'){
   {id:'idafa-rule-1',prompt:ar?'ما حكم المضاف إليه؟':'What is the grammatical case of the mudaf ilayh?',options:ar?['مجرور','مرفوع دائمًا','منصوب دائمًا','مجزوم']:['Genitive','Always nominative','Always accusative','Jussive'],answer:ar?'مجرور':'Genitive',explanation:ar?'المضاف إليه يكون مجرورًا دائمًا.':'The mudaf ilayh is genitive.',subject:'arabic',topicKey:'idafa'},
   {id:'idafa-rule-2',prompt:ar?'أي عبارة صحيحة عن المضاف في الإضافة المعنوية؟':'Which statement is correct about the mudaf in a regular idafa?',options:ar?['لا يأخذ أل ولا تنوينًا','يجب أن يأخذ أل','يجب أن يكون مجرورًا دائمًا','يأخذ تنوينًا دائمًا']:['It normally takes neither al- nor tanween','It must take al-','It is always genitive','It always takes tanween'],answer:ar?'لا يأخذ أل ولا تنوينًا':'It normally takes neither al- nor tanween',explanation:ar?'المضاف في الإضافة المعنوية لا يأخذ أل ولا تنوينًا.':'In a regular idafa, the mudaf normally takes neither the definite article nor tanween.',subject:'arabic',topicKey:'idafa'}
  );
- const n=Math.max(1,Math.min(20,Number(count)||10)),out=[],pool=classoraShuffle(bank);
+ const n=Math.max(1,Math.min(30,Number(count)||10)),out=[],pool=classoraShuffle(bank);
  while(out.length<n){if(!pool.length)pool.push(...classoraShuffle(bank));const q=pool.shift();out.push({...q,id:q.id+'-'+out.length})}
  return out;
 }
