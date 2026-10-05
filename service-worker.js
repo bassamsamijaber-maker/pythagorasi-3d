@@ -1,12 +1,15 @@
-const CACHE_NAME="classora-v88-stable-splash-chem-arabic";
+const CACHE_NAME="classora-v89-labs-navigation-auth";
 const APP_SHELL=[
-  "./assets/learning-plus.js?v=88",
-  "./assets/learning-plus.css?v=88",
-  "./assets/learning-content.js?v=88",
-  "./assets/learning-store.js?v=88",
-  "./assets/ph-lab.js?v=88",
-  "./assets/learning-hub.js?v=88",
-  "./assets/learning-hub.css?v=88",
+  "./assets/subject-labs.js?v=89",
+  "./assets/subject-labs.css?v=89",
+  "./assets/return-navigation.js?v=89",
+  "./assets/learning-plus.js?v=89",
+  "./assets/learning-plus.css?v=89",
+  "./assets/learning-content.js?v=89",
+  "./assets/learning-store.js?v=89",
+  "./assets/ph-lab.js?v=89",
+  "./assets/learning-hub.js?v=89",
+  "./assets/learning-hub.css?v=89",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
@@ -145,3 +148,4 @@ classoraMessaging.onBackgroundMessage(payload=>{
 });
 
 } catch(error) { console.warn("Optional push messaging unavailable",error?.message); }
+

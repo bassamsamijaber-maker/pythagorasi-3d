@@ -4646,10 +4646,19 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=87"><link rel="stylesheet" href="./assets/learning-plus.css?v=87"></head>
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=89"><link rel="stylesheet" href="./assets/learning-plus.css?v=89"><link rel="stylesheet" href="./assets/subject-labs.css?v=89">
+<style>
+body:not(.auth-ready) #authGate,body.classora-session-restoring #authGate{visibility:hidden!important;pointer-events:none!important}body.classora-authenticated #authGate{display:none!important}
+button[data-return-control]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto!important;min-width:78px!important;height:40px!important;font-size:13px!important;padding:8px 12px!important;border-radius:12px!important;flex-shrink:0}button[data-return-control] span{display:inline!important}
+@media(max-width:760px){body.classora-authenticated .modalhead .close[data-return-control]{display:inline-flex!important}.lobby-topbar{display:flex!important;flex-wrap:wrap;gap:14px!important}.lobby-top-actions{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:10px!important;width:100%!important}.lobby-top-actions button{min-height:44px!important;width:auto!important;flex:0 1 auto;padding:10px!important}.lobby-top-actions span{display:inline!important}.hub-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hub-topic-card{min-width:0!important;padding:14px!important}.hub-topic-card h3{font-size:17px!important}.hub-hero-art{display:block!important}#chatModal .classora-chat-box{width:calc(100vw - 20px)!important;max-width:none!important;height:calc(100dvh - 105px)!important;max-height:none!important}.modalhead{gap:10px!important;flex-wrap:wrap}.classora-mobile-page-nav{max-width:400px}.modalbox{width:calc(100vw - 20px)!important;max-width:100%!important}.hub-subject-tabs{display:flex!important;flex-wrap:wrap!important}}
+@media(max-width:350px){.hub-card-grid{grid-template-columns:1fr!important}}
+#classoraIntro{z-index:2147483600!important}#classoraIntro .classora-intro-mark{width:140px!important;height:140px!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important}#classoraIntro .classora-intro-mark img{width:100%;height:100%;object-fit:contain;border-radius:28px}#classoraIntro strong{font-size:32px!important}#sessionRecovery{position:fixed;inset:0;z-index:99999;background:#07111e;display:grid;place-content:center;text-align:center;gap:20px;padding:24px;color:#eaf5ff}#sessionRecovery[hidden]{display:none}#sessionRecovery button{padding:14px;border-radius:12px;background:#26579a;color:white;border:1px solid #83c7ff}
+</style>
+</head>
 <body class="classora-intro-active">
-<div id="classoraIntro" role="status" aria-live="polite"><div class="classora-intro-mark"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M72 17a36 36 0 1 0 9 55A31 31 0 0 1 72 17Z" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/><path d="m50 39 4 9 10 3-10 4-4 10-4-10-10-4 10-3Z" fill="#fff"/><path d="M31 66h38M50 66v15M35 71l15 10 15-10" fill="none" stroke="#a8dfff" stroke-width="4" stroke-linecap="round"/><defs><linearGradient id="g" x1="12" y1="15" x2="88" y2="83"><stop stop-color="#25e4ff"/><stop offset=".55" stop-color="#396bff"/><stop offset="1" stop-color="#c25dff"/></linearGradient></defs></svg></div><strong>CLASSORA</strong><span class="classora-intro-tagline">Learn by exploring</span></div>
-<script>(function(){var e=document.getElementById("classoraIntro"),b=document.body;try{if(localStorage.getItem("pythagorasi_language")==="ar")e.querySelector(".classora-intro-tagline").textContent="تعلّم بالاكتشاف"}catch{}var done=false;function close(){if(done)return;done=true;b.classList.remove("classora-intro-active");e.classList.add("classora-intro-exit");setTimeout(function(){e.remove()},260)}setTimeout(close,1450);setTimeout(close,4500)})();</script>
+<div id="classoraIntro" role="status" aria-live="polite"><div class="classora-intro-mark"><img src="./icons/classora-192.png" alt=""></div><strong>CLASSORA</strong><span class="classora-intro-tagline">Learn. Explore. Discover.</span></div>
+<script>(function(){var e=document.getElementById('classoraIntro'),done=false,start=Date.now();try{if(localStorage.getItem('pythagorasi_language')==='ar')e.querySelector('.classora-intro-tagline').textContent='تعلّم. جرّب. اكتشف.'}catch{}function close(){if(done)return;done=true;setTimeout(function(){document.body.classList.remove('classora-intro-active');e.classList.add('classora-intro-exit');setTimeout(function(){e.remove()},300)},Math.max(0,2600-(Date.now()-start)))}window.addEventListener('classora-auth-settled',close,{once:true});setTimeout(close,6000)})();</script>
+<div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
@@ -6739,9 +6748,11 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=88";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=88";
-import {createLearningStore} from "./assets/learning-store.js?v=88";
+import {mountLearningHub, scienceLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=89";
+import {mountSubjectLabs} from "./assets/subject-labs.js?v=89";
+import {mountReturnNavigation} from "./assets/return-navigation.js?v=89";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=89";
+import {createLearningStore} from "./assets/learning-store.js?v=89";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -7413,6 +7424,7 @@ function finishAuthIntent(){
 }
 
 function paintUser(user,profile){
+  document.getElementById("sessionRecovery").hidden=true;
   sessionStorage.removeItem("classora_guest_session");
   stopGuestReminderLoop?.();
   activeProfile=profile;
@@ -7478,6 +7490,8 @@ async function resolveCurrentUser(user){
     return;
   }
 
+  authGate.classList.remove("show");
+  document.getElementById("sessionRecovery").hidden=true;
   authBusy(true,"جاري الدخول…");
   try{
     const adminUid=await isSuperAdminUid(user.uid);
@@ -7531,6 +7545,12 @@ async function resolveCurrentUser(user){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
     console.error("resolveCurrentUser",error);
+    if(auth.currentUser){
+      authGate.classList.remove("show");const recovery=document.getElementById("sessionRecovery");recovery.hidden=false;
+      document.getElementById("sessionRecoveryText").textContent=localStorage.getItem("pythagorasi_language")==="ar"?"حسابك ما زال مسجّلًا. تعذّر تحميل بياناتك الآن؛ حاول مجددًا.":"You are still signed in. Your account data could not load. Please retry.";
+      document.getElementById("sessionRecoveryRetry").onclick=()=>resolveCurrentUser(auth.currentUser);
+      return;
+    }
     if(String(error?.message||"")==="student-profile-missing"){
       setAuthError("الحساب ناقص بياناته. أنشئ حساب جديد.");
     }else{
@@ -8124,6 +8144,7 @@ authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
 
 onAuthStateChanged(auth,async user=>{
   await authPersistenceReady;
+  document.body.classList.toggle("classora-session-restoring",!!user);
   authResolved=true;
   document.body.classList.add("auth-ready");
   if(user){
@@ -8131,7 +8152,7 @@ onAuthStateChanged(auth,async user=>{
     if(!expires)expires=rememberLoginForTwoMonths();
     if(Date.now()>=expires){
       clearRememberedLogin();
-      document.body.classList.remove("classora-authenticated");
+      document.body.classList.remove("classora-authenticated","classora-session-restoring");
       try{await signOut(auth)}catch{}
       activeProfile=null;window.PythagorasiUser=null;
       hidePlatformLobby();authUserBar.classList.remove("show");authGate.classList.add("show");showRoleChooser();
@@ -8141,6 +8162,7 @@ onAuthStateChanged(auth,async user=>{
     }
   }
   await resolveCurrentUser(user);
+  document.body.classList.remove("classora-session-restoring");
   window.dispatchEvent(new Event("classora-auth-settled"));
 });
 
@@ -12892,7 +12914,7 @@ function applySiteLanguage(lang,save=true){
   translateSubtree(document.body);
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
   document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
-  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh()}catch{}
+  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh()}catch{}
   try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
   try{applyAdminLanguage()}catch{}
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
@@ -20402,7 +20424,8 @@ function classoraHasVerifiedSession(){
 }
 document.addEventListener("click",event=>{
   if(event.target?.closest?.(".modal .close"))return;
-  if(classoraHasVerifiedSession())return;
+  if(classoraHasVerifiedSession()||isGuestSession())return;
+  if(auth.currentUser){authGate.classList.remove("show");return;}
   const insideAuth=event.target?.closest?.("#authGate");
   if(insideAuth)return;
   if(event.target?.closest?.("#supportModal"))return;
@@ -20504,7 +20527,7 @@ function closeAllClassoraScreensForMobile(){
 function mobileGoLobby(){
   closeAllClassoraScreensForMobile();
   showPlatformLobby();
-  document.querySelector(".platform-lobby")?.scrollTo?.({top:0,behavior:"smooth"});
+  document.querySelector(".platform-lobby")?.scrollTo?.({top:classoraOverlayScrollTop||0,behavior:"auto"});
 }
 function mobileGoSettings(){
   closeAllClassoraScreensForMobile();
@@ -20546,10 +20569,13 @@ function classoraAutoWake(){
     classoraWakeTimer=setTimeout(classoraAutoWake,180);
     return;
   }
-  if(!auth?.currentUser || !window.PythagorasiUser?.uid){
-    document.body.classList.remove("classora-authenticated");
-    hidePlatformLobby();
-    authGate?.classList.add("show");
+  if(isGuestSession()){
+    authGate?.classList.remove("show");
+    if(!window.PythagorasiUser?.uid)paintGuestSession();
+  }else if(!auth?.currentUser){
+    document.body.classList.remove("classora-authenticated");hidePlatformLobby();authGate?.classList.add("show");
+  }else if(!window.PythagorasiUser?.uid){
+    authGate?.classList.remove("show");
   }else{
     document.body.classList.add("classora-authenticated");
     authGate?.classList.remove("show");
@@ -21114,7 +21140,7 @@ window.classoraLearningHub=mountLearningHub({
  action:async key=>{
   const ids={lab:'lobbyLabCard',equations:'equationLabBtn',practice:'lobbyQuestionBtn',challenge:'lobbyChallengeBtn',periodic:'periodicTableBtn',exam:'lobbyExamBtn',competition:'competitionBtn',classes:'lobbyJoinClassBtn',chat:'lobbyChatBtn',support:'lobbySupportBtn',settings:'lobbySettingsBtn'};
   if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم — متنوع','Science exam — General');document.getElementById('scienceExamTopic').value='';document.getElementById('scienceExamQuestionCount').value='10';scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
-  if(key==='acids'){window.classoraLearningPlus?.acids();return}
+  if(key==='acids'||key==='idafa'){window.classoraSubjectLabs.open(key);return}
   if(key==='study'){window.classoraLearningPlus?.study();return}
   if(key==='flashcards'){window.classoraLearningPlus?.flashcards();return}
   if(key==='progress'){window.classoraLearningPlus?.progress();return}
@@ -21130,6 +21156,7 @@ const classoraLearningStore=createLearningStore({
  isAdmin:()=>isSuperAdminProfile()
 });
 window.classoraLearningPlus=mountLearningPlus({
+ dialog:title=>{const modal=supportDialog(title);modal.close=()=>modal.dialog.close("back");return modal},
  language:()=>currentUILanguage,flags:()=>({...siteControlsCache.learningFeatures,acids:true}),
  topics:()=>hubScienceTopics,questions:scienceLiveQuestions,THREE,profile:()=>window.PythagorasiUser,
  record:data=>classoraLearningStore.record(data),
@@ -21141,6 +21168,8 @@ window.classoraLearningPlus=mountLearningPlus({
  setRequestStatus:(key,status)=>classoraLearningStore.setRequestStatus(key,status),
  deleteRequest:(key,rows)=>classoraLearningStore.deleteRequest(key,rows),daily:async()=>[]
 });
+window.classoraSubjectLabs=mountSubjectLabs({language:()=>currentUILanguage,THREE,isGuest:isGuestSession,requireLogin:()=>showGuestLoginReminder('protected'),acidTest:()=>window.classoraLearningPlus.acidTest()});
+window.classoraReturnNavigation=mountReturnNavigation(()=>currentUILanguage);
 installVectorIcons();
 // Keep learning controls in sync even when chat has never been opened.
 onAuthStateChanged(auth,user=>{
@@ -21151,3 +21180,4 @@ onAuthStateChanged(auth,user=>{
 </script>
 </body>
 </html>
+

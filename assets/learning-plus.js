@@ -1,5 +1,5 @@
-import {acidsTopic,phSamples,phColor,phClass,acidQuestions,levelFromXP,nextDifficulty} from './learning-content.js?v=88';
-import {mountPHScene} from './ph-lab.js?v=88';
+import {acidsTopic,phSamples,phColor,phClass,acidQuestions,levelFromXP,nextDifficulty} from './learning-content.js?v=89';
+import {mountPHScene} from './ph-lab.js?v=89';
 export function mountLearningPlus(api){
  const L=(a,e)=>api.language()==='ar'?a:e,txt=p=>p[api.language()==='ar'?0:1],N=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n},B=(text,fn)=>{const b=N('button','hub-button',text);b.type='button';b.onclick=fn;return b};
  let dialog=null,cleanup=()=>{},openAgain=null,requestRows=[],requestStates={},dailyRows=[],dailyError=false,refreshGeneration=0;
@@ -46,5 +46,6 @@ export function mountLearningPlus(api){
  function refresh(){tools.replaceChildren();for(const [key,ar,en]of [['study','وضع الدراسة','Study Mode'],['flashcards','البطاقات التعليمية','Flashcards'],['progress','تقدّمي','Progress']])if(enabled(key))tools.append(B(L(ar,en),()=>key==='progress'?progress():choose(key)));renderControls();updateRequests(requestRows,requestStates);const gen=++refreshGeneration;if(api.profile()&&enabled('daily')){api.daily().then(rows=>{if(gen!==refreshGeneration)return;dailyRows=rows;dailyError=false;renderDaily()}).catch(()=>{if(gen!==refreshGeneration)return;dailyError=true;renderDaily()})}else{dailyRows=[];renderDaily()} }
  let lastLanguage=api.language();function languageRefresh(){if(lastLanguage!==api.language()){lastLanguage=api.language();if(dialog){close();api.toast(L('تم تغيير اللغة. افتح النشاط باللغة الجديدة.','Language changed. Open your activity in the new language.'))}}refresh()}
  const offline=N('div','plus-offline-banner');offline.setAttribute('role','status');offline.setAttribute('data-no-translate','');document.body.append(offline);function network(){offline.hidden=navigator.onLine;offline.textContent=L('أنت دون اتصال. الدروس المحفوظة متاحة؛ النتائج والطلبات تحتاج اتصالًا.','You’re offline. Saved lessons are available; results and requests need a connection.');if(navigator.onLine)refresh()};window.addEventListener('online',network);window.addEventListener('offline',network);network();setInterval(()=>{if(!document.hidden)renderDaily()},30000);
- refresh();return {refresh:languageRefresh,acids,study:()=>choose('study'),flashcards:()=>choose('flashcards'),progress,requestTopic,updateRequests};
+ refresh();return {refresh:languageRefresh,acids,acidTest:()=>session('acids',false),study:()=>choose('study'),flashcards:()=>choose('flashcards'),progress,requestTopic,updateRequests};
 }
+
