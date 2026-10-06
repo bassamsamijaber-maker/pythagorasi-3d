@@ -18605,6 +18605,7 @@ function balancedRandomTeam(){
   return Math.random()<.5?"A":"B";
 }
 function competitionQuestionTypeLabel(q){
+  if(q?.typeLabel)return q.typeLabel;
   const en=currentUILanguage==="en";
   const key=q?.topicKey||q?.subject||"general";
   const kind=q?.questionKind||"general";
@@ -19242,6 +19243,7 @@ function renderLiveRoom(){
   const st=document.getElementById("compAnswerStatus");
   if(r.status==="result"){
     st.textContent=adminLang("الإجابة الصحيحة: ","Correct answer: ")+localizedScience.label(r.correctAnswer||"—");
+    if(Array.isArray(r.answerStats)&&r.answerStats.length){const summary=r.answerStats.map(x=>localizedScience.label(x.option)+" "+x.pct+"%").join(" • ");st.textContent+="  |  "+summary}
     if(liveCompetitionRole==="player"&&liveLastRenderedStatus!=="result"){
       const myAns=liveLastAnswerByIndex[r.currentIndex];
       const ok=myAns!=null&&normExam(myAns)===normExam(r.correctAnswer||"");
@@ -19316,7 +19318,7 @@ async function hostSetQuestion(index){
     tx.update(roomRef,{
       status:"question",currentIndex:index,
       currentQuestion:{prompt:q.prompt,options:q.options,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q),topicKey:q.topicKey||"general",questionKind:q.questionKind||"general"},
-      correctAnswer:null,questionStartedAt:serverTimestamp()
+      correctAnswer:null,answerStats:[],questionStartedAt:serverTimestamp()
     });
   });
 }
@@ -19384,7 +19386,9 @@ document.getElementById("compRevealBtn").addEventListener("click",()=>{
     if(!qSnap.exists())throw new Error("question missing");
     const q=qSnap.data();
     const responses=await getDocs(query(collection(db,"competitions",roomId,"responses"),where("questionIndex","==",idx)));
-    const correct=responses.docs.map(d=>d.data()).filter(r=>normExam(r.answer)===normExam(q.answer));
+    const responseRows=responses.docs.map(d=>d.data());
+    const correct=responseRows.filter(r=>normExam(r.answer)===normExam(q.answer));
+    const answerStats=(q.options||[]).map(opt=>{const count=responseRows.filter(r=>normExam(r.answer)===normExam(opt)).length;return {option:String(opt),count,pct:responseRows.length?Math.round(count/responseRows.length*100):0}});
     await runTransaction(db,async tx=>{
       const snap=await tx.get(roomRef),room=snap.data();
       if(!room||room.currentIndex!==idx||room.status!=="grading")return;
@@ -19396,14 +19400,18 @@ document.getElementById("compRevealBtn").addEventListener("click",()=>{
       let aScore=room.teamAScore||0,bScore=room.teamBScore||0;
       for(const {r,ref,snap:player} of players){
         if(!player.exists())continue;
-        const points=q.points||1000;
+        const basePoints=q.points||1000;
+        const answeredMs=Number(r.answeredAtMs)||liveTimestampMs(r.submittedAt);
+        const elapsed=Math.max(0,(answeredMs-liveTimestampMs(room.questionStartedAt))/1000);
+        const speedFactor=Math.max(0,Math.min(1,1-elapsed/liveQuestionSeconds(room)));
+        const points=Math.max(1,Math.round(basePoints*(.6+.4*speedFactor)));
         if(room.teamMode!=="solo"){
           if(r.team==="A")aScore+=points;
           else if(r.team==="B")bScore+=points;
         }
         tx.update(ref,{score:(player.data().score||0)+points});
       }
-      tx.update(roomRef,{status:"result",correctAnswer:q.answer,teamAScore:aScore,teamBScore:bScore});
+      tx.update(roomRef,{status:"result",correctAnswer:q.answer,answerStats,teamAScore:aScore,teamBScore:bScore});
     });
   });
 });
