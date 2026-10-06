@@ -4033,6 +4033,7 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
 /* ================= V99 PHONE DOWNLOAD / APP SHELL ================= */
 #installAppBtn{width:auto!important;gap:7px!important;padding-inline:11px!important}
 #installAppBtn .pwa-install-text{display:inline!important;font-size:10px;font-weight:900;white-space:nowrap}
+.settings-link-button{display:flex!important;align-items:center;justify-content:center;text-decoration:none;margin-top:8px;min-height:42px}
 @media(max-width:700px){
  #installAppBtn{grid-column:span 2;width:100%!important}
  #installAppBtn .pwa-install-text{display:inline!important}
@@ -6033,8 +6034,15 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
       <section class="settings-card pwa-settings-card" id="pwaSettingsCard">
         <h3 id="pwaSettingsTitle">📲 تطبيق Classora</h3>
         <div class="settings-note" id="pwaSettingsNote">ثبّت Classora على الشاشة الرئيسية وافتحه مثل تطبيق مستقل.</div>
-        <button class="apply" id="settingsInstallAppBtn">📲 تثبيت التطبيق</button>
+        <button class="apply" id="settingsInstallAppBtn">📲 تحميل على الهاتف</button>
         <div class="pwa-installed-badge hidden" id="pwaInstalledBadge">✓ مثبت كتطبيق</div>
+      </section>
+
+      <section class="settings-card" id="privacySupportCard">
+        <h3 id="privacySupportTitle">الخصوصية والدعم</h3>
+        <div class="settings-note" id="privacySupportNote">راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.</div>
+        <a class="exam-secondary settings-link-button" id="privacyPolicyLink" href="./privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a>
+        <a class="exam-secondary settings-link-button" id="publicSupportLink" href="./support.html" target="_blank" rel="noopener">صفحة الدعم</a>
       </section>
 
       <section class="settings-card">
@@ -13059,6 +13067,10 @@ function syncV99LanguageLabels(){
  const mobileLobby=document.querySelector("#classoraMobileLobbyBtn span");if(mobileLobby)mobileLobby.textContent=en?"Lobby":"اللوبي";
  const mobileSettings=document.querySelector("#classoraMobileSettingsBtn span");if(mobileSettings)mobileSettings.textContent=en?"Settings":"الإعدادات";
  const offline=document.getElementById("offlineLessonsLink");if(offline)offline.textContent=en?"Offline lessons":"الدروس دون إنترنت";
+ setText("privacySupportTitle","الخصوصية والدعم","Privacy & Support");
+ setText("privacySupportNote","راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.","Review the privacy policy or open the public support page.");
+ setText("privacyPolicyLink","سياسة الخصوصية","Privacy Policy");
+ setText("publicSupportLink","صفحة الدعم","Support Page");
 }
 function applySiteLanguage(lang,save=true){
   currentUILanguage=lang==='en'?'en':'ar';
@@ -21260,7 +21272,8 @@ let deferredInstallPrompt=null;
 const pwaInstallModal=document.getElementById("pwaInstallModal");
 
 function isStandaloneApp(){
-  return window.matchMedia?.("(display-mode: standalone)")?.matches
+  return window.Capacitor?.isNativePlatform?.()===true
+    || window.matchMedia?.("(display-mode: standalone)")?.matches
     || window.navigator.standalone===true;
 }
 function isIOSDevice(){
