@@ -1,4 +1,5 @@
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS} from "./curriculum-v97.js?v=98";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
@@ -210,7 +211,8 @@ export function idafaLiveQuestions(count=10,lang='ar'){
 const features=[['search','البحث في المواضيع والأدوات','Search topics and tools'],['science','قسم العلوم','Science section'],['scienceLab','مختبر الجسيمات','Particle lab'],['sciencePractice','تدريب واختبار العلوم','Science practice and self-test'],['scienceLive','مسابقات العلوم','Science live competitions'],['scienceExam','امتحانات صفية للعلوم','Science class exams'],['social','حساباتنا','Our accounts'],['desktopDock','شريط الكمبيوتر السفلي','Desktop bottom dock'],['motion','حركة البطاقات','Card animations']];
 export function mountLearningHub(api){
  const L=(ar,en)=>api.language()==='ar'?ar:en,txt=p=>pickLang(p,api.language()),enabled=k=>api.flags()?.[k]!==false;
- let selected='all',dialog=null,quizState=null,renderOpen=null,searchTimer;
+ let selected='all',dialog=null,quizState=null,renderOpen=null,searchTimer,selectedGrade=8;
+ try{const g=Number(localStorage.getItem("classora_curriculum_grade")||8);if(CURRICULUM_DATA[g])selectedGrade=g}catch{}
  const node=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
  const button=(label,fn,cls='hub-button')=>{const b=node('button',cls,label);b.type='button';b.onclick=fn;return b};
  const hero=document.querySelector('.pythag-lobby-hero'),legacy=document.getElementById('lobbyLabCard').closest('section');
@@ -224,6 +226,34 @@ export function mountLearningHub(api){
  function show(title,render){close();dialog=api.dialog(title);dialog.body.setAttribute('data-no-translate','');dialog.body.classList.add('hub-dialog-body');renderOpen=render;render(dialog.body);dialog.dialog.addEventListener('close',()=>{dialog=null;renderOpen=null;quizState=null},{once:true});}
  function openAccounts(){if(!enabled('social'))return;show(L('حساباتنا','Our accounts'),body=>{body.append(node('p','hub-muted',L('تابع أخبار كلاسورا وكل جديد.','Follow Classora for news and new activities.')));const a=node('a','hub-social-link');a.href='https://www.instagram.com/classora_app?stkn=ZzJlNDFma3Vnb29j&utm_source=qr';a.target='_blank';a.rel='noopener noreferrer';a.innerHTML=icon('instagram');a.append(node('span','',L('صفحتنا على الانستا','Our Instagram page')));body.append(a)})}
  function launch(action){close();api.action(action)}
+ const curriculumTopicTitle=x=>typeof x==="string"?x:x?.title||"";
+ const curriculumSubjectIcon=s=>({math:"math",science:"atom",arabic:"book",english:"book",history:"school",geography:"globe"}[s]||"book");
+ const curriculumSubjectName=s=>{const m=CURRICULUM_SUBJECTS[s];return m?L(m.ar,m.en):s};
+ const curriculumTopics=(g,s)=>(CURRICULUM_DATA[g]?.[s]||[]);
+ function openCurriculum(subject,topicRef=""){
+  const curr=window.classoraCurriculum;
+  if(curr?.openAt){curr.openAt(selectedGrade,subject,topicRef);return}
+  api.toast?.(L("جاري تجهيز المنهاج، جرّب بعد لحظة.","Curriculum is loading. Try again in a moment."));
+ }
+ function makeCurriculumShelf(){
+  const section=node("section","hub-curriculum-shelf"),head=node("div","hub-curriculum-head");
+  const copy=node("div");copy.append(node("span","hub-kicker","CLASSORA / "+L("المنهاج الدراسي","CURRICULUM")),node("h2","",L("اختار صفك، وبعدها المادة","Choose your grade, then a subject")),node("p","hub-muted",L("سابع لحد عاشر. العربي قواعد فقط، والإنجليزي Grammar فقط. كل موضوع فيه شرح وتدريب وامتحان ومسابقة.","Grades 7–10. Arabic is grammar-only and English is grammar-only. Every topic has learning, practice, an exam and live competition.")));
+  const grades=node("div","hub-grade-tabs");
+  [7,8,9,10].forEach(g=>{const b=button(String(g),()=>{selectedGrade=g;try{localStorage.setItem("classora_curriculum_grade",String(g))}catch{}render()},"hub-grade-button");b.classList.toggle("active",g===selectedGrade);b.setAttribute("aria-pressed",String(g===selectedGrade));b.title=L("الصف "+g,"Grade "+g);grades.append(b)});
+  head.append(copy,grades);section.append(head);
+  const grid=node("div","hub-curriculum-subjects");
+  const keys=Object.keys(CURRICULUM_DATA[selectedGrade]||{}).filter(s=>CURRICULUM_SUBJECTS[s]&&(selected==="all"||selected===s));
+  keys.forEach(s=>{
+   const topics=curriculumTopics(selectedGrade,s),card=node("article","hub-curriculum-subject "+s),main=button("",()=>openCurriculum(s),"hub-curriculum-subject-main");
+   main.innerHTML='<span class="hub-curriculum-icon">'+icon(curriculumSubjectIcon(s))+'</span><span class="hub-curriculum-copy"><small>'+L("الصف "+selectedGrade,"GRADE "+selectedGrade)+'</small><b>'+curriculumSubjectName(s)+'</b><em>'+topics.length+" "+L("موضوع","topics")+'</em></span><span class="hub-curriculum-open">↗</span>';
+   const chips=node("div","hub-curriculum-preview");
+   topics.slice(0,3).forEach(raw=>{const name=curriculumTopicTitle(raw),chip=button(name,()=>openCurriculum(s,name),"hub-topic-chip");chips.append(chip)});
+   if(selectedGrade===10&&s==="science"){const tracks=node("div","hub-track-badges");tracks.innerHTML='<span>'+L("فيزياء","Physics")+'</span><span>'+L("كيمياء","Chemistry")+'</span><span>'+L("أحياء","Biology")+'</span>';card.append(main,tracks,chips)}else card.append(main,chips);
+   grid.append(card);
+  });
+  if(!keys.length)section.append(node("p","hub-muted",L("هاي المادة مش مضافة لهذا الصف حاليًا.","This subject is not added for this grade yet.")));else section.append(grid);
+  return section;
+ }
  const mathCards=[['lab','math',['مختبر فيثاغورس','Pythagoras lab'],['نموذج ثلاثي الأبعاد وبرهان بالرمل','3D model and sand proof']],['equations','math',['معادلتان بمجهولين','Two-variable equations'],['حل النظام واستكشف الرسم البياني','Solve the system and explore its graph']],['practice','book',['تدريب الرياضيات','Math practice'],['أسئلة متغيرة مع تصحيح مباشر','Varied questions with instant feedback']],['challenge','trophy',['تحدّي الرياضيات','Math challenge'],['اختبر سرعتك واجمع نقاطًا','Test your speed and collect points']]];
  const idafa={id:'idafa',title:['المضاف والمضاف إليه','Idafa: the possessed noun and possessor'],summary:['افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.','Learn the Arabic construct phrase with clear examples.'],lesson:['الإضافة تركيب يتكوّن من اسمين متتابعين: الأول مضاف، والثاني مضاف إليه مجرور. يكتسب المضاف معنى التخصيص أو الملكية من الاسم الذي بعده. غالبًا لا يأتي المضاف مع أل ولا يقبل التنوين، أما المضاف إليه فيكون مجرورًا.','Idafa is a two-noun Arabic construct: the first noun is the muḍāf, and the second is the muḍāf ilayh in the genitive case. The second noun specifies or possesses the first. The first noun usually has no definite article or tanwīn; the second is genitive.'],example:['كتابُ الطالبِ جديدٌ: كتابُ = مضاف، والطالبِ = مضاف إليه مجرور وعلامة جره الكسرة. مثال آخر: بابُ المدرسةِ مفتوحٌ.','kitābu ṭ-ṭālibi jadīd: “book” is the muḍāf; “the student” is the muḍāf ilayh, genitive with kasra. Another example: bābu l-madrasati maftūḥ (“The school door is open”).'],icon:'book',subject:'arabic'};
  function render(){
@@ -231,12 +261,43 @@ export function mountLearningHub(api){
   const intro=node('div','hub-hero');const copy=node('div','hub-hero-copy');copy.append(node('span','hub-kicker','CLASSORA / '+L('مساحتك للتعلّم','YOUR LEARNING SPACE')),node('h1','',L('فكّر. جرّب. افهم.','Think. Try. Understand.')),node('p','',L('اختار مادة، استكشف الفكرة وجرّبها بإيدك.','Choose a subject. Explore an idea. Make it click.')));
   const art=node('div','hub-hero-art');art.setAttribute('aria-hidden','true');art.innerHTML=`<div class="hub-art-ring"></div><div class="hub-art-tile math">${icon('math')}</div><div class="hub-art-tile atom">${icon('atom')}</div><div class="hub-art-tile book">${icon('book')}</div>`;intro.append(copy,art);hub.append(intro);
   const searchWrap=node('label','hub-search');searchWrap.innerHTML=icon('search');const search=node('input');search.type='search';search.value=savedQuery;search.placeholder=L('ابحث عن موضوع، مختبر أو أداة…','Search topics, labs or tools…');search.setAttribute('aria-label',search.placeholder);searchWrap.append(search);searchWrap.hidden=!enabled('search');hub.append(searchWrap);
-  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['science','علوم','Science','atom'],['arabic','عربي','Arabic','book']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;render()});b.innerHTML=icon(ic);b.append(node('span','',L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);
+  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;render()});b.innerHTML=icon(ic);b.append(node('span','',L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);hub.append(makeCurriculumShelf());
   const list=node('div','hub-card-grid'),status=node('p','hub-muted');status.setAttribute('role','status');hub.append(list,status);
-  function fill(){list.replaceChildren();const q=search.value.trim().toLowerCase(),cards=[];if(q||!['science','arabic'].includes(selected))for(const [id,ic,title,summary] of mathCards)cards.push({id:'math-'+id,ic,title,summary,subject:'math',go:()=>launch(id)});if((q||!['math','arabic'].includes(selected))&&enabled('science')){cards.push({id:'periodic',ic:'atom',title:['جدول العناصر','Periodic table'],summary:['118 عنصرًا، مقارنة واستكشاف واختبار','118 elements, comparisons and quizzes'],subject:'science',go:()=>launch('periodic')});for(const topic of scienceTopics)cards.push({id:topic.id,ic:topic.icon,title:topic.title,summary:topic.summary,subject:'science',go:()=>topic.id==='acids'?launch('acids'):lesson(topic)});if(enabled('scienceLab'))cards.push({id:'particles',ic:'atom',title:['مختبر الجسيمات','Particle lab'],summary:['بدّل حالة المادة وشوف الحركة','Switch states and watch particles move'],subject:'science',go:()=>particleLab()});if(enabled('sciencePractice')){cards.push({id:'science-practice',ic:'book',title:['تمارين العلوم','Science practice'],summary:['أسئلة متغيّرة مع تصحيح وشرح مباشر','Fresh questions with instant grading and explanations'],subject:'science',go:()=>startQuiz('practice')});cards.push({id:'science-self-test',ic:'trophy',title:['اختبار علوم','Science test'],summary:['اختبار ذاتي من 10 أسئلة ونتيجة في النهاية','A 10-question self-test with a final score'],subject:'science',go:()=>startQuiz('test')})}}
-   if(q||!['math','science'].includes(selected)){cards.push({id:'arabic-idafa',ic:'book',title:idafa.title,summary:idafa.summary,subject:'arabic',go:()=>launch('idafa')});cards.push({id:'arabic-idafa-practice',ic:'edit',title:['تمارين المضاف والمضاف إليه','Idafa practice'],summary:['اختَر المضاف والمضاف إليه وخذ تصحيحًا مباشرًا','Identify both parts with instant feedback'],subject:'arabic',go:()=>startArabicQuiz('practice')});cards.push({id:'arabic-idafa-test',ic:'trophy',title:['اختبار عربي — المضاف والمضاف إليه','Arabic test — Idafa'],summary:['10 أسئلة مع علامة ومراجعة الإجابات','10 questions with a score and answer review'],subject:'arabic',go:()=>startArabicQuiz('test')})}
-   const extras=[['chat',['الشات','Chat'],'chat'],['support',['الدعم','Support'],'help'],['settings',['الإعدادات','Settings'],'settings'],['exam',['الامتحانات','Exams'],'book'],['competition',['المسابقات','Competitions'],'trophy']];if(q)for(const [id,title,ic]of extras)cards.push({id,ic,title,summary:['أدوات كلاسورا','Classora tools'],subject:'tools',go:()=>launch(id)});
-   const filtered=cards.filter(c=>!q||topicMatches(q,[...c.title,...c.summary,c.subject,c.id].join(' ')));for(const c of filtered){const b=button('',c.go,'hub-topic-card '+c.subject);b.innerHTML=`<span class="hub-card-icon">${icon(c.ic)}</span>`;b.append(node('small','hub-card-category',c.subject==='math'?L('رياضيات','MATHEMATICS'):c.subject==='science'?L('علوم','SCIENCE'):c.subject==='arabic'?L('عربي','ARABIC'):L('أدوات','TOOLS')),node('h3','',txt(c.title)),node('p','',txt(c.summary)),node('span','hub-card-arrow','↗'));list.append(b)}status.textContent=filtered.length?L(`${filtered.length} نشاط متاح`,`${filtered.length} activities to explore`):L('هذا الموضوع مش موجود حاليًا في Classora.','This topic is not currently available in Classora.');if(!filtered.length&&q&&enabled('topicRequests'))list.append(button(L('اطلب إضافة الموضوع','Request this topic'),()=>{if(api.isGuest?.()){api.protectedAction?.();return}api.requestTopic?.(search.value.trim())}));}
+  function fill(){
+   list.replaceChildren();
+   const q=search.value.trim().toLowerCase(),cards=[];
+   if(q||selected==="all"||selected==="math")for(const [id,ic,title,summary] of mathCards)cards.push({id:"math-"+id,ic,title,summary,subject:"math",go:()=>launch(id)});
+   if((q||selected==="all"||selected==="science")&&enabled("science")){
+    cards.push({id:"periodic",ic:"atom",title:["جدول العناصر","Periodic table"],summary:["118 عنصرًا، مقارنة واستكشاف واختبار","118 elements, comparisons and quizzes"],subject:"science",go:()=>launch("periodic")});
+    for(const topic of scienceTopics)cards.push({id:topic.id,ic:topic.icon,title:topic.title,summary:topic.summary,subject:"science",go:()=>topic.id==="acids"?launch("acids"):lesson(topic)});
+    if(enabled("scienceLab"))cards.push({id:"particles",ic:"atom",title:["مختبر الجسيمات","Particle lab"],summary:["بدّل حالة المادة وشوف الحركة","Switch states and watch particles move"],subject:"science",go:()=>particleLab()});
+    if(enabled("sciencePractice")){cards.push({id:"science-practice",ic:"book",title:["تمارين العلوم","Science practice"],summary:["أسئلة متغيّرة مع تصحيح وشرح مباشر","Fresh questions with instant grading and explanations"],subject:"science",go:()=>startQuiz("practice")});cards.push({id:"science-self-test",ic:"trophy",title:["اختبار علوم","Science test"],summary:["اختبار ذاتي من 10 أسئلة ونتيجة في النهاية","A 10-question self-test with a final score"],subject:"science",go:()=>startQuiz("test")})}
+   }
+   if(q||selected==="all"||selected==="arabic"){
+    cards.push({id:"arabic-idafa",ic:"book",title:idafa.title,summary:idafa.summary,subject:"arabic",go:()=>launch("idafa")});
+    cards.push({id:"arabic-idafa-practice",ic:"edit",title:["تمارين المضاف والمضاف إليه","Idafa practice"],summary:["اختَر المضاف والمضاف إليه وخذ تصحيحًا مباشرًا","Identify both parts with instant feedback"],subject:"arabic",go:()=>startArabicQuiz("practice")});
+    cards.push({id:"arabic-idafa-test",ic:"trophy",title:["اختبار عربي — المضاف والمضاف إليه","Arabic test — Idafa"],summary:["10 أسئلة مع علامة ومراجعة الإجابات","10 questions with a score and answer review"],subject:"arabic",go:()=>startArabicQuiz("test")});
+   }
+   const curriculumKeys=selected==="all"?Object.keys(CURRICULUM_DATA[selectedGrade]||{}):[selected];
+   for(const subject of curriculumKeys){
+    if(!CURRICULUM_DATA[selectedGrade]?.[subject])continue;
+    const rawTopics=curriculumTopics(selectedGrade,subject),candidate=q?rawTopics.filter(raw=>topicMatches(q,curriculumTopicTitle(raw)+" "+curriculumSubjectName(subject))):(selected!=="all"?rawTopics:[]);
+    for(const raw of candidate){
+     const name=curriculumTopicTitle(raw);
+     cards.push({id:"curr-"+selectedGrade+"-"+subject+"-"+name,ic:curriculumSubjectIcon(subject),title:[name,name],summary:[L("الصف ","Grade ")+selectedGrade+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition"),L("الصف ","Grade ")+selectedGrade+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition")],subject,go:()=>openCurriculum(subject,name),curriculum:true});
+    }
+   }
+   const extras=[["chat",["الشات","Chat"],"chat"],["support",["الدعم","Support"],"help"],["settings",["الإعدادات","Settings"],"settings"],["exam",["الامتحانات","Exams"],"book"],["competition",["المسابقات","Competitions"],"trophy"]];if(q)for(const [id,title,ic]of extras)cards.push({id,ic,title,summary:["أدوات كلاسورا","Classora tools"],subject:"tools",go:()=>launch(id)});
+   const filtered=cards.filter(c=>!q||topicMatches(q,[...c.title,...c.summary,c.subject,c.id].join(" ")));
+   const categoryLabel=s=>s==="math"?L("رياضيات","MATHEMATICS"):s==="science"?L("علوم","SCIENCE"):s==="arabic"?L("عربي — قواعد","ARABIC GRAMMAR"):s==="english"?"ENGLISH GRAMMAR":s==="history"?L("تاريخ","HISTORY"):s==="geography"?L("جغرافيا","GEOGRAPHY"):L("أدوات","TOOLS");
+   for(const card of filtered){
+    const el=button("",card.go,"hub-topic-card "+card.subject+(card.curriculum?" curriculum-topic":""));
+    el.innerHTML='<span class="hub-card-icon">'+icon(card.ic)+'</span>';
+    el.append(node("small","hub-card-category",categoryLabel(card.subject)),node("h3","",txt(card.title)),node("p","",txt(card.summary)),node("span","hub-card-arrow","↗"));list.append(el);
+   }
+   status.textContent=filtered.length?L(filtered.length+" نشاط متاح",filtered.length+" activities to explore"):L("هذا الموضوع مش موجود حاليًا في Classora.","This topic is not currently available in Classora.");
+   if(!filtered.length&&q&&enabled("topicRequests"))list.append(button(L("اطلب إضافة الموضوع","Request this topic"),()=>{if(api.isGuest?.()){api.protectedAction?.();return}api.requestTopic?.(search.value.trim())}));
+  }
   search.oninput=()=>{clearTimeout(searchTimer);searchTimer=setTimeout(fill,100)};fill();
   tools.replaceChildren();for(const [action,ic,ar,en]of [['exam','book','امتحانات الصف','Class exams'],['competition','trophy','المسابقات المباشرة','Live competitions'],['classes','book','صفوفي والوظائف','Classes & assignments']]){const b=button('',()=>launch(action));b.innerHTML=icon(ic);b.append(node('span','',L(ar,en)));tools.append(b)}
   if(selected==='science'&&enabled('scienceLive')){const b=button(L('مسابقة علوم مباشرة','Science live competition'),()=>launch('scienceLive'));tools.append(b)}
