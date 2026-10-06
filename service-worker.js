@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v100-periodic-scroll-hotfix";
+const CACHE_NAME="classora-v100-2-periodic-stable-scroll";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=99",
   "./assets/subject-labs.css?v=99",
@@ -19,8 +19,8 @@ const APP_SHELL=[
   "./privacy.html",
   "./support.html",
   "./chemistry/periodic-table.html",
-  "./chemistry/periodic-table.css?v=100.1",
-  "./chemistry/periodic-table.js?v=100.1",
+  "./chemistry/periodic-table.css?v=100.2",
+  "./chemistry/periodic-table.js?v=100.2",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
