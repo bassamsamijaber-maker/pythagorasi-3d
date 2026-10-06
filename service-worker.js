@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v97-curriculum-r2";
+const CACHE_NAME="classora-v98-integrated-curriculum";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=92",
   "./assets/subject-labs.css?v=92",
@@ -8,17 +8,17 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=92",
-  "./assets/learning-hub.css?v=92",
-  "./assets/curriculum-v97.js?v=97.2",
-  "./assets/curriculum-v97.css?v=97.2",
+  "./assets/learning-hub.js?v=98",
+  "./assets/learning-hub.css?v=98",
+  "./assets/curriculum-v97.js?v=98",
+  "./assets/curriculum-v97.css?v=98",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
   "./manifest.webmanifest",
   "./chemistry/periodic-table.html",
-  "./chemistry/periodic-table.css?v=92",
-  "./chemistry/periodic-table.js?v=92",
+  "./chemistry/periodic-table.css?v=98",
+  "./chemistry/periodic-table.js?v=98",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
