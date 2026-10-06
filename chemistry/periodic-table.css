@@ -148,3 +148,44 @@ main{width:min(1640px,calc(100vw - 20px))}
   .gallery-note{margin:4px 2px 7px}
   .periodic-scroll{padding:2px 0 4px}
 }
+
+
+/* ================= CLASSORA V98 LARGE RESPONSIVE PERIODIC TABLE ================= */
+.explore-view{display:flex;flex-direction:column;align-items:stretch}
+.explore-view .section-head,.explore-view .layout-switch,.explore-view .gallery-note,.explore-view .legend,#emptyState{width:100%}
+.table-shell{width:min(1500px,100%);margin-inline:auto;padding:clamp(10px,1.1vw,18px)!important;border-radius:28px!important;background:
+ radial-gradient(circle at 50% 0,rgba(72,190,255,.075),transparent 38%),
+ linear-gradient(180deg,#0a1a27f2,#06131dea);box-shadow:0 28px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035)}
+.periodic-scroll{width:100%;margin-inline:auto;min-height:clamp(320px,48vw,880px)}
+.periodic-fit-content{margin-inline:auto}
+.periodic-fit-content .periodic-grid:not(.gallery-grid),
+.periodic-fit-content .group-numbers{
+  width:1240px!important;
+  min-width:1240px!important;
+  grid-template-columns:repeat(18,minmax(62px,1fr))!important;
+  gap:7px!important;
+}
+.periodic-fit-content .periodic-grid:not(.gallery-grid){
+  grid-template-rows:repeat(7,86px) 18px 86px 86px!important;
+}
+.periodic-fit-content .group-numbers{font-size:10px!important;gap:7px!important;padding-bottom:9px!important}
+.periodic-fit-content .periodic-grid:not(.gallery-grid) .element-card{
+  min-width:0!important;border-radius:8px!important;padding:6px 3px!important;border-width:1px!important;overflow:hidden!important
+}
+.periodic-fit-content .periodic-grid:not(.gallery-grid) .atomic-num{font-size:9px!important;left:4px!important;top:4px!important}
+.periodic-fit-content .periodic-grid:not(.gallery-grid) .el-thumb{width:22px!important;height:22px!important;top:4px!important;right:4px!important;border-radius:6px!important}
+.periodic-fit-content .periodic-grid:not(.gallery-grid) .el-symbol{font-size:25px!important;margin:21px 0 4px!important;letter-spacing:0!important}
+.periodic-fit-content .periodic-grid:not(.gallery-grid) .el-name{font-size:9px!important;line-height:1.08!important;min-height:19px!important;white-space:normal!important;text-overflow:ellipsis!important}
+.periodic-fit-content .series-marker{font-size:10px!important;border-radius:7px!important}
+@media(max-width:900px){
+  .table-shell{width:100%;padding:8px!important}
+  .periodic-scroll{min-height:clamp(260px,62vw,620px)}
+}
+@media(max-width:600px){
+  .table-shell{padding:5px!important;border-radius:16px!important}
+  .periodic-scroll{min-height:clamp(190px,58vw,360px)}
+  .periodic-fit-content .periodic-grid:not(.gallery-grid) .el-name{display:none!important}
+  .periodic-fit-content .periodic-grid:not(.gallery-grid) .el-thumb{display:none!important}
+  .periodic-fit-content .periodic-grid:not(.gallery-grid) .el-symbol{font-size:30px!important;margin:14px 0 0!important}
+  .periodic-fit-content .periodic-grid:not(.gallery-grid) .atomic-num{font-size:9px!important}
+}
