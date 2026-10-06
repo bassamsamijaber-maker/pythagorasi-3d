@@ -2,12 +2,16 @@
   "id": "./",
   "name": "Classora",
   "short_name": "Classora",
-  "description": "Interactive learning, classes, assignments, exams and live competitions.",
+  "description": "Interactive learning, classes, assignments, exams, live competitions and subject labs.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
   "orientation": "any",
   "background_color": "#07111c",
   "theme_color": "#0b1422",
@@ -33,6 +37,30 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Classora",
+      "short_name": "Classora",
+      "url": "./#platformLobby",
+      "icons": [
+        {
+          "src": "./icons/classora-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Privacy",
+      "short_name": "Privacy",
+      "url": "./privacy.html",
+      "icons": [
+        {
+          "src": "./icons/classora-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "prefer_related_applications": false
