@@ -236,3 +236,44 @@ main{overflow:visible!important}
   }
   @keyframes sheetIn{from{opacity:0;transform:translateX(-50%) translateY(12px) scale(.98)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
 }
+
+
+/* ================= V100 PERIODIC PAGE SCROLL / EXIT HOTFIX ================= */
+html,body{
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  overflow:hidden!important;
+}
+body{
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  overscroll-behavior:none!important;
+}
+.ambient{position:fixed!important}
+.topbar{
+  position:relative!important;
+  top:auto!important;
+  grid-row:1!important;
+  flex:0 0 auto!important;
+  z-index:100!important;
+}
+main{
+  grid-row:2!important;
+  width:min(1520px,94vw)!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0 auto!important;
+  padding-bottom:max(90px,env(safe-area-inset-bottom))!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-y:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y pinch-zoom!important;
+  scrollbar-gutter:stable!important;
+}
+.control-panel{top:8px!important}
+@media(max-width:560px){
+  main{width:100%!important;padding-inline:10px!important}
+  .topbar{padding:max(8px,env(safe-area-inset-top)) 10px 8px!important}
+}
