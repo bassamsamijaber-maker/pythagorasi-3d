@@ -5071,7 +5071,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=78"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=99.4"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -13121,6 +13121,7 @@ window.addEventListener("message",event=>{
   if(event.source!==periodicTableFrame?.contentWindow)return;
   if(event.data?.type==="classora-subject-language"){applySiteLanguage(event.data.lang==="ar"?"ar":"en");}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
+    try{if(event.data?.returnTo==="science")sessionStorage.setItem("classora_subject_origin","science")}catch{}
     classoraGoLobby();
   }
 });
