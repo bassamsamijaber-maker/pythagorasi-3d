@@ -142,22 +142,51 @@ function topicsFor(grade,subject){
 function subjectList(grade){return Object.keys(G[grade]||{}).filter(function(k){return S[k]})}
 function subjectName(api,key){return S[key]?(lang(api)==="en"?S[key].en:S[key].ar):key}
 function trackName(api,key){const a=TRACKS[key];return a?(lang(api)==="en"?a[1]:a[0]):key}
-function titleText(api,topic){return topic.subject==="english"?topic.title:topic.title}
+
+const TOPIC_EN={
+"الأعداد الموجبة والسالبة":"Positive and negative numbers","ترتيب العمليات الحسابية":"Order of operations","القوى والجذور":"Powers and roots","التعابير الجبرية":"Algebraic expressions","المتغيرات":"Variables","تجميع الحدود المتشابهة":"Combining like terms","قانون التوزيع":"Distributive property","المعادلات من الدرجة الأولى":"Linear equations","مسائل كلامية":"Word problems","النسبة والتناسب الأساسي":"Basic ratio and proportion","النسب المئوية":"Percentages","المستوى الإحداثي":"Coordinate plane","مقدمة في الدوال":"Introduction to functions","قراءة الرسوم البيانية":"Reading graphs","الزوايا":"Angles","المثلثات":"Triangles","المحيط والمساحة":"Perimeter and area","المجسمات":"3D solids","الحجم":"Volume","النسبة والتناسب":"Ratio and proportion","مقياس الرسم":"Scale","المعادلات":"Equations","المعادلات بمتغير في الطرفين":"Equations with variables on both sides","المتباينات":"Inequalities","نظام معادلتين بمجهولين":"System of two equations","الدالة الخطية":"Linear function","الميل":"Slope","معادلة المستقيم":"Equation of a line","نقاط تقاطع المستقيم مع المحاور":"Axis intercepts","السرعة والزمن والمسافة":"Speed, time and distance","الإحصاء":"Statistics","الاحتمال":"Probability","المستقيمات المتوازية":"Parallel lines","تطابق المثلثات":"Triangle congruence","تشابه المثلثات":"Triangle similarity","المثلث متساوي الساقين":"Isosceles triangle","نظرية فيثاغورس":"Pythagorean theorem","المساحات والحجوم":"Areas and volumes","الدالة الخطية المتقدمة":"Advanced linear functions","التحليل إلى عوامل":"Factoring","إخراج عامل مشترك":"Factoring out a common factor","المتطابقات الجبرية":"Algebraic identities","الفرق بين مربعين":"Difference of two squares","الكسور الجبرية":"Algebraic fractions","نظام المعادلات":"Systems of equations","المعادلات التربيعية":"Quadratic equations","الدالة التربيعية":"Quadratic function","القطع المكافئ":"Parabola","رأس القطع المكافئ":"Vertex of a parabola","محور التماثل":"Axis of symmetry","نقاط الصفر":"Zeros","مجالات الموجب والسالب":"Positive and negative intervals","مجالات الصعود والنزول":"Increasing and decreasing intervals","فيثاغورس":"Pythagoras","الأشكال الرباعية":"Quadrilaterals","الهندسة الإحداثية":"Coordinate geometry","الجبر":"Algebra","أنظمة المعادلات":"Systems of equations","الدوال":"Functions","الهندسة":"Geometry","الهندسة التحليلية":"Analytic geometry","المسافة بين نقطتين":"Distance between two points","منتصف قطعة مستقيمة":"Midpoint","حساب المثلثات":"Trigonometry",
+"المادة وخصائصها":"Matter and its properties","حالات المادة":"States of matter","الكتلة والحجم":"Mass and volume","الكثافة":"Density","الجسيمات والذرات":"Particles and atoms","العناصر":"Elements","الطاقة":"Energy","تحولات الطاقة":"Energy transformations","الحرارة ودرجة الحرارة":"Heat and temperature","القوى والحركة":"Forces and motion","الخلية":"The cell","أجهزة جسم الإنسان":"Human body systems","الجهاز التنفسي":"Respiratory system","جهاز الدوران":"Circulatory system","التغذية":"Nutrition","الكائنات الحية":"Living organisms","الأنظمة البيئية":"Ecosystems","السلاسل الغذائية":"Food chains","بنية الذرة":"Atomic structure","الجدول الدوري":"Periodic table","المركبات":"Compounds","المخاليط":"Mixtures","التفاعلات الكيميائية":"Chemical reactions","الأحماض والقواعد":"Acids and bases","الكهرباء":"Electricity","الدارات الكهربائية":"Electric circuits","التيار الكهربائي":"Electric current","الضوء":"Light","الصوت":"Sound","التكاثر":"Reproduction","الوراثة الأساسية":"Basic genetics","البيئة والاستدامة":"Environment and sustainability","الحركة":"Motion","السرعة":"Speed","التسارع":"Acceleration","القوى":"Forces","قوانين الحركة":"Laws of motion","الطاقة الميكانيكية":"Mechanical energy","الكيمياء":"Chemistry","الروابط الكيميائية":"Chemical bonds","الوراثة":"Genetics","تأثير الإنسان على البيئة":"Human impact on the environment","قوانين نيوتن":"Newton's laws","الشغل":"Work","القدرة":"Power","الأيونات":"Ions","المعادلات الكيميائية":"Chemical equations","الرقم الهيدروجيني pH":"pH","عضيات الخلية":"Cell organelles","الانقسام الخلوي":"Cell division","الجينات":"Genes","البروتينات":"Proteins","التنفس الخلوي":"Cellular respiration","البناء الضوئي":"Photosynthesis",
+"الدولة الأموية":"Umayyad Caliphate","الدولة العباسية":"Abbasid Caliphate","الأندلس":"Al-Andalus","أوروبا في العصور الوسطى":"Europe in the Middle Ages","الحملات الصليبية":"Crusades","الدولة الفاطمية":"Fatimid Caliphate","الدولة الأيوبية":"Ayyubid state","الدولة المملوكية":"Mamluk state","الدروز في العصور الوسطى":"Druze in the Middle Ages","اليهود في البلدان الإسلامية في العصور الوسطى":"Jews in Islamic lands in the Middle Ages","عصر النهضة":"Renaissance","الإنسانية Humanism":"Humanism","الإصلاح الديني":"Reformation","الاكتشافات الجغرافية":"Age of Exploration","اكتشاف أمريكا":"Discovery of America","رأس الرجاء الصالح":"Cape of Good Hope","الثورة الفرنسية":"French Revolution","نابليون بونابرت":"Napoleon Bonaparte","الدولة العثمانية حتى نهاية القرن الثامن عشر":"Ottoman Empire to the end of the 18th century","الثورة الصناعية":"Industrial Revolution","القومية":"Nationalism","الإمبريالية":"Imperialism","الاستعمار":"Colonialism","أوروبا في القرن التاسع عشر":"Europe in the 19th century","الحرب العالمية الأولى":"World War I","أسباب الحرب العالمية الأولى":"Causes of World War I","أحداث الحرب العالمية الأولى":"Events of World War I","نتائج الحرب العالمية الأولى":"Consequences of World War I","اتفاقيات السلام سنة 1919":"Peace treaties of 1919","الشرق الأوسط في القرن التاسع عشر":"Middle East in the 19th century","الدولة العثمانية في القرن التاسع عشر":"Ottoman Empire in the 19th century","الشرق الأوسط حتى نهاية الحرب العالمية الأولى":"Middle East to the end of World War I",
+"الإنسان والبيئة":"People and the environment","السكان":"Population","توزيع السكان":"Population distribution","الهجرة":"Migration","المدن والقرى":"Cities and villages","الاقتصاد والعمل":"Economy and work","العولمة":"Globalization","الموارد":"Resources","البيئة":"Environment","التنمية المستدامة":"Sustainable development","الأرض والنظام الشمسي":"Earth and the Solar System","بنية الكرة الأرضية":"Structure of Earth","الصفائح التكتونية":"Plate tectonics","الزلازل":"Earthquakes","البراكين":"Volcanoes","الصخور":"Rocks","المعادن":"Minerals","التجوية":"Weathering","التعرية":"Erosion","الغلاف الجوي":"Atmosphere","الطقس":"Weather","المناخ":"Climate","مناطق المناخ":"Climate zones","دورة المياه":"Water cycle","الموارد الطبيعية":"Natural resources","مصادر الطاقة":"Energy resources","الطاقة المتجددة":"Renewable energy","الطاقة غير المتجددة":"Non-renewable energy","تغير المناخ":"Climate change","إسرائيل في الشرق الأوسط":"Israel in the Middle East","الموقع والحدود":"Location and borders","التضاريس":"Landforms","مصادر المياه":"Water resources","الاقتصاد":"Economy","الصناعة":"Industry","الزراعة":"Agriculture","المواصلات":"Transportation","الاستدامة":"Sustainability"
+};
+const AR_TO_EN={
+"أقسام الكلام":"Parts of speech","الاسم والفعل والحرف":"Noun, verb and particle","الماضي والمضارع والأمر":"Past, present and imperative verbs","الجملة الاسمية":"Nominal sentence","الجملة الفعلية":"Verbal sentence","المبتدأ والخبر":"Subject and predicate","الفاعل":"Subject (doer)","المفعول به":"Direct object","النعت والمنعوت":"Adjective and described noun","المضاف والمضاف إليه":"Idafa: possessive construction","المعرفة والنكرة":"Definite and indefinite nouns","المذكر والمؤنث":"Masculine and feminine","المفرد والمثنى والجمع":"Singular, dual and plural","جمع المذكر السالم":"Sound masculine plural","جمع المؤنث السالم":"Sound feminine plural","جمع التكسير":"Broken plural","الضمائر":"Pronouns","أسماء الإشارة":"Demonstratives","الأسماء الموصولة":"Relative pronouns","حروف الجر":"Prepositions","علامات الإعراب الأساسية":"Basic case endings","نائب الفاعل":"Passive subject","المبني للمعلوم والمبني للمجهول":"Active and passive voice","الحال":"Circumstantial accusative","النعت":"Adjective","العطف":"Coordination","التوكيد":"Emphasis","البدل":"Apposition","الأفعال المبنية والمعربة":"Inflected and indeclinable verbs","الفعل الصحيح":"Sound verb","الفعل المعتل":"Weak verb","الميزان الصرفي":"Morphological pattern","اسم الفاعل":"Active participle","اسم المفعول":"Passive participle","أنواع الجموع":"Types of plurals","علامات الرفع":"Nominative markers","علامات النصب":"Accusative markers","علامات الجر":"Genitive markers","رفع الفعل المضارع":"Indicative present verb","نصب الفعل المضارع":"Subjunctive present verb","جزم الفعل المضارع":"Jussive present verb","المفعول المطلق":"Absolute object","المفعول لأجله":"Object of reason","المفعول فيه":"Adverbial object","المفعول معه":"Object of accompaniment","التمييز":"Specification","الاستثناء":"Exception","المنادى":"Vocative","كان وأخواتها":"Kana and its sisters","إن وأخواتها":"Inna and its sisters","لا النافية للجنس":"La of absolute negation","الصفة المشبهة":"Adjective resembling participle","صيغ المبالغة":"Intensive forms","اسم التفضيل":"Comparative/superlative noun","الأفعال المجردة":"Basic verb forms","الأفعال المزيدة":"Augmented verb forms","الجمل التي لها محل من الإعراب":"Sentences with grammatical position","الجمل التي لا محل لها من الإعراب":"Sentences without grammatical position","الإعراب التفصيلي":"Detailed parsing","مراجعة علامات الإعراب":"Review of case endings","المفاعيل":"Objects","الممنوع من الصرف":"Diptotes","العدد والمعدود":"Numbers and counted nouns","أسلوب الشرط":"Conditional style","أسلوب التعجب":"Exclamation style","أسلوب المدح والذم":"Praise and blame style","الإغراء والتحذير":"Encouragement and warning","المصادر":"Verbal nouns","المجرد والمزيد":"Basic and augmented forms","الصحيح والمعتل":"Sound and weak verbs","الإعلال والإبدال":"Vowel change and substitution","الإعراب الكامل":"Full grammatical parsing"
+};
+const EN_TO_AR={
+"Parts of Speech":"أقسام الكلام","Nouns":"الأسماء","Singular and Plural":"المفرد والجمع","Countable and Uncountable Nouns":"الأسماء المعدودة وغير المعدودة","Subject Pronouns":"ضمائر الفاعل","Object Pronouns":"ضمائر المفعول","Possessive Adjectives":"صفات الملكية","Possessive Pronouns":"ضمائر الملكية","Demonstratives":"أسماء الإشارة","Verb To Be":"فعل الكينونة To Be","Have / Has":"Have / Has للملكية","There is / There are":"يوجد / توجد","Articles: a / an / the":"أدوات التعريف والتنكير","Present Simple":"المضارع البسيط","Present Continuous":"المضارع المستمر","Present Simple vs Present Continuous":"المضارع البسيط مقابل المستمر","Past Simple":"الماضي البسيط","Regular and Irregular Verbs":"الأفعال المنتظمة وغير المنتظمة","Future with Will":"المستقبل باستخدام Will","Be Going To":"المستقبل باستخدام Be Going To","Can / Can’t":"القدرة باستخدام Can","Must / Mustn’t":"Must للوجوب والمنع","Should / Shouldn’t":"Should للنصيحة","Adjectives":"الصفات","Adverbs":"الظروف","Comparative":"صيغة المقارنة","Superlative":"صيغة التفضيل","Prepositions":"حروف الجر","Question Words":"أدوات السؤال","Some / Any":"Some / Any","Much / Many":"Much / Many","A lot of":"A lot of","Past Continuous":"الماضي المستمر","Present Perfect":"المضارع التام","Present Perfect vs Past Simple":"المضارع التام مقابل الماضي البسيط","Modals":"الأفعال الناقصة","Can / Could":"Can / Could","Must / Have to":"Must / Have to","Should":"Should","May / Might":"May / Might","Comparative and Superlative":"المقارنة والتفضيل","Too / Enough":"Too / Enough","First Conditional":"الشرط الأول","Zero Conditional":"الشرط الصفري","Passive Voice — Introduction":"مقدمة في المبني للمجهول","Relative Pronouns":"ضمائر الوصل","Who / Which / That":"Who / Which / That","Gerunds and Infinitives — Introduction":"مقدمة في Gerunds وInfinitives","Quantifiers":"ألفاظ الكمية","Few / Little":"Few / Little","Some / Any / No":"Some / Any / No","Question Tags — Introduction":"مقدمة في Question Tags","Present Perfect Continuous":"المضارع التام المستمر","Past Perfect":"الماضي التام","Past Perfect vs Past Simple":"الماضي التام مقابل الماضي البسيط","Future Forms":"صيغ المستقبل","Future Continuous":"المستقبل المستمر","Passive Voice":"المبني للمجهول","Present Passive":"المبني للمجهول في المضارع","Past Passive":"المبني للمجهول في الماضي","Future Passive":"المبني للمجهول في المستقبل","Second Conditional":"الشرط الثاني","Relative Clauses":"الجمل الموصولة","Defining Relative Clauses":"الجمل الموصولة المحددة","Reported Speech — Introduction":"مقدمة في الكلام المنقول","Modal Verbs":"الأفعال الناقصة","Gerunds":"Gerunds","Infinitives":"Infinitives","Gerunds vs Infinitives":"Gerunds مقابل Infinitives","Used to":"Used to","Question Tags":"Question Tags","Articles":"أدوات التعريف والتنكير","Adjective Order":"ترتيب الصفات","Future Perfect — Introduction":"مقدمة في المستقبل التام","Active and Passive Voice":"المبني للمعلوم والمجهول","Third Conditional — Introduction":"مقدمة في الشرط الثالث","Reported Speech":"الكلام المنقول","Reported Questions":"الأسئلة المنقولة","Modal Perfects — Introduction":"مقدمة في Modal Perfects","Used to / Would":"Used to / Would","Wish / If Only — Introduction":"مقدمة في Wish / If Only","Causative Have — Introduction":"مقدمة في Causative Have","Determiners":"المحددات","Linking Words":"كلمات الربط"
+};
+function titleText(api,topic){
+ if(topic.subject==="arabic"||topic.subject==="english")return topic.title;
+ return lang(api)==="en"?(TOPIC_EN[topic.title]||topic.title):topic.title;
+}
+function translationTitle(t){return t.subject==="arabic"?(AR_TO_EN[t.title]||t.title):t.subject==="english"?(EN_TO_AR[t.title]||t.title):t.title}
 function statusLabel(api,s){return s==="done"?txt(api,"مكتمل","Completed"):s==="progress"?txt(api,"قيد التعلم","In progress"):txt(api,"لم يبدأ","Not started")}
 function levelLabel(api,d){return ({easy:txt(api,"سهل","Easy"),medium:txt(api,"متوسط","Medium"),hard:txt(api,"صعب","Hard"),mixed:txt(api,"مختلط","Mixed")})[d]||d}
 function basicExplanation(api,t){
- const n=t.title;
- if(t.subject==="english")return "Learn the rule, form and common use of "+n+". Focus on how the sentence changes in affirmative, negative and question forms.";
- if(t.subject==="arabic")return "في هذا الدرس نتعلّم قاعدة «"+n+"»، كيف نميّزها داخل الجملة، وما العلامات التي تساعدنا على تحديدها وإعرابها بصورة صحيحة.";
+ const n=titleText(api,t);
+ if(t.subject==="english")return "Learn the rule, form and common use of "+t.title+". Focus on affirmative, negative and question forms.";
+ if(t.subject==="arabic")return "في هذا الدرس نتعلّم قاعدة «"+t.title+"»، كيف نميّزها داخل الجملة، وما العلامات التي تساعدنا على تحديدها وإعرابها بصورة صحيحة.";
+ if(lang(api)==="en"){
+  if(t.subject==="math")return "In “"+n+"”, start with the main idea, identify the given information and the target, then apply the rule step by step and check the result.";
+  if(t.subject==="science")return "In “"+n+"”, connect the concept to an observation, identify cause and effect, and use evidence before answering questions.";
+  if(t.subject==="history")return "In “"+n+"”, focus on chronology, causes, key events and consequences, and connect it to what came before and after.";
+  return "In “"+n+"”, identify the place or phenomenon, the natural and human factors affecting it, and the resulting impact.";
+ }
  if(t.subject==="math")return "في موضوع «"+n+"» نبدأ بالفكرة الأساسية، نحدد المعطيات والمطلوب، ثم نطبّق القاعدة بخطوات قصيرة وواضحة ونراجع النتيجة.";
  if(t.subject==="science")return "في موضوع «"+n+"» نربط المصطلح بالملاحظة العلمية، ونفهم السبب والنتيجة والعلاقات الأساسية قبل حل الأسئلة.";
  if(t.subject==="history")return "في «"+n+"» نركّز على السياق الزمني، الأسباب، الأحداث الرئيسية والنتائج، ونربط الحدث بما سبقه وما جاء بعده.";
  return "في «"+n+"» نحدّد المكان أو الظاهرة، العوامل المؤثرة فيها، آثارها وعلاقتها بالإنسان والبيئة، ثم نطبّق ذلك على أمثلة وخرائط.";
 }
 function advancedExplanation(api,t){
- const n=t.title;
- if(t.subject==="english")return "Advanced: compare "+n+" with nearby grammar forms, watch signal words and exceptions, then justify why one form is correct in context.";
- if(t.subject==="arabic")return "الشرح المتقدم: طبّق «"+n+"» على جمل مختلفة، ميّز الحالات المتشابهة، وحدد الموقع الإعرابي والعلامة الأصلية أو الفرعية عند الحاجة.";
+ const n=titleText(api,t);
+ if(t.subject==="english")return "Advanced: compare "+t.title+" with nearby grammar forms, watch signal words and exceptions, then justify the correct form in context.";
+ if(t.subject==="arabic")return "الشرح المتقدم: طبّق «"+t.title+"» على جمل مختلفة، ميّز الحالات المتشابهة، وحدد الموقع الإعرابي والعلامة الأصلية أو الفرعية عند الحاجة.";
+ if(lang(api)==="en"){
+  if(t.subject==="math")return "Advanced: translate the problem into a suitable algebraic or geometric model, choose a strategy, test constraints, then verify with another method.";
+  if(t.subject==="science")return "Advanced: explain “"+n+"” with a scientific model, separate variables from outcomes, and use measurements or evidence.";
+  if(t.subject==="history")return "Advanced: compare immediate and long-term causes of “"+n+"”, then evaluate political, social and economic effects.";
+  return "Advanced: analyze “"+n+"” with multiple spatial and human factors, read data or maps, and infer cause-and-effect relationships.";
+ }
  if(t.subject==="math")return "الشرح المتقدم: حوّل المسألة إلى تمثيل جبري أو هندسي مناسب، اختَر استراتيجية الحل، تحقّق من القيود، ثم جرّب طريقة ثانية للتأكد من النتيجة.";
  if(t.subject==="science")return "الشرح المتقدم: فسّر «"+n+"» باستخدام نموذج علمي، ميّز بين المتغيرات والنتائج، واستخدم الدليل أو القياس المناسب بدل الاكتفاء بحفظ التعريف.";
  if(t.subject==="history")return "الشرح المتقدم: قارن بين أسباب «"+n+"» المباشرة والبعيدة، ميّز بين الحدث والنتيجة، وحاول تقييم أثره السياسي والاجتماعي والاقتصادي.";
@@ -165,69 +194,63 @@ function advancedExplanation(api,t){
 }
 function workedExample(api,t){
  const en=lang(api)==="en";
- if(t.subject==="english"){
-  const pair=EN_EXAMPLES[t.title]||["Choose the sentence that correctly follows the rule of "+t.title+".","Check the verb form, word order and context."];
-  return "Example: "+pair[0]+" ✓  |  "+pair[1]+" ✕";
- }
- if(t.subject==="arabic"){
-  const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];
-  return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕";
- }
+ if(t.subject==="english"){const pair=EN_EXAMPLES[t.title]||["Choose the sentence that correctly follows the rule of "+t.title+".","Check the verb form, word order and context."];return "Example: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
+ if(t.subject==="arabic"){const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
+ const n=titleText(api,t);
  if(t.subject==="math"){
-  if(/فيثاغورس/.test(t.title))return "مثال: a=3 و b=4 → c²=9+16=25 → c=5.";
-  if(/نسب/.test(t.title))return "مثال: 25% من 200 = 200×25÷100 = 50.";
-  if(/ميل/.test(t.title))return "مثال: بين (1,2) و(3,6): الميل = (6−2)÷(3−1)=2.";
-  if(/مسافة بين نقطتين/.test(t.title))return "مثال: بين (0,0) و(3,4): المسافة = √(3²+4²)=5.";
-  if(/منتصف/.test(t.title))return "مثال: منتصف (2,4) و(6,8) هو ((2+6)/2,(4+8)/2)=(4,6).";
-  if(/Sin|Cos|Tan|حساب المثلثات/.test(t.title))return "مثال: في مثلث قائم، sin(θ)=المقابل÷الوتر، cos(θ)=المجاور÷الوتر، tan(θ)=المقابل÷المجاور.";
-  return "مثال تدريبي: اكتب المعطيات أولًا، اختر القاعدة المناسبة لموضوع «"+t.title+"»، عوّض القيم، ثم افحص الناتج.";
+  if(/فيثاغورس/.test(t.title))return en?"Example: a=3, b=4 → c²=9+16=25 → c=5.":"مثال: a=3 و b=4 → c²=9+16=25 → c=5.";
+  if(/نسب/.test(t.title))return en?"Example: 25% of 200 = 200×25÷100 = 50.":"مثال: 25% من 200 = 200×25÷100 = 50.";
+  if(/ميل/.test(t.title))return en?"Example: between (1,2) and (3,6), slope = (6−2)÷(3−1)=2.":"مثال: بين (1,2) و(3,6): الميل = (6−2)÷(3−1)=2.";
+  return en?"Practice example: list the givens, choose the rule for “"+n+"”, substitute values, then check the result.":"مثال تدريبي: اكتب المعطيات أولًا، اختر القاعدة المناسبة لموضوع «"+n+"»، عوّض القيم، ثم افحص الناتج.";
  }
- if(t.subject==="science")return "مثال تطبيقي: ابدأ بملاحظة مرتبطة بـ«"+t.title+"»، حدّد المتغير أو السبب، توقّع النتيجة، ثم قارنها بالدليل العلمي.";
- if(t.subject==="history")return "مثال تحليل: رتّب «"+t.title+"» على خط زمني، ثم اكتب سببًا → حدثًا → نتيجةً لتثبيت العلاقة بين المعلومات.";
- return "مثال جغرافي: حدّد «"+t.title+"» على خريطة أو مخطط، ثم اربطه بعامل طبيعي أو بشري واذكر نتيجة واحدة لهذا العامل.";
+ if(t.subject==="science")return en?"Application: start with an observation related to “"+n+"”, identify the variable or cause, predict the outcome, then compare with evidence.":"مثال تطبيقي: ابدأ بملاحظة مرتبطة بـ«"+n+"»، حدّد المتغير أو السبب، توقّع النتيجة، ثم قارنها بالدليل العلمي.";
+ if(t.subject==="history")return en?"Analysis example: place “"+n+"” on a timeline, then write one cause → event → consequence.":"مثال تحليل: رتّب «"+n+"» على خط زمني، ثم اكتب سببًا → حدثًا → نتيجةً لتثبيت العلاقة بين المعلومات.";
+ return en?"Geography example: locate “"+n+"” on a map or diagram, connect it to one natural or human factor, then state one effect.":"مثال جغرافي: حدّد «"+n+"» على خريطة أو مخطط، ثم اربطه بعامل طبيعي أو بشري واذكر نتيجة واحدة لهذا العامل.";
 }
-function skillText(t){
+function skillText(api,t){
+ const n=titleText(api,t);
  if(t.subject==="english")return "Apply "+t.title+" correctly in context";
  if(t.subject==="arabic")return "تمييز قاعدة "+t.title+" وتطبيقها وإعرابها";
- if(t.subject==="math")return "اختيار القاعدة المناسبة وحل مسألة في "+t.title;
- if(t.subject==="science")return "تفسير مفهوم "+t.title+" وربط السبب بالنتيجة";
- if(t.subject==="history")return "ترتيب وفهم أسباب ونتائج "+t.title;
- return "تحليل "+t.title+" وربطه بالمكان والإنسان والبيئة";
+ if(lang(api)==="en"){
+  if(t.subject==="math")return "Choose the correct rule and solve a problem in "+n;
+  if(t.subject==="science")return "Explain "+n+" and connect cause to effect";
+  if(t.subject==="history")return "Understand the sequence, causes and consequences of "+n;
+  return "Analyze "+n+" and connect place, people and environment";
+ }
+ if(t.subject==="math")return "اختيار القاعدة المناسبة وحل مسألة في "+n;
+ if(t.subject==="science")return "تفسير مفهوم "+n+" وربط السبب بالنتيجة";
+ if(t.subject==="history")return "ترتيب وفهم أسباب ونتائج "+n;
+ return "تحليل "+n+" وربطه بالمكان والإنسان والبيئة";
 }
 function rand(arr){return arr[Math.floor(Math.random()*arr.length)]}
 function shuffle(arr){return arr.slice().sort(function(){return Math.random()-.5})}
 function englishPractical(t,diff,n){
- const pair=EN_EXAMPLES[t.title];
- if(!pair)return null;
+ const pair=EN_EXAMPLES[t.title];if(!pair)return null;
  const ask=diff==="hard"?"Which sentence uses "+t.title+" correctly in context?":"Choose the correct example of "+t.title+".";
- const wrongs=[
-  pair[1],
-  "The sentence does not follow the target rule.",
-  "This option uses a different grammar form."
- ];
+ const wrongs=[pair[1],"The sentence does not follow the target rule.","This option uses a different grammar form."];
  return {prompt:ask+" ("+(n+1)+")",options:shuffle([pair[0]].concat(wrongs)).slice(0,4),answer:pair[0],explanation:"The correct answer follows the target form for "+t.title+"."};
 }
 function arabicPractical(t,diff,n){
- const pair=AR_EXAMPLES[t.title];
- if(!pair)return null;
+ const pair=AR_EXAMPLES[t.title];if(!pair)return null;
  const ask=diff==="hard"?"أي مثال يطبّق قاعدة «"+t.title+"» تطبيقًا صحيحًا؟":"اختر المثال الصحيح على «"+t.title+"».";
  const wrongs=[pair[1],"هذا المثال لا يحقق القاعدة المطلوبة.","الجملة لا تطابق موضوع السؤال."];
  return {prompt:ask+" ("+(n+1)+")",options:shuffle([pair[0]].concat(wrongs)).slice(0,4),answer:pair[0],explanation:"المثال الصحيح يطابق قاعدة «"+t.title+"»."};
 }
 function genericQuestion(api,t,diff,n){
- const same=topicsFor(t.grade,t.subject).filter(function(x){return x.id!==t.id});
- const ds=shuffle(same).slice(0,3);
+ const same=topicsFor(t.grade,t.subject).filter(function(x){return x.id!==t.id}),ds=shuffle(same).slice(0,3);
  if(t.subject==="english"){
   const p=englishPractical(t,diff,n);if(p)return p;
-  const correct=skillText(t),opts=shuffle([correct].concat(ds.map(skillText))).slice(0,4);
+  const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4);
   return {prompt:(diff==="hard"?"Which learning goal best matches ":"Choose the skill that belongs to ")+"“"+t.title+"” ("+(n+1)+")",options:opts,answer:correct,explanation:"This is the core skill practised in "+t.title+"."};
  }
- if(t.subject==="arabic"){
-  const p=arabicPractical(t,diff,n);if(p)return p;
+ if(t.subject==="arabic"){const p=arabicPractical(t,diff,n);if(p)return p}
+ const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4),display=titleText(api,t);
+ if(lang(api)==="en"){
+  const lead=diff==="easy"?"Which skill is directly connected to":diff==="medium"?"Which description best matches the skill in":diff==="hard"?"After studying the topic, which application proves understanding of":"Choose the best skill for";
+  return {prompt:lead+" “"+display+"”? ("+(n+1)+")",options:opts,answer:correct,explanation:"The correct choice is the main learning goal of “"+display+"”."};
  }
- const correct=skillText(t),opts=shuffle([correct].concat(ds.map(skillText))).slice(0,4);
  const lead=diff==="easy"?"أي مهارة ترتبط مباشرة بموضوع":diff==="medium"?"أي وصف أدق للمهارة التي تتدرب عليها في":diff==="hard"?"بعد دراسة الموضوع، أي تطبيق يثبت فهمك لـ":"اختر المهارة الأنسب لـ";
- return {prompt:lead+" «"+t.title+"»؟ ("+(n+1)+")",options:opts,answer:correct,explanation:"الاختيار الصحيح هو الهدف المباشر من موضوع «"+t.title+"»."};
+ return {prompt:lead+" «"+display+"»؟ ("+(n+1)+")",options:opts,answer:correct,explanation:"الاختيار الصحيح هو الهدف المباشر من موضوع «"+display+"»."};
 }
 function makeQuestions(api,t,count,difficulty,live){
  const out=[],seen=new Set(),levels=difficulty==="mixed"?["easy","medium","hard"]: [difficulty];
@@ -277,21 +300,30 @@ function buildEntry(api,open){
  const hero=lobby.querySelector(".pythag-lobby-hero");if(hero)lobby.insertBefore(section,hero);else lobby.prepend(section);
  section.querySelector("button").onclick=open;
 }
+
+function editorDefaults(t){
+ const pair=t.subject==="arabic"?AR_EXAMPLES[t.title]:t.subject==="english"?EN_EXAMPLES[t.title]:null;
+ if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=> "en"},t),question:"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
+ if(t.subject==="science")return {data:"المتغير = 10",words:t.title,question:"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
+ if(t.subject==="arabic")return {data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
+ if(t.subject==="english")return {data:pair?.[0]||"Write a sentence here.",words:t.title,question:"Rewrite the sentence using the target grammar rule.",answer:""};
+ return {data:t.title,words:"",question:"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
+}
 export function mountCurriculum(api){
- let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:""};
+ let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
  const modal=document.createElement("div");modal.className="classora-curriculum-modal";modal.id="classoraCurriculumModal";
  modal.innerHTML='<div class="classora-curriculum-shell" role="dialog" aria-modal="true"><div class="classora-curriculum-top"><button class="classora-curriculum-back" type="button"></button><div class="classora-curriculum-brand">'+svg("school")+'<div><b>Classora</b><small id="cv97TopSub"></small></div></div><button class="classora-curriculum-close" type="button" aria-label="Close">×</button></div><div class="classora-curriculum-body" id="cv97Body"></div></div>';
  document.body.appendChild(modal);
  const body=modal.querySelector("#cv97Body"),back=modal.querySelector(".classora-curriculum-back"),close=modal.querySelector(".classora-curriculum-close"),topSub=modal.querySelector("#cv97TopSub");
  function open(){state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
  function openAt(grade,subject,topicRef=""){
-  const g=Number(grade);state.grade=G[g]?g:7;state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";
+  const g=Number(grade);state.grade=G[g]?g:7;state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
   if(state.subject&&topicRef){
    const found=topicsFor(state.grade,state.subject).find(x=>x.id===topicRef||x.title===topicRef);
    if(found){state.topic=found;state.view="lesson";touchTopic(api,found)}
    else state.view="topics";
   }else state.view=state.subject?"topics":"subjects";
-  modal.classList.add("open");render();
+  if(state.subject==="science")try{sessionStorage.setItem("classora_subject_origin","science")}catch{};modal.classList.add("open");render();
  }
  function shut(){modal.classList.remove("open")}
  close.onclick=shut;modal.addEventListener("click",function(e){if(e.target===modal)shut()});
@@ -398,8 +430,8 @@ export function mountCurriculum(api){
    const grid=document.createElement("div");grid.className="curriculum-topic-grid";
    items.forEach(({t,i})=>{
     const p=progressFor(api,t.id),b=document.createElement("button");b.className="curriculum-topic-card";
-    b.innerHTML='<span class="curriculum-topic-status">'+statusLabel(api,p.status)+'</span><div class="curriculum-topic-number">'+txt(api,"موضوع ","Topic ")+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(t))+'</small>';
-    b.onclick=function(){state.topic=t;state.view="lesson";touchTopic(api,t);render()};grid.appendChild(b);
+    b.innerHTML='<span class="curriculum-topic-status">'+statusLabel(api,p.status)+'</span><div class="curriculum-topic-number">'+txt(api,"موضوع ","Topic ")+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(api,t))+'</small>';
+    b.onclick=function(){state.topic=t;state.view="lesson";state.showTranslation=false;state.editor=editorDefaults(t);touchTopic(api,t);render()};grid.appendChild(b);
    });
    unit.append(head,grid);host.appendChild(unit);
   });
@@ -439,29 +471,55 @@ export function mountCurriculum(api){
  }
  function attach3D(){
   const card=body.querySelector(".curriculum-3d-card"),scene=body.querySelector("#cv97Scene");if(!card||!scene)return;
-  let down=false,x=0,y=0,rx=-18,ry=28;
-  card.addEventListener("pointerdown",function(e){down=true;x=e.clientX;y=e.clientY;card.setPointerCapture&&card.setPointerCapture(e.pointerId)});
-  card.addEventListener("pointermove",function(e){if(!down)return;ry+=(e.clientX-x)*.55;rx-=(e.clientY-y)*.55;x=e.clientX;y=e.clientY;scene.style.transform="rotateX("+rx+"deg) rotateY("+ry+"deg)"});
-  card.addEventListener("pointerup",function(){down=false});card.addEventListener("pointercancel",function(){down=false});
+  let down=false,x=0,y=0,rx=-12,ry=18,scale=1,auto=false,raf=0;
+  const paint=()=>scene.style.transform="rotateX("+rx+"deg) rotateY("+ry+"deg) scale("+scale+")";
+  const stopAuto=()=>{auto=false;if(raf)cancelAnimationFrame(raf);raf=0;body.querySelector("#cv3DAuto")?.classList.remove("active")};
+  const tick=()=>{if(!auto)return;ry+=.22;paint();raf=requestAnimationFrame(tick)};
+  card.addEventListener("pointerdown",function(e){if(e.target.closest("button,input"))return;stopAuto();down=true;x=e.clientX;y=e.clientY;card.setPointerCapture?.(e.pointerId)});
+  card.addEventListener("pointermove",function(e){if(!down)return;ry+=(e.clientX-x)*.45;rx-=(e.clientY-y)*.45;rx=Math.max(-55,Math.min(55,rx));x=e.clientX;y=e.clientY;paint()});
+  card.addEventListener("pointerup",()=>down=false);card.addEventListener("pointercancel",()=>down=false);
+  card.addEventListener("wheel",e=>{e.preventDefault();scale=Math.max(.7,Math.min(1.6,scale+(e.deltaY<0?.08:-.08)));paint()},{passive:false});
+  card.addEventListener("dblclick",()=>{stopAuto();rx=-12;ry=18;scale=1;paint()});
+  body.querySelector("#cv3DReset")?.addEventListener("click",()=>{stopAuto();rx=-12;ry=18;scale=1;paint()});
+  body.querySelector("#cv3DAuto")?.addEventListener("click",e=>{auto=!auto;e.currentTarget.classList.toggle("active",auto);if(auto)tick();else stopAuto()});
+  body.querySelector("#cv3DZoomIn")?.addEventListener("click",()=>{scale=Math.min(1.6,scale+.1);paint()});
+  body.querySelector("#cv3DZoomOut")?.addEventListener("click",()=>{scale=Math.max(.7,scale-.1);paint()});
+  card.querySelectorAll(".cv-word-card,.cv-grammar-card,.cv-math-block,.cv-nucleus,.cv-cell,.cv-era,.cv-globe,.cv-motion-ball,.cv-beaker").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();el.classList.toggle("cv-selected");const tag=card.querySelector(".cv-scene-tag");if(tag)tag.textContent=(el.textContent||state.topic?.title||"").trim().slice(0,80)}));
+  paint();
  }
  function renderLesson(){
-  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t);
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+t.grade+" / "+subjectName(api,t.subject)+(t.track?" / "+trackName(api,t.track):"")+'</div></div>'+
-  '<div class="curriculum-lesson-hero"><section class="curriculum-lesson-copy"><span class="curriculum-kicker">'+subjectName(api,t.subject)+'</span><h2>'+esc(t.title)+'</h2><p>'+esc(skillText(t))+'</p><div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+txt(api,"المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+txt(api,"أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div>'+(flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+'</section><section class="curriculum-3d-card">'+buildTopicScene(t)+'</section></div>'+
-  '<div class="curriculum-panels"><section class="curriculum-panel"><h3>'+txt(api,"شرح مبسط","Basic explanation")+'</h3><p>'+esc(basicExplanation(api,t))+'</p></section><section class="curriculum-panel"><h3>'+txt(api,"شرح متقدم","Advanced explanation")+'</h3><p>'+esc(advancedExplanation(api,t))+'</p></section><section class="curriculum-panel"><h3>'+txt(api,"مثال محلول خطوة بخطوة","Worked example")+'</h3><div class="curriculum-worked">'+esc(workedExample(api,t))+'</div></section><section class="curriculum-panel"><h3>'+txt(api,"تمرين سريع","Quick practice")+'</h3><div class="curriculum-mini-practice" id="cv97Practice"></div></section></div>'+
+  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),nativeOnly=t.subject==="arabic"||t.subject==="english",display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
+  const trans=nativeOnly?translationTitle(t):"";
+  const transBlock=state.showTranslation?'<section class="curriculum-panel curriculum-translation" data-no-translate="1"><span class="curriculum-kicker">'+(t.subject==="arabic"?"ENGLISH TRANSLATION":"الترجمة العربية")+'</span><h3>'+esc(trans)+'</h3><p>'+(t.subject==="arabic"?"This translation is shown only on request. The original Arabic grammar lesson stays in Arabic.":"هذه الترجمة تظهر عند الطلب فقط، ويبقى درس English Grammar باللغة الإنجليزية.")+'</p></section>':"";
+  const nativeAttr=nativeOnly?' data-no-translate="1"':'';
+  body.innerHTML='<div class="curriculum-toolbar curriculum-lesson-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+t.grade+" / "+subjectName(api,t.subject)+(t.track?" / "+trackName(api,t.track):"")+'</div><div class="curriculum-page-actions"><button id="cv99ExplainBtn" class="curriculum-toolbar-btn">'+txt(api,"شرح تفاعلي","Interactive explanation")+'</button>'+(nativeOnly?'<button id="cv99TranslateBtn" class="curriculum-toolbar-btn">'+(state.showTranslation?txt(api,"إخفاء الترجمة","Hide translation"):txt(api,"إظهار الترجمة","Show translation"))+'</button>':'')+'</div></div>'+
+  '<div class="curriculum-lesson-hero"><section class="curriculum-lesson-copy"'+nativeAttr+'><span class="curriculum-kicker">'+subjectName(api,t.subject)+'</span><h2>'+esc(display)+'</h2><p>'+esc(skillText(api,t))+'</p><div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+txt(api,"المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+txt(api,"أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div>'+(flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+'</section><section class="curriculum-3d-card">'+buildTopicScene(t)+'<div class="curriculum-3d-controls"><button id="cv3DZoomOut" type="button">−</button><button id="cv3DReset" type="button">'+txt(api,"إعادة","Reset")+'</button><button id="cv3DAuto" type="button">'+txt(api,"دوران","Auto")+'</button><button id="cv3DZoomIn" type="button">+</button></div></section></div>'+
+  transBlock+
+  '<section class="curriculum-interactive-explainer hidden" id="cv99Explainer"><div class="curriculum-explainer-head"><div><span class="curriculum-kicker">'+txt(api,"مختبر الشرح","EXPLANATION LAB")+'</span><h3>'+txt(api,"غيّر المعطيات والكلمات والسؤال","Change the givens, words and question")+'</h3></div><button id="cv99ApplyEditor" class="curriculum-main-action">'+txt(api,"حدّث الشرح","Update explanation")+'</button></div><div class="curriculum-editor-grid"><label>'+txt(api,"المعطيات / الجملة","Givens / sentence")+'<textarea id="cv99Data">'+esc(editor.data)+'</textarea></label><label>'+txt(api,"الكلمات أو المصطلحات","Words or terms")+'<textarea id="cv99Words">'+esc(editor.words)+'</textarea></label><label class="wide">'+txt(api,"السؤال","Question")+'<textarea id="cv99Question">'+esc(editor.question)+'</textarea></label><label>'+txt(api,"الإجابة النموذجية — اختياري","Model answer — optional")+'<input id="cv99Answer" value="'+esc(editor.answer||"")+'"></label></div><div class="curriculum-dynamic-answer" id="cv99DynamicExplanation"></div></section>'+
+  '<div class="curriculum-panels"><section class="curriculum-panel"'+nativeAttr+'><h3>'+txt(api,"شرح مبسط","Basic explanation")+'</h3><p>'+esc(basicExplanation(api,t))+'</p></section><section class="curriculum-panel"'+nativeAttr+'><h3>'+txt(api,"شرح متقدم","Advanced explanation")+'</h3><p>'+esc(advancedExplanation(api,t))+'</p></section><section class="curriculum-panel"'+nativeAttr+'><h3>'+txt(api,"مثال محلول خطوة بخطوة","Worked example")+'</h3><div class="curriculum-worked">'+esc(workedExample(api,t))+'</div></section><section class="curriculum-panel"><h3>'+txt(api,"تمرين سريع","Quick practice")+'</h3><div class="curriculum-mini-practice" id="cv97Practice"></div></section></div>'+
   '<section class="curriculum-panel curriculum-actions-panel"><div class="curriculum-action-grid"><div class="curriculum-action-box"><h3>'+txt(api,"امتحان الموضوع","Topic exam")+'</h3><div class="curriculum-controls"><label>'+txt(api,"الصعوبة","Difficulty")+'<select id="cv97ExamDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+txt(api,"عدد الأسئلة","Questions")+'<select id="cv97ExamCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label></div><button class="curriculum-main-action" id="cv97StartExam">'+txt(api,"ابدأ الامتحان","Start exam")+'</button></div>'+
   '<div class="curriculum-action-box"><h3>'+txt(api,"مسابقة مباشرة","Live competition")+'</h3><div class="curriculum-controls"><label>'+txt(api,"الصعوبة","Difficulty")+'<select id="cv97LiveDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+txt(api,"الأسئلة","Questions")+'<select id="cv97LiveCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label><label>'+txt(api,"وقت السؤال","Time per question")+'<select id="cv97LiveTime"><option>10</option><option>15</option><option selected>20</option><option>30</option><option>45</option><option>60</option></select></label><label>'+txt(api,"النمط","Mode")+'<select id="cv97LiveMode"><option value="solo">'+txt(api,"فردي","Solo")+'</option><option value="choice" selected>'+txt(api,"فرق","Teams")+'</option></select></label></div><button class="curriculum-main-action live" id="cv97StartLive">'+txt(api,"أنشئ مسابقة","Create competition")+'</button></div></div></section>';
   attach3D();renderPractice();
+  const explain=body.querySelector("#cv99Explainer");
+  body.querySelector("#cv99ExplainBtn").onclick=()=>{explain.classList.toggle("hidden");if(!explain.classList.contains("hidden"))explain.scrollIntoView({behavior:"smooth",block:"start"})};
+  if(nativeOnly&&body.querySelector("#cv99TranslateBtn"))body.querySelector("#cv99TranslateBtn").onclick=()=>{state.showTranslation=!state.showTranslation;renderLesson()};
+  body.querySelector("#cv99ApplyEditor").onclick=()=>{
+   state.editor={data:body.querySelector("#cv99Data").value,words:body.querySelector("#cv99Words").value,question:body.querySelector("#cv99Question").value,answer:body.querySelector("#cv99Answer").value};
+   const d=state.editor,box=body.querySelector("#cv99DynamicExplanation"),sceneTag=body.querySelector(".cv-scene-tag");
+   if(sceneTag)sceneTag.textContent=(d.words||display).slice(0,80);
+   box.innerHTML='<b>'+txt(api,"شرح مخصص","Custom explanation")+'</b><p>'+esc(basicExplanation(api,t))+'</p><p><strong>'+txt(api,"المعطيات: ","Givens: ")+'</strong>'+esc(d.data||"—")+'</p><p><strong>'+txt(api,"السؤال: ","Question: ")+'</strong>'+esc(d.question||"—")+'</p>'+(d.answer?'<p><strong>'+txt(api,"الإجابة النموذجية: ","Model answer: ")+'</strong>'+esc(d.answer)+'</p>':'');
+  };
   if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
-   const exam={title:(t.subject==="english"?"Grammar Exam — ":"امتحان — ")+t.title,questions:qs,total:qs.reduce(function(s,q){return s+q.points},0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title};
+   if(state.editor?.question&&state.editor?.answer){qs.unshift({id:"custom-"+Date.now(),type:"open",prompt:state.editor.question,answer:state.editor.answer,options:[],explanation:state.editor.answer,points:10,topicKey:t.subject,questionKind:"custom",level:2,typeLabel:subjectName(api,t.subject)+" • "+display});qs.splice(count)}
+   const exam={title:(t.subject==="english"?"Grammar Exam — ":txt(api,"امتحان — ","Exam — "))+display,questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title};
    const ok=await api.startExam(exam);if(ok!==false)shut()
   };
   body.querySelector("#cv97StartLive").onclick=async function(){
    if(!api.isTeacher||!api.isTeacher()){api.toast&&api.toast(txt(api,"إنشاء المسابقة يحتاج حساب معلم.","A teacher account is required to create a competition."));return}
    const diff=body.querySelector("#cv97LiveDifficulty").value,count=Number(body.querySelector("#cv97LiveCount").value),seconds=Number(body.querySelector("#cv97LiveTime").value),teamMode=body.querySelector("#cv97LiveMode").value,qs=makeQuestions(api,t,count,diff,true);
-   shut();await api.startCompetition(qs,(t.subject==="english"?"Live Grammar — ":"مسابقة — ")+t.title,{teamMode:teamMode,audienceMode:"projector",questionSeconds:seconds,curriculumTopicId:t.id,difficulty:diff})
+   shut();await api.startCompetition(qs,(t.subject==="english"?"Live Grammar — ":txt(api,"مسابقة — ","Live — "))+display,{teamMode,audienceMode:"projector",questionSeconds:seconds,curriculumTopicId:t.id,difficulty:diff})
   }
  }
  function renderPractice(){
