@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v97-curriculum";
+const CACHE_NAME="classora-v97-curriculum-r2";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=92",
   "./assets/subject-labs.css?v=92",
@@ -10,8 +10,8 @@ const APP_SHELL=[
   "./assets/ph-lab.js?v=92",
   "./assets/learning-hub.js?v=92",
   "./assets/learning-hub.css?v=92",
-  "./assets/curriculum-v97.js?v=97",
-  "./assets/curriculum-v97.css?v=97",
+  "./assets/curriculum-v97.js?v=97.2",
+  "./assets/curriculum-v97.css?v=97.2",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
