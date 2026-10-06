@@ -140,7 +140,7 @@ function topicsFor(grade,subject){
  return (G[grade]&&G[grade][subject]||[]).map(function(x,i){return normalizeTopic(x,grade,subject,i)});
 }
 function subjectList(grade){return Object.keys(G[grade]||{}).filter(function(k){return S[k]})}
-function subjectName(api,key){return S[key]?(lang(api)==="en"?S[key].en:S[key].ar):key}
+function subjectName(api,key){if(key==="arabic")return "العربي — قواعد";if(key==="english")return "English Grammar";return S[key]?(lang(api)==="en"?S[key].en:S[key].ar):key}
 function trackName(api,key){const a=TRACKS[key];return a?(lang(api)==="en"?a[1]:a[0]):key}
 
 const TOPIC_EN={
@@ -426,7 +426,7 @@ export function mountCurriculum(api){
   groups.forEach(({sec,items})=>{
    const unit=document.createElement("section");unit.className="curriculum-unit-section "+state.subject+" unit-"+sec.key;
    const head=document.createElement("div");head.className="curriculum-unit-head";
-   head.innerHTML='<div class="curriculum-unit-mark">'+svg(sec.icon||S[state.subject]?.icon||"book")+'</div><div><span>'+txt(api,"وحدة","UNIT")+'</span><h3>'+esc(lang(api)==="en"?sec.en:sec.ar)+'</h3></div><small>'+items.length+" "+txt(api,"مواضيع","topics")+'</small>';
+   head.innerHTML='<div class="curriculum-unit-mark">'+svg(sec.icon||S[state.subject]?.icon||"book")+'</div><div><span>'+txt(api,"وحدة","UNIT")+'</span><h3>'+esc(state.subject==="arabic"?sec.ar:state.subject==="english"?sec.en:(lang(api)==="en"?sec.en:sec.ar))+'</h3></div><small>'+items.length+" "+txt(api,"مواضيع","topics")+'</small>';
    const grid=document.createElement("div");grid.className="curriculum-topic-grid";
    items.forEach(({t,i})=>{
     const p=progressFor(api,t.id),b=document.createElement("button");b.className="curriculum-topic-card";
