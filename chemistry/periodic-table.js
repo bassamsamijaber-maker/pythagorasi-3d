@@ -225,7 +225,7 @@ function renderTable(){
  const marker1=document.createElement("div");marker1.className="series-marker";marker1.style.gridColumn="3";marker1.style.gridRow="6";marker1.textContent="57–71";if(layout==="periodic")host.append(marker1);
  const marker2=document.createElement("div");marker2.className="series-marker";marker2.style.gridColumn="3";marker2.style.gridRow="7";marker2.textContent="89–103";if(layout==="periodic")host.append(marker2);
  let shown=0;
- elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;if(!ok&&layout==="gallery")return;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" src="${visual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span><span class="el-family">${catName(e)}</span>${favorites.has(e.n)?`<span class="favorite-indicator" aria-label="favorite">${ptIconMarkup("star")}</span>`:""}`;b.onclick=()=>{b.classList.add("selected-element");openElement(e)};host.append(b)});
+ elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;if(!ok&&layout==="gallery")return;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" decoding="async" src="${thumbnailVisual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span><span class="el-family">${catName(e)}</span>${favorites.has(e.n)?`<span class="favorite-indicator" aria-label="favorite">${ptIconMarkup("star")}</span>`:""}`;b.onclick=()=>{b.classList.add("selected-element");openElement(e)};host.append(b)});
  $("#visibleCount").textContent=shown;$("#emptyState").hidden=shown!==0;requestAnimationFrame(fitPeriodicTable);
 }
 function buildLegend(){const h=$("#legend");h.innerHTML="";catOrder.forEach(k=>{const b=document.createElement("button");b.type="button";b.style.setProperty("--legend",cats[k].color);b.innerHTML=`<i></i>${cats[k][lang]}`;b.onclick=()=>{filter=k;buildFilters();renderTable();window.scrollTo({top:$("#exploreView").offsetTop-100,behavior:"smooth"})};h.append(b)})}
@@ -275,14 +275,18 @@ function scheduleTableRender(){
 $("#searchInput").addEventListener("input",e=>{search=e.target.value;scheduleTableRender()});
 $("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTableRender()};
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
-$("#backBtn").onclick=()=>{
+function exitPeriodicTable(){
+ if($("#elementModal")?.classList.contains("open"))closeModal();
+ try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
  if(window.parent!==window){
-   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table"},location.origin);
+   try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin)}catch{}
+   setTimeout(()=>{try{window.parent.location.hash="platformLobby"}catch{}},180);
    return;
  }
  try{sessionStorage.setItem("classora_returning_from_subject","1")}catch{}
  location.replace("../#platformLobby");
-};
+}
+$("#backBtn").onclick=exitPeriodicTable;
 window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
 window.addEventListener("message",event=>{
  if(event.origin!==location.origin)return;
@@ -293,5 +297,23 @@ window.addEventListener("message",event=>{
 });
 qa("[data-layout]").forEach(b=>b.onclick=()=>{layout=b.dataset.layout;qa("[data-layout]").forEach(x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b))});renderTable()});
 applyLanguage();
-$("#tableFitToggle").addEventListener("click",()=>{fitWholeTable=!fitWholeTable;fitPeriodicTable()});window.addEventListener("resize",fitPeriodicTable);if(typeof ResizeObserver!=="undefined")new ResizeObserver(fitPeriodicTable).observe($(".table-shell"));
+$("#tableFitToggle").addEventListener("click",()=>{fitWholeTable=!fitWholeTable;scheduleFitPeriodicTable()});
+let fitFrame=0,lastFitWidth=0;
+function scheduleFitPeriodicTable(){
+ cancelAnimationFrame(fitFrame);
+ fitFrame=requestAnimationFrame(()=>{
+  fitFrame=0;
+  const shell=$(".table-shell"),width=Math.round(shell?.clientWidth||0);
+  if(!width)return;
+  if(width===lastFitWidth&&layout!=="periodic")return;
+  lastFitWidth=width;
+  fitPeriodicTable();
+ });
+}
+window.addEventListener("resize",scheduleFitPeriodicTable,{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(scheduleFitPeriodicTable,120),{passive:true});
+if(typeof ResizeObserver!=="undefined"){
+ const ro=new ResizeObserver(entries=>{const w=Math.round(entries[0]?.contentRect?.width||0);if(w&&w!==lastFitWidth)scheduleFitPeriodicTable()});
+ ro.observe($(".table-shell"));
+}
 })();
