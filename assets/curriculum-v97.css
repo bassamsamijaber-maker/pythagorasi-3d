@@ -81,3 +81,33 @@ background-size:24px 24px;box-shadow:0 38px 70px rgba(0,0,0,.44),inset 0 0 45px 
 .cv-terrain{position:absolute;bottom:23%;width:70px;height:48px;clip-path:polygon(0 100%,28% 35%,45% 65%,68% 12%,100% 100%);background:linear-gradient(180deg,#d0f08a,#31845d);filter:drop-shadow(0 13px 12px rgba(0,0,0,.3))}.cv-terrain.t1{left:10%;transform:translateZ(40px)}.cv-terrain.t2{right:8%;width:88px;height:62px;transform:translateZ(75px)}.cv-terrain.t3{right:27%;bottom:14%;width:55px;height:38px;transform:translateZ(28px);opacity:.68}
 @media(max-width:700px){.curriculum-3d-card{min-height:285px}.curriculum-visual-scene{width:min(380px,96%);height:225px}.cv-math-block{height:62px;font-size:25px}.scene-algebra{padding:26px 12px 45px;gap:6px}.cv-word-card{width:108px;height:78px;font-size:20px}.cv-grammar-card{width:94px;height:68px}.cv-grammar-card.g2{width:126px;height:90px}.cv-globe{width:138px;height:138px}.cv-era{width:68px}}
 @media(prefers-reduced-motion:reduce){.cv-orbit span,.cv-beaker>i,.cv-motion-ball{animation:none!important}}
+
+
+/* V98 curriculum units */
+.curriculum-topic-sections{display:flex;flex-direction:column;gap:18px}
+.curriculum-unit-section{position:relative;padding:16px;border:1px solid rgba(255,255,255,.075);border-radius:22px;background:
+ linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.012));overflow:hidden}
+.curriculum-unit-section:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-80px;top:-95px;background:radial-gradient(circle,var(--unit-glow,rgba(74,180,255,.12)),transparent 70%);pointer-events:none}
+.curriculum-unit-section.math{--unit-glow:rgba(64,170,255,.18)}
+.curriculum-unit-section.science{--unit-glow:rgba(59,218,163,.16)}
+.curriculum-unit-section.arabic{--unit-glow:rgba(173,126,255,.16)}
+.curriculum-unit-section.english{--unit-glow:rgba(255,180,89,.15)}
+.curriculum-unit-section.history{--unit-glow:rgba(235,141,103,.15)}
+.curriculum-unit-section.geography{--unit-glow:rgba(76,212,208,.15)}
+.curriculum-unit-head{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:2px}
+.curriculum-unit-mark{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:rgba(80,181,255,.075);border:1px solid rgba(126,208,255,.11)}
+.curriculum-unit-mark svg{width:24px;height:24px;stroke:#79d8ff;fill:none;stroke-width:1.7}
+.curriculum-unit-head>div:nth-child(2){min-width:0}
+.curriculum-unit-head span{display:block;font-size:9px;font-weight:1000;letter-spacing:1.5px;color:#6fd3ff}
+.curriculum-unit-head h3{margin:3px 0 0;font-size:18px}
+.curriculum-unit-head>small{margin-inline-start:auto;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);color:#8fa8bb;font-size:10px;white-space:nowrap}
+.curriculum-unit-section .curriculum-topic-grid{position:relative;z-index:1}
+.curriculum-unit-section .curriculum-topic-card{background:rgba(7,20,32,.52)}
+.curriculum-unit-section .curriculum-topic-card:hover{background:rgba(48,121,174,.10)}
+@media(max-width:600px){
+ .curriculum-unit-section{padding:12px;border-radius:18px}
+ .curriculum-unit-head{gap:9px;margin-bottom:11px}
+ .curriculum-unit-mark{width:38px;height:38px}
+ .curriculum-unit-head h3{font-size:16px}
+ .curriculum-unit-head>small{font-size:9px}
+}
