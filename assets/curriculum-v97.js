@@ -118,7 +118,14 @@ function svg(name){
   book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',
   language:'<path d="M4 5h10M9 3v2m-3 4c2 4 5 6 8 7M13 9c-1 3-4 6-8 8M15 20l3-8 3 8m-5-3h4"/>',
   history:'<path d="M4 5h16M6 5v15m12-15v15M4 20h16M9 9h6m-6 4h6m-6 4h6"/>',
-  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  motion:'<path d="M2 8h8M2 16h5M7 12h15m-6-6 6 6-6 6"/>',
+  flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/>',
+  leaf:'<path d="M20 3C2 2 1 16 9 19s13-8 11-16zM4 22 16 9"/>',
+  group:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M14 15a5 5 0 0 1 7 4v1"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/>',
+  bolt:'<path d="m14 2-10 12h8l-2 8 10-12h-8z"/>'
  };
  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+(p[name]||p.book)+'</svg>';
 }
