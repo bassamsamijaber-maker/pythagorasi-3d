@@ -1,5 +1,5 @@
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS} from "./curriculum-v97.js?v=98.1";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS} from "./curriculum-v97.js?v=98.2";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
