@@ -4030,6 +4030,15 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
 }
 
 
+/* ================= V99 PHONE DOWNLOAD / APP SHELL ================= */
+#installAppBtn{width:auto!important;gap:7px!important;padding-inline:11px!important}
+#installAppBtn .pwa-install-text{display:inline!important;font-size:10px;font-weight:900;white-space:nowrap}
+@media(max-width:700px){
+ #installAppBtn{grid-column:span 2;width:100%!important}
+ #installAppBtn .pwa-install-text{display:inline!important}
+ body:has(#classoraCurriculumModal.open) .classora-mobile-page-nav{z-index:2147483605!important}
+}
+
 /* ================= V44 INSTALLABLE APP / PWA ================= */
 .pwa-install-button{
   border-color:rgba(91,188,255,.17)!important;
@@ -4831,7 +4840,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         </div>
 
         <span class="auth-step-kicker">2 / 2</span>
-        <label for="studentNameInput">الاسم</label>
+        <label for="studentNameInput" id="studentNameLabel">الاسم</label>
         <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
 
         <label for="studentPasswordInput">كلمة السر</label>
@@ -4892,7 +4901,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     </div>
 
     <button class="auth-support-link" id="authSupportBtn" type="button">🛟 تواصل مع الدعم</button>
-    <button class="auth-support-link auth-install-link" id="authInstallAppBtn" type="button">📲 تثبيت Classora على الهاتف</button>
+    <button class="auth-support-link auth-install-link" id="authInstallAppBtn" type="button">📲 تحميل Classora على الهاتف</button>
     <a class="auth-support-link" href="./offline.html" id="offlineLessonsLink">الدروس دون إنترنت</a>
     <div class="auth-error" id="authError"></div>
     <div class="auth-foot" id="authStatusText"></div>
@@ -4928,7 +4937,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
         <button class="lobby-icon-btn hidden" id="lobbySupportRequestsBtn" type="button">📥 <span>طلبات الدعم</span></button><button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" aria-label="الإشعارات" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
-        <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تثبيت Classora">📲</button>
+        <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تحميل Classora على الهاتف"><span aria-hidden="true">📲</span><span class="pwa-install-text">تحميل على الهاتف</span></button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي"><span aria-hidden="true">🏫</span> <span>صفوفي</span></button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
@@ -13035,6 +13044,22 @@ function translateSubtree(root=document.body){
   translateElementNode(root);
   root.querySelectorAll?.('*').forEach(translateElementNode);
 }
+
+function syncV99LanguageLabels(){
+ const en=currentUILanguage==="en";
+ const setText=(id,a,e)=>{const el=document.getElementById(id);if(el)el.textContent=en?e:a};
+ const setPlaceholder=(id,a,e)=>{const el=document.getElementById(id);if(el)el.placeholder=en?e:a};
+ setText("studentNameLabel","الاسم","Name");
+ setPlaceholder("studentNameInput","مثال: بسام جابر","Example: Bassam Jaber");
+ setText("teacherIdentifierLabel","الاسم أو الإيميل","Name or email");
+ const teacherCreateName=document.querySelector('label[for="teacherCreateName"]');if(teacherCreateName)teacherCreateName.textContent=en?"Name":"الاسم";
+ setPlaceholder("teacherCreateName","مثال: أحمد محمد","Example: Ahmad Mohammad");
+ setText("authInstallAppBtn","📲 تحميل Classora على الهاتف","📲 Download Classora to this phone");
+ const lobbyText=document.querySelector("#installAppBtn .pwa-install-text");if(lobbyText)lobbyText.textContent=en?"Download":"تحميل على الهاتف";
+ const mobileLobby=document.querySelector("#classoraMobileLobbyBtn span");if(mobileLobby)mobileLobby.textContent=en?"Lobby":"اللوبي";
+ const mobileSettings=document.querySelector("#classoraMobileSettingsBtn span");if(mobileSettings)mobileSettings.textContent=en?"Settings":"الإعدادات";
+ const offline=document.getElementById("offlineLessonsLink");if(offline)offline.textContent=en?"Offline lessons":"الدروس دون إنترنت";
+}
 function applySiteLanguage(lang,save=true){
   currentUILanguage=lang==='en'?'en':'ar';
   document.documentElement.lang=currentUILanguage;
@@ -13047,7 +13072,7 @@ function applySiteLanguage(lang,save=true){
   translateSubtree(document.body);
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
   document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
-  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh()}catch{}
+  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh()}catch{};syncV99LanguageLabels();
   try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
   try{applyAdminLanguage()}catch{}
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
@@ -20696,7 +20721,14 @@ function closeAllClassoraScreensForMobile(){
 function classoraGoLobby(){
   closeAllClassoraScreensForMobile();
   showPlatformLobby();
-  classoraRestoreLobbyPosition();
+  let origin="";
+  try{origin=sessionStorage.getItem("classora_subject_origin")||""}catch{}
+  const phone=window.matchMedia?.("(max-width: 760px)")?.matches||false;
+  if(phone&&origin&&window.classoraLearningHub?.openSubject){
+    setTimeout(()=>window.classoraLearningHub.openSubject(origin),40);
+  }else{
+    classoraRestoreLobbyPosition();
+  }
   return false;
 }
 function mobileGoLobby(){return classoraGoLobby()}
@@ -20711,6 +20743,9 @@ document.addEventListener("click",event=>{
   if(!target)return;
   if(target.closest(".classora-mobile-page-nav"))return;
   classoraRememberLobbyPosition();
+  try{
+    if(target.id==="periodicTableBtn"||target.closest("#periodicTableBtn"))sessionStorage.setItem("classora_subject_origin","science");
+  }catch{}
 },true);
 
 /* Every Lobby/Back-to-lobby control uses one route, no matter where it appears. */
@@ -21250,10 +21285,10 @@ function updatePwaUI(){
   settingsBtn?.classList.toggle("hidden",installed);
   badge?.classList.toggle("hidden",!installed);
 
-  if(lobbyBtn)lobbyBtn.title=en?"Install Classora":"تثبيت Classora";
-  if(authInstallBtn)authInstallBtn.textContent=en?"Install Classora on this phone":"تثبيت Classora على الهاتف";
+  if(lobbyBtn){lobbyBtn.title=en?"Download Classora to this phone":"تحميل Classora على الهاتف";const t=lobbyBtn.querySelector(".pwa-install-text");if(t)t.textContent=en?"Download":"تحميل على الهاتف"}
+  if(authInstallBtn)authInstallBtn.textContent=en?"📲 Download Classora to this phone":"📲 تحميل Classora على الهاتف";
   if(title)title.textContent=en?"📲 Classora App":"📲 تطبيق Classora";
-  if(settingsBtn)settingsBtn.textContent=en?"📲 Install App":"📲 تثبيت التطبيق";
+  if(settingsBtn)settingsBtn.textContent=en?"📲 Download to phone":"📲 تحميل على الهاتف";
   if(badge)badge.textContent=en?"✓ Installed as an app":"✓ مثبت كتطبيق";
 
   if(note){
