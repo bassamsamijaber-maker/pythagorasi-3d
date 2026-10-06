@@ -323,11 +323,54 @@ export function mountCurriculum(api){
   const q=String(state.query||"").trim().toLowerCase();if(q)list=list.filter(function(t){return t.title.toLowerCase().indexOf(q)>=0});
   return list
  }
+ function topicSection(t){
+  const n=String(t.title||""),s=t.subject;
+  const mk=(key,ar,en,icon)=>({key,ar,en,icon});
+  if(s==="math"){
+   if(/(إحصاء|احتمال)/.test(n))return mk("statistics","الإحصاء والاحتمال","Statistics & Probability","chart");
+   if(/(دالة|رسم|ميل|مستقيم|إحداث|قطع مكافئ|نقاط الصفر|الصعود|النزول)/.test(n))return mk("functions","الدوال والرسوم","Functions & Graphs","chart");
+   if(/(زاوية|مثلث|فيثاغورس|هندسة|مساحة|محيط|مجسم|حجم|تشابه|تطابق|منتصف|المسافة بين نقطتين|Sin|Cos|Tan|حساب المثلثات)/i.test(n))return mk("geometry","الهندسة والقياس","Geometry & Measurement","math");
+   if(/(معادلة|متباين|جبر|متغير|تعبير|حدود|توزيع|تحليل|عامل|متطابق|كسور جبرية|نظام)/.test(n))return mk("algebra","الجبر والمعادلات","Algebra & Equations","math");
+   return mk("numbers","الأعداد والحساب","Numbers & Arithmetic","book");
+  }
+  if(s==="science"){
+   if(t.track==="physics"||/(حركة|سرعة|تسارع|قوى|قوانين نيوتن|طاقة|شغل|قدرة|كهرباء|دارات|تيار|ضوء|صوت|حرارة)/.test(n))return mk("physics","الفيزياء","Physics","motion");
+   if(t.track==="chemistry"||/(ذرة|عناصر|جدول دوري|مركبات|مخاليط|تفاعلات|أحماض|قواعد|روابط|أيون|كيمياء|pH|الرقم الهيدروجيني|معادلات كيميائية)/i.test(n))return mk("chemistry","الكيمياء","Chemistry","flask");
+   if(t.track==="biology"||/(خلية|تكاثر|وراثة|DNA|جين|بروتين|جسم الإنسان|تنفس|دوران|تغذية|كائنات|أنظمة بيئية|سلاسل غذائية|بناء ضوئي)/i.test(n))return mk("biology","الأحياء","Biology","leaf");
+   return mk("matter","المادة والبيئة","Matter & Environment","atom");
+  }
+  if(s==="arabic"){
+   if(/(ميزان صرفي|مجرد|مزيد|صحيح|معتل|اسم الفاعل|اسم المفعول|صفة مشبهة|صيغ المبالغة|اسم التفضيل|مصادر|إعلال|إبدال)/.test(n))return mk("morphology","الصرف والمشتقات","Morphology & Derivation","book");
+   if(/(مبتدأ|خبر|فاعل|مفعول|نائب الفاعل|حال|تمييز|استثناء|منادى|كان|إن|لا النافية|نعت|عطف|توكيد|بدل|مضاف|إعراب|رفع|نصب|جر|جزم|الممنوع|العدد والمعدود|الشرط|التعجب|المدح|الذم|الإغراء|التحذير|الجملة)/.test(n))return mk("syntax","النحو والإعراب","Syntax & Parsing","book");
+   return mk("basics","أساسيات القواعد","Grammar Basics","book");
+  }
+  if(s==="english"){
+   if(/Conditional/i.test(n))return mk("conditionals","Conditionals","Conditionals","bolt");
+   if(/Passive|Reported|Relative|Causative|Wish|If Only/i.test(n))return mk("structures","تراكيب الجمل","Sentence Structures","book");
+   if(/Modal|Gerund|Infinitive|Used to|Would/i.test(n))return mk("verbs","الأفعال و Modals","Verb Patterns & Modals","motion");
+   if(/Present|Past|Future/i.test(n))return mk("tenses","الأزمنة","Tenses","clock");
+   return mk("basics","أساسيات Grammar","Grammar Basics","book");
+  }
+  if(s==="history"){
+   if(/(أموية|عباسية|أندلس|العصور الوسطى|صليبية|فاطمية|أيوبية|مملوكية|الدروز|اليهود)/.test(n))return mk("middle","العصور الوسطى والدول الإسلامية","Middle Ages & Islamic States","history");
+   if(/(نهضة|Humanism|الإصلاح|اكتشاف|رأس الرجاء)/i.test(n))return mk("renaissance","النهضة والاكتشافات","Renaissance & Exploration","history");
+   if(/(الثورة الفرنسية|نابليون|الثورة الصناعية|قومية|إمبريالية|استعمار)/.test(n))return mk("modern","الثورات والعالم الحديث","Revolutions & Modern World","history");
+   if(/(الحرب العالمية الأولى|1919)/.test(n))return mk("ww1","الحرب العالمية الأولى","World War I","history");
+   return mk("region","الشرق الأوسط والدولة العثمانية","Middle East & Ottoman Empire","history");
+  }
+  if(s==="geography"){
+   if(/(الأرض|النظام الشمسي|بنية الكرة|صفائح|زلازل|براكين|صخور|معادن|تجوية|تعرية|غلاف جوي|طقس|مناخ|مياه|تضاريس)/.test(n))return mk("physical","الجغرافيا الطبيعية","Physical Geography","globe");
+   if(/(سكان|هجرة|مدن|قرى|اقتصاد|عمل|صناعة|زراعة|مواصلات|العولمة)/.test(n))return mk("human","الجغرافيا البشرية","Human Geography","group");
+   if(/(بيئة|استدام|موارد|طاقة|تغير المناخ)/.test(n))return mk("environment","البيئة والموارد","Environment & Resources","leaf");
+   return mk("regional","المكان والإقليم","Places & Regions","globe");
+  }
+  return mk("general","الوحدة","Unit","book");
+ }
  function renderTopics(){
   const extra=[];
   if(state.grade===10&&state.subject==="science")extra.push('<div class="curriculum-filter-row" id="cv97Track"><button data-track="all">'+txt(api,"الكل","All")+'</button><button data-track="physics">'+trackName(api,"physics")+'</button><button data-track="chemistry">'+trackName(api,"chemistry")+'</button><button data-track="biology">'+trackName(api,"biology")+'</button></div>');
   if(state.grade===10&&state.subject==="math")extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+state.grade+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-grid" id="cv97Topics"></div>';
+  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+state.grade+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
   const search=body.querySelector("#cv97Search");search.oninput=function(){state.query=search.value;paintTopicCards()};
   body.querySelectorAll("#cv97Track button").forEach(function(b){b.classList.toggle("active",b.dataset.track===state.track);b.onclick=function(){state.track=b.dataset.track;renderTopics()}});
   body.querySelectorAll("#cv97MathLevel button").forEach(function(b){b.classList.toggle("active",b.dataset.level===state.mathLevel);b.onclick=function(){state.mathLevel=b.dataset.level;renderTopics()}});
@@ -337,11 +380,22 @@ export function mountCurriculum(api){
   const host=body.querySelector("#cv97Topics");if(!host)return;host.innerHTML="";
   const list=filteredTopics();
   if(!list.length){host.innerHTML='<div class="curriculum-empty">'+txt(api,"ما في مواضيع مطابقة.","No matching topics.")+'</div>';return}
-  list.forEach(function(t,i){
-   const p=progressFor(api,t.id),b=document.createElement("button");b.className="curriculum-topic-card";
-   b.innerHTML='<span class="curriculum-topic-status">'+statusLabel(api,p.status)+'</span><div class="curriculum-topic-number">'+txt(api,"موضوع ","Topic ")+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(t))+'</small>';
-   b.onclick=function(){state.topic=t;state.view="lesson";touchTopic(api,t);render()};host.appendChild(b)
-  })
+  const groups=new Map();
+  list.forEach((t,i)=>{
+   const sec=topicSection(t),row=groups.get(sec.key)||{sec,items:[]};row.items.push({t,i});groups.set(sec.key,row);
+  });
+  groups.forEach(({sec,items})=>{
+   const unit=document.createElement("section");unit.className="curriculum-unit-section "+state.subject+" unit-"+sec.key;
+   const head=document.createElement("div");head.className="curriculum-unit-head";
+   head.innerHTML='<div class="curriculum-unit-mark">'+svg(sec.icon||S[state.subject]?.icon||"book")+'</div><div><span>'+txt(api,"وحدة","UNIT")+'</span><h3>'+esc(lang(api)==="en"?sec.en:sec.ar)+'</h3></div><small>'+items.length+" "+txt(api,"مواضيع","topics")+'</small>';
+   const grid=document.createElement("div");grid.className="curriculum-topic-grid";
+   items.forEach(({t,i})=>{
+    const p=progressFor(api,t.id),b=document.createElement("button");b.className="curriculum-topic-card";
+    b.innerHTML='<span class="curriculum-topic-status">'+statusLabel(api,p.status)+'</span><div class="curriculum-topic-number">'+txt(api,"موضوع ","Topic ")+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(t))+'</small>';
+    b.onclick=function(){state.topic=t;state.view="lesson";touchTopic(api,t);render()};grid.appendChild(b);
+   });
+   unit.append(head,grid);host.appendChild(unit);
+  });
  }
  function flagshipAction(t){
   const n=String(t.title||"");
