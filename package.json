@@ -1,0 +1,19 @@
+{
+  "name": "classora-mobile",
+  "private": true,
+  "version": "0.99.0",
+  "description": "Native iOS wrapper preparation for Classora",
+  "scripts": {
+    "mobile:prepare": "node scripts/prepare-mobile.mjs",
+    "ios:add": "npm run mobile:prepare && npx cap add ios",
+    "ios:sync": "npm run mobile:prepare && npx cap sync ios",
+    "ios:open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "@capacitor/ios": "latest"
+  }
+}
