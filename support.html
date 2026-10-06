@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Classora Support</title>
+<meta name="theme-color" content="#07111c"><style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#07111c;color:#eef8ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0,#123a58,transparent 34%),#07111c}.wrap{width:min(850px,calc(100% - 28px));margin:auto;padding:42px 0 70px}.card{padding:clamp(22px,4vw,40px);border:1px solid #ffffff14;border-radius:26px;background:#0b1b29df;box-shadow:0 24px 70px #0005}h1{font-size:clamp(32px,6vw,48px);margin:6px 0 12px}h2{font-size:19px;margin-top:28px}p,li{line-height:1.8;color:#b8ccd9}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.buttons a,.lang button{display:inline-flex;min-height:44px;align-items:center;padding:10px 15px;border-radius:12px;border:1px solid #ffffff1f;background:#ffffff08;color:#eaf8ff;text-decoration:none;font-weight:900}.buttons a.primary{background:#65d1ff;color:#06121c;border-color:transparent}.lang{float:right;display:flex;gap:6px}.lang button.active{background:#77d8ff;color:#07111c}.ar{display:none;direction:rtl;text-align:right}.eyebrow{color:#78d9ff;font-size:11px;font-weight:1000;letter-spacing:1.4px}.clear{clear:both}@media(max-width:600px){.wrap{padding-top:18px}.card{border-radius:20px}.lang{float:none;margin-bottom:18px}}</style></head>
+<body><main class="wrap"><section class="card">
+<div class="lang"><button id="enBtn" class="active">EN</button><button id="arBtn">عربي</button></div><div class="clear"></div>
+<div class="en" id="en"><span class="eyebrow">CLASSORA SUPPORT</span><h1>Need help?</h1><p>The fastest way to get help with your Classora account, class, password, report or technical problem is the Support feature inside Classora.</p>
+<div class="buttons"><a class="primary" href="./index.html#platformLobby">Open Classora</a><a href="./privacy.html">Privacy Policy</a></div>
+<h2>Account access</h2><p>If you can sign in, open <b>Support</b> from the lobby or Settings. If you cannot sign in, use <b>Contact Support</b> on the login screen.</p>
+<h2>Account deletion</h2><p>Signed-in users can initiate permanent account deletion from <b>Settings → Delete my account</b>. This option is separate from the support chat.</p>
+<h2>Reports and safety</h2><p>You can report a user from Classora Chat. Support staff can review reports and take permitted moderation actions.</p>
+<h2>Technical problems</h2><p>When reporting a bug, include what page you were on, what you pressed, and what happened. Do not send your password.</p></div>
+<div class="ar" id="ar"><span class="eyebrow">دعم CLASSORA</span><h1>بدك مساعدة؟</h1><p>أسرع طريقة للحصول على مساعدة بالحساب أو الصف أو كلمة السر أو البلاغات أو المشاكل التقنية هي ميزة الدعم داخل Classora.</p>
+<div class="buttons"><a class="primary" href="./index.html#platformLobby">افتح Classora</a><a href="./privacy.html">سياسة الخصوصية</a></div>
+<h2>مشاكل الدخول</h2><p>إذا بتقدر تدخل، افتح <b>الدعم</b> من اللوبي أو الإعدادات. وإذا ما بتقدر تدخل، استخدم <b>تواصل مع الدعم</b> من شاشة تسجيل الدخول.</p>
+<h2>حذف الحساب</h2><p>المستخدم المسجل يقدر يبدأ حذف حسابه نهائيًا من <b>الإعدادات ← حذف حسابي نهائيًا</b>. هذا الخيار مستقل عن شات الدعم.</p>
+<h2>البلاغات والأمان</h2><p>يمكنك الإبلاغ عن مستخدم من Classora Chat، ويستطيع فريق الدعم مراجعة البلاغ واتخاذ الإجراءات المسموحة.</p>
+<h2>المشاكل التقنية</h2><p>لما تبلغ عن Bug، اكتب بأي صفحة كنت، شو كبست، وشو صار. لا ترسل كلمة السر.</p></div>
+</section></main><script>
+const en=document.getElementById('en'),ar=document.getElementById('ar'),enBtn=document.getElementById('enBtn'),arBtn=document.getElementById('arBtn');
+function setLang(l){const a=l==='ar';en.style.display=a?'none':'block';ar.style.display=a?'block':'none';document.documentElement.lang=a?'ar':'en';document.documentElement.dir=a?'rtl':'ltr';enBtn.classList.toggle('active',!a);arBtn.classList.toggle('active',a)}
+enBtn.onclick=()=>setLang('en');arBtn.onclick=()=>setLang('ar');setLang((navigator.language||'').startsWith('ar')?'ar':'en');
+</script></body></html>
