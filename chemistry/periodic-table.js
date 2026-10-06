@@ -201,20 +201,20 @@ function fitPeriodicTable(){
  const shell=document.querySelector('.periodic-scroll'),content=document.querySelector('.periodic-fit-content'),toggle=document.querySelector('#tableFitToggle');if(!shell||!content||!toggle)return;
  toggle.hidden=layout!=='periodic';toggle.textContent=fitWholeTable?(lang==='ar'?'تكبير الجدول':'Zoom in'):(lang==='ar'?'عرض الجدول كاملًا':'Fit full table');toggle.setAttribute('aria-pressed',String(fitWholeTable));
  content.style.transform='';content.style.width='';content.style.position='';content.style.left='';content.style.margin='';content.style.transformOrigin='';shell.style.height='';shell.style.overflowX='';shell.style.overflowY='';
- if(layout!=='periodic'||!fitWholeTable)return;
+ if(layout!=='periodic')return;
+ if(!fitWholeTable){shell.style.overflowX='auto';shell.style.overflowY='visible';return}
  requestAnimationFrame(()=>{
   const naturalWidth=Math.max(1240,content.scrollWidth||0),naturalHeight=Math.max(1,content.scrollHeight||0);
-  const availableWidth=Math.max(1,shell.clientWidth-8);
-  const top=Math.max(0,shell.getBoundingClientRect().top);
-  const availableHeight=Math.max(280,window.innerHeight-top-18);
-  const scale=Math.min(1,availableWidth/naturalWidth,availableHeight/naturalHeight);
+  const availableWidth=Math.max(1,shell.clientWidth-12);
+  const desktopBoost=window.innerWidth>=1250?1.08:1;
+  const scale=Math.min(desktopBoost,availableWidth/naturalWidth);
   content.style.width=naturalWidth+'px';
   content.style.position='relative';
   content.style.left='50%';
   content.style.margin='0';
   content.style.transformOrigin='top center';
-  content.style.transform=`translateX(-50%) scale(${scale})`;
-  shell.style.height=Math.ceil(naturalHeight*scale+8)+'px';
+  content.style.transform='translateX(-50%) scale('+scale+')';
+  shell.style.height=Math.ceil(naturalHeight*scale+18)+'px';
   shell.style.overflowX='hidden';
   shell.style.overflowY='hidden';
   shell.dataset.fitScale=scale.toFixed(3);
