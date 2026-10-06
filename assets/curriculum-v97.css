@@ -111,3 +111,68 @@ background-size:24px 24px;box-shadow:0 38px 70px rgba(0,0,0,.44),inset 0 0 45px 
  .curriculum-unit-head h3{font-size:16px}
  .curriculum-unit-head>small{font-size:9px}
 }
+
+
+/* ================= CLASSORA V99 FULL TOPIC PAGES ================= */
+.classora-curriculum-modal{padding:0!important;align-items:stretch!important;justify-content:stretch!important;overflow:hidden!important;background:#06111bf7!important}
+.classora-curriculum-shell{width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;border:0!important;border-radius:0!important;overflow:hidden!important;display:grid!important;grid-template-rows:auto minmax(0,1fr)!important;background:
+ radial-gradient(circle at 12% 0,rgba(38,143,218,.11),transparent 34%),
+ linear-gradient(160deg,#071522,#06111b 68%,#050d15)!important}
+.classora-curriculum-top{position:relative!important;top:auto!important;min-height:66px;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left))!important;border-radius:0!important}
+.classora-curriculum-body{min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;scrollbar-gutter:stable;padding:clamp(14px,2vw,28px)!important}
+.classora-curriculum-body>*{width:min(1440px,100%);margin-inline:auto}
+.curriculum-lesson-toolbar{position:sticky;top:0;z-index:6;padding:8px 0 12px;background:linear-gradient(180deg,#071522 76%,transparent)}
+.curriculum-page-actions{display:flex;gap:8px;flex-wrap:wrap}
+.curriculum-toolbar-btn{min-height:42px;padding:8px 13px;border-radius:12px;border:1px solid rgba(116,206,255,.16);background:rgba(70,166,226,.07);color:#dff6ff;font-weight:900;cursor:pointer}
+.curriculum-toolbar-btn:hover{background:rgba(76,176,240,.12);border-color:rgba(116,206,255,.3)}
+.curriculum-lesson-hero{grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr)!important;min-height:420px;align-items:stretch}
+.curriculum-lesson-copy,.curriculum-3d-card{min-height:420px!important}
+.curriculum-lesson-copy{display:flex;flex-direction:column;justify-content:center}
+.curriculum-3d-card{overflow:hidden!important}
+.curriculum-3d-controls{position:absolute;z-index:5;left:50%;bottom:33px;transform:translateX(-50%);display:flex;gap:7px;padding:7px;border:1px solid rgba(151,222,255,.12);border-radius:15px;background:rgba(4,15,25,.74);backdrop-filter:blur(12px);box-shadow:0 14px 35px rgba(0,0,0,.28)}
+.curriculum-3d-controls button{min-width:42px;height:38px;padding:0 10px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:#e9f8ff;font-weight:900;cursor:pointer}
+.curriculum-3d-controls button:hover,.curriculum-3d-controls button.active{background:rgba(75,187,255,.18);border-color:rgba(93,204,255,.35);color:white}
+.cv-selected{filter:brightness(1.2) drop-shadow(0 0 18px rgba(92,218,255,.55))!important;outline:2px solid rgba(124,225,255,.58);outline-offset:3px}
+.curriculum-interactive-explainer{width:min(1440px,100%);margin:0 auto 16px!important;padding:20px;border:1px solid rgba(105,207,255,.15);border-radius:23px;background:
+ radial-gradient(circle at 8% 0,rgba(74,191,255,.12),transparent 35%),
+ rgba(255,255,255,.025);box-shadow:0 22px 55px rgba(0,0,0,.18)}
+.curriculum-interactive-explainer.hidden{display:none!important}
+.curriculum-explainer-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:15px}
+.curriculum-explainer-head h3{margin:4px 0 0;font-size:22px}
+.curriculum-explainer-head .curriculum-main-action{width:auto;min-width:170px;margin:0}
+.curriculum-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.curriculum-editor-grid label{display:grid;gap:7px;color:#a9c0d0;font-size:11px;font-weight:900}
+.curriculum-editor-grid label.wide{grid-column:1/-1}
+.curriculum-editor-grid textarea,.curriculum-editor-grid input{width:100%;min-width:0;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:#071521;color:#eef8ff;padding:12px 13px;outline:0;font:inherit;resize:vertical}
+.curriculum-editor-grid textarea{min-height:82px}
+.curriculum-editor-grid textarea:focus,.curriculum-editor-grid input:focus{border-color:rgba(85,207,255,.55);box-shadow:0 0 0 3px rgba(85,207,255,.08)}
+.curriculum-dynamic-answer{margin-top:14px;min-height:62px;padding:14px;border-radius:15px;border:1px dashed rgba(107,211,255,.17);background:rgba(66,180,235,.045);color:#bfd3df;line-height:1.75}
+.curriculum-dynamic-answer:empty:before{content:"غيّر المحتوى واضغط تحديث الشرح";color:#648398}
+html[lang="en"] .curriculum-dynamic-answer:empty:before{content:"Edit the content, then update the explanation"}
+.curriculum-translation{margin:0 auto 16px!important;border-color:rgba(189,144,255,.20)!important;background:linear-gradient(145deg,rgba(124,79,194,.08),rgba(255,255,255,.022))!important}
+.curriculum-translation h3{margin:6px 0 8px}
+.curriculum-panels{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.curriculum-panel{min-height:160px}
+.curriculum-actions-panel{margin-bottom:max(20px,env(safe-area-inset-bottom))!important}
+@media(max-width:900px){
+ .curriculum-lesson-hero{grid-template-columns:1fr!important;min-height:0}
+ .curriculum-lesson-copy,.curriculum-3d-card{min-height:330px!important}
+}
+@media(max-width:600px){
+ .classora-curriculum-top{min-height:58px!important;padding-top:max(8px,env(safe-area-inset-top))!important}
+ .classora-curriculum-brand small{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .classora-curriculum-body{padding:10px!important}
+ .curriculum-lesson-toolbar{top:0;padding:5px 0 9px}
+ .curriculum-page-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .curriculum-toolbar-btn{font-size:11px;padding:7px 8px}
+ .curriculum-lesson-copy{min-height:260px!important;padding:16px!important}
+ .curriculum-lesson-copy h2{font-size:clamp(26px,8vw,38px)!important}
+ .curriculum-3d-card{min-height:340px!important}
+ .curriculum-visual-scene{height:270px!important}
+ .curriculum-3d-controls{bottom:28px;width:calc(100% - 26px);justify-content:center}
+ .curriculum-3d-controls button{flex:1;min-width:0;font-size:11px;padding:0 6px}
+ .curriculum-panels{grid-template-columns:1fr!important}
+ .curriculum-editor-grid{grid-template-columns:1fr}
+ .curriculum-editor-grid label.wide{grid-column:auto}
+ .curriculum-explainer-head .curriculum-main-action{width:100%}
+}
