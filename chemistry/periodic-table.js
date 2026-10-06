@@ -277,24 +277,19 @@ $("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTabl
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
 function exitPeriodicTable(){
  if($("#elementModal")?.classList.contains("open"))closeModal();
- try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
- if(window.parent!==window){
-   /* Same-origin Classora embed: call the parent navigation directly when available.
-      postMessage remains as a fallback for older parent pages. */
-   try{
-     if(typeof window.parent.classoraGoLobby==="function"){
-       window.parent.classoraGoLobby();
-       return;
-     }
-   }catch{}
-   try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin)}catch{}
-   setTimeout(()=>{
-     try{window.parent.location.hash="platformLobby"}catch{}
-   },260);
+ try{
+   sessionStorage.removeItem("classora_subject_origin");
+   sessionStorage.removeItem("classora_returning_from_subject");
+ }catch{}
+ const lobbyUrl=new URL("../#platformLobby",window.location.href).href;
+ try{
+   /* Leave the periodic-table iframe completely and open the main Classora lobby. */
+   window.top.location.replace(lobbyUrl);
    return;
- }
- try{sessionStorage.setItem("classora_returning_from_subject","1")}catch{}
- location.replace("../#platformLobby");
+ }catch{}
+ try{window.parent.location.replace(lobbyUrl);return}catch{}
+ try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"lobby"},location.origin)}catch{}
+ location.replace(lobbyUrl);
 }
 
 $("#backBtn").onclick=exitPeriodicTable;
