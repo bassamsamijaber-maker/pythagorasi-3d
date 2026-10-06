@@ -241,7 +241,7 @@ function grade10MathAllowed(topic,level){
 }
 function makeProgressKey(api){const p=api.profile&&api.profile();return "classora_curriculum_v97_"+String(p&&p.uid||p&&p.profileId||"guest")}
 function readProgress(api){
- const p=api.profile&&api.profile();const cloud=p&&p.curriculumProgress;
+ const p=api.profile&&api.profile();const cloud=p&&(p.accountState&&p.accountState.curriculumProgress||p.curriculumProgress);
  if(cloud&&typeof cloud==="object")return JSON.parse(JSON.stringify(cloud));
  try{return JSON.parse(localStorage.getItem(makeProgressKey(api))||"{}")}catch(e){return{}}
 }
