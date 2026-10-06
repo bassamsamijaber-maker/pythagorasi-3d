@@ -494,8 +494,8 @@ export function mountCurriculum(api){
  }
  function renderLesson(){
   const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),nativeOnly=t.subject==="arabic"||t.subject==="english",display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
-  const T=(ar,en)=>t.subject==="arabic"?ar:t.subject==="english"?en:T(ar,en);
-  const lessonStatus=t.subject==="arabic"?(p.status==="done"?"مكتمل":p.status==="progress"?"قيد التعلم":"لم يبدأ"):t.subject==="english"?(p.status==="done"?"Completed":p.status==="progress"?"In progress":"Not started"):lessonStatus;
+  const T=(ar,en)=>t.subject==="arabic"?ar:t.subject==="english"?en:txt(api,ar,en);
+  const lessonStatus=t.subject==="arabic"?(p.status==="done"?"مكتمل":p.status==="progress"?"قيد التعلم":"لم يبدأ"):t.subject==="english"?(p.status==="done"?"Completed":p.status==="progress"?"In progress":"Not started"):statusLabel(api,p.status);
   const trans=nativeOnly?translationTitle(t):"";
   const transBlock=state.showTranslation?'<section class="curriculum-panel curriculum-translation" data-no-translate="1"><span class="curriculum-kicker">'+(t.subject==="arabic"?"ENGLISH TRANSLATION":"الترجمة العربية")+'</span><h3>'+esc(trans)+'</h3><p>'+(t.subject==="arabic"?"This translation is shown only on request. The original Arabic grammar lesson stays in Arabic.":"هذه الترجمة تظهر عند الطلب فقط، ويبقى درس English Grammar باللغة الإنجليزية.")+'</p></section>':"";
   const nativeAttr=nativeOnly?' data-no-translate="1"':'';
