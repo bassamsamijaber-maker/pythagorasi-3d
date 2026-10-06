@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v100-2-periodic-stable-scroll";
+const CACHE_NAME="classora-v100-3-periodic-lobby-back";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=99",
   "./assets/subject-labs.css?v=99",
@@ -20,7 +20,7 @@ const APP_SHELL=[
   "./support.html",
   "./chemistry/periodic-table.html",
   "./chemistry/periodic-table.css?v=100.2",
-  "./chemistry/periodic-table.js?v=100.2",
+  "./chemistry/periodic-table.js?v=100.3",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
