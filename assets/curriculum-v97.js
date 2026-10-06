@@ -43,6 +43,9 @@ const G={
   english:["Present Simple","Present Continuous","Present Perfect","Present Perfect Continuous","Past Simple","Past Continuous","Past Perfect","Future Forms","Future Continuous","Future Perfect — Introduction","Active and Passive Voice","Zero Conditional","First Conditional","Second Conditional","Third Conditional — Introduction","Relative Clauses","Reported Speech","Reported Questions","Modal Verbs","Modal Perfects — Introduction","Gerunds","Infinitives","Gerunds vs Infinitives","Used to / Would","Wish / If Only — Introduction","Causative Have — Introduction","Question Tags","Articles","Determiners","Quantifiers","Prepositions","Linking Words"]
  }
 };
+export const CURRICULUM_DATA=G;
+export const CURRICULUM_SUBJECTS=S;
+
 const TRACKS={physics:["الفيزياء","Physics"],chemistry:["الكيمياء","Chemistry"],biology:["الأحياء","Biology"]};
 const EN_EXAMPLES={
  "Present Simple":["She plays football every day.","She is playing football now."],
@@ -274,6 +277,15 @@ export function mountCurriculum(api){
  document.body.appendChild(modal);
  const body=modal.querySelector("#cv97Body"),back=modal.querySelector(".classora-curriculum-back"),close=modal.querySelector(".classora-curriculum-close"),topSub=modal.querySelector("#cv97TopSub");
  function open(){state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
+ function openAt(grade,subject,topicRef=""){
+  const g=Number(grade);state.grade=G[g]?g:7;state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";
+  if(state.subject&&topicRef){
+   const found=topicsFor(state.grade,state.subject).find(x=>x.id===topicRef||x.title===topicRef);
+   if(found){state.topic=found;state.view="lesson";touchTopic(api,found)}
+   else state.view="topics";
+  }else state.view=state.subject?"topics":"subjects";
+  modal.classList.add("open");render();
+ }
  function shut(){modal.classList.remove("open")}
  close.onclick=shut;modal.addEventListener("click",function(e){if(e.target===modal)shut()});
  back.onclick=function(){
@@ -331,9 +343,38 @@ export function mountCurriculum(api){
    b.onclick=function(){state.topic=t;state.view="lesson";touchTopic(api,t);render()};host.appendChild(b)
   })
  }
- function buildCube(t){
-  const short=esc(t.title.length>22?t.title.slice(0,22)+"…":t.title);
-  return '<div class="curriculum-3d-scene" id="cv97Scene"><div class="curriculum-cube-face f1">'+short+'</div><div class="curriculum-cube-face f2">'+esc(subjectName(api,t.subject))+'</div><div class="curriculum-cube-face f3">'+txt(api,"شرح","Learn")+'</div><div class="curriculum-cube-face f4">'+txt(api,"تدريب","Practice")+'</div><div class="curriculum-cube-face f5">'+txt(api,"امتحان","Exam")+'</div><div class="curriculum-cube-face f6">'+txt(api,"مسابقة","Live")+'</div></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج","Drag to rotate the model")+'</div>';
+ function flagshipAction(t){
+  const n=String(t.title||"");
+  if(t.subject==="math"&&/فيثاغورس/.test(n))return {key:"lab",ar:"افتح مختبر فيثاغورس الكامل",en:"Open the full Pythagoras lab"};
+  if(t.subject==="math"&&/(نظام معادلتين|أنظمة المعادلات)/.test(n))return {key:"equations",ar:"افتح مختبر المعادلتين 2D / 3D",en:"Open the 2D / 3D equations lab"};
+  if(t.subject==="science"&&/(الجدول الدوري|العناصر)/.test(n))return {key:"periodic",ar:"افتح الجدول الدوري التفاعلي",en:"Open the interactive periodic table"};
+  if(t.subject==="science"&&/(الأحماض والقواعد|الرقم الهيدروجيني|pH)/i.test(n))return {key:"acids",ar:"افتح مختبر الأحماض والقواعد",en:"Open the acids & bases lab"};
+  if(t.subject==="arabic"&&/المضاف والمضاف إليه/.test(n))return {key:"idafa",ar:"افتح مختبر المضاف والمضاف إليه",en:"Open the Idafa lab"};
+  return null;
+ }
+ function buildTopicScene(t){
+  const title=esc(t.title),n=String(t.title||""),subject=t.subject;
+  if(subject==="math"){
+   if(/(فيثاغورس|مثلث)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-triangle" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg" viewBox="0 0 360 260" aria-hidden="true"><polygon points="78,205 78,65 278,205" class="cv-triangle"/><rect x="18" y="82" width="58" height="122" class="cv-side-square a"/><rect x="92" y="205" width="174" height="48" class="cv-side-square b"/><polygon points="90,56 288,190 244,252 46,118" class="cv-side-square c"/></svg><span class="cv-scene-tag">a² + b² = c²</span><span class="cv-depth-dot d1"></span><span class="cv-depth-dot d2"></span><span class="cv-depth-dot d3"></span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج","Drag to rotate the model")+'</div>';
+   if(/(دالة|مستقيم|معادلة|ميل|إحداث|قطع مكافئ|نقاط الصفر)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-graph" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path d="M35 215 L320 55" class="cv-line l1"/><path d="M45 45 Q180 245 320 70" class="cv-line l2"/><circle cx="201" cy="122" r="8" class="cv-point"/></svg><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الرسم","Drag to rotate the graph")+'</div>';
+   return '<div class="curriculum-visual-scene scene-math scene-algebra" id="cv97Scene"><div class="cv-grid-plane"></div><div class="cv-math-block b1">x</div><div class="cv-math-block b2">+</div><div class="cv-math-block b3">7</div><div class="cv-math-block b4">=</div><div class="cv-math-block b5">12</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب ودوّر مساحة الرياضيات","Drag and rotate the math space")+'</div>';
+  }
+  if(subject==="science"){
+   if(/(ذرة|العناصر|الجدول الدوري|أيون|بنية الذرة)/.test(n))return '<div class="curriculum-visual-scene scene-science scene-atom" id="cv97Scene"><div class="cv-nucleus"><b>+</b><i></i><i></i></div><div class="cv-orbit o1"><span></span></div><div class="cv-orbit o2"><span></span></div><div class="cv-orbit o3"><span></span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الذرة","Drag to rotate the atom")+'</div>';
+   if(/(كيمياء|حمض|قاعدة|تفاعل|مركب|مخلوط|روابط|pH|معادلات كيميائية)/i.test(n))return '<div class="curriculum-visual-scene scene-science scene-chemistry" id="cv97Scene"><div class="cv-lab-floor"></div><div class="cv-beaker"><div class="cv-liquid"></div><i></i><i></i><i></i><i></i></div><div class="cv-molecule m1"><b></b><b></b><b></b></div><div class="cv-molecule m2"><b></b><b></b></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير المختبر","Drag to rotate the lab")+'</div>';
+   if(/(خلية|وراثة|DNA|تكاثر|جسم الإنسان|التنفس|البناء الضوئي|جين|بروتين)/i.test(n))return '<div class="curriculum-visual-scene scene-science scene-biology" id="cv97Scene"><div class="cv-cell"><i class="org o1"></i><i class="org o2"></i><i class="org o3"></i><b class="cv-cell-core"></b></div><div class="cv-dna"><i></i><i></i><i></i><i></i><i></i></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج الحيوي","Drag to rotate the biology model")+'</div>';
+   return '<div class="curriculum-visual-scene scene-science scene-motion" id="cv97Scene"><div class="cv-track"><i></i></div><div class="cv-motion-ball"></div><div class="cv-vector v1">→</div><div class="cv-vector v2">↑</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتغيير زاوية المشهد","Drag to change the scene angle")+'</div>';
+  }
+  if(subject==="arabic"){
+   const pair=/المضاف والمضاف إليه/.test(n)?["كتابُ","الطالبِ"]:["الكلمة","الإعراب"];
+   return '<div class="curriculum-visual-scene scene-language scene-arabic" id="cv97Scene"><div class="cv-book-base"></div><div class="cv-word-card w1">'+pair[0]+'</div><div class="cv-word-card w2">'+pair[1]+'</div><div class="cv-word-card w3">'+title+'</div><span class="cv-scene-tag">'+txt(api,"قواعد عربية","Arabic grammar")+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير بطاقات القاعدة","Drag to rotate the grammar cards")+'</div>';
+  }
+  if(subject==="english"){
+   const tense=/(Past|Present|Future)/i.test(n);
+   return '<div class="curriculum-visual-scene scene-language scene-english" id="cv97Scene"><div class="cv-english-line"></div><div class="cv-grammar-card g1">'+(tense?"PAST":"FORM")+'</div><div class="cv-grammar-card g2">'+esc(t.title.length>18?t.title.slice(0,18)+"…":t.title)+'</div><div class="cv-grammar-card g3">'+(tense?"FUTURE":"USE")+'</div><span class="cv-scene-tag">English Grammar</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير خط القاعدة","Drag to rotate the grammar timeline")+'</div>';
+  }
+  if(subject==="history")return '<div class="curriculum-visual-scene scene-history" id="cv97Scene"><div class="cv-history-floor"></div><div class="cv-era e1"><b>'+txt(api,"سبب","CAUSE")+'</b></div><div class="cv-era e2"><b>'+txt(api,"حدث","EVENT")+'</b></div><div class="cv-era e3"><b>'+txt(api,"نتيجة","RESULT")+'</b></div><div class="cv-history-rail"></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الخط الزمني","Drag to rotate the timeline")+'</div>';
+  return '<div class="curriculum-visual-scene scene-geography" id="cv97Scene"><div class="cv-globe"><i class="lat l1"></i><i class="lat l2"></i><i class="lon n1"></i><i class="lon n2"></i><b></b></div><div class="cv-terrain t1"></div><div class="cv-terrain t2"></div><div class="cv-terrain t3"></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الكرة والمجال","Drag to rotate the globe")+'</div>';
  }
  function attach3D(){
   const card=body.querySelector(".curriculum-3d-card"),scene=body.querySelector("#cv97Scene");if(!card||!scene)return;
@@ -343,13 +384,14 @@ export function mountCurriculum(api){
   card.addEventListener("pointerup",function(){down=false});card.addEventListener("pointercancel",function(){down=false});
  }
  function renderLesson(){
-  const t=state.topic,p=progressFor(api,t.id);
+  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t);
   body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+t.grade+" / "+subjectName(api,t.subject)+(t.track?" / "+trackName(api,t.track):"")+'</div></div>'+
-  '<div class="curriculum-lesson-hero"><section class="curriculum-lesson-copy"><span class="curriculum-kicker">'+subjectName(api,t.subject)+'</span><h2>'+esc(t.title)+'</h2><p>'+esc(skillText(t))+'</p><div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+txt(api,"المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+txt(api,"أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div></section><section class="curriculum-3d-card">'+buildCube(t)+'</section></div>'+
+  '<div class="curriculum-lesson-hero"><section class="curriculum-lesson-copy"><span class="curriculum-kicker">'+subjectName(api,t.subject)+'</span><h2>'+esc(t.title)+'</h2><p>'+esc(skillText(t))+'</p><div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+txt(api,"المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+txt(api,"أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div>'+(flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+'</section><section class="curriculum-3d-card">'+buildTopicScene(t)+'</section></div>'+
   '<div class="curriculum-panels"><section class="curriculum-panel"><h3>'+txt(api,"شرح مبسط","Basic explanation")+'</h3><p>'+esc(basicExplanation(api,t))+'</p></section><section class="curriculum-panel"><h3>'+txt(api,"شرح متقدم","Advanced explanation")+'</h3><p>'+esc(advancedExplanation(api,t))+'</p></section><section class="curriculum-panel"><h3>'+txt(api,"مثال محلول خطوة بخطوة","Worked example")+'</h3><div class="curriculum-worked">'+esc(workedExample(api,t))+'</div></section><section class="curriculum-panel"><h3>'+txt(api,"تمرين سريع","Quick practice")+'</h3><div class="curriculum-mini-practice" id="cv97Practice"></div></section></div>'+
   '<section class="curriculum-panel curriculum-actions-panel"><div class="curriculum-action-grid"><div class="curriculum-action-box"><h3>'+txt(api,"امتحان الموضوع","Topic exam")+'</h3><div class="curriculum-controls"><label>'+txt(api,"الصعوبة","Difficulty")+'<select id="cv97ExamDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+txt(api,"عدد الأسئلة","Questions")+'<select id="cv97ExamCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label></div><button class="curriculum-main-action" id="cv97StartExam">'+txt(api,"ابدأ الامتحان","Start exam")+'</button></div>'+
   '<div class="curriculum-action-box"><h3>'+txt(api,"مسابقة مباشرة","Live competition")+'</h3><div class="curriculum-controls"><label>'+txt(api,"الصعوبة","Difficulty")+'<select id="cv97LiveDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+txt(api,"الأسئلة","Questions")+'<select id="cv97LiveCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label><label>'+txt(api,"وقت السؤال","Time per question")+'<select id="cv97LiveTime"><option>10</option><option>15</option><option selected>20</option><option>30</option><option>45</option><option>60</option></select></label><label>'+txt(api,"النمط","Mode")+'<select id="cv97LiveMode"><option value="solo">'+txt(api,"فردي","Solo")+'</option><option value="choice" selected>'+txt(api,"فرق","Teams")+'</option></select></label></div><button class="curriculum-main-action live" id="cv97StartLive">'+txt(api,"أنشئ مسابقة","Create competition")+'</button></div></div></section>';
   attach3D();renderPractice();
+  if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
    const exam={title:(t.subject==="english"?"Grammar Exam — ":"امتحان — ")+t.title,questions:qs,total:qs.reduce(function(s,q){return s+q.points},0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title};
@@ -373,6 +415,6 @@ export function mountCurriculum(api){
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
   if(t)completeTopic(api,t,pct)
  }
- buildEntry(api,open);
- return {open:open,close:shut,recordExam:recordExam,refresh:function(){if(modal.classList.contains("open"))render()},curriculum:G};
+ if(!document.querySelector(".learning-hub"))buildEntry(api,open);
+ return {open:open,openAt:openAt,close:shut,recordExam:recordExam,refresh:function(){if(modal.classList.contains("open"))render()},curriculum:G,subjects:S};
 }
