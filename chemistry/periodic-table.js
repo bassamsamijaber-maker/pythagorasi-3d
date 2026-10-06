@@ -279,7 +279,18 @@ function exitPeriodicTable(){
  if($("#elementModal")?.classList.contains("open"))closeModal();
  try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
  if(window.parent!==window){
+   /* Same-origin Classora embed: call the parent navigation directly when available.
+      postMessage remains as a fallback for older parent pages. */
+   try{
+     if(typeof window.parent.classoraGoLobby==="function"){
+       window.parent.classoraGoLobby();
+       return;
+     }
+   }catch{}
    try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin)}catch{}
+   setTimeout(()=>{
+     try{window.parent.location.hash="platformLobby"}catch{}
+   },260);
    return;
  }
  try{sessionStorage.setItem("classora_returning_from_subject","1")}catch{}
@@ -307,23 +318,29 @@ window.addEventListener("message",event=>{
 });
 qa("[data-layout]").forEach(b=>b.onclick=()=>{layout=b.dataset.layout;qa("[data-layout]").forEach(x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b))});renderTable()});
 applyLanguage();
-$("#tableFitToggle").addEventListener("click",()=>{fitWholeTable=!fitWholeTable;scheduleFitPeriodicTable()});
+$("#tableFitToggle").addEventListener("click",()=>{fitWholeTable=!fitWholeTable;scheduleFitPeriodicTable(true)});
 let fitFrame=0,lastFitWidth=0;
-function scheduleFitPeriodicTable(){
+function scheduleFitPeriodicTable(force=false){
  cancelAnimationFrame(fitFrame);
  fitFrame=requestAnimationFrame(()=>{
   fitFrame=0;
   const shell=$(".table-shell"),width=Math.round(shell?.clientWidth||0);
   if(!width)return;
-  if(width===lastFitWidth&&layout!=="periodic")return;
+  /* Only re-fit when the available width actually changed. The old condition
+     re-ran continuously in periodic mode because fitPeriodicTable changes the
+     table height, which re-triggered ResizeObserver and could jump the scroll. */
+  if(!force&&width===lastFitWidth)return;
   lastFitWidth=width;
   fitPeriodicTable();
  });
 }
-window.addEventListener("resize",scheduleFitPeriodicTable,{passive:true});
-window.addEventListener("orientationchange",()=>setTimeout(scheduleFitPeriodicTable,120),{passive:true});
+window.addEventListener("resize",()=>scheduleFitPeriodicTable(false),{passive:true});
+window.addEventListener("orientationchange",()=>setTimeout(()=>scheduleFitPeriodicTable(true),120),{passive:true});
 if(typeof ResizeObserver!=="undefined"){
- const ro=new ResizeObserver(entries=>{const w=Math.round(entries[0]?.contentRect?.width||0);if(w&&w!==lastFitWidth)scheduleFitPeriodicTable()});
+ const ro=new ResizeObserver(entries=>{
+  const w=Math.round(entries[0]?.contentRect?.width||0);
+  if(w&&w!==lastFitWidth)scheduleFitPeriodicTable(false);
+ });
  ro.observe($(".table-shell"));
 }
 })();
