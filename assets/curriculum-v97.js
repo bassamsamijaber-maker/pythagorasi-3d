@@ -370,7 +370,7 @@ export function mountCurriculum(api){
  function render(){setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
-  let t=null;for(const gr of [7,8,9,10])for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break}if(t)break}
+  let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
   if(t)completeTopic(api,t,pct)
  }
  buildEntry(api,open);
