@@ -277,3 +277,20 @@ main{
   main{width:100%!important;padding-inline:10px!important}
   .topbar{padding:max(8px,env(safe-area-inset-top)) 10px 8px!important}
 }
+
+
+/* ================= CLASSORA V100.2 STABLE PERIODIC SCROLL ================= */
+/* Keep the page scroller stable while allowing wheel/touch gestures that start
+   over the periodic table to continue vertically through the page. */
+main{
+  overscroll-behavior-y:auto!important;
+}
+.periodic-scroll{
+  overscroll-behavior-x:contain!important;
+  overscroll-behavior-y:auto!important;
+  touch-action:pan-x pan-y!important;
+}
+.back-btn{
+  touch-action:manipulation!important;
+  pointer-events:auto!important;
+}
