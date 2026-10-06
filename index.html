@@ -5071,7 +5071,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" src="chemistry/periodic-table.html?v=99.4"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=100.1"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -20733,6 +20733,9 @@ function closeAllClassoraScreensForMobile(){
 }
 function classoraGoLobby(){
   closeAllClassoraScreensForMobile();
+  if(location.hash==="#periodic-table"){
+    try{history.replaceState(history.state||null,"",location.pathname+location.search+"#platformLobby")}catch{location.hash="platformLobby"}
+  }
   showPlatformLobby();
   let origin="";
   try{origin=sessionStorage.getItem("classora_subject_origin")||""}catch{}
