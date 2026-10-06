@@ -280,13 +280,23 @@ function exitPeriodicTable(){
  try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
  if(window.parent!==window){
    try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin)}catch{}
-   setTimeout(()=>{try{window.parent.location.hash="platformLobby"}catch{}},180);
    return;
  }
  try{sessionStorage.setItem("classora_returning_from_subject","1")}catch{}
  location.replace("../#platformLobby");
 }
+
 $("#backBtn").onclick=exitPeriodicTable;
+const periodicMain=document.querySelector("main");
+document.addEventListener("keydown",event=>{
+ if(!periodicMain||$("#elementModal")?.classList.contains("open"))return;
+ if(event.key==="PageDown"){event.preventDefault();periodicMain.scrollBy({top:Math.max(320,periodicMain.clientHeight*.8),behavior:"smooth"})}
+ if(event.key==="PageUp"){event.preventDefault();periodicMain.scrollBy({top:-Math.max(320,periodicMain.clientHeight*.8),behavior:"smooth"})}
+ if(event.key==="Home"&&!event.ctrlKey){event.preventDefault();periodicMain.scrollTo({top:0,behavior:"smooth"})}
+ if(event.key==="End"&&!event.ctrlKey){event.preventDefault();periodicMain.scrollTo({top:periodicMain.scrollHeight,behavior:"smooth"})}
+});
+window.addEventListener("pageshow",()=>{if(!$("#elementModal")?.classList.contains("open"))document.body.style.overflow=""});
+
 window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
 window.addEventListener("message",event=>{
  if(event.origin!==location.origin)return;
