@@ -675,3 +675,166 @@ html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-chil
  .cv-live-scene-plate small{display:none}
  .cv-live-scene-plate.stat-live{top:23%}
 }
+
+
+/* V109 — per-topic model variants + clear change guide */
+.curriculum-change-guide{
+  margin:10px 0;padding:12px;border-radius:15px;
+  border:1px solid rgba(116,202,246,.13);
+  background:linear-gradient(145deg,rgba(15,35,53,.84),rgba(8,24,38,.82))
+}
+.curriculum-change-guide .curriculum-kicker{display:block;margin-bottom:8px;color:#76d8ff}
+.curriculum-change-chips{display:flex;flex-wrap:wrap;gap:6px}
+.curriculum-change-chips span{
+  padding:6px 9px;border-radius:999px;background:rgba(86,174,230,.09);
+  border:1px solid rgba(112,204,255,.12);color:#d7effc;font-size:9px;font-weight:850
+}
+
+/* Arabic models are not the same tree anymore */
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-parse-root{
+  top:10%!important;background:linear-gradient(135deg,#234c7d,#7a43c3)!important
+}
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-parse-lines{
+  top:37%!important;height:2px!important;border-top:0!important;
+  background:linear-gradient(90deg,transparent,#6ad9ff,#b687ff,#6ad9ff,transparent)!important;
+  transform:translateZ(38px)!important
+}
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-parse-lines:after{
+  content:"⇄";position:absolute;left:50%;top:-21px;transform:translateX(-50%);
+  color:#d9f6ff;font-size:26px;font-weight:1000
+}
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-word-card.w1{left:5%!important;top:53%!important}
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-word-card.w2{left:50%!important;top:43%!important}
+.curriculum-visual-scene[data-model="active-passive-flow"] .cv-word-card.w3{right:5%!important;top:53%!important}
+
+.curriculum-visual-scene[data-model="deputy-subject-tree"] .cv-word-card.w1{left:8%!important;top:58%!important;opacity:.6}
+.curriculum-visual-scene[data-model="deputy-subject-tree"] .cv-word-card.w2{
+  left:50%!important;top:43%!important;transform:translateX(-50%) translateZ(125px) scale(1.16)!important;
+  background:linear-gradient(145deg,#255c8e,#4e5fd0)!important
+}
+.curriculum-visual-scene[data-model="deputy-subject-tree"] .cv-word-card.w3{right:8%!important;top:58%!important}
+
+.curriculum-visual-scene[data-model="adjective-link"] .cv-word-card.w1{left:13%!important;top:50%!important}
+.curriculum-visual-scene[data-model="adjective-link"] .cv-word-card.w2{
+  left:50%!important;top:50%!important;transform:translateX(-50%) translateZ(104px)!important
+}
+.curriculum-visual-scene[data-model="adjective-link"] .cv-word-card.w3{right:13%!important;top:50%!important}
+.curriculum-visual-scene[data-model="adjective-link"] .cv-parse-lines{
+  top:48%!important;height:4px!important;border:0!important;background:#72d7ff66!important;
+  transform:translateZ(28px)!important
+}
+
+.curriculum-visual-scene[data-model="state-link"] .cv-word-card.w1{
+  left:50%!important;top:36%!important;transform:translateX(-50%) translateZ(115px)!important
+}
+.curriculum-visual-scene[data-model="state-link"] .cv-word-card.w2{left:12%!important;top:61%!important}
+.curriculum-visual-scene[data-model="state-link"] .cv-word-card.w3{right:12%!important;top:61%!important}
+.curriculum-visual-scene[data-model="state-link"] .cv-parse-lines{
+  top:46%!important;height:100px!important;transform:perspective(380px) rotateX(67deg) translateZ(20px)!important
+}
+
+.curriculum-visual-scene[data-model="conjunction-branch"] .cv-parse-lines{
+  top:38%!important;left:18%!important;right:18%!important;height:110px!important;
+  border-top:3px solid rgba(107,224,255,.35)!important
+}
+.curriculum-visual-scene[data-model="conjunction-branch"] .cv-word-card.w1{left:5%!important;top:58%!important}
+.curriculum-visual-scene[data-model="conjunction-branch"] .cv-word-card.w2{left:50%!important;top:42%!important}
+.curriculum-visual-scene[data-model="conjunction-branch"] .cv-word-card.w3{right:5%!important;top:58%!important}
+
+.curriculum-visual-scene[data-model="emphasis-stack"] .cv-word-card.w1{left:50%!important;top:34%!important;transform:translateX(-50%) translateZ(65px)!important}
+.curriculum-visual-scene[data-model="emphasis-stack"] .cv-word-card.w2{left:50%!important;top:50%!important;transform:translateX(-50%) translateZ(95px)!important}
+.curriculum-visual-scene[data-model="emphasis-stack"] .cv-word-card.w3{left:50%!important;right:auto!important;top:66%!important;transform:translateX(-50%) translateZ(125px)!important}
+
+.curriculum-visual-scene[data-model="replacement-link"] .cv-word-card.w1{left:10%!important;top:54%!important}
+.curriculum-visual-scene[data-model="replacement-link"] .cv-word-card.w2{left:50%!important;top:54%!important;transform:translateX(-50%) translateZ(105px)!important}
+.curriculum-visual-scene[data-model="replacement-link"] .cv-word-card.w3{right:10%!important;top:54%!important}
+.curriculum-visual-scene[data-model="replacement-link"] .cv-parse-lines:after{
+  content:"↔";position:absolute;left:50%;top:20px;transform:translateX(-50%);
+  color:#87e7ff;font-size:28px
+}
+
+.curriculum-visual-scene[data-model="idafa-link"] .cv-word-card.w1{left:18%!important;top:50%!important}
+.curriculum-visual-scene[data-model="idafa-link"] .cv-word-card.w2{right:18%!important;left:auto!important;top:50%!important}
+.curriculum-visual-scene[data-model="idafa-link"] .cv-word-card.w3{left:50%!important;right:auto!important;top:69%!important;transform:translateX(-50%) translateZ(45px)!important}
+.curriculum-visual-scene[data-model="idafa-link"] .cv-parse-lines{
+  top:50%!important;left:31%!important;right:31%!important;height:3px!important;border:0!important;background:#7edfff88!important;
+  transform:translateZ(30px)!important
+}
+
+.curriculum-visual-scene[data-model="morphology-scale"] .cv-word-card.w1{left:12%!important;top:52%!important;transform:translateZ(70px) rotateZ(-5deg)!important}
+.curriculum-visual-scene[data-model="morphology-scale"] .cv-word-card.w2{left:50%!important;top:45%!important;transform:translateX(-50%) translateZ(115px)!important}
+.curriculum-visual-scene[data-model="morphology-scale"] .cv-word-card.w3{right:12%!important;top:52%!important;transform:translateZ(70px) rotateZ(5deg)!important}
+.curriculum-visual-scene[data-model="morphology-scale"] .cv-parse-lines{
+  top:61%!important;left:15%!important;right:15%!important;height:7px!important;border:0!important;
+  border-radius:10px;background:linear-gradient(90deg,#57c6ff,#e7f9ff,#8b68ff)!important;transform:translateZ(20px)!important
+}
+
+.curriculum-visual-scene[data-model^="case-"] .cv-word-card.w1,
+.curriculum-visual-scene[data-model^="verb-"] .cv-word-card.w1{left:6%!important;top:58%!important}
+.curriculum-visual-scene[data-model^="case-"] .cv-word-card.w2,
+.curriculum-visual-scene[data-model^="verb-"] .cv-word-card.w2{
+  left:50%!important;top:42%!important;transform:translateX(-50%) translateZ(118px)!important
+}
+.curriculum-visual-scene[data-model^="case-"] .cv-word-card.w3,
+.curriculum-visual-scene[data-model^="verb-"] .cv-word-card.w3{right:6%!important;top:58%!important}
+.curriculum-visual-scene[data-model="case-nominative"]{--case-accent:#63e3a5}
+.curriculum-visual-scene[data-model="case-accusative"]{--case-accent:#ffbf69}
+.curriculum-visual-scene[data-model="case-genitive"]{--case-accent:#79b8ff}
+.curriculum-visual-scene[data-model^="case-"] .cv-word-card{border-color:var(--case-accent)!important;box-shadow:0 0 25px color-mix(in srgb,var(--case-accent) 25%,transparent)!important}
+
+/* English topic families get different stage geometry */
+.curriculum-visual-scene[data-model="english-passive"] .cv-grammar-card.g1{left:8%!important;top:57%!important}
+.curriculum-visual-scene[data-model="english-passive"] .cv-grammar-card.g2{left:50%!important;top:33%!important}
+.curriculum-visual-scene[data-model="english-passive"] .cv-grammar-card.g3{right:8%!important;top:57%!important}
+.curriculum-visual-scene[data-model="english-passive"] .cv-english-line:after{
+  content:"ACTIVE  ⇄  PASSIVE";position:absolute;left:50%;top:-28px;transform:translateX(-50%);
+  font-size:9px;color:#9fe3ff;font-weight:950;white-space:nowrap
+}
+.curriculum-visual-scene[data-model="english-conditional"] .cv-grammar-card.g1{left:6%!important;top:40%!important}
+.curriculum-visual-scene[data-model="english-conditional"] .cv-grammar-card.g2{left:50%!important;top:53%!important}
+.curriculum-visual-scene[data-model="english-conditional"] .cv-grammar-card.g3{right:6%!important;top:40%!important}
+.curriculum-visual-scene[data-model="english-perfect"] .cv-english-line{transform:translateZ(30px) rotateZ(-4deg)!important}
+.curriculum-visual-scene[data-model="english-continuous"] .cv-english-line{transform:translateZ(30px) rotateZ(4deg)!important}
+.curriculum-visual-scene[data-model="english-future"] .cv-grammar-card.g3{transform:translateZ(120px) scale(1.12)!important}
+.curriculum-visual-scene[data-model="english-past"] .cv-grammar-card.g1{transform:translateZ(120px) scale(1.12)!important}
+
+/* Math identities: same lesson family, different visual character */
+.curriculum-visual-scene[data-model="parentheses-balance"] .cv-balance-arm{background:linear-gradient(90deg,#a56dff,#eefaff,#a56dff)!important}
+.curriculum-visual-scene[data-model="multistep-balance"] .cv-step-chips{transform:translateX(-50%) translateZ(80px) rotateX(-8deg)!important}
+.curriculum-visual-scene[data-model="linear-balance"] .cv-balance-pivot{filter:hue-rotate(25deg)}
+.curriculum-visual-scene[data-model="percent-grid"] .cv-ratio-cubes{grid-template-columns:repeat(10,1fr)!important;gap:4px!important}
+.curriculum-visual-scene[data-model="slope-plane"] .graph-svg{transform:translateZ(70px) rotateX(4deg)!important}
+.curriculum-visual-scene[data-model="function-plane"] .graph-svg{transform:translateZ(50px) rotateY(-6deg)!important}
+.curriculum-visual-scene[data-model="solid-geometry"] .cv-geo-prism{transform:rotateX(-24deg) rotateY(32deg) translateZ(88px)!important}
+.curriculum-visual-scene[data-model="area-geometry"] .cv-geo-prism{opacity:.35!important}
+.curriculum-visual-scene[data-model="triangle-geometry"] .cv-geo-svg{width:70%!important;left:1%!important}
+
+/* History families */
+.curriculum-visual-scene[data-model="history-revolution"] .cv-era.e2{background:linear-gradient(145deg,#a22d4f,#4d2335)!important}
+.curriculum-visual-scene[data-model="history-war"] .cv-history-rail{box-shadow:0 0 28px rgba(255,83,83,.35)!important}
+.curriculum-visual-scene[data-model="history-ideas"] .cv-era{background:linear-gradient(145deg,#345d92,#3f337a)!important}
+.curriculum-visual-scene[data-model="history-exploration"] .cv-era.e1{transform:translateZ(45px) rotateY(10deg)!important}
+.curriculum-visual-scene[data-model="history-exploration"] .cv-era.e3{transform:translateZ(65px) rotateY(-10deg)!important}
+.curriculum-visual-scene[data-model="history-state"] .cv-era.e2{transform:translateX(-50%) translateZ(125px) scale(1.1)!important}
+
+/* Science/geography variants */
+.curriculum-visual-scene[data-model="current-flow"] .cv-circuit .wire{animation-duration:.7s!important}
+.curriculum-visual-scene[data-model="electric-field"] .cv-bulb{border-radius:18px!important}
+.curriculum-visual-scene[data-model="ph-beaker"] .cv-liquid{background:linear-gradient(#79d7ff,#7457ff)!important}
+.curriculum-visual-scene[data-model="reaction-vessel"] .cv-liquid{animation:cvLiquidPulse 1.1s ease-in-out infinite alternate}
+.curriculum-visual-scene[data-model="mixture-particles"] .cv-molecule{filter:hue-rotate(75deg)}
+.curriculum-visual-scene[data-model="dna-helix"] .cv-cell{opacity:.35;transform:scale(.8) translateZ(10px)}
+.curriculum-visual-scene[data-model="ecosystem-chain"] .cv-eco-node{filter:drop-shadow(0 10px 12px #0006)}
+.curriculum-visual-scene[data-model="weather-system"] .cv-weather-cloud{transform:translateZ(75px) rotateY(-7deg)!important}
+.curriculum-visual-scene[data-model="climate-zones"] .cv-weather-cloud{filter:hue-rotate(35deg)}
+.curriculum-visual-scene[data-model="earthquake-plates"] .cv-tectonic-plates b:first-child{transform:translateX(calc((var(--model-level) - 5)*5px)) rotateZ(-4deg)!important}
+.curriculum-visual-scene[data-model="earthquake-plates"] .cv-tectonic-plates b:last-child{transform:translateX(calc((5 - var(--model-level))*5px)) rotateZ(4deg)!important}
+.curriculum-visual-scene[data-model="volcano-section"] .cv-earth-core{clip-path:polygon(0 100%,50% 0,100% 100%);border-radius:8px!important}
+.curriculum-visual-scene[data-model="rock-cycle"] .cv-earth-core{filter:saturate(.55) contrast(1.2)}
+.curriculum-visual-scene[data-model="population-city"] .cv-city-model .building{filter:saturate(1.3)}
+@keyframes cvLiquidPulse{to{filter:hue-rotate(35deg) brightness(1.25)}}
+
+@media(max-width:600px){
+ .curriculum-change-chips span{font-size:8px;padding:5px 7px}
+ .curriculum-visual-scene[data-model="emphasis-stack"] .cv-word-card{width:92px!important;height:54px!important}
+}
