@@ -9,7 +9,7 @@ initializeApp();
 const db = getFirestore();
 const messaging = getMessaging();
 
-const APP_URL = "https://bassamsamijaber-maker.github.io/pythagorasi-3d/";
+const APP_URL = "https://classora.study/";
 const ICON_URL = APP_URL + "icons/classora-192.png";
 const BADGE_URL = APP_URL + "icons/favicon-64.png";
 
