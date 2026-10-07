@@ -164,6 +164,10 @@ function statusLabel(api,s){return s==="done"?txt(api,"مكتمل","Completed"):
 function levelLabel(api,d){return ({easy:txt(api,"سهل","Easy"),medium:txt(api,"متوسط","Medium"),hard:txt(api,"صعب","Hard"),mixed:txt(api,"مختلط","Mixed")})[d]||d}
 function basicExplanation(api,t){
  const n=titleText(api,t);
+ if(t.subject==="math"&&/إحصاء/.test(t.title)){
+  if(lang(api)==="en")return "Statistics helps us turn a list of numbers into information we can understand. Start by identifying the variable being measured — for example height, price, quantity or marks — then organize the values in a table or graph. In a bar chart, the horizontal axis shows the categories or observations and the vertical axis shows the numerical value. After reading the graph, calculate the mean by adding all values and dividing by their count, find the median from the ordered list, identify the mode as the most repeated value, and use the range to describe how spread out the data are.";
+  return "الإحصاء يساعدنا نحول مجموعة أرقام إلى معلومات سهلة للفهم والمقارنة. أولًا نحدد ما هو المتغير الذي نقيسه، مثل الطول أو السعر أو الكمية أو العلامات، ثم نرتب القيم في جدول أو رسم بياني. في الرسم بالأعمدة يوضح المحور الأفقي الفئات أو المشاهدات، بينما يوضح المحور العمودي قيمة كل فئة. بعد قراءة الرسم نحسب المتوسط بجمع القيم وقسمتها على عددها، ونرتب القيم لإيجاد الوسيط، ونبحث عن القيمة الأكثر تكرارًا لإيجاد المنوال، ونحسب المدى بطرح أصغر قيمة من أكبر قيمة. المهم ليس حفظ القوانين فقط، بل معرفة ماذا يخبرنا الرسم عن البيانات وأين توجد القيم الأكبر والأصغر.";
+ }
  if(t.subject==="english")return "Learn the rule, form and common use of "+t.title+". Focus on affirmative, negative and question forms.";
  if(t.subject==="arabic")return "في هذا الدرس نتعلّم قاعدة «"+t.title+"»، كيف نميّزها داخل الجملة، وما العلامات التي تساعدنا على تحديدها وإعرابها بصورة صحيحة.";
  if(lang(api)==="en"){
@@ -179,6 +183,10 @@ function basicExplanation(api,t){
 }
 function advancedExplanation(api,t){
  const n=titleText(api,t);
+ if(t.subject==="math"&&/إحصاء/.test(t.title)){
+  if(lang(api)==="en")return "Advanced statistics: compare two data sets using center and spread, not one number only. The mean can change strongly because of an extreme value, while the median is often more stable. Read bar charts carefully by checking the scale and units before comparing heights. For larger ordered data sets, quartiles split the data into four parts: Q1, the median Q2 and Q3. The interquartile range IQR = Q3 − Q1 describes the spread of the middle 50% of the data. When the variables are different, such as height and price, keep their units clear and choose the graph that fits the question before drawing a conclusion.";
+  return "بالإحصاء المتقدم نقارن بين مجموعتين من البيانات باستخدام مقاييس المركز والانتشار، وليس رقمًا واحدًا فقط. المتوسط يتأثر كثيرًا بالقيمة الشاذة الكبيرة أو الصغيرة، بينما الوسيط غالبًا يبقى أكثر ثباتًا. عند قراءة أي رسم بياني افحص أولًا تدريج المحور والوحدة حتى لا تقارن أعمدة بطريقة خاطئة. وإذا كانت البيانات مرتبة وكبيرة يمكن تقسيمها إلى أربعة أجزاء: الربيع الأول Q1، والوسيط Q2، والربيع الثالث Q3، ويكون المدى الربيعي IQR = Q3 − Q1 لقياس انتشار نصف البيانات الأوسط. وإذا كنا نعرض متغيرات مختلفة مثل الطول والسعر، يجب كتابة الوحدة بوضوح واختيار نوع الرسم المناسب قبل الاستنتاج.";
+ }
  if(t.subject==="english")return "Advanced: compare "+t.title+" with nearby grammar forms, watch signal words and exceptions, then justify the correct form in context.";
  if(t.subject==="arabic")return "الشرح المتقدم: طبّق «"+t.title+"» على جمل مختلفة، ميّز الحالات المتشابهة، وحدد الموقع الإعرابي والعلامة الأصلية أو الفرعية عند الحاجة.";
  if(lang(api)==="en"){
@@ -198,6 +206,7 @@ function workedExample(api,t){
  if(t.subject==="arabic"){const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
  const n=titleText(api,t);
  if(t.subject==="math"){
+  if(/إحصاء/.test(t.title))return en?"Example — heights (cm): 150, 160, 160, 170, 180. Mean = (150+160+160+170+180)÷5 = 164 cm. Median = 160 cm. Mode = 160 cm. Range = 180−150 = 30 cm. On a bar chart, label the horizontal axis with the observations and the vertical axis with height (cm), then compare the bar heights.":"مثال — أطوال 5 طلاب بالسنتيمتر: 150، 160، 160، 170، 180. المتوسط = (150+160+160+170+180)÷5 = 164 سم. الوسيط = 160 سم بعد ترتيب القيم. المنوال = 160 لأنه الأكثر تكرارًا. المدى = 180−150 = 30 سم. وفي الرسم بالأعمدة نكتب المشاهدات على المحور الأفقي والطول (سم) على المحور العمودي ثم نقارن ارتفاع الأعمدة.";
   if(/فيثاغورس/.test(t.title))return en?"Example: a=3, b=4 → c²=9+16=25 → c=5.":"مثال: a=3 و b=4 → c²=9+16=25 → c=5.";
   if(/نسب/.test(t.title))return en?"Example: 25% of 200 = 200×25÷100 = 50.":"مثال: 25% من 200 = 200×25÷100 = 50.";
   if(/ميل/.test(t.title))return en?"Example: between (1,2) and (3,6), slope = (6−2)÷(3−1)=2.":"مثال: بين (1,2) و(3,6): الميل = (6−2)÷(3−1)=2.";
@@ -212,11 +221,13 @@ function skillText(api,t){
  if(t.subject==="english")return "Apply "+t.title+" correctly in context";
  if(t.subject==="arabic")return "تمييز قاعدة "+t.title+" وتطبيقها وإعرابها";
  if(lang(api)==="en"){
+  if(t.subject==="math"&&/إحصاء/.test(t.title))return "Read graphs, organize data and calculate mean, median, mode and range";
   if(t.subject==="math")return "Choose the correct rule and solve a problem in "+n;
   if(t.subject==="science")return "Explain "+n+" and connect cause to effect";
   if(t.subject==="history")return "Understand the sequence, causes and consequences of "+n;
   return "Analyze "+n+" and connect place, people and environment";
  }
+ if(t.subject==="math"&&/إحصاء/.test(t.title))return "قراءة الرسوم البيانية وتنظيم البيانات وحساب المتوسط والوسيط والمنوال والمدى";
  if(t.subject==="math")return "اختيار القاعدة المناسبة وحل مسألة في "+n;
  if(t.subject==="science")return "تفسير مفهوم "+n+" وربط السبب بالنتيجة";
  if(t.subject==="history")return "ترتيب وفهم أسباب ونتائج "+n;
@@ -303,6 +314,7 @@ function buildEntry(api,open){
 
 function editorDefaults(t){
  const pair=t.subject==="arabic"?AR_EXAMPLES[t.title]:t.subject==="english"?EN_EXAMPLES[t.title]:null;
+ if(t.subject==="math"&&/إحصاء/.test(t.title))return {data:"150, 160, 160, 170, 180",words:"الطول / السعر / الكمية / العلامات",question:"مثّل البيانات بيانيًا ثم احسب المتوسط والوسيط والمنوال والمدى.",answer:""};
  if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=> "en"},t),question:"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
  if(t.subject==="science")return {data:"المتغير = 10",words:t.title,question:"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
  if(t.subject==="arabic")return {data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
@@ -453,6 +465,7 @@ export function mountCurriculum(api){
  function buildTopicScene(t){
   const title=esc(t.title),n=String(t.title||""),subject=t.subject;
   if(subject==="math"){
+   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-grid"></div><div class="cv-stat-y">'+txt(api,"القيمة","Value")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:58%"><b>172</b><span>'+txt(api,"الطول","Height")+'</span></div><div class="cv-stat-bar s2" style="--h:42%"><b>85</b><span>'+txt(api,"السعر","Price")+'</span></div><div class="cv-stat-bar s3" style="--h:32%"><b>64</b><span>'+txt(api,"الكمية","Quantity")+'</span></div><div class="cv-stat-bar s4" style="--h:49%"><b>92</b><span>'+txt(api,"العلامات","Marks")+'</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المتغيرات","Variables")+'</div><div class="cv-stat-summary"><span>Mean</span><span>Median</span><span>Mode</span><span>Range</span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الرسم البياني","Drag to rotate the chart")+'</div>';
    if(/(فيثاغورس|مثلث)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-triangle" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg" viewBox="0 0 360 260" aria-hidden="true"><polygon points="78,205 78,65 278,205" class="cv-triangle"/><rect x="18" y="82" width="58" height="122" class="cv-side-square a"/><rect x="92" y="205" width="174" height="48" class="cv-side-square b"/><polygon points="90,56 288,190 244,252 46,118" class="cv-side-square c"/></svg><span class="cv-scene-tag">a² + b² = c²</span><span class="cv-depth-dot d1"></span><span class="cv-depth-dot d2"></span><span class="cv-depth-dot d3"></span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج","Drag to rotate the model")+'</div>';
    if(/(دالة|مستقيم|معادلة|ميل|إحداث|قطع مكافئ|نقاط الصفر)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-graph" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path d="M35 215 L320 55" class="cv-line l1"/><path d="M45 45 Q180 245 320 70" class="cv-line l2"/><circle cx="201" cy="122" r="8" class="cv-point"/></svg><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الرسم","Drag to rotate the graph")+'</div>';
    return '<div class="curriculum-visual-scene scene-math scene-algebra" id="cv97Scene"><div class="cv-grid-plane"></div><div class="cv-math-block b1">x</div><div class="cv-math-block b2">+</div><div class="cv-math-block b3">7</div><div class="cv-math-block b4">=</div><div class="cv-math-block b5">12</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب ودوّر مساحة الرياضيات","Drag and rotate the math space")+'</div>';
@@ -489,7 +502,7 @@ export function mountCurriculum(api){
   body.querySelector("#cv3DAuto")?.addEventListener("click",e=>{auto=!auto;e.currentTarget.classList.toggle("active",auto);if(auto)tick();else stopAuto()});
   body.querySelector("#cv3DZoomIn")?.addEventListener("click",()=>{scale=Math.min(1.6,scale+.1);paint()});
   body.querySelector("#cv3DZoomOut")?.addEventListener("click",()=>{scale=Math.max(.7,scale-.1);paint()});
-  card.querySelectorAll(".cv-word-card,.cv-grammar-card,.cv-math-block,.cv-nucleus,.cv-cell,.cv-era,.cv-globe,.cv-motion-ball,.cv-beaker").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();el.classList.toggle("cv-selected");const tag=card.querySelector(".cv-scene-tag");if(tag)tag.textContent=(el.textContent||state.topic?.title||"").trim().slice(0,80)}));
+  card.querySelectorAll(".cv-word-card,.cv-grammar-card,.cv-math-block,.cv-nucleus,.cv-cell,.cv-era,.cv-globe,.cv-motion-ball,.cv-beaker,.cv-stat-bar").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();el.classList.toggle("cv-selected");const tag=card.querySelector(".cv-scene-tag");if(tag)tag.textContent=(el.textContent||state.topic?.title||"").trim().slice(0,80)}));
   paint();
  }
  function renderLesson(){
