@@ -4031,6 +4031,10 @@ body.light .competition-question-type{background:#eef7fd;border-color:#d3e8f5;co
 
 
 /* ================= V99 PHONE DOWNLOAD / APP SHELL ================= */
+body:not(.classora-samsung-device) #installAppBtn,
+body:not(.classora-samsung-device) #authInstallAppBtn,
+body:not(.classora-samsung-device) #settingsInstallAppBtn{display:none!important}
+
 #installAppBtn{width:auto!important;gap:7px!important;padding-inline:11px!important}
 #installAppBtn .pwa-install-text{display:inline!important;font-size:10px;font-weight:900;white-space:nowrap}
 .settings-link-button{display:flex!important;align-items:center;justify-content:center;text-decoration:none;margin-top:8px;min-height:42px}
@@ -4868,7 +4872,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
         <span class="auth-step-kicker">2 / 2</span>
         <label for="studentNameInput" id="studentNameLabel">الاسم</label>
-        <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="مثال: بسام جابر">
+        <input id="studentNameInput" maxlength="40" autocomplete="name" placeholder="Name">
 
         <label for="studentPasswordInput">كلمة السر</label>
         <input id="studentPasswordInput" type="password" minlength="6" maxlength="64" autocomplete="current-password" placeholder="6 خانات أو أكثر">
@@ -4912,7 +4916,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
       <div class="teacher-entry-fields hidden" id="teacherCreateFields">
         <label for="teacherCreateName">اسم المعلم</label>
-        <input id="teacherCreateName" maxlength="40" autocomplete="name" placeholder="مثال: أحمد محمد">
+        <input id="teacherCreateName" maxlength="40" autocomplete="name" placeholder="Name">
         <label for="teacherCreateEmail">الإيميل</label>
         <input id="teacherCreateEmail" type="email" maxlength="100" autocomplete="email" placeholder="teacher@example.com">
         <label for="teacherCreatePassword">كلمة السر</label>
@@ -13102,10 +13106,10 @@ function syncV99LanguageLabels(){
  if(arabicSwitch)arabicSwitch.textContent=en?"Arabic":"العربية";
  const setPlaceholder=(id,a,e)=>{const el=document.getElementById(id);if(el)el.placeholder=en?e:a};
  setText("studentNameLabel","الاسم","Name");
- setPlaceholder("studentNameInput","مثال: بسام جابر","Example: Bassam Jaber");
+ setPlaceholder("studentNameInput","الاسم","Name");
  setText("teacherIdentifierLabel","الاسم أو الإيميل","Name or email");
  const teacherCreateName=document.querySelector('label[for="teacherCreateName"]');if(teacherCreateName)teacherCreateName.textContent=en?"Name":"الاسم";
- setPlaceholder("teacherCreateName","مثال: أحمد محمد","Example: Ahmad Mohammad");
+ setPlaceholder("teacherCreateName","الاسم","Name");
  setText("authInstallAppBtn","📲 تحميل Classora على الهاتف","📲 Download Classora to this phone");
  const lobbyText=document.querySelector("#installAppBtn .pwa-install-text");if(lobbyText)lobbyText.textContent=en?"Download":"تحميل على الهاتف";
  const mobileLobby=document.querySelector("#classoraMobileLobbyBtn span");if(mobileLobby)mobileLobby.textContent=en?"Lobby":"اللوبي";
@@ -21328,6 +21332,10 @@ function isIOSDevice(){
   return /iphone|ipad|ipod/i.test(navigator.userAgent)
     || (navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 }
+function isSamsungDevice(){
+  const ua=String(navigator.userAgent||"");
+  return /SamsungBrowser|SAMSUNG|SM-[A-Z0-9]+/i.test(ua);
+}
 function updatePwaUI(){
   const installed=isStandaloneApp();
   document.body.classList.toggle("pwa-standalone",installed);
@@ -21340,10 +21348,14 @@ function updatePwaUI(){
   const title=document.getElementById("pwaSettingsTitle");
   const en=currentUILanguage==="en";
 
-  const canInstall=true;
+  const canInstall=isSamsungDevice();
+  document.body.classList.toggle("classora-samsung-device",canInstall);
   lobbyBtn?.classList.toggle("hidden",installed||!canInstall);
   authInstallBtn?.classList.toggle("hidden",installed||!canInstall);
-  settingsBtn?.classList.toggle("hidden",installed);
+  settingsBtn?.classList.toggle("hidden",installed||!canInstall);
+  if(lobbyBtn)lobbyBtn.style.display=(!installed&&canInstall)?"":"none";
+  if(authInstallBtn)authInstallBtn.style.display=(!installed&&canInstall)?"":"none";
+  if(settingsBtn)settingsBtn.style.display=(!installed&&canInstall)?"":"none";
   badge?.classList.toggle("hidden",!installed);
 
   if(lobbyBtn){lobbyBtn.title=en?"Download Classora to this phone":"تحميل Classora على الهاتف";const t=lobbyBtn.querySelector(".pwa-install-text");if(t)t.textContent=en?"Download":"تحميل على الهاتف"}
@@ -21376,6 +21388,9 @@ function showPwaInstallInstructions(){
 }
 
 async function installClassoraApp(){
+  if(!isSamsungDevice()){
+    return;
+  }
   if(isStandaloneApp()){
     showToast(currentUILanguage==="en"?"Classora is already installed ✅":"Classora مثبت ومفتوح كتطبيق ✅");
     return;
@@ -21397,7 +21412,7 @@ async function installClassoraApp(){
 
 window.addEventListener("beforeinstallprompt",event=>{
   event.preventDefault();
-  deferredInstallPrompt=event;
+  deferredInstallPrompt=isSamsungDevice()?event:null;
   updatePwaUI();
 });
 window.addEventListener("appinstalled",()=>{
