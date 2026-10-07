@@ -465,7 +465,7 @@ export function mountCurriculum(api){
  function buildTopicScene(t){
   const title=esc(t.title),n=String(t.title||""),subject=t.subject;
   if(subject==="math"){
-   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
+   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
    if(/(فيثاغورس|مثلث)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-triangle" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg" viewBox="0 0 360 260" aria-hidden="true"><polygon points="78,205 78,65 278,205" class="cv-triangle"/><rect x="18" y="82" width="58" height="122" class="cv-side-square a"/><rect x="92" y="205" width="174" height="48" class="cv-side-square b"/><polygon points="90,56 288,190 244,252 46,118" class="cv-side-square c"/></svg><span class="cv-scene-tag">a² + b² = c²</span><span class="cv-depth-dot d1"></span><span class="cv-depth-dot d2"></span><span class="cv-depth-dot d3"></span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج","Drag to rotate the model")+'</div>';
    if(/(دالة|مستقيم|معادلة|ميل|إحداث|قطع مكافئ|نقاط الصفر)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-graph" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path d="M35 215 L320 55" class="cv-line l1"/><path d="M45 45 Q180 245 320 70" class="cv-line l2"/><circle cx="201" cy="122" r="8" class="cv-point"/></svg><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الرسم","Drag to rotate the graph")+'</div>';
    return '<div class="curriculum-visual-scene scene-math scene-algebra" id="cv97Scene"><div class="cv-grid-plane"></div><div class="cv-math-block b1">x</div><div class="cv-math-block b2">+</div><div class="cv-math-block b3">7</div><div class="cv-math-block b4">=</div><div class="cv-math-block b5">12</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب ودوّر مساحة الرياضيات","Drag and rotate the math space")+'</div>';
@@ -506,38 +506,53 @@ export function mountCurriculum(api){
   const statSelect=card.querySelector("#cvStatDataset"),statInputs=[...card.querySelectorAll(".cv-stat-input")],statBars=[...card.querySelectorAll(".cv-stat-bar")];
   if(statSelect&&statInputs.length===4){
    const statSets={
-    height:{values:[150,160,170,180],ar:"الطول (سم)",en:"Height (cm)"},
-    price:{values:[20,35,50,65],ar:"السعر (₪)",en:"Price (₪)"},
-    quantity:{values:[12,18,9,25],ar:"الكمية",en:"Quantity"},
-    marks:{values:[65,78,92,84],ar:"العلامات",en:"Marks"}
+    height:{values:[150,160,170,180],ar:"الطول (سم)",en:"Height (cm)",labelAr:"طول",labelEn:"Height",itemAr:"الطالب",itemEn:"student",unitAr:" سم",unitEn:" cm"},
+    price:{values:[20,35,50,65],ar:"السعر (₪)",en:"Price (₪)",labelAr:"سعر",labelEn:"Price",itemAr:"المنتج",itemEn:"item",unitAr:" ₪",unitEn:" ₪"},
+    quantity:{values:[12,18,9,25],ar:"الكمية",en:"Quantity",labelAr:"كمية",labelEn:"Quantity",itemAr:"الصنف",itemEn:"item",unitAr:"",unitEn:""},
+    marks:{values:[65,78,92,84],ar:"العلامات",en:"Marks",labelAr:"علامة",labelEn:"Mark",itemAr:"الطالب",itemEn:"student",unitAr:" درجة",unitEn:" pts"}
    };
    const statNumber=v=>{const n=Number(v);return Number.isFinite(n)?Math.max(0,Math.min(9999,n)):0};
    const statFormat=v=>Number.isInteger(v)?String(v):String(Math.round(v*10)/10);
-   const updateStats=()=>{
+   const updateStats=(activeIndex=0)=>{
     const vals=statInputs.map(i=>statNumber(i.value));
+    const current=statSets[statSelect.value]||statSets.height;
     const max=Math.max(1,...vals);
-    statBars.forEach((bar,i)=>bar.style.setProperty("--h",(24+(vals[i]/max)*58)+"%"));
+    statBars.forEach((bar,i)=>{
+     bar.style.setProperty("--h",(24+(vals[i]/max)*58)+"%");
+     const label=bar.querySelector(".cv-stat-label");
+     if(label)label.textContent=(lang(api)==="en"?current.labelEn:current.labelAr)+" "+(i+1);
+     bar.dataset.statValue=vals[i];
+     bar.setAttribute("aria-label",(lang(api)==="en"?current.labelEn+" of "+current.itemEn+" "+(i+1)+": "+statFormat(vals[i])+current.unitEn:current.labelAr+" "+current.itemAr+" "+(i+1)+": "+statFormat(vals[i])+current.unitAr));
+    });
     const sorted=vals.slice().sort((a,b)=>a-b);
     const mean=vals.reduce((a,b)=>a+b,0)/vals.length;
     const median=(sorted[1]+sorted[2])/2;
     const counts={};vals.forEach(v=>counts[v]=(counts[v]||0)+1);
-    let mode="—",best=1;Object.keys(counts).forEach(k=>{if(counts[k]>best){best=counts[k];mode=statFormat(Number(k))}});
+    let modeValue=null,best=1;Object.keys(counts).forEach(k=>{if(counts[k]>best){best=counts[k];modeValue=Number(k)}});
     const range=sorted[sorted.length-1]-sorted[0];
+    const unit=lang(api)==="en"?current.unitEn:current.unitAr;
     const set=(id,val)=>{const el=card.querySelector(id);if(el)el.textContent=val};
-    set("#cvStatMean",statFormat(mean));set("#cvStatMedian",statFormat(median));set("#cvStatMode",mode);set("#cvStatRange",statFormat(range));
-    if(state.editor)state.editor.data=vals.join(", ");
+    set("#cvStatMean",statFormat(mean)+unit);set("#cvStatMedian",statFormat(median)+unit);set("#cvStatMode",modeValue===null?"—":statFormat(modeValue)+unit);set("#cvStatRange",statFormat(range)+unit);
+    const idx=Math.max(0,Math.min(statInputs.length-1,Number(activeIndex)||0));
+    const detail=card.querySelector("#cvStatDetail");
+    if(detail)detail.textContent=lang(api)==="en"
+      ?current.itemEn.charAt(0).toUpperCase()+current.itemEn.slice(1)+" "+(idx+1)+" "+current.labelEn.toLowerCase()+": "+statFormat(vals[idx])+current.unitEn
+      :current.labelAr+" "+current.itemAr+" "+(idx+1)+": "+statFormat(vals[idx])+current.unitAr;
+    if(state.editor){state.editor.data=vals.join(", ");state.editor.words=lang(api)==="en"?current.en:current.ar}
    };
-   statInputs.forEach(input=>{
+   statInputs.forEach((input,index)=>{
     ["pointerdown","click"].forEach(ev=>input.addEventListener(ev,e=>e.stopPropagation()));
-    input.addEventListener("input",updateStats);
-    input.addEventListener("change",()=>{input.value=statFormat(statNumber(input.value));updateStats()});
+    input.addEventListener("focus",()=>updateStats(index));
+    input.addEventListener("input",()=>updateStats(index));
+    input.addEventListener("change",()=>{input.value=statFormat(statNumber(input.value));updateStats(index)});
+    statBars[index]?.addEventListener("click",()=>updateStats(index));
    });
    ["pointerdown","click"].forEach(ev=>statSelect.addEventListener(ev,e=>e.stopPropagation()));
    statSelect.addEventListener("change",()=>{
     const set=statSets[statSelect.value]||statSets.height;
     statInputs.forEach((input,i)=>input.value=set.values[i]);
     const y=card.querySelector("#cvStatYAxis");if(y)y.textContent=lang(api)==="en"?set.en:set.ar;
-    updateStats();
+    updateStats(0);
    });
    updateStats();
   }
