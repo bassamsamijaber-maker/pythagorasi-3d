@@ -211,13 +211,12 @@ function advancedExplanation(api,t){
  return "الشرح المتقدم: حلّل «"+n+"» باستخدام أكثر من عامل مكاني وبشري، اقرأ البيانات أو الخريطة، ثم استنتج علاقة السبب بالنتيجة.";
 }
 function workedExample(api,t){
- const en=lang(api)==="en";
+ const en=lang(api)==="en",n=titleText(api,t);
  if(t.subject==="english"){const pair=EN_EXAMPLES[t.title]||["Choose the sentence that correctly follows the rule of "+t.title+".","Check the verb form, word order and context."];return "Example: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
  if(t.subject==="arabic"){
   if(en)return "Worked example: identify the word or structure that matches “"+n+"”, explain its role, then check the grammatical case and the relationship between the words.";
   const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"
  }
- const n=titleText(api,t);
  if(t.subject==="math"){
   if(/إحصاء/.test(t.title))return en?"Example — heights (cm): 150, 160, 160, 170, 180. Mean = (150+160+160+170+180)÷5 = 164 cm. Median = 160 cm. Mode = 160 cm. Range = 180−150 = 30 cm. On a bar chart, label the horizontal axis with the observations and the vertical axis with height (cm), then compare the bar heights.":"مثال — أطوال 5 طلاب بالسنتيمتر: 150، 160، 160، 170، 180. المتوسط = (150+160+160+170+180)÷5 = 164 سم. الوسيط = 160 سم بعد ترتيب القيم. المنوال = 160 لأنه الأكثر تكرارًا. المدى = 180−150 = 30 سم. وفي الرسم بالأعمدة نكتب المشاهدات على المحور الأفقي والطول (سم) على المحور العمودي ثم نقارن ارتفاع الأعمدة.";
   if(/فيثاغورس/.test(t.title))return en?"Example: a=3, b=4 → c²=9+16=25 → c=5.":"مثال: a=3 و b=4 → c²=9+16=25 → c=5.";
@@ -580,13 +579,11 @@ export function mountCurriculum(api){
   paint();
  }
  function renderLesson(){
-  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),nativeOnly=false,display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
+  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
   const T=(ar,en)=>txt(api,ar,en);
-  const lessonStatus=t.subject==="arabic"?(p.status==="done"?"مكتمل":p.status==="progress"?"قيد التعلم":"لم يبدأ"):t.subject==="english"?(p.status==="done"?"Completed":p.status==="progress"?"In progress":"Not started"):statusLabel(api,p.status);
-  const trans=nativeOnly?translationTitle(t):"";
-  const transBlock=state.showTranslation?'<section class="curriculum-panel curriculum-translation" data-no-translate="1"><span class="curriculum-kicker">'+(t.subject==="arabic"?"ENGLISH TRANSLATION":"الترجمة العربية")+'</span><h3>'+esc(trans)+'</h3><p>'+(t.subject==="arabic"?"This translation is shown only on request. The original Arabic grammar lesson stays in Arabic.":"هذه الترجمة تظهر عند الطلب فقط، ويبقى درس English Grammar باللغة الإنجليزية.")+'</p></section>':"";
-  const nativeAttr=nativeOnly?' data-no-translate="1"':'';
-  body.innerHTML='<div class="curriculum-toolbar curriculum-lesson-toolbar"><div class="curriculum-breadcrumb">'+T("الصف ","Grade ")+t.grade+" / "+subjectName(api,t.subject)+(t.track?" / "+trackName(api,t.track):"")+'</div><div class="curriculum-page-actions"><button id="cv99ExplainBtn" class="curriculum-toolbar-btn">'+T("شرح تفاعلي","Interactive explanation")+'</button>'+(nativeOnly?'<button id="cv99TranslateBtn" class="curriculum-toolbar-btn">'+(state.showTranslation?T("إخفاء الترجمة","Hide translation"):T("إظهار الترجمة","Show translation"))+'</button>':'')+'</div></div>'+
+  const transBlock="";
+  const nativeAttr="";
+  body.innerHTML='<div class="curriculum-toolbar curriculum-lesson-toolbar"><div class="curriculum-breadcrumb">'+T("الصف ","Grade ")+t.grade+" / "+subjectName(api,t.subject)+(t.track?" / "+trackName(api,t.track):"")+'</div><div class="curriculum-page-actions"><button id="cv99ExplainBtn" class="curriculum-toolbar-btn">'+T("شرح تفاعلي","Interactive explanation")+'</button></div></div>'+
   '<div class="curriculum-lesson-hero"><section class="curriculum-lesson-copy"'+nativeAttr+'><span class="curriculum-kicker">'+subjectName(api,t.subject)+'</span><h2>'+esc(display)+'</h2><p>'+esc(skillText(api,t))+'</p><div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+T("المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+T("أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div>'+(flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+'</section><section class="curriculum-3d-card"'+nativeAttr+'>'+buildTopicScene(t)+'<div class="curriculum-3d-controls"><button id="cv3DZoomOut" type="button">−</button><button id="cv3DReset" type="button">'+T("إعادة","Reset")+'</button><button id="cv3DAuto" type="button">'+T("دوران","Auto")+'</button><button id="cv3DZoomIn" type="button">+</button></div></section></div>'+
   transBlock+
   '<section class="curriculum-interactive-explainer hidden" id="cv99Explainer"'+nativeAttr+'><div class="curriculum-explainer-head"><div><span class="curriculum-kicker">'+T("مختبر الشرح","EXPLANATION LAB")+'</span><h3>'+T("غيّر المعطيات والكلمات والسؤال","Change the givens, words and question")+'</h3></div><button id="cv99ApplyEditor" class="curriculum-main-action">'+T("حدّث الشرح","Update explanation")+'</button></div><div class="curriculum-editor-grid"><label>'+T("المعطيات / الجملة","Givens / sentence")+'<textarea id="cv99Data">'+esc(editor.data)+'</textarea></label><label>'+T("الكلمات أو المصطلحات","Words or terms")+'<textarea id="cv99Words">'+esc(editor.words)+'</textarea></label><label class="wide">'+T("السؤال","Question")+'<textarea id="cv99Question">'+esc(editor.question)+'</textarea></label><label>'+T("الإجابة النموذجية — اختياري","Model answer — optional")+'<input id="cv99Answer" value="'+esc(editor.answer||"")+'"></label></div><div class="curriculum-dynamic-answer" id="cv99DynamicExplanation"></div></section>'+
