@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v102-1-split-lessons";
+const CACHE_NAME="classora-v102-2-live-readable";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=103",
   "./assets/subject-labs.css?v=99",
@@ -8,10 +8,10 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=106",
+  "./assets/learning-hub.js?v=107",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=106",
-  "./assets/curriculum-v97.css?v=106",
+  "./assets/curriculum-v97.js?v=107",
+  "./assets/curriculum-v97.css?v=107",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
