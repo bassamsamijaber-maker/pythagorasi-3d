@@ -482,3 +482,160 @@ html[dir="ltr"] .curriculum-topic-sidebar{direction:ltr}
  .curriculum-topic-stage .cv-prob-wheel{width:145px;height:145px;margin:-72px}
  .curriculum-topic-stage .cv-earth-core{width:150px;height:150px;margin:-75px}
 }
+
+
+/* V107 — readable 3D labels + live controls */
+.curriculum-live-note{margin:7px 0 0!important;color:#64e6b0!important;font-size:9px!important;font-weight:900}
+.curriculum-dynamic-answer:empty:before{content:"غيّر أي قيمة — النتيجة تتحدث مباشرة";color:#648398}
+html[lang="en"] .curriculum-dynamic-answer:empty:before{content:"Change any value — the result updates instantly"}
+
+.cv-model-control{flex-direction:column!important;align-items:stretch!important;gap:5px!important;min-width:190px!important;text-align:center!important;line-height:1.2}
+.cv-model-control input[type=range]{width:100%!important}
+.cv-model-control b{align-self:center;padding:3px 7px;border-radius:7px;background:rgba(255,255,255,.07)}
+.cv-live-field{display:grid;gap:5px;justify-items:center;min-width:76px}
+.cv-live-field small,.cv-control-caption{display:block;color:#9cd8f3;font-size:8px;font-weight:950;line-height:1.25;text-align:center;white-space:nowrap}
+.cv-live-field .cv-model-number{width:68px}
+.cv-control-caption{margin-bottom:2px}
+
+.curriculum-topic-stage .cv-scene-tag{display:none!important}
+.curriculum-topic-stage .curriculum-visual-scene{overflow:visible!important}
+
+/* Arabic parsing — three independent cards, never stacked */
+.curriculum-topic-stage .scene-parsing .cv-parse-root{
+ top:8%!important;left:50%!important;bottom:auto!important;
+ max-width:62%!important;min-width:260px;
+ transform:translateX(-50%) translateZ(118px)!important;
+ font-size:15px!important;padding:10px 18px!important
+}
+.curriculum-topic-stage .scene-parsing .cv-parse-lines{
+ left:10%!important;right:10%!important;top:29%!important;height:135px!important
+}
+.curriculum-topic-stage .scene-parsing .cv-word-card{
+ top:55%!important;bottom:auto!important;width:150px!important;height:88px!important;
+ font-size:20px!important;margin:0!important
+}
+.curriculum-topic-stage .scene-parsing .cv-word-card.w1{
+ left:3%!important;right:auto!important;
+ transform:translateZ(68px) rotateY(8deg)!important
+}
+.curriculum-topic-stage .scene-parsing .cv-word-card.w2{
+ left:50%!important;right:auto!important;
+ transform:translateX(-50%) translateZ(108px)!important
+}
+.curriculum-topic-stage .scene-parsing .cv-word-card.w3{
+ left:auto!important;right:3%!important;
+ transform:translateZ(72px) rotateY(-8deg)!important
+}
+.curriculum-topic-stage .scene-parsing .cv-parse-readout{
+ left:50%!important;bottom:8%!important;width:70%!important;
+ transform:translateX(-50%) translateZ(95px)!important
+}
+
+/* English grammar — wide separation */
+.curriculum-topic-stage .scene-english .cv-english-line{left:7%!important;right:7%!important;top:56%!important}
+.curriculum-topic-stage .scene-english .cv-grammar-card{top:48%!important;width:142px!important;height:88px!important;font-size:15px}
+.curriculum-topic-stage .scene-english .cv-grammar-card.g1{
+ left:2%!important;right:auto!important;transform:translateZ(64px) rotateY(7deg)!important
+}
+.curriculum-topic-stage .scene-english .cv-grammar-card.g2{
+ left:50%!important;right:auto!important;top:30%!important;width:185px!important;height:108px!important;
+ transform:translateX(-50%) translateZ(112px)!important
+}
+.curriculum-topic-stage .scene-english .cv-grammar-card.g3{
+ left:auto!important;right:2%!important;transform:translateZ(68px) rotateY(-7deg)!important
+}
+
+/* History timeline — keep captions apart */
+.curriculum-topic-stage .scene-history .cv-era{bottom:27%!important;width:104px!important}
+.curriculum-topic-stage .scene-history .cv-era.e1{left:5%!important;right:auto!important;transform:translateZ(50px)!important}
+.curriculum-topic-stage .scene-history .cv-era.e2{left:50%!important;right:auto!important;transform:translateX(-50%) translateZ(100px)!important}
+.curriculum-topic-stage .scene-history .cv-era.e3{left:auto!important;right:5%!important;transform:translateZ(58px)!important}
+.curriculum-topic-stage .scene-history .cv-era b{font-size:12px!important}
+
+/* Algebra / graph captions */
+.curriculum-topic-stage .scene-algebra{gap:clamp(14px,2.4vw,34px)!important;padding-inline:7%!important}
+.curriculum-topic-stage .scene-algebra .cv-math-block{min-width:70px;max-width:112px}
+.curriculum-topic-stage .cv-system-badges{top:10%!important;gap:12px!important;flex-wrap:wrap;justify-content:center;width:78%}
+.curriculum-topic-stage .cv-system-badges span{font-size:10px!important;padding:7px 11px!important}
+.curriculum-topic-stage .cv-equation-live{top:8%!important;white-space:nowrap}
+.curriculum-topic-stage .cv-step-chips{bottom:15%!important;gap:10px!important}
+
+/* Fraction equation — captions sit above each number */
+.curriculum-topic-stage .scene-fraction-equation .cv-eq-space{
+ gap:22px!important;top:47%!important;min-width:66%;justify-content:center
+}
+.curriculum-topic-stage .scene-fraction-equation .cv-live-field small{font-size:9px}
+.curriculum-topic-stage .scene-fraction-equation .cv-equation-result{bottom:12%!important;font-size:16px!important}
+
+/* Word problems */
+.curriculum-topic-stage .cv-story-stage{gap:22px!important;left:7%!important;right:7%!important}
+.curriculum-topic-stage .cv-story-object{gap:9px!important}
+.curriculum-topic-stage .cv-story-equation{bottom:10%!important}
+
+/* Statistics — clear header, values and chart labels */
+.curriculum-topic-stage .scene-statistics .cv-stat-toolbar{top:4%!important;left:8%!important;right:8%!important}
+.curriculum-topic-stage .scene-statistics .cv-stat-detail{top:17%!important;max-width:72%!important;font-size:10px!important}
+.curriculum-topic-stage .scene-statistics .cv-stat-bars{top:30%!important;bottom:22%!important}
+.curriculum-topic-stage .scene-statistics .cv-stat-label{bottom:-30px!important;max-width:100px!important}
+.curriculum-topic-stage .scene-statistics .cv-stat-summary{bottom:5%!important}
+
+/* Generic model controls remain separated from scene content */
+.curriculum-topic-stage .cv-model-control{bottom:5%!important;z-index:30!important;max-width:260px}
+.curriculum-topic-stage .cv-model-action{bottom:5%!important;z-index:31!important}
+.curriculum-topic-stage .scene-probability .cv-model-action,
+.curriculum-topic-stage .scene-english .cv-model-action,
+.curriculum-topic-stage .scene-history .cv-model-action{bottom:7%!important}
+
+/* Geometry/science/geography controls */
+.curriculum-topic-stage .scene-geometry .cv-model-control,
+.curriculum-topic-stage .scene-electricity .cv-model-control,
+.curriculum-topic-stage .scene-light .cv-model-control,
+.curriculum-topic-stage .scene-sound .cv-model-control,
+.curriculum-topic-stage .scene-atom .cv-model-control,
+.curriculum-topic-stage .scene-chemistry .cv-model-control,
+.curriculum-topic-stage .scene-biology .cv-model-control,
+.curriculum-topic-stage .scene-ecosystem .cv-model-control,
+.curriculum-topic-stage .scene-motion .cv-model-control,
+.curriculum-topic-stage .scene-motion-math .cv-model-control,
+.curriculum-topic-stage .scene-earth-layers .cv-model-control,
+.curriculum-topic-stage .scene-weather .cv-model-control,
+.curriculum-topic-stage .scene-human-geography .cv-model-control,
+.curriculum-topic-stage .scene-geography .cv-model-control{bottom:4%!important}
+
+/* Live editor is intentionally simple: labels explain exactly what changes */
+.curriculum-topic-sidebar .curriculum-editor-grid label{
+ position:relative;padding-top:2px;font-size:10px!important;color:#b8d5e5!important
+}
+.curriculum-topic-sidebar .curriculum-editor-grid label:after{
+ display:block;margin-top:-2px;color:#658ba1;font-size:8px;font-weight:700
+}
+.curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(1):after{content:"يغيّر البيانات الظاهرة في النموذج"}
+.curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(2):after{content:"يغيّر الكلمات والمصطلحات في المشهد"}
+.curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(3):after{content:"يغيّر السؤال المعروض"}
+.curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(4):after{content:"يغيّر الإجابة النموذجية"}
+html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(1):after{content:"Changes the data shown in the model"}
+html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(2):after{content:"Changes the words and terms in the scene"}
+html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(3):after{content:"Changes the displayed question"}
+html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-child(4):after{content:"Changes the model answer"}
+
+@media(max-width:820px){
+ .curriculum-topic-stage .scene-parsing .cv-parse-root{min-width:210px;max-width:70%!important;font-size:12px!important}
+ .curriculum-topic-stage .scene-parsing .cv-word-card{width:112px!important;height:68px!important;font-size:15px!important}
+ .curriculum-topic-stage .scene-parsing .cv-word-card.w1{left:1%!important}
+ .curriculum-topic-stage .scene-parsing .cv-word-card.w3{right:1%!important}
+ .curriculum-topic-stage .scene-english .cv-grammar-card{width:105px!important;height:68px!important}
+ .curriculum-topic-stage .scene-english .cv-grammar-card.g2{width:135px!important;height:86px!important}
+ .curriculum-topic-stage .scene-history .cv-era{width:78px!important}
+ .curriculum-topic-stage .scene-fraction-equation .cv-eq-space{gap:10px!important;min-width:92%}
+ .cv-live-field small,.cv-control-caption{font-size:7px}
+}
+@media(max-width:520px){
+ .curriculum-topic-stage .scene-parsing .cv-word-card{width:86px!important;height:58px!important;font-size:12px!important}
+ .curriculum-topic-stage .scene-parsing .cv-word-card.w1{left:0!important}
+ .curriculum-topic-stage .scene-parsing .cv-word-card.w3{right:0!important}
+ .curriculum-topic-stage .scene-parsing .cv-parse-root{min-width:170px;font-size:10px!important}
+ .curriculum-topic-stage .scene-english .cv-grammar-card{width:82px!important;height:56px!important;font-size:10px}
+ .curriculum-topic-stage .scene-english .cv-grammar-card.g2{width:106px!important;height:70px!important}
+ .curriculum-topic-stage .scene-history .cv-era{width:62px!important}
+ .curriculum-topic-stage .cv-model-control{min-width:150px!important;max-width:58%!important}
+}
