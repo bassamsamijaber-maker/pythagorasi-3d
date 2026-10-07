@@ -570,6 +570,126 @@ export function mountCurriculum(api){
    unit.append(head,grid);host.appendChild(unit);
   });
  }
+ function topicModelKey(t){
+  const n=String(t.title||""),s=t.subject;
+  if(s==="math"){
+   if(/إحصاء/.test(n))return "statistics-bars";
+   if(/معادلات كسرية|كسور جبرية/.test(n))return "fraction-equation";
+   if(/مسائل كلامية/.test(n))return "word-equation";
+   if(/نظام معادلتين|نظام المعادلات/.test(n))return "system-intersection";
+   if(/معادلات مع أقواس/.test(n))return "parentheses-balance";
+   if(/معادلات متعددة الخطوات/.test(n))return "multistep-balance";
+   if(/معادلات خطية|المعادلات بمتغير|^المعادلات$/.test(n))return "linear-balance";
+   if(/فيثاغورس/.test(n))return "pythagoras-squares";
+   if(/احتمال/.test(n))return "probability-wheel";
+   if(/نسب مئوية/.test(n))return "percent-grid";
+   if(/نسبة|تناسب|مقياس الرسم/.test(n))return "ratio-cubes";
+   if(/سرعة|زمن|مسافة/.test(n))return "motion-track";
+   if(/ميل/.test(n))return "slope-plane";
+   if(/معادلة المستقيم|دالة|إحداث|تقاطع/.test(n))return "function-plane";
+   if(/حجوم|مجسمات/.test(n))return "solid-geometry";
+   if(/مساحات|محيط/.test(n))return "area-geometry";
+   if(/مثلث|زاوية|تطابق|تشابه|مستقيمات/.test(n))return "triangle-geometry";
+   return "algebra-blocks";
+  }
+  if(s==="science"){
+   if(/دارات/.test(n))return "electric-circuit";
+   if(/تيار كهربائي/.test(n))return "current-flow";
+   if(/كهرباء/.test(n))return "electric-field";
+   if(/ضوء/.test(n))return "light-rays";
+   if(/صوت/.test(n))return "sound-waves";
+   if(/ذرة|بنية الذرة/.test(n))return "atom-orbits";
+   if(/عناصر|الجدول الدوري/.test(n))return "element-shell";
+   if(/أحماض|قواعد|pH/.test(n))return "ph-beaker";
+   if(/تفاعل/.test(n))return "reaction-vessel";
+   if(/مركبات|روابط/.test(n))return "molecule-bonds";
+   if(/مخاليط/.test(n))return "mixture-particles";
+   if(/خلية/.test(n))return "cell-model";
+   if(/وراثة|DNA|جين/.test(n))return "dna-helix";
+   if(/تكاثر/.test(n))return "reproduction-cycle";
+   if(/جسم الإنسان|جهاز|تنفس|دوران/.test(n))return "body-system";
+   if(/بيئة|استدامة|سلاسل غذائية/.test(n))return "ecosystem-chain";
+   if(/حرارة|درجة الحرارة/.test(n))return "thermal-particles";
+   if(/طاقة/.test(n))return "energy-transfer";
+   if(/قوة|حركة|سرعة|تسارع|نيوتن/.test(n))return "force-motion";
+   return "science-lab";
+  }
+  if(s==="arabic"){
+   if(/المبني للمعلوم والمبني للمجهول/.test(n))return "active-passive-flow";
+   if(/نائب الفاعل/.test(n))return "deputy-subject-tree";
+   if(/فاعل/.test(n))return "subject-tree";
+   if(/مفعول/.test(n))return "object-tree";
+   if(/حال/.test(n))return "state-link";
+   if(/نعت|منعوت/.test(n))return "adjective-link";
+   if(/عطف/.test(n))return "conjunction-branch";
+   if(/توكيد/.test(n))return "emphasis-stack";
+   if(/بدل/.test(n))return "replacement-link";
+   if(/مضاف/.test(n))return "idafa-link";
+   if(/ميزان صرفي/.test(n))return "morphology-scale";
+   if(/اسم الفاعل/.test(n))return "active-participle";
+   if(/اسم المفعول/.test(n))return "passive-participle";
+   if(/علامات الرفع/.test(n))return "case-nominative";
+   if(/علامات النصب/.test(n))return "case-accusative";
+   if(/علامات الجر/.test(n))return "case-genitive";
+   if(/جزم/.test(n))return "verb-jussive";
+   if(/نصب الفعل/.test(n))return "verb-subjunctive";
+   if(/رفع الفعل/.test(n))return "verb-indicative";
+   return "grammar-tree";
+  }
+  if(s==="english"){
+   if(/Passive/.test(n))return "english-passive";
+   if(/Conditional/.test(n))return "english-conditional";
+   if(/Perfect/.test(n))return "english-perfect";
+   if(/Continuous/.test(n))return "english-continuous";
+   if(/Past/.test(n))return "english-past";
+   if(/Future|Will|Going To/.test(n))return "english-future";
+   if(/Modal|Can|Could|Must|Should|May|Might/.test(n))return "english-modal";
+   if(/Relative/.test(n))return "english-relative";
+   if(/Comparative|Superlative/.test(n))return "english-comparison";
+   return "english-grammar";
+  }
+  if(s==="history"){
+   if(/ثورة/.test(n))return "history-revolution";
+   if(/حرب/.test(n))return "history-war";
+   if(/إصلاح|النهضة|Humanism/.test(n))return "history-ideas";
+   if(/اكتشاف/.test(n))return "history-exploration";
+   if(/دولة|إمبراطورية|عثمانية|أموية|عباسية/.test(n))return "history-state";
+   return "history-timeline";
+  }
+  if(s==="geography"){
+   if(/زلازل/.test(n))return "earthquake-plates";
+   if(/براكين/.test(n))return "volcano-section";
+   if(/صفائح/.test(n))return "tectonic-plates";
+   if(/صخور|معادن/.test(n))return "rock-cycle";
+   if(/طقس/.test(n))return "weather-system";
+   if(/مناخ/.test(n))return "climate-zones";
+   if(/دورة المياه/.test(n))return "water-cycle";
+   if(/غلاف جوي/.test(n))return "atmosphere-layers";
+   if(/سكان|هجرة|مدن/.test(n))return "population-city";
+   if(/طاقة|موارد/.test(n))return "resource-network";
+   if(/الأرض والنظام الشمسي/.test(n))return "solar-earth";
+   return "geography-globe";
+  }
+  return "topic-model";
+ }
+ function topicChangeGuide(api,t){
+  const n=String(t.title||""),en=lang(api)==="en";let items=[];
+  if(t.subject==="math"&&/إحصاء/.test(n))items=en?["Data type","Four values","Column labels","Question"]:["نوع البيانات","القيم الأربع","أسماء الأعمدة","السؤال"];
+  else if(t.subject==="math"&&/معادلات كسرية/.test(n))items=en?["Denominator","Added value","Right side","Question"]:["المقام","العدد المضاف","الطرف الأيمن","السؤال"];
+  else if(t.subject==="math"&&/مسائل كلامية/.test(n))items=en?["Price","Quantity","Story","Question"]:["السعر","الكمية","نص المسألة","السؤال"];
+  else if(t.subject==="math"&&/معادلات|المعادلات/.test(n))items=en?["Equation values","Left side","Right side","Question"]:["أرقام المعادلة","الطرف الأيسر","الطرف الأيمن","السؤال"];
+  else if(t.subject==="math"&&/زاوية|مثلث|تطابق|تشابه/.test(n))items=en?["Angle","Side length","Shape","Question"]:["الزاوية","طول الضلع","شكل المجسم","السؤال"];
+  else if(t.subject==="science"&&/كهرباء|دارات|تيار/.test(n))items=en?["Current","Circuit state","Component value","Question"]:["شدة التيار","حالة الدارة","قيمة العنصر","السؤال"];
+  else if(t.subject==="science"&&/ضوء/.test(n))items=en?["Ray angle","Light direction","Surface","Question"]:["زاوية الشعاع","اتجاه الضوء","السطح","السؤال"];
+  else if(t.subject==="science"&&/صوت/.test(n))items=en?["Frequency","Wave height","Source","Question"]:["التردد","ارتفاع الموجة","المصدر","السؤال"];
+  else if(t.subject==="science"&&/ذرة|عناصر/.test(n))items=en?["Electrons","Element data","Energy level","Question"]:["الإلكترونات","بيانات العنصر","مستوى الطاقة","السؤال"];
+  else if(t.subject==="science")items=en?["Main variable","Model state","Terms","Question"]:["المتغير الرئيسي","حالة النموذج","المصطلحات","السؤال"];
+  else if(t.subject==="arabic")items=en?["Sentence","Displayed words","Grammar role","Question"]:["الجملة","الكلمات الظاهرة","الموقع الإعرابي","السؤال"];
+  else if(t.subject==="english")items=en?["Sentence","Grammar form","Time/context","Question"]:["الجملة","صيغة القاعدة","الزمن/السياق","السؤال"];
+  else if(t.subject==="history")items=en?["Event","Date/order","Cause","Result"]:["الحدث","السنة/الترتيب","السبب","النتيجة"];
+  else items=en?["Main value","Place/factor","Labels","Question"]:["القيمة الرئيسية","المكان/العامل","العناوين","السؤال"];
+  return items;
+ }
  function flagshipAction(t){
   const n=String(t.title||"");
   if(t.subject==="math"&&/فيثاغورس/.test(n))return {key:"lab",ar:"افتح مختبر فيثاغورس الكامل",en:"Open the full Pythagoras lab"};
@@ -581,10 +701,11 @@ export function mountCurriculum(api){
  }
  function buildTopicScene(t){
   const n=String(t.title||""),subject=t.subject,display=esc(titleText(api,t));
-  const shell=(kind,inner,arHint,enHint)=>'<div class="curriculum-visual-scene '+kind+'" id="cv97Scene" data-topic-kind="'+kind.replace(/\s+/g,"-")+'">'+inner+'<div class="cv-live-scene-plate"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,arHint,enHint)+'</div>';
+  const modelKey=topicModelKey(t);
+  const shell=(kind,inner,arHint,enHint)=>'<div class="curriculum-visual-scene '+kind+'" id="cv97Scene" data-topic-kind="'+kind.replace(/\s+/g,"-")+'" data-model="'+modelKey+'">'+inner+'<div class="cv-live-scene-plate"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,arHint,enHint)+'</div>';
 
   if(subject==="math"){
-   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><div class="cv-live-scene-plate stat-live"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
+   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene" data-model="statistics-bars"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><div class="cv-live-scene-plate stat-live"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
 
    if(/(معادلات كسرية|كسور جبرية)/.test(n))return shell("scene-math scene-fraction-equation",
     '<div class="cv-eq-space"><div class="cv-fraction-stack"><div class="cv-frac-num">x</div><div class="cv-frac-line"></div><label class="cv-live-field"><small>'+txt(api,"غيّر المقام","Change denominator")+'</small><input id="cvFracDen" class="cv-model-number" type="number" min="1" max="20" value="2" aria-label="'+txt(api,"المقام","Denominator")+'"></label></div><b class="cv-eq-op">+</b><label class="cv-live-field"><small>'+txt(api,"غيّر العدد المضاف","Change added value")+'</small><input id="cvFracAdd" class="cv-model-number floating" type="number" value="3" aria-label="'+txt(api,"العدد المضاف","Added number")+'"></label><b class="cv-eq-op">=</b><label class="cv-live-field"><small>'+txt(api,"غيّر الناتج","Change result")+'</small><input id="cvFracRight" class="cv-model-number floating" type="number" value="7" aria-label="'+txt(api,"الطرف الأيمن","Right side")+'"></label></div><div class="cv-equation-result">'+txt(api,"الحل: x = ","Solution: x = ")+'<b id="cvFracSolution">8</b></div><div class="cv-fraction-tiles"><i></i><i></i><i></i><i></i></div>',
@@ -883,6 +1004,7 @@ export function mountCurriculum(api){
       '<div class="curriculum-topic-spotlight">'+esc(spotlight)+'</div>'+
       (flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+
     '</section>'+
+    '<section class="curriculum-change-guide"><span class="curriculum-kicker">'+T("شو بقدر أغيّر؟","WHAT CAN I CHANGE?")+'</span><div class="curriculum-change-chips">'+topicChangeGuide(api,t).map(x=>"\u003cspan>"+esc(x)+"\u003c/span>").join("")+'</div></section>'+
     '<section class="curriculum-topic-quick-actions">'+
       '<button id="cv99ExplainBtn" type="button">✦ <b>'+T("شرح بالتفصيل","Explain in detail")+'</b></button>'+
       '<button id="cvTopicAuto" type="button">✦ <b>'+T("شغّل النموذج","Run model")+'</b></button>'+
