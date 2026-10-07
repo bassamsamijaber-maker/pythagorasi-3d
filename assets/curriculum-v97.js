@@ -288,15 +288,83 @@ function arabicPractical(api,t,diff,n){
  const wrongs=[pair[1],"هذا المثال لا يحقق القاعدة المطلوبة.","الجملة لا تطابق موضوع السؤال."];
  return {prompt:ask+" ("+(n+1)+")",options:shuffle([pair[0]].concat(wrongs)).slice(0,4),answer:pair[0],explanation:"المثال الصحيح يطابق قاعدة «"+t.title+"»."};
 }
+function topicSpecificQuestion(api,t,diff,n){
+ const en=lang(api)==="en",title=titleText(api,t),raw=String(t.title||""),k=n+1;
+ const mc=(prompt,answer,wrongs,explanation)=>({prompt:prompt+" ("+k+")",options:shuffle([answer].concat(wrongs)).slice(0,4),answer:answer,explanation:explanation});
+ const num=v=>Number.isInteger(v)?String(v):String(Math.round(v*100)/100);
+ if(t.subject==="math"){
+  if(/إحصاء/.test(raw)){
+   const sets=[[4,6,6,8],[10,12,14,16],[5,5,7,9],[20,25,25,30]],a=sets[n%sets.length],sorted=a.slice().sort((x,y)=>x-y);
+   const mean=a.reduce((x,y)=>x+y,0)/a.length,median=(sorted[1]+sorted[2])/2,range=sorted[3]-sorted[0],counts={};
+   a.forEach(v=>counts[v]=(counts[v]||0)+1);const mode=Number(Object.keys(counts).sort((x,y)=>counts[y]-counts[x])[0]);
+   const type=n%4,answers=[mean,median,mode,range],ar=["المتوسط","الوسيط","المنوال","المدى"],ee=["mean","median","mode","range"],ans=num(answers[type]);
+   return mc((en?"For the data ":"للبيانات ")+a.join(", ")+(en?", what is the "+ee[type]+"?":"، ما "+ar[type]+"؟"),ans,[num(answers[type]+1),num(Math.max(0,answers[type]-1)),num(sorted[0])],en?"Calculate using only these data.":"احسب من هذه البيانات فقط.");
+  }
+  if(/معادلات كسرية|كسور جبرية/.test(raw)){
+   const d=2+n%4,add=1+n%5,x=d*(2+n%5),right=x/d+add,ans="x = "+num(x);
+   return mc((en?"Solve ":"حل ")+"x/"+d+" + "+add+" = "+num(right),ans,["x = "+num(x+d),"x = "+num(Math.max(0,x-d)),"x = "+num(right*d)],en?"Remove the fraction, isolate x, then check.":"تخلّص من الكسر، اعزل x، ثم افحص.");
+  }
+  if(/معادلات مع أقواس/.test(raw)){
+   const a=2+n%3,b=1+n%4,x=2+n%6,r=a*(x+b),ans="x = "+x;
+   return mc((en?"Solve ":"حل ")+a+"(x + "+b+") = "+r,ans,["x = "+(x+1),"x = "+Math.max(0,x-1),"x = "+r],en?"Expand the parentheses and isolate x.":"فك القوس ثم اعزل x.");
+  }
+  if(/معادلات متعددة الخطوات|معادلات خطية|المعادلات بمتغير في الطرفين|^المعادلات$/.test(raw)){
+   const a=2+n%4,x=2+n%7,b=1+n%6,r=a*x+b,ans="x = "+x;
+   return mc((en?"Solve ":"حل ")+a+"x + "+b+" = "+r,ans,["x = "+(x+1),"x = "+Math.max(0,x-1),"x = "+num(r/a)],en?"Keep both sides balanced and isolate x.":"حافظ على توازن الطرفين واعزل x.");
+  }
+  if(/مسائل كلامية على المعادلات|مسائل كلامية/.test(raw)){
+   const qty=2+n%5,price=5+n%8,total=qty*price,ans=num(price)+" ₪";
+   return mc(en?qty+" identical items cost "+total+" ₪. What is the price of one item?":"ثمن "+qty+" قطع متساوية هو "+total+" ₪. كم سعر القطعة الواحدة؟",ans,[num(price+1)+" ₪",num(Math.max(1,price-1))+" ₪",num(total)+" ₪"],en?"Use quantity × price = total.":"استخدم الكمية × السعر = المجموع.");
+  }
+  if(/نسبة|تناسب|نسب مئوية|مقياس الرسم/.test(raw)){
+   const total=40+10*(n%4),pct=10*(2+n%5),part=total*pct/100,ans=num(part);
+   return mc(en?"What is "+pct+"% of "+total+"?":"كم يساوي "+pct+"% من "+total+"؟",ans,[num(part+5),num(Math.max(0,part-5)),num(total-pct)],en?"Convert the percentage and multiply.":"حوّل النسبة ثم اضرب.");
+  }
+  if(/احتمال/.test(raw)){
+   const good=1+n%4,all=good+2+n%4,ans=good+"/"+all;
+   return mc(en?"A bag has "+all+" equally likely pieces and "+good+" are blue. What is P(blue)?":"في كيس "+all+" قطع متساوية الاحتمال، منها "+good+" زرقاء. ما احتمال الأزرق؟",ans,["1/"+all,(all-good)+"/"+all,good+"/"+(all+1)],en?"Probability = favorable ÷ total.":"الاحتمال = المطلوب ÷ الكل.");
+  }
+  if(/سرعة|زمن|مسافة/.test(raw)){
+   const speed=5+n%6,time=2+n%4,dist=speed*time,ans=num(dist);
+   return mc(en?"An object moves at "+speed+" m/s for "+time+" s. Find the distance.":"جسم سرعته "+speed+" م/ث لمدة "+time+" ث. جد المسافة.",ans,[num(dist+speed),num(Math.max(0,dist-time)),num(speed+time)],en?"Distance = speed × time.":"المسافة = السرعة × الزمن.");
+  }
+  if(/فيثاغورس/.test(raw)){
+   const triples=[[3,4,5],[5,12,13],[8,15,17],[7,24,25]],tr=triples[n%triples.length],ans=String(tr[2]);
+   return mc(en?"A right triangle has legs "+tr[0]+" and "+tr[1]+". Find the hypotenuse.":"مثلث قائم ضلعاه "+tr[0]+" و"+tr[1]+". جد الوتر.",ans,[String(tr[2]+1),String(tr[1]),String(tr[0]+tr[1])],en?"Use a² + b² = c².":"استخدم a² + b² = c².");
+  }
+  if(/ميل/.test(raw)){
+   const x1=1,y1=2,x2=3+n%3,m=2+n%3,y2=y1+m*(x2-x1),ans=String(m);
+   return mc(en?"Find the slope through ("+x1+","+y1+") and ("+x2+","+y2+").":"جد الميل بين ("+x1+","+y1+") و("+x2+","+y2+").",ans,[String(m+1),String(m-1),String(y2-y1)],en?"m = Δy/Δx.":"الميل = Δy ÷ Δx.");
+  }
+  if(/زاوية|مثلث|تطابق|تشابه|مستقيمات متوازية/.test(raw)){
+   const a=40+(n%5)*10,b=50+(n%4)*5,cx=180-a-b,ans=String(cx)+"°";
+   return mc(en?"A triangle has angles "+a+"° and "+b+"°. Find the third angle.":"في مثلث زاويتان "+a+"° و"+b+"°. جد الثالثة.",ans,[String(cx+10)+"°",String(Math.max(10,cx-10))+"°",String(a+b)+"°"],en?"Triangle angles total 180°.":"مجموع الزوايا 180°.");
+  }
+  return mc(en?"Which statement is correct specifically about “"+title+"”?":"أي عبارة صحيحة تحديدًا عن «"+title+"»؟",skillText(api,t),[en?"A rule from another lesson.":"قاعدة من درس آخر.",en?"An unrelated application.":"تطبيق غير مرتبط.",en?"A statement outside this topic.":"عبارة خارج هذا الموضوع."],en?"This question belongs only to "+title+".":"هذا السؤال من موضوع «"+title+"» فقط.");
+ }
+ if(t.subject==="science"){
+  const correct=basicExplanation(api,t);
+  return mc(en?"Which statement belongs specifically to “"+title+"”?":"أي عبارة تخص «"+title+"» تحديدًا؟",correct,[en?"A statement from a different science topic.":"عبارة من موضوع علوم آخر.",en?"An unrelated cause and effect.":"سبب ونتيجة غير مرتبطين.",en?"A rule outside this lesson.":"قاعدة خارج هذا الدرس."],diff==="hard"?advancedExplanation(api,t):correct);
+ }
+ if(t.subject==="history"){
+  const correct=basicExplanation(api,t);
+  return mc(en?"Which explanation belongs to “"+title+"”?":"أي تفسير يخص «"+title+"»؟",correct,[en?"A different historical period.":"فترة تاريخية مختلفة.",en?"An unrelated geography statement.":"عبارة جغرافية غير مرتبطة.",en?"A different event.":"حدث مختلف."],advancedExplanation(api,t));
+ }
+ if(t.subject==="geography"){
+  const correct=basicExplanation(api,t);
+  return mc(en?"Which statement correctly explains “"+title+"”?":"أي عبارة تفسّر «"+title+"»؟",correct,[en?"An unrelated geographic process.":"عملية جغرافية غير مرتبطة.",en?"A different place or factor.":"مكان أو عامل مختلف.",en?"A historical statement outside this topic.":"عبارة تاريخية خارج الموضوع."],advancedExplanation(api,t));
+ }
+ return null;
+}
 function genericQuestion(api,t,diff,n){
- const same=topicsFor(t.grade,t.subject).filter(function(x){return x.id!==t.id}),ds=shuffle(same).slice(0,3);
+ const specific=topicSpecificQuestion(api,t,diff,n);if(specific)return specific;
  if(t.subject==="english"){
   const p=englishPractical(t,diff,n);if(p)return p;
-  const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4);
-  return {prompt:(diff==="hard"?"Which learning goal best matches ":"Choose the skill that belongs to ")+"“"+t.title+"” ("+(n+1)+")",options:opts,answer:correct,explanation:"This is the core skill practised in "+t.title+"."};
+  const correct=skillText(api,t),opts=shuffle([correct,"A different grammar rule.","A form outside this lesson.","An unrelated sentence pattern."]);
+  return {prompt:(diff==="hard"?"Which learning goal best matches ":"Choose the skill that belongs to ")+"“"+t.title+"” ("+(n+1)+")",options:opts,answer:correct,explanation:"This question is locked to "+t.title+" only."};
  }
  if(t.subject==="arabic"){const p=arabicPractical(api,t,diff,n);if(p)return p}
- const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4),display=titleText(api,t);
+ const correct=skillText(api,t),display=titleText(api,t),opts=shuffle([correct,lang(api)==="en"?"A statement from another topic.":"عبارة من موضوع آخر.",lang(api)==="en"?"An unrelated rule.":"قاعدة غير مرتبطة.",lang(api)==="en"?"An application outside this lesson.":"تطبيق خارج هذا الدرس."]);
  if(lang(api)==="en"){
   const lead=diff==="easy"?"Which skill is directly connected to":diff==="medium"?"Which description best matches the skill in":diff==="hard"?"After studying the topic, which application proves understanding of":"Choose the best skill for";
   return {prompt:lead+" “"+display+"”? ("+(n+1)+")",options:opts,answer:correct,explanation:"The correct choice is the main learning goal of “"+display+"”."};
@@ -313,7 +381,7 @@ function makeQuestions(api,t,count,difficulty,live){
   const key=q.prompt+"|"+q.answer;
   if(seen.has(key))continue;seen.add(key);
   const points=live?1000:10;
-  out.push({id:"cv97-"+t.id+"-"+Date.now()+"-"+out.length,type:"mcq",prompt:q.prompt,options:q.options,answer:q.answer,explanation:q.explanation,points:points,topicKey:t.subject,questionKind:d,level:d==="easy"?1:d==="hard"?3:2,typeLabel:(t.subject==="english"?"English Grammar":subjectName(api,t.subject))+" • "+t.title});
+  out.push({id:"cv97-"+t.id+"-"+Date.now()+"-"+out.length,type:"mcq",prompt:q.prompt,options:q.options,answer:q.answer,explanation:q.explanation,points:points,topicKey:t.id,subjectKey:t.subject,curriculumTopicId:t.id,curriculumTopicTitle:t.title,curriculumGrade:t.grade,questionKind:d,level:d==="easy"?1:d==="hard"?3:2,typeLabel:(t.subject==="english"?"English Grammar":subjectName(api,t.subject))+" • "+t.title});
  }
  return out;
 }
