@@ -1143,7 +1143,7 @@ export function mountCurriculum(api){
   if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
-   if(state.editor?.question&&state.editor?.answer){qs.unshift({id:"custom-"+Date.now(),type:"open",prompt:state.editor.question,answer:state.editor.answer,options:[],explanation:state.editor.answer,points:10,topicKey:t.subject,questionKind:"custom",level:2,typeLabel:subjectName(api,t.subject)+" • "+display});qs.splice(count)}
+   if(state.editor?.question&&state.editor?.answer){qs.unshift({id:"custom-"+Date.now(),type:"open",prompt:state.editor.question,answer:state.editor.answer,options:[],explanation:state.editor.answer,points:10,topicKey:t.id,subjectKey:t.subject,curriculumTopicId:t.id,curriculumTopicTitle:t.title,curriculumGrade:t.grade,questionKind:"custom",level:2,typeLabel:subjectName(api,t.subject)+" • "+display});qs.splice(count)}
    const exam={title:(t.subject==="english"?"Grammar Exam — ":T("امتحان — ","Exam — "))+display,questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title};
    const ok=await api.startExam(exam);if(ok!==false)shut()
   };
