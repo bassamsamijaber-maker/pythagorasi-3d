@@ -838,3 +838,159 @@ html[lang="en"] .curriculum-topic-sidebar .curriculum-editor-grid label:nth-chil
  .curriculum-change-chips span{font-size:8px;padding:5px 7px}
  .curriculum-visual-scene[data-model="emphasis-stack"] .cv-word-card{width:92px!important;height:54px!important}
 }
+
+
+/* V109 — simple Pythagoras-style lesson controls */
+.curriculum-simple-data-card{
+  margin:10px 0;padding:14px;border-radius:17px;
+  border:1px solid rgba(111,198,242,.13);
+  background:linear-gradient(145deg,rgba(15,38,57,.88),rgba(8,23,35,.9));
+  box-shadow:0 14px 34px rgba(0,0,0,.14)
+}
+.curriculum-simple-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:11px}
+.curriculum-simple-head h3{margin:4px 0 0;font-size:15px}
+.curriculum-live-dot{padding:5px 8px;border-radius:999px;background:rgba(40,205,145,.1);border:1px solid rgba(76,227,167,.17);color:#73e5b6;font-size:8px;font-weight:1000;white-space:nowrap}
+.curriculum-simple-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.curriculum-simple-inputs label{display:grid;gap:5px;font-size:9px;color:#a8c0d0;font-weight:900}
+.curriculum-simple-inputs label:nth-child(3):last-child{grid-column:1/-1}
+.curriculum-simple-inputs input{
+  width:100%;height:42px;padding:0 11px;border-radius:11px;
+  border:1px solid rgba(139,207,245,.13);
+  background:#0b1b29;color:#f5fbff;font:inherit;font-size:12px;font-weight:950;outline:none
+}
+.curriculum-simple-inputs input:focus{border-color:#3baeff;box-shadow:0 0 0 3px rgba(59,174,255,.09)}
+.curriculum-simple-result{
+  margin-top:10px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;
+  padding:11px 12px;border-radius:12px;border:1px solid rgba(64,217,160,.16);
+  background:linear-gradient(135deg,rgba(24,89,74,.36),rgba(17,48,65,.4))
+}
+.curriculum-simple-result span{font-size:9px;color:#90b6a9;font-weight:900}
+.curriculum-simple-result b{font-size:17px;color:#72efbd;text-align:end;direction:ltr}
+.curriculum-change-guide{display:none!important}
+.curriculum-topic-quick-actions{margin-top:9px}
+.curriculum-topic-sidebar .curriculum-panels{margin-top:10px}
+.curriculum-topic-sidebar #cvBasicExplanation{scroll-margin-top:14px}
+
+/* Keep the lesson as easy as the Pythagoras lab */
+.curriculum-topic-sidebar .curriculum-topic-spotlight{margin-top:9px}
+.curriculum-topic-sidebar .curriculum-progress-row{display:none}
+.curriculum-topic-sidebar .curriculum-lesson-copy{padding-bottom:13px}
+.curriculum-topic-sidebar .curriculum-lesson-copy>p{margin-bottom:5px}
+.curriculum-topic-sidebar .curriculum-actions-panel{margin-top:10px}
+.curriculum-topic-sidebar .curriculum-action-box{background:rgba(255,255,255,.018)}
+.curriculum-topic-sidebar .curriculum-action-box .curriculum-controls{opacity:.82}
+
+/* Topic model identity — the same easy controls, a genuinely different visual for each lesson family */
+.curriculum-visual-scene[data-model]{--topic-accent:#58c7ff}
+
+/* Arabic grammar models */
+.scene-parsing[data-model="active-passive-flow"] .cv-word-card.w1{left:2%!important;top:51%!important;background:linear-gradient(145deg,#144b73,#1d74a2)!important}
+.scene-parsing[data-model="active-passive-flow"] .cv-word-card.w2{left:50%!important;top:37%!important;background:linear-gradient(145deg,#5a35b1,#8357df)!important}
+.scene-parsing[data-model="active-passive-flow"] .cv-word-card.w3{right:2%!important;top:51%!important;background:linear-gradient(145deg,#14694f,#29a67a)!important}
+.scene-parsing[data-model="active-passive-flow"] .cv-parse-lines{transform:perspective(480px) rotateX(72deg) translateZ(28px)!important}
+.scene-parsing[data-model="active-passive-flow"]:after{content:"→";position:absolute;left:50%;top:51%;transform:translate(-50%,-50%) translateZ(150px);font-size:42px;color:#72dbff;text-shadow:0 0 18px #4dc8ff88}
+.scene-parsing[data-model="deputy-subject-tree"] .cv-word-card.w2{top:60%!important;transform:translateX(-50%) translateZ(125px) scale(1.12)!important;background:linear-gradient(145deg,#7149d0,#3f79c8)!important}
+.scene-parsing[data-model="deputy-subject-tree"] .cv-word-card.w1,.scene-parsing[data-model="deputy-subject-tree"] .cv-word-card.w3{top:43%!important}
+.scene-parsing[data-model="subject-tree"] .cv-word-card.w1{transform:translateZ(110px) scale(1.12)!important;background:linear-gradient(145deg,#1b688f,#2aa6c4)!important}
+.scene-parsing[data-model="object-tree"] .cv-word-card.w3{transform:translateZ(110px) scale(1.12)!important;background:linear-gradient(145deg,#7c3f95,#b060c5)!important}
+.scene-parsing[data-model="adjective-link"] .cv-word-card.w1{left:18%!important;top:53%!important}
+.scene-parsing[data-model="adjective-link"] .cv-word-card.w2{left:50%!important;top:53%!important}
+.scene-parsing[data-model="adjective-link"] .cv-word-card.w3{right:8%!important;top:34%!important;opacity:.72}
+.scene-parsing[data-model="state-link"] .cv-word-card.w2{top:31%!important;transform:translateX(-50%) translateZ(135px)!important}
+.scene-parsing[data-model="idafa-link"] .cv-word-card.w1{left:23%!important;top:53%!important;border-radius:16px 4px 4px 16px!important}
+.scene-parsing[data-model="idafa-link"] .cv-word-card.w2{left:52%!important;top:53%!important;border-radius:4px 16px 16px 4px!important}
+.scene-parsing[data-model="idafa-link"] .cv-word-card.w3{display:none}
+.scene-parsing[data-model="morphology-scale"] .cv-parse-lines{border-top:5px solid #e2b75a!important;transform:perspective(500px) rotateX(24deg) translateZ(30px)!important}
+.scene-parsing[data-model="morphology-scale"] .cv-word-card{border-radius:50%!important;width:100px!important;height:100px!important}
+
+/* English grammar models */
+.scene-english[data-model="english-passive"] .cv-grammar-card.g1{background:linear-gradient(145deg,#245a84,#2d8fb2)!important}
+.scene-english[data-model="english-passive"] .cv-grammar-card.g2{transform:translateX(-50%) translateZ(130px) rotateX(-7deg)!important;background:linear-gradient(145deg,#6946bf,#8b65dd)!important}
+.scene-english[data-model="english-passive"] .cv-grammar-card.g3{background:linear-gradient(145deg,#2b735e,#39a985)!important}
+.scene-english[data-model="english-conditional"] .cv-english-line{height:5px!important;background:linear-gradient(90deg,#53dfff 0 50%,#ffbd5c 50%)!important}
+.scene-english[data-model="english-perfect"] .cv-grammar-card.g2{top:22%!important}
+.scene-english[data-model="english-continuous"] .cv-english-line{box-shadow:0 0 24px #53dfff;animation:cvEnglishPulse 1.3s ease-in-out infinite alternate}
+@keyframes cvEnglishPulse{to{transform:scaleX(.82);opacity:.45}}
+
+/* Equation models */
+.scene-equation-balance[data-model="parentheses-balance"] .cv-pan{border-radius:28px!important}
+.scene-equation-balance[data-model="parentheses-balance"] .cv-pan.left:before{content:"(";font-size:35px;color:#7bdcff}
+.scene-equation-balance[data-model="parentheses-balance"] .cv-pan.left:after{content:")";font-size:35px;color:#7bdcff}
+.scene-equation-balance[data-model="multistep-balance"] .cv-step-chips span{background:rgba(126,93,255,.17);border:1px solid rgba(153,127,255,.18)}
+.scene-equation-balance[data-model="linear-balance"] .cv-balance-arm{background:linear-gradient(90deg,#51d8ff,#fff,#51d8ff)}
+.scene-system-equations[data-model="system-intersection"] .cv-point{filter:drop-shadow(0 0 10px #ffcf5b)}
+
+/* Ratio / percent */
+.scene-ratio[data-model="percent-grid"] .cv-ratio-cubes{grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(1,1fr);gap:3px}
+.scene-ratio[data-model="percent-grid"] .cv-ratio-cubes i{border-radius:4px}
+.scene-ratio[data-model="ratio-cubes"] .cv-ratio-cubes{transform:translateZ(58px) rotateX(-9deg)}
+
+/* Geometry families */
+.scene-geometry[data-model="solid-geometry"] .cv-geo-svg{opacity:.28}
+.scene-geometry[data-model="solid-geometry"] .cv-geo-prism{right:34%!important;top:18%!important;width:145px!important;height:145px!important}
+.scene-geometry[data-model="area-geometry"] .cv-geo-prism{opacity:.3;transform:scale(.62) rotateX(-18deg) rotateY(25deg)!important}
+.scene-geometry[data-model="area-geometry"] .cv-geo-svg{width:72%!important;left:14%!important}
+.scene-geometry[data-model="triangle-geometry"] .cv-geo-prism{opacity:.2}
+
+/* Electricity models */
+.scene-electricity[data-model="electric-circuit"] .cv-circuit{border-style:solid}
+.scene-electricity[data-model="current-flow"] .cv-circuit .wire{animation-duration:.65s!important;width:15px;height:15px}
+.scene-electricity[data-model="current-flow"] .cv-bulb{opacity:.42}
+.scene-electricity[data-model="electric-field"] .cv-circuit{border-style:dashed;transform:translateZ(45px) rotateZ(8deg)}
+.scene-electricity[data-model="electric-field"] .cv-bulb{box-shadow:0 0 65px rgba(110,207,255,.75)!important;background:#b7eeff!important}
+
+/* Chemistry */
+.scene-chemistry[data-model="ph-beaker"] .cv-liquid{background:linear-gradient(#84e887,#3aaa78)!important}
+.scene-chemistry[data-model="ph-beaker"]:after{content:"pH";position:absolute;right:17%;top:25%;font-size:44px;font-weight:1000;color:#92efae;transform:translateZ(95px)}
+.scene-chemistry[data-model="reaction-vessel"] .cv-beaker i{animation:cvReact .8s ease-in-out infinite alternate}
+@keyframes cvReact{to{transform:translateY(-38px) scale(.6);opacity:.25}}
+.scene-chemistry[data-model="molecule-bonds"] .cv-beaker{opacity:.28}
+.scene-chemistry[data-model="molecule-bonds"] .cv-molecule{transform:scale(1.35) translateZ(95px)}
+.scene-chemistry[data-model="mixture-particles"] .cv-molecule{filter:hue-rotate(85deg)}
+.scene-chemistry[data-model="mixture-particles"] .cv-beaker{transform:translateZ(70px) scale(1.12)}
+
+/* Atom / biology */
+.scene-atom[data-model="element-shell"] .cv-nucleus{transform:translateZ(85px) scale(1.2)}
+.scene-atom[data-model="element-shell"] .cv-orbit.o3{border-style:dashed}
+.scene-biology[data-model="dna-helix"] .cv-cell{opacity:.22;transform:scale(.65) translateZ(5px)}
+.scene-biology[data-model="dna-helix"] .cv-dna{transform:translateZ(105px) scale(1.45)}
+.scene-biology[data-model="cell-model"] .cv-dna{opacity:.2}
+.scene-biology[data-model="cell-model"] .cv-cell{transform:translateZ(90px) scale(1.12)}
+.scene-biology[data-model="body-system"] .cv-dna{display:none}
+.scene-biology[data-model="body-system"] .cv-cell{border-radius:45% 45% 55% 55%;transform:translateZ(90px) scale(.95,1.18)}
+.scene-biology[data-model="reproduction-cycle"] .cv-dna{animation:cvBioSpin 7s linear infinite}
+@keyframes cvBioSpin{to{transform:rotateY(360deg) translateZ(70px)}}
+
+/* Motion / energy */
+.scene-motion[data-model="force-motion"] .cv-vector{font-size:38px!important}
+.scene-motion[data-model="energy-transfer"] .cv-motion-ball{box-shadow:0 0 35px #ffd95c!important;background:radial-gradient(circle at 35% 30%,#fff6a6,#ef9c28)!important}
+
+/* History */
+.scene-history[data-model="history-revolution"] .cv-era.e2{background:linear-gradient(145deg,#a63752,#df5863)!important;transform:translateX(-50%) translateZ(125px) scale(1.12)!important}
+.scene-history[data-model="history-war"] .cv-history-floor{filter:grayscale(.65)}
+.scene-history[data-model="history-war"] .cv-era{border-color:rgba(255,113,113,.35)!important}
+.scene-history[data-model="history-ideas"] .cv-era{border-radius:50%!important}
+.scene-history[data-model="history-exploration"] .cv-history-rail{transform:rotate(-7deg) translateZ(22px)!important}
+.scene-history[data-model="history-state"] .cv-era.e2{height:120px!important}
+
+/* Geography */
+.scene-earth-layers[data-model="earthquake-plates"] .cv-tectonic-plates b{animation:cvPlateShake .7s ease-in-out infinite alternate}
+@keyframes cvPlateShake{to{transform:translateX(12px) rotate(2deg)}}
+.scene-earth-layers[data-model="volcano-section"] .cv-earth-core:after{content:"";position:absolute;left:50%;top:-55px;transform:translateX(-50%);border-left:42px solid transparent;border-right:42px solid transparent;border-bottom:95px solid rgba(220,81,48,.85);filter:drop-shadow(0 0 18px #ff7043)}
+.scene-earth-layers[data-model="tectonic-plates"] .cv-tectonic-plates b:first-child{transform:translateX(-22px)}
+.scene-earth-layers[data-model="tectonic-plates"] .cv-tectonic-plates b:last-child{transform:translateX(22px)}
+.scene-weather[data-model="climate-zones"] .cv-weather-cloud{opacity:.35}
+.scene-weather[data-model="climate-zones"]:after{content:"COLD   •   TEMPERATE   •   HOT";position:absolute;left:50%;top:48%;transform:translateX(-50%) translateZ(90px);font-size:11px;font-weight:1000;letter-spacing:.08em;color:#bdeeff}
+.scene-weather[data-model="water-cycle"] .cv-water-cycle{font-size:48px!important;transform:translateZ(105px)}
+.scene-weather[data-model="atmosphere-layers"] .cv-weather-cloud{display:none}
+.scene-weather[data-model="atmosphere-layers"]:after{content:"TROPOSPHERE\A STRATOSPHERE\A MESOSPHERE";white-space:pre;position:absolute;left:50%;top:30%;transform:translateX(-50%) translateZ(100px);text-align:center;line-height:2;color:#a6ddff;font-weight:950}
+.scene-human-geography[data-model="population-city"] .cv-city-model .building{transform:scaleY(calc(.65 + var(--model-ratio)*.6));transform-origin:bottom}
+.scene-geography[data-model="solar-earth"] .cv-globe{box-shadow:80px -50px 55px rgba(255,211,79,.22),0 24px 35px rgba(0,0,0,.35)}
+
+.scene-probability .cv-prob-wheel{background:conic-gradient(#42cdfc 0 var(--prob-fill,90deg),#273d55 var(--prob-fill,90deg) 360deg)!important}
+
+@media(max-width:600px){
+ .curriculum-simple-inputs{grid-template-columns:1fr 1fr}
+ .curriculum-simple-inputs label:only-child{grid-column:1/-1}
+ .curriculum-simple-result b{font-size:14px}
+}
