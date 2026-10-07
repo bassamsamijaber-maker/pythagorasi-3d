@@ -1,5 +1,5 @@
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS} from "./curriculum-v97.js?v=99";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=103";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
@@ -187,6 +187,19 @@ const idafaPracticeExamples=[
 function classoraShuffle(list){return [...list].sort(()=>Math.random()-.5)}
 export function idafaLiveQuestions(count=10,lang='ar'){
  const ar=lang==='ar',bank=[];
+ if(!ar){
+  const englishBank=[
+   {id:'idafa-en-1',prompt:'What is the mudaf in an idafa construction?',options:['The first noun','The second noun','A verb','A preposition'],answer:'The first noun',explanation:'The mudaf is the first noun in the two-noun construction.'},
+   {id:'idafa-en-2',prompt:'What is the mudaf ilayh?',options:['The second noun in the genitive case','The main verb','The first adjective','A conjunction'],answer:'The second noun in the genitive case',explanation:'The mudaf ilayh is the second noun and is genitive.'},
+   {id:'idafa-en-3',prompt:'Which description fits a regular idafa?',options:['Two linked nouns','A verb followed by an adverb','Two unrelated adjectives','A question word and a verb'],answer:'Two linked nouns',explanation:'Idafa links two nouns to express specification or possession.'},
+   {id:'idafa-en-4',prompt:'In a regular idafa, what usually happens to the mudaf?',options:['It normally has neither al- nor tanween','It must always take al-','It must always be genitive','It must always take tanween'],answer:'It normally has neither al- nor tanween',explanation:'The mudaf normally does not take the definite article or tanween.'},
+   {id:'idafa-en-5',prompt:'What grammatical case is the mudaf ilayh?',options:['Genitive','Nominative only','Accusative only','Jussive'],answer:'Genitive',explanation:'The mudaf ilayh is genitive.'},
+   {id:'idafa-en-6',prompt:'What meaning can idafa express?',options:['Specification or possession','Only past time','Only comparison','Only negation'],answer:'Specification or possession',explanation:'Idafa often expresses possession or specifies one noun through another.'}
+  ];
+  const n=Math.max(1,Math.min(30,Number(count)||10)),out=[],pool=classoraShuffle(englishBank);
+  while(out.length<n){if(!pool.length)pool.push(...classoraShuffle(englishBank));const q=pool.shift();out.push({...q,id:q.id+'-'+out.length,subject:'arabic',topicKey:'idafa',options:classoraShuffle(q.options)})}
+  return out;
+ }
  for(let i=0;i<idafaPracticeExamples.length;i++){
   const x=idafaPracticeExamples[i],others=idafaPracticeExamples.filter((_,n)=>n!==i);
   const mudafOptions=classoraShuffle([x.mudaf,x.mudafIlayh,others[0].mudafIlayh,others[1].mudaf]);
@@ -227,8 +240,9 @@ export function mountLearningHub(api){
  function openAccounts(){if(!enabled('social'))return;show(L('حساباتنا','Our accounts'),body=>{body.append(node('p','hub-muted',L('تابع أخبار كلاسورا وكل جديد.','Follow Classora for news and new activities.')));const a=node('a','hub-social-link');a.href='https://www.instagram.com/classora_app?stkn=ZzJlNDFma3Vnb29j&utm_source=qr';a.target='_blank';a.rel='noopener noreferrer';a.innerHTML=icon('instagram');a.append(node('span','',L('صفحتنا على الانستا','Our Instagram page')));body.append(a)})}
  function launch(action){close();api.action(action)}
  const curriculumTopicTitle=x=>typeof x==="string"?x:x?.title||"";
+ const curriculumTopicLabel=(x,subject)=>curriculumTopicDisplayName(curriculumTopicTitle(x),subject,api.language());
  const curriculumSubjectIcon=s=>({math:"math",science:"atom",arabic:"book",english:"book",history:"school",geography:"globe"}[s]||"book");
- const curriculumSubjectName=s=>{const m=CURRICULUM_SUBJECTS[s];if(s==="arabic")return "العربي — قواعد";if(s==="english")return "English Grammar";return m?L(m.ar,m.en):s};
+ const curriculumSubjectName=s=>{const m=CURRICULUM_SUBJECTS[s];if(s==="arabic")return L("العربي — قواعد","Arabic Grammar");if(s==="english")return "English Grammar";return m?L(m.ar,m.en):s};
  const curriculumTopics=(g,s)=>(CURRICULUM_DATA[g]?.[s]||[]);
  function openCurriculum(subject,topicRef=""){
   const curr=window.classoraCurriculum;
@@ -247,7 +261,7 @@ export function mountLearningHub(api){
    const topics=curriculumTopics(selectedGrade,s),card=node("article","hub-curriculum-subject "+s),main=button("",()=>openCurriculum(s),"hub-curriculum-subject-main");
    main.innerHTML='<span class="hub-curriculum-icon">'+icon(curriculumSubjectIcon(s))+'</span><span class="hub-curriculum-copy"><small>'+L("الصف "+selectedGrade,"GRADE "+selectedGrade)+'</small><b>'+curriculumSubjectName(s)+'</b><em>'+topics.length+" "+L("موضوع","topics")+'</em></span><span class="hub-curriculum-open">↗</span>';
    const chips=node("div","hub-curriculum-preview");
-   topics.slice(0,3).forEach(raw=>{const name=curriculumTopicTitle(raw),chip=button(name,()=>openCurriculum(s,name),"hub-topic-chip");chips.append(chip)});
+   topics.slice(0,3).forEach(raw=>{const name=curriculumTopicTitle(raw),label=curriculumTopicLabel(raw,s),chip=button(label,()=>openCurriculum(s,name),"hub-topic-chip");chips.append(chip)});
    if(selectedGrade===10&&s==="science"){const tracks=node("div","hub-track-badges");tracks.innerHTML='<span>'+L("فيزياء","Physics")+'</span><span>'+L("كيمياء","Chemistry")+'</span><span>'+L("أحياء","Biology")+'</span>';card.append(main,tracks,chips)}else card.append(main,chips);
    grid.append(card);
   });
@@ -255,13 +269,13 @@ export function mountLearningHub(api){
   return section;
  }
  const mathCards=[['lab','math',['مختبر فيثاغورس','Pythagoras lab'],['نموذج ثلاثي الأبعاد وبرهان بالرمل','3D model and sand proof']],['equations','math',['معادلتان بمجهولين','Two-variable equations'],['حل النظام واستكشف الرسم البياني','Solve the system and explore its graph']],['practice','book',['تدريب الرياضيات','Math practice'],['أسئلة متغيرة مع تصحيح مباشر','Varied questions with instant feedback']],['challenge','trophy',['تحدّي الرياضيات','Math challenge'],['اختبر سرعتك واجمع نقاطًا','Test your speed and collect points']]];
- const idafa={id:'idafa',title:['المضاف والمضاف إليه','المضاف والمضاف إليه'],summary:['افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.','افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.'],lesson:['الإضافة تركيب يتكوّن من اسمين متتابعين: الأول مضاف، والثاني مضاف إليه مجرور. يكتسب المضاف معنى التخصيص أو الملكية من الاسم الذي بعده. غالبًا لا يأتي المضاف مع أل ولا يقبل التنوين، أما المضاف إليه فيكون مجرورًا.','Idafa is a two-noun Arabic construct: the first noun is the muḍāf, and the second is the muḍāf ilayh in the genitive case. The second noun specifies or possesses the first. The first noun usually has no definite article or tanwīn; the second is genitive.'],example:['كتابُ الطالبِ جديدٌ: كتابُ = مضاف، والطالبِ = مضاف إليه مجرور وعلامة جره الكسرة. مثال آخر: بابُ المدرسةِ مفتوحٌ.','kitābu ṭ-ṭālibi jadīd: “book” is the muḍāf; “the student” is the muḍāf ilayh, genitive with kasra. Another example: bābu l-madrasati maftūḥ (“The school door is open”).'],icon:'book',subject:'arabic'};
+ const idafa={id:'idafa',title:['المضاف والمضاف إليه','Idafa: possessive construction'],summary:['افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.','Learn the idafa construction with clear examples and simple grammatical analysis.'],lesson:['الإضافة تركيب يتكوّن من اسمين متتابعين: الأول مضاف، والثاني مضاف إليه مجرور. يكتسب المضاف معنى التخصيص أو الملكية من الاسم الذي بعده. غالبًا لا يأتي المضاف مع أل ولا يقبل التنوين، أما المضاف إليه فيكون مجرورًا.','Idafa is a two-noun Arabic construct: the first noun is the muḍāf, and the second is the muḍāf ilayh in the genitive case. The second noun specifies or possesses the first. The first noun usually has no definite article or tanwīn; the second is genitive.'],example:['كتابُ الطالبِ جديدٌ: كتابُ = مضاف، والطالبِ = مضاف إليه مجرور وعلامة جره الكسرة. مثال آخر: بابُ المدرسةِ مفتوحٌ.','kitābu ṭ-ṭālibi jadīd: “book” is the muḍāf; “the student” is the muḍāf ilayh, genitive with kasra. Another example: bābu l-madrasati maftūḥ (“The school door is open”).'],icon:'book',subject:'arabic'};
  function render(){
   const savedQuery=hub.querySelector('input')?.value||'';if(selected==='science'&&!enabled('science'))selected='all';hub.replaceChildren();
   const intro=node('div','hub-hero');const copy=node('div','hub-hero-copy');copy.append(node('span','hub-kicker','CLASSORA / '+L('مساحتك للتعلّم','YOUR LEARNING SPACE')),node('h1','',L('فكّر. جرّب. افهم.','Think. Try. Understand.')),node('p','',L('اختار مادة، استكشف الفكرة وجرّبها بإيدك.','Choose a subject. Explore an idea. Make it click.')));
   const art=node('div','hub-hero-art');art.setAttribute('aria-hidden','true');art.innerHTML=`<div class="hub-art-ring"></div><div class="hub-art-tile math">${icon('math')}</div><div class="hub-art-tile atom">${icon('atom')}</div><div class="hub-art-tile book">${icon('book')}</div>`;intro.append(copy,art);hub.append(intro);
   const searchWrap=node('label','hub-search');searchWrap.innerHTML=icon('search');const search=node('input');search.type='search';search.value=savedQuery;search.placeholder=L('ابحث عن موضوع، مختبر أو أداة…','Search topics, labs or tools…');search.setAttribute('aria-label',search.placeholder);searchWrap.append(search);searchWrap.hidden=!enabled('search');hub.append(searchWrap);
-  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;try{if(key==="science")sessionStorage.setItem("classora_subject_origin","science");else if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render()});b.innerHTML=icon(ic);b.append(node('span','',key==="arabic"?"عربي — قواعد":key==="english"?"English Grammar":L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);hub.append(makeCurriculumShelf());
+  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;try{if(key==="science")sessionStorage.setItem("classora_subject_origin","science");else if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render()});b.innerHTML=icon(ic);b.append(node('span','',key==="english"?"English Grammar":L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);hub.append(makeCurriculumShelf());
   const list=node('div','hub-card-grid'),status=node('p','hub-muted');status.setAttribute('role','status');hub.append(list,status);
   function fill(){
    list.replaceChildren();
@@ -275,23 +289,23 @@ export function mountLearningHub(api){
    }
    if(q||selected==="all"||selected==="arabic"){
     cards.push({id:"arabic-idafa",ic:"book",title:idafa.title,summary:idafa.summary,subject:"arabic",go:()=>launch("idafa")});
-    cards.push({id:"arabic-idafa-practice",ic:"edit",title:["تمارين المضاف والمضاف إليه","تمارين المضاف والمضاف إليه"],summary:["اختَر المضاف والمضاف إليه وخذ تصحيحًا مباشرًا","اختَر المضاف والمضاف إليه وخذ تصحيحًا مباشرًا"],subject:"arabic",go:()=>startArabicQuiz("practice")});
-    cards.push({id:"arabic-idafa-test",ic:"trophy",title:["اختبار عربي — المضاف والمضاف إليه","اختبار عربي — المضاف والمضاف إليه"],summary:["10 أسئلة مع علامة ومراجعة الإجابات","10 أسئلة مع علامة ومراجعة الإجابات"],subject:"arabic",go:()=>startArabicQuiz("test")});
+    cards.push({id:"arabic-idafa-practice",ic:"edit",title:["تمارين المضاف والمضاف إليه","Idafa practice"],summary:["اختَر المضاف والمضاف إليه وخذ تصحيحًا مباشرًا","Identify the mudaf and mudaf ilayh with instant feedback."],subject:"arabic",go:()=>startArabicQuiz("practice")});
+    cards.push({id:"arabic-idafa-test",ic:"trophy",title:["اختبار عربي — المضاف والمضاف إليه","Arabic Grammar Test — Idafa"],summary:["10 أسئلة مع علامة ومراجعة الإجابات","10 questions with a score and answer review."],subject:"arabic",go:()=>startArabicQuiz("test")});
    }
    const curriculumKeys=selected==="all"?Object.keys(CURRICULUM_DATA[selectedGrade]||{}):[selected];
    for(const subject of curriculumKeys){
     if(!CURRICULUM_DATA[selectedGrade]?.[subject])continue;
-    const rawTopics=curriculumTopics(selectedGrade,subject),candidate=q?rawTopics.filter(raw=>topicMatches(q,curriculumTopicTitle(raw)+" "+curriculumSubjectName(subject))):(selected!=="all"?rawTopics:[]);
+    const rawTopics=curriculumTopics(selectedGrade,subject),candidate=q?rawTopics.filter(raw=>topicMatches(q,curriculumTopicTitle(raw)+" "+curriculumTopicLabel(raw,subject)+" "+curriculumSubjectName(subject))):(selected!=="all"?rawTopics:[]);
     for(const raw of candidate){
-     const name=curriculumTopicTitle(raw);
-     cards.push({id:"curr-"+selectedGrade+"-"+subject+"-"+name,ic:curriculumSubjectIcon(subject),title:[name,name],summary:[L("الصف ","Grade ")+selectedGrade+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition"),L("الصف ","Grade ")+selectedGrade+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition")],subject,go:()=>openCurriculum(subject,name),curriculum:true});
+     const name=curriculumTopicTitle(raw),label=curriculumTopicLabel(raw,subject);
+     cards.push({id:"curr-"+selectedGrade+"-"+subject+"-"+name,ic:curriculumSubjectIcon(subject),title:[name,label],summary:[L("الصف ","Grade ")+selectedGrade+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition"),"Grade "+selectedGrade+" • lesson + 3D + exam + live competition"],subject,go:()=>openCurriculum(subject,name),curriculum:true});
     }
    }
    const extras=[["chat",["الشات","Chat"],"chat"],["support",["الدعم","Support"],"help"],["settings",["الإعدادات","Settings"],"settings"],["exam",["الامتحانات","Exams"],"book"],["competition",["المسابقات","Competitions"],"trophy"]];if(q)for(const [id,title,ic]of extras)cards.push({id,ic,title,summary:["أدوات كلاسورا","Classora tools"],subject:"tools",go:()=>launch(id)});
    const filtered=cards.filter(c=>!q||topicMatches(q,[...c.title,...c.summary,c.subject,c.id].join(" ")));
    const categoryLabel=s=>s==="math"?L("رياضيات","MATHEMATICS"):s==="science"?L("علوم","SCIENCE"):s==="arabic"?L("عربي — قواعد","ARABIC GRAMMAR"):s==="english"?"ENGLISH GRAMMAR":s==="history"?L("تاريخ","HISTORY"):s==="geography"?L("جغرافيا","GEOGRAPHY"):L("أدوات","TOOLS");
    for(const card of filtered){
-    const el=button("",card.go,"hub-topic-card "+card.subject+(card.curriculum?" curriculum-topic":""));if(card.subject==="arabic"||card.subject==="english")el.dataset.noTranslate="";
+    const el=button("",card.go,"hub-topic-card "+card.subject+(card.curriculum?" curriculum-topic":""));if(card.subject==="english")el.dataset.noTranslate="";
     el.innerHTML='<span class="hub-card-icon">'+icon(card.ic)+'</span>';
     el.append(node("small","hub-card-category",categoryLabel(card.subject)),node("h3","",txt(card.title)),node("p","",txt(card.summary)),node("span","hub-card-arrow","↗"));list.append(el);
    }
