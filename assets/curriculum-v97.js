@@ -483,29 +483,124 @@ export function mountCurriculum(api){
   return null;
  }
  function buildTopicScene(t){
-  const title=esc(t.title),n=String(t.title||""),subject=t.subject;
+  const n=String(t.title||""),subject=t.subject,display=esc(titleText(api,t));
+  const shell=(kind,inner,arHint,enHint)=>'<div class="curriculum-visual-scene '+kind+'" id="cv97Scene" data-topic-kind="'+kind.replace(/\s+/g,"-")+'">'+inner+'<span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,arHint,enHint)+'</div>';
+
   if(subject==="math"){
-   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
-   if(/(فيثاغورس|مثلث)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-triangle" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg" viewBox="0 0 360 260" aria-hidden="true"><polygon points="78,205 78,65 278,205" class="cv-triangle"/><rect x="18" y="82" width="58" height="122" class="cv-side-square a"/><rect x="92" y="205" width="174" height="48" class="cv-side-square b"/><polygon points="90,56 288,190 244,252 46,118" class="cv-side-square c"/></svg><span class="cv-scene-tag">a² + b² = c²</span><span class="cv-depth-dot d1"></span><span class="cv-depth-dot d2"></span><span class="cv-depth-dot d3"></span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج","Drag to rotate the model")+'</div>';
-   if(/(دالة|مستقيم|معادلة|ميل|إحداث|قطع مكافئ|نقاط الصفر)/.test(n))return '<div class="curriculum-visual-scene scene-math scene-graph" id="cv97Scene"><div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path d="M35 215 L320 55" class="cv-line l1"/><path d="M45 45 Q180 245 320 70" class="cv-line l2"/><circle cx="201" cy="122" r="8" class="cv-point"/></svg><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الرسم","Drag to rotate the graph")+'</div>';
-   return '<div class="curriculum-visual-scene scene-math scene-algebra" id="cv97Scene"><div class="cv-grid-plane"></div><div class="cv-math-block b1">x</div><div class="cv-math-block b2">+</div><div class="cv-math-block b3">7</div><div class="cv-math-block b4">=</div><div class="cv-math-block b5">12</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب ودوّر مساحة الرياضيات","Drag and rotate the math space")+'</div>';
+   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
+
+   if(/(معادلات كسرية|كسور جبرية)/.test(n))return shell("scene-math scene-fraction-equation",
+    '<div class="cv-eq-space"><div class="cv-fraction-stack"><div class="cv-frac-num">x</div><div class="cv-frac-line"></div><input id="cvFracDen" class="cv-model-number" type="number" min="1" max="20" value="2" aria-label="'+txt(api,"المقام","Denominator")+'"></div><b class="cv-eq-op">+</b><input id="cvFracAdd" class="cv-model-number floating" type="number" value="3" aria-label="'+txt(api,"العدد المضاف","Added number")+'"><b class="cv-eq-op">=</b><input id="cvFracRight" class="cv-model-number floating" type="number" value="7" aria-label="'+txt(api,"الطرف الأيمن","Right side")+'"></div><div class="cv-equation-result">'+txt(api,"الحل: x = ","Solution: x = ")+'<b id="cvFracSolution">8</b></div><div class="cv-fraction-tiles"><i></i><i></i><i></i><i></i></div>',
+    "غيّر المقام والأعداد وشاهد حل المعادلة الكسرية","Change the denominator and values to solve the fractional equation");
+
+   if(/(مسائل كلامية|كلامية على المعادلات)/.test(n))return shell("scene-math scene-word-equation",
+    '<div class="cv-story-stage"><div class="cv-story-object price">'+txt(api,"سعر القطعة","Item price")+'<input id="cvWordPrice" class="cv-model-number" type="number" min="1" value="12"></div><div class="cv-story-object qty">'+txt(api,"العدد","Quantity")+'<input id="cvWordQty" class="cv-model-number" type="number" min="1" value="4"></div><div class="cv-story-arrow">→</div><div class="cv-story-object total">'+txt(api,"المجموع","Total")+'<b id="cvWordTotal">48</b> ₪</div></div><div class="cv-story-equation" id="cvWordEquation">12 × 4 = 48</div>',
+    "غيّر السعر والكمية وحوّل القصة إلى معادلة","Change price and quantity and watch the story become an equation");
+
+   if(/(معادلات|المعادلات|متباينات)/.test(n)&&!/(نظام|معادلتين|كسرية)/.test(n))return shell("scene-math scene-equation-balance",
+    '<div class="cv-balance"><div class="cv-balance-arm"><div class="cv-pan left"><span>x</span><input id="cvEqAdd" class="cv-model-number" type="number" value="3"></div><div class="cv-balance-pivot"></div><div class="cv-pan right"><input id="cvEqRight" class="cv-model-number" type="number" value="7"></div></div></div><div class="cv-equation-live">x + <b id="cvEqAddLabel">3</b> = <b id="cvEqRightLabel">7</b> → x = <strong id="cvEqSolution">4</strong></div><div class="cv-step-chips"><span>−a</span><span>÷ coefficient</span><span>✓</span></div>',
+    "غيّر طرفي المعادلة وشاهد الميزان والحل يتحدثان","Change both sides and watch the balance and solution update");
+
+   if(/(نظام معادلتين|أنظمة المعادلات|نظام المعادلات)/.test(n))return shell("scene-math scene-system-equations",
+    '<div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path id="cvSysLine1" d="M35 215 L320 55" class="cv-line l1"/><path id="cvSysLine2" d="M35 55 L320 210" class="cv-line l2"/><circle cx="180" cy="130" r="9" class="cv-point"/></svg><div class="cv-system-badges"><span>y = 2x + 1</span><span>y = −x + 4</span></div>',
+    "دوّر الرسم وشاهد نقطة تقاطع المعادلتين","Rotate the graph and inspect the intersection of the two equations");
+
+   if(/(فيثاغورس)/.test(n))return shell("scene-math scene-triangle scene-pythagoras",
+    '<div class="cv-grid-plane"></div><svg class="cv-math-svg" viewBox="0 0 360 260" aria-hidden="true"><polygon points="78,205 78,65 278,205" class="cv-triangle"/><rect x="18" y="82" width="58" height="122" class="cv-side-square a"/><rect x="92" y="205" width="174" height="48" class="cv-side-square b"/><polygon points="90,56 288,190 244,252 46,118" class="cv-side-square c"/></svg><div class="cv-pythag-values"><span>a²</span><span>b²</span><span>c²</span></div>',
+    "اسحب لتدوير نموذج فيثاغورس","Drag to rotate the Pythagorean model");
+
+   if(/(نسبة|تناسب|مقياس الرسم|نسب مئوية)/.test(n))return shell("scene-math scene-ratio",
+    '<div class="cv-ratio-cubes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><label class="cv-model-control">'+txt(api,"القيمة","Value")+' <input id="cvModelRange" type="range" min="10" max="100" value="60"><b id="cvModelValue">60%</b></label><div class="cv-ratio-brace"><span>part</span><span>whole</span></div>',
+    "حرّك القيمة وشاهد النسبة بصريًا","Move the value and watch the ratio change visually");
+
+   if(/(احتمال)/.test(n))return shell("scene-math scene-probability",
+    '<div class="cv-prob-wheel" id="cvProbWheel"><i>A</i><i>B</i><i>C</i><i>D</i></div><button class="cv-model-action" id="cvSpinWheel" type="button">'+txt(api,"لف العجلة","Spin")+'</button><div class="cv-prob-readout" id="cvProbReadout">'+txt(api,"اضغط لتجربة احتمال عشوائي","Spin to run a random trial")+'</div>',
+    "لف عجلة الاحتمال وكرر التجربة","Spin the probability wheel and repeat the trial");
+
+   if(/(سرعة|زمن|مسافة)/.test(n))return shell("scene-math scene-motion-math",
+    '<div class="cv-track"><i></i><i></i><i></i></div><div class="cv-motion-ball cv-car"></div><label class="cv-model-control">'+txt(api,"السرعة","Speed")+' <input id="cvModelRange" type="range" min="1" max="20" value="8"><b id="cvModelValue">8 m/s</b></label>',
+    "غيّر السرعة وشاهد موضع الجسم يتغير","Change the speed and watch the object move");
+
+   if(/(زاوية|مثلث|مستقيمات متوازية|تطابق|تشابه|مساحات|حجوم|مجسمات|محيط|هندسة)/.test(n))return shell("scene-math scene-geometry",
+    '<div class="cv-geo-stage"><div class="cv-geo-prism"><i></i><i></i><i></i><i></i></div><svg class="cv-geo-svg" viewBox="0 0 300 190"><polygon points="55,155 145,35 250,155" class="cv-triangle"/><path id="cvGeoArc" d="M76 151 A30 30 0 0 1 94 125" class="cv-angle-arc"/></svg></div><label class="cv-model-control">'+txt(api,"الزاوية","Angle")+' <input id="cvGeoAngle" type="range" min="20" max="140" value="60"><b id="cvGeoValue">60°</b></label>',
+    "غيّر الزاوية ودوّر المجسم","Change the angle and rotate the solid");
+
+   if(/(دالة|مستقيم|ميل|إحداث|قطع مكافئ|نقاط الصفر)/.test(n))return shell("scene-math scene-graph",
+    '<div class="cv-grid-plane"></div><svg class="cv-math-svg graph-svg" viewBox="0 0 360 260" aria-hidden="true"><path d="M25 130H335M180 20V240" class="cv-axis"/><path d="M35 215 L320 55" class="cv-line l1"/><path d="M45 45 Q180 245 320 70" class="cv-line l2"/><circle cx="201" cy="122" r="8" class="cv-point"/></svg><label class="cv-model-control compact">'+txt(api,"الميل","Slope")+' <input id="cvModelRange" type="range" min="-5" max="5" step=".5" value="2"><b id="cvModelValue">2</b></label>',
+    "غيّر الميل ودوّر الرسم","Change the slope and rotate the graph");
+
+   return shell("scene-math scene-algebra",
+    '<div class="cv-grid-plane"></div><div class="cv-math-block b1">x</div><div class="cv-math-block b2">+</div><div class="cv-math-block b3">7</div><div class="cv-math-block b4">=</div><div class="cv-math-block b5">12</div><label class="cv-model-control compact">'+txt(api,"القيمة","Value")+' <input id="cvModelRange" type="range" min="-10" max="20" value="7"><b id="cvModelValue">7</b></label>',
+    "حرّك القيم ودوّر مساحة الرياضيات","Change values and rotate the math space");
   }
+
   if(subject==="science"){
-   if(/(ذرة|العناصر|الجدول الدوري|أيون|بنية الذرة)/.test(n))return '<div class="curriculum-visual-scene scene-science scene-atom" id="cv97Scene"><div class="cv-nucleus"><b>+</b><i></i><i></i></div><div class="cv-orbit o1"><span></span></div><div class="cv-orbit o2"><span></span></div><div class="cv-orbit o3"><span></span></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الذرة","Drag to rotate the atom")+'</div>';
-   if(/(كيمياء|حمض|قاعدة|تفاعل|مركب|مخلوط|روابط|pH|معادلات كيميائية)/i.test(n))return '<div class="curriculum-visual-scene scene-science scene-chemistry" id="cv97Scene"><div class="cv-lab-floor"></div><div class="cv-beaker"><div class="cv-liquid"></div><i></i><i></i><i></i><i></i></div><div class="cv-molecule m1"><b></b><b></b><b></b></div><div class="cv-molecule m2"><b></b><b></b></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير المختبر","Drag to rotate the lab")+'</div>';
-   if(/(خلية|وراثة|DNA|تكاثر|جسم الإنسان|التنفس|البناء الضوئي|جين|بروتين)/i.test(n))return '<div class="curriculum-visual-scene scene-science scene-biology" id="cv97Scene"><div class="cv-cell"><i class="org o1"></i><i class="org o2"></i><i class="org o3"></i><b class="cv-cell-core"></b></div><div class="cv-dna"><i></i><i></i><i></i><i></i><i></i></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير النموذج الحيوي","Drag to rotate the biology model")+'</div>';
-   return '<div class="curriculum-visual-scene scene-science scene-motion" id="cv97Scene"><div class="cv-track"><i></i></div><div class="cv-motion-ball"></div><div class="cv-vector v1">→</div><div class="cv-vector v2">↑</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتغيير زاوية المشهد","Drag to change the scene angle")+'</div>';
+   if(/(كهرباء|دارات|تيار)/.test(n))return shell("scene-science scene-electricity",
+    '<div class="cv-circuit"><i class="wire w1"></i><i class="wire w2"></i><i class="wire w3"></i><i class="wire w4"></i><b class="cv-battery">+ −</b><b class="cv-bulb" id="cvBulb"></b></div><label class="cv-model-control">'+txt(api,"التيار","Current")+' <input id="cvModelRange" type="range" min="0" max="10" value="5"><b id="cvModelValue">5 A</b></label>',
+    "غيّر التيار وشاهد الدارة تستجيب","Change current and watch the circuit respond");
+
+   if(/(ضوء)/.test(n))return shell("scene-science scene-light",
+    '<div class="cv-light-source"></div><div class="cv-light-ray r1"></div><div class="cv-light-ray r2"></div><div class="cv-prism-glass"></div><label class="cv-model-control">'+txt(api,"زاوية الشعاع","Ray angle")+' <input id="cvModelRange" type="range" min="-35" max="35" value="0"><b id="cvModelValue">0°</b></label>',
+    "غيّر زاوية الضوء وشاهد مسار الشعاع","Change the light angle and watch the ray path");
+
+   if(/(صوت)/.test(n))return shell("scene-science scene-sound",
+    '<div class="cv-speaker"></div><div class="cv-sound-wave"><i></i><i></i><i></i><i></i><i></i></div><label class="cv-model-control">'+txt(api,"التردد","Frequency")+' <input id="cvModelRange" type="range" min="1" max="10" value="5"><b id="cvModelValue">5</b></label>',
+    "غيّر التردد وشاهد الموجة","Change frequency and watch the wave");
+
+   if(/(ذرة|العناصر|الجدول الدوري|أيون|بنية الذرة)/.test(n))return shell("scene-science scene-atom",
+    '<div class="cv-nucleus"><b>+</b><i></i><i></i></div><div class="cv-orbit o1"><span></span></div><div class="cv-orbit o2"><span></span></div><div class="cv-orbit o3"><span></span></div><label class="cv-model-control compact">'+txt(api,"الإلكترونات","Electrons")+' <input id="cvModelRange" type="range" min="1" max="18" value="6"><b id="cvModelValue">6</b></label>',
+    "غيّر عدد الإلكترونات ودوّر الذرة","Change electron count and rotate the atom");
+
+   if(/(كيمياء|حمض|قاعدة|تفاعل|مركب|مخلوط|روابط|pH|معادلات كيميائية)/i.test(n))return shell("scene-science scene-chemistry",
+    '<div class="cv-lab-floor"></div><div class="cv-beaker"><div class="cv-liquid"></div><i></i><i></i><i></i><i></i></div><div class="cv-molecule m1"><b></b><b></b><b></b></div><div class="cv-molecule m2"><b></b><b></b></div><label class="cv-model-control">'+txt(api,"شدة التفاعل","Reaction level")+' <input id="cvModelRange" type="range" min="0" max="14" value="7"><b id="cvModelValue">7</b></label>',
+    "غيّر القيمة وشاهد نموذج المختبر يستجيب","Change the value and watch the lab model respond");
+
+   if(/(خلية|وراثة|DNA|تكاثر|جسم الإنسان|التنفس|البناء الضوئي|جين|بروتين)/i.test(n))return shell("scene-science scene-biology",
+    '<div class="cv-cell"><i class="org o1"></i><i class="org o2"></i><i class="org o3"></i><b class="cv-cell-core"></b></div><div class="cv-dna"><i></i><i></i><i></i><i></i><i></i></div><label class="cv-model-control compact">'+txt(api,"التكبير","Zoom level")+' <input id="cvModelRange" type="range" min="1" max="10" value="5"><b id="cvModelValue">5×</b></label>',
+    "غيّر التكبير واستكشف النموذج الحيوي","Change magnification and explore the biology model");
+
+   if(/(بيئة|أنظمة بيئية|استدامة|كائنات حية|سلاسل غذائية)/.test(n))return shell("scene-science scene-ecosystem",
+    '<div class="cv-eco-sun"></div><div class="cv-eco-layer plants"></div><div class="cv-eco-node n1">🌿</div><div class="cv-eco-node n2">🐇</div><div class="cv-eco-node n3">🦅</div><div class="cv-eco-arrow a1">→</div><div class="cv-eco-arrow a2">→</div><label class="cv-model-control compact">'+txt(api,"الطاقة المتاحة","Available energy")+' <input id="cvModelRange" type="range" min="10" max="100" value="70"><b id="cvModelValue">70%</b></label>',
+    "غيّر الطاقة وشاهد السلسلة الغذائية","Change the energy and inspect the food chain");
+
+   return shell("scene-science scene-motion",
+    '<div class="cv-track"><i></i></div><div class="cv-motion-ball"></div><div class="cv-vector v1">→</div><div class="cv-vector v2">↑</div><label class="cv-model-control compact">'+txt(api,"القوة","Force")+' <input id="cvModelRange" type="range" min="1" max="20" value="8"><b id="cvModelValue">8 N</b></label>',
+    "غيّر القوة وشاهد الحركة","Change force and watch the motion");
   }
+
   if(subject==="arabic"){
-   const pair=lang(api)==="en"?(/المضاف والمضاف إليه/.test(n)?["Mudaf","Mudaf ilayh"]:["Word","Parsing"]):(/المضاف والمضاف إليه/.test(n)?["كتابُ","الطالبِ"]:["الكلمة","الإعراب"]);
-   return '<div class="curriculum-visual-scene scene-language scene-arabic" id="cv97Scene"><div class="cv-book-base"></div><div class="cv-word-card w1">'+pair[0]+'</div><div class="cv-word-card w2">'+pair[1]+'</div><div class="cv-word-card w3">'+esc(titleText(api,t))+'</div><span class="cv-scene-tag">'+txt(api,"قواعد عربية","Arabic Grammar")+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير بطاقات القاعدة","Drag to rotate the grammar cards")+'</div>';
+   const labels=lang(api)==="en"?["Word","Role","Case"]:["الكلمة","الموقع","العلامة"];
+   return shell("scene-language scene-arabic scene-parsing",
+    '<div class="cv-parse-root">'+display+'</div><div class="cv-parse-lines"><i></i><i></i><i></i></div><div class="cv-word-card w1">'+labels[0]+'</div><div class="cv-word-card w2">'+labels[1]+'</div><div class="cv-word-card w3">'+labels[2]+'</div><div class="cv-parse-readout" id="cvParseReadout">'+txt(api,"اضغط بطاقة لتتبع الإعراب","Tap a card to inspect the grammatical role")+'</div>',
+    "اضغط الكلمات ودوّر شجرة الإعراب","Tap the cards and rotate the parsing tree");
   }
+
   if(subject==="english"){
-   const tense=/(Past|Present|Future)/i.test(n);
-   return '<div class="curriculum-visual-scene scene-language scene-english" id="cv97Scene"><div class="cv-english-line"></div><div class="cv-grammar-card g1">'+(tense?"PAST":"FORM")+'</div><div class="cv-grammar-card g2">'+esc(t.title.length>18?t.title.slice(0,18)+"…":t.title)+'</div><div class="cv-grammar-card g3">'+(tense?"FUTURE":"USE")+'</div><span class="cv-scene-tag">English Grammar</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير خط القاعدة","Drag to rotate the grammar timeline")+'</div>';
+   const tense=/(Past|Present|Future|Perfect|Continuous)/i.test(n);
+   return shell("scene-language scene-english",
+    '<div class="cv-english-line"></div><div class="cv-grammar-card g1">'+(tense?"PAST":"FORM")+'</div><div class="cv-grammar-card g2">'+esc(t.title.length>18?t.title.slice(0,18)+"…":t.title)+'</div><div class="cv-grammar-card g3">'+(tense?"FUTURE":"USE")+'</div><button class="cv-model-action" id="cvGrammarFlip" type="button">'+txt(api,"بدّل المثال","Change example")+'</button>',
+    "دوّر خط القاعدة واضغط لتبديل المثال","Rotate the grammar timeline and change the example");
   }
-  if(subject==="history")return '<div class="curriculum-visual-scene scene-history" id="cv97Scene"><div class="cv-history-floor"></div><div class="cv-era e1"><b>'+txt(api,"سبب","CAUSE")+'</b></div><div class="cv-era e2"><b>'+txt(api,"حدث","EVENT")+'</b></div><div class="cv-era e3"><b>'+txt(api,"نتيجة","RESULT")+'</b></div><div class="cv-history-rail"></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الخط الزمني","Drag to rotate the timeline")+'</div>';
-  return '<div class="curriculum-visual-scene scene-geography" id="cv97Scene"><div class="cv-globe"><i class="lat l1"></i><i class="lat l2"></i><i class="lon n1"></i><i class="lon n2"></i><b></b></div><div class="cv-terrain t1"></div><div class="cv-terrain t2"></div><div class="cv-terrain t3"></div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير الكرة والمجال","Drag to rotate the globe")+'</div>';
+
+  if(subject==="history")return shell("scene-history",
+   '<div class="cv-history-floor"></div><div class="cv-era e1"><b>'+txt(api,"سبب","CAUSE")+'</b></div><div class="cv-era e2"><b>'+txt(api,"حدث","EVENT")+'</b></div><div class="cv-era e3"><b>'+txt(api,"نتيجة","RESULT")+'</b></div><div class="cv-history-rail"></div><button class="cv-model-action" id="cvHistoryStep" type="button">'+txt(api,"الحدث التالي","Next event")+'</button>',
+   "اضغط السبب والحدث والنتيجة ودوّر الخط الزمني","Tap cause, event and result and rotate the timeline");
+
+  if(/(صفائح|زلازل|براكين|بنية الكرة|صخور|معادن)/.test(n))return shell("scene-geography scene-earth-layers",
+   '<div class="cv-earth-core"><i class="layer l1"></i><i class="layer l2"></i><i class="layer l3"></i></div><div class="cv-tectonic-plates"><b></b><b></b></div><label class="cv-model-control compact">'+txt(api,"حركة الصفائح","Plate movement")+' <input id="cvModelRange" type="range" min="0" max="10" value="4"><b id="cvModelValue">4</b></label>',
+   "غيّر حركة الصفائح ودوّر طبقات الأرض","Change plate motion and rotate the Earth layers");
+
+  if(/(طقس|مناخ|غلاف جوي|دورة المياه)/.test(n))return shell("scene-geography scene-weather",
+   '<div class="cv-weather-cloud"><i></i><i></i><i></i></div><div class="cv-weather-sun"></div><div class="cv-water-cycle"><b>↑</b><b>→</b><b>↓</b></div><label class="cv-model-control compact">'+txt(api,"درجة الحرارة","Temperature")+' <input id="cvModelRange" type="range" min="-10" max="45" value="24"><b id="cvModelValue">24°C</b></label>',
+   "غيّر الحرارة وشاهد نموذج الطقس","Change temperature and inspect the weather model");
+
+  if(/(سكان|هجرة|مدن|اقتصاد|صناعة|زراعة|مواصلات)/.test(n))return shell("scene-geography scene-human-geography",
+   '<div class="cv-city-model"><i class="building b1"></i><i class="building b2"></i><i class="building b3"></i><i class="road"></i></div><div class="cv-pop-bars"><b style="--p:45%"></b><b style="--p:68%"></b><b style="--p:82%"></b></div><label class="cv-model-control compact">'+txt(api,"عدد السكان","Population")+' <input id="cvModelRange" type="range" min="10" max="100" value="65"><b id="cvModelValue">65</b></label>',
+   "غيّر السكان وشاهد المدينة والبيانات","Change population and inspect the city model");
+
+  return shell("scene-geography",
+   '<div class="cv-globe"><i class="lat l1"></i><i class="lat l2"></i><i class="lon n1"></i><i class="lon n2"></i><b></b></div><div class="cv-terrain t1"></div><div class="cv-terrain t2"></div><div class="cv-terrain t3"></div><label class="cv-model-control compact">'+txt(api,"عامل التأثير","Impact factor")+' <input id="cvModelRange" type="range" min="1" max="10" value="5"><b id="cvModelValue">5</b></label>',
+   "غيّر العامل ودوّر الكرة والمجال","Change the factor and rotate the globe");
  }
  function attach3D(){
   const card=body.querySelector(".curriculum-3d-card"),scene=body.querySelector("#cv97Scene");if(!card||!scene)return;
