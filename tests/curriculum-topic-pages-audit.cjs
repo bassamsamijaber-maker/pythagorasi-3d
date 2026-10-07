@@ -30,6 +30,13 @@ assert.ok(css.includes("V105 — topic-specific interactive 3D curriculum"),"Int
 assert.ok(css.includes("V107 — readable 3D labels + live controls"),"Readable 3D labels/live control CSS is missing");
 assert.ok(curriculum.includes('const syncEditor=()=>{'),"Lesson editor must update live");
 assert.ok(curriculum.includes('addEventListener("input",syncEditor)'),"Lesson inputs must sync instantly");
+assert.ok(curriculum.includes('addEventListener("keyup",syncEditor)'),"Typing must sync on every key press");
+assert.ok(curriculum.includes("cv-live-scene-plate"),"Every topic scene needs a live value plate");
+assert.ok(curriculum.includes('liveData.textContent=dataText||display'),"Givens must update the 3D scene");
+assert.ok(curriculum.includes('liveWords.textContent=wordsText||titleText(api,t)'),"Words must update the 3D scene");
+assert.ok(curriculum.includes('liveQuestion.textContent=questionText'),"Question must update the 3D scene");
+assert.ok(curriculum.includes('statInputs[0]?.dispatchEvent'),"Statistics editor values must update bars");
+assert.ok(curriculum.includes('eqAdd.dispatchEvent'),"Equation editor values must update the equation model");
 assert.ok(!curriculum.includes('id="cv99ApplyEditor"'),"Manual update button must not exist");
 assert.ok(curriculum.includes("cv-live-field"),"Interactive numeric controls need visible captions");
 assert.ok(css.includes(".scene-parsing .cv-word-card.w1"),"Arabic parsing cards need explicit spacing");
@@ -43,5 +50,9 @@ assert.ok(index.includes("if(!isSamsungDevice())"),"Install action must be block
 assert.ok(functionsIndex.includes('const APP_URL = "https://classora.study/";'),"Public app links must use classora.study");
 assert.ok(!functionsIndex.includes("github.io"),"Public runtime must not expose a GitHub Pages URL");
 assert.ok(!/chatgpt|openai|generated\s+by\s+ai|ai[-\s]?generated/i.test(index),"Public page must not contain AI-builder traces");
+assert.ok(!index.includes("Classora AI"),"Visible branding and headers must not say Classora AI");
+assert.ok(!index.includes("مساعد كلاسورا AI"),"Arabic headers must not include AI wording");
+assert.ok(!index.includes('id="pythagAIChip"'),"Pythagoras header must not contain an AI chip");
+assert.ok(!curriculum.includes("Classora AI"),"Curriculum lesson header must be AI-free");
 
 console.log("PASS: Classora topic pages, Grade 8 equations and Samsung-only install audit passed.");
