@@ -13871,9 +13871,9 @@ document.getElementById("topicSearchOtherBtn").addEventListener("click",()=>{
 });
 document.getElementById("newTopicPractice").addEventListener("click",()=>{if(currentTopic)makeTopicPractice(currentTopic)});
 
-function generateTopicAIQuestion(topic){
+function generateTopicPracticeQuestion(topic){
   const q=pick(topicQuestionPool(topic).filter(x=>x.type==="mcq"));
-  aiGeneratedQuestion=q;
+  practiceQuestionState=q;
   return `${q.prompt}\n${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`;
 }
 function topicAssistantAnswer(raw,topic){
@@ -13885,7 +13885,7 @@ function topicAssistantAnswer(raw,topic){
   if(has(t,"اشرح","شرح","شو يعني","ما معنى","فهمني"))return topic.explanation;
   if(has(t,"مثال","اعطيني مثال","هات مثال"))return `مثال: ${topic.example}`;
   if(has(t,"قاعده","قاعدة","تذكر","نصيحه","نصيحة"))return topic.tip;
-  if(has(t,"سؤال","اسالني","اسألني","تدريب"))return generateTopicAIQuestion(topic);
+  if(has(t,"سؤال","اسالني","اسألني","تدريب"))return generateTopicPracticeQuestion(topic);
   const general=generalKnowledgeAnswer(raw,t);
   if(general)return general;
   return `بهذا الموضوع «${topic.title}»: ${topic.summary}\nاسألني عن الشرح أو المثال أو اطلب سؤال تدريب.`;
@@ -13900,7 +13900,7 @@ function sendTopicAI(){
   input.value="";appendTopicAI(raw,"user");
   logStudentActivity("ai_use",`استخدم مساعد موضوع ${currentTopic.title}`,currentTopic.subject);
   setTimeout(()=>{
-    const graded=gradeGeneratedAIAnswer(raw);
+    const graded=gradePracticeAnswer(raw);
     appendTopicAI(graded||topicAssistantAnswer(raw,currentTopic),"bot");
   },160);
 }
@@ -20026,7 +20026,7 @@ function hebrewKnowledgeAnswer(raw){
   return null;
 }
 
-let aiGeneratedQuestion=null;
+let practiceQuestionState=null;
 
 const localFacts=[
   {keys:["عاصمه فرنسا","عاصمة فرنسا"],answer:"عاصمة فرنسا هي باريس."},
@@ -20062,22 +20062,22 @@ function detectStudySubject(t){
 }
 function generateStudyQuestion(subject="mixed"){
   const q=shuffle(generalQuestionPool(subject)).find(x=>x.type==="mcq"||x.type==="number")||generalQuestionPool("mixed")[0];
-  aiGeneratedQuestion=q;
+  practiceQuestionState=q;
   const options=q.type==="mcq"?`\nالخيارات: ${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`:"";
   return `سؤال ${subjectNames[subject]||"مختلط"} 🎯\n${q.prompt}${options}\nجاوبني وأنا بفحصلك.`;
 }
-function gradeGeneratedAIAnswer(raw){
-  if(!aiGeneratedQuestion)return null;
+function gradePracticeAnswer(raw){
+  if(!practiceQuestionState)return null;
   const t=normalizeArabic(raw);
   if(has(t,"شو الجواب","اعطيني الجواب","الحل","وريني الجواب")){
-    const ans=aiGeneratedQuestion.answer;
-    const exp=aiGeneratedQuestion.explanation||"";
-    aiGeneratedQuestion=null;
+    const ans=practiceQuestionState.answer;
+    const exp=practiceQuestionState.explanation||"";
+    practiceQuestionState=null;
     return `الجواب: ${ans}. ${exp}`;
   }
   if(raw.length>60||/[؟?]/.test(raw))return null;
 
-  const q=aiGeneratedQuestion;
+  const q=practiceQuestionState;
   let ok=false;
   if(q.type==="number"){
     const n=extractNumbers(raw)[0];
@@ -20089,7 +20089,7 @@ function gradeGeneratedAIAnswer(raw){
     else ok=nr===normExam(q.answer)||nr.includes(normExam(q.answer));
   }
   const answer=q.answer,exp=q.explanation||"";
-  aiGeneratedQuestion=null;
+  practiceQuestionState=null;
   return ok?`صح ✅ ممتاز! ${exp}`:`مش صحيح. الجواب الصحيح هو ${answer}. ${exp}`;
 }
 function generalKnowledgeAnswer(raw,t){
@@ -20238,7 +20238,7 @@ function pythagorasiAnswer(raw){
     return "مثال: إذا كان a=5 وb=12، فالوتر c=13 لأن 25+144=169.";
   }
 
-  const generatedGrade=gradeGeneratedAIAnswer(repairedRaw);
+  const generatedGrade=gradePracticeAnswer(repairedRaw);
   if(generatedGrade)return generatedGrade;
 
   const nameMatch=String(repairedRaw).trim().match(/(?:^|\s)(?:اسمي|أنا اسمي|انا اسمي|ناديني)\s+([^\r\n،,.!?؟]{2,40})/i);
