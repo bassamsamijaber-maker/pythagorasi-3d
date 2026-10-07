@@ -5030,7 +5030,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <div class="lobby-ai-head">
           <div class="lobby-ai-orb">∟</div>
           <div>
-            <b id="lobbyAIName">Classora AI Assistant</b>
+            <b id="lobbyAIName">Classora Assistant</b>
             <span>Classora learning assistant</span>
           </div>
         </div>
@@ -6001,8 +6001,8 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
       </section>
 
       <section class="settings-card">
-        <h3>🤖 Classora AI Assistant</h3>
-        <input id="settingsAIName" value="Classora AI Assistant" readonly>
+        <h3>Classora Assistant</h3>
+        <input id="settingsAIName" value="Classora Assistant" readonly>
         <div class="settings-note">The assistant name is part of the Classora platform.</div>
         <button class="exam-secondary hidden" id="saveAINameSettingsBtn">Save assistant name</button>
       </section>
@@ -6369,7 +6369,6 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
   <aside class="side">
     <div class="brand">
       <h1>Classora</h1>
-      <div class="ai-chip" id="pythagAIChip">● Classora AI Assistant</div>
       <div class="lab-brand-actions">
         <button class="exam-secondary" id="returnLobbyBtn">⌂ <span>الرجوع للّوبي</span></button>
         <button class="exam-secondary" id="labSettingsBtn">⚙️ <span>الإعدادات</span></button>
@@ -6467,11 +6466,11 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
 <section class="card ai-card">
       <div class="ai-head">
-        <div class="ai-name"><span class="botlogo">∟</span><span>Classora AI Assistant</span></div>
+        <div class="ai-name"><span class="botlogo">∟</span><span>Classora Assistant</span></div>
         <div class="online">● جاهز</div>
       </div>
       <div class="chat" id="chat">
-        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>Classora AI Assistant</b>. اسألني عن الدروس، فيثاغورس، المعادلات، الحسابات، الامتحانات أو المسابقات.</div>
+        <div class="msg bot" id="aiWelcome">هلا فيك 👋 أنا <b>Classora Assistant</b>. اسألني عن الدروس، فيثاغورس، المعادلات، الحسابات، الامتحانات أو المسابقات.</div>
       </div>
       <div class="suggestions">
         <button data-q="اشرحلي النظرية ببساطة">اشرحها ببساطة</button>
@@ -6480,7 +6479,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <button data-q="هل تنفع لكل المثلثات؟">متى نستخدمها؟</button>
       </div>
       <div class="chatinput">
-        <button class="mic" id="micBtn" type="button" title="Talk to Classora AI Assistant">🎤</button>
+        <button class="mic" id="micBtn" type="button" title="Talk to Classora Assistant">🎤</button>
         <textarea id="question" rows="1" placeholder="اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟"></textarea>
         <button class="send" id="sendBtn">➤</button>
       </div>
@@ -6493,9 +6492,9 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         </select>
         <label class="ai-auto"><input id="aiAutoSpeak" type="checkbox"> 🔊 اقرأ الرد تلقائيًا</label>
       </div>
-      <div class="dictnote">Classora AI Assistant • understands Arabic and English • remembers context on this device</div>
+      <div class="dictnote">Classora Assistant • understands Arabic and English • remembers context on this device</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
-      <div class="ai-scope">Classora AI Assistant can help with lessons, Pythagoras, equations, examples and calculations.</div>
+      <div class="ai-scope">Classora Assistant can help with lessons, Pythagoras, equations, examples and calculations.</div>
     </section>
   </aside>
 </div>
@@ -7068,14 +7067,14 @@ window.PythagorasiFirebase = { app:firebaseApp, db, auth };
 
 
 const defaultAssistantNames={
-  lobby:"Classora AI Assistant",
-  math:"Classora AI Assistant",
-  science:"Classora AI Assistant",
-  arabic:"Classora AI Assistant",
-  hebrew:"Classora AI Assistant",
-  english:"Classora AI Assistant",
-  geography:"Classora AI Assistant",
-  pythagoras:"Classora AI Assistant"
+  lobby:"Classora Assistant",
+  math:"Classora Assistant",
+  science:"Classora Assistant",
+  arabic:"Classora Assistant",
+  hebrew:"Classora Assistant",
+  english:"Classora Assistant",
+  geography:"Classora Assistant",
+  pythagoras:"Classora Assistant"
 };
 let currentSubjectContext="mixed";
 
@@ -7190,7 +7189,7 @@ function assistantNames(){
   return {...defaultAssistantNames,...(window.PythagorasiUser?.assistantNames||{})};
 }
 function assistantNameFor(subject){
-  return "Classora AI Assistant";
+  return "Classora Assistant";
 }
 function applyAvatar(el,profile,name){
   if(!el)return;
@@ -7206,11 +7205,11 @@ function applyAvatar(el,profile,name){
   }
 }
 function updateAssistantLabels(){
-  const fixedName=currentUILanguage==="en"?"Classora AI Assistant":"مساعد كلاسورا AI";
+  const fixedName=currentUILanguage==="en"?"Classora Assistant":"مساعد كلاسورا";
   document.getElementById("lobbyAIName")?.replaceChildren(document.createTextNode(fixedName));
   document.querySelectorAll("[data-ai-label]").forEach(el=>{el.textContent=fixedName});
   const chip=document.getElementById("pythagAIChip");
-  if(chip)chip.textContent=`● ${fixedName}`;
+  if(chip)chip.remove();
   const sa=document.getElementById("subjectAssistantName");
   if(sa)sa.textContent=fixedName;
   const topic=document.getElementById("topicAIName");
@@ -12444,24 +12443,24 @@ const uiExactTranslations=new Map([
 
 
 [
-  ["أهلًا 👋","Welcome 👋"],["فيثاغورسي","Classora AI Assistant"],["المختبر 3D","3D Lab"],["تحدّي فيثاغورس","Pythagoras Challenge"],
+  ["أهلًا 👋","Welcome 👋"],["فيثاغورسي","Classora Assistant"],["المختبر 3D","3D Lab"],["تحدّي فيثاغورس","Pythagoras Challenge"],
   ["أسئلة تدريب","Practice Questions"],["امتحانات","Exams"],["مسابقة مباشرة","Live Competition"],["ملفي","My Profile"],
   ["بنك أسئلة فيثاغورس","Pythagoras Question Bank"],["نتائج الامتحانات","Exam Results"],["مسابقاتي","My Competitions"],
   ["السؤال","Question"],["النقاط","Score"],["المادة","Subject"],["المساعد:","Assistant:"],["بحث","Search"],
   ["اختار موضوع حتى تفتح الشرح والأمثلة والتدريب.","Choose a topic to open its explanation, examples and practice."],
   ["← كل المواضيع","← All topics"],["الموضوع","Topic"],["المساعد","Assistant"],["📖 الشرح","📖 Explanation"],["💡 مثال","💡 Example"],
-  ["🎯 تدريب سريع","🎯 Quick Practice"],["🤖 اسأل مساعد الموضوع","🤖 Ask Classora AI Assistant"],["🎓 امتحان على هذا الموضوع","🎓 Exam on this topic"],
+  ["🎯 تدريب سريع","🎯 Quick Practice"],["🤖 اسأل مساعد الموضوع","🤖 Ask Classora Assistant"],["🎓 امتحان على هذا الموضوع","🎓 Exam on this topic"],
   ["🔎 ابحث عن موضوع ثاني","🔎 Search another topic"],["👤 ملفي الشخصي","👤 My Profile"],["🤖 أسماء المساعدين","🤖 Assistant Names"],
   ["مساعد اللوبي","Lobby Assistant"],["حفظ الأسماء","Save names"],["اسم الدخول: —","Login name: —"],["العربية","Arabic"],
   ["الخيار 1 هو الصحيح","Option 1 is correct"],["الخيار 2 هو الصحيح","Option 2 is correct"],["الخيار 3 هو الصحيح","Option 3 is correct"],["الخيار 4 هو الصحيح","Option 4 is correct"],
   ["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","🖱 Drag left/right or up/down within the front viewing angle"],
-  ["🔎 عجلة الماوس للتقريب","🔎 Use the mouse wheel to zoom"],["● فيثاغورسي","● Classora AI Assistant"],["تسجيل خروج","Log out"],
+  ["🔎 عجلة الماوس للتقريب","🔎 Use the mouse wheel to zoom"],["● فيثاغورسي","● Classora Assistant"],["تسجيل خروج","Log out"],
   ["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.",", and the site calculates the requested side and rebuilds the model and sand."],
   ["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. The sand is distributed in proportion to each square's area."],
-  ["0 نقاط","0 pts"],["فيثاغورسي AI","Classora AI Assistant"],["هلا فيك 👋 أنا","Hi 👋 I am"],
+  ["0 نقاط","0 pts"],["فيثاغورسي AI","Classora Assistant"],["هلا فيك 👋 أنا","Hi 👋 I am"],
   [". اسألني عن نظرية فيثاغورس، الوتر، المثلث القائم، الحسابات، المجسم أو الامتحانات والمسابقات.",". Ask me about the Pythagorean theorem, the hypotenuse, right triangles, calculations, the model, exams or competitions."],
-  ["Classora AI Assistant • understands Arabic and English • remembers context on this device","Pythagorasi runs locally • understands flexible input • remembers your name, context and conversations"],
-  ["Classora AI Assistant can help with lessons, Pythagoras, equations, examples and calculations.","Focused on the Pythagorean theorem: hypotenuse, sides, right triangles, examples and calculations."],
+  ["Classora Assistant • understands Arabic and English • remembers context on this device","Pythagorasi runs locally • understands flexible input • remembers your name, context and conversations"],
+  ["Classora Assistant can help with lessons, Pythagoras, equations, examples and calculations.","Focused on the Pythagorean theorem: hypotenuse, sides, right triangles, examples and calculations."],
   ["الصوت العربي • السرعة","Voice • speed"],["عادي","Normal"],
   [". إذا سمّينا الضلعين اللذين يصنعان الزاوية القائمة بـ",". If we call the two sides that form the right angle"],
   ["و","and"],["، وسمّينا الضلع المقابل للزاوية القائمة — وهو أطول ضلع — بـ",", and call the side opposite the right angle — the longest side —"],
@@ -12501,7 +12500,7 @@ const uiExactTranslations=new Map([
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 [
-  ["Classora AI Assistant","Classora AI Assistant"],
+  ["Classora Assistant","Classora Assistant"],
   ["مساعد Classora","Classora Assistant"],
   ["Classora learning assistant","Classora learning assistant"],
   ["🔥 اختار النشاط","🔥 Choose an Activity"],
@@ -12548,13 +12547,13 @@ const uiExactTranslations=new Map([
   ["🏅 الترتيب المباشر","🏅 Live Leaderboard"],
   ["🏆 مسابقات شغّالة هسا","🏆 Live Competitions"],
   ["اضغط دخول وادخل مباشرة للمسابقة عن بُعد.","Tap Join to enter a remote competition immediately."],
-  ["🤖 Classora AI Assistant","🤖 Classora AI Assistant"],
+  ["🤖 Classora Assistant","🤖 Classora Assistant"],
   ["The assistant name is part of the Classora platform.","The assistant name is part of the Classora platform."]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 [["🌐 اللغة / Language","🌐 Language"],["فيثاغورس","Pythagoras"],["أو","or"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
-[["احكي مع فيثاغورسي","Talk to Classora AI Assistant"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+[["احكي مع فيثاغورسي","Talk to Classora Assistant"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 [["🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.","🔒 You stay signed in on this device for 2 months unless you log out."]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
@@ -12916,7 +12915,7 @@ const uiPlaceholderTranslations=new Map([
   ["اكتب اسمك","Enter your name"],["اكتب جوابك هنا...","Enter your answer..."],["اكتب سؤالك لفيثاغورسي...","Ask Pythagorasi..."],
   ["مثال: بسام جابر","Example: Bassam Jaber"],["6 خانات أو أكثر","6 characters or more"],
   ["اكتب كلمة السر مرة ثانية","Enter the password again"],["الكود اللي أعطاك إياه المعلم","Code given by your teacher"],
-  ["الاسم الظاهر","Display name"],["فيثاغورسي","Classora AI Assistant"],["كود الصف","Class code"],
+  ["الاسم الظاهر","Display name"],["فيثاغورسي","Classora Assistant"],["كود الصف","Class code"],
   ["مثال: ثامن 6","Example: Grade 8 - Class 6"],["كود دعوة المعلم","Teacher invite code"],
   ["عنوان الوظيفة","Assignment title"],["تعليمات الوظيفة للطلاب...","Assignment instructions..."],
   ["اكتب السؤال","Write the question"],["اكتب الرقم","Enter a number"],["اكتب إجابتك المفتوحة...","Write your open answer..."],
@@ -13257,7 +13256,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLoginName").textContent=`اسم الدخول: ${p.loginName||p.originalLoginName||p.nameKey||name}`;
   document.getElementById("settingsProfileId").textContent=p.profileId||"----------";
   document.getElementById("settingsRememberedLogin").textContent=`تسجيل الدخول محفوظ لغاية: ${formatLoginExpiry(rememberedLoginExpiresAt())}`;
-  document.getElementById("settingsAIName").value="Classora AI Assistant";
+  document.getElementById("settingsAIName").value="Classora Assistant";
   const avatar=document.getElementById("settingsAvatar");
   applyAvatar(avatar,p,name);
   document.getElementById("settingsSoundToggle").checked=soundEnabled;
@@ -13435,7 +13434,7 @@ document.getElementById("enableTeacherPasswordBtn").addEventListener("click",asy
 
 document.getElementById("saveAINameSettingsBtn").addEventListener("click",async()=>{
   if(!auth.currentUser)return;
-  const ai="Classora AI Assistant";
+  const ai="Classora Assistant";
   const names={...assistantNames(),lobby:ai,pythagoras:ai};
   try{
     await setDoc(doc(db,"users",auth.currentUser.uid),{assistantNames:names,updatedAt:serverTimestamp()},{merge:true});
@@ -19737,8 +19736,8 @@ function refreshAIWelcome(){
   let el=document.getElementById("aiWelcome");
   if(!el){el=document.createElement("div");el.id="aiWelcome";el.className="msg bot";host.prepend(el)}
   el.innerHTML=currentUILanguage==="en"
-    ?`${escapeHtml(helloForUser())} I am <b>Classora AI Assistant</b>. Ask me about a lesson, a math problem, or equations.`
-    :`${escapeHtml(helloForUser())} أنا <b>مساعد كلاسورا AI</b>. اسألني عن درس، مسألة أو معادلات.`;
+    ?`${escapeHtml(helloForUser())} I am <b>Classora Assistant</b>. Ask me about a lesson, a math problem, or equations.`
+    :`${escapeHtml(helloForUser())} أنا <b>مساعد كلاسورا</b>. اسألني عن درس، مسألة أو معادلات.`;
 }
 function personalizeAssistantText(text){
   return String(text||"")
