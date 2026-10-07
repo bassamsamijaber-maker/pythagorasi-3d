@@ -7,6 +7,7 @@ const read=p=>fs.readFileSync(path.join(root,...p.split("/")),"utf8");
 const curriculum=read("assets/curriculum-v97.js");
 const css=read("assets/curriculum-v97.css");
 const index=read("index.html");
+const functionsIndex=read("functions/index.js");
 
 const grade8=curriculum.slice(curriculum.indexOf(" 8:{"),curriculum.indexOf(" 9:{"));
 for(const topic of ["معادلات خطية","معادلات متعددة الخطوات","معادلات مع أقواس","معادلات كسرية","مسائل كلامية على المعادلات"]){
@@ -26,11 +27,21 @@ for(const marker of [
 assert.ok(curriculum.includes('modal.classList.toggle("lesson-open",state.view==="lesson")'),"Topic lessons must open full-page");
 assert.ok(css.includes(".classora-curriculum-modal.lesson-open"),"Full-page topic CSS is missing");
 assert.ok(css.includes("V105 — topic-specific interactive 3D curriculum"),"Interactive 3D topic CSS is missing");
+assert.ok(css.includes("V107 — readable 3D labels + live controls"),"Readable 3D labels/live control CSS is missing");
+assert.ok(curriculum.includes('const syncEditor=()=>{'),"Lesson editor must update live");
+assert.ok(curriculum.includes('addEventListener("input",syncEditor)'),"Lesson inputs must sync instantly");
+assert.ok(!curriculum.includes('id="cv99ApplyEditor"'),"Manual update button must not exist");
+assert.ok(curriculum.includes("cv-live-field"),"Interactive numeric controls need visible captions");
+assert.ok(css.includes(".scene-parsing .cv-word-card.w1"),"Arabic parsing cards need explicit spacing");
+assert.ok(css.includes(".scene-parsing .cv-word-card.w3"),"Arabic parsing cards need explicit spacing");
 
 assert.ok(index.includes('id="studentNameInput" maxlength="40" autocomplete="name" placeholder="Name"'),"Student name placeholder must be Name");
 assert.ok(index.includes('id="teacherCreateName" maxlength="40" autocomplete="name" placeholder="Name"'),"Teacher name placeholder must be Name");
 assert.ok(index.includes("function isSamsungDevice()"),"Samsung device detector is missing");
 assert.ok(index.includes("const canInstall=isSamsungDevice();"),"Install visibility must be Samsung-only");
 assert.ok(index.includes("if(!isSamsungDevice())"),"Install action must be blocked outside Samsung");
+assert.ok(functionsIndex.includes('const APP_URL = "https://classora.study/";'),"Public app links must use classora.study");
+assert.ok(!functionsIndex.includes("github.io"),"Public runtime must not expose a GitHub Pages URL");
+assert.ok(!/chatgpt|openai|generated\s+by\s+ai|ai[-\s]?generated/i.test(index),"Public page must not contain AI-builder traces");
 
 console.log("PASS: Classora topic pages, Grade 8 equations and Samsung-only install audit passed.");
