@@ -4767,6 +4767,32 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 @media(max-width:700px){#classoraIntro .intro-orbit-ring{width:78vw}#classoraIntro .intro-orbit-ring.r2{width:108vw}#classoraIntro .intro-float-card{min-width:92px;padding:8px 10px;font-size:10px}#classoraIntro .intro-float-card svg{width:19px;height:19px}#classoraIntro .intro-logo-shell{width:118px;height:118px;border-radius:31px}#classoraIntro .intro-logo-shell img{width:90px!important;height:90px!important;border-radius:24px!important}#classoraIntro .intro-demo-cursor{display:none}}
 @media(prefers-reduced-motion:reduce){#classoraIntro .intro-orbit-ring,#classoraIntro .intro-film-glow,#classoraIntro .intro-logo-shell::before,#classoraIntro .intro-demo-cursor,#classoraIntro .intro-click-ripple{animation-duration:1.8s!important}#classoraIntro.classora-cinematic-intro{animation:classoraIntroAutoExit 3s linear both!important}}
 </style>
+
+<style id="classora-phone-lobby-v1005">
+/* Safe mobile Lobby control: styling only; reuses the existing Classora navigation handler. */
+@media (max-width:760px){
+  body.classora-authenticated #classoraMobilePageNav{
+    display:flex!important;
+    z-index:2147483646!important;
+    bottom:calc(max(10px,env(safe-area-inset-bottom)) + 2px)!important;
+    pointer-events:auto!important;
+  }
+  body.classora-authenticated #classoraMobileLobbyBtn{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+    min-height:50px!important;
+    border-color:rgba(109,211,255,.30)!important;
+    background:linear-gradient(145deg,rgba(30,155,220,.20),rgba(36,86,161,.18))!important;
+    box-shadow:0 8px 24px rgba(0,0,0,.26)!important;
+  }
+  body.classora-authenticated #classoraMobileLobbyBtn span{display:inline!important}
+  body.classora-intro-active #classoraMobilePageNav,
+  body:has(#authGate.show) #classoraMobilePageNav{display:none!important}
+}
+</style>
+
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
