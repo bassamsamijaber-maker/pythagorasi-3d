@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v102-4-direct-live-3d";
+const CACHE_NAME="classora-v103-0-simple-topic-models";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=103",
   "./assets/subject-labs.css?v=99",
@@ -8,10 +8,10 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=108",
+  "./assets/learning-hub.js?v=110",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=108",
-  "./assets/curriculum-v97.css?v=108",
+  "./assets/curriculum-v97.js?v=110",
+  "./assets/curriculum-v97.css?v=110",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
