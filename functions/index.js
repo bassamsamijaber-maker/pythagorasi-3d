@@ -61,7 +61,8 @@ async function collectTokens(uids) {
     const tokens = Array.isArray(data.pushTokens) ? data.pushTokens : [];
     for (const token of tokens) {
       if (typeof token !== "string" || !token) continue;
-      tokenOwners.set(token, snap.id);
+      const language = data?.accountState?.preferences?.language || data?.preferences?.language || "en";
+      tokenOwners.set(token, { uid: snap.id, language: language === "ar" ? "ar" : "en" });
     }
   }
 
@@ -94,49 +95,56 @@ async function sendToUsers(uids, payload) {
   let failure = 0;
   const invalidByUid = new Map();
 
-  for (const tokenChunk of chunks(tokens, 500)) {
-    const response = await messaging.sendEachForMulticast({
-      tokens: tokenChunk,
-      notification: {
-        title: payload.title,
-        body: payload.body
-      },
-      data: {
-        type: payload.type || "general",
-        eventKey: payload.eventKey || "",
-        title: payload.title || "Classora",
-        body: payload.body || "",
-        url: payload.url || APP_URL
-      },
-      webpush: {
-        notification: {
-          icon: ICON_URL,
-          badge: BADGE_URL,
-          tag: payload.eventKey || undefined
+  const localize = (value, language) => {
+    if (value && typeof value === "object") return String(value[language] || value.en || value.ar || "");
+    return String(value || "");
+  };
+
+  for (const language of ["en", "ar"]) {
+    const languageTokens = tokens.filter((token) => tokenOwners.get(token)?.language === language);
+    for (const tokenChunk of chunks(languageTokens, 500)) {
+      const title = localize(payload.title, language) || "Classora";
+      const body = localize(payload.body, language);
+      const response = await messaging.sendEachForMulticast({
+        tokens: tokenChunk,
+        notification: { title, body },
+        data: {
+          type: payload.type || "general",
+          eventKey: payload.eventKey || "",
+          title,
+          body,
+          url: payload.url || APP_URL
         },
-        fcmOptions: {
-          link: payload.url || APP_URL
+        webpush: {
+          notification: {
+            icon: ICON_URL,
+            badge: BADGE_URL,
+            tag: payload.eventKey || undefined
+          },
+          fcmOptions: {
+            link: payload.url || APP_URL
+          }
         }
-      }
-    });
+      });
 
-    success += response.successCount;
-    failure += response.failureCount;
+      success += response.successCount;
+      failure += response.failureCount;
 
-    response.responses.forEach((item, index) => {
-      if (item.success) return;
-      const code = item.error?.code || "";
-      if (
-        code === "messaging/registration-token-not-registered" ||
-        code === "messaging/invalid-registration-token"
-      ) {
-        const token = tokenChunk[index];
-        const uid = tokenOwners.get(token);
-        if (!uid) return;
-        if (!invalidByUid.has(uid)) invalidByUid.set(uid, []);
-        invalidByUid.get(uid).push(token);
-      }
-    });
+      response.responses.forEach((item, index) => {
+        if (item.success) return;
+        const code = item.error?.code || "";
+        if (
+          code === "messaging/registration-token-not-registered" ||
+          code === "messaging/invalid-registration-token"
+        ) {
+          const token = tokenChunk[index];
+          const uid = tokenOwners.get(token)?.uid;
+          if (!uid) return;
+          if (!invalidByUid.has(uid)) invalidByUid.set(uid, []);
+          invalidByUid.get(uid).push(token);
+        }
+      });
+    }
   }
 
   await cleanupInvalidTokens(invalidByUid);
@@ -159,17 +167,19 @@ exports.notifyNewAssignment = onDocumentCreated(
     const classId = event.params.classId;
     const assignmentId = event.params.assignmentId;
     const classSnap = await db.collection("classes").doc(classId).get();
-    const className = classSnap.exists ? (classSnap.data()?.name || "الصف") : "الصف";
+    const className = classSnap.exists ? (classSnap.data()?.name || "Class") : "Class";
     const uids = await classMemberIds(classId);
 
-    let body = data.title || "وظيفة جديدة";
-    if (data.dueDate) body += " • التسليم " + data.dueDate;
-    body += " • " + className;
+    const assignmentTitle = data.title || "";
+    const body = {
+      en: (assignmentTitle || "New assignment") + (data.dueDate ? " • Due " + data.dueDate : "") + " • " + className,
+      ar: (assignmentTitle || "وظيفة جديدة") + (data.dueDate ? " • التسليم " + data.dueDate : "") + " • " + className
+    };
 
     return sendToUsers(uids, {
       type: "assignment",
       eventKey: "assignment:" + classId + ":" + assignmentId,
-      title: "📝 وظيفة جديدة",
+      title: { en: "📝 New assignment", ar: "📝 وظيفة جديدة" },
       body
     });
   }
@@ -182,13 +192,16 @@ exports.notifyNewExam = onDocumentCreated(
     if (data.published !== true) return;
 
     const uids = await recipientIdsForTarget(data);
-    let body = data.title || "امتحان جديد";
-    if (data.code) body += " • الكود " + data.code;
+    const examTitle = data.title || "";
+    const body = {
+      en: (examTitle || "New exam") + (data.code ? " • Code " + data.code : ""),
+      ar: (examTitle || "امتحان جديد") + (data.code ? " • الكود " + data.code : "")
+    };
 
     return sendToUsers(uids, {
       type: "exam",
       eventKey: "exam:" + event.params.examId,
-      title: "🎓 امتحان جديد",
+      title: { en: "🎓 New exam", ar: "🎓 امتحان جديد" },
       body
     });
   }
@@ -201,13 +214,16 @@ exports.notifyNewCompetition = onDocumentCreated(
     if (data.publishToLobby !== true || data.status === "finished") return;
 
     const uids = await recipientIdsForTarget(data);
-    let body = data.title || "مسابقة Classora";
-    if (data.code) body += " • الكود " + data.code;
+    const competitionTitle = data.title || "";
+    const body = {
+      en: (competitionTitle || "Classora competition") + (data.code ? " • Code " + data.code : ""),
+      ar: (competitionTitle || "مسابقة Classora") + (data.code ? " • الكود " + data.code : "")
+    };
 
     return sendToUsers(uids, {
       type: "competition",
       eventKey: "competition:" + event.params.competitionId,
-      title: "🏆 مسابقة جديدة",
+      title: { en: "🏆 New competition", ar: "🏆 مسابقة جديدة" },
       body
     });
   }
@@ -231,14 +247,14 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
     const coTeachers = await db.collection("classes").doc(classId).collection("teachers").get();
     coTeachers.docs.forEach((doc) => teacherIds.add(doc.id));
 
-    const studentName = member.displayName || "طالب";
-    const className = classData.name || "الصف";
+    const studentName = member.displayName || "Student";
+    const className = classData.name || "Class";
 
     return sendToUsers([...teacherIds], {
       type: "classJoin",
       eventKey: "classJoin:" + classId + ":" + memberId,
-      title: "👤 طالب دخل صفك",
-      body: studentName + " • " + className
+      title: { en: "👤 Student joined your class", ar: "👤 طالب دخل صفك" },
+      body: { en: studentName + " • " + className, ar: studentName + " • " + className }
     });
   }
 );
