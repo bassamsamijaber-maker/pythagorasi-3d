@@ -33,9 +33,9 @@ The current proposed bundle ID is `com.classora.education`. If it is unavailable
 ## App Store URLs
 
 - Privacy Policy URL:
-  `https://bassamsamijaber-maker.github.io/pythagorasi-3d/privacy.html`
+  `https://classora.study/privacy.html`
 - Support URL:
-  `https://bassamsamijaber-maker.github.io/pythagorasi-3d/support.html`
+  `https://classora.study/support.html`
 
 ## iOS permission descriptions
 
