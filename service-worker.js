@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v100-8-statistics-semantic";
+const CACHE_NAME="classora-v101-0-full-english";
 const APP_SHELL=[
-  "./assets/subject-labs.js?v=99",
+  "./assets/subject-labs.js?v=103",
   "./assets/subject-labs.css?v=99",
   "./assets/return-navigation.js?v=92",
   "./assets/learning-plus.js?v=92",
@@ -8,10 +8,10 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=99",
+  "./assets/learning-hub.js?v=103",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=102",
-  "./assets/curriculum-v97.css?v=102",
+  "./assets/curriculum-v97.js?v=103",
+  "./assets/curriculum-v97.css?v=103",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
