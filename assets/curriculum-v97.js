@@ -1217,7 +1217,7 @@ export function mountCurriculum(api){
   const applySimpleControls=()=>{
    const values={};
    body.querySelectorAll(".cv-simple-input").forEach(el=>values[el.dataset.simpleKey]=el.type==="number"?Number(el.value):el.value);
-   const key=simpleSpec.key,dataEl=body.querySelector("#cv99Data"),wordsEl=body.querySelector("#cv99Words"),questionEl=body.querySelector("#cv99Question"),resultEl=body.querySelector("#cvSimpleResult"),scene=body.querySelector("#cv97Scene");
+   const key=simpleSpec.key,dataEl=body.querySelector("#cv99Data"),wordsEl=body.querySelector("#cv99Words"),questionEl=body.querySelector("#cv99Question"),answerEl=body.querySelector("#cv99Answer"),resultEl=body.querySelector("#cvSimpleResult"),scene=body.querySelector("#cv97Scene");
    const fmt=v=>Number.isInteger(Number(v))?String(Number(v)):String(Math.round(Number(v)*100)/100);
    let result=T("تم تحديث النموذج","Model updated");
 
@@ -1227,18 +1227,22 @@ export function mountCurriculum(api){
     [...body.querySelectorAll(".cv-stat-input")].forEach((input,i)=>{input.value=arr[i];input.dispatchEvent(new Event("input",{bubbles:true}))});
     const mean=arr.reduce((a,b)=>a+b,0)/arr.length,sorted=arr.slice().sort((a,b)=>a-b),median=(sorted[1]+sorted[2])/2;
     result=T("المتوسط = ","Mean = ")+fmt(mean)+T(" • الوسيط = "," • Median = ")+fmt(median);
+    if(questionEl)questionEl.value=T("احسب المتوسط للبيانات الحالية.","Calculate the mean of the current data.");if(answerEl)answerEl.value=fmt(mean);
    }else if(key==="fraction-equation"){
     const d=Math.max(1,Number(values.den||1)),a=Number(values.add||0),r=Number(values.right||0),x=d*(r-a);
     dataEl.value="x / "+d+" + "+a+" = "+r;
     result="x = "+fmt(x);
+    if(questionEl)questionEl.value=T("حل المعادلة الحالية وأوجد x.","Solve the current equation for x.");if(answerEl)answerEl.value="x = "+fmt(x);
    }else if(key==="word-equation"){
     const p=Number(values.price||0),q=Number(values.qty||0),total=p*q;
     dataEl.value=p+", "+q;
     result=fmt(total)+" ₪";
+    if(questionEl)questionEl.value=T("احسب المجموع من السعر والكمية.","Calculate the total from price and quantity.");if(answerEl)answerEl.value=fmt(total)+" ₪";
    }else if(/balance$/.test(key)||key==="linear-balance"){
     const a=Number(values.add||0),r=Number(values.right||0),x=r-a;
     dataEl.value="x + "+a+" = "+r;
     result="x = "+fmt(x);
+    if(questionEl)questionEl.value=T("حل المعادلة الحالية وأوجد x.","Solve the current equation for x.");if(answerEl)answerEl.value="x = "+fmt(x);
    }else if(key==="system-intersection"){
     const m1=Number(values.m1||0),m2=Number(values.m2||0);
     dataEl.value=m1+", "+m2;
@@ -1251,6 +1255,7 @@ export function mountCurriculum(api){
     dataEl.value=good+", "+all;
     if(scene)scene.style.setProperty("--prob-fill",(p*360)+"deg");
     result="P = "+good+"/"+all+" = "+fmt(p);
+    if(questionEl)questionEl.value=T("احسب الاحتمال من القيم الحالية.","Calculate the probability from the current values.");if(answerEl)answerEl.value=good+"/"+all;
    }else if(key==="motion-track"){
     dataEl.value=String(values.value);
     result=T("السرعة = ","Speed = ")+fmt(values.value)+" m/s";
