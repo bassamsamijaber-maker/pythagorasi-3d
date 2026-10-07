@@ -4656,7 +4656,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea{transiti
 @keyframes voiceBarLive{from{transform:scaleY(.72);filter:brightness(.9)}to{transform:scaleY(1.15);filter:brightness(1.35)}}
 @keyframes voiceSpeedTap{50%{transform:scale(.88)}}
 @media(prefers-reduced-motion:reduce){.voice-player.is-playing .voice-wave-bars i,.voice-player.is-playing .voice-play::after,.voice-play.pressed,.voice-speed.tap{animation:none!important}}
-</style><link rel="stylesheet" href="./assets/learning-hub.css?v=99"><link rel="stylesheet" href="./assets/learning-plus.css?v=92"><link rel="stylesheet" href="./assets/subject-labs.css?v=99"><link rel="stylesheet" href="./assets/curriculum-v97.css?v=99">
+</style><link rel="stylesheet" href="./assets/learning-hub.css?v=99"><link rel="stylesheet" href="./assets/learning-plus.css?v=92"><link rel="stylesheet" href="./assets/subject-labs.css?v=99"><link rel="stylesheet" href="./assets/curriculum-v97.css?v=103">
 <style>
 body:not(.auth-ready) #authGate,body.classora-session-restoring #authGate{visibility:hidden!important;pointer-events:none!important}body.classora-authenticated #authGate{display:none!important}
 button[data-return-control]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto!important;min-width:78px!important;height:40px!important;font-size:13px!important;padding:8px 12px!important;border-radius:12px!important;flex-shrink:0}button[data-return-control] span{display:inline!important}
@@ -4822,7 +4822,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
     <div class="auth-language-switch" role="group" aria-label="Language">
       <button id="authEnglishBtn" type="button" lang="en" data-no-translate>English</button>
-      <button id="authArabicBtn" type="button" lang="ar" data-no-translate>العربية</button>
+      <button id="authArabicBtn" type="button" lang="ar" data-no-translate>Arabic</button>
     </div>
     <div class="auth-logo">∟</div>
     <h2>أهلًا في Classora 👋</h2>
@@ -4956,7 +4956,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <div id="accountActionRequests" aria-live="polite"></div><div class="lobby-topbar">
       <div>
         <div class="lobby-brand">Classora</div>
-        <div class="lobby-sub" id="lobbyGreeting" data-no-translate>أهلًا 👋</div>
+        <div class="lobby-sub" id="lobbyGreeting" data-no-translate>Welcome 👋</div>
       </div>
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
@@ -4969,7 +4969,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي"><span aria-hidden="true">🏫</span> <span>صفوفي</span></button>
         <button class="lobby-profile-btn" id="lobbyProfileBtn">
           <div class="lobby-avatar" id="lobbyAvatar">؟</div>
-          <span id="lobbyProfileName" data-no-translate>حسابي</span>
+          <span id="lobbyProfileName" data-no-translate>My Account</span>
         </button>
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
@@ -6915,12 +6915,12 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=99";
-import {mountSubjectLabs} from "./assets/subject-labs.js?v=99";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=103";
+import {mountSubjectLabs} from "./assets/subject-labs.js?v=103";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=99";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=103";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -12960,6 +12960,21 @@ uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثا�
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 
 const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu,'').trim();
+[
+ ["Try again / حاول مجددًا","Try again"],
+ ["📲 تحميل Classora على الهاتف","📲 Download Classora to this phone"],
+ ["تحميل Classora على الهاتف","Download Classora to this phone"],
+ ["تحميل على الهاتف","Download"],
+ ["📲 تحميل على الهاتف","📲 Download to phone"],
+ ["الخصوصية والدعم","Privacy & Support"],
+ ["راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.","Review the privacy policy or open the public support page."],
+ ["سياسة الخصوصية","Privacy Policy"],
+ ["صفحة الدعم","Support Page"],
+ ["📘 عربي — المضاف والمضاف إليه","📘 Arabic — Idafa (Possessive Construction)"],
+ ["توليد أسئلة تلقائيًا","Automatic question generation"],
+ ["✦ ولّد الأسئلة","✦ Generate questions"],
+ ["اعمل مسابقة رياضيات أو علوم أو عربي، واختار الموضوع، وكلاسورا يولّد الأسئلة تلقائيًا.","Create a Math, Science or Arabic Grammar competition, choose the topic, and Classora will generate the questions automatically."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
 const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
@@ -13082,6 +13097,9 @@ function translateSubtree(root=document.body){
 function syncV99LanguageLabels(){
  const en=currentUILanguage==="en";
  const setText=(id,a,e)=>{const el=document.getElementById(id);if(el)el.textContent=en?e:a};
+ const englishSwitch=document.getElementById("authEnglishBtn"),arabicSwitch=document.getElementById("authArabicBtn");
+ if(englishSwitch)englishSwitch.textContent="English";
+ if(arabicSwitch)arabicSwitch.textContent=en?"Arabic":"العربية";
  const setPlaceholder=(id,a,e)=>{const el=document.getElementById(id);if(el)el.placeholder=en?e:a};
  setText("studentNameLabel","الاسم","Name");
  setPlaceholder("studentNameInput","مثال: بسام جابر","Example: Bassam Jaber");
