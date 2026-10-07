@@ -671,6 +671,88 @@ export function mountCurriculum(api){
    });
    updateStats();
   }
+  const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
+  const fmt=v=>Number.isInteger(v)?String(v):String(Math.round(v*100)/100);
+  const range=card.querySelector("#cvModelRange"),rangeValue=card.querySelector("#cvModelValue");
+  if(range){
+   const syncRange=()=>{
+    const v=num(range.value);
+    scene.style.setProperty("--model-level",String(v));
+    scene.style.setProperty("--model-ratio",String(Math.max(0,Math.min(1,(v-Number(range.min||0))/Math.max(1,Number(range.max||100)-Number(range.min||0))))));
+    if(rangeValue){
+     let suffix="";
+     if(scene.classList.contains("scene-ratio")||scene.classList.contains("scene-ecosystem"))suffix="%";
+     else if(scene.classList.contains("scene-motion-math"))suffix=" m/s";
+     else if(scene.classList.contains("scene-electricity"))suffix=" A";
+     else if(scene.classList.contains("scene-light"))suffix="°";
+     else if(scene.classList.contains("scene-biology"))suffix="×";
+     rangeValue.textContent=fmt(v)+suffix;
+    }
+   };
+   ["pointerdown","click"].forEach(ev=>range.addEventListener(ev,e=>e.stopPropagation()));
+   range.addEventListener("input",syncRange);syncRange();
+  }
+  const eqAdd=card.querySelector("#cvEqAdd"),eqRight=card.querySelector("#cvEqRight");
+  if(eqAdd&&eqRight){
+   const solveEq=()=>{
+    const a=num(eqAdd.value),b=num(eqRight.value),xv=b-a;
+    card.querySelector("#cvEqAddLabel").textContent=fmt(a);
+    card.querySelector("#cvEqRightLabel").textContent=fmt(b);
+    card.querySelector("#cvEqSolution").textContent=fmt(xv);
+    scene.style.setProperty("--balance",String(Math.max(-12,Math.min(12,xv))/12));
+    if(state.editor){state.editor.data="x + "+fmt(a)+" = "+fmt(b);state.editor.answer="x = "+fmt(xv)}
+   };
+   [eqAdd,eqRight].forEach(input=>{["pointerdown","click"].forEach(ev=>input.addEventListener(ev,e=>e.stopPropagation()));input.addEventListener("input",solveEq)});
+   solveEq();
+  }
+  const fracDen=card.querySelector("#cvFracDen"),fracAdd=card.querySelector("#cvFracAdd"),fracRight=card.querySelector("#cvFracRight");
+  if(fracDen&&fracAdd&&fracRight){
+   const solveFrac=()=>{
+    const d=Math.max(1,Math.abs(num(fracDen.value)||1)),a=num(fracAdd.value),b=num(fracRight.value),xv=d*(b-a);
+    fracDen.value=fmt(d);card.querySelector("#cvFracSolution").textContent=fmt(xv);
+    scene.style.setProperty("--fraction-pieces",String(Math.min(12,d)));
+    if(state.editor){state.editor.data="x / "+fmt(d)+" + "+fmt(a)+" = "+fmt(b);state.editor.answer="x = "+fmt(xv)}
+   };
+   [fracDen,fracAdd,fracRight].forEach(input=>{["pointerdown","click"].forEach(ev=>input.addEventListener(ev,e=>e.stopPropagation()));input.addEventListener("input",solveFrac)});
+   solveFrac();
+  }
+  const wordPrice=card.querySelector("#cvWordPrice"),wordQty=card.querySelector("#cvWordQty");
+  if(wordPrice&&wordQty){
+   const solveWord=()=>{
+    const p=Math.max(0,num(wordPrice.value)),q=Math.max(0,num(wordQty.value)),total=p*q;
+    card.querySelector("#cvWordTotal").textContent=fmt(total);
+    card.querySelector("#cvWordEquation").textContent=fmt(p)+" × "+fmt(q)+" = "+fmt(total);
+    scene.style.setProperty("--story-total",String(Math.min(100,total)));
+    if(state.editor){state.editor.data=fmt(p)+" ₪ × "+fmt(q);state.editor.question=txt(api,"كم المجموع؟","What is the total?");state.editor.answer=fmt(total)+" ₪"}
+   };
+   [wordPrice,wordQty].forEach(input=>{["pointerdown","click"].forEach(ev=>input.addEventListener(ev,e=>e.stopPropagation()));input.addEventListener("input",solveWord)});
+   solveWord();
+  }
+  const geo=card.querySelector("#cvGeoAngle"),geoValue=card.querySelector("#cvGeoValue");
+  if(geo){
+   const syncGeo=()=>{const v=num(geo.value);if(geoValue)geoValue.textContent=fmt(v)+"°";scene.style.setProperty("--geo-angle",v+"deg")};
+   ["pointerdown","click"].forEach(ev=>geo.addEventListener(ev,e=>e.stopPropagation()));geo.addEventListener("input",syncGeo);syncGeo();
+  }
+  const spin=card.querySelector("#cvSpinWheel"),wheel=card.querySelector("#cvProbWheel"),probReadout=card.querySelector("#cvProbReadout");
+  if(spin&&wheel){
+   let spins=0;
+   spin.addEventListener("click",e=>{e.stopPropagation();spins++;const pick=Math.floor(Math.random()*4),angle=spins*720+pick*90+45;wheel.style.transform="rotate("+angle+"deg)";if(probReadout)probReadout.textContent=txt(api,"النتيجة: ","Result: ")+["A","B","C","D"][pick]+" • P = 1/4"});
+  }
+  const grammarFlip=card.querySelector("#cvGrammarFlip");
+  if(grammarFlip){
+   const examples=lang(api)==="en"?["FORM → USE","POSITIVE → NEGATIVE","STATEMENT → QUESTION"]:["FORM → USE","POSITIVE → NEGATIVE","STATEMENT → QUESTION"];let gi=0;
+   grammarFlip.addEventListener("click",e=>{e.stopPropagation();gi=(gi+1)%examples.length;const mid=card.querySelector(".cv-grammar-card.g2");if(mid)mid.textContent=examples[gi]});
+  }
+  const historyStep=card.querySelector("#cvHistoryStep");
+  if(historyStep){
+   let hi=0;const eras=[...card.querySelectorAll(".cv-era")];
+   historyStep.addEventListener("click",e=>{e.stopPropagation();eras.forEach(x=>x.classList.remove("cv-selected"));eras[hi%eras.length]?.classList.add("cv-selected");hi++});
+  }
+  const parse=card.querySelector("#cvParseReadout");
+  if(parse){
+   const messages=lang(api)==="en"?["Identify the word first.","Find its grammatical role.","Check the case marker."]:["حدّد الكلمة أولًا.","حدّد موقعها الإعرابي.","افحص علامة الإعراب."];
+   [...card.querySelectorAll(".cv-word-card")].forEach((el,i)=>el.addEventListener("click",()=>{parse.textContent=messages[i]||messages[0]}));
+  }
   paint();
  }
  function renderLesson(){
