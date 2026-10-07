@@ -66,6 +66,7 @@
 </main>
 <script>
 const en=document.getElementById('en'),ar=document.getElementById('ar'),enBtn=document.getElementById('enBtn'),arBtn=document.getElementById('arBtn');
-function setLang(l){const a=l==='ar';en.style.display=a?'none':'block';ar.style.display=a?'block':'none';document.documentElement.lang=a?'ar':'en';document.documentElement.dir=a?'rtl':'ltr';enBtn.classList.toggle('active',!a);arBtn.classList.toggle('active',a)}
-enBtn.onclick=()=>setLang('en');arBtn.onclick=()=>setLang('ar');setLang((navigator.language||'').startsWith('ar')?'ar':'en');
+function setLang(l,save=true){const a=l==='ar';en.style.display=a?'none':'block';ar.style.display=a?'block':'none';document.documentElement.lang=a?'ar':'en';document.documentElement.dir=a?'rtl':'ltr';enBtn.classList.toggle('active',!a);arBtn.classList.toggle('active',a);if(save)try{localStorage.setItem('pythagorasi_language',a?'ar':'en')}catch{}}
+enBtn.onclick=()=>setLang('en');arBtn.onclick=()=>setLang('ar');
+let initial='en';try{const q=new URLSearchParams(location.search).get('lang'),saved=localStorage.getItem('pythagorasi_language');initial=q==='ar'||q==='en'?q:(saved==='ar'||saved==='en'?saved:((navigator.language||'').startsWith('ar')?'ar':'en'))}catch{initial=(navigator.language||'').startsWith('ar')?'ar':'en'}setLang(initial,false);
 </script></body></html>
