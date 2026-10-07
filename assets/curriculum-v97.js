@@ -690,6 +690,71 @@ export function mountCurriculum(api){
   else items=en?["Main value","Place/factor","Labels","Question"]:["القيمة الرئيسية","المكان/العامل","العناوين","السؤال"];
   return items;
  }
+ function topicSimpleControlSpec(api,t,editor){
+  const en=lang(api)==="en",key=topicModelKey(t),nums=(String(editor?.data||"").match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+  const n=(i,f)=>Number.isFinite(nums[i])?nums[i]:f;
+  const field=(id,label,type,value,min,max,step)=>({id,label,type:type||"text",value,min,max,step});
+  let controls=[];
+  if(key==="statistics-bars")controls=[
+   field("v1",en?"Value 1":"القيمة 1","number",n(0,150),0,9999,1),
+   field("v2",en?"Value 2":"القيمة 2","number",n(1,160),0,9999,1),
+   field("v3",en?"Value 3":"القيمة 3","number",n(2,170),0,9999,1),
+   field("v4",en?"Value 4":"القيمة 4","number",n(3,180),0,9999,1)
+  ];
+  else if(key==="fraction-equation")controls=[
+   field("den",en?"Denominator":"المقام","number",n(0,3),1,20,1),
+   field("add",en?"Added number":"العدد المضاف","number",n(1,2),-99,99,1),
+   field("right",en?"Right side":"الطرف الأيمن","number",n(2,6),-99,99,1)
+  ];
+  else if(key==="word-equation")controls=[
+   field("price",en?"Price":"السعر","number",n(0,12),1,999,1),
+   field("qty",en?"Quantity":"الكمية","number",n(1,4),1,99,1)
+  ];
+  else if(/balance$/.test(key)||key==="linear-balance")controls=[
+   field("add",en?"Added number":"العدد المضاف","number",n(0,3),-99,99,1),
+   field("right",en?"Right side":"الطرف الأيمن","number",n(1,7),-99,99,1)
+  ];
+  else if(key==="system-intersection")controls=[
+   field("m1",en?"Line 1 slope":"ميل الخط الأول","number",n(0,2),-10,10,.5),
+   field("m2",en?"Line 2 slope":"ميل الخط الثاني","number",n(1,-1),-10,10,.5)
+  ];
+  else if(key==="probability-wheel")controls=[
+   field("good",en?"Favorable":"المطلوب","number",n(0,1),1,20,1),
+   field("all",en?"Total":"الكل","number",n(1,4),1,20,1)
+  ];
+  else if(key==="motion-track")controls=[field("value",en?"Speed":"السرعة","number",n(0,8),1,20,1)];
+  else if(/geometry/.test(key))controls=[field("value",en?"Angle":"الزاوية","number",n(0,60),20,140,1)];
+  else if(key==="slope-plane"||key==="function-plane")controls=[field("value",en?"Slope":"الميل","number",n(0,2),-5,5,.5)];
+  else if(/ratio|percent/.test(key))controls=[field("value",en?"Value":"القيمة","number",n(0,60),0,100,1)];
+  else if(t.subject==="science")controls=[
+   field("value",en?"Main value":"القيمة الرئيسية","number",n(0,5),0,100,1),
+   field("label",en?"What are you changing?":"شو بتغيّر؟","text",String(editor?.words||titleText(api,t)))
+  ];
+  else if(t.subject==="arabic")controls=[
+   field("sentence",en?"Sentence":"الجملة","text",String(editor?.data||"كتبَ الطالبُ الدرسَ")),
+   field("words",en?"Words":"الكلمات","text",String(editor?.words||t.title))
+  ];
+  else if(t.subject==="english")controls=[
+   field("sentence","Sentence","text",String(editor?.data||"She studies every day.")),
+   field("form","Grammar form","text",String(editor?.words||t.title))
+  ];
+  else if(t.subject==="history")controls=[
+   field("event",en?"Event":"الحدث","text",String(editor?.data||titleText(api,t))),
+   field("cause",en?"Cause / result":"السبب / النتيجة","text",String(editor?.words||""))
+  ];
+  else controls=[
+   field("value",en?"Main value":"القيمة الرئيسية","number",n(0,5),0,100,1),
+   field("factor",en?"Place / factor":"المكان / العامل","text",String(editor?.words||titleText(api,t)))
+  ];
+  return {key,controls};
+ }
+ function simpleControlHtml(api,spec){
+  const en=lang(api)==="en";
+  return spec.controls.map(function(f){
+   const attrs=f.type==="number"?' inputmode="decimal" min="'+(f.min??"")+'" max="'+(f.max??"")+'" step="'+(f.step??1)+'"':"";
+   return '<label><span>'+esc(f.label)+'</span><input class="cv-simple-input" data-simple-key="'+esc(f.id)+'" type="'+f.type+'" value="'+esc(String(f.value??""))+'"'+attrs+"></label>";
+  }).join("");
+ }
  function flagshipAction(t){
   const n=String(t.title||"");
   if(t.subject==="math"&&/فيثاغورس/.test(n))return {key:"lab",ar:"افتح مختبر فيثاغورس الكامل",en:"Open the full Pythagoras lab"};
@@ -975,6 +1040,7 @@ export function mountCurriculum(api){
  }
  function renderLesson(){
   const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
+  const simpleSpec=topicSimpleControlSpec(api,t,editor);
   const T=(ar,en)=>txt(api,ar,en);
   const transBlock="";
   const nativeAttr="";
@@ -1004,16 +1070,24 @@ export function mountCurriculum(api){
       '<div class="curriculum-topic-spotlight">'+esc(spotlight)+'</div>'+
       (flagship?'<button class="curriculum-main-action curriculum-flagship" id="cv97Flagship">'+esc(lang(api)==="en"?flagship.en:flagship.ar)+'</button>':'')+
     '</section>'+
-    '<section class="curriculum-change-guide"><span class="curriculum-kicker">'+T("شو بقدر أغيّر؟","WHAT CAN I CHANGE?")+'</span><div class="curriculum-change-chips">'+topicChangeGuide(api,t).map(x=>"\u003cspan>"+esc(x)+"\u003c/span>").join("")+'</div></section>'+
-    '<section class="curriculum-topic-quick-actions">'+
-      '<button id="cv99ExplainBtn" type="button">✦ <b>'+T("شرح بالتفصيل","Explain in detail")+'</b></button>'+
-      '<button id="cvTopicAuto" type="button">✦ <b>'+T("شغّل النموذج","Run model")+'</b></button>'+
-      '<button id="cvTopicQuickExam" class="accent" type="button">✦ <b>'+T("امتحان مفاجئ","Surprise exam")+'</b></button>'+
-      '<button id="cvTopicPracticeBtn" type="button">✦ <b>'+T("تدريب سريع","Quick practice")+'</b></button>'+
+    '<section class="curriculum-simple-data-card">'+
+      '<div class="curriculum-simple-head"><div><span class="curriculum-kicker">'+T("غيّر المعطيات","CHANGE THE VALUES")+'</span><h3>'+T("غيّر وشوف النموذج فورًا","Change it and watch the model instantly")+'</h3></div><span class="curriculum-live-dot">● '+T("مباشر","LIVE")+'</span></div>'+
+      '<div class="curriculum-simple-inputs">'+simpleControlHtml(api,simpleSpec)+'</div>'+
+      '<div class="curriculum-simple-result"><span>'+T("النتيجة","Result")+'</span><b id="cvSimpleResult">—</b></div>'+
+      '<input type="hidden" id="cv99Data" value="'+esc(editor.data||"")+'">'+
+      '<input type="hidden" id="cv99Words" value="'+esc(editor.words||"")+'">'+
+      '<input type="hidden" id="cv99Question" value="'+esc(editor.question||"")+'">'+
+      '<input type="hidden" id="cv99Answer" value="'+esc(editor.answer||"")+'">'+
+      '<div class="curriculum-dynamic-answer hidden" id="cv99DynamicExplanation"></div>'+
     '</section>'+
-    '<section class="curriculum-interactive-explainer hidden" id="cv99Explainer"><div class="curriculum-explainer-head"><div><span class="curriculum-kicker">'+T("مختبر الشرح","EXPLANATION LAB")+'</span><h3>'+T("غيّر المعطيات والكلمات والسؤال","Change the givens, words and question")+'</h3><p class="curriculum-live-note">● '+T("أي تغيير يظهر مباشرة في النموذج والشرح","Every change appears instantly in the model and explanation")+'</p></div></div><div class="curriculum-editor-grid"><label>'+T("المعطيات / الجملة","Givens / sentence")+'<textarea id="cv99Data">'+esc(editor.data)+'</textarea></label><label>'+T("الكلمات أو المصطلحات","Words or terms")+'<textarea id="cv99Words">'+esc(editor.words)+'</textarea></label><label class="wide">'+T("السؤال","Question")+'<textarea id="cv99Question">'+esc(editor.question)+'</textarea></label><label>'+T("الإجابة النموذجية — اختياري","Model answer — optional")+'<input id="cv99Answer" value="'+esc(editor.answer||"")+'"></label></div><div class="curriculum-dynamic-answer" id="cv99DynamicExplanation"></div></section>'+
+    '<section class="curriculum-topic-quick-actions">'+
+      '<button id="cv99ExplainBtn" type="button">📘 <b>'+T("شرح بالتفصيل","Detailed explanation")+'</b></button>'+
+      '<button id="cvTopicAuto" type="button">▶ <b>'+T("شغّل النموذج","Run model")+'</b></button>'+
+      '<button id="cvTopicQuickExam" class="accent" type="button">🎓 <b>'+T("امتحان مفاجئ","Surprise exam")+'</b></button>'+
+      '<button id="cvTopicPracticeBtn" type="button">🔥 <b>'+T("تحدّي سريع","Quick challenge")+'</b></button>'+
+    '</section>'+
     '<div class="curriculum-panels">'+
-      '<section class="curriculum-panel"><h3>✦ '+T("شرح مبسط","Basic explanation")+'</h3><p>'+esc(basicExplanation(api,t))+'</p></section>'+
+      '<section class="curriculum-panel" id="cvBasicExplanation"><h3>✦ '+T("شرح مبسط","Basic explanation")+'</h3><p>'+esc(basicExplanation(api,t))+'</p></section>'+
       '<section class="curriculum-panel"><h3>✦ '+T("شرح متقدم","Advanced explanation")+'</h3><p>'+esc(advancedExplanation(api,t))+'</p></section>'+
       '<section class="curriculum-panel"><h3>✦ '+T("مثال محلول خطوة بخطوة","Worked example")+'</h3><div class="curriculum-worked">'+esc(workedExample(api,t))+'</div></section>'+
       '<section class="curriculum-panel curriculum-practice-card" id="cvTopicPracticeCard"><h3>✦ '+T("تحدّي الموضوع","Topic challenge")+'</h3><div class="curriculum-mini-practice" id="cv97Practice"></div></section>'+
@@ -1024,8 +1098,7 @@ export function mountCurriculum(api){
    '</aside>'+
   '</div>';
   attach3D();renderPractice();
-  const explain=body.querySelector("#cv99Explainer");
-  body.querySelector("#cv99ExplainBtn").onclick=()=>{explain.classList.toggle("hidden");if(!explain.classList.contains("hidden"))explain.scrollIntoView({behavior:"smooth",block:"nearest"})};
+  body.querySelector("#cv99ExplainBtn").onclick=()=>body.querySelector("#cvBasicExplanation")?.scrollIntoView({behavior:"smooth",block:"center"});
   body.querySelector("#cvTopicAuto")?.addEventListener("click",()=>body.querySelector("#cv3DAuto")?.click());
   body.querySelector("#cvStageReset")?.addEventListener("click",()=>body.querySelector("#cv3DReset")?.click());
   body.querySelector("#cvStageFullscreen")?.addEventListener("click",async()=>{const stage=body.querySelector(".curriculum-topic-stage");try{if(!document.fullscreenElement)await stage?.requestFullscreen?.();else await document.exitFullscreen?.()}catch{}});
