@@ -770,7 +770,6 @@ export function mountCurriculum(api){
   attach3D();renderPractice();
   const explain=body.querySelector("#cv99Explainer");
   body.querySelector("#cv99ExplainBtn").onclick=()=>{explain.classList.toggle("hidden");if(!explain.classList.contains("hidden"))explain.scrollIntoView({behavior:"smooth",block:"start"})};
-  if(nativeOnly&&body.querySelector("#cv99TranslateBtn"))body.querySelector("#cv99TranslateBtn").onclick=()=>{state.showTranslation=!state.showTranslation;renderLesson()};
   body.querySelector("#cv99ApplyEditor").onclick=()=>{
    state.editor={data:body.querySelector("#cv99Data").value,words:body.querySelector("#cv99Words").value,question:body.querySelector("#cv99Question").value,answer:body.querySelector("#cv99Answer").value};
    const d=state.editor,box=body.querySelector("#cv99DynamicExplanation"),sceneTag=body.querySelector(".cv-scene-tag"),scene=body.querySelector("#cv97Scene");
