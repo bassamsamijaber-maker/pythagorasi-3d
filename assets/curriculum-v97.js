@@ -513,10 +513,10 @@ export function mountCurriculum(api){
  }
  function buildTopicScene(t){
   const n=String(t.title||""),subject=t.subject,display=esc(titleText(api,t));
-  const shell=(kind,inner,arHint,enHint)=>'<div class="curriculum-visual-scene '+kind+'" id="cv97Scene" data-topic-kind="'+kind.replace(/\s+/g,"-")+'">'+inner+'<span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,arHint,enHint)+'</div>';
+  const shell=(kind,inner,arHint,enHint)=>'<div class="curriculum-visual-scene '+kind+'" id="cv97Scene" data-topic-kind="'+kind.replace(/\s+/g,"-")+'">'+inner+'<div class="cv-live-scene-plate"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,arHint,enHint)+'</div>';
 
   if(subject==="math"){
-   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
+   if(/إحصاء/.test(n))return '<div class="curriculum-visual-scene scene-math scene-statistics" id="cv97Scene"><div class="cv-stat-toolbar"><label><span>'+txt(api,"نوع المعطيات","Data type")+'</span><select id="cvStatDataset"><option value="height">'+txt(api,"الطول (سم)","Height (cm)")+'</option><option value="price">'+txt(api,"السعر (₪)","Price (₪)")+'</option><option value="quantity">'+txt(api,"الكمية","Quantity")+'</option><option value="marks">'+txt(api,"العلامات","Marks")+'</option></select></label><small>'+txt(api,"غيّر الأرقام من داخل الأعمدة","Edit the numbers inside the bars")+'</small></div><div class="cv-stat-detail" id="cvStatDetail">'+txt(api,"طول الطالب 1: 150 سم","Student 1 height: 150 cm")+'</div><div class="cv-stat-grid"></div><div class="cv-stat-y" id="cvStatYAxis">'+txt(api,"الطول (سم)","Height (cm)")+'</div><div class="cv-stat-bars"><div class="cv-stat-bar s1" style="--h:66%" data-stat-index="0"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="150" aria-label="'+txt(api,"القيمة الأولى","First value")+'"><span class="cv-stat-label">1</span></div><div class="cv-stat-bar s2" style="--h:71%" data-stat-index="1"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="160" aria-label="'+txt(api,"القيمة الثانية","Second value")+'"><span class="cv-stat-label">2</span></div><div class="cv-stat-bar s3" style="--h:76%" data-stat-index="2"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="170" aria-label="'+txt(api,"القيمة الثالثة","Third value")+'"><span class="cv-stat-label">3</span></div><div class="cv-stat-bar s4" style="--h:82%" data-stat-index="3"><input class="cv-stat-input" type="number" inputmode="decimal" min="0" step="1" value="180" aria-label="'+txt(api,"القيمة الرابعة","Fourth value")+'"><span class="cv-stat-label">4</span></div></div><div class="cv-stat-axis"></div><div class="cv-stat-x">'+txt(api,"المشاهدات","Observations")+'</div><div class="cv-stat-summary"><span>'+txt(api,"المتوسط","Mean")+' <b id="cvStatMean">165</b></span><span>'+txt(api,"الوسيط","Median")+' <b id="cvStatMedian">165</b></span><span>'+txt(api,"المنوال","Mode")+' <b id="cvStatMode">—</b></span><span>'+txt(api,"المدى","Range")+' <b id="cvStatRange">30</b></span></div><div class="cv-live-scene-plate stat-live"><b id="cvLiveData"></b><span id="cvLiveWords"></span><small id="cvLiveQuestion"></small></div><span class="cv-scene-tag">'+display+'</span></div><div class="curriculum-3d-hint">'+txt(api,"عدّل القيم داخل الرسم أو اسحب لتدويره","Edit values inside the chart or drag to rotate")+'</div>';
 
    if(/(معادلات كسرية|كسور جبرية)/.test(n))return shell("scene-math scene-fraction-equation",
     '<div class="cv-eq-space"><div class="cv-fraction-stack"><div class="cv-frac-num">x</div><div class="cv-frac-line"></div><label class="cv-live-field"><small>'+txt(api,"غيّر المقام","Change denominator")+'</small><input id="cvFracDen" class="cv-model-number" type="number" min="1" max="20" value="2" aria-label="'+txt(api,"المقام","Denominator")+'"></label></div><b class="cv-eq-op">+</b><label class="cv-live-field"><small>'+txt(api,"غيّر العدد المضاف","Change added value")+'</small><input id="cvFracAdd" class="cv-model-number floating" type="number" value="3" aria-label="'+txt(api,"العدد المضاف","Added number")+'"></label><b class="cv-eq-op">=</b><label class="cv-live-field"><small>'+txt(api,"غيّر الناتج","Change result")+'</small><input id="cvFracRight" class="cv-model-number floating" type="number" value="7" aria-label="'+txt(api,"الطرف الأيمن","Right side")+'"></label></div><div class="cv-equation-result">'+txt(api,"الحل: x = ","Solution: x = ")+'<b id="cvFracSolution">8</b></div><div class="cv-fraction-tiles"><i></i><i></i><i></i><i></i></div>',
@@ -809,7 +809,7 @@ export function mountCurriculum(api){
    '</section>'+
    '<aside class="curriculum-topic-sidebar">'+
     '<section class="curriculum-lesson-copy">'+
-      '<div class="curriculum-sidebar-brand"><div><span class="curriculum-kicker">CLASSORA / '+T("درس تفاعلي","INTERACTIVE LESSON")+'</span><h2>'+esc(display)+'</h2></div><span class="curriculum-ai-chip">● Classora AI</span></div>'+
+      '<div class="curriculum-sidebar-brand"><div><span class="curriculum-kicker">CLASSORA / '+T("درس تفاعلي","INTERACTIVE LESSON")+'</span><h2>'+esc(display)+'</h2></div><span class="curriculum-brand-chip">CLASSORA</span></div>'+
       '<p>'+esc(skillText(api,t))+'</p>'+
       '<div class="curriculum-progress-row"><span class="curriculum-progress-pill">'+statusLabel(api,p.status)+'</span><span class="curriculum-progress-pill">'+T("المحاولات: ","Attempts: ")+(p.attempts||0)+'</span><span class="curriculum-progress-pill">'+T("أفضل علامة: ","Best: ")+(p.best||0)+'%</span></div>'+
       '<div class="curriculum-topic-spotlight">'+esc(spotlight)+'</div>'+
@@ -828,7 +828,7 @@ export function mountCurriculum(api){
       '<section class="curriculum-panel"><h3>✦ '+T("مثال محلول خطوة بخطوة","Worked example")+'</h3><div class="curriculum-worked">'+esc(workedExample(api,t))+'</div></section>'+
       '<section class="curriculum-panel curriculum-practice-card" id="cvTopicPracticeCard"><h3>✦ '+T("تحدّي الموضوع","Topic challenge")+'</h3><div class="curriculum-mini-practice" id="cv97Practice"></div></section>'+
     '</div>'+
-    '<section class="curriculum-panel curriculum-ai-launcher"><div><span class="curriculum-ai-chip">● '+T("جاهز","Ready")+'</span><h3>Classora AI Assistant</h3><p>'+T("اسأل المساعد عن هذا الموضوع، مثال إضافي، أو طريقة الحل.","Ask the assistant about this topic, another example, or the solution method.")+'</p></div><button id="cvTopicAskAI" type="button">'+T("اسأل عن ","Ask about ")+esc(display)+' ↗</button></section>'+
+    '<section class="curriculum-panel curriculum-ai-launcher"><div><span class="curriculum-ai-chip">● '+T("جاهز","Ready")+'</span><h3>'+T("مساعد كلاسورا","Classora Assistant")+'</h3><p>'+T("اسأل المساعد عن هذا الموضوع، مثال إضافي، أو طريقة الحل.","Ask the assistant about this topic, another example, or the solution method.")+'</p></div><button id="cvTopicAskAI" type="button">'+T("اسأل عن ","Ask about ")+esc(display)+' ↗</button></section>'+
     '<section class="curriculum-panel curriculum-actions-panel"><div class="curriculum-action-grid"><div class="curriculum-action-box"><h3>'+T("امتحان الموضوع","Topic exam")+'</h3><div class="curriculum-controls"><label>'+T("الصعوبة","Difficulty")+'<select id="cv97ExamDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+T("عدد الأسئلة","Questions")+'<select id="cv97ExamCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label></div><button class="curriculum-main-action" id="cv97StartExam">'+T("ابدأ الامتحان","Start exam")+'</button></div>'+
       '<div class="curriculum-action-box"><h3>'+T("مسابقة مباشرة","Live competition")+'</h3><div class="curriculum-controls"><label>'+T("الصعوبة","Difficulty")+'<select id="cv97LiveDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+T("الأسئلة","Questions")+'<select id="cv97LiveCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label><label>'+T("وقت السؤال","Time per question")+'<select id="cv97LiveTime"><option>10</option><option>15</option><option selected>20</option><option>30</option><option>45</option><option>60</option></select></label><label>'+T("النمط","Mode")+'<select id="cv97LiveMode"><option value="solo">'+T("فردي","Solo")+'</option><option value="choice" selected>'+T("فرق","Teams")+'</option></select></label></div><button class="curriculum-main-action live" id="cv97StartLive">'+T("أنشئ مسابقة","Create competition")+'</button></div></div></section>'+
    '</aside>'+
@@ -845,34 +845,110 @@ export function mountCurriculum(api){
   const syncEditor=()=>{
    state.editor={data:body.querySelector("#cv99Data")?.value||"",words:body.querySelector("#cv99Words")?.value||"",question:body.querySelector("#cv99Question")?.value||"",answer:body.querySelector("#cv99Answer")?.value||""};
    const d=state.editor,box=body.querySelector("#cv99DynamicExplanation"),scene=body.querySelector("#cv97Scene");
-   const tokens=(d.words||d.data||"").split(/[\s,،;:=+\-\/]+/).filter(Boolean);
+   const dataText=d.data.trim(),wordsText=d.words.trim(),questionText=d.question.trim();
+   const dataTokens=dataText.split(/[\s,،;:=+\-\/|]+/).filter(Boolean);
+   const wordTokens=wordsText.split(/[\s,،;:=+\-\/|]+/).filter(Boolean);
+   const rawNums=(dataText.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+
+   const liveData=body.querySelector("#cvLiveData"),liveWords=body.querySelector("#cvLiveWords"),liveQuestion=body.querySelector("#cvLiveQuestion");
+   if(liveData)liveData.textContent=dataText||display;
+   if(liveWords)liveWords.textContent=wordsText||titleText(api,t);
+   if(liveQuestion)liveQuestion.textContent=questionText||T("غيّر المعطيات وشاهد النتيجة","Change the givens and watch the result");
+
+   if(scene){
+    scene.dataset.liveRevision=String((Number(scene.dataset.liveRevision||0)+1)%100000);
+    scene.style.setProperty("--cv-editor-shift",String((dataText.length%20)-10)+"deg");
+    scene.style.setProperty("--cv-live-pulse",String(Date.now()%2));
+   }
+
    if(t.subject==="arabic"){
-    const source=(d.data||d.words||"").split(/[\s,،;:=+\-\/]+/).filter(Boolean);
-    body.querySelectorAll(".cv-word-card").forEach((el,i)=>{if(source[i])el.textContent=source[i]});
+    const root=body.querySelector(".cv-parse-root");
+    if(root&&dataText)root.textContent=dataText.slice(0,100);
+    const cards=[...body.querySelectorAll(".cv-word-card")];
+    const source=wordTokens.length?wordTokens:dataTokens;
+    const fallback=lang(api)==="en"?["Word","Role","Case"]:["الكلمة","الموقع","العلامة"];
+    cards.forEach((el,i)=>{el.textContent=source[i]||fallback[i]||""});
+    const readout=body.querySelector("#cvParseReadout");
+    if(readout)readout.textContent=questionText||T("اضغط بطاقة لتتبع الإعراب","Tap a card to inspect the grammatical role");
    }else if(t.subject==="english"){
-    const cards=[...body.querySelectorAll(".cv-grammar-card")];if(tokens.length)cards.forEach((el,i)=>{if(tokens[i])el.textContent=tokens[i]});
+    const cards=[...body.querySelectorAll(".cv-grammar-card")];
+    const source=wordTokens.length?wordTokens:dataTokens;
+    if(cards[0])cards[0].textContent=source[0]||"FORM";
+    if(cards[1])cards[1].textContent=(dataText||source[1]||t.title).slice(0,28);
+    if(cards[2])cards[2].textContent=source[2]||"USE";
    }else if(t.subject==="math"){
-    const rawNums=(d.data.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
-    const vals=(d.data.match(/-?\d+(?:\.\d+)?|[a-zA-Z]+/g)||[]).slice(0,5);
-    body.querySelectorAll(".cv-math-block").forEach((el,i)=>{if(vals[i])el.textContent=vals[i]});
-    const point=body.querySelector(".cv-point");if(point&&rawNums.length){const a=Math.abs(rawNums[0]||1);point.setAttribute("cx",String(80+(a*23)%230));point.setAttribute("cy",String(50+(a*17)%150))}
+    const blocks=[...body.querySelectorAll(".cv-math-block")];
+    const values=(dataText.match(/-?\d+(?:\.\d+)?|[a-zA-Z]+|[+\-=]/g)||[]).slice(0,blocks.length);
+    blocks.forEach((el,i)=>{if(values[i]!=null)el.textContent=values[i]});
+
+    const statInputs=[...body.querySelectorAll(".cv-stat-input")];
+    if(statInputs.length&&rawNums.length){
+     statInputs.forEach((input,i)=>{if(rawNums[i]!=null)input.value=rawNums[i]});
+     statInputs[0]?.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
     const eqAdd=body.querySelector("#cvEqAdd"),eqRight=body.querySelector("#cvEqRight");
-    if(eqAdd&&eqRight&&rawNums.length>=2){eqAdd.value=rawNums[0];eqRight.value=rawNums[1];eqAdd.dispatchEvent(new Event("input",{bubbles:true}))}
+    if(eqAdd&&eqRight&&rawNums.length>=2){
+     eqAdd.value=rawNums[0];eqRight.value=rawNums[1];
+     eqAdd.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
     const fd=body.querySelector("#cvFracDen"),fa=body.querySelector("#cvFracAdd"),fr=body.querySelector("#cvFracRight");
-    if(fd&&fa&&fr&&rawNums.length>=3){fd.value=Math.max(1,Math.abs(rawNums[0]));fa.value=rawNums[1];fr.value=rawNums[2];fd.dispatchEvent(new Event("input",{bubbles:true}))}
-    const geo=body.querySelector("#cvGeoAngle");if(geo&&rawNums.length){geo.value=Math.max(Number(geo.min||20),Math.min(Number(geo.max||140),rawNums[0]));geo.dispatchEvent(new Event("input",{bubbles:true}))}
-   }else if(t.subject==="science"){
-    const number=Math.abs(Number((d.data.match(/-?\d+(?:\.\d+)?/)||[])[0]||7));
-    const range=body.querySelector("#cvModelRange");if(range){range.value=Math.max(Number(range.min||0),Math.min(Number(range.max||100),number));range.dispatchEvent(new Event("input",{bubbles:true}))}
+    if(fd&&fa&&fr&&rawNums.length>=3){
+     fd.value=Math.max(1,Math.abs(rawNums[0]||1));fa.value=rawNums[1];fr.value=rawNums[2];
+     fd.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
+    const wp=body.querySelector("#cvWordPrice"),wq=body.querySelector("#cvWordQty");
+    if(wp&&wq&&rawNums.length>=2){
+     wp.value=rawNums[0];wq.value=rawNums[1];
+     wp.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
+    const geo=body.querySelector("#cvGeoAngle");
+    if(geo&&rawNums.length){
+     geo.value=Math.max(Number(geo.min||20),Math.min(Number(geo.max||140),rawNums[0]));
+     geo.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
+    const range=body.querySelector("#cvModelRange");
+    if(range&&rawNums.length){
+     range.value=Math.max(Number(range.min||0),Math.min(Number(range.max||100),rawNums[0]));
+     range.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+
+    const point=body.querySelector(".cv-point");
+    if(point&&rawNums.length){
+     const a=Math.abs(rawNums[0]||1),b=Math.abs(rawNums[1]||a);
+     point.setAttribute("cx",String(55+(a*31)%250));
+     point.setAttribute("cy",String(35+(b*23)%185));
+    }
+   }else if(t.subject==="science"||t.subject==="geography"){
+    const number=Math.abs(Number(rawNums[0]??7));
+    const range=body.querySelector("#cvModelRange");
+    if(range){
+     range.value=Math.max(Number(range.min||0),Math.min(Number(range.max||100),number));
+     range.dispatchEvent(new Event("input",{bubbles:true}));
+    }
     const liquid=body.querySelector(".cv-liquid");if(liquid)liquid.style.height=Math.max(18,Math.min(88,20+(number%15)*4.5))+"%";
     const ball=body.querySelector(".cv-motion-ball");if(ball){const size=48+(number%8)*4;ball.style.width=size+"px";ball.style.height=size+"px"}
     const nucleus=body.querySelector(".cv-nucleus");if(nucleus)nucleus.style.filter="hue-rotate("+((number*19)%360)+"deg)";
-   }else if(scene){
-    scene.style.setProperty("--cv-editor-shift",String((d.data.length%18)-9)+"deg");
+    const globe=body.querySelector(".cv-globe");if(globe)globe.style.filter="hue-rotate("+((number*11)%80)+"deg)";
+   }else if(t.subject==="history"){
+    const eras=[...body.querySelectorAll(".cv-era")];
+    const source=wordTokens.length?wordTokens:dataTokens;
+    eras.forEach((el,i)=>{const b=el.querySelector("b");if(b&&source[i])b.textContent=source[i]});
+    if(scene)scene.style.setProperty("--history-shift",String((rawNums[0]||dataText.length)%18)+"deg");
    }
-   if(box)box.innerHTML='<b>'+T("تحديث مباشر","Live update")+'</b><p><strong>'+T("المعطيات: ","Givens: ")+'</strong>'+esc(d.data||"—")+'</p><p><strong>'+T("الكلمات: ","Words: ")+'</strong>'+esc(d.words||"—")+'</p><p><strong>'+T("السؤال: ","Question: ")+'</strong>'+esc(d.question||"—")+'</p>'+(d.answer?'<p><strong>'+T("الإجابة النموذجية: ","Model answer: ")+'</strong>'+esc(d.answer)+'</p>':'');
+
+   if(box)box.innerHTML='<b>'+T("تحديث مباشر","Live update")+'</b><p><strong>'+T("المعطيات: ","Givens: ")+'</strong>'+esc(dataText||"—")+'</p><p><strong>'+T("الكلمات: ","Words: ")+'</strong>'+esc(wordsText||"—")+'</p><p><strong>'+T("السؤال: ","Question: ")+'</strong>'+esc(questionText||"—")+'</p>'+(d.answer?'<p><strong>'+T("الإجابة النموذجية: ","Model answer: ")+'</strong>'+esc(d.answer)+'</p>':'');
   };
-  ["cv99Data","cv99Words","cv99Question","cv99Answer"].forEach(id=>body.querySelector("#"+id)?.addEventListener("input",syncEditor));
+  ["cv99Data","cv99Words","cv99Question","cv99Answer"].forEach(id=>{
+   const el=body.querySelector("#"+id);if(!el)return;
+   el.addEventListener("input",syncEditor);
+   el.addEventListener("change",syncEditor);
+   el.addEventListener("keyup",syncEditor);
+  });
   syncEditor();
   if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
