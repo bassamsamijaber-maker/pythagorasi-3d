@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v102-2-live-readable";
+const CACHE_NAME="classora-v102-3-clean-live-ui";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=103",
   "./assets/subject-labs.css?v=99",
