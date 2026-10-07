@@ -336,7 +336,7 @@ function editorDefaults(t){
  if(t.subject==="math"&&/إحصاء/.test(t.title))return {data:"150, 160, 160, 170, 180",words:"الطول / السعر / الكمية / العلامات",question:"مثّل البيانات بيانيًا ثم احسب المتوسط والوسيط والمنوال والمدى.",answer:""};
  if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=> "en"},t),question:"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
  if(t.subject==="science")return {data:"المتغير = 10",words:t.title,question:"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
- if(t.subject==="arabic")return lang({language:()=>localStorage.getItem("pythagorasi_language")==="en"?"en":"ar"})==="en"
+ if(t.subject==="arabic")return localStorage.getItem("pythagorasi_language")!=="ar"
   ?{data:"Write or paste an Arabic example using Latin transliteration if you want no Arabic script.",words:AR_TO_EN[t.title]||t.title,question:"Identify the target Arabic grammar rule and explain its grammatical role.",answer:""}
   :{data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
  if(t.subject==="english")return {data:pair?.[0]||"Write a sentence here.",words:t.title,question:"Rewrite the sentence using the target grammar rule.",answer:""};
