@@ -170,6 +170,15 @@ function statusLabel(api,s){return s==="done"?txt(api,"مكتمل","Completed"):
 function levelLabel(api,d){return ({easy:txt(api,"سهل","Easy"),medium:txt(api,"متوسط","Medium"),hard:txt(api,"صعب","Hard"),mixed:txt(api,"مختلط","Mixed")})[d]||d}
 function basicExplanation(api,t){
  const n=titleText(api,t);
+ if(t.subject==="math"&&/(معادلات كسرية|كسور جبرية)/.test(t.title))return lang(api)==="en"
+  ?"A fractional equation contains the unknown inside a fraction. First note every denominator and its restrictions. Multiply both sides by a common denominator to remove the fractions, simplify, isolate x using the same operation on both sides, and substitute the result back into the original equation to check it."
+  :"المعادلة الكسرية هي معادلة يظهر فيها المجهول داخل كسر. نحدد المقامات أولًا والقيم الممنوعة، ثم نضرب طرفي المعادلة بالمقام المشترك للتخلص من الكسور، نبسّط، نعزل x بإجراء العملية نفسها على الطرفين، وفي النهاية نعوّض الحل في المعادلة الأصلية للتأكد.";
+ if(t.subject==="math"&&/(مسائل كلامية على المعادلات|مسائل كلامية)/.test(t.title))return lang(api)==="en"
+  ?"For an equation word problem, do not start with calculations. Identify the unknown, name it x, extract the numerical givens and units, translate the relationship in the story into an equation, solve the equation, then check whether the answer makes sense in the original situation."
+  :"في المسألة الكلامية لا نبدأ بالحساب مباشرة. نحدد المجهول ونسميه x، نستخرج المعطيات والوحدات، نحول العلاقة الموجودة في القصة إلى معادلة، نحل المعادلة، ثم نفحص هل الجواب منطقي داخل سياق المسألة.";
+ if(t.subject==="math"&&/(معادلات خطية|معادلات متعددة الخطوات|معادلات مع أقواس|المعادلات بمتغير في الطرفين|^المعادلات$)/.test(t.title))return lang(api)==="en"
+  ?"Think of an equation as a balanced scale. Simplify each side first, expand parentheses when needed, combine like terms, move variable terms to one side and constants to the other, then divide by the coefficient of x. Every operation must be applied to both sides to keep the equation balanced."
+  :"فكّر بالمعادلة كميزان متوازن. نبسّط كل طرف أولًا، نفك الأقواس عند الحاجة، نجمع الحدود المتشابهة، ننقل حدود المتغير إلى طرف والأعداد إلى الطرف الآخر، ثم نقسم على معامل x. أي عملية نعملها على طرف لازم نعملها على الطرف الثاني حتى يبقى الميزان متساويًا.";
  if(t.subject==="math"&&/إحصاء/.test(t.title)){
   if(lang(api)==="en")return "Statistics helps us turn a list of numbers into information we can understand. Start by identifying the variable being measured — for example height, price, quantity or marks — then organize the values in a table or graph. In a bar chart, the horizontal axis shows the categories or observations and the vertical axis shows the numerical value. After reading the graph, calculate the mean by adding all values and dividing by their count, find the median from the ordered list, identify the mode as the most repeated value, and use the range to describe how spread out the data are.";
   return "الإحصاء يساعدنا نحول مجموعة أرقام إلى معلومات سهلة للفهم والمقارنة. أولًا نحدد ما هو المتغير الذي نقيسه، مثل الطول أو السعر أو الكمية أو العلامات، ثم نرتب القيم في جدول أو رسم بياني. في الرسم بالأعمدة يوضح المحور الأفقي الفئات أو المشاهدات، بينما يوضح المحور العمودي قيمة كل فئة. بعد قراءة الرسم نحسب المتوسط بجمع القيم وقسمتها على عددها، ونرتب القيم لإيجاد الوسيط، ونبحث عن القيمة الأكثر تكرارًا لإيجاد المنوال، ونحسب المدى بطرح أصغر قيمة من أكبر قيمة. المهم ليس حفظ القوانين فقط، بل معرفة ماذا يخبرنا الرسم عن البيانات وأين توجد القيم الأكبر والأصغر.";
@@ -191,6 +200,15 @@ function basicExplanation(api,t){
 }
 function advancedExplanation(api,t){
  const n=titleText(api,t);
+ if(t.subject==="math"&&/(معادلات كسرية|كسور جبرية)/.test(t.title))return lang(api)==="en"
+  ?"Advanced fractional equations require domain restrictions before solving. Record any value that makes a denominator zero. After multiplying by the least common denominator, solve the resulting equation carefully and reject any solution that violates the original restrictions. For equations with several rational expressions, factor denominators first so the least common denominator is clear."
+  :"في المعادلات الكسرية المتقدمة نكتب القيم الممنوعة قبل الحل، أي قيمة تجعل مقامًا يساوي صفرًا. بعد الضرب بالمقام المشترك الأصغر نحل المعادلة الناتجة بدقة، ثم نرفض أي حل يخالف القيود الأصلية. وإذا كان عندنا أكثر من كسر فمن الأفضل تحليل المقامات أولًا لتحديد المقام المشترك بسهولة.";
+ if(t.subject==="math"&&/(مسائل كلامية على المعادلات|مسائل كلامية)/.test(t.title))return lang(api)==="en"
+  ?"Advanced word problems may hide the equation in rates, percentages, ages, prices, distances or geometry. Build a variable table, keep units consistent, write one equation for each relationship, and decide whether one unknown or a system of equations is needed. Always interpret the numeric solution in words."
+  :"المسائل الكلامية المتقدمة ممكن تخفي المعادلة داخل السرعة أو النسبة المئوية أو الأعمار أو الأسعار أو المسافات أو الهندسة. نرتب المتغيرات في جدول، نوحّد الوحدات، نكتب معادلة لكل علاقة، ونقرر هل نحتاج مجهولًا واحدًا أم نظام معادلتين، وبعد الحل نفسر الناتج بالكلمات.";
+ if(t.subject==="math"&&/(معادلات خطية|معادلات متعددة الخطوات|معادلات مع أقواس|المعادلات بمتغير في الطرفين|^المعادلات$)/.test(t.title))return lang(api)==="en"
+  ?"For multi-step equations, choose an efficient order: distribute first, combine like terms, then move variable terms and constants. If variables appear on both sides, move the smaller variable term first to reduce sign errors. A final substitution check should make the left and right sides exactly equal."
+  :"في المعادلات متعددة الخطوات نختار ترتيبًا ذكيًا: نفك التوزيع أولًا، نجمع الحدود المتشابهة، ثم ننقل حدود المتغير والأعداد. إذا كان المتغير في الطرفين فمن المريح نقل الحد ذي المعامل الأصغر لتقليل أخطاء الإشارات، وبعد الحل نعوّض للتأكد أن الطرفين يساويان نفس القيمة.";
  if(t.subject==="math"&&/إحصاء/.test(t.title)){
   if(lang(api)==="en")return "Advanced statistics: compare two data sets using center and spread, not one number only. The mean can change strongly because of an extreme value, while the median is often more stable. Read bar charts carefully by checking the scale and units before comparing heights. For larger ordered data sets, quartiles split the data into four parts: Q1, the median Q2 and Q3. The interquartile range IQR = Q3 − Q1 describes the spread of the middle 50% of the data. When the variables are different, such as height and price, keep their units clear and choose the graph that fits the question before drawing a conclusion.";
   return "بالإحصاء المتقدم نقارن بين مجموعتين من البيانات باستخدام مقاييس المركز والانتشار، وليس رقمًا واحدًا فقط. المتوسط يتأثر كثيرًا بالقيمة الشاذة الكبيرة أو الصغيرة، بينما الوسيط غالبًا يبقى أكثر ثباتًا. عند قراءة أي رسم بياني افحص أولًا تدريج المحور والوحدة حتى لا تقارن أعمدة بطريقة خاطئة. وإذا كانت البيانات مرتبة وكبيرة يمكن تقسيمها إلى أربعة أجزاء: الربيع الأول Q1، والوسيط Q2، والربيع الثالث Q3، ويكون المدى الربيعي IQR = Q3 − Q1 لقياس انتشار نصف البيانات الأوسط. وإذا كنا نعرض متغيرات مختلفة مثل الطول والسعر، يجب كتابة الوحدة بوضوح واختيار نوع الرسم المناسب قبل الاستنتاج.";
@@ -218,6 +236,11 @@ function workedExample(api,t){
   const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"
  }
  if(t.subject==="math"){
+  if(/معادلات كسرية/.test(t.title))return en?"Example: x/3 + 2 = 6 → subtract 2 from both sides: x/3 = 4 → multiply both sides by 3: x = 12 → check: 12/3 + 2 = 6.":"مثال: x/3 + 2 = 6 → نطرح 2 من الطرفين: x/3 = 4 → نضرب الطرفين بـ3: x = 12 → فحص: 12/3 + 2 = 6.";
+  if(/مسائل كلامية على المعادلات/.test(t.title))return en?"Example: 4 notebooks cost 48 ₪. Let x be the price of one notebook. 4x = 48 → x = 12 ₪. Check: 4 × 12 = 48.":"مثال: ثمن 4 دفاتر هو 48 ₪. نفرض سعر الدفتر x. إذن 4x = 48 → x = 12 ₪. الفحص: 4 × 12 = 48.";
+  if(/معادلات مع أقواس/.test(t.title))return en?"Example: 3(x + 2) = 18 → 3x + 6 = 18 → 3x = 12 → x = 4.":"مثال: 3(x + 2) = 18 → نفك القوس: 3x + 6 = 18 → نطرح 6: 3x = 12 → نقسم على 3: x = 4.";
+  if(/معادلات متعددة الخطوات/.test(t.title))return en?"Example: 2x + 5 = 17 → 2x = 12 → x = 6. Check: 2×6 + 5 = 17.":"مثال: 2x + 5 = 17 → نطرح 5: 2x = 12 → نقسم على 2: x = 6. الفحص: 2×6 + 5 = 17.";
+  if(/(معادلات خطية|^المعادلات$|المعادلات بمتغير في الطرفين)/.test(t.title))return en?"Example: 3x + 4 = 19 → 3x = 15 → x = 5. Apply the same operation to both sides at every step.":"مثال: 3x + 4 = 19 → نطرح 4 من الطرفين: 3x = 15 → نقسم الطرفين على 3: x = 5. في كل خطوة نحافظ على توازن الطرفين.";
   if(/إحصاء/.test(t.title))return en?"Example — heights (cm): 150, 160, 160, 170, 180. Mean = (150+160+160+170+180)÷5 = 164 cm. Median = 160 cm. Mode = 160 cm. Range = 180−150 = 30 cm. On a bar chart, label the horizontal axis with the observations and the vertical axis with height (cm), then compare the bar heights.":"مثال — أطوال 5 طلاب بالسنتيمتر: 150، 160، 160، 170، 180. المتوسط = (150+160+160+170+180)÷5 = 164 سم. الوسيط = 160 سم بعد ترتيب القيم. المنوال = 160 لأنه الأكثر تكرارًا. المدى = 180−150 = 30 سم. وفي الرسم بالأعمدة نكتب المشاهدات على المحور الأفقي والطول (سم) على المحور العمودي ثم نقارن ارتفاع الأعمدة.";
   if(/فيثاغورس/.test(t.title))return en?"Example: a=3, b=4 → c²=9+16=25 → c=5.":"مثال: a=3 و b=4 → c²=9+16=25 → c=5.";
   if(/نسب/.test(t.title))return en?"Example: 25% of 200 = 200×25÷100 = 50.":"مثال: 25% من 200 = 200×25÷100 = 50.";
@@ -331,15 +354,21 @@ function buildEntry(api,open){
 }
 
 function editorDefaults(t){
+ const en=localStorage.getItem("pythagorasi_language")!=="ar";
  const pair=t.subject==="arabic"?AR_EXAMPLES[t.title]:t.subject==="english"?EN_EXAMPLES[t.title]:null;
- if(t.subject==="math"&&/إحصاء/.test(t.title))return {data:"150, 160, 160, 170, 180",words:"الطول / السعر / الكمية / العلامات",question:"مثّل البيانات بيانيًا ثم احسب المتوسط والوسيط والمنوال والمدى.",answer:""};
- if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=> "en"},t),question:"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
- if(t.subject==="science")return {data:"المتغير = 10",words:t.title,question:"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
- if(t.subject==="arabic")return localStorage.getItem("pythagorasi_language")!=="ar"
+ if(t.subject==="math"&&/إحصاء/.test(t.title))return en
+  ?{data:"150, 160, 160, 170, 180",words:"height / price / quantity / marks",question:"Represent the data and calculate mean, median, mode and range.",answer:""}
+  :{data:"150, 160, 160, 170, 180",words:"الطول / السعر / الكمية / العلامات",question:"مثّل البيانات بيانيًا ثم احسب المتوسط والوسيط والمنوال والمدى.",answer:""};
+ if(t.subject==="math"&&/(معادلات كسرية|كسور جبرية)/.test(t.title))return {data:"x / 3 + 2 = 6",words:en?"fractional equation":"معادلة كسرية",question:en?"Solve for x and check the solution.":"حل المعادلة وأوجد x ثم افحص الحل.",answer:"x = 12"};
+ if(t.subject==="math"&&/(مسائل كلامية على المعادلات|مسائل كلامية)/.test(t.title))return {data:en?"4 notebooks cost 48 ₪":"4 دفاتر ثمنها 48 ₪",words:en?"price / quantity / total":"السعر / الكمية / المجموع",question:en?"What is the price of one notebook?":"كم سعر الدفتر الواحد؟",answer:"12 ₪"};
+ if(t.subject==="math"&&/(معادلات|المعادلات)/.test(t.title))return {data:"x + 3 = 7",words:en?"equation / balance":"معادلة / ميزان",question:en?"Solve for x.":"أوجد قيمة x.",answer:"x = 4"};
+ if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=>en?"en":"ar"},t),question:en?"Change the givens and write the question you want to solve.":"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
+ if(t.subject==="science")return {data:en?"variable = 10":"المتغير = 10",words:titleText({language:()=>en?"en":"ar"},t),question:en?"Change the variable or state, then write what you want to explain.":"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
+ if(t.subject==="arabic")return en
   ?{data:"Write or paste an Arabic example using Latin transliteration if you want no Arabic script.",words:AR_TO_EN[t.title]||t.title,question:"Identify the target Arabic grammar rule and explain its grammatical role.",answer:""}
   :{data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
  if(t.subject==="english")return {data:pair?.[0]||"Write a sentence here.",words:t.title,question:"Rewrite the sentence using the target grammar rule.",answer:""};
- return {data:t.title,words:"",question:"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
+ return {data:en?titleText({language:()=>"en"},t):t.title,words:"",question:en?"Write the question or idea you want to analyze.":"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
 }
 export function mountCurriculum(api){
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
@@ -812,7 +841,7 @@ export function mountCurriculum(api){
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})
  }
- function render(){setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
+ function render(){modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
