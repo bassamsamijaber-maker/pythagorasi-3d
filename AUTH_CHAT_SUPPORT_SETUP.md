@@ -1,6 +1,6 @@
 # Authentication, chat and support deployment
 
-The GitHub Pages frontend contains teacher name/email password login, student class-code-first login, direct chat, recent conversations, reporting, support requests and support replies. Existing Google teacher accounts can link a password in Settings. Student recovery requests provide an ownership signal for manual support; a security phrase does not itself change a Firebase Auth password.
+The Classora frontend contains teacher name/email password login, student class-code-first login, direct chat, recent conversations, reporting, support requests and support replies. Existing Google teacher accounts can link a password in Settings. Student recovery requests provide an ownership signal for manual support; a security phrase does not itself change a Firebase Auth password.
 
 Deploy the matching Firestore rules from this commit before relying on teacher password permissions:
 
@@ -8,7 +8,7 @@ Deploy the matching Firestore rules from this commit before relying on teacher p
 firebase deploy --only firestore:rules
 ```
 
-No new Cloud Functions or SMS billing is required for these changes. This session could publish to GitHub, but did not have an authenticated Firebase CLI or Firebase deployment connector; the rules deployment is therefore not verified.
+No new Cloud Functions or SMS billing is required for these changes. Firebase rules deployment should be verified after configuration changes.
 
 Teacher authorization uses a protected `users.role`: normal users cannot promote their role. Existing legitimate teacher profiles continue to work with either Google or password authentication. Login aliases cannot be overwritten by another account. Chat message access is restricted to the two participants; support requests are readable only by their authenticated author or the admin.
 
