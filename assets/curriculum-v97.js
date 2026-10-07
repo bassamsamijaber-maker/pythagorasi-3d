@@ -140,7 +140,7 @@ function topicsFor(grade,subject){
  return (G[grade]&&G[grade][subject]||[]).map(function(x,i){return normalizeTopic(x,grade,subject,i)});
 }
 function subjectList(grade){return Object.keys(G[grade]||{}).filter(function(k){return S[k]})}
-function subjectName(api,key){if(key==="arabic")return "العربي — قواعد";if(key==="english")return "English Grammar";return S[key]?(lang(api)==="en"?S[key].en:S[key].ar):key}
+function subjectName(api,key){if(key==="arabic")return txt(api,"العربي — قواعد","Arabic Grammar");if(key==="english")return "English Grammar";return S[key]?(lang(api)==="en"?S[key].en:S[key].ar):key}
 function trackName(api,key){const a=TRACKS[key];return a?(lang(api)==="en"?a[1]:a[0]):key}
 
 const TOPIC_EN={
@@ -156,8 +156,14 @@ const EN_TO_AR={
 "Parts of Speech":"أقسام الكلام","Nouns":"الأسماء","Singular and Plural":"المفرد والجمع","Countable and Uncountable Nouns":"الأسماء المعدودة وغير المعدودة","Subject Pronouns":"ضمائر الفاعل","Object Pronouns":"ضمائر المفعول","Possessive Adjectives":"صفات الملكية","Possessive Pronouns":"ضمائر الملكية","Demonstratives":"أسماء الإشارة","Verb To Be":"فعل الكينونة To Be","Have / Has":"Have / Has للملكية","There is / There are":"يوجد / توجد","Articles: a / an / the":"أدوات التعريف والتنكير","Present Simple":"المضارع البسيط","Present Continuous":"المضارع المستمر","Present Simple vs Present Continuous":"المضارع البسيط مقابل المستمر","Past Simple":"الماضي البسيط","Regular and Irregular Verbs":"الأفعال المنتظمة وغير المنتظمة","Future with Will":"المستقبل باستخدام Will","Be Going To":"المستقبل باستخدام Be Going To","Can / Can’t":"القدرة باستخدام Can","Must / Mustn’t":"Must للوجوب والمنع","Should / Shouldn’t":"Should للنصيحة","Adjectives":"الصفات","Adverbs":"الظروف","Comparative":"صيغة المقارنة","Superlative":"صيغة التفضيل","Prepositions":"حروف الجر","Question Words":"أدوات السؤال","Some / Any":"Some / Any","Much / Many":"Much / Many","A lot of":"A lot of","Past Continuous":"الماضي المستمر","Present Perfect":"المضارع التام","Present Perfect vs Past Simple":"المضارع التام مقابل الماضي البسيط","Modals":"الأفعال الناقصة","Can / Could":"Can / Could","Must / Have to":"Must / Have to","Should":"Should","May / Might":"May / Might","Comparative and Superlative":"المقارنة والتفضيل","Too / Enough":"Too / Enough","First Conditional":"الشرط الأول","Zero Conditional":"الشرط الصفري","Passive Voice — Introduction":"مقدمة في المبني للمجهول","Relative Pronouns":"ضمائر الوصل","Who / Which / That":"Who / Which / That","Gerunds and Infinitives — Introduction":"مقدمة في Gerunds وInfinitives","Quantifiers":"ألفاظ الكمية","Few / Little":"Few / Little","Some / Any / No":"Some / Any / No","Question Tags — Introduction":"مقدمة في Question Tags","Present Perfect Continuous":"المضارع التام المستمر","Past Perfect":"الماضي التام","Past Perfect vs Past Simple":"الماضي التام مقابل الماضي البسيط","Future Forms":"صيغ المستقبل","Future Continuous":"المستقبل المستمر","Passive Voice":"المبني للمجهول","Present Passive":"المبني للمجهول في المضارع","Past Passive":"المبني للمجهول في الماضي","Future Passive":"المبني للمجهول في المستقبل","Second Conditional":"الشرط الثاني","Relative Clauses":"الجمل الموصولة","Defining Relative Clauses":"الجمل الموصولة المحددة","Reported Speech — Introduction":"مقدمة في الكلام المنقول","Modal Verbs":"الأفعال الناقصة","Gerunds":"Gerunds","Infinitives":"Infinitives","Gerunds vs Infinitives":"Gerunds مقابل Infinitives","Used to":"Used to","Question Tags":"Question Tags","Articles":"أدوات التعريف والتنكير","Adjective Order":"ترتيب الصفات","Future Perfect — Introduction":"مقدمة في المستقبل التام","Active and Passive Voice":"المبني للمعلوم والمجهول","Third Conditional — Introduction":"مقدمة في الشرط الثالث","Reported Speech":"الكلام المنقول","Reported Questions":"الأسئلة المنقولة","Modal Perfects — Introduction":"مقدمة في Modal Perfects","Used to / Would":"Used to / Would","Wish / If Only — Introduction":"مقدمة في Wish / If Only","Causative Have — Introduction":"مقدمة في Causative Have","Determiners":"المحددات","Linking Words":"كلمات الربط"
 };
 function titleText(api,topic){
- if(topic.subject==="arabic"||topic.subject==="english")return topic.title;
+ if(topic.subject==="arabic")return lang(api)==="en"?(AR_TO_EN[topic.title]||TOPIC_EN[topic.title]||topic.title):topic.title;
+ if(topic.subject==="english")return topic.title;
  return lang(api)==="en"?(TOPIC_EN[topic.title]||topic.title):topic.title;
+}
+export function curriculumTopicDisplayName(title,subject,language="en"){
+ if(subject==="arabic")return language==="en"?(AR_TO_EN[title]||TOPIC_EN[title]||title):title;
+ if(subject==="english")return title;
+ return language==="en"?(TOPIC_EN[title]||title):title;
 }
 function translationTitle(t){return t.subject==="arabic"?(AR_TO_EN[t.title]||t.title):t.subject==="english"?(EN_TO_AR[t.title]||t.title):t.title}
 function statusLabel(api,s){return s==="done"?txt(api,"مكتمل","Completed"):s==="progress"?txt(api,"قيد التعلم","In progress"):txt(api,"لم يبدأ","Not started")}
@@ -169,7 +175,9 @@ function basicExplanation(api,t){
   return "الإحصاء يساعدنا نحول مجموعة أرقام إلى معلومات سهلة للفهم والمقارنة. أولًا نحدد ما هو المتغير الذي نقيسه، مثل الطول أو السعر أو الكمية أو العلامات، ثم نرتب القيم في جدول أو رسم بياني. في الرسم بالأعمدة يوضح المحور الأفقي الفئات أو المشاهدات، بينما يوضح المحور العمودي قيمة كل فئة. بعد قراءة الرسم نحسب المتوسط بجمع القيم وقسمتها على عددها، ونرتب القيم لإيجاد الوسيط، ونبحث عن القيمة الأكثر تكرارًا لإيجاد المنوال، ونحسب المدى بطرح أصغر قيمة من أكبر قيمة. المهم ليس حفظ القوانين فقط، بل معرفة ماذا يخبرنا الرسم عن البيانات وأين توجد القيم الأكبر والأصغر.";
  }
  if(t.subject==="english")return "Learn the rule, form and common use of "+t.title+". Focus on affirmative, negative and question forms.";
- if(t.subject==="arabic")return "في هذا الدرس نتعلّم قاعدة «"+t.title+"»، كيف نميّزها داخل الجملة، وما العلامات التي تساعدنا على تحديدها وإعرابها بصورة صحيحة.";
+ if(t.subject==="arabic")return lang(api)==="en"
+  ?"In this lesson, learn the Arabic grammar rule “"+n+"”, how to recognize it in a sentence, and how its grammatical role and case are identified."
+  :"في هذا الدرس نتعلّم قاعدة «"+t.title+"»، كيف نميّزها داخل الجملة، وما العلامات التي تساعدنا على تحديدها وإعرابها بصورة صحيحة.";
  if(lang(api)==="en"){
   if(t.subject==="math")return "In “"+n+"”, start with the main idea, identify the given information and the target, then apply the rule step by step and check the result.";
   if(t.subject==="science")return "In “"+n+"”, connect the concept to an observation, identify cause and effect, and use evidence before answering questions.";
@@ -188,7 +196,9 @@ function advancedExplanation(api,t){
   return "بالإحصاء المتقدم نقارن بين مجموعتين من البيانات باستخدام مقاييس المركز والانتشار، وليس رقمًا واحدًا فقط. المتوسط يتأثر كثيرًا بالقيمة الشاذة الكبيرة أو الصغيرة، بينما الوسيط غالبًا يبقى أكثر ثباتًا. عند قراءة أي رسم بياني افحص أولًا تدريج المحور والوحدة حتى لا تقارن أعمدة بطريقة خاطئة. وإذا كانت البيانات مرتبة وكبيرة يمكن تقسيمها إلى أربعة أجزاء: الربيع الأول Q1، والوسيط Q2، والربيع الثالث Q3، ويكون المدى الربيعي IQR = Q3 − Q1 لقياس انتشار نصف البيانات الأوسط. وإذا كنا نعرض متغيرات مختلفة مثل الطول والسعر، يجب كتابة الوحدة بوضوح واختيار نوع الرسم المناسب قبل الاستنتاج.";
  }
  if(t.subject==="english")return "Advanced: compare "+t.title+" with nearby grammar forms, watch signal words and exceptions, then justify the correct form in context.";
- if(t.subject==="arabic")return "الشرح المتقدم: طبّق «"+t.title+"» على جمل مختلفة، ميّز الحالات المتشابهة، وحدد الموقع الإعرابي والعلامة الأصلية أو الفرعية عند الحاجة.";
+ if(t.subject==="arabic")return lang(api)==="en"
+  ?"Advanced: apply “"+n+"” to different sentence patterns, compare similar cases, and identify the grammatical position and the correct case marker."
+  :"الشرح المتقدم: طبّق «"+t.title+"» على جمل مختلفة، ميّز الحالات المتشابهة، وحدد الموقع الإعرابي والعلامة الأصلية أو الفرعية عند الحاجة.";
  if(lang(api)==="en"){
   if(t.subject==="math")return "Advanced: translate the problem into a suitable algebraic or geometric model, choose a strategy, test constraints, then verify with another method.";
   if(t.subject==="science")return "Advanced: explain “"+n+"” with a scientific model, separate variables from outcomes, and use measurements or evidence.";
@@ -203,7 +213,10 @@ function advancedExplanation(api,t){
 function workedExample(api,t){
  const en=lang(api)==="en";
  if(t.subject==="english"){const pair=EN_EXAMPLES[t.title]||["Choose the sentence that correctly follows the rule of "+t.title+".","Check the verb form, word order and context."];return "Example: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
- if(t.subject==="arabic"){const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
+ if(t.subject==="arabic"){
+  if(en)return "Worked example: identify the word or structure that matches “"+n+"”, explain its role, then check the grammatical case and the relationship between the words.";
+  const pair=AR_EXAMPLES[t.title]||["نحدّد الكلمة أو التركيب الذي يحقق قاعدة «"+t.title+"» داخل جملة.","نراجع الحركة الإعرابية والعلاقة بين الكلمات."];return "مثال: "+pair[0]+" ✓  |  "+pair[1]+" ✕"
+ }
  const n=titleText(api,t);
  if(t.subject==="math"){
   if(/إحصاء/.test(t.title))return en?"Example — heights (cm): 150, 160, 160, 170, 180. Mean = (150+160+160+170+180)÷5 = 164 cm. Median = 160 cm. Mode = 160 cm. Range = 180−150 = 30 cm. On a bar chart, label the horizontal axis with the observations and the vertical axis with height (cm), then compare the bar heights.":"مثال — أطوال 5 طلاب بالسنتيمتر: 150، 160، 160، 170، 180. المتوسط = (150+160+160+170+180)÷5 = 164 سم. الوسيط = 160 سم بعد ترتيب القيم. المنوال = 160 لأنه الأكثر تكرارًا. المدى = 180−150 = 30 سم. وفي الرسم بالأعمدة نكتب المشاهدات على المحور الأفقي والطول (سم) على المحور العمودي ثم نقارن ارتفاع الأعمدة.";
@@ -219,7 +232,7 @@ function workedExample(api,t){
 function skillText(api,t){
  const n=titleText(api,t);
  if(t.subject==="english")return "Apply "+t.title+" correctly in context";
- if(t.subject==="arabic")return "تمييز قاعدة "+t.title+" وتطبيقها وإعرابها";
+ if(t.subject==="arabic")return lang(api)==="en"?"Recognize and apply the Arabic grammar rule "+n:"تمييز قاعدة "+t.title+" وتطبيقها وإعرابها";
  if(lang(api)==="en"){
   if(t.subject==="math"&&/إحصاء/.test(t.title))return "Read graphs, organize data and calculate mean, median, mode and range";
   if(t.subject==="math")return "Choose the correct rule and solve a problem in "+n;
@@ -241,7 +254,13 @@ function englishPractical(t,diff,n){
  const wrongs=[pair[1],"The sentence does not follow the target rule.","This option uses a different grammar form."];
  return {prompt:ask+" ("+(n+1)+")",options:shuffle([pair[0]].concat(wrongs)).slice(0,4),answer:pair[0],explanation:"The correct answer follows the target form for "+t.title+"."};
 }
-function arabicPractical(t,diff,n){
+function arabicPractical(api,t,diff,n){
+ if(lang(api)==="en"){
+  const rule=AR_TO_EN[t.title]||t.title;
+  const correct="Identify the target structure, then verify its grammatical role and case.";
+  const wrongs=["Ignore the grammatical relationship between the words.","Choose only by sentence length.","Treat every noun as having the same grammatical case."];
+  return {prompt:(diff==="hard"?"Which method best proves understanding of ":"Choose the correct way to apply ")+rule+" ("+(n+1)+")",options:shuffle([correct].concat(wrongs)),answer:correct,explanation:"The correct method uses the grammatical relationship and case, not surface appearance alone."};
+ }
  const pair=AR_EXAMPLES[t.title];if(!pair)return null;
  const ask=diff==="hard"?"أي مثال يطبّق قاعدة «"+t.title+"» تطبيقًا صحيحًا؟":"اختر المثال الصحيح على «"+t.title+"».";
  const wrongs=[pair[1],"هذا المثال لا يحقق القاعدة المطلوبة.","الجملة لا تطابق موضوع السؤال."];
@@ -254,7 +273,7 @@ function genericQuestion(api,t,diff,n){
   const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4);
   return {prompt:(diff==="hard"?"Which learning goal best matches ":"Choose the skill that belongs to ")+"“"+t.title+"” ("+(n+1)+")",options:opts,answer:correct,explanation:"This is the core skill practised in "+t.title+"."};
  }
- if(t.subject==="arabic"){const p=arabicPractical(t,diff,n);if(p)return p}
+ if(t.subject==="arabic"){const p=arabicPractical(api,t,diff,n);if(p)return p}
  const correct=skillText(api,t),opts=shuffle([correct].concat(ds.map(x=>skillText(api,x)))).slice(0,4),display=titleText(api,t);
  if(lang(api)==="en"){
   const lead=diff==="easy"?"Which skill is directly connected to":diff==="medium"?"Which description best matches the skill in":diff==="hard"?"After studying the topic, which application proves understanding of":"Choose the best skill for";
@@ -317,7 +336,9 @@ function editorDefaults(t){
  if(t.subject==="math"&&/إحصاء/.test(t.title))return {data:"150, 160, 160, 170, 180",words:"الطول / السعر / الكمية / العلامات",question:"مثّل البيانات بيانيًا ثم احسب المتوسط والوسيط والمنوال والمدى.",answer:""};
  if(t.subject==="math")return {data:"a = 3, b = 4",words:titleText({language:()=> "en"},t),question:"غيّر المعطيات واكتب السؤال الذي تريد حله.",answer:""};
  if(t.subject==="science")return {data:"المتغير = 10",words:t.title,question:"غيّر المتغير أو الحالة، ثم اكتب ما الذي تريد تفسيره.",answer:""};
- if(t.subject==="arabic")return {data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
+ if(t.subject==="arabic")return lang({language:()=>localStorage.getItem("pythagorasi_language")==="en"?"en":"ar"})==="en"
+  ?{data:"Write or paste an Arabic example using Latin transliteration if you want no Arabic script.",words:AR_TO_EN[t.title]||t.title,question:"Identify the target Arabic grammar rule and explain its grammatical role.",answer:""}
+  :{data:pair?.[0]||"اكتب جملة هنا",words:t.title,question:"حدّد القاعدة المطلوبة في الجملة.",answer:""};
  if(t.subject==="english")return {data:pair?.[0]||"Write a sentence here.",words:t.title,question:"Rewrite the sentence using the target grammar rule.",answer:""};
  return {data:t.title,words:"",question:"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
 }
@@ -437,7 +458,7 @@ export function mountCurriculum(api){
   });
   groups.forEach(({sec,items})=>{
    const unit=document.createElement("section");unit.className="curriculum-unit-section "+state.subject+" unit-"+sec.key;
-   const nativeSubject=state.subject==="arabic"||state.subject==="english";if(nativeSubject)unit.dataset.noTranslate="";
+   const nativeSubject=false;
    const unitLabel=state.subject==="arabic"?"وحدة":state.subject==="english"?"UNIT":txt(api,"وحدة","UNIT");
    const topicsLabel=state.subject==="arabic"?"مواضيع":state.subject==="english"?"topics":txt(api,"مواضيع","topics");
    const head=document.createElement("div");head.className="curriculum-unit-head";
@@ -477,8 +498,8 @@ export function mountCurriculum(api){
    return '<div class="curriculum-visual-scene scene-science scene-motion" id="cv97Scene"><div class="cv-track"><i></i></div><div class="cv-motion-ball"></div><div class="cv-vector v1">→</div><div class="cv-vector v2">↑</div><span class="cv-scene-tag">'+title+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتغيير زاوية المشهد","Drag to change the scene angle")+'</div>';
   }
   if(subject==="arabic"){
-   const pair=/المضاف والمضاف إليه/.test(n)?["كتابُ","الطالبِ"]:["الكلمة","الإعراب"];
-   return '<div class="curriculum-visual-scene scene-language scene-arabic" id="cv97Scene"><div class="cv-book-base"></div><div class="cv-word-card w1">'+pair[0]+'</div><div class="cv-word-card w2">'+pair[1]+'</div><div class="cv-word-card w3">'+title+'</div><span class="cv-scene-tag">'+txt(api,"قواعد عربية","Arabic grammar")+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير بطاقات القاعدة","Drag to rotate the grammar cards")+'</div>';
+   const pair=lang(api)==="en"?(/المضاف والمضاف إليه/.test(n)?["Mudaf","Mudaf ilayh"]:["Word","Parsing"]):(/المضاف والمضاف إليه/.test(n)?["كتابُ","الطالبِ"]:["الكلمة","الإعراب"]);
+   return '<div class="curriculum-visual-scene scene-language scene-arabic" id="cv97Scene"><div class="cv-book-base"></div><div class="cv-word-card w1">'+pair[0]+'</div><div class="cv-word-card w2">'+pair[1]+'</div><div class="cv-word-card w3">'+esc(titleText(api,t))+'</div><span class="cv-scene-tag">'+txt(api,"قواعد عربية","Arabic Grammar")+'</span></div><div class="curriculum-3d-hint">'+txt(api,"اسحب لتدوير بطاقات القاعدة","Drag to rotate the grammar cards")+'</div>';
   }
   if(subject==="english"){
    const tense=/(Past|Present|Future)/i.test(n);
@@ -559,8 +580,8 @@ export function mountCurriculum(api){
   paint();
  }
  function renderLesson(){
-  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),nativeOnly=t.subject==="arabic"||t.subject==="english",display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
-  const T=(ar,en)=>t.subject==="arabic"?ar:t.subject==="english"?en:txt(api,ar,en);
+  const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),nativeOnly=false,display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
+  const T=(ar,en)=>txt(api,ar,en);
   const lessonStatus=t.subject==="arabic"?(p.status==="done"?"مكتمل":p.status==="progress"?"قيد التعلم":"لم يبدأ"):t.subject==="english"?(p.status==="done"?"Completed":p.status==="progress"?"In progress":"Not started"):statusLabel(api,p.status);
   const trans=nativeOnly?translationTitle(t):"";
   const transBlock=state.showTranslation?'<section class="curriculum-panel curriculum-translation" data-no-translate="1"><span class="curriculum-kicker">'+(t.subject==="arabic"?"ENGLISH TRANSLATION":"الترجمة العربية")+'</span><h3>'+esc(trans)+'</h3><p>'+(t.subject==="arabic"?"This translation is shown only on request. The original Arabic grammar lesson stays in Arabic.":"هذه الترجمة تظهر عند الطلب فقط، ويبقى درس English Grammar باللغة الإنجليزية.")+'</p></section>':"";
