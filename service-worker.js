@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v100-7-statistics-editable";
+const CACHE_NAME="classora-v100-8-statistics-semantic";
 const APP_SHELL=[
   "./assets/subject-labs.js?v=99",
   "./assets/subject-labs.css?v=99",
@@ -10,8 +10,8 @@ const APP_SHELL=[
   "./assets/ph-lab.js?v=92",
   "./assets/learning-hub.js?v=99",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=101",
-  "./assets/curriculum-v97.css?v=101",
+  "./assets/curriculum-v97.js?v=102",
+  "./assets/curriculum-v97.css?v=102",
   "./offline.html",
 
   "./assets/chat-doodles.svg",
