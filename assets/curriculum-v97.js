@@ -1213,6 +1213,95 @@ export function mountCurriculum(api){
    el.addEventListener("keyup",syncEditor);
   });
   syncEditor();
+
+  const applySimpleControls=()=>{
+   const values={};
+   body.querySelectorAll(".cv-simple-input").forEach(el=>values[el.dataset.simpleKey]=el.type==="number"?Number(el.value):el.value);
+   const key=simpleSpec.key,dataEl=body.querySelector("#cv99Data"),wordsEl=body.querySelector("#cv99Words"),questionEl=body.querySelector("#cv99Question"),resultEl=body.querySelector("#cvSimpleResult"),scene=body.querySelector("#cv97Scene");
+   const fmt=v=>Number.isInteger(Number(v))?String(Number(v)):String(Math.round(Number(v)*100)/100);
+   let result=T("تم تحديث النموذج","Model updated");
+
+   if(key==="statistics-bars"){
+    const arr=["v1","v2","v3","v4"].map(k=>Number(values[k]||0));
+    dataEl.value=arr.join(", ");
+    [...body.querySelectorAll(".cv-stat-input")].forEach((input,i)=>{input.value=arr[i];input.dispatchEvent(new Event("input",{bubbles:true}))});
+    const mean=arr.reduce((a,b)=>a+b,0)/arr.length,sorted=arr.slice().sort((a,b)=>a-b),median=(sorted[1]+sorted[2])/2;
+    result=T("المتوسط = ","Mean = ")+fmt(mean)+T(" • الوسيط = "," • Median = ")+fmt(median);
+   }else if(key==="fraction-equation"){
+    const d=Math.max(1,Number(values.den||1)),a=Number(values.add||0),r=Number(values.right||0),x=d*(r-a);
+    dataEl.value="x / "+d+" + "+a+" = "+r;
+    result="x = "+fmt(x);
+   }else if(key==="word-equation"){
+    const p=Number(values.price||0),q=Number(values.qty||0),total=p*q;
+    dataEl.value=p+", "+q;
+    result=fmt(total)+" ₪";
+   }else if(/balance$/.test(key)||key==="linear-balance"){
+    const a=Number(values.add||0),r=Number(values.right||0),x=r-a;
+    dataEl.value="x + "+a+" = "+r;
+    result="x = "+fmt(x);
+   }else if(key==="system-intersection"){
+    const m1=Number(values.m1||0),m2=Number(values.m2||0);
+    dataEl.value=m1+", "+m2;
+    const l1=body.querySelector("#cvSysLine1"),l2=body.querySelector("#cvSysLine2"),cy=130,cx=180,scale=65;
+    if(l1)l1.setAttribute("d","M25 "+fmt(cy+m1*2.35*scale)+" L335 "+fmt(cy-m1*2.35*scale));
+    if(l2)l2.setAttribute("d","M25 "+fmt(cy+m2*2.35*scale)+" L335 "+fmt(cy-m2*2.35*scale));
+    result=Math.abs(m1-m2)<.001?T("الخطان متوازيان","Parallel lines"):T("يوجد تقاطع","Lines intersect");
+   }else if(key==="probability-wheel"){
+    const good=Math.max(0,Number(values.good||0)),all=Math.max(1,Number(values.all||1)),p=Math.min(1,good/all);
+    dataEl.value=good+", "+all;
+    if(scene)scene.style.setProperty("--prob-fill",(p*360)+"deg");
+    result="P = "+good+"/"+all+" = "+fmt(p);
+   }else if(key==="motion-track"){
+    dataEl.value=String(values.value);
+    result=T("السرعة = ","Speed = ")+fmt(values.value)+" m/s";
+   }else if(/geometry/.test(key)){
+    dataEl.value=String(values.value);
+    result=T("الزاوية = ","Angle = ")+fmt(values.value)+"°";
+   }else if(key==="slope-plane"||key==="function-plane"){
+    dataEl.value=String(values.value);
+    result=T("الميل = ","Slope = ")+fmt(values.value);
+   }else if(/ratio|percent/.test(key)){
+    dataEl.value=String(values.value);
+    result=fmt(values.value)+"%";
+   }else if(t.subject==="science"){
+    dataEl.value=String(values.value??5);
+    wordsEl.value=String(values.label||titleText(api,t));
+    result=String(values.label||titleText(api,t))+" = "+fmt(values.value??5);
+   }else if(t.subject==="arabic"){
+    dataEl.value=String(values.sentence||"");
+    wordsEl.value=String(values.words||"");
+    result=String(values.words||t.title);
+   }else if(t.subject==="english"){
+    dataEl.value=String(values.sentence||"");
+    wordsEl.value=String(values.form||t.title);
+    result=String(values.form||t.title);
+   }else if(t.subject==="history"){
+    dataEl.value=String(values.event||titleText(api,t));
+    wordsEl.value=String(values.cause||"");
+    result=String(values.event||titleText(api,t));
+   }else{
+    dataEl.value=String(values.value??5);
+    wordsEl.value=String(values.factor||titleText(api,t));
+    result=String(values.factor||titleText(api,t))+" • "+fmt(values.value??5);
+   }
+
+   syncEditor();
+
+   const range=body.querySelector("#cvModelRange");
+   if(range&&values.value!=null){range.value=Math.max(Number(range.min||0),Math.min(Number(range.max||100),Number(values.value)));range.dispatchEvent(new Event("input",{bubbles:true}))}
+   const geo=body.querySelector("#cvGeoAngle");
+   if(geo&&values.value!=null){geo.value=Math.max(Number(geo.min||20),Math.min(Number(geo.max||140),Number(values.value)));geo.dispatchEvent(new Event("input",{bubbles:true}))}
+   const eqAdd=body.querySelector("#cvEqAdd"),eqRight=body.querySelector("#cvEqRight");
+   if(eqAdd&&eqRight&&values.add!=null&&values.right!=null){eqAdd.value=values.add;eqRight.value=values.right;eqAdd.dispatchEvent(new Event("input",{bubbles:true}))}
+   const fd=body.querySelector("#cvFracDen"),fa=body.querySelector("#cvFracAdd"),fr=body.querySelector("#cvFracRight");
+   if(fd&&fa&&fr&&values.den!=null){fd.value=values.den;fa.value=values.add;fr.value=values.right;fd.dispatchEvent(new Event("input",{bubbles:true}))}
+   const wp=body.querySelector("#cvWordPrice"),wq=body.querySelector("#cvWordQty");
+   if(wp&&wq&&values.price!=null){wp.value=values.price;wq.value=values.qty;wp.dispatchEvent(new Event("input",{bubbles:true}))}
+   if(resultEl)resultEl.textContent=result;
+  };
+  body.querySelectorAll(".cv-simple-input").forEach(el=>{el.addEventListener("input",applySimpleControls);el.addEventListener("change",applySimpleControls)});
+  applySimpleControls();
+
   if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
