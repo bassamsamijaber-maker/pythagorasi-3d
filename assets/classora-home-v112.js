@@ -242,6 +242,8 @@ export function mountClassoraHomeV112(api){
   const page=get("adminViewPromos"),list=adminList;
   if(!page||!list)return;
   page.querySelector(".cp-admin-count").textContent=t("الإعلانات: ","Announcements: ")+allRows().filter(x=>x.active).length+" / 5";
+  const draftLabel=page.querySelector("[data-active-ar]");
+  if(draftLabel)draftLabel.textContent=t(draftLabel.dataset.activeAr,draftLabel.dataset.activeEn);
   let controls=get("classoraPromoAdminFilters");
   if(!controls){
    controls=newNode("div","cp-admin-filters");
