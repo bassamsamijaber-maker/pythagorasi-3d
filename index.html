@@ -21058,6 +21058,18 @@ function classoraRestoreLobbyPosition(){
   setTimeout(restore,90);
 }
 function closeAllClassoraScreensForMobile(){
+  /* Respect existing exam/competition teardown. Hiding a modal alone leaves
+     its one-second timer or live Firebase subscriptions running indefinitely. */
+  const examView=document.getElementById("examModal");
+  if(examView?.classList.contains("open")){
+    if(!document.getElementById("examRunner")?.classList.contains("hidden")){
+      try{saveAttemptLocal()}catch(err){console.warn("Exam autosave",err)}
+    }
+    stopExamTimer();
+  }
+  if(document.getElementById("competitionModal")?.classList.contains("open")){
+    clearLiveSubscriptions();
+  }
   document.querySelectorAll(".modal.open").forEach(modal=>modal.classList.remove("open"));
   document.getElementById("chatModal")?.classList.remove("chat-thread-open");
   if(location.hash&&location.hash!=="#platformLobby"){
