@@ -34,7 +34,7 @@ assert(css.includes('classora-curriculum-modal'),'Curriculum dock layout missing
 assert(quick.includes('function syncHeader'),'Clean header identity missing');
 assert(quick.includes('isPermitted'),'Settings must preserve original permissions');
 assert(home.includes('},4000)'),'Promos must rotate every four seconds');
-assert(home.includes('next.length>5'),'Five-announcement cap missing');
+assert(home.includes('next.filter(p=>p.active).length>5'),'Five ACTIVE announcement cap missing');
 assert(home.includes('function editPromo'),'Admin edit operation missing');
 assert(home.includes('window.confirm'),'Destructive action confirmation missing');
 assert(home.includes('classoraPromoSearch'),'Admin search missing');
