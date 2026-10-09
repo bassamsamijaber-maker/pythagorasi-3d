@@ -9,12 +9,11 @@
   "scope": "./",
   "display": "standalone",
   "display_override": [
-    "window-controls-overlay",
     "standalone"
   ],
   "orientation": "any",
-  "background_color": "#07111c",
-  "theme_color": "#0b1422",
+  "background_color": "#06101b",
+  "theme_color": "#06101b",
   "categories": [
     "education",
     "productivity"

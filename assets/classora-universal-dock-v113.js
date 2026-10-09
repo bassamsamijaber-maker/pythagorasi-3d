@@ -13,7 +13,7 @@
      window.matchMedia?.("(pointer: coarse)")?.matches;
    return window.innerWidth>760 && window.innerWidth<=1500 && (ipad||touchTablet);
  };
- const supported=()=>window.innerWidth<=760 || tablet();
+ const supported=()=>true; // Same five-tab dock across desktop, phone and tablet; material is device-specific.
  let raf=0;
  function syncLayout(){
    raf=0;

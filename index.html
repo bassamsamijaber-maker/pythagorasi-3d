@@ -29,7 +29,7 @@ body.classora-intro-active{overflow:auto!important}
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="application-name" content="Classora">
 <meta name="format-detection" content="telephone=no">
-<link rel="manifest" href="./manifest.webmanifest?v=99">
+<link rel="manifest" href="./manifest.webmanifest?v=116">
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/classora-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./icons/classora-512.png">
@@ -4814,68 +4814,49 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 <script defer src="./assets/classora-universal-dock-v111.js?v=1"></script>
 <link rel="stylesheet" href="./assets/classora-home-v112.css?v=2">
 <link rel="stylesheet" href="./assets/classora-universal-dock-v113.css?v=2">
-<script defer src="./assets/classora-universal-dock-v113.js?v=3"></script>
+<script defer src="./assets/classora-universal-dock-v113.js?v=4"></script>
+<link rel="stylesheet" href="./assets/classora-entrance-v116.css?v=1">
+<script defer src="./assets/classora-entrance-v116.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
-  <div class="intro-film-grid" aria-hidden="true"></div><div class="intro-film-glow" aria-hidden="true"></div>
-  <div class="intro-orbit-ring" aria-hidden="true">
-    <div class="intro-float-card" data-intro-ar="علوم" data-intro-en="Science"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-45 12 12)"/><circle cx="12" cy="12" r="1.6"/></svg><span>Science</span></div>
-    <div class="intro-float-card" data-intro-ar="عربي" data-intro-en="Arabic"><svg viewBox="0 0 24 24"><path d="M4 5q4-2 8 1 4-3 8-1v14q-4-2-8 1-4-3-8-1zM12 6v14"/></svg><span>Arabic</span></div>
-    <div class="intro-float-card" data-intro-ar="رياضيات" data-intro-en="Math"><svg viewBox="0 0 24 24"><path d="M4 19 12 5l8 14H4Z"/><path d="M8 17h8"/></svg><span>Math</span></div>
+  <div class="cw116-stage">
+    <svg class="cw116-writing" viewBox="0 0 420 184" role="img" aria-label="كلاسورا — Classora">
+      <text class="cw116-word" x="210" y="102" text-anchor="middle" direction="rtl">كلاسورا</text>
+      <path class="cw116-line one" d="M65 118 Q210 126 355 118"/>
+      <path class="cw116-line two" d="M111 133 Q210 139 309 132"/>
+    </svg>
+    <div class="cw116-pen" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m30 5 13 13-23 23-15 3 3-15Z"/><path d="m25 10 13 13M8 29l11 11"/></svg></div>
+    <small class="cw116-sub" aria-hidden="true">C L A S S O R A</small>
   </div>
-  <div class="intro-orbit-ring r2" aria-hidden="true">
-    <div class="intro-float-card" data-intro-ar="مسابقات" data-intro-en="Live quiz"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4M12 14v4M8 21h8"/></svg><span>Live quiz</span></div>
-    <div class="intro-float-card" data-intro-ar="مختبرات" data-intro-en="Labs"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg><span>Labs</span></div>
-    <div class="intro-float-card" data-intro-ar="مساعد كلاسورا" data-intro-en="Assistant"><svg viewBox="0 0 24 24"><path d="m12 3 2.2 6.1L20 11l-5.8 2L12 19l-2.2-6L4 11l5.8-1.9L12 3Z"/></svg><span>Assistant</span></div>
-  </div>
-  <div class="intro-center-launch" id="classoraIntroOpen">
-    <span class="intro-logo-shell"><img src="./icons/classora-192.png" alt=""></span>
-    <strong>CLASSORA</strong><small class="classora-intro-tagline">Think. Try. Understand.</small><span class="intro-enter-pill">Enter Classora</span>
-  </div>
-  <span class="intro-click-ripple" aria-hidden="true"></span>
-  <span class="intro-demo-cursor" aria-hidden="true"><svg viewBox="0 0 38 44"><path d="M4 3 31 25l-13 2 8 11-7 4-7-12-8 9V3Z"/></svg></span>
+  <button class="cw116-skip" type="button" aria-label="تخطي الافتتاحية">تخطي / Skip</button>
 </div>
 <script>(function(){
   var intro=document.getElementById("classoraIntro");
-  if(!intro){document.body.classList.remove("classora-intro-active");return}
-  var returning=false,seen=false,reduced=false,arabic=false;
+  if(!intro){document.body.classList.remove("classora-intro-active");return;}
+  var returning=false;
   try{
     returning=sessionStorage.getItem("classora_returning_from_subject")==="1";
     if(returning)sessionStorage.removeItem("classora_returning_from_subject");
-    seen=localStorage.getItem("classora_intro_seen_v110")==="1";
-    arabic=localStorage.getItem("pythagorasi_language")==="ar";
-    reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }catch(e){}
-  if(returning||seen||reduced){
+  // Playing on every site opening, except returns from internal topic pages.
+  if(returning){
     document.body.classList.remove("classora-intro-active");
-    intro.remove();
-    return;
-  }
-  try{localStorage.setItem("classora_intro_seen_v110","1")}catch(e){}
-  if(arabic){
-    var tagline=intro.querySelector(".classora-intro-tagline");
-    var entry=intro.querySelector(".intro-enter-pill");
-    if(tagline)tagline.textContent="فكّر. جرّب. افهم.";
-    if(entry)entry.textContent="جاري الدخول…";
-    intro.querySelectorAll("[data-intro-ar]").forEach(function(el){
-      var span=el.querySelector("span");if(span)span.textContent=el.dataset.introAr;
-    });
-  }else{
-    var englishEntry=intro.querySelector(".intro-enter-pill");
-    if(englishEntry)englishEntry.textContent="Opening…";
+    intro.remove();window.dispatchEvent(new Event("classora-intro-finished"));return;
   }
   var finished=false;
   function finish(){
     if(finished)return;finished=true;
     document.body.classList.remove("classora-intro-active");
     intro.classList.add("classora-intro-exit");
-    setTimeout(function(){intro.remove()},260);
+    window.dispatchEvent(new Event("classora-intro-finished"));
+    setTimeout(function(){intro.remove()},220);
   }
-  setTimeout(function(){if(!finished)intro.classList.add("demo-press")},1000);
-  setTimeout(finish,2200);
+  intro.querySelector(".cw116-skip")?.addEventListener("click",finish);
+  setTimeout(finish,3000);
   setTimeout(finish,3600);
 })();</script>
+<div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading • جارٍ التحميل</span></div>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">

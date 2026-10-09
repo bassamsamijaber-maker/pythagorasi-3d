@@ -1,7 +1,9 @@
-const CACHE_NAME="classora-v115-0-ui-phases";
+const CACHE_NAME="classora-v116-0-entrance-guide";
 const APP_SHELL=[
+  "./assets/classora-entrance-v116.css?v=1",
+  "./assets/classora-entrance-v116.js?v=1",
   "./assets/classora-universal-dock-v113.css?v=2",
-  "./assets/classora-universal-dock-v113.js?v=3",
+  "./assets/classora-universal-dock-v113.js?v=4",
   "./assets/classora-home-v112.css?v=2",
   "./assets/classora-home-v112.js?v=2",
   "./assets/classora-universal-dock-v111.css?v=1",
