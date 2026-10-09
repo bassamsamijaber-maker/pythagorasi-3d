@@ -235,7 +235,6 @@ export function mountClassoraHomeV112(api){
  center?.addEventListener("mouseleave",()=>{paused=false});
  center?.addEventListener("focusin",()=>{paused=true});
  center?.addEventListener("focusout",()=>{paused=false});
- get("classoraPromoAdminAdd")?.addEventListener("click",addPromo);
  const refresh=()=>{
   render();
   if(role()==="student"&&!isAdmin())refreshTasks();
