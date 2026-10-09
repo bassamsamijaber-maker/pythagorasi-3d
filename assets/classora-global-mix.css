@@ -1,0 +1,114 @@
+/* Classora Global Mix UI — Phase 1, 2026-10. Scoped visual layer; no auth, routing or lab logic changed. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;600;700;800;900&display=swap');
+:root{--mix-bg:#080e17;--mix-panel:#111d2a;--mix-panel2:#152432;--mix-stroke:rgba(176,219,230,.14);--mix-green:#42e8a2;--mix-blue:#70caff;--mix-muted:#a5b7c6;--mix-white:#f5f9fc}
+#platformLobby,#authGate{font-family:"Inter","Tajawal",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+html[dir="rtl"] #platformLobby,html[dir="rtl"] #authGate{font-family:"Tajawal","Inter",system-ui,sans-serif}
+body:not(.light) #platformLobby{background:radial-gradient(ellipse 65% 45% at 4% 5%,rgba(36,216,165,.115),transparent 65%),radial-gradient(ellipse 54% 40% at 95% 35%,rgba(79,133,240,.1),transparent 68%),linear-gradient(150deg,#080f19 0%,#070c15 72%,#0a1521 100%)!important;color:var(--mix-white)}
+#platformLobby .lobby-shell{width:min(1320px,100%)!important}
+#platformLobby .lobby-topbar{padding:14px 18px!important;border:1px solid rgba(191,232,235,.13)!important;border-radius:22px!important;background:rgba(15,27,39,.87)!important;box-shadow:0 12px 32px rgba(0,0,0,.16);margin-bottom:22px!important;gap:12px!important}
+#platformLobby .lobby-brand{font-family:Inter,Tajawal,system-ui,sans-serif!important;font-size:clamp(23px,2.6vw,29px)!important;font-weight:900!important;letter-spacing:-1.3px!important;color:var(--mix-white)!important;display:flex;align-items:center;gap:10px}
+#platformLobby .lobby-brand::before{content:"";display:inline-block;width:31px;height:31px;flex:0 0 auto;border-radius:10px;background:radial-gradient(circle at 60% 35%,#cbffe6 0 7%,transparent 8%),linear-gradient(140deg,#50f0ad,#0f986d);box-shadow:0 0 0 5px rgba(52,224,153,.08),0 8px 22px rgba(40,209,148,.22);transform:rotate(-10deg)}
+#platformLobby .lobby-sub{font-size:12px!important;color:var(--mix-muted)!important;letter-spacing:.1px}
+#platformLobby .lobby-top-actions{display:flex!important;flex-wrap:wrap!important;align-items:center;justify-content:flex-end!important;gap:7px!important;min-width:0}
+#platformLobby .lobby-top-actions .lobby-icon-btn,#platformLobby .lobby-profile-btn,#platformLobby .lobby-logout-btn{border:1px solid rgba(190,224,237,.15)!important;border-radius:13px!important;background:rgba(255,255,255,.035)!important;color:#e9f5fa!important;box-shadow:none!important;font-weight:750!important}
+#platformLobby .lobby-top-actions .lobby-icon-btn{min-width:43px!important;height:43px!important;padding:0 11px!important}
+#platformLobby .lobby-top-actions .lobby-icon-btn:hover,#platformLobby .lobby-profile-btn:hover{border-color:rgba(66,232,162,.44)!important;background:rgba(66,232,162,.095)!important}
+#platformLobby .lobby-avatar{background:linear-gradient(135deg,#37d69e,#3177c6)!important;box-shadow:0 2px 15px rgba(56,223,158,.12)}
+#platformLobby .lobby-logout-btn{min-height:43px!important;padding:8px 12px!important}
+#platformLobby .lobby-section{margin-top:clamp(18px,2.5vw,29px)!important}
+#platformLobby .lobby-section-head{margin-bottom:15px!important;gap:10px}
+#platformLobby .lobby-section-head h3{font-size:clamp(19px,2vw,24px)!important;letter-spacing:-.35px;font-weight:850!important;color:#f0f9fc}
+#platformLobby .lobby-section-head p{font-size:13px!important;line-height:1.65!important;color:var(--mix-muted)!important}
+#platformLobby .lobby-section-head h3::before{content:"";display:inline-block;width:4px;height:17px;background:linear-gradient(var(--mix-green),#32afe5);border-radius:5px;margin-inline-end:10px;vertical-align:-2px}
+#platformLobby .pythag-action-grid,#platformLobby .lobby-action-grid{gap:12px!important}
+#platformLobby .pythag-action-card,#platformLobby .lobby-action,#platformLobby .subject-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--mix-stroke)!important;border-radius:20px!important;background:linear-gradient(145deg,rgba(26,47,61,.8),rgba(13,27,39,.95))!important;box-shadow:0 9px 22px rgba(0,0,0,.11);color:#f2f9fc!important;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important}
+#platformLobby .pythag-action-card::before,#platformLobby .lobby-action::before,#platformLobby .subject-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#47e5a2,#57b7f0,transparent);opacity:.53;pointer-events:none}
+#platformLobby .pythag-action-card:hover,#platformLobby .lobby-action:hover,#platformLobby .subject-card:hover{transform:translateY(-3px)!important;border-color:rgba(78,229,173,.48)!important;box-shadow:0 19px 40px rgba(0,0,0,.22),0 0 26px rgba(43,215,148,.07)!important;filter:none!important}
+#platformLobby .pythag-action-card:focus-visible,#platformLobby .lobby-action:focus-visible,#platformLobby .subject-card:focus-visible,#platformLobby .lobby-icon-btn:focus-visible,#platformLobby .mix-btn:focus-visible{outline:3px solid #51eeb1!important;outline-offset:3px!important}
+#platformLobby .pythag-action-card b,#platformLobby .lobby-action b,#platformLobby .subject-card b{font-size:clamp(15px,1.45vw,18px)!important;font-weight:800!important;line-height:1.4}
+#platformLobby .pythag-action-card small,#platformLobby .lobby-action small,#platformLobby .subject-card small{display:block!important;color:#acc0cf!important;font-size:12px!important;line-height:1.7!important;margin-top:6px}
+#platformLobby .pythag-lobby-hero{border:1px solid rgba(115,199,213,.15)!important;border-radius:23px!important;background:linear-gradient(130deg,rgba(21,42,55,.94),rgba(10,25,37,.96))!important;box-shadow:0 18px 38px rgba(0,0,0,.12)!important;padding:clamp(18px,2.8vw,32px)!important;gap:22px!important}
+#platformLobby .pythag-lobby-hero h1{color:var(--mix-white)!important;letter-spacing:-.6px}
+#platformLobby .lobby-ai-card{border-radius:19px!important;border-color:rgba(94,223,177,.2)!important;background:rgba(7,19,28,.83)!important}
+#platformLobby .lobby-ai-orb{background:linear-gradient(145deg,#29c892,#1a76a5)!important;box-shadow:0 12px 25px rgba(35,203,142,.16)!important}
+#platformLobby .lobby-ai-input button{background:#27bc87!important;color:#061913!important}
+#platformLobby .lobby-ai-input input{border-color:rgba(159,218,215,.15)!important;background:#0b1a26!important;color:#f4fafc!important}
+#platformLobby .pythag-enter-lab{border:1px solid rgba(76,238,180,.54)!important;border-radius:13px!important;background:linear-gradient(115deg,#39dca0,#35bddd)!important;color:#062017!important;box-shadow:0 9px 24px rgba(36,194,148,.18)!important}
+#platformLobby .student-upcoming-events,#platformLobby .student-active-timers,#platformLobby .site-updates-priority{border-radius:20px!important}
+#platformLobby button:disabled{opacity:.55;cursor:not-allowed}
+
+/* New hero — decorative geometry is SVG, not a blocking 3D canvas. */
+#platformLobby .classora-mix-hero{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.04fr) minmax(290px,.96fr);gap:clamp(20px,4vw,50px);align-items:center;min-height:340px;padding:clamp(27px,4.5vw,58px);border:1px solid rgba(104,214,185,.25);border-radius:30px;background:radial-gradient(ellipse at 88% 25%,rgba(43,209,151,.16),transparent 48%),radial-gradient(ellipse at 8% 85%,rgba(35,126,181,.16),transparent 49%),linear-gradient(126deg,#101f2d 0%,#0a1521 100%);box-shadow:0 22px 70px rgba(0,0,0,.22)}
+#platformLobby .classora-mix-hero::after{content:"";position:absolute;inset:0;opacity:.12;background-image:linear-gradient(rgba(142,230,219,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(142,230,219,.18) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to right,transparent 35%,#000);z-index:-1;pointer-events:none}
+#platformLobby .mix-copy{position:relative;z-index:2;min-width:0}
+#platformLobby .mix-eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a8f5d0;font:800 11px/1.3 Inter,Tajawal,system-ui;letter-spacing:1.3px;text-transform:uppercase;border:1px solid rgba(68,226,161,.24);background:rgba(57,216,158,.065);padding:9px 13px;border-radius:999px}
+#platformLobby .mix-dot{width:7px;height:7px;background:#59f2ac;border-radius:50%;box-shadow:0 0 0 4px rgba(69,235,163,.13)}
+#platformLobby .mix-headline{max-width:710px;font-size:clamp(34px,4.4vw,58px)!important;font-weight:900!important;letter-spacing:-1.5px!important;line-height:1.18!important;margin:21px 0 12px!important;color:#fff}
+#platformLobby .mix-headline em{font-style:normal;color:#55e9ad}
+#platformLobby .mix-description{font-size:clamp(14px,1.4vw,17px)!important;max-width:530px;margin:0 0 25px;color:#bbccda;line-height:1.8}
+#platformLobby .mix-actions{display:flex;gap:11px;flex-wrap:wrap;align-items:center}
+#platformLobby .mix-btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:50px;padding:12px 22px;border-radius:14px;cursor:pointer;font:800 14px Tajawal,Inter,system-ui;transition:transform .2s ease,box-shadow .2s ease}
+#platformLobby .mix-btn-primary{border:1px solid #55edac;background:linear-gradient(130deg,#61f0b3,#36d3aa);color:#092019;box-shadow:0 12px 26px rgba(33,224,153,.17)}
+#platformLobby .mix-btn-secondary{border:1px solid rgba(172,221,225,.25);background:rgba(255,255,255,.045);color:#f6faff}
+#platformLobby .mix-btn:hover{transform:translateY(-2px)!important;filter:brightness(1.06)}
+#platformLobby .mix-proof{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:#c6d9e5;font-size:12px;font-weight:700}
+#platformLobby .mix-proof span{display:inline-flex;align-items:center;gap:6px}
+#platformLobby .mix-proof span::before{content:"✓";color:#4be6a2;font-weight:900}
+#platformLobby .mix-art{position:relative;display:grid;place-items:center;min-height:290px;width:100%;pointer-events:none}
+#platformLobby .mix-art::before{content:"";position:absolute;width:min(90%,350px);aspect-ratio:1;border:1px solid rgba(103,233,197,.21);border-radius:50%;box-shadow:0 0 0 28px rgba(56,179,164,.025),0 0 0 66px rgba(56,179,164,.025);transform:rotate(-14deg)}
+#platformLobby .mix-art svg{position:relative;z-index:1;display:block;width:min(100%,330px);max-height:285px;filter:drop-shadow(0 18px 18px rgba(8,25,30,.4))}
+#platformLobby .mix-art-pill{position:absolute;z-index:3;border:1px solid rgba(134,229,210,.28);border-radius:15px;background:rgba(16,39,52,.95);padding:10px 14px;color:#edfaff;box-shadow:0 9px 30px rgba(0,0,0,.27);font:700 12px Inter,Tajawal,system-ui}
+#platformLobby .mix-art-pill strong{display:block;font:900 17px Inter,system-ui;color:#5be9ab}
+#platformLobby .mix-art-pill.top{top:8%;inset-inline-end:1%}
+#platformLobby .mix-art-pill.bottom{bottom:8%;inset-inline-start:1%}
+#platformLobby .mix-art .mix-ring{transform-origin:center;animation:mixBreathe 7s ease-in-out infinite alternate}
+@keyframes mixBreathe{from{opacity:.75;transform:scale(.98)}to{opacity:1;transform:scale(1.03)}}
+
+/* Login consistency */
+body:not(.light) #authGate{background:radial-gradient(circle at 12% 14%,rgba(47,218,163,.13),transparent 35%),radial-gradient(circle at 86% 88%,rgba(61,133,209,.14),transparent 38%),#07101b!important}
+body:not(.light) #authGate .auth-panel{background:linear-gradient(160deg,rgba(20,36,50,.98),rgba(10,22,33,.99))!important;border:1px solid rgba(102,214,185,.23)!important;box-shadow:0 25px 85px rgba(0,0,0,.4)!important;border-radius:26px!important}
+body:not(.light) #authGate .auth-logo{background:linear-gradient(145deg,#47dda2,#2f85b2)!important;color:#071822!important;border-radius:17px!important}
+body:not(.light) #authGate h2{letter-spacing:-.4px}
+body:not(.light) #authGate .auth-role,body:not(.light) #authGate .auth-guest-entry{border:1px solid rgba(160,217,222,.16)!important;background:rgba(255,255,255,.035)!important;border-radius:17px!important;transition:background .18s,border-color .18s}
+body:not(.light) #authGate .auth-role:hover,body:not(.light) #authGate .auth-guest-entry:hover{border-color:rgba(73,226,160,.5)!important;background:rgba(54,215,156,.09)!important}
+body:not(.light) #authGate .auth-primary{background:linear-gradient(120deg,#51e8a6,#37bfbb)!important;color:#061b19!important;border-radius:13px!important}
+body:not(.light) #authGate input{border-radius:13px!important;border-color:rgba(159,212,218,.22)!important;background:#0b1c29!important}
+body:not(.light) #authGate input:focus{border-color:#4addac!important;box-shadow:0 0 0 3px rgba(65,225,163,.12)!important}
+
+/* Only theme the EXISTING mobile controls. Never alter their behavior/visibility state. */
+@media(max-width:760px){
+ #platformLobby{padding:11px!important;padding-bottom:calc(94px + env(safe-area-inset-bottom))!important}
+ #platformLobby .lobby-topbar{padding:13px!important;border-radius:17px!important;gap:10px!important}
+ #platformLobby .lobby-top-actions{display:flex!important;width:100%!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;justify-content:flex-start!important;-webkit-overflow-scrolling:touch;touch-action:pan-x;gap:7px!important;padding-bottom:2px}
+ #platformLobby .lobby-top-actions::-webkit-scrollbar{display:none}
+ #platformLobby .lobby-top-actions button,#platformLobby .lobby-top-actions .lobby-profile-btn{width:auto!important;min-width:max-content!important;flex:0 0 auto!important;max-width:none!important;min-height:42px!important;padding:7px 11px!important;font-size:12px!important}
+ #platformLobby .lobby-top-actions #lobbySettingsBtn,#platformLobby .lobby-top-actions #lobbyClassBtn{width:auto!important;min-width:44px!important}
+ #platformLobby .classora-mix-hero{grid-template-columns:minmax(0,1fr)!important;gap:10px;min-height:0;padding:25px 19px;border-radius:23px}
+ #platformLobby .mix-headline{font-size:clamp(32px,8vw,43px)!important;letter-spacing:-.8px!important;margin:17px 0 10px!important}
+ #platformLobby .mix-description{font-size:14px!important;margin-bottom:16px}
+ #platformLobby .mix-art{min-height:200px}
+ #platformLobby .mix-art svg{width:min(76%,230px);max-height:220px}
+ #platformLobby .mix-art-pill{font-size:10px;padding:7px 9px;border-radius:11px}
+ #platformLobby .mix-art-pill strong{font-size:13px}
+ #platformLobby .mix-proof{margin-top:15px;gap:10px;font-size:11px}
+ #platformLobby .lobby-section-head h3{font-size:20px!important}
+ #platformLobby .pythag-action-grid,#platformLobby .lobby-action-grid{gap:10px!important}
+ #platformLobby .pythag-action-card,#platformLobby .lobby-action{padding:14px!important;border-radius:16px!important;min-height:115px!important}
+ #platformLobby .pythag-action-card b,#platformLobby .lobby-action b{font-size:14px!important}
+ #platformLobby .pythag-action-card small,#platformLobby .lobby-action small{font-size:11px!important;line-height:1.55!important}
+ #classoraMobilePageNav{border:1px solid rgba(74,217,166,.22)!important;background:rgba(10,29,37,.95)!important;box-shadow:0 8px 30px rgba(0,0,0,.25)!important}
+ #classoraMobilePageNav button{border-color:rgba(117,223,190,.18)!important;border-radius:13px!important}
+}
+@media(max-width:390px){
+ #platformLobby .mix-actions{display:grid;grid-template-columns:1fr}
+ #platformLobby .mix-btn{width:100%;min-height:46px}
+ #platformLobby .classora-mix-hero{padding:20px 15px}
+ #platformLobby .mix-art{min-height:175px}
+ #platformLobby .pythag-action-grid,#platformLobby .lobby-action-grid{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .mix-ring{animation:none!important}
+ #platformLobby .mix-btn,#platformLobby .pythag-action-card,#platformLobby .lobby-action{transition:none!important}
+}
+body.light #platformLobby .classora-mix-hero,body.light #platformLobby .classora-mix-hero *{color:#f5fafc}
+body.light #platformLobby .mix-btn-primary{color:#072119!important}
