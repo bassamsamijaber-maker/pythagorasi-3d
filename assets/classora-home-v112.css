@@ -112,3 +112,29 @@
 @media(prefers-reduced-motion:reduce){
  #platformLobby .cp-slide{animation:none}
 }
+
+/* Integrated quick return, clean admin area, and a consistent single dock. */
+#platformLobby .ct-resume{
+ width:100%;min-height:41px;text-align:start;padding:10px 14px;
+ border-radius:12px;border:1px dashed rgba(118,234,187,.4);
+ background:rgba(65,218,161,.075);color:#9df8cf;
+ font:800 13px "Tajawal","Inter",system-ui;cursor:pointer
+}
+#platformLobby .ct-resume:hover{background:rgba(72,215,160,.17)}
+#adminPanelModal .admin-panel-box{border:1px solid rgba(128,225,199,.26)!important;background:linear-gradient(145deg,#0d202d,#0a1825)!important}
+#adminPanelModal .admin-tabs{gap:7px!important}
+#adminPanelModal .admin-tabs button{border-radius:11px!important;min-height:40px!important;transition:background .16s,border-color .16s}
+#adminPanelModal .admin-tabs button.active{background:linear-gradient(115deg,#48dfa6,#32c3a7)!important;color:#09281e!important}
+#adminPanelModal .admin-stat{border-radius:15px!important}
+@media(min-width:761px) and (max-width:1180px){
+ #adminPanelModal .admin-panel-box{max-height:calc(100dvh - var(--classora-dock-clearance) - 16px)!important}
+ #settingsModal .classora-settings-shortcuts{margin:15px 20px}
+}
+@media(max-width:1180px){
+ /* The original two-button Pythagoras strip is redundant with the universal dock. */
+ .lab-mobile-nav{display:none!important}
+ .shell{padding-bottom:calc(83px + env(safe-area-inset-bottom))!important}
+ #platformLobby .lobby-topbar{position:relative;z-index:1}
+ #adminPanelModal .admin-tabs{display:flex!important;overflow-x:auto;white-space:nowrap;scrollbar-width:thin}
+ #adminPanelModal .admin-tabs button{flex:0 0 auto!important}
+}
