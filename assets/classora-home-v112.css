@@ -166,3 +166,28 @@
 @media(prefers-reduced-motion:reduce){
  #classoraIntro .intro-film-glow,#classoraIntro .intro-orbit-ring{animation:none!important}
 }
+
+
+/* Urgent class work is rendered only from actual open Firestore assignments. */
+#platformLobby .ct-urgent-title{
+ margin:5px 2px 2px!important;color:#ffdb9d!important;
+ font:900 14px/1.5 "Tajawal","Inter",system-ui!important
+}
+#platformLobby .ct-task.ct-urgent{
+ border-color:rgba(246,181,101,.55);background:linear-gradient(115deg,rgba(226,153,70,.12),rgba(255,255,255,.03))
+}
+#platformLobby .ct-target-assignment{
+ outline:3px solid #58edb5!important;outline-offset:3px;
+ transition:outline-color .2s ease
+}
+#adminViewPromos .cp-admin-cancel{
+ grid-column:1/-1;min-height:41px;border-radius:12px;
+ background:transparent;color:#c5d9df;border:1px solid #b8e2db55;
+ font:850 13px "Tajawal","Inter",sans-serif;cursor:pointer
+}
+#adminViewPromos .cp-admin-cancel[hidden]{display:none!important}
+#adminViewPromos .cp-admin-actions{flex-wrap:wrap}
+#adminViewPromos .cp-admin-edit{border-color:rgba(122,239,191,.55)!important;color:#9ff8cf!important}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .ct-target-assignment{transition:none!important}
+}
