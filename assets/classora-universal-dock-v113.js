@@ -74,7 +74,9 @@
      // the attempt and stops timers, but ask before leaving it.
      const activeExam=$("examModal")?.classList.contains("open") &&
        !$("examRunner")?.classList.contains("hidden");
-     if(activeExam){
+     if(activeExam && event.isTrusted){
+       // The legacy tab handler may programmatically click Lobby afterwards.
+       // Only confirm the original user tap, never the delegated second click.
        const english=document.documentElement.lang==="en";
        const approved=window.confirm(english?
          "Leave this exam? Your answers will be saved so you can resume later.":
