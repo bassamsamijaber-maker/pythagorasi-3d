@@ -1,0 +1,184 @@
+/* Classora Global Mix — Phase 4 / Curriculum & Learning Experience v107
+ * Purely visual, scoped to subject hub and curriculum modal. Existing 3D transforms,
+ * control gestures, exam actions, permissions, lesson content & scroll ownership stay intact.
+ */
+:root{--classora-learning-green:#56ebb3;--classora-learning-mint:#a2f6d7;--classora-learning-blue:#75c8f5;--classora-learning-stroke:rgba(159,222,221,.17);--classora-learning-muted:#abc3d2}
+
+/* Learning hub: deliberate vertical hierarchy, matching the global dashboard. */
+#platformLobby .learning-hub{margin:18px 0 27px!important;color:#eef9fd}
+#platformLobby .learning-hub .hub-hero{margin:0 0 18px;padding:25px 29px!important;min-height:180px!important;border:1px solid var(--classora-learning-stroke);border-radius:24px;background:radial-gradient(ellipse at 80% 30%,rgba(52,204,159,.1),transparent 52%),linear-gradient(125deg,#122838,#0b1926);box-shadow:0 14px 39px rgba(0,0,0,.1)}
+#platformLobby .learning-hub .hub-hero h1{font:900 clamp(29px,3.3vw,42px)/1.17 "Tajawal","Inter",system-ui!important;letter-spacing:-.8px!important;color:#f3faff!important}
+#platformLobby .learning-hub .hub-hero p{font:500 15px/1.8 "Tajawal","Inter",system-ui;color:#b6c9d7!important}
+#platformLobby .learning-hub .hub-kicker{font-size:11px;color:#80edc8;letter-spacing:1.4px;font-weight:900}
+#platformLobby .learning-hub .hub-search{margin:14px 0 18px!important;max-width:100%;border:1px solid rgba(126,222,200,.24)!important;background:linear-gradient(145deg,#142b39,#0b1b2a)!important;border-radius:18px!important;box-shadow:0 8px 23px rgba(0,0,0,.08);padding-inline:18px!important}
+#platformLobby .learning-hub .hub-search input{font:600 15px "Tajawal","Inter",system-ui!important;color:#f4fbfd!important;min-width:0}
+#platformLobby .learning-hub .hub-search input::placeholder{color:#a5bacc!important;opacity:1}
+#platformLobby .learning-hub .hub-subject-tabs{padding:3px 0 8px!important;margin:14px 0 19px!important;gap:9px!important}
+#platformLobby .learning-hub .hub-subject-tabs button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px!important;border-radius:13px!important;border:1px solid rgba(163,215,225,.19)!important;background:rgba(20,42,56,.88)!important;color:#c9dee8!important;font:800 13px "Tajawal","Inter",system-ui!important;transition:background .17s,border-color .17s,transform .17s}
+#platformLobby .learning-hub .hub-subject-tabs button.active{background:linear-gradient(120deg,#4ce4ac,#36c7ab)!important;color:#0c2924!important;border-color:#7bf2cb!important;box-shadow:0 9px 24px rgba(56,218,164,.15)}
+#platformLobby .learning-hub .hub-subject-tabs button.active svg{color:#113b31!important}
+#platformLobby .learning-hub .hub-subject-tabs button:focus-visible{outline:3px solid #6cf6c3!important;outline-offset:3px!important}
+
+/* Grade selector and curriculum subject catalog */
+#platformLobby .learning-hub .hub-curriculum-shelf{padding:clamp(17px,2.5vw,27px)!important;background:radial-gradient(ellipse at 100% 0%,rgba(46,190,149,.105),transparent 44%),linear-gradient(145deg,#112636,#0a1b29)!important;border:1px solid rgba(143,221,206,.2)!important;border-radius:26px!important;box-shadow:0 17px 40px rgba(0,0,0,.14)}
+#platformLobby .learning-hub .hub-curriculum-head h2{font:900 clamp(23px,2.7vw,33px)/1.25 "Tajawal","Inter",system-ui!important;letter-spacing:-.35px;color:#f4fcfd;margin:8px 0!important}
+#platformLobby .learning-hub .hub-curriculum-head .hub-muted{font:600 13px/1.7 "Tajawal","Inter",system-ui!important;color:#adc4d1!important;max-width:740px}
+#platformLobby .learning-hub .hub-grade-tabs{gap:7px!important;padding:5px;border-radius:16px;background:rgba(6,20,31,.72);border:1px solid rgba(124,206,196,.13)}
+#platformLobby .learning-hub .hub-grade-button{min-height:45px!important;border-radius:12px!important;font:900 15px "Inter","Tajawal",system-ui!important;color:#bed3db;background:transparent!important;border:1px solid transparent!important}
+#platformLobby .learning-hub .hub-grade-button.active{background:linear-gradient(120deg,#58e9b1,#3ac7b0)!important;color:#092a25!important;box-shadow:0 8px 24px rgba(47,213,162,.16)}
+#platformLobby .learning-hub .hub-curriculum-subjects{gap:13px!important}
+#platformLobby .learning-hub .hub-curriculum-subject{--subject-accent:#77caf5;--subject-haze:rgba(88,161,241,.12);border:1px solid rgba(153,216,219,.16)!important;border-radius:20px!important;background:radial-gradient(circle at 100% 0,var(--subject-haze),transparent 64%),linear-gradient(145deg,#173041,#0f2231)!important;box-shadow:0 10px 25px rgba(0,0,0,.08);transition:transform .2s,border-color .2s,box-shadow .2s!important}
+#platformLobby .learning-hub .hub-curriculum-subject.math{--subject-accent:#80c7ff;--subject-haze:rgba(67,148,234,.16)}
+#platformLobby .learning-hub .hub-curriculum-subject.science{--subject-accent:#73edc0;--subject-haze:rgba(42,212,150,.16)}
+#platformLobby .learning-hub .hub-curriculum-subject.arabic{--subject-accent:#ceb0ff;--subject-haze:rgba(150,106,225,.16)}
+#platformLobby .learning-hub .hub-curriculum-subject.english{--subject-accent:#ffce91;--subject-haze:rgba(235,167,79,.13)}
+#platformLobby .learning-hub .hub-curriculum-subject.history{--subject-accent:#ffac9f;--subject-haze:rgba(231,121,103,.13)}
+#platformLobby .learning-hub .hub-curriculum-subject.geography{--subject-accent:#83e5e3;--subject-haze:rgba(82,203,197,.13)}
+#platformLobby .learning-hub .hub-curriculum-subject:hover{border-color:var(--subject-accent)!important;transform:translateY(-2px)!important;box-shadow:0 17px 32px rgba(0,0,0,.19)}
+#platformLobby .learning-hub .hub-curriculum-subject:before{opacity:.4}
+#platformLobby .learning-hub .hub-curriculum-subject-main{min-height:86px!important;padding:17px 17px 13px!important;text-align:start}
+#platformLobby .learning-hub .hub-curriculum-icon{border:1px solid rgba(188,231,219,.12);border-radius:15px!important;background:var(--subject-haze)!important;--icon-color:var(--subject-accent)}
+#platformLobby .learning-hub .hub-curriculum-icon .classora-icon{color:var(--subject-accent)!important}
+#platformLobby .learning-hub .hub-curriculum-copy small{font:800 10px "Tajawal","Inter",system-ui!important;color:var(--subject-accent)!important}
+#platformLobby .learning-hub .hub-curriculum-copy b{font:900 17px/1.4 "Tajawal","Inter",system-ui!important;color:#f6fbff!important}
+#platformLobby .learning-hub .hub-curriculum-copy em{font:700 12px "Tajawal","Inter",system-ui!important;color:#afc4d0!important}
+#platformLobby .learning-hub .hub-curriculum-preview{gap:7px!important}
+#platformLobby .learning-hub .hub-topic-chip{border-radius:10px!important;border:1px solid rgba(152,216,223,.15)!important;background:rgba(3,19,30,.4)!important;color:#c9dfeb!important;font:700 11px/1.4 "Tajawal","Inter",system-ui!important;min-height:35px}
+#platformLobby .learning-hub .hub-topic-chip:hover{border-color:var(--subject-accent)!important;color:#fff!important}
+#platformLobby .learning-hub .hub-card-grid{gap:13px!important}
+#platformLobby .learning-hub .hub-topic-card{border-radius:19px!important;border:1px solid rgba(157,219,217,.18)!important;background:linear-gradient(140deg,#172d3d,#0c202f)!important;min-height:190px!important;box-shadow:0 8px 25px rgba(0,0,0,.07);transition:transform .2s,border-color .2s!important}
+#platformLobby .learning-hub .hub-topic-card:hover{transform:translateY(-3px)!important;border-color:rgba(80,228,174,.48)!important}
+#platformLobby .learning-hub .hub-topic-card h3{font:900 18px/1.4 "Tajawal","Inter",system-ui!important}
+#platformLobby .learning-hub .hub-topic-card p{color:#adc3d0!important;font:600 12px/1.75 "Tajawal","Inter",system-ui!important}
+#platformLobby .learning-hub .hub-assistant{border:1px solid rgba(129,218,198,.18)!important;background:linear-gradient(140deg,#142a38,#091b28)!important}
+
+/* Curriculum browser: same palette, stronger visual hierarchy, maintain full-screen modal. */
+.classora-curriculum-modal{--cv-accent:#61e9b5;--cv-blue:#7ccffa;font-family:"Tajawal","Inter",system-ui,sans-serif;color:#f0faff}
+.classora-curriculum-modal .classora-curriculum-shell{background:linear-gradient(156deg,#0a1a27,#081520 58%,#06111b)!important;border-color:rgba(149,218,208,.23)!important;color:#f1f9fd!important}
+.classora-curriculum-modal .classora-curriculum-top{min-height:62px;background:rgba(10,26,37,.97)!important;border-bottom:1px solid rgba(136,220,204,.16)!important;padding:11px clamp(12px,2vw,22px)!important}
+.classora-curriculum-modal .classora-curriculum-brand svg{stroke:#71edbc!important}
+.classora-curriculum-modal .classora-curriculum-brand b{color:#f0faff!important;font:900 20px "Inter","Tajawal",system-ui!important}
+.classora-curriculum-modal .classora-curriculum-brand small{color:#a8bfcb!important}
+.classora-curriculum-modal .classora-curriculum-back,.classora-curriculum-modal .classora-curriculum-close{border-radius:12px!important;border:1px solid rgba(165,220,208,.19)!important;background:rgba(255,255,255,.05)!important;color:#eafbf7!important;min-height:42px;transition:background .18s,border-color .18s}
+.classora-curriculum-modal .classora-curriculum-back:hover,.classora-curriculum-modal .classora-curriculum-close:hover{background:rgba(76,210,162,.12)!important;border-color:rgba(94,230,182,.58)!important}
+.classora-curriculum-modal .classora-curriculum-body{color:#edf8fc}
+.classora-curriculum-modal .curriculum-hero{border:1px solid rgba(149,228,201,.19)!important;background:radial-gradient(ellipse at 90% 0%,rgba(53,210,161,.15),transparent 55%),linear-gradient(132deg,#153041,#0b1f2d)!important;border-radius:24px!important;padding:clamp(20px,3vw,32px)!important}
+.classora-curriculum-modal .curriculum-hero h2{font:900 clamp(27px,3.8vw,40px)/1.25 "Tajawal","Inter",system-ui!important;color:#f2faff!important}
+.classora-curriculum-modal .curriculum-hero p{color:#b0c4d1!important;font:600 14px/1.8 "Tajawal","Inter",system-ui!important}
+.classora-curriculum-modal .curriculum-kicker{color:#72edc0!important;font-size:11px!important}
+.classora-curriculum-modal .curriculum-grid{gap:13px!important}
+.classora-curriculum-modal .curriculum-grade-card,.classora-curriculum-modal .curriculum-subject-card,.classora-curriculum-modal .curriculum-topic-card{position:relative;border-radius:19px!important;min-width:0;border:1px solid rgba(161,217,219,.18)!important;background:linear-gradient(135deg,#173042,#102533)!important;color:#f2fbff!important;box-shadow:0 8px 25px rgba(0,0,0,.08);transition:transform .18s,border-color .18s,box-shadow .18s!important}
+.classora-curriculum-modal .curriculum-grade-card::before,.classora-curriculum-modal .curriculum-subject-card::before,.classora-curriculum-modal .curriculum-topic-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;border-radius:20px 20px 0 0;background:linear-gradient(90deg,#55e5ad,#68baf4,transparent);pointer-events:none}
+.classora-curriculum-modal .curriculum-grade-card:hover,.classora-curriculum-modal .curriculum-subject-card:hover,.classora-curriculum-modal .curriculum-topic-card:hover{transform:translateY(-2px)!important;border-color:rgba(99,234,183,.52)!important;box-shadow:0 15px 34px rgba(0,0,0,.21)}
+.classora-curriculum-modal .curriculum-grade-card svg,.classora-curriculum-modal .curriculum-subject-card svg{stroke:#83edc7!important}
+.classora-curriculum-modal .curriculum-grade-card b,.classora-curriculum-modal .curriculum-subject-card b,.classora-curriculum-modal .curriculum-topic-card b{font:900 18px/1.45 "Tajawal","Inter",system-ui!important;color:#f3fafd!important}
+.classora-curriculum-modal .curriculum-grade-card small,.classora-curriculum-modal .curriculum-subject-card small,.classora-curriculum-modal .curriculum-topic-card small{font:650 12px/1.65 "Tajawal","Inter",system-ui!important;color:#adbfcc!important}
+.classora-curriculum-modal .curriculum-subject-card:nth-child(2){background:linear-gradient(130deg,#143a36,#0d272e)!important}
+.classora-curriculum-modal .curriculum-subject-card:nth-child(3){background:linear-gradient(130deg,#2c2443,#141f37)!important}
+.classora-curriculum-modal .curriculum-subject-card:nth-child(4){background:linear-gradient(130deg,#3b3026,#17232c)!important}
+.classora-curriculum-modal .curriculum-subject-card:nth-child(5){background:linear-gradient(130deg,#38262c,#1a2430)!important}
+.classora-curriculum-modal .curriculum-subject-card:nth-child(6){background:linear-gradient(130deg,#17353e,#102530)!important}
+.classora-curriculum-modal .curriculum-topic-number{color:#75ecc3!important}
+.classora-curriculum-modal .curriculum-topic-status{border-color:rgba(66,230,174,.25)!important;background:rgba(54,219,162,.09)!important;color:#97f7cf!important}
+.classora-curriculum-modal .curriculum-unit-section{border:1px solid rgba(133,213,204,.15)!important;background:linear-gradient(140deg,#122a3a,#0c202e)!important;border-radius:21px!important}
+.classora-curriculum-modal .curriculum-toolbar{gap:10px!important}
+.classora-curriculum-modal .curriculum-breadcrumb{color:#c0d1df!important;font-size:13px}
+.classora-curriculum-modal .curriculum-search{min-height:45px;border-color:rgba(135,226,202,.25)!important;border-radius:12px!important;background:#0b2030!important;color:#f2faff!important;font:700 13px "Tajawal","Inter",system-ui!important}
+.classora-curriculum-modal .curriculum-filter-row button{min-height:41px;border:1px solid rgba(136,209,210,.19)!important;background:#152b3a!important;color:#c5d8e3!important;border-radius:13px!important}
+.classora-curriculum-modal .curriculum-filter-row button.active{background:#48dfa9!important;color:#0b2a20!important;border-color:#7ff2c6!important}
+.classora-curriculum-modal :is(.classora-curriculum-back,.classora-curriculum-close,.curriculum-grade-card,.curriculum-subject-card,.curriculum-topic-card,.curriculum-search,.curriculum-filter-row button,.curriculum-main-action):focus-visible{outline:3px solid #64efbb!important;outline-offset:3px!important}
+
+/* Full lesson: KEEP split-screen stage, 3D gestures and independent sidebar scroll.
+   Improve control readability and show which field directly changes the model. */
+.classora-curriculum-modal.lesson-open .curriculum-topic-workspace{background:#081520!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-stage{background:radial-gradient(circle at 50% 42%,rgba(45,186,146,.11),transparent 38%),radial-gradient(circle at 78% 22%,rgba(51,120,184,.11),transparent 42%),linear-gradient(145deg,#07141d,#091b28 70%,#050d15)!important;border-color:rgba(152,218,215,.14)!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-stage:before{border-color:rgba(95,231,185,.12)!important}
+.classora-curriculum-modal.lesson-open .curriculum-stage-toolbar>div:first-child{border:1px solid rgba(117,226,196,.23)!important;background:rgba(7,26,34,.77)!important;border-radius:13px}
+.classora-curriculum-modal.lesson-open .curriculum-stage-toolbar-actions button{border:1px solid rgba(117,217,201,.24)!important;background:rgba(9,32,44,.87)!important;color:#edfdf7!important;border-radius:11px!important}
+.classora-curriculum-modal.lesson-open .curriculum-stage-toolbar-actions button:hover{border-color:#5deab1!important;background:rgba(46,172,129,.19)!important}
+.classora-curriculum-modal.lesson-open .curriculum-3d-controls button{border-color:rgba(98,228,194,.28)!important;background:rgba(10,32,42,.89)!important;color:#e7fcf5!important;border-radius:11px!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar{background:radial-gradient(circle at 100% 0%,rgba(44,180,144,.095),transparent 38%),linear-gradient(160deg,#0c2230,#091925 75%)!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar :is(.curriculum-lesson-copy,.curriculum-panel,.curriculum-interactive-explainer,.curriculum-simple-data-card){border:1px solid rgba(142,215,210,.17)!important;border-radius:17px!important;background:linear-gradient(145deg,rgba(20,47,58,.94),rgba(12,31,43,.95))!important;box-shadow:0 10px 25px rgba(0,0,0,.09)!important}
+.classora-curriculum-modal.lesson-open .curriculum-sidebar-brand h2{font:900 clamp(22px,2.6vw,31px)/1.3 "Tajawal","Inter",system-ui!important;color:#f4fcfd!important;letter-spacing:-.4px!important;overflow-wrap:anywhere}
+.classora-curriculum-modal.lesson-open .curriculum-sidebar-brand .curriculum-brand-chip{border-color:rgba(77,228,174,.22)!important;color:#99f1cb!important}
+.classora-curriculum-modal.lesson-open .curriculum-lesson-copy p{color:#bfd0dc!important;font:600 13px/1.8 "Tajawal","Inter",system-ui!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-spotlight{border-radius:12px!important;border:1px solid rgba(92,224,176,.16)!important;background:rgba(56,196,142,.085)!important;color:#bbf4dc!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-head h3{font:900 15px/1.4 "Tajawal","Inter",system-ui!important;color:#f5fcfe!important}
+.classora-curriculum-modal.lesson-open .curriculum-live-dot{border-color:rgba(83,229,177,.38)!important;color:#a4f8d6!important;background:rgba(57,210,155,.1)!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-inputs{gap:10px!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-inputs label{font:800 12px/1.4 "Tajawal","Inter",system-ui!important;color:#c9e1e8!important;min-width:0}
+.classora-curriculum-modal.lesson-open .curriculum-simple-inputs input,.classora-curriculum-modal.lesson-open .curriculum-simple-inputs select{width:100%;min-width:0;min-height:46px!important;border:1px solid rgba(130,223,203,.27)!important;border-radius:12px!important;background:#091c29!important;color:#f1fbfd!important;padding-inline:12px!important;font:800 14px "Tajawal","Inter",system-ui!important;box-sizing:border-box}
+.classora-curriculum-modal.lesson-open .curriculum-simple-inputs input:focus,.classora-curriculum-modal.lesson-open .curriculum-simple-inputs select:focus{border-color:#54e4aa!important;box-shadow:0 0 0 3px rgba(81,228,174,.14)!important;outline:none!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-result{border:1px solid rgba(83,230,177,.25)!important;background:linear-gradient(115deg,rgba(21,100,80,.34),rgba(16,64,75,.27))!important;border-radius:13px!important;padding:12px!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-result span{font:850 12px "Tajawal","Inter",system-ui!important;color:#b0e7cc!important}
+.classora-curriculum-modal.lesson-open .curriculum-simple-result b{font:900 18px "Tajawal","Inter",system-ui!important;color:#85f5bf!important;max-width:100%;overflow-wrap:anywhere}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar :is(.curriculum-main-action,.curriculum-toolbar-btn){border:1px solid rgba(103,235,188,.28)!important;border-radius:12px!important;color:#09251f!important;background:linear-gradient(125deg,#54e9ac,#48cbbb)!important;min-height:45px!important;font:900 13px "Tajawal","Inter",system-ui!important;box-shadow:0 8px 21px rgba(26,180,134,.12)!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar .curriculum-main-action.live{background:linear-gradient(120deg,#9fa9fa,#b898f8)!important;color:#17213e!important}
+.classora-curriculum-modal.lesson-open .curriculum-controls label{font:750 12px "Tajawal","Inter",system-ui!important;color:#c3d6df!important}
+.classora-curriculum-modal.lesson-open .curriculum-controls select{min-width:0;min-height:43px!important;background:#091e2a!important;color:#f5fbff!important;border-radius:11px!important;border-color:rgba(129,217,202,.24)!important;font-size:13px!important}
+.classora-curriculum-modal.lesson-open .curriculum-mini-options button{border-radius:11px!important;min-height:41px!important;border-color:rgba(125,216,208,.2)!important;color:#eaf8fc!important;background:rgba(255,255,255,.045)!important}
+.classora-curriculum-modal.lesson-open .curriculum-mini-options button:hover{border-color:#5fe6ac!important;background:rgba(69,225,170,.095)!important}
+.classora-curriculum-modal.lesson-open .curriculum-panel h3{color:#effaff!important;font:900 17px "Tajawal","Inter",system-ui!important}
+.classora-curriculum-modal.lesson-open .curriculum-panel p{color:#bdd1db!important}
+.classora-curriculum-modal.lesson-open .curriculum-dynamic-answer{color:#dcf6ef!important}
+
+/* Carefully preserve gestures for 3D, while allowing form scrolling and tapping */
+.classora-curriculum-modal.lesson-open .curriculum-topic-stage .curriculum-3d-card{touch-action:none!important}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar{touch-action:pan-y}
+.classora-curriculum-modal.lesson-open .curriculum-topic-sidebar :is(input,textarea,select,button){touch-action:manipulation}
+
+/* Phone/iPad: avoid compressed text and unreachable content; inherit existing scroll strategy. */
+@media(max-width:950px){
+ #platformLobby .learning-hub .hub-hero{grid-template-columns:minmax(0,1fr) minmax(0,.45fr)!important;padding:19px!important}
+ #platformLobby .learning-hub .hub-hero-art{min-height:160px}
+ #platformLobby .learning-hub .hub-art-tile{transform:scale(.7)!important}
+ #platformLobby .learning-hub .hub-curriculum-subjects{gap:10px!important}
+}
+@media(max-width:760px){
+ #platformLobby .learning-hub{margin:12px 0 19px!important}
+ #platformLobby .learning-hub .hub-hero{grid-template-columns:1fr!important;gap:4px!important;min-height:0!important;padding:19px!important}
+ #platformLobby .learning-hub .hub-hero-art{display:none!important}
+ #platformLobby .learning-hub .hub-subject-tabs{flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:7px!important}
+ #platformLobby .learning-hub .hub-subject-tabs::-webkit-scrollbar{display:none}
+ #platformLobby .learning-hub .hub-subject-tabs button{min-height:43px!important;white-space:nowrap;flex:0 0 auto;padding:8px 12px!important}
+ #platformLobby .learning-hub .hub-search{min-height:50px!important}
+ #platformLobby .learning-hub .hub-search input{min-height:48px!important;font-size:14px!important}
+ #platformLobby .learning-hub .hub-curriculum-shelf{padding:16px!important;border-radius:20px!important}
+ #platformLobby .learning-hub .hub-curriculum-head h2{font-size:24px!important}
+ #platformLobby .learning-hub .hub-grade-tabs{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px!important}
+ #platformLobby .learning-hub .hub-grade-button{width:100%;min-height:43px!important}
+ #platformLobby .learning-hub .hub-curriculum-subjects{grid-template-columns:1fr!important;gap:10px!important}
+ #platformLobby .learning-hub .hub-curriculum-subject-main{padding:14px!important;min-height:81px!important}
+ #platformLobby .learning-hub .hub-curriculum-copy b{font-size:16px!important}
+ #platformLobby .learning-hub .hub-topic-chip{font-size:11px!important;line-height:1.3!important}
+ #platformLobby .learning-hub .hub-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ #platformLobby .learning-hub .hub-topic-card{min-height:170px!important;padding:14px!important}
+ .classora-curriculum-modal .classora-curriculum-top{padding:9px 12px!important;gap:7px!important}
+ .classora-curriculum-modal .classora-curriculum-brand{min-width:0}
+ .classora-curriculum-modal .classora-curriculum-brand b{font-size:16px!important}
+ .classora-curriculum-modal .classora-curriculum-brand small{font-size:10px!important}
+ .classora-curriculum-modal .classora-curriculum-back,.classora-curriculum-modal .classora-curriculum-close{min-height:43px!important;flex-shrink:0}
+ .classora-curriculum-modal .curriculum-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .classora-curriculum-modal .curriculum-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .classora-curriculum-modal .curriculum-grade-card,.classora-curriculum-modal .curriculum-subject-card{min-height:110px!important;padding:15px 12px!important}
+ .classora-curriculum-modal .curriculum-topic-card{padding:13px!important;min-height:114px!important}
+ .classora-curriculum-modal .curriculum-topic-card b{font-size:15px!important}
+ .classora-curriculum-modal .curriculum-topic-number{margin-bottom:11px!important}
+ .classora-curriculum-modal.lesson-open .curriculum-topic-stage{min-height:360px}
+ .classora-curriculum-modal.lesson-open .curriculum-topic-sidebar{padding:13px 12px max(35px,env(safe-area-inset-bottom))!important}
+ .classora-curriculum-modal.lesson-open .curriculum-sidebar-brand h2{font-size:22px!important}
+ .classora-curriculum-modal.lesson-open .curriculum-simple-inputs label{font-size:12px!important}
+ .classora-curriculum-modal.lesson-open .curriculum-topic-sidebar :is(.curriculum-lesson-copy,.curriculum-panel,.curriculum-interactive-explainer,.curriculum-simple-data-card){padding:14px!important}
+}
+@media(max-width:440px){
+ #platformLobby .learning-hub .hub-card-grid{grid-template-columns:1fr!important}
+ .classora-curriculum-modal .curriculum-topic-grid{grid-template-columns:1fr!important}
+ .classora-curriculum-modal .curriculum-topic-card{min-height:100px!important}
+ .classora-curriculum-modal.lesson-open .curriculum-simple-inputs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .classora-curriculum-modal.lesson-open .curriculum-simple-inputs label:last-child:nth-child(odd){grid-column:1/-1}
+ .classora-curriculum-modal.lesson-open .curriculum-topic-quick-actions{gap:8px!important}
+ .classora-curriculum-modal.lesson-open .curriculum-topic-quick-actions button{min-height:42px!important;font-size:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .learning-hub .hub-curriculum-subject,#platformLobby .learning-hub .hub-topic-card,.classora-curriculum-modal .curriculum-grade-card,.classora-curriculum-modal .curriculum-subject-card,.classora-curriculum-modal .curriculum-topic-card{transition:none!important}
+}
