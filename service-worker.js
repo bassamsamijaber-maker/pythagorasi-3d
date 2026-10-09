@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v103-0-simple-topic-models";
+const CACHE_NAME="classora-v104-0-global-mix-ui";
 const APP_SHELL=[
+  "./assets/classora-global-mix.css?v=1",
+  "./assets/classora-global-mix.js?v=1",
   "./assets/subject-labs.js?v=103",
   "./assets/subject-labs.css?v=99",
   "./assets/return-navigation.js?v=92",
