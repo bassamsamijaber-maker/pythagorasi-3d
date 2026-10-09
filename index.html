@@ -13688,7 +13688,8 @@ document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>
         displayNameChangedAt:serverTimestamp(),updatedAt:serverTimestamp()
       });
     });
-    const updated=await getDoc(userRef);
+    let updated=null;
+    try{updated=await getDoc(userRef)}catch{}
     window.PythagorasiUser={
       ...window.PythagorasiUser,displayName:name,originalLoginName,
       displayNameChangedAt:updated.data()?.displayNameChangedAt||{seconds:Math.floor(Date.now()/1000)}
@@ -13698,8 +13699,8 @@ document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>
     document.getElementById("lobbyProfileName").textContent=name;
     document.getElementById("lobbyGreeting").textContent=
       (en?"Welcome, ":"أهلًا ")+name.split(/\s+/)[0];
-    if(isStudentLike())await syncStudentMemberStats();
-    await syncPublicProfile(window.PythagorasiUser,auth.currentUser);
+    if(isStudentLike())try{await syncStudentMemberStats()}catch(e){console.warn("class stats sync",e)}
+    try{await syncPublicProfile(window.PythagorasiUser,auth.currentUser)}catch(e){console.warn("profile sync",e)}
     refreshAIWelcome();refreshSettingsUI();
     status.textContent=en?"Display name saved. You can change it again in 7 days.":
       "تم تغيير الاسم. بتقدر تغيّره مرة ثانية بعد 7 أيام.";
