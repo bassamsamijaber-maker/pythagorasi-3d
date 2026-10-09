@@ -151,10 +151,10 @@ export function mountClassoraHomeV112(api){
  async function refreshTasks(force=false){
   const profile=api.profile(),uid=api.auth.currentUser?.uid;
   if(!profile||profile.role!=="student"||!uid){tasks=[];renderTasks();return}
-  if(taskLoading||(!force&&loadedTasksFor===uid&&Date.now()-lastTaskRead<90000))return;
+  if(taskLoading||(!force&&loadedTasksFor===uid&&Date.now()-lastTaskRead<300000))return;
   taskLoading=true;renderTasks();
   try{
-   const out=[],ids=[...new Set(Array.isArray(profile.classIds)?profile.classIds:[])].slice(0,18);
+   const out=[],ids=[...new Set(Array.isArray(profile.classIds)?profile.classIds:[])].slice(0,12);
    // Fetch a lightweight summary, not the full classmates/answers UI.
    for(const classId of ids){
     if(!/^[\w-]{5,100}$/.test(classId))continue;
@@ -164,12 +164,15 @@ export function mountClassoraHomeV112(api){
      const c=await api.getDoc(api.doc(api.db,"classes",classId));
      if(!c.exists())continue;
      const snaps=await api.getDocs(api.collection(api.db,"classes",classId,"assignments"));
-     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,12);
-     for(const a of recent){
-      const sub=await api.getDoc(api.doc(api.db,"classes",classId,"assignments",a.id,"submissions",uid));
-      if(sub.exists())continue;
-      out.push({id:a.id,title:String(a.title||"").slice(0,100),className:String(c.data().name||"").slice(0,70),dueDate:String(a.dueDate||"").slice(0,30),submitted:false,createdAt:a.createdAt?.seconds||0});
-     }
+     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
+     const checks=await Promise.all(recent.map(async a=>{
+      try{
+       const sub=await api.getDoc(api.doc(api.db,"classes",classId,"assignments",a.id,"submissions",uid));
+       if(sub.exists())return null;
+       return {id:a.id,title:String(a.title||"").slice(0,100),className:String(c.data().name||"").slice(0,70),dueDate:String(a.dueDate||"").slice(0,30),submitted:false,createdAt:a.createdAt?.seconds||0};
+      }catch{return null}
+     }));
+     out.push(...checks.filter(Boolean));
     }catch(err){console.warn("Classora task summary unavailable",err?.message)}
    }
    if(api.auth.currentUser?.uid!==uid)return;
