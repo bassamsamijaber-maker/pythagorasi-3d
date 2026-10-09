@@ -1,0 +1,127 @@
+/* Classora Mobile & Tablet Experience — Phase 5 / Release 108
+   Pure presentation overrides. Navigation actions are wired in index.html
+   and continue to delegate to the existing authorized Classora controls.
+*/
+:root{--classora-mobile-nav-height:74px}
+#classoraMobilePageNav{font-family:"Tajawal","Inter",system-ui,sans-serif}
+#classoraMobilePageNav button:focus-visible{outline:3px solid #75f3c3!important;outline-offset:2px!important}
+@media(max-width:760px){
+  :root{--classora-mobile-nav-height:76px}
+  html,body{max-width:100%;overscroll-behavior-x:none}
+  #platformLobby{padding-inline:clamp(10px,3vw,16px)!important;padding-bottom:calc(var(--classora-mobile-nav-height) + 33px + env(safe-area-inset-bottom))!important}
+  #platformLobby .lobby-shell{min-width:0;width:100%!important}
+  #platformLobby .lobby-topbar{display:flex!important;align-items:flex-start!important;flex-wrap:wrap!important;gap:9px!important;margin-bottom:17px!important;padding:13px!important;border-radius:18px!important}
+  #platformLobby .lobby-topbar>div:first-child{min-width:0;max-width:100%}
+  #platformLobby .lobby-brand{font-size:25px!important}
+  #platformLobby #lobbyGreeting{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:calc(100vw - 54px)}
+  #platformLobby .lobby-top-actions{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;width:100%!important;max-width:100%;min-width:0;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding:2px 1px 5px!important}
+  #platformLobby .lobby-top-actions::-webkit-scrollbar{display:none}
+  #platformLobby .lobby-top-actions .lobby-icon-btn,#platformLobby .lobby-top-actions .lobby-profile-btn,#platformLobby .lobby-top-actions .lobby-logout-btn,#platformLobby .lobby-top-actions .admin-panel-btn{height:43px!important;min-height:43px!important;max-height:43px!important;width:auto!important;min-width:max-content!important;flex:0 0 auto!important;padding:6px 11px!important;margin:0!important;border-radius:12px!important;font-size:12px!important;white-space:nowrap}
+  #platformLobby .lobby-top-actions #lobbySettingsBtn,#platformLobby .lobby-top-actions #lobbyClassBtn{width:auto!important;min-width:43px!important}
+  #platformLobby :is(.classora-mix-hero,.student-dash-hero,.tw-hero){max-width:100%;overflow:hidden}
+  #platformLobby .lobby-section-head{align-items:flex-start;gap:9px}
+  #platformLobby :is(.pythag-action-card,.lobby-action,.subject-card,.hub-topic-card,.hub-curriculum-subject){min-width:0}
+  #platformLobby :is(.student-dash-action-grid,.tw-actions,.hub-card-grid){gap:10px!important}
+
+  /* Five-item bottom navigation — persistent and thumb-friendly. */
+  body.classora-authenticated #classoraMobilePageNav{
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    justify-content:stretch!important;
+    gap:3px!important;
+    left:50%!important;right:auto!important;
+    bottom:calc(7px + env(safe-area-inset-bottom))!important;
+    transform:translateX(-50%)!important;
+    width:min(460px,calc(100vw - 14px))!important;
+    max-width:calc(100vw - 14px)!important;
+    min-height:var(--classora-mobile-nav-height)!important;
+    padding:7px!important;
+    border:1px solid rgba(126,229,198,.26)!important;
+    border-radius:22px!important;
+    background:rgba(10,29,39,.97)!important;
+    box-shadow:0 12px 38px rgba(0,0,0,.38),0 0 24px rgba(48,211,159,.05)!important;
+    backdrop-filter:blur(16px)!important;
+    -webkit-backdrop-filter:blur(16px)!important;
+    box-sizing:border-box;
+  }
+  body.classora-authenticated #classoraMobilePageNav button,
+  body.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn{
+    display:flex!important;flex-direction:column!important;
+    justify-content:center!important;align-items:center!important;
+    flex:1 1 0!important;
+    gap:5px!important;
+    width:100%!important;min-width:0!important;
+    min-height:59px!important;max-height:66px!important;
+    margin:0!important;
+    padding:7px 2px!important;
+    border-radius:16px!important;
+    border:1px solid transparent!important;
+    background:transparent!important;
+    color:#b9d2df!important;
+    box-shadow:none!important;
+    opacity:1!important;visibility:visible!important;
+    font:800 11px/1.1 "Tajawal","Inter",system-ui!important;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    transition:background .17s ease,color .17s ease,border-color .17s ease!important;
+    -webkit-tap-highlight-color:transparent!important;
+    touch-action:manipulation!important;
+  }
+  body.classora-authenticated #classoraMobilePageNav button svg{flex:0 0 auto!important;width:22px!important;height:22px!important;stroke-width:1.8!important}
+  body.classora-authenticated #classoraMobilePageNav button span{display:block!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;line-height:1.2!important;font:inherit!important}
+  body.classora-authenticated #classoraMobilePageNav button.is-active{
+    border-color:rgba(91,232,175,.28)!important;
+    color:#a3f9d4!important;
+    background:rgba(54,215,151,.13)!important;
+    box-shadow:inset 0 1px rgba(157,255,217,.08)!important;
+  }
+  body.classora-authenticated #classoraMobilePageNav button:active{background:rgba(77,233,169,.18)!important;transform:scale(.97)!important}
+
+  /* Keep the existing authentication/intro state gates stronger than the authenticated style above. */
+  body:not(.classora-authenticated) #classoraMobilePageNav,
+  body.classora-intro-active #classoraMobilePageNav,
+  body:has(#authGate.show) #classoraMobilePageNav,
+  body.classora-mobile-typing #classoraMobilePageNav{display:none!important}
+
+  /* Scrollable modal content remains reachable above the native home indicator and dock. */
+  #settingsModal .modalbox,#classModal .modalbox,#examModal .modalbox{
+    scroll-padding-bottom:calc(var(--classora-mobile-nav-height) + env(safe-area-inset-bottom) + 14px);
+    padding-bottom:calc(var(--classora-mobile-nav-height) + 24px + env(safe-area-inset-bottom))!important
+  }
+  #chatModal .classora-chat-box{padding-bottom:calc(var(--classora-mobile-nav-height) + 16px + env(safe-area-inset-bottom))!important}
+  #platformLobby :is(button,a,input,select,textarea){-webkit-tap-highlight-color:transparent}
+}
+
+/* Narrow phones: every nav label still fits and controls remain large enough to tap. */
+@media(max-width:365px){
+  :root{--classora-mobile-nav-height:72px}
+  body.classora-authenticated #classoraMobilePageNav{width:calc(100vw - 8px)!important;padding:5px!important;gap:0!important;border-radius:17px!important}
+  body.classora-authenticated #classoraMobilePageNav button,
+  body.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn{min-height:58px!important;font-size:10px!important;padding:6px 0!important;gap:4px!important}
+  body.classora-authenticated #classoraMobilePageNav button svg{width:20px!important;height:20px!important}
+  #platformLobby .lobby-topbar{padding:11px!important}
+}
+
+/* Tablet and iPad: no phone dock; wide cards and PC-like workspaces. */
+@media(min-width:761px) and (max-width:1180px){
+  #classoraMobilePageNav{display:none!important}
+  #platformLobby{padding-inline:clamp(15px,2vw,26px)!important}
+  #platformLobby .lobby-shell{width:100%!important;max-width:1200px}
+  #platformLobby .lobby-topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  #platformLobby .lobby-top-actions{display:flex!important;flex:1;justify-content:flex-end!important;flex-wrap:wrap!important;gap:8px!important}
+  #platformLobby .lobby-top-actions button{min-height:43px}
+  #platformLobby .learning-hub .hub-curriculum-subjects{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #platformLobby .student-dash-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #platformLobby .tw-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  #platformLobby .tw-class-list{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #platformLobby .classora-mix-hero{grid-template-columns:minmax(0,1fr) minmax(260px,.85fr)!important}
+  #platformLobby .student-dash-hero,#platformLobby .tw-hero{grid-template-columns:minmax(0,1.1fr) minmax(240px,.9fr)!important}
+}
+@media(min-width:761px) and (max-width:920px){
+  #platformLobby .tw-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #platformLobby .lobby-topbar{justify-content:space-between}
+}
+@media(prefers-reduced-motion:reduce){
+  body.classora-authenticated #classoraMobilePageNav button{transition:none!important}
+}
