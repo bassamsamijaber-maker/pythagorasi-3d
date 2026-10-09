@@ -1,0 +1,81 @@
+/* Classora Global Mix — Phase 7 / Release 110
+   Final visual polish: short composited transitions only (opacity + transform),
+   keyboard focus, reduced motion, battery/data-aware fallback, no 3D overrides.
+*/
+:root {
+  --classora-polish-ease:cubic-bezier(.22,1,.36,1);
+  --classora-polish-duration:210ms;
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  #platformLobby :is(.pythag-action-card,.lobby-action,.subject-card,
+    .student-dash-action,.tw-action,.tw-class-item,
+    .hub-topic-card,.hub-curriculum-subject,
+    .classora-mix-hero .mix-btn,
+    .student-dash-primary,.tw-primary){
+    transition:transform var(--classora-polish-duration) var(--classora-polish-ease),
+      border-color var(--classora-polish-duration) ease,
+      box-shadow var(--classora-polish-duration) ease!important;
+  }
+  #platformLobby :is(.pythag-action-card,.lobby-action,.subject-card,
+    .student-dash-action,.tw-action,.tw-class-item,
+    .hub-topic-card,.hub-curriculum-subject):hover{
+    transform:translate3d(0,-3px,0)!important;
+  }
+  #chatModal :is(.chat-contact,.chat-media-tools button),
+  #settingsModal .settings-card :is(button,.settings-link-button){
+    transition:background-color .18s ease,border-color .18s ease!important;
+  }
+}
+@keyframes classora-v110-enter{
+  from{opacity:.78;transform:translate3d(0,9px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@keyframes classora-v110-modal{
+  from{opacity:.86;transform:translate3d(0,6px,0) scale(.992)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@media (prefers-reduced-motion:no-preference) {
+  html:not(.classora-minimal-motion) #platformLobby .classora-v110-visible{
+    animation:classora-v110-enter .38s var(--classora-polish-ease) both!important;
+  }
+  html:not(.classora-minimal-motion) #chatModal.open .classora-chat-box,
+  html:not(.classora-minimal-motion) #settingsModal.open .settings-modalbox{
+    animation:classora-v110-modal .23s var(--classora-polish-ease) both;
+  }
+}
+@media (max-width:760px){
+  /* Keep animations tiny on phone, without obscuring fields or delaying taps. */
+  #platformLobby .classora-v110-visible{animation-duration:.24s!important}
+  #platformLobby :is(.pythag-action-card,.lobby-action,.subject-card,.hub-topic-card){
+    -webkit-tap-highlight-color:transparent;
+  }
+  #chatModal .chat-contact:active,
+  #settingsModal .settings-card button:active{
+    filter:brightness(1.09);
+  }
+}
+/* Never turn genuine hidden elements into visible animated elements. */
+#platformLobby .hidden,
+#platformLobby [hidden],
+#chatModal [hidden],#settingsModal [hidden]{animation:none!important}
+#platformLobby :is(button,a,input,select,textarea):focus-visible,
+#chatModal :is(button,a,input,select,textarea):focus-visible,
+#settingsModal :is(button,a,input,select,textarea):focus-visible{
+  outline:3px solid #75f0bf!important;outline-offset:3px!important;
+}
+/* Offscreen tabs and invisible app windows should not spend cycles animating. */
+html.classora-page-hidden .mix-ring,
+html.classora-page-hidden #classoraIntro *,
+html.classora-page-hidden #chatModal .chat-typing i {
+  animation-play-state:paused!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #platformLobby .classora-v110-visible,
+  #chatModal.open .classora-chat-box,
+  #settingsModal.open .settings-modalbox{animation:none!important}
+}
+html.classora-minimal-motion #platformLobby .classora-v110-visible,
+html.classora-minimal-motion #chatModal.open .classora-chat-box,
+html.classora-minimal-motion #settingsModal.open .settings-modalbox{
+  animation:none!important;
+}
