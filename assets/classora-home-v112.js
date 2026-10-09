@@ -286,7 +286,7 @@ export function mountClassoraHomeV112(api){
   if(save)save.textContent=t("أضف إعلانًا","Add announcement");
   const cancel=get("classoraPromoCancelEdit");
   if(cancel)cancel.hidden=true;
-  const active=form.elements?.namedItem("active");if(active)active.checked=true;
+  const active=get("classoraPromoAdminForm")?.elements.namedItem("active");if(active)active.checked=true;
  }
  function editPromo(p){
   if(!isAdmin())return;
