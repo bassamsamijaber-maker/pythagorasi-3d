@@ -1,0 +1,86 @@
+/* Classora 2.0 / Phase 2 — Student Dashboard.
+   Rendered exclusively for authenticated student profiles. No teacher, guest
+   or Firebase functionality is changed. */
+#classoraStudentDashboard{display:none}
+body.classora-student-mode #classoraStudentDashboard:not([hidden]){display:block}
+body.classora-student-mode #classoraMixHero{display:none!important}
+
+#platformLobby .student-dash{--sd-green:#4de5a9;--sd-blue:#79cfff;--sd-ink:#f5fbfd;--sd-sub:#b7c9d5;--sd-stroke:rgba(150,222,217,.17);color:var(--sd-ink);font-family:"Tajawal","Inter",system-ui,sans-serif}
+#platformLobby .student-dash *{box-sizing:border-box}
+#platformLobby .student-dash:focus-within{scroll-margin-top:20px}
+#platformLobby .student-dash-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(255px,.8fr);gap:clamp(20px,4vw,46px);align-items:center;padding:clamp(24px,4vw,43px);background:radial-gradient(ellipse at 85% 15%,rgba(44,224,163,.13),transparent 55%),radial-gradient(ellipse at 10% 100%,rgba(56,136,203,.15),transparent 50%),linear-gradient(128deg,#112331 0%,#0b1724 100%);border:1px solid rgba(111,230,193,.25);border-radius:28px;box-shadow:0 20px 52px rgba(0,0,0,.16);position:relative;overflow:hidden}
+#platformLobby .student-dash-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(137,212,208,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(137,212,208,.09) 1px,transparent 1px);background-size:45px 45px;mask-image:linear-gradient(90deg,transparent,#000)}
+#platformLobby .student-dash-hero>*{position:relative;z-index:1;min-width:0}
+#platformLobby .student-dash-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;color:#aef5d7;border-radius:999px;background:rgba(70,225,166,.085);border:1px solid rgba(91,231,180,.23);font:800 12px "Tajawal","Inter",system-ui}
+#platformLobby .student-dash-eyebrow svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}
+#platformLobby .student-dash-heading{font-size:clamp(32px,4vw,54px)!important;font-weight:900!important;letter-spacing:-1px!important;line-height:1.18!important;margin:20px 0 12px!important;color:var(--sd-ink)!important}
+#platformLobby .student-dash-heading strong{font-weight:900!important;color:var(--sd-green)!important;overflow-wrap:anywhere}
+#platformLobby .student-dash-description{font-size:clamp(14px,1.45vw,17px)!important;line-height:1.9!important;color:#b6cad8!important;margin:0 0 22px!important;max-width:470px}
+#platformLobby .student-dash-hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#platformLobby .student-dash-primary,#platformLobby .student-dash-outline{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;min-height:46px;padding:11px 18px;cursor:pointer;font:800 14px "Tajawal","Inter",system-ui;transition:transform .16s,box-shadow .16s}
+#platformLobby .student-dash-primary{background:linear-gradient(120deg,#59edb0,#31c5aa);border:1px solid #83efc6;color:#092620;box-shadow:0 12px 26px rgba(36,193,151,.16)}
+#platformLobby .student-dash-outline{background:rgba(255,255,255,.045);border:1px solid rgba(162,225,216,.25);color:#f1fcf8}
+#platformLobby .student-dash-primary:hover,#platformLobby .student-dash-outline:hover{transform:translateY(-2px)!important;filter:brightness(1.07)}
+#platformLobby .student-dash-progress{background:linear-gradient(145deg,rgba(22,48,60,.9),rgba(9,26,39,.94));border:1px solid rgba(138,219,209,.24);border-radius:22px;padding:23px;box-shadow:0 15px 40px rgba(0,0,0,.12);min-width:0}
+#platformLobby .student-dash-progress-header{display:flex;justify-content:space-between;align-items:center;gap:14px}
+#platformLobby .student-dash-progress-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;border:1px solid rgba(82,220,179,.25);background:rgba(76,226,174,.105)}
+#platformLobby .student-dash-progress-icon svg{width:27px;height:27px;fill:none;stroke:#75f3c7;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#platformLobby .student-dash-progress-label{font:750 12px "Tajawal","Inter",system-ui;color:#bfd0da}
+#platformLobby .student-dash-level{font:900 clamp(26px,3vw,38px) "Inter","Tajawal",sans-serif;color:#f2fffb;margin:15px 0 4px;line-height:1.12}
+#platformLobby .student-dash-xp{font:700 13px "Tajawal","Inter",sans-serif;color:#94bdc9;margin-bottom:15px}
+#platformLobby .student-dash-meter{height:10px;overflow:hidden;border-radius:999px;background:rgba(148,203,199,.14);border:1px solid rgba(144,215,207,.1)}
+#platformLobby .student-dash-meter-fill{height:100%;width:0;background:linear-gradient(90deg,#2bbd9b,#66f4b0);border-radius:inherit;transition:width .5s ease}
+#platformLobby .student-dash-next{margin-top:10px;font:650 12px/1.6 "Tajawal","Inter",sans-serif;color:#adc3cf}
+#platformLobby .student-dash-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:17px 0 25px}
+#platformLobby .student-dash-stat{display:flex;align-items:center;gap:13px;padding:16px 18px;background:linear-gradient(145deg,rgba(21,43,56,.87),rgba(13,28,40,.94));border:1px solid var(--sd-stroke);border-radius:18px;min-width:0}
+#platformLobby .student-dash-stat-icon{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border-radius:14px;background:rgba(69,200,166,.11);border:1px solid rgba(113,224,199,.15);color:#73edc5}
+#platformLobby .student-dash-stat:nth-child(2) .student-dash-stat-icon{background:rgba(88,159,228,.12);color:#94d7ff}
+#platformLobby .student-dash-stat:nth-child(3) .student-dash-stat-icon{background:rgba(169,131,248,.11);color:#d5b8ff}
+#platformLobby .student-dash-stat-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#platformLobby .student-dash-stat-number{display:block;font:900 clamp(21px,2.5vw,30px)/1.05 "Inter","Tajawal",sans-serif;color:#f1f9ff}
+#platformLobby .student-dash-stat-label{display:block;font:700 12px/1.5 "Tajawal","Inter",sans-serif;color:#b4c5d2;margin-top:5px}
+#platformLobby .student-dash-section-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:14px}
+#platformLobby .student-dash-section-head h2{margin:0!important;color:#f2f9fc;font:900 clamp(20px,2.2vw,25px) "Tajawal","Inter",sans-serif!important}
+#platformLobby .student-dash-section-head p{margin:5px 0 0!important;color:#a5bcca;font-size:13px;line-height:1.6}
+#platformLobby .student-dash-action-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+#platformLobby .student-dash-action{position:relative;overflow:hidden;min-width:0;min-height:164px;text-align:start;padding:21px 17px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;border-radius:19px;border:1px solid var(--sd-stroke);background:linear-gradient(150deg,#183040,#0e202e);color:#f1fbfc;cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease!important}
+#platformLobby .student-dash-action::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#4feab3,#57abef,transparent);opacity:.62}
+#platformLobby .student-dash-action:hover{transform:translateY(-3px)!important;border-color:rgba(79,232,168,.48);box-shadow:0 15px 35px rgba(0,0,0,.2)}
+#platformLobby .student-dash-action-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;color:#75f0c0;background:rgba(75,226,169,.11);margin-bottom:15px}
+#platformLobby .student-dash-action:nth-child(2) .student-dash-action-icon{color:#9cd8fb;background:rgba(87,159,229,.11)}
+#platformLobby .student-dash-action:nth-child(3) .student-dash-action-icon{color:#dab6ff;background:rgba(165,113,223,.12)}
+#platformLobby .student-dash-action:nth-child(4) .student-dash-action-icon{color:#ffd29d;background:rgba(231,166,91,.11)}
+#platformLobby .student-dash-action-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#platformLobby .student-dash-action b{font-size:17px;font-weight:900;line-height:1.35}
+#platformLobby .student-dash-action small{color:#a9bfd0;font-size:12px;line-height:1.6;margin-top:6px}
+#platformLobby .student-dash-action:focus-visible,#platformLobby .student-dash-primary:focus-visible,#platformLobby .student-dash-outline:focus-visible{outline:3px solid #67eab5!important;outline-offset:3px}
+body.classora-student-mode #platformLobby .student-upcoming-events:not(.hidden){background:linear-gradient(145deg,rgba(17,40,54,.95),rgba(10,28,40,.96));border:1px solid rgba(141,224,210,.22);border-radius:21px;padding:20px;margin-top:22px}
+body.classora-student-mode #platformLobby .student-upcoming-head h3{color:#f2fafc}
+@media(max-width:920px){#platformLobby .student-dash-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ #platformLobby .student-dash-hero{grid-template-columns:1fr;gap:17px;padding:24px 19px;border-radius:22px}
+ #platformLobby .student-dash-heading{font-size:clamp(30px,8vw,42px)!important;margin:15px 0 9px!important}
+ #platformLobby .student-dash-description{font-size:14px!important;margin-bottom:16px!important}
+ #platformLobby .student-dash-progress{padding:18px;border-radius:18px}
+ #platformLobby .student-dash-insights{gap:8px;margin:13px 0 23px}
+ #platformLobby .student-dash-stat{flex-direction:column;align-items:flex-start;padding:12px 10px;gap:8px;border-radius:14px}
+ #platformLobby .student-dash-stat-icon{width:35px;height:35px;flex:0 0 35px;border-radius:10px}
+ #platformLobby .student-dash-stat-icon svg{width:20px;height:20px}
+ #platformLobby .student-dash-stat-number{font-size:22px}
+ #platformLobby .student-dash-stat-label{font-size:11px}
+ #platformLobby .student-dash-action-grid{gap:9px}
+ #platformLobby .student-dash-action{min-height:140px;padding:15px 12px;border-radius:16px}
+ #platformLobby .student-dash-action-icon{width:39px;height:39px;margin-bottom:9px}
+ #platformLobby .student-dash-action b{font-size:14px}
+ #platformLobby .student-dash-action small{font-size:11px}
+}
+@media(max-width:365px){
+ #platformLobby .student-dash-insights{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #platformLobby .student-dash-stat:last-child{grid-column:1/-1}
+ #platformLobby .student-dash-action-grid{grid-template-columns:1fr}
+ #platformLobby .student-dash-hero-actions{display:grid;grid-template-columns:1fr}
+ #platformLobby .student-dash-primary,#platformLobby .student-dash-outline{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .student-dash-action,#platformLobby .student-dash-meter-fill,#platformLobby .student-dash-primary,#platformLobby .student-dash-outline{transition:none!important}
+}
