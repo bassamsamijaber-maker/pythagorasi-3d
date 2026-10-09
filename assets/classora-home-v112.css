@@ -191,3 +191,20 @@
 @media(prefers-reduced-motion:reduce){
  #platformLobby .ct-target-assignment{transition:none!important}
 }
+
+
+#adminViewPromos .cp-admin-filters{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,180px);
+ gap:10px;margin:15px 0 10px
+}
+#adminViewPromos .cp-admin-filters :is(input,select){
+ width:100%;min-height:43px;padding:9px 12px;box-sizing:border-box;
+ border-radius:12px;border:1px solid rgba(151,228,204,.3);
+ color:#eefbf9;background:#0c2634;font:750 13px "Tajawal","Inter",sans-serif
+}
+#adminViewPromos .cp-admin-filters :is(input,select):focus-visible{
+ outline:2px solid #83f0c1;outline-offset:2px
+}
+@media(max-width:580px){
+ #adminViewPromos .cp-admin-filters{grid-template-columns:1fr}
+}
