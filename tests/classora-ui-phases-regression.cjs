@@ -47,4 +47,7 @@ assert(tasksCss.includes('ct-target-assignment'),'Task focus highlight missing')
 assert(icon.includes('installVectorIcons'),'Vector replacement pass missing');
 assert(index.includes('classora_intro_seen_v110'),'One-time splash storage missing');
 assert(index.includes('setTimeout(finish,3600)'),'Splash needs a fail-safe');
+const worker=read('service-worker.js');
+assert(worker.includes('classora-v115-0-ui-phases'),'Service-worker revision must change for cached UI updates');
+assert(worker.includes('cache:"reload"'),'Updated UI assets must bypass an old HTTP cache on install');
 console.log('Classora static UI checks passed. Run browser/device and authenticated Firebase tests before deploying.');
