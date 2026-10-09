@@ -23,7 +23,7 @@ export function mountClassoraHomeV112(api){
   {id:"default-pythagoras",kind:"pythagoras",titleAr:"عجلة فيثاغورس التفاعلية",titleEn:"Interactive Pythagoras wheel",bodyAr:"جرّب تحريك العجلة والرمل واكتشف علاقة أضلاع المثلث القائم.",bodyEn:"Explore the wheel, sand and right-triangle relationships.",target:"all",active:true},
   {id:"default-periodic",kind:"periodic",titleAr:"الجدول الدوري للعناصر",titleEn:"Periodic table of elements",bodyAr:"استكشف 118 عنصرًا بخصائصها ورسوماتها.",bodyEn:"Explore the elements, their properties and interactive models.",target:"all",active:true}
  ];
- let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[];
+ let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[],classNames=[];
  const center=get("classoraPromoCenter"),slides=get("classoraPromoSlides"),dots=get("classoraPromoDots");
  const status=get("classoraPromoAdminStatus"),adminList=get("classoraPromoAdminList");
  const role=()=>api.profile()?.role||"";
@@ -74,7 +74,7 @@ export function mountClassoraHomeV112(api){
    welcome.querySelector(".cw-name").textContent=name||t("أهلًا فيك","Welcome");
    welcome.querySelector(".cw-role").textContent=role()==="student"?t("مساحة الطالب","Student workspace"):role()==="teacher"?t("مساحة المعلم","Teacher workspace"):isAdmin()?t("مساحة الأدمن","Admin workspace"):t("أهلًا في كلاسورا","Welcome to Classora");
    const ids=api.profile()?.classIds||[];
-   welcome.querySelector(".cw-grade").textContent=api.profile()?.grade? t("الصف ","Grade ")+api.profile().grade:Array.isArray(ids)&&ids.length?t("صفوفي: ","Classes: ")+ids.length:t("تعلّم وجرّب واكتشف","Learn. Explore. Create.");
+   welcome.querySelector(".cw-grade").textContent=classNames.length?t("صفّي: ","My class: ")+classNames.slice(0,2).join("، "):api.profile()?.grade?t("الصف ","Grade ")+api.profile().grade:Array.isArray(ids)&&ids.length?t("صفوفي: ","Classes: ")+ids.length:t("تعلّم وجرّب واكتشف","Learn. Explore. Create.");
   }
   center.querySelector(".cp-section-heading").textContent=t("آخر الإضافات","What's new");
   center.querySelector(".cp-section-description").textContent=t("إعلانات كلاسورا التعليمية","Classora learning highlights");
@@ -169,7 +169,7 @@ export function mountClassoraHomeV112(api){
   if(taskLoading||(!force&&loadedTasksFor===uid&&Date.now()-lastTaskRead<300000))return;
   taskLoading=true;renderTasks();
   try{
-   const out=[],ids=[...new Set(Array.isArray(profile.classIds)?profile.classIds:[])].slice(0,12);
+   const out=[],names=[],ids=[...new Set(Array.isArray(profile.classIds)?profile.classIds:[])].slice(0,12);
    // Fetch a lightweight summary, not the full classmates/answers UI.
    for(const classId of ids){
     if(!/^[\w-]{5,100}$/.test(classId))continue;
@@ -178,6 +178,7 @@ export function mountClassoraHomeV112(api){
      if(!member.exists())continue;
      const c=await api.getDoc(api.doc(api.db,"classes",classId));
      if(!c.exists())continue;
+     names.push(String(c.data().name||"").slice(0,70));
      const snaps=await api.getDocs(api.collection(api.db,"classes",classId,"assignments"));
      const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
      const checks=await Promise.all(recent.map(async a=>{
@@ -191,7 +192,7 @@ export function mountClassoraHomeV112(api){
     }catch(err){console.warn("Classora task summary unavailable",err?.message)}
    }
    if(api.auth.currentUser?.uid!==uid)return;
-   tasks=out.sort((a,b)=>b.createdAt-a.createdAt);loadedTasksFor=uid;lastTaskRead=Date.now();
+   tasks=out.sort((a,b)=>b.createdAt-a.createdAt);classNames=names;loadedTasksFor=uid;lastTaskRead=Date.now();render();
   }catch(err){console.warn("Classora task summary",err)}
   finally{taskLoading=false;renderTasks()}
  }
