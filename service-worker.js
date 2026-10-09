@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v109-1-chat-settings-ui";
+const CACHE_NAME="classora-v110-0-final-polish";
 const APP_SHELL=[
+  "./assets/classora-polish-v110.css?v=1",
+  "./assets/classora-polish-v110.js?v=1",
   "./assets/classora-chat-settings-v109.css?v=2",
   "./assets/classora-mobile-tablet-v108.css?v=1",
   "./assets/classora-mobile-tablet-v108.js?v=1",
