@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v117-0-weekly-name-guided-tour";
+const CACHE_NAME="classora-v118-0-no-white-first-paint";
 const APP_SHELL=[
+  "./assets/classora-inline-core-v118.css?v=1",
+  "./assets/classora-inline-late-v118.css?v=1",
   "./assets/classora-v117.css?v=1",
   "./assets/classora-guided-tour-v117.js?v=1",
   "./assets/classora-entrance-v116.css?v=1",
