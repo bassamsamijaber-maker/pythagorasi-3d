@@ -208,3 +208,13 @@
 @media(max-width:580px){
  #adminViewPromos .cp-admin-filters{grid-template-columns:1fr}
 }
+
+
+#adminViewPromos form .cp-admin-active-toggle{
+ grid-column:1/-1;display:flex;align-items:center;gap:10px;
+ font:850 13px "Tajawal","Inter",system-ui;color:#d8f6eb
+}
+#adminViewPromos form .cp-admin-active-toggle input[type="checkbox"]{
+ width:19px!important;height:19px!important;min-height:19px!important;
+ accent-color:#4ce2ab;flex:0 0 auto;margin:0
+}
