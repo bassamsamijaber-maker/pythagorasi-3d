@@ -1,0 +1,114 @@
+/* Classora v112 — welcome, drawn promotions (max 5), student tasks,
+   admin announcements, iPad dock, topbar cleanup, GPU-safe motion. */
+#platformLobby .classora-welcome{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;margin-bottom:13px;border-radius:19px;border:1px solid rgba(99,224,176,.24);background:radial-gradient(circle at 100% 20%,rgba(75,209,156,.12),transparent 55%),linear-gradient(120deg,#152f3e,#0a1c29)}
+#platformLobby .classora-welcome h2{font:900 clamp(22px,3vw,30px) "Tajawal","Inter",sans-serif!important;color:#f2fafd!important;margin:3px 0 5px!important;overflow-wrap:anywhere}
+#platformLobby .classora-welcome p{font:650 13px/1.6 "Tajawal","Inter",sans-serif;color:#aac6d2!important;margin:0!important}
+#platformLobby .cw-role{font:900 11px "Tajawal","Inter",sans-serif;color:#77f1c0!important}
+#platformLobby .cw-badge{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:13px;border:1px solid rgba(121,227,192,.26);background:rgba(74,226,169,.09);color:#d1f9e9;font-weight:800;white-space:nowrap}
+#platformLobby .cw-badge svg{width:20px;height:20px;stroke:#8aebc4;stroke-width:1.8;fill:none}
+#platformLobby .classora-promo-center{border:1px solid rgba(125,229,198,.23);background:linear-gradient(138deg,#122d3c,#081b2a);border-radius:23px;padding:18px 20px;margin:0 0 16px;box-shadow:0 18px 40px #0002;overflow:hidden;position:relative}
+#platformLobby .cp-titlebar{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:12px}
+#platformLobby .cp-titlebar h2{font:900 21px "Tajawal","Inter",sans-serif!important;color:#f3fbfd!important;margin:0!important}
+#platformLobby .cp-titlebar p{font:650 12px "Tajawal","Inter",sans-serif!important;color:#acc4cf!important;margin:4px 0 0!important}
+#platformLobby .cp-timing{display:inline-flex;gap:5px;align-items:center;color:#9ae9cd;font:750 11px "Tajawal","Inter",sans-serif}
+#platformLobby .cp-timing svg{width:17px;height:17px;stroke:currentColor;fill:none}
+#platformLobby .cp-slides{min-height:146px;position:relative}
+#platformLobby .cp-slide{display:grid;grid-template-columns:135px minmax(0,1fr);align-items:center;gap:20px;min-height:145px;animation:cpFade .3s ease both}
+#platformLobby .cp-slide[hidden]{display:none!important}
+#platformLobby .cp-illustration{height:130px;width:130px;display:grid;place-items:center;border-radius:20px;border:1px solid rgba(153,225,206,.24);background:radial-gradient(circle at 35% 20%,rgba(95,225,190,.3),transparent 55%),#153a3e;box-shadow:inset 0 0 24px #0001}
+#platformLobby .cp-illustration svg{width:91px;height:91px;stroke:#8ef5c8;stroke-width:1.45;fill:none;filter:drop-shadow(0 8px 12px #021c1c99)}
+#platformLobby .cp-pythagoras .cp-illustration{background:radial-gradient(circle at 30% 25%,#4a66964d,transparent 65%),#172f4c}
+#platformLobby .cp-pythagoras .cp-illustration svg{stroke:#9bd6ff}
+#platformLobby .cp-periodic .cp-illustration{background:radial-gradient(circle at 30% 25%,#a58ae54f,transparent 65%),#30264c}
+#platformLobby .cp-periodic .cp-illustration svg{stroke:#dbc2ff}
+#platformLobby .cp-topic .cp-illustration{background:radial-gradient(circle at 30% 25%,#e1ab6240,transparent 65%),#38352f}
+#platformLobby .cp-topic .cp-illustration svg{stroke:#ffe1a8}
+#platformLobby .cp-copy{min-width:0}
+#platformLobby .cp-eyebrow{color:#83ebc0;font:900 10px "Tajawal","Inter",sans-serif;letter-spacing:.6px}
+#platformLobby .cp-title{font:900 clamp(19px,2.9vw,28px)/1.4 "Tajawal","Inter",sans-serif!important;color:#f7fcff!important;margin:5px 0 6px!important}
+#platformLobby .cp-description{font:600 14px/1.8 "Tajawal","Inter",sans-serif!important;color:#c5d9e1!important;margin:0 0 12px!important}
+#platformLobby .cp-enter,#platformLobby .ct-enter{min-height:40px;padding:9px 17px;border:1px solid #76edc0;background:linear-gradient(130deg,#5aeab0,#43caaa);color:#082b21;border-radius:11px;font:900 13px "Tajawal","Inter",sans-serif;cursor:pointer}
+#platformLobby .cp-enter[disabled]{opacity:.55;cursor:default}
+#platformLobby .cp-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px}
+#platformLobby .cp-controls>button{height:35px;width:35px;display:grid;place-items:center;border-radius:10px;background:#ffffff0b;color:#d7f6ec;border:1px solid #b6f1dc35;cursor:pointer}
+#platformLobby .cp-controls>button svg{width:20px;height:20px;stroke:currentColor;fill:none}
+#platformLobby .cp-dots{display:flex;justify-content:center;align-items:center;gap:7px}
+#platformLobby .cp-dot{width:8px;height:8px;border:0;background:#7ba39c;border-radius:20px;padding:0;cursor:pointer;opacity:.65}
+#platformLobby .cp-dot.active{width:25px;background:#62e7af;opacity:1}
+#platformLobby #classoraPromoCounter{font:850 11px "Inter","Tajawal",sans-serif;color:#bcd5da}
+#platformLobby .classora-student-tasks{border:1px solid rgba(113,210,230,.21);background:linear-gradient(145deg,#102e40,#0c1f2e);border-radius:19px;padding:17px 21px;margin-bottom:16px}
+#platformLobby .classora-student-tasks h2{font:900 20px "Tajawal","Inter",sans-serif!important;margin:0 0 10px!important;color:#f4fbfd!important}
+#platformLobby .ct-list{display:grid;gap:8px}
+#platformLobby .ct-task{display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:12px;border:1px solid rgba(130,223,202,.18);background:#ffffff07;padding:12px 14px}
+#platformLobby .ct-task-copy{display:grid;min-width:0;gap:4px}
+#platformLobby .ct-task-copy b{font:850 14px/1.5 "Tajawal","Inter",sans-serif;color:#f1fbfe;overflow-wrap:anywhere}
+#platformLobby .ct-task-copy small{font:700 11px/1.6 "Tajawal","Inter",sans-serif;color:#abc4d1;overflow-wrap:anywhere}
+#platformLobby .ct-enter{white-space:nowrap;flex-shrink:0}
+#platformLobby .ct-empty{padding:14px;color:#b1cad2;font:700 13px/1.8 "Tajawal","Inter",sans-serif}
+#platformLobby :is(.classora-promo-center,.classora-student-tasks,.classora-welcome)[hidden]{display:none!important}
+@keyframes cpFade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* Admin content module: same permission gating as existing Admin Panel. */
+#adminViewPromos{padding:15px}
+#adminViewPromos .cp-admin-header{padding:18px;border-radius:18px;background:linear-gradient(115deg,#193d45,#0e283a);border:1px solid #8deacc31;margin-bottom:14px}
+#adminViewPromos h3{margin:0 0 5px;color:#effffc;font:900 23px "Tajawal","Inter",sans-serif}
+#adminViewPromos .cp-admin-header p{margin:0;color:#bcd1d7;font-size:13px;line-height:1.7}
+#adminViewPromos .cp-admin-count{color:#88f2c8;font-weight:850}
+#adminViewPromos form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding:15px;border-radius:16px;border:1px solid #b7f0d127;background:#132c38}
+#adminViewPromos form label{display:grid;gap:6px;min-width:0;color:#cfe4e9;font:800 12px "Tajawal","Inter",sans-serif}
+#adminViewPromos form :is(input,select,textarea){min-width:0;width:100%;border:1px solid #99d9cc39;background:#091e2b;color:#f6fcff;border-radius:10px;padding:11px;font-size:14px;min-height:43px;box-sizing:border-box}
+#adminViewPromos form label.cp-wide{grid-column:1/-1}
+#adminViewPromos form textarea{min-height:78px;resize:vertical}
+#adminViewPromos .cp-admin-add{grid-column:1/-1;min-height:45px;border-radius:12px;background:#50dda7;color:#0a2c20;border:1px solid #8aebc4;font-weight:900;cursor:pointer}
+#adminViewPromos .cp-admin-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px;border:1px solid #8cdac927;border-radius:13px;margin:10px 0;background:#112b36}
+#adminViewPromos .cp-admin-details{display:grid;gap:6px;min-width:0}
+#adminViewPromos .cp-admin-details b{color:#ecf9f7;overflow-wrap:anywhere}
+#adminViewPromos .cp-admin-details small{color:#afc7cf}
+#adminViewPromos .cp-admin-actions{display:flex;gap:7px}
+#adminViewPromos .cp-admin-actions button{min-height:37px;padding:7px 12px;border-radius:10px;background:#ffffff0c;border:1px solid #acf0d52f;color:#dbfaf0;cursor:pointer}
+#adminViewPromos .cp-admin-remove{color:#ffc5c5!important;border-color:#fa9e9e50!important}
+#adminViewPromos #classoraPromoAdminStatus{min-height:25px;color:#aeedce;margin:12px 0}
+/* Universal dock now on iPad as well, including modal/3D screens */
+@media(min-width:761px) and (max-width:1180px){
+ :root{--classora-mobile-nav-height:74px;--classora-dock-clearance:calc(90px + env(safe-area-inset-bottom))}
+ body.classora-authenticated #classoraMobilePageNav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;position:fixed!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;width:min(490px,calc(100vw - 22px))!important;max-width:490px!important;padding:7px!important;gap:5px!important;min-height:74px!important;z-index:2147483646!important;border:1px solid #8de6c53d!important;background:#0d2937ef!important;border-radius:21px!important;box-shadow:0 14px 45px #0008!important;pointer-events:auto!important}
+ body.classora-authenticated #classoraMobilePageNav button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:59px!important;padding:5px!important;background:transparent!important;border:1px solid transparent!important;color:#bad6dd!important;border-radius:13px!important;min-width:0!important;flex:1!important}
+ body.classora-authenticated #classoraMobilePageNav button.is-active{color:#9bf2ce!important;border-color:#6be6b238!important;background:#50cc9622!important}
+ body.classora-authenticated #classoraMobilePageNav button svg{width:23px;height:23px;stroke:currentColor;fill:none}
+ body.classora-authenticated #classoraMobilePageNav button span{font:800 12px "Tajawal",system-ui!important;display:block!important}
+ body:not(.classora-authenticated) #classoraMobilePageNav,body.classora-intro-active #classoraMobilePageNav,body:has(#authGate.show) #classoraMobilePageNav,body.classora-mobile-typing #classoraMobilePageNav{display:none!important}
+ #platformLobby{padding-bottom:var(--classora-dock-clearance)!important}
+ .modal.open{padding-bottom:var(--classora-dock-clearance)!important;box-sizing:border-box!important}
+ .modal.open>.modalbox{max-height:calc(100dvh - var(--classora-dock-clearance) - 20px)!important}
+ .classora-curriculum-modal.open{padding-bottom:var(--classora-dock-clearance)!important}
+ .classora-curriculum-modal.open .classora-curriculum-shell{max-height:calc(100dvh - var(--classora-dock-clearance) - 10px)!important}
+ .classora-subject-page:target{bottom:var(--classora-dock-clearance)!important}
+ #platformLobby .lobby-top-actions{display:none!important}
+ #settingsModal .classora-settings-shortcuts{display:block!important}
+}
+@media(max-width:760px){
+ #platformLobby .classora-welcome{padding:15px 16px}
+ #platformLobby .cw-badge{font-size:11px;padding:7px 9px}
+ #platformLobby .classora-promo-center{padding:14px 14px 12px;border-radius:17px}
+ #platformLobby .cp-titlebar h2{font-size:18px!important}
+ #platformLobby .cp-timing{font-size:10px}
+ #platformLobby .cp-slides{min-height:125px}
+ #platformLobby .cp-slide{grid-template-columns:80px minmax(0,1fr);gap:12px;min-height:125px}
+ #platformLobby .cp-illustration{width:78px;height:85px;border-radius:13px}
+ #platformLobby .cp-illustration svg{width:54px;height:54px}
+ #platformLobby .cp-title{font-size:17px!important}
+ #platformLobby .cp-description{font-size:12px!important;line-height:1.55!important}
+ #platformLobby .cp-eyebrow{font-size:9px}
+ #platformLobby .cp-enter{min-height:34px;font-size:12px;padding:7px 11px}
+ #platformLobby .classora-student-tasks{padding:14px;border-radius:16px}
+ #platformLobby .ct-task{padding:10px;flex-wrap:wrap}
+ #platformLobby .ct-enter{min-height:36px}
+ #adminViewPromos form{grid-template-columns:1fr}
+ #adminViewPromos .cp-admin-row{flex-wrap:wrap}
+}
+@media(max-width:360px){
+ #platformLobby .cp-slide{grid-template-columns:1fr;gap:7px}
+ #platformLobby .cp-illustration{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .cp-slide{animation:none}
+}
