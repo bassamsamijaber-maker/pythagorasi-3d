@@ -169,6 +169,11 @@
  }
  function init(){
    platform();loginDesign();setupDock();replayLink();ensureWelcome();
+   const loader=$("cw116Wait");
+   if(loader&&!loader.querySelector(".cw116-wait-spin")){
+     const spinner=document.createElement("div");spinner.className="cw116-wait-spin";
+     spinner.setAttribute("aria-hidden","true");loader.prepend(spinner);
+   }
    introReady=!$("classoraIntro")&&!document.body.classList.contains("classora-intro-active");
    window.addEventListener("classora-intro-finished",()=>{introReady=true;onAuth()});
    window.addEventListener("classora-auth-settled",onAuth);
