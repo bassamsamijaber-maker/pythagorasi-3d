@@ -67,17 +67,33 @@
    // Capture on window first so the active indicator resets even when it stops propagation.
    window.addEventListener("click",event=>{
      const clicked=event.target?.closest?.(
-       '#classoraMobileLobbyBtn,#mobileReturnLobbyBtn,#returnLobbyBtn,[data-return-control][data-return-target="lobby"]'
+       '#classoraMobilePageNav button,#mobileReturnLobbyBtn,#returnLobbyBtn,[data-return-control][data-return-target="lobby"]'
      );
-     if(clicked)select("classoraMobileLobbyBtn");
-   },true);
-   new MutationObserver(()=>{
-     if(!$("classModal")?.classList.contains("open") &&
-        nav()?.querySelector("#classoraMobileClassesBtn.is-active") &&
-        !$("settingsModal")?.classList.contains("open")){
+     if(!clicked)return;
+     // An active exam may have unsent answers. The core Lobby route autosaves
+     // the attempt and stops timers, but ask before leaving it.
+     const activeExam=$("examModal")?.classList.contains("open") &&
+       !$("examRunner")?.classList.contains("hidden");
+     if(activeExam){
+       const english=document.documentElement.lang==="en";
+       const approved=window.confirm(english?
+         "Leave this exam? Your answers will be saved so you can resume later.":
+         "بدك تطلع من الامتحان؟ رح نحفظ إجاباتك عشان تكمل بعدين.");
+       if(!approved){
+         event.preventDefault();
+         event.stopImmediatePropagation();
+         return;
+       }
+     }
+     if(clicked.id==="classoraMobileLobbyBtn" ||
+       clicked.id==="mobileReturnLobbyBtn" ||
+       clicked.id==="returnLobbyBtn" ||
+       clicked.dataset?.returnTarget==="lobby"){
        select("classoraMobileLobbyBtn");
      }
-   }).observe($("classModal"),{attributes:true,attributeFilter:["class"]});
+   },true);
+   // The class modal is already observed by monitorModal above.
+   // Don't attach a second observer to the same element on slow phones.
    const added=new MutationObserver(records=>{
      for(const record of records){
        for(const item of record.addedNodes){
