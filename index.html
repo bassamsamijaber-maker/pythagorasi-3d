@@ -7165,7 +7165,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
-  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
+  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc, deleteField,
   arrayUnion, arrayRemove, orderBy, limit, startAfter, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
@@ -16092,7 +16092,7 @@ function adminRenderPeople(){
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
     card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
       <div class="admin-detail-grid">
-        <div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("آخر تغيير اسم","LAST NAME CHANGE")}</small><span>${u.displayNameChangedAt?escapeHtml(adminHistoryTimestamp(u.displayNameChangedAt)):"—"}</span></div><div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
         <div class="admin-detail-item"><small>ACCOUNT UID</small><span>${escapeHtml(u.uid||"—")}</span></div>
         <div class="admin-detail-item"><small>${adminLang("اسم الدخول","LOGIN NAME")}</small><span>${escapeHtml(loginName)}</span></div>
         <div class="admin-detail-item"><small>${adminLang("نوع الدخول","AUTH PROVIDER")}</small><span>${escapeHtml(provider)}</span></div>
@@ -16103,12 +16103,32 @@ function adminRenderPeople(){
         <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
       </div>
       <div class="admin-account-classes">${memberships.length?`${adminLang("الصفوف","Classes")}: ${memberships.map(c=>escapeHtml(c.name||"Class")).join(" • ")}`:adminLang("مش مربوط بأي صف.","Not linked to a class.")}</div>
-      <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
-    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));card.querySelector(".admin-reset-access")?.addEventListener("click",()=>adminRequirePasswordChange(u));card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));host.appendChild(card)
+      <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><button class="admin-reset-name-clock admin-action-primary">${adminLang("فتح تغيير الاسم","Reset name timer")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
+    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));card.querySelector(".admin-reset-name-clock")?.addEventListener("click",()=>adminResetNameCooldown(u));card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));card.querySelector(".admin-reset-access")?.addEventListener("click",()=>adminRequirePasswordChange(u));card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));host.appendChild(card)
   }
 }
 async function adminRequirePasswordChange(u){if(u.role!=="student")return;if(!confirm(adminLang(`تطلب من ${adminUserDisplay(u)} تغيير كلمة السر عند دخوله؟`,`Require ${adminUserDisplay(u)} to change their password?`)))return;try{await updateDoc(doc(db,"users",u.uid),{forcePasswordReset:true,forcePasswordResetAt:serverTimestamp(),forcePasswordResetBy:auth.currentUser.uid});await adminAudit("require_password_change",u.profileId||u.uid);showToast(adminLang("تم تسجيل طلب تغيير كلمة السر ✅","Password-change requirement saved ✅"));await adminLoadAllData()}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الطلب.","Could not save the request."))}}
 
+async function adminResetNameCooldown(u){
+  if(!isSuperAdminProfile()||!u?.uid)return;
+  const yes=confirm(adminLang(
+    "تسمح لهذا المستخدم بتغيير اسمه الآن، حتى لو لم يمر أسبوع؟",
+    "Allow this user to change their display name immediately, even if seven days have not passed?"
+  ));
+  if(!yes)return;
+  try{
+    await updateDoc(doc(db,"users",u.uid),{
+      displayNameChangedAt:deleteField(),
+      adminEditedAt:serverTimestamp()
+    });
+    await adminAudit("reset_name_cooldown",u.profileId||u.uid);
+    showToast(adminLang("تم فتح تغيير الاسم للمستخدم.","The name-change timer was reset."));
+    await adminLoadAllData();
+  }catch(error){
+    console.error("adminResetNameCooldown",error);
+    showToast(adminLang("تعذر إعادة السماح بتغيير الاسم.","Could not reset the name timer."));
+  }
+}
 async function adminRenameUser(u){
   const next=prompt(adminLang("اكتب الاسم الجديد:","Enter the new display name:"),adminUserDisplay(u));if(next==null)return;
   const name=next.trim().replace(/\s+/g," ").slice(0,40);if(name.length<2)return;
