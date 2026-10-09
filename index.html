@@ -4799,6 +4799,8 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
 <link rel="stylesheet" href="./assets/classora-global-mix.css?v=1">
 <script defer src="./assets/classora-global-mix.js?v=1"></script>
+<link rel="stylesheet" href="./assets/classora-student-dashboard.css?v=1">
+<script defer src="./assets/classora-student-dashboard.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -4983,6 +4985,44 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 
     
     <!-- Classora Global Mix / Phase 1: visual-first hero; existing actions remain authoritative -->
+    
+    <!-- Classora UI 2.0 / Phase 2: actual student profile dashboard. No new login system. -->
+    <section id="classoraStudentDashboard" class="student-dash" data-no-translate hidden aria-label="My learning dashboard">
+      <div class="student-dash-hero">
+        <div class="student-dash-copy">
+          <div class="student-dash-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.8 5.5 4.5 3 5.2v14c3.3-.7 6.1-.1 9 1.5m0-14.2c3-1.7 6.5-2 9-1.3v14c-3.3-.7-6.1-.1-9 1.5m0-14.2v14.2"/></svg><span data-student-ar="مساحتي التعليمية" data-student-en="MY LEARNING SPACE">مساحتي التعليمية</span></div>
+          <h1 class="student-dash-heading"><span data-student-ar="أهلًا،" data-student-en="Welcome,">أهلًا،</span> <strong id="studentDashName">طالب</strong></h1>
+          <p class="student-dash-description" data-student-ar="كل اللي بتحتاجه لتتعلم وتتابع صفوفك وتمتحن، مرتب إلك بمكان واحد." data-student-en="Your lessons, classes, practice and exams—all in one organized place.">كل اللي بتحتاجه لتتعلم وتتابع صفوفك وتمتحن، مرتب إلك بمكان واحد.</p>
+          <div class="student-dash-hero-actions">
+            <button type="button" class="student-dash-primary" data-student-action="subjects"><span data-student-ar="استكشف موادي" data-student-en="Explore subjects">استكشف موادي</span><span aria-hidden="true">↗</span></button>
+            <button type="button" class="student-dash-outline" data-student-action="classes"><span data-student-ar="صفوفي وواجباتي" data-student-en="Classes & assignments">صفوفي وواجباتي</span></button>
+          </div>
+        </div>
+        <div class="student-dash-progress">
+          <div class="student-dash-progress-header">
+            <span class="student-dash-progress-label" data-student-ar="تقدمك في كلاسورا" data-student-en="Your Classora progress">تقدمك في كلاسورا</span>
+            <span class="student-dash-progress-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 13-2 8 6-3 6 3-2-8M12 3a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"/><path d="m9.5 9 1.7 1.7L15 7"/></svg></span>
+          </div>
+          <div class="student-dash-level" id="studentDashLevel">—</div>
+          <div class="student-dash-xp" id="studentDashXP">— XP</div>
+          <div class="student-dash-meter" id="studentDashMeter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="student-dash-meter-fill" id="studentDashMeterFill"></div></div>
+          <div class="student-dash-next" id="studentDashNext">—</div>
+        </div>
+      </div>
+      <div class="student-dash-insights" aria-label="Student statistics">
+        <div class="student-dash-stat"><span class="student-dash-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-8h6v8M4 10h16"/></svg></span><div><strong class="student-dash-stat-number" id="studentDashClasses">—</strong><span class="student-dash-stat-label" data-student-ar="صفوفي" data-student-en="My classes">صفوفي</span></div></div>
+        <div class="student-dash-stat"><span class="student-dash-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><div><strong class="student-dash-stat-number" id="studentDashExams">—</strong><span class="student-dash-stat-label" data-student-ar="امتحاناتي" data-student-en="Exams taken">امتحاناتي</span></div></div>
+        <div class="student-dash-stat"><span class="student-dash-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h2M13 15h2"/></svg></span><div><strong class="student-dash-stat-number" id="studentDashUpcoming">—</strong><span class="student-dash-stat-label" data-student-ar="مواعيد قادمة" data-student-en="Upcoming events">مواعيد قادمة</span></div></div>
+      </div>
+      <div class="student-dash-section-head"><div><h2 data-student-ar="من وين نبدأ؟" data-student-en="Where to next?">من وين نبدأ؟</h2><p data-student-ar="اختار اللي بدك تعمله، والباقي علينا." data-student-en="Choose what you want to do next.">اختار اللي بدك تعمله، والباقي علينا.</p></div></div>
+      <div class="student-dash-action-grid">
+        <button class="student-dash-action" type="button" data-student-action="subjects"><span class="student-dash-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.8 5.5 4.5 3 5.2v14c3.3-.7 6.1-.1 9 1.5m0-14.2c3-1.7 6.5-2 9-1.3v14c-3.3-.7-6.1-.1-9 1.5m0-14.2v14.2"/></svg></span><b data-student-ar="المواد والدروس" data-student-en="Subjects & lessons">المواد والدروس</b><small data-student-ar="رياضيات، علوم، لغات وأكثر" data-student-en="Math, science, languages & more">رياضيات، علوم، لغات وأكثر</small></button>
+        <button class="student-dash-action" type="button" data-student-action="classes"><span class="student-dash-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-8h6v8M4 10h16"/></svg></span><b data-student-ar="صفوفي وواجباتي" data-student-en="Classes & assignments">صفوفي وواجباتي</b><small data-student-ar="تابع صفك والوظائف المطلوبة" data-student-en="View classes and assignments">تابع صفك والوظائف المطلوبة</small></button>
+        <button class="student-dash-action" type="button" data-student-action="exams"><span class="student-dash-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><b data-student-ar="الامتحانات" data-student-en="Exams">الامتحانات</b><small data-student-ar="اختبر معلوماتك وشوف النتائج" data-student-en="Test your skills and review results">اختبر معلوماتك وشوف النتائج</small></button>
+        <button class="student-dash-action" type="button" data-student-action="practice"><span class="student-dash-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 4 4 12-12M4 7h9M4 11h6"/></svg></span><b data-student-ar="تدرّب الآن" data-student-en="Practice now">تدرّب الآن</b><small data-student-ar="أسئلة متنوعة وتصحيح فوري" data-student-en="Practice with instant feedback">أسئلة متنوعة وتصحيح فوري</small></button>
+      </div>
+    </section>
+
     <section class="classora-mix-hero" id="classoraMixHero" aria-label="Classora learning">
       <div class="mix-copy">
         <div class="mix-eyebrow"><span class="mix-dot" aria-hidden="true"></span><span data-mix-ar="CLASSORA • تعلّم بطريقة مختلفة" data-mix-en="CLASSORA • LEARNING REIMAGINED">CLASSORA • تعلّم بطريقة مختلفة</span></div>
