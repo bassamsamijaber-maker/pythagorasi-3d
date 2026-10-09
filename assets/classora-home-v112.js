@@ -135,7 +135,7 @@ export function mountClassoraHomeV112(api){
    if(!raw)return Infinity;
    let parsed=Date.parse(raw);
    if(!Number.isFinite(parsed)){
-    const m=raw.match(/^(\\d{1,2})[\\/.](\\d{1,2})[\\/.](\\d{4})$/);
+    const m=raw.match(/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})$/);
     if(m)parsed=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),23,59,59).getTime();
    }
    return Number.isFinite(parsed)?parsed:Infinity;
@@ -288,7 +288,7 @@ export function mountClassoraHomeV112(api){
   }catch(err){
    console.error("Classora announcement save",err);
    message(err?.message==="limit-five"?"الحد الأقصى 5 إعلانات. احذف إعلان قبل الإضافة.":"تعذّر الحفظ. افحص اتصالك وصلاحيات الأدمن.",
-     err?.message==="limit-five"?"Maximum 5 announcements. Remove one first.":"Couldn't save. Check your connection and admin permissions.");
+     err?.message==="limit-five"?"Maximum 5 announcements. Remove one first.":"Couldn't save. Check your connection and admin permissions.");return false;
   }
  }
  function changePromo(action,id){
