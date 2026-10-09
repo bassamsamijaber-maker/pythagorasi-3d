@@ -4797,6 +4797,8 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 }
 </style>
 
+<link rel="stylesheet" href="./assets/classora-global-mix.css?v=1">
+<script defer src="./assets/classora-global-mix.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -4978,6 +4980,43 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <button class="lobby-logout-btn" id="lobbyLogoutBtn">↪ تسجيل خروج</button>
       </div>
     </div>
+
+    
+    <!-- Classora Global Mix / Phase 1: visual-first hero; existing actions remain authoritative -->
+    <section class="classora-mix-hero" id="classoraMixHero" aria-label="Classora learning">
+      <div class="mix-copy">
+        <div class="mix-eyebrow"><span class="mix-dot" aria-hidden="true"></span><span data-mix-ar="CLASSORA • تعلّم بطريقة مختلفة" data-mix-en="CLASSORA • LEARNING REIMAGINED">CLASSORA • تعلّم بطريقة مختلفة</span></div>
+        <h1 class="mix-headline"><span data-mix-ar="تعلّم أبعد من الكتاب." data-mix-en="Learning beyond the textbook.">تعلّم أبعد من الكتاب.</span><br><em data-mix-ar="افهمها بالـ 3D." data-mix-en="Bring ideas to life in 3D.">افهمها بالـ 3D.</em></h1>
+        <p class="mix-description" data-mix-ar="مواد ودروس تفاعلية، تجارب ثلاثية الأبعاد، أسئلة واختبارات—كلها بمكان واحد، وبطريقة سهلة وممتعة." data-mix-en="Interactive subjects and lessons, 3D experiments, practice and quizzes—all together in one clear learning space.">مواد ودروس تفاعلية، تجارب ثلاثية الأبعاد، أسئلة واختبارات—كلها بمكان واحد، وبطريقة سهلة وممتعة.</p>
+        <div class="mix-actions">
+          <button class="mix-btn mix-btn-primary" id="classoraMixDiscoverBtn" type="button"><span data-mix-ar="استكشف الأنشطة" data-mix-en="Explore activities">استكشف الأنشطة</span><span aria-hidden="true">↗</span></button>
+          <button class="mix-btn mix-btn-secondary" id="classoraMixLabBtn" type="button"><span data-mix-ar="جرّب مختبر 3D" data-mix-en="Try the 3D lab">جرّب مختبر 3D</span><span aria-hidden="true">◈</span></button>
+        </div>
+        <div class="mix-proof"><span data-mix-ar="تعلّم تفاعلي" data-mix-en="Interactive learning">تعلّم تفاعلي</span><span data-mix-ar="دروس ومواد متعددة" data-mix-en="Multiple subjects">دروس ومواد متعددة</span><span data-mix-ar="تمارين وامتحانات" data-mix-en="Practice and quizzes">تمارين وامتحانات</span></div>
+      </div>
+      <div class="mix-art" aria-hidden="true">
+        <svg viewBox="0 0 360 310" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <defs>
+            <linearGradient id="mix-tri" x1="50" y1="240" x2="270" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#3DD9A4" stop-opacity=".25"/><stop offset="1" stop-color="#50B9ED" stop-opacity=".16"/></linearGradient>
+            <linearGradient id="mix-edge" x1="60" y1="210" x2="280" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#72FFD1"/><stop offset="1" stop-color="#64BFF0"/></linearGradient>
+            <filter id="mix-glow"><feGaussianBlur stdDeviation="6"/></filter>
+          </defs>
+          <ellipse class="mix-ring" cx="180" cy="158" rx="150" ry="102" stroke="#56DFB3" stroke-opacity=".22" stroke-dasharray="6 12"/>
+          <path d="M66 240 105 78 291 240Z" fill="url(#mix-tri)" stroke="url(#mix-edge)" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M105 78 142 49 327 212 291 240" stroke="#7EC8F6" stroke-opacity=".45" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M105 78 327 212M291 240 327 212M66 240 103 211 142 49" stroke="#6BF2C7" stroke-opacity=".25" stroke-width="1.5"/>
+          <path d="M66 240H291" stroke="#5AF0C2" stroke-opacity=".9" stroke-width="2.4"/>
+          <path d="M105 78 105 240" stroke="#6FE8D2" stroke-dasharray="5 7" stroke-opacity=".6"/>
+          <path d="M105 215h25v25" stroke="#A7FBE0" stroke-width="2"/>
+          <circle cx="105" cy="78" r="6" fill="#82FFD9"/><circle cx="291" cy="240" r="6" fill="#7CCEF6"/><circle cx="66" cy="240" r="6" fill="#7BFDCA"/>
+          <circle cx="105" cy="78" r="18" fill="#65EFC0" fill-opacity=".3" filter="url(#mix-glow)"/>
+          <text x="171" y="266" fill="#DFFBF4" font-size="17" font-family="Inter,Arial,sans-serif" font-weight="800">a² + b² = c²</text>
+          <text x="194" y="150" fill="#AFFBE3" font-size="13" font-family="Inter,Arial,sans-serif">3D · INTERACTIVE</text>
+        </svg>
+        <div class="mix-art-pill top"><strong>3D LAB</strong> Interactive</div>
+        <div class="mix-art-pill bottom"><strong>∞</strong> Learn · Explore</div>
+      </div>
+    </section>
 
     <section class="admin-custom-surface hidden" id="adminCustomSurface">
       <div class="admin-custom-notices" id="adminCustomNotices"></div>
