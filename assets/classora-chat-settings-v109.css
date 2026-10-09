@@ -547,3 +547,21 @@
     width:22px;height:22px;vertical-align:-4px;margin-inline-end:6px;
   }
 }
+
+
+/* Phase 6 mobile dock clearance: modal content ends before the five-tab bar.
+   When typing, the legacy keyboard handler hides the dock and chat expands. */
+@media(max-width:700px){
+  #chatModal.open,#settingsModal.open{
+    align-items:flex-start!important;
+    justify-content:center!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  #chatModal .classora-chat-box{
+    flex:0 1 auto;
+    border-bottom:1px solid rgba(136,227,208,.2)!important;
+  }
+  #settingsModal.open{padding:8px 0 0!important}
+  #settingsModal .settings-modalbox{flex:0 1 auto}
+}
