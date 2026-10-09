@@ -7351,6 +7351,43 @@ function updateAssistantLabels(){
   const topic=document.getElementById("topicAIName");
   if(topic)topic.textContent=fixedName;
 }
+/* Teacher workspace summary: read-only, same Firebase permissions as class/exam manager. */
+let classoraTeacherOverviewSequence=0;
+let classoraTeacherOverviewCache=null;
+async function classoraPublishTeacherOverview(force=false){
+  const p=window.PythagorasiUser;
+  if(p?.role!=="teacher"||!p?.uid||auth.currentUser?.uid!==p.uid)return;
+  const uid=p.uid,now=Date.now();
+  const send=data=>{
+    if(window.PythagorasiUser?.uid!==uid||auth.currentUser?.uid!==uid)return;
+    window.dispatchEvent(new CustomEvent("classora:teacher-overview",{detail:{uid,...data}}));
+  };
+  const cached=classoraTeacherOverviewCache;
+  if(!force&&cached?.uid===uid&&now-cached.time<30000){
+    send(cached.data);return;
+  }
+  const sequence=++classoraTeacherOverviewSequence;
+  const result=await Promise.allSettled([
+    getManagedClasses(),
+    getDocs(query(collection(db,"exams"),where("ownerId","==",uid)))
+  ]);
+  if(sequence!==classoraTeacherOverviewSequence||window.PythagorasiUser?.uid!==uid||auth.currentUser?.uid!==uid)return;
+  const detail={};
+  if(result[0].status==="fulfilled"){
+    detail.classes=result[0].value.map(c=>({name:String(c.name||"Class").slice(0,100),owner:c.ownerId===uid}));
+  }else{
+    detail.classesError=true;
+    console.warn("Teacher overview: classes unavailable",result[0].reason);
+  }
+  if(result[1].status==="fulfilled"){
+    detail.examCount=result[1].value.size;
+  }else{
+    detail.examsError=true;
+    console.warn("Teacher overview: exams unavailable",result[1].reason);
+  }
+  if(!detail.classesError&&!detail.examsError)classoraTeacherOverviewCache={uid,time:Date.now(),data:detail};
+  send(detail);
+}
 function showPlatformLobby(){
   const guest=window.PythagorasiUser?.role==="guest";
   if((!auth?.currentUser&&!guest) || !window.PythagorasiUser || !window.PythagorasiUser.uid){
@@ -7392,6 +7429,7 @@ function showPlatformLobby(){
   setTimeout(refreshLobbySubjectVisibility,30);
   setTimeout(loadSiteUpdatesForCurrentUser,80);
   setTimeout(subscribeLobbyLiveCompetitions,120);
+  if(p.role==="teacher")setTimeout(()=>classoraPublishTeacherOverview(),240);
 }
 function hidePlatformLobby(){
   document.getElementById("platformLobby")?.classList.add("hidden");
@@ -11043,6 +11081,7 @@ async function ensureTeacherStarterClass(){
     const first=(window.PythagorasiUser.displayName||"المعلم").split(/\s+/)[0];
     const created=await createClassForTeacher(`صف ${first}`,{silent:true});
     showToast(`🏫 عملنالك صفك الأول تلقائيًا • الكود ${created.code}`);
+    classoraPublishTeacherOverview(true);
   }catch(err){
     console.warn("starter class",err);
     teacherStarterCheckedFor="";
@@ -11071,6 +11110,7 @@ document.getElementById("createClassBtn").addEventListener("click",async()=>{
     await createClassForTeacher(name);
     document.getElementById("newClassName").value="";
     await loadTeacherClasses();
+    classoraPublishTeacherOverview(true);
   }catch(err){console.error(err);showToast("تعذر إنشاء الصف.")}
   finally{btn.disabled=false}
 });
