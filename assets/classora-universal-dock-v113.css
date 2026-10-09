@@ -179,3 +179,30 @@ body.classora-dock-enabled.classora-mobile-typing #chatModal.open .classora-chat
 body.classora-dock-enabled.classora-mobile-typing #settingsModal.open .settings-modalbox{
   max-height:calc(100dvh - 15px)!important;
 }
+
+
+/* Classora v114: dock clearance and software-keyboard accessibility.
+   Do not resize the 3D canvas directly; keep space in the parent document. */
+body.classora-dock-enabled .shell{
+  padding-bottom:calc(var(--classora-dock-clearance) + 12px)!important;
+  box-sizing:border-box!important;
+}
+body.classora-dock-enabled .side{
+  scroll-padding-bottom:var(--classora-dock-clearance);
+}
+body.classora-dock-enabled.classora-mobile-typing .modal.open{
+  padding-bottom:env(safe-area-inset-bottom,0px)!important;
+}
+body.classora-dock-enabled.classora-mobile-typing
+  .modal.open:not(#chatModal):not(#settingsModal) > .modalbox{
+  max-height:calc(100dvh - 20px)!important;
+}
+body.classora-dock-enabled.classora-mobile-typing
+  .classora-curriculum-modal.open{
+  padding-bottom:env(safe-area-inset-bottom,0px)!important;
+}
+body.classora-dock-enabled.classora-mobile-typing
+  .classora-curriculum-modal.open .classora-curriculum-shell{
+  height:calc(100dvh - 10px)!important;
+  max-height:calc(100dvh - 10px)!important;
+}
