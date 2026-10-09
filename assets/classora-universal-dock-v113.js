@@ -42,6 +42,8 @@
    const chat=$("chatModal");
    if(settings?.classList.contains("open")){select("classoraMobileSettingsBtn");return}
    if(chat?.classList.contains("open")){select("classoraMobileChatBtn");return}
+   if($("classModal")?.classList.contains("open")){select("classoraMobileClassesBtn");return}
+   if($("classoraCurriculumModal")?.classList.contains("open")){select("classoraMobileSubjectsBtn");return}
    if(location.hash==="#periodic-table"){select("classoraMobileSubjectsBtn");return}
    const activeNav=nav()?.querySelector("button.is-active");
    if(!activeNav)select("classoraMobileLobbyBtn");
@@ -59,7 +61,23 @@
    syncLayout();
    monitorModal($("chatModal"));
    monitorModal($("settingsModal"));
+   monitorModal($("classModal"));
    monitorModal($("classoraCurriculumModal"));
+   // The old lobby return handler intercepts clicks at document capture level.
+   // Capture on window first so the active indicator resets even when it stops propagation.
+   window.addEventListener("click",event=>{
+     const clicked=event.target?.closest?.(
+       '#classoraMobileLobbyBtn,#mobileReturnLobbyBtn,#returnLobbyBtn,[data-return-control][data-return-target="lobby"]'
+     );
+     if(clicked)select("classoraMobileLobbyBtn");
+   },true);
+   new MutationObserver(()=>{
+     if(!$("classModal")?.classList.contains("open") &&
+        nav()?.querySelector("#classoraMobileClassesBtn.is-active") &&
+        !$("settingsModal")?.classList.contains("open")){
+       select("classoraMobileLobbyBtn");
+     }
+   }).observe($("classModal"),{attributes:true,attributeFilter:["class"]});
    const added=new MutationObserver(records=>{
      for(const record of records){
        for(const item of record.addedNodes){
