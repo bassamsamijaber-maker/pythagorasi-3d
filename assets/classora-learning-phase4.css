@@ -182,3 +182,13 @@
 @media(prefers-reduced-motion:reduce){
  #platformLobby .learning-hub .hub-curriculum-subject,#platformLobby .learning-hub .hub-topic-card,.classora-curriculum-modal .curriculum-grade-card,.classora-curriculum-modal .curriculum-subject-card,.classora-curriculum-modal .curriculum-topic-card{transition:none!important}
 }
+
+
+/* Preserve quiz feedback colors and selection states after visual overrides. */
+.classora-curriculum-modal.lesson-open .curriculum-mini-options button.correct{
+  border-color:#52e7a9!important;background:rgba(43,182,115,.2)!important;color:#cbffde!important
+}
+.classora-curriculum-modal.lesson-open .curriculum-mini-options button.wrong{
+  border-color:#ff8181!important;background:rgba(213,66,73,.2)!important;color:#ffe0e1!important
+}
+.classora-curriculum-modal.lesson-open .curriculum-mini-options button:disabled{cursor:default;opacity:.72}
