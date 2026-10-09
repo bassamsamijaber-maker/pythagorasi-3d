@@ -23,7 +23,7 @@ export function mountClassoraHomeV112(api){
   {id:"default-pythagoras",kind:"pythagoras",titleAr:"عجلة فيثاغورس التفاعلية",titleEn:"Interactive Pythagoras wheel",bodyAr:"جرّب تحريك العجلة والرمل واكتشف علاقة أضلاع المثلث القائم.",bodyEn:"Explore the wheel, sand and right-triangle relationships.",target:"all",active:true},
   {id:"default-periodic",kind:"periodic",titleAr:"الجدول الدوري للعناصر",titleEn:"Periodic table of elements",bodyAr:"استكشف 118 عنصرًا بخصائصها ورسوماتها.",bodyEn:"Explore the elements, their properties and interactive models.",target:"all",active:true}
  ];
- let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[],classNames=[];
+ let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[],classNames=[],editingPromoId="";
  const center=get("classoraPromoCenter"),slides=get("classoraPromoSlides"),dots=get("classoraPromoDots");
  const status=get("classoraPromoAdminStatus"),adminList=get("classoraPromoAdminList");
  const role=()=>api.profile()?.role||"";
@@ -206,15 +206,44 @@ export function mountClassoraHomeV112(api){
    const name=newNode("div","cp-admin-details");
    name.append(newNode("b","",p.titleAr||p.titleEn||"—"),newNode("small","",p.active?t("مفعّل","Active"):t("متوقف","Paused")));
    const actions=newNode("div","cp-admin-actions");
-   for(const [action,label] of [["toggle",p.active?t("إيقاف","Pause"):t("تشغيل","Enable")],["remove",t("حذف","Delete")]]){
+   for(const [action,label] of [["edit",t("تعديل","Edit")],["toggle",p.active?t("إيقاف","Pause"):t("تشغيل","Enable")],["remove",t("حذف","Delete")]]){
     const button=newNode("button","cp-admin-"+action,label);button.type="button";
-    button.addEventListener("click",()=>changePromo(action,p.id));actions.append(button);
+    button.addEventListener("click",()=>action==="edit"?editPromo(p):changePromo(action,p.id));actions.append(button);
    }
    row.append(name,actions);list.append(row);
   }
   if(!allRows().length)list.append(newNode("p","ct-empty",t("ما في إعلانات بعد.","No announcements yet.")));
  }
  function message(ar,en){if(status)status.textContent=t(ar,en)}
+ function resetEditor(){
+  editingPromoId="";
+  get("classoraPromoAdminForm")?.reset();
+  const save=get("classoraPromoAdminAdd");
+  if(save)save.textContent=t("أضف إعلانًا","Add announcement");
+  const cancel=get("classoraPromoCancelEdit");
+  if(cancel)cancel.hidden=true;
+ }
+ function editPromo(p){
+  if(!isAdmin())return;
+  const form=get("classoraPromoAdminForm");
+  if(!form)return;
+  editingPromoId=p.id;
+  for(const name of ["kind","titleAr","titleEn","bodyAr","bodyEn","target","classId","grade","subject","topicRef"]){
+   const field=form.elements.namedItem(name);
+   if(field)field.value=p[name]??"";
+  }
+  const save=get("classoraPromoAdminAdd");
+  if(save)save.textContent=t("احفظ التعديلات","Save changes");
+  let cancel=get("classoraPromoCancelEdit");
+  if(!cancel){
+   cancel=newNode("button","cp-admin-cancel",t("إلغاء التعديل","Cancel edit"));
+   cancel.type="button";cancel.id="classoraPromoCancelEdit";
+   cancel.addEventListener("click",resetEditor);form.append(cancel);
+  }
+  cancel.hidden=false;
+  form.scrollIntoView({behavior:"smooth",block:"start"});
+  message("تعديل الإعلان المحدد","Editing selected announcement");
+ }
  async function updatePromos(compute){
   if(!isAdmin()||!api.auth.currentUser){message("ليس لديك صلاحية الإدارة.","No administrator access.");return}
   const ref=api.doc(api.db,"siteControls","main");
@@ -226,7 +255,7 @@ export function mountClassoraHomeV112(api){
     if(next.length>5||next.filter(p=>p.active).length>5)throw Error("limit-five");
     transaction.set(ref,{homePromos:next,updatedBy:api.auth.currentUser.uid,updatedAt:api.serverTimestamp()},{merge:true});
    });
-   message("تم الحفظ بنجاح.","Saved successfully.");
+   message("تم الحفظ بنجاح.","Saved successfully.");return true;
   }catch(err){
    console.error("Classora announcement save",err);
    message(err?.message==="limit-five"?"الحد الأقصى 5 إعلانات. احذف إعلان قبل الإضافة.":"تعذّر الحفظ. افحص اتصالك وصلاحيات الأدمن.",
@@ -235,6 +264,8 @@ export function mountClassoraHomeV112(api){
  }
  function changePromo(action,id){
   if(!isAdmin())return;
+  if(action==="remove"&&!window.confirm(t("حذف الإعلان نهائيًا؟","Delete this announcement permanently?")))return;
+  if(action==="remove"&&editingPromoId===id)resetEditor();
   updatePromos(old=>action==="remove"?old.filter(p=>p.id!==id):old.map(p=>p.id===id?{...p,active:!p.active}:p));
  }
  function addPromo(){
@@ -245,7 +276,7 @@ export function mountClassoraHomeV112(api){
   if(titleAr.length<2||bodyAr.length<5){message("اكتب عنوانًا ووصفًا واضحين.","Enter a title and description.");return}
   const promo=normalize({id:"home_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),kind,titleAr,bodyAr,titleEn:pick("titleEn"),bodyEn:pick("bodyEn"),target:pick("target"),classId:pick("classId"),grade:pick("grade"),subject:pick("subject"),topicRef:pick("topicRef"),active:true});
   if(promo.target==="class"&&!promo.classId){message("أدخل معرّف الصف المستهدف.","Enter the target class ID.");return}
-  updatePromos(old=>[...old,promo]).then(()=>{if(status?.textContent?.includes(t("بنجاح","successfully")))form.reset()});
+  updatePromos(old=>editingPromoId?old.map(row=>row.id===editingPromoId?{...promo,id:editingPromoId,active:row.active}:row):[...old,promo]).then(saved=>{if(saved)resetEditor()});
  }
  const setPromos=rows=>{stored=Array.isArray(rows)?rows.map(normalize).filter(Boolean).slice(0,5):null;render();renderAdmin()};
  get("classoraPromoPrev")?.addEventListener("click",()=>show(selected-1));
