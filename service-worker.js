@@ -1,7 +1,7 @@
-const CACHE_NAME="classora-v113-1-universal-dock";
+const CACHE_NAME="classora-v114-0-universal-dock-stability";
 const APP_SHELL=[
-  "./assets/classora-universal-dock-v113.css?v=1",
-  "./assets/classora-universal-dock-v113.js?v=2",
+  "./assets/classora-universal-dock-v113.css?v=2",
+  "./assets/classora-universal-dock-v113.js?v=3",
   "./assets/classora-home-v112.css?v=2",
   "./assets/classora-home-v112.js?v=2",
   "./assets/classora-universal-dock-v111.css?v=1",
