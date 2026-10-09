@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v111-0-universal-navigation";
+const CACHE_NAME="classora-v112-0-illustrated-announcements";
 const APP_SHELL=[
+  "./assets/classora-home-v112.css?v=1",
+  "./assets/classora-home-v112.js?v=1",
   "./assets/classora-universal-dock-v111.css?v=1",
   "./assets/classora-universal-dock-v111.js?v=1",
   "./assets/classora-polish-v110.css?v=1",
