@@ -78,9 +78,11 @@
 
     // Capture before the application's existing return handlers, without
     // preventing the existing buttons from working.
-    nav.addEventListener("click",e=>{
-      const btn=e.target.closest("button");
+    document.addEventListener("click",e=>{
+      const btn=e.target?.closest?.("#classoraMobilePageNav button");
       if(!btn)return;
+      // The legacy Lobby handler stops propagation at document capture, so
+      // we attach here before that handler and do not interfere with it.
       if(btn.id==="classoraMobileSettingsBtn"){
         try{sessionStorage.removeItem("classora_subject_origin")}catch{}
         select(btn.id);
