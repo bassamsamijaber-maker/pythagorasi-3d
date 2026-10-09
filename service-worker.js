@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v107-0-learning-experience";
+const CACHE_NAME="classora-v108-0-mobile-tablet-experience";
 const APP_SHELL=[
+  "./assets/classora-mobile-tablet-v108.css?v=1",
+  "./assets/classora-mobile-tablet-v108.js?v=1",
   "./assets/classora-learning-phase4.css?v=1",
   "./assets/classora-learning-phase4.js?v=1",
   "./assets/classora-teacher-dashboard.css?v=1",
