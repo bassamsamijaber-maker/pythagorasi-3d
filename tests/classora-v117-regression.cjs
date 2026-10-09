@@ -25,6 +25,10 @@ assert.match(index,/completed:Boolean\(profile\?\.classoraOnboardingCompletedAt\
 assert.match(index,/classoraGuidedTourV117\?\.profileReady/,'New-account tutorial only after auth');
 assert.match(index,/CLASSORA_NAME_COOLDOWN_MS=7\*24\*60\*60\*1000/,'Full 7-day cooldown');
 assert.match(index,/runTransaction\(db,async tx=>/,'Atomic Firestore name changes');
+assert.match(index,/adminResetNameCooldown/,'Admin may reset name timer');
+assert.match(index,/reset_name_cooldown/,'Admin cooldown reset audited');
+assert.match(index,/displayNameChangedAt:deleteField\(\)/,'Admin cooldown reset actually removes timestamp');
+assert.match(index,/LAST NAME CHANGE/,'Admin sees last name-change timestamp');
 assert.match(index,/displayNameChangedAt:serverTimestamp\(\)/,'Trusted timestamp write');
 assert.match(index,/id="classoraNameCooldownNote"/,'Visible localized remaining time');
 assert.match(rules,/function selfDisplayNameCooldown\(\)/,'Firestore rule guard');
