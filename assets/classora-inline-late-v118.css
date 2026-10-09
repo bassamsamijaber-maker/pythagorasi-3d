@@ -1,0 +1,135 @@
+
+body:not(.auth-ready) #authGate,body.classora-session-restoring #authGate{visibility:hidden!important;pointer-events:none!important}body.classora-authenticated #authGate{display:none!important}
+button[data-return-control]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto!important;min-width:78px!important;height:40px!important;font-size:13px!important;padding:8px 12px!important;border-radius:12px!important;flex-shrink:0}button[data-return-control] span{display:inline!important}
+@media(max-width:760px){body.classora-authenticated .modalhead .close[data-return-control]{display:inline-flex!important}.lobby-topbar{display:flex!important;flex-wrap:wrap;gap:14px!important}.lobby-top-actions{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:10px!important;width:100%!important}.lobby-top-actions button{min-height:44px!important;width:auto!important;flex:0 1 auto;padding:10px!important}.lobby-top-actions span{display:inline!important}.hub-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hub-topic-card{min-width:0!important;padding:14px!important}.hub-topic-card h3{font-size:17px!important}.hub-hero-art{display:block!important}#chatModal .classora-chat-box{width:calc(100vw - 20px)!important;max-width:none!important;height:calc(100dvh - 105px)!important;max-height:none!important}.modalhead{gap:10px!important;flex-wrap:wrap}.classora-mobile-page-nav{max-width:400px}.modalbox{width:calc(100vw - 20px)!important;max-width:100%!important}.hub-subject-tabs{display:flex!important;flex-wrap:wrap!important}}
+@media(max-width:350px){.hub-card-grid{grid-template-columns:1fr!important}}
+.classora-mobile-page-nav{display:none}
+@media(max-width:760px){
+  .classora-mobile-page-nav{
+    position:fixed!important;
+    z-index:2147483500!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:max(10px,env(safe-area-inset-bottom))!important;
+    transform:translateX(-50%)!important;
+    width:min(390px,calc(100vw - 20px))!important;
+    min-height:62px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    padding:8px!important;
+    border:1px solid rgba(164,220,255,.18)!important;
+    border-radius:19px!important;
+    background:rgba(5,18,28,.92)!important;
+    box-shadow:0 16px 42px rgba(0,0,0,.48),0 0 30px rgba(54,194,255,.08)!important;
+    backdrop-filter:blur(18px)!important;
+    -webkit-backdrop-filter:blur(18px)!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+  }
+  body:not(.classora-authenticated) .classora-mobile-page-nav,
+  body.classora-intro-active .classora-mobile-page-nav,
+  body:has(#authGate.show) .classora-mobile-page-nav{display:none!important}
+  .classora-mobile-page-nav button{
+    flex:1 1 0!important;
+    min-width:0!important;
+    min-height:46px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    border:1px solid rgba(164,220,255,.12)!important;
+    border-radius:13px!important;
+    background:rgba(255,255,255,.045)!important;
+    color:#ecf9ff!important;
+    font-size:13px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    padding:10px 12px!important;
+    cursor:pointer!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+  .classora-mobile-page-nav button:active{transform:scale(.96)!important;background:rgba(89,197,255,.13)!important}
+  .classora-mobile-page-nav svg{width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 auto!important}
+  .platform-lobby{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
+  .modalbox,.classora-chat-box{padding-bottom:calc(86px + env(safe-area-inset-bottom))!important}
+  #classoraIntro.classora-cinematic-intro{touch-action:none!important;pointer-events:none!important}
+  #classoraIntro .intro-center-launch,#classoraIntro .intro-skip{pointer-events:none!important}
+}
+#classoraIntro{z-index:2147483600!important}#classoraIntro .classora-intro-mark{width:140px!important;height:140px!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important}#classoraIntro .classora-intro-mark img{width:100%;height:100%;object-fit:contain;border-radius:28px}#classoraIntro strong{font-size:32px!important}#sessionRecovery{position:fixed;inset:0;z-index:99999;background:#07111e;display:grid;place-content:center;text-align:center;gap:20px;padding:24px;color:#eaf5ff}#sessionRecovery[hidden]{display:none}#sessionRecovery button{padding:14px;border-radius:12px;background:#26579a;color:white;border:1px solid #83c7ff}
+
+
+
+#classoraIntro.classora-cinematic-intro{
+  pointer-events:none!important;overflow:hidden!important;isolation:isolate!important;
+  animation:classoraIntroAutoExit 4.2s linear both!important;
+  background:
+   radial-gradient(circle at 50% 42%,rgba(37,193,255,.18),transparent 23%),
+   radial-gradient(circle at 18% 20%,rgba(45,255,176,.10),transparent 30%),
+   radial-gradient(circle at 82% 78%,rgba(67,139,255,.12),transparent 30%),
+   linear-gradient(145deg,#02090f,#061723 55%,#031017)!important;
+  gap:0!important;letter-spacing:normal!important
+}
+#classoraIntro .intro-film-grid{position:absolute;inset:-25%;z-index:-4;background-image:linear-gradient(#79d6ff0d 1px,transparent 1px),linear-gradient(90deg,#79d6ff0d 1px,transparent 1px);background-size:54px 54px;transform:perspective(800px) rotateX(58deg) translateY(24%);mask-image:linear-gradient(to bottom,transparent,#000 26%,#000 75%,transparent)}
+#classoraIntro .intro-film-glow{position:absolute;width:min(62vw,700px);aspect-ratio:1;border-radius:50%;background:#30cfa622;filter:blur(80px);z-index:-3;animation:introGlowDrift 5s ease-in-out infinite alternate}
+#classoraIntro .intro-orbit-ring{position:absolute;left:50%;top:50%;width:min(68vw,720px);aspect-ratio:1;border:1px solid #9eefff1a;border-radius:50%;animation:introOrbitSpin 15s linear infinite}
+#classoraIntro .intro-orbit-ring.r2{width:min(88vw,940px);border-style:dashed;animation-duration:23s;animation-direction:reverse}
+#classoraIntro .intro-float-card{position:absolute;display:flex;align-items:center;gap:9px;min-width:118px;padding:10px 13px;border:1px solid #a5eaff24;border-radius:16px;background:#071824c9;color:#def8ff;box-shadow:0 14px 34px #0007,0 0 24px #39c9ff10;backdrop-filter:blur(12px);font:800 12px/1.2 system-ui;letter-spacing:0}
+#classoraIntro .intro-float-card svg{width:23px;height:23px;fill:none;stroke:#78e7cc;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(1){left:50%;top:-22px;transform:translateX(-50%)}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(2){right:-54px;top:50%;transform:translateY(-50%)}
+#classoraIntro .intro-orbit-ring .intro-float-card:nth-child(3){left:50%;bottom:-22px;transform:translateX(-50%)}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(1){left:7%;top:12%;transform:none}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(2){right:5%;top:72%;transform:none}
+#classoraIntro .intro-orbit-ring.r2 .intro-float-card:nth-child(3){left:8%;bottom:9%;transform:none}
+#classoraIntro .intro-center-launch{position:relative;z-index:7;display:grid;justify-items:center;gap:9px;border:0;background:transparent;color:#fff;cursor:default;padding:18px;overflow:visible;animation:introCenterIn .8s cubic-bezier(.16,.9,.24,1.12) both;pointer-events:none!important}
+#classoraIntro .intro-logo-shell{position:relative;width:146px;height:146px;display:grid;place-items:center;border-radius:38px;background:linear-gradient(145deg,#ffffff16,#ffffff05);border:1px solid #b8f5ff2c;box-shadow:0 24px 65px #0009,0 0 70px #34dfb633;backdrop-filter:blur(18px)}
+#classoraIntro .intro-logo-shell::before{content:"";position:absolute;inset:-12px;border:1px solid #70e7cf35;border-radius:48px;animation:introLogoPulse 2.2s ease-in-out infinite}
+#classoraIntro .intro-logo-shell img{width:112px!important;height:112px!important;object-fit:contain!important;border-radius:29px!important;filter:drop-shadow(0 10px 22px #0008)}
+#classoraIntro .intro-center-launch strong{font:1000 clamp(32px,5vw,55px)/1 system-ui!important;letter-spacing:-1.8px!important}
+#classoraIntro .intro-center-launch small{font:650 clamp(12px,1.6vw,17px)/1.4 system-ui;color:#9ec7d6;letter-spacing:.02em}
+#classoraIntro .intro-enter-pill{margin-top:5px;padding:8px 14px;border-radius:999px;border:1px solid #6ae6c44a;background:#4de0ad12;color:#9bffdf;font:850 12px system-ui}
+#classoraIntro .intro-demo-cursor{position:absolute;z-index:12;width:42px;height:42px;left:calc(50% + min(31vw,310px));top:calc(50% + min(25vh,190px));filter:drop-shadow(0 8px 10px #000a);animation:introCursorDemo 3.35s cubic-bezier(.35,.05,.18,1) .45s both;pointer-events:none}
+#classoraIntro .intro-demo-cursor svg{width:100%;height:100%;fill:#f4ffff;stroke:#061019;stroke-width:1.5}
+#classoraIntro .intro-click-ripple{position:absolute;z-index:6;left:50%;top:50%;width:24px;height:24px;border:2px solid #8bffe0;border-radius:50%;opacity:0;transform:translate(-50%,-50%) scale(.3);animation:introTapRipple .65s ease-out 2.75s}
+#classoraIntro .intro-skip{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:15;border:1px solid #ffffff22;border-radius:999px;background:#ffffff09;color:#c9dce5;padding:9px 13px;font:750 11px system-ui;cursor:pointer;backdrop-filter:blur(8px)}
+#classoraIntro .intro-skip:hover{background:#ffffff12}
+#classoraIntro.demo-press .intro-logo-shell{animation:introDemoPress .42s ease}
+#classoraIntro.classora-intro-exit{opacity:0!important;visibility:hidden!important;transform:scale(1.035);transition:opacity .48s ease,visibility .48s ease,transform .55s ease!important}
+@keyframes classoraIntroAutoExit{
+  0%,82%{opacity:1;visibility:visible}
+  92%{opacity:0}
+  100%{opacity:0;visibility:hidden}
+}
+@keyframes introOrbitSpin{to{transform:rotate(360deg)}}@keyframes introGlowDrift{to{transform:translate(7vw,-4vh) scale(1.12)}}@keyframes introCenterIn{from{opacity:0;transform:scale(.82) translateY(16px)}to{opacity:1;transform:none}}@keyframes introLogoPulse{50%{transform:scale(1.055);opacity:.55}}@keyframes introDemoPress{45%{transform:scale(.92)}75%{transform:scale(1.04)}}@keyframes introTapRipple{30%{opacity:1}to{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}@keyframes introCursorDemo{0%{opacity:0;transform:translate(0,0) rotate(-12deg)}12%{opacity:1}72%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg)}82%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg) scale(.82)}92%{transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg) scale(1)}100%{opacity:0;transform:translate(calc(25px - min(31vw,310px)),calc(24px - min(25vh,190px))) rotate(-12deg)}}
+@media(max-width:700px){#classoraIntro .intro-orbit-ring{width:78vw}#classoraIntro .intro-orbit-ring.r2{width:108vw}#classoraIntro .intro-float-card{min-width:92px;padding:8px 10px;font-size:10px}#classoraIntro .intro-float-card svg{width:19px;height:19px}#classoraIntro .intro-logo-shell{width:118px;height:118px;border-radius:31px}#classoraIntro .intro-logo-shell img{width:90px!important;height:90px!important;border-radius:24px!important}#classoraIntro .intro-demo-cursor{display:none}}
+@media(prefers-reduced-motion:reduce){#classoraIntro .intro-orbit-ring,#classoraIntro .intro-film-glow,#classoraIntro .intro-logo-shell::before,#classoraIntro .intro-demo-cursor,#classoraIntro .intro-click-ripple{animation-duration:1.8s!important}#classoraIntro.classora-cinematic-intro{animation:classoraIntroAutoExit 3s linear both!important}}
+
+
+
+/* Safe mobile Lobby control: styling only; reuses the existing Classora navigation handler. */
+@media (max-width:760px){
+  body.classora-authenticated #classoraMobilePageNav{
+    display:flex!important;
+    z-index:2147483646!important;
+    bottom:calc(max(10px,env(safe-area-inset-bottom)) + 2px)!important;
+    pointer-events:auto!important;
+  }
+  body.classora-authenticated #classoraMobileLobbyBtn{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+    min-height:50px!important;
+    border-color:rgba(109,211,255,.30)!important;
+    background:linear-gradient(145deg,rgba(30,155,220,.20),rgba(36,86,161,.18))!important;
+    box-shadow:0 8px 24px rgba(0,0,0,.26)!important;
+  }
+  body.classora-authenticated #classoraMobileLobbyBtn span{display:inline!important}
+  body.classora-intro-active #classoraMobilePageNav,
+  body:has(#authGate.show) #classoraMobilePageNav{display:none!important}
+}
+
