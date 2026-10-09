@@ -4816,20 +4816,22 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 <link rel="stylesheet" href="./assets/classora-universal-dock-v113.css?v=2">
 <script defer src="./assets/classora-universal-dock-v113.js?v=4"></script>
 <link rel="stylesheet" href="./assets/classora-entrance-v116.css?v=1">
-<script defer src="./assets/classora-entrance-v116.js?v=1"></script>
+<script defer src="./assets/classora-entrance-v116.js?v=2"></script>
+<link rel="stylesheet" href="./assets/classora-v117.css?v=1">
+<script defer src="./assets/classora-guided-tour-v117.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
   <div class="cw116-stage">
-    <svg class="cw116-writing" viewBox="0 0 420 184" role="img" aria-label="كلاسورا — Classora">
-      <text class="cw116-word" x="210" y="102" text-anchor="middle" direction="rtl">كلاسورا</text>
+    <svg class="cw116-writing" viewBox="0 0 420 184" role="img" aria-label="Classora">
+      <text class="cw116-word" x="210" y="102" text-anchor="middle" direction="ltr">Classora</text>
       <path class="cw116-line one" d="M65 118 Q210 126 355 118"/>
       <path class="cw116-line two" d="M111 133 Q210 139 309 132"/>
     </svg>
     <div class="cw116-pen" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m30 5 13 13-23 23-15 3 3-15Z"/><path d="m25 10 13 13M8 29l11 11"/></svg></div>
     <small class="cw116-sub" aria-hidden="true">C L A S S O R A</small>
   </div>
-  <button class="cw116-skip" type="button" aria-label="تخطي الافتتاحية">تخطي / Skip</button>
+  <button class="cw116-skip" type="button" aria-label="Skip intro">Skip</button>
 </div>
 <script>(function(){
   var intro=document.getElementById("classoraIntro");
@@ -4856,7 +4858,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
   setTimeout(finish,3000);
   setTimeout(finish,3600);
 })();</script>
-<div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading • جارٍ التحميل</span></div>
+<div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading your workspace…</span></div>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
@@ -6211,6 +6213,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <input id="settingsDisplayName" maxlength="40" placeholder="الاسم الظاهر">
         <div class="settings-note">هذا يغيّر الاسم الظاهر فقط. اسم الدخول الأصلي يبقى نفسه حتى ما يضيع حسابك.</div>
         <button class="exam-secondary" id="saveDisplayNameBtn">حفظ الاسم</button>
+        <p id="classoraNameCooldownNote" data-no-translate aria-live="polite"></p>
       </section>
 
       <section class="settings-card">
@@ -7162,7 +7165,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, getDocFromServer, setDoc, addDoc, collection, getDocs,
-  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc,
+  query, where, serverTimestamp, updateDoc, onSnapshot, runTransaction, deleteDoc, deleteField,
   arrayUnion, arrayRemove, orderBy, limit, startAfter, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
@@ -7841,7 +7844,10 @@ async function saveUserProfile(user,profile){
   };
   if(user.email)base.email=user.email;
   if(user.photoURL&&!base.photoData)base.photoURL=user.photoURL;
-  if(!existing.exists())base.createdAt=serverTimestamp();
+  if(!existing.exists()){
+    base.createdAt=serverTimestamp();
+    base.classoraOnboardingEligible=true; // Only freshly created accounts receive the automatic guided tour.
+  }
   await setDoc(ref,base,{merge:true});
   return {...existingData,...clean,...base};
 }
@@ -7899,6 +7905,17 @@ function paintUser(user,profile){
 
   const pending=authPendingAction;
   if(!pending)showPlatformLobby();
+  if(!guest && user?.uid){
+    window.classoraGuidedTourV117?.profileReady({
+      uid:user.uid,
+      eligible:profile?.classoraOnboardingEligible===true,
+      completed:Boolean(profile?.classoraOnboardingCompletedAt),
+      saveCompletion:async()=>{
+        await setDoc(doc(db,"users",user.uid),{classoraOnboardingCompletedAt:serverTimestamp()},{merge:true});
+        if(window.PythagorasiUser?.uid===user.uid)window.PythagorasiUser.classoraOnboardingCompletedAt=new Date();
+      }
+    });
+  }
   if(!guest)finishAuthIntent(); else authPendingAction=null;
   if(!guest)setTimeout(()=>maybeShowSecurityReminder(user.uid),1400);
 }
@@ -13516,6 +13533,36 @@ document.addEventListener("keydown",e=>{
   if(e.key.length===1||e.key==="Backspace"){lastTypingSound=now;soundFx("type")}
 },true);
 
+// Local status mirrors the 7-day Firestore rule; transaction/rules enforce the real limit.
+const CLASSORA_NAME_COOLDOWN_MS=7*24*60*60*1000;
+function classoraNameLastChangedMs(profile){
+  const stamp=profile?.displayNameChangedAt;
+  return typeof stamp?.toMillis==="function"?stamp.toMillis():
+    typeof stamp?.seconds==="number"?stamp.seconds*1000:0;
+}
+function classoraNameNextAllowedMs(profile){
+  const last=classoraNameLastChangedMs(profile);
+  return last>0?last+CLASSORA_NAME_COOLDOWN_MS:0;
+}
+function classoraFormatNameDate(timestamp){
+  return new Intl.DateTimeFormat(currentUILanguage==="en"?"en-US":"ar",
+    {dateStyle:"medium",timeStyle:"short"}).format(new Date(timestamp));
+}
+function classoraRefreshNameCooldown(){
+  const note=document.getElementById("classoraNameCooldownNote");
+  const button=document.getElementById("saveDisplayNameBtn");
+  const field=document.getElementById("settingsDisplayName");
+  if(!note||!button||!field)return;
+  const until=classoraNameNextAllowedMs(window.PythagorasiUser);
+  const locked=until>Date.now()&&!isSuperAdminProfile();
+  button.disabled=locked;
+  field.readOnly=locked;
+  note.dataset.locked=String(locked);
+  const en=currentUILanguage==="en";
+  note.textContent=locked?
+    (en?"You can change your display name again on ":"بتقدر تغيّر اسمك مرة ثانية بتاريخ ")+classoraFormatNameDate(until):
+    (en?"Display name can be changed once every 7 days. Admins can edit it anytime.":"بتقدر تغيّر الاسم مرة كل 7 أيام. الأدمن بقدر يعدّله بأي وقت.");
+}
 function refreshSettingsUI(){
   const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
   document.getElementById("settingsCurrentName").textContent=name;
@@ -13534,6 +13581,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
+  classoraRefreshNameCooldown();
   document.getElementById("securityPhraseCurrentPassword")?.classList.toggle("hidden",!auth.currentUser?.providerData?.some(p=>p.providerId==="password"));
   const secState=document.getElementById("securityPhraseState");
   if(secState)secState.textContent=p.securityPhraseHash?(currentUILanguage==="en"?"Security phrase is configured ✅":"كلمة الأمان مفعّلة ✅"):(currentUILanguage==="en"?"Security phrase is not set yet.":"كلمة الأمان غير مفعّلة بعد.");
@@ -13613,23 +13661,58 @@ document.getElementById("settingsMotionToggle").addEventListener("change",e=>{
 
 document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>{
   if(!auth.currentUser||!window.PythagorasiUser)return;
+  const button=document.getElementById("saveDisplayNameBtn");
   const name=document.getElementById("settingsDisplayName").value.trim().replace(/\s+/g," ");
   const status=document.getElementById("settingsStatus");
-  if(name.length<2){status.textContent="اكتب اسمًا من حرفين على الأقل.";return}
+  const en=currentUILanguage==="en";
+  if(name.length<2||name.length>40){
+    status.textContent=en?"Use a name between 2 and 40 characters.":"اكتب اسمًا بين حرفين و40 حرفًا.";return;
+  }
+  if(name===window.PythagorasiUser.displayName){
+    status.textContent=en?"This is already your display name.":"هذا اسمك الحالي.";return;
+  }
+  button.disabled=true;
   try{
-    const originalLoginName=window.PythagorasiUser.loginName||window.PythagorasiUser.originalLoginName||window.PythagorasiUser.displayName||name;
-    await setDoc(doc(db,"users",auth.currentUser.uid),{displayName:name,originalLoginName,updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,displayName:name,originalLoginName};
+    const uid=auth.currentUser.uid,userRef=doc(db,"users",uid);
+    const oldName=window.PythagorasiUser.displayName;
+    const originalLoginName=window.PythagorasiUser.loginName||
+      window.PythagorasiUser.originalLoginName||oldName||name;
+    const adminChanging=isSuperAdminProfile();
+    await runTransaction(db,async tx=>{
+      const latest=await tx.get(userRef);
+      if(!latest.exists())throw new Error("name-profile-missing");
+      const nextAllowed=classoraNameNextAllowedMs(latest.data());
+      if(!adminChanging&&nextAllowed>Date.now())throw new Error("name-cooldown");
+      tx.update(userRef,{
+        displayName:name,originalLoginName,
+        displayNameChangedAt:serverTimestamp(),updatedAt:serverTimestamp()
+      });
+    });
+    let updated=null;
+    try{updated=await getDoc(userRef)}catch{}
+    window.PythagorasiUser={
+      ...window.PythagorasiUser,displayName:name,originalLoginName,
+      displayNameChangedAt:updated.data()?.displayNameChangedAt||{seconds:Math.floor(Date.now()/1000)}
+    };
     activeProfile=window.PythagorasiUser;
     document.getElementById("authDisplayName").textContent=name;
     document.getElementById("lobbyProfileName").textContent=name;
-    document.getElementById("lobbyGreeting").textContent=`أهلًا ${name.split(/\s+/)[0]} 👋`;
-    if(isStudentLike())await syncStudentMemberStats();
-    await syncPublicProfile(window.PythagorasiUser,auth.currentUser);
+    document.getElementById("lobbyGreeting").textContent=
+      (en?"Welcome, ":"أهلًا ")+name.split(/\s+/)[0];
+    if(isStudentLike())try{await syncStudentMemberStats()}catch(e){console.warn("class stats sync",e)}
+    try{await syncPublicProfile(window.PythagorasiUser,auth.currentUser)}catch(e){console.warn("profile sync",e)}
     refreshAIWelcome();refreshSettingsUI();
-    status.textContent="تم حفظ الاسم الظاهر ✅";
+    status.textContent=en?"Display name saved. You can change it again in 7 days.":
+      "تم تغيير الاسم. بتقدر تغيّره مرة ثانية بعد 7 أيام.";
     soundFx("correct");
-  }catch(err){console.error(err);status.textContent="تعذر حفظ الاسم."}
+  }catch(err){
+    console.error("weekly display-name change",err);
+    status.textContent=String(err?.message||"").includes("name-cooldown")?
+      (en?"You can only change your display name once every 7 days.":"تغيير الاسم متاح مرة كل 7 أيام فقط."):
+      (en?"Could not save your name. Please try again.":"تعذّر حفظ الاسم. جرّب مرة ثانية.");
+  }finally{
+    classoraRefreshNameCooldown();
+  }
 });
 
 
@@ -16009,7 +16092,7 @@ function adminRenderPeople(){
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
     card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
       <div class="admin-detail-grid">
-        <div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("آخر تغيير اسم","LAST NAME CHANGE")}</small><span>${u.displayNameChangedAt?escapeHtml(adminHistoryTimestamp(u.displayNameChangedAt)):"—"}</span></div><div class="admin-detail-item"><small>PROFILE ID</small><span class="admin-id">${escapeHtml(u.profileId||"—")}</span></div>
         <div class="admin-detail-item"><small>ACCOUNT UID</small><span>${escapeHtml(u.uid||"—")}</span></div>
         <div class="admin-detail-item"><small>${adminLang("اسم الدخول","LOGIN NAME")}</small><span>${escapeHtml(loginName)}</span></div>
         <div class="admin-detail-item"><small>${adminLang("نوع الدخول","AUTH PROVIDER")}</small><span>${escapeHtml(provider)}</span></div>
@@ -16020,12 +16103,32 @@ function adminRenderPeople(){
         <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
       </div>
       <div class="admin-account-classes">${memberships.length?`${adminLang("الصفوف","Classes")}: ${memberships.map(c=>escapeHtml(c.name||"Class")).join(" • ")}`:adminLang("مش مربوط بأي صف.","Not linked to a class.")}</div>
-      <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
-    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));card.querySelector(".admin-reset-access")?.addEventListener("click",()=>adminRequirePasswordChange(u));card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));host.appendChild(card)
+      <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><button class="admin-reset-name-clock admin-action-primary">${adminLang("فتح تغيير الاسم","Reset name timer")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
+    card.querySelector(".admin-rename-user")?.addEventListener("click",()=>adminRenameUser(u));card.querySelector(".admin-reset-name-clock")?.addEventListener("click",()=>adminResetNameCooldown(u));card.querySelector(".admin-user-photo")?.addEventListener("change",e=>adminChangeUserPhoto(u,e.target));card.querySelector(".admin-remove-user-photo")?.addEventListener("click",()=>adminRemoveUserPhoto(u));card.querySelector(".admin-reset-access")?.addEventListener("click",()=>adminRequirePasswordChange(u));card.querySelector(".admin-toggle-block")?.addEventListener("click",()=>adminToggleBlockUser(u));card.querySelector(".admin-delete-user")?.addEventListener("click",()=>adminDeleteSiteUser(u));host.appendChild(card)
   }
 }
 async function adminRequirePasswordChange(u){if(u.role!=="student")return;if(!confirm(adminLang(`تطلب من ${adminUserDisplay(u)} تغيير كلمة السر عند دخوله؟`,`Require ${adminUserDisplay(u)} to change their password?`)))return;try{await updateDoc(doc(db,"users",u.uid),{forcePasswordReset:true,forcePasswordResetAt:serverTimestamp(),forcePasswordResetBy:auth.currentUser.uid});await adminAudit("require_password_change",u.profileId||u.uid);showToast(adminLang("تم تسجيل طلب تغيير كلمة السر ✅","Password-change requirement saved ✅"));await adminLoadAllData()}catch(err){console.error(err);showToast(adminLang("تعذر حفظ الطلب.","Could not save the request."))}}
 
+async function adminResetNameCooldown(u){
+  if(!isSuperAdminProfile()||!u?.uid)return;
+  const yes=confirm(adminLang(
+    "تسمح لهذا المستخدم بتغيير اسمه الآن، حتى لو لم يمر أسبوع؟",
+    "Allow this user to change their display name immediately, even if seven days have not passed?"
+  ));
+  if(!yes)return;
+  try{
+    await updateDoc(doc(db,"users",u.uid),{
+      displayNameChangedAt:deleteField(),
+      adminEditedAt:serverTimestamp()
+    });
+    await adminAudit("reset_name_cooldown",u.profileId||u.uid);
+    showToast(adminLang("تم فتح تغيير الاسم للمستخدم.","The name-change timer was reset."));
+    await adminLoadAllData();
+  }catch(error){
+    console.error("adminResetNameCooldown",error);
+    showToast(adminLang("تعذر إعادة السماح بتغيير الاسم.","Could not reset the name timer."));
+  }
+}
 async function adminRenameUser(u){
   const next=prompt(adminLang("اكتب الاسم الجديد:","Enter the new display name:"),adminUserDisplay(u));if(next==null)return;
   const name=next.trim().replace(/\s+/g," ").slice(0,40);if(name.length<2)return;

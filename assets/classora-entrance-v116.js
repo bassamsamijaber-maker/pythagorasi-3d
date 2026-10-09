@@ -148,6 +148,7 @@
    render();$("cw116-primary").focus({preventScroll:true});
  }
  function askOnce(){
+   return; // V117: only account-creation eligible users see the new live guided tour.
    if(!introReady||!authed()||(overlay&&!overlay.hidden))return;
    const k=storageKey();if(!k||seenAccount===k)return;
    seenAccount=k;try{if(localStorage.getItem(k)==="done")return}catch{}
@@ -156,7 +157,7 @@
  function onAuth(){setTimeout(askOnce,240);syncDock()}
  function replay(){
    $("closeSettingsModal")?.click();
-   setTimeout(()=>openWelcome("tour",true),180);
+   setTimeout(()=>window.classoraGuidedTourV117?.start(true),180);
  }
  function replayLink(){
    const grid=$("classoraSettingsShortcuts")?.querySelector(".classora-quick-grid");
@@ -168,7 +169,7 @@
    btn.addEventListener("click",replay);
  }
  function init(){
-   platform();loginDesign();setupDock();replayLink();ensureWelcome();
+   platform();loginDesign();setupDock();replayLink();
    const loader=$("cw116Wait");
    if(loader&&!loader.querySelector(".cw116-wait-spin")){
      const spinner=document.createElement("div");spinner.className="cw116-wait-spin";
@@ -188,5 +189,5 @@
    },10000);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
- window.classoraReplayOnboarding=()=>{if(authed()&&introReady)openWelcome("tour",true)};
+ window.classoraReplayOnboarding=()=>window.classoraGuidedTourV117?.start(true);
 })();
