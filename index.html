@@ -19,7 +19,7 @@ body.classora-intro-active{background:#06101b!important;overflow:hidden!importan
 body.classora-intro-active{overflow:auto!important}
 #classoraIntro{pointer-events:none!important;position:fixed;z-index:99999;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(ellipse at 50% 45%,#10285c 0%,#071426 48%,#040914 100%);color:#f5f8ff;font:700 15px system-ui;letter-spacing:.22em;transition:opacity .24s ease,visibility .24s ease}.classora-intro-mark{width:100px;height:100px;filter:drop-shadow(0 0 24px #315cff99);animation:introMarkIn .65s cubic-bezier(.2,.8,.2,1) both}.classora-intro-mark svg{width:100%;height:100%}#classoraIntro strong{font-size:19px;letter-spacing:.32em}.classora-intro-tagline{font:500 13px system-ui;letter-spacing:.04em;color:#afc5ef}#classoraIntro.classora-intro-exit{opacity:0;visibility:hidden}@keyframes introMarkIn{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}@media(prefers-reduced-motion:reduce){.classora-intro-mark{animation:none}#classoraIntro{transition:none}}
 </style>
-<link rel="preload" href="./icons/classora-512.png" as="image" fetchpriority="high">
+<!-- Intro uses inline SVG; no high-priority 512px image competing with critical CSS. -->
 <script id="classora-touch-zoom-guard">
 (()=>{if(!(navigator.maxTouchPoints>0))return;
  const stop=e=>{if(e.cancelable)e.preventDefault()};
