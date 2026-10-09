@@ -62,6 +62,31 @@
      get(targets[key])?.click();
    },90);
  }
+ function syncHeader(){
+   const bar=get("platformLobby")?.querySelector(".lobby-topbar");
+   const group=bar?.firstElementChild;
+   if(!group)return;
+   let summary=get("classoraHeaderIdentity");
+   if(!summary){
+     summary=document.createElement("div");
+     summary.id="classoraHeaderIdentity";
+     summary.className="classora-header-identity";
+     summary.setAttribute("data-no-translate","");
+     group.append(summary);
+   }
+   const name=get("lobbyProfileName")?.textContent?.trim()||"";
+   const grade=get("classoraWelcomeCard")?.querySelector(".cw-grade")?.textContent?.trim()||"";
+   summary.replaceChildren();
+   if(name){
+     const label=document.createElement("strong");
+     label.textContent=name;summary.append(label);
+   }
+   if(grade){
+     const label=document.createElement("span");
+     label.textContent=grade;summary.append(label);
+   }
+   summary.hidden=!name&&!grade;
+ }
  function init(){
    const shortcuts=menu(),top=get("platformLobby")?.querySelector(".lobby-top-actions");
    if(!shortcuts||shortcuts.dataset.v111Ready)return;
@@ -84,8 +109,11 @@
    new MutationObserver(syncShortcuts).observe(document.documentElement,{
      attributes:true,attributeFilter:["lang"]
    });
-   window.addEventListener("pageshow",syncShortcuts);
-   syncShortcuts();
+   window.addEventListener("pageshow",()=>{syncShortcuts();syncHeader()});
+   const identity=get("lobbyProfileName"),welcome=get("classoraWelcomeCard");
+   if(identity)new MutationObserver(syncHeader).observe(identity,{childList:true,characterData:true,subtree:true});
+   if(welcome)new MutationObserver(syncHeader).observe(welcome,{childList:true,characterData:true,subtree:true});
+   syncShortcuts();syncHeader();
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
  else init();
