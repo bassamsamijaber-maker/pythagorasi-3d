@@ -32,6 +32,7 @@
    const supported=Boolean(window.CSS&&(CSS.supports("backdrop-filter","blur(8px)")||CSS.supports("-webkit-backdrop-filter","blur(8px)")));
    document.body.classList.toggle("classora-platform-glass",native&&supported);
    document.body.classList.toggle("classora-platform-solid",!native||!supported);
+   document.body.classList.add("classora-dock-enabled");
  }
  function loginDesign(){
    const logo=$("authPanel")?.querySelector(".auth-logo");
@@ -86,6 +87,16 @@
        syncDock();
      }).observe(el,{attributes:true,attributeFilter:["class"]});
    });
+   // Curriculum screens can be added only after Firebase and learning modules initialize.
+   new MutationObserver(records=>{
+     for(const record of records)for(const node of record.addedNodes){
+       if(node.nodeType===1&&node.id==="classoraCurriculumModal"){
+         new MutationObserver(()=>{if(!node.classList.contains("open"))preferred="classoraMobileLobbyBtn";syncDock()})
+           .observe(node,{attributes:true,attributeFilter:["class"]});
+         syncDock();
+       }
+     }
+   }).observe(document.body,{childList:true});
    new MutationObserver(syncDock).observe(document.body,{attributes:true,attributeFilter:["class"]});
    window.addEventListener("popstate",()=>{preferred="classoraMobileLobbyBtn";syncDock()});
    ["hashchange","pageshow","resize","orientationchange","classora-auth-settled"].forEach(event=>window.addEventListener(event,syncDock,{passive:true}));
@@ -162,6 +173,14 @@
    window.addEventListener("classora-intro-finished",()=>{introReady=true;onAuth()});
    window.addEventListener("classora-auth-settled",onAuth);
    setTimeout(()=>{if(!$("classoraIntro"))introReady=true;askOnce()},3900);
+   // No automatic reload loop: offer a manual recovery action if external auth services never respond.
+   setTimeout(()=>{
+     if(document.body.classList.contains("auth-ready")&&!document.body.classList.contains("classora-session-restoring"))return;
+     const host=$("cw116Wait");if(!host||$("cw116-retry"))return;
+     const button=document.createElement("button");button.type="button";button.id="cw116-retry";
+     button.textContent=english()?"Try loading again":"حاول التحميل مرة ثانية";
+     button.addEventListener("click",()=>window.location.reload());host.append(button);
+   },10000);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
  window.classoraReplayOnboarding=()=>{if(authed()&&introReady)openWelcome("tour",true)};
