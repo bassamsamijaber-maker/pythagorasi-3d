@@ -129,20 +129,49 @@ export function mountClassoraHomeV112(api){
   if(!student)return;
   section.querySelector("h2").textContent=t("المطلوب منك","Your assignments");
   list.replaceChildren();
-  const visible=tasks.filter(x=>!x.submitted).slice(0,4);
+  const now=Date.now();
+  const dueTime=task=>{
+   const raw=String(task.dueDate||"").trim();
+   if(!raw)return Infinity;
+   let parsed=Date.parse(raw);
+   if(!Number.isFinite(parsed)){
+    const m=raw.match(/^(\\d{1,2})[\\/.](\\d{1,2})[\\/.](\\d{4})$/);
+    if(m)parsed=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),23,59,59).getTime();
+   }
+   return Number.isFinite(parsed)?parsed:Infinity;
+  };
+  const visible=tasks.filter(x=>!x.submitted)
+   .sort((a,b)=>dueTime(a)-dueTime(b)||b.createdAt-a.createdAt).slice(0,6);
+  const urgent=visible.filter(task=>dueTime(task)<=now+72*60*60*1000);
+  if(urgent.length)list.append(newNode("h3","ct-urgent-title",t("مهم الآن — تسليم قريب","Important now — due soon")));
   if(!visible.length){
    const empty=newNode("div","ct-empty",taskLoading?t("جاري التحقق من وظائف صفوفك...","Checking class assignments..."):t("ما في وظائف غير مسلّمة حاليًا.","No unfinished assignments right now."));
    list.append(empty);
   }else{
    for(const task of visible){
     const row=newNode("div","ct-task");
+    if(urgent.includes(task))row.classList.add("ct-urgent");
     const label=newNode("div","ct-task-copy");
     label.append(newNode("b","",task.title||t("وظيفة مدرسية","Assignment")),newNode("small","",task.className+(task.dueDate?t(" • التسليم: "," • Due: ")+task.dueDate:"")));
     const btn=newNode("button","ct-enter",t("ابدأ الآن","Start now"));
     btn.type="button";
     btn.addEventListener("click",()=>{
      get("lobbyClassBtn")?.click();
-     setTimeout(()=>get("studentAssignmentsList")?.scrollIntoView({behavior:"smooth",block:"start"}),250);
+     const host=get("studentAssignmentsList");
+     if(!host)return;
+     const navigate=()=>{
+      const cards=[...host.querySelectorAll(".assignment-card")];
+      const match=cards.find(card=>card.querySelector("h5")?.textContent?.trim()===task.title&&(!task.className||card.textContent.includes(task.className)));
+      if(!match)return false;
+      match.scrollIntoView({behavior:"smooth",block:"center"});
+      match.classList.add("ct-target-assignment");
+      window.setTimeout(()=>match.classList.remove("ct-target-assignment"),1800);
+      return true;
+     };
+     if(navigate())return;
+     const observer=new MutationObserver(()=>{if(navigate())observer.disconnect()});
+     observer.observe(host,{childList:true,subtree:true});
+     window.setTimeout(()=>observer.disconnect(),8000);
     });
     row.append(label,btn);list.append(row);
    }
@@ -180,7 +209,7 @@ export function mountClassoraHomeV112(api){
      if(!c.exists())continue;
      names.push(String(c.data().name||"").slice(0,70));
      const snaps=await api.getDocs(api.collection(api.db,"classes",classId,"assignments"));
-     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
+     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,15);
      const checks=await Promise.all(recent.map(async a=>{
       try{
        const sub=await api.getDoc(api.doc(api.db,"classes",classId,"assignments",a.id,"submissions",uid));
@@ -284,7 +313,7 @@ export function mountClassoraHomeV112(api){
  center?.addEventListener("mouseenter",()=>{paused=true});
  center?.addEventListener("mouseleave",()=>{paused=false});
  center?.addEventListener("focusin",()=>{paused=true});
- center?.addEventListener("focusout",()=>{paused=false});
+ center?.addEventListener("focusout",()=>{paused=center.contains(document.activeElement)});
  const refresh=()=>{
   render();
   if(role()==="student"&&!isAdmin())refreshTasks();
