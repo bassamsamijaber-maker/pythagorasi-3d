@@ -114,3 +114,43 @@
 @media(prefers-reduced-motion:reduce){
   #settingsModal .classora-quick-grid button{transition:none}
 }
+
+
+/* Phase 2: preserve the real source actions for role checks, while making
+   the header readable on desktop and moving tools into Settings. */
+#platformLobby .classora-header-identity{
+ display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:7px;
+ font:700 12px/1.45 "Tajawal","Inter",system-ui,sans-serif;color:#c4e4dd;
+}
+#platformLobby .classora-header-identity strong{color:#ecfffa;font-weight:900}
+#platformLobby .classora-header-identity span{color:#a8cbd0;overflow-wrap:anywhere}
+#platformLobby .classora-header-identity[hidden]{display:none!important}
+@media (min-width:1181px){
+ #platformLobby .lobby-top-actions > :not(#lobbySettingsBtn){display:none!important}
+ #platformLobby .lobby-top-actions{width:auto!important;flex:0 0 auto!important;overflow:visible!important}
+ #platformLobby #lobbySettingsBtn{display:inline-flex!important;min-height:44px!important}
+}
+@media (min-width:761px){
+ #settingsModal .classora-settings-shortcuts{
+  display:block!important;margin:16px 22px;padding:18px;border-radius:19px;
+  border:1px solid rgba(107,232,188,.25);background:linear-gradient(132deg,#173544,#0a2634);color:#f0fcfa
+ }
+ #settingsModal .classora-settings-shortcuts h3{font:900 19px "Tajawal","Inter",sans-serif;color:#f2fdfb;margin:0 0 6px}
+ #settingsModal .classora-settings-shortcuts p{font:650 12px/1.7 "Tajawal","Inter",sans-serif;color:#bbd6dc;margin:0 0 13px}
+ #settingsModal .classora-quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+ #settingsModal .classora-quick-grid button{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  min-width:0;min-height:86px;padding:11px 6px;border-radius:13px;cursor:pointer;
+  border:1px solid rgba(140,225,201,.22);background:rgba(255,255,255,.04);
+  color:#e8f9fb;font:800 12px/1.4 "Tajawal","Inter",sans-serif
+ }
+ #settingsModal .classora-quick-grid button[hidden]{display:none!important}
+ #settingsModal .classora-quick-grid button svg{
+  width:23px;height:23px;stroke:#77edbb;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
+ }
+ #settingsModal .classora-quick-grid button:focus-visible{outline:3px solid #72eebd;outline-offset:2px}
+ #settingsModal .classora-quick-grid button span{overflow-wrap:anywhere;text-align:center}
+}
+@media (min-width:761px) and (max-width:950px){
+ #settingsModal .classora-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

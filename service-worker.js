@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v114-0-universal-dock-stability";
+const CACHE_NAME="classora-v115-0-ui-phases";
 const APP_SHELL=[
   "./assets/classora-universal-dock-v113.css?v=2",
   "./assets/classora-universal-dock-v113.js?v=3",
@@ -50,7 +50,7 @@ const APP_SHELL=[
 self.addEventListener("install",event=>{
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache=>cache.addAll(APP_SHELL))
+      .then(cache=>cache.addAll(APP_SHELL.map(url=>new Request(url,{cache:"reload"}))))
       .then(()=>self.skipWaiting())
   );
 });

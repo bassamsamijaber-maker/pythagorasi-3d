@@ -23,9 +23,22 @@ export function mountClassoraHomeV112(api){
   {id:"default-pythagoras",kind:"pythagoras",titleAr:"عجلة فيثاغورس التفاعلية",titleEn:"Interactive Pythagoras wheel",bodyAr:"جرّب تحريك العجلة والرمل واكتشف علاقة أضلاع المثلث القائم.",bodyEn:"Explore the wheel, sand and right-triangle relationships.",target:"all",active:true},
   {id:"default-periodic",kind:"periodic",titleAr:"الجدول الدوري للعناصر",titleEn:"Periodic table of elements",bodyAr:"استكشف 118 عنصرًا بخصائصها ورسوماتها.",bodyEn:"Explore the elements, their properties and interactive models.",target:"all",active:true}
  ];
- let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[],classNames=[];
+ let stored=null,items=[],selected=0,timer=null,paused=false,loadedTasksFor="",taskLoading=false,lastTaskRead=0,tasks=[],classNames=[],editingPromoId="";
  const center=get("classoraPromoCenter"),slides=get("classoraPromoSlides"),dots=get("classoraPromoDots");
  const status=get("classoraPromoAdminStatus"),adminList=get("classoraPromoAdminList");
+ const promoForm=get("classoraPromoAdminForm");
+ if(promoForm&&!promoForm.elements.namedItem("active")){
+  const field=document.createElement("label");
+  field.className="cp-admin-active-toggle";
+  const checkbox=document.createElement("input");
+  checkbox.type="checkbox";checkbox.name="active";checkbox.checked=true;
+  const title=document.createElement("span");
+  title.textContent="تفعيل الإعلان الآن";
+  title.setAttribute("data-active-ar","تفعيل الإعلان الآن");
+  title.setAttribute("data-active-en","Publish now");
+  field.append(checkbox,title);
+  promoForm.insertBefore(field,get("classoraPromoAdminAdd"));
+ }
  const role=()=>api.profile()?.role||"";
  const isAdmin=()=>Boolean(api.isAdmin());
  function normalize(row){
@@ -129,20 +142,49 @@ export function mountClassoraHomeV112(api){
   if(!student)return;
   section.querySelector("h2").textContent=t("المطلوب منك","Your assignments");
   list.replaceChildren();
-  const visible=tasks.filter(x=>!x.submitted).slice(0,4);
+  const now=Date.now();
+  const dueTime=task=>{
+   const raw=String(task.dueDate||"").trim();
+   if(!raw)return Infinity;
+   let parsed=Date.parse(raw);
+   if(!Number.isFinite(parsed)){
+    const m=raw.match(/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})$/);
+    if(m)parsed=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),23,59,59).getTime();
+   }
+   return Number.isFinite(parsed)?parsed:Infinity;
+  };
+  const visible=tasks.filter(x=>!x.submitted)
+   .sort((a,b)=>dueTime(a)-dueTime(b)||b.createdAt-a.createdAt).slice(0,6);
+  const urgent=visible.filter(task=>dueTime(task)<=now+72*60*60*1000);
+  if(urgent.length)list.append(newNode("h3","ct-urgent-title",t("مهم الآن — تسليم قريب","Important now — due soon")));
   if(!visible.length){
    const empty=newNode("div","ct-empty",taskLoading?t("جاري التحقق من وظائف صفوفك...","Checking class assignments..."):t("ما في وظائف غير مسلّمة حاليًا.","No unfinished assignments right now."));
    list.append(empty);
   }else{
    for(const task of visible){
     const row=newNode("div","ct-task");
+    if(urgent.includes(task))row.classList.add("ct-urgent");
     const label=newNode("div","ct-task-copy");
     label.append(newNode("b","",task.title||t("وظيفة مدرسية","Assignment")),newNode("small","",task.className+(task.dueDate?t(" • التسليم: "," • Due: ")+task.dueDate:"")));
     const btn=newNode("button","ct-enter",t("ابدأ الآن","Start now"));
     btn.type="button";
     btn.addEventListener("click",()=>{
      get("lobbyClassBtn")?.click();
-     setTimeout(()=>get("studentAssignmentsList")?.scrollIntoView({behavior:"smooth",block:"start"}),250);
+     const host=get("studentAssignmentsList");
+     if(!host)return;
+     const navigate=()=>{
+      const cards=[...host.querySelectorAll(".assignment-card")];
+      const match=cards.find(card=>card.querySelector("h5")?.textContent?.trim()===task.title&&(!task.className||card.textContent.includes(task.className)));
+      if(!match)return false;
+      match.scrollIntoView({behavior:"smooth",block:"center"});
+      match.classList.add("ct-target-assignment");
+      window.setTimeout(()=>match.classList.remove("ct-target-assignment"),1800);
+      return true;
+     };
+     if(navigate())return;
+     const observer=new MutationObserver(()=>{if(navigate())observer.disconnect()});
+     observer.observe(host,{childList:true,subtree:true});
+     window.setTimeout(()=>observer.disconnect(),8000);
     });
     row.append(label,btn);list.append(row);
    }
@@ -180,7 +222,7 @@ export function mountClassoraHomeV112(api){
      if(!c.exists())continue;
      names.push(String(c.data().name||"").slice(0,70));
      const snaps=await api.getDocs(api.collection(api.db,"classes",classId,"assignments"));
-     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
+     const recent=snaps.docs.map(d=>({id:d.id,...d.data()})).filter(a=>a.active!==false&&a.hidden!==true).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,15);
      const checks=await Promise.all(recent.map(async a=>{
       try{
        const sub=await api.getDoc(api.doc(api.db,"classes",classId,"assignments",a.id,"submissions",uid));
@@ -200,21 +242,77 @@ export function mountClassoraHomeV112(api){
   const page=get("adminViewPromos"),list=adminList;
   if(!page||!list)return;
   page.querySelector(".cp-admin-count").textContent=t("الإعلانات: ","Announcements: ")+allRows().filter(x=>x.active).length+" / 5";
+  const draftLabel=page.querySelector("[data-active-ar]");
+  if(draftLabel)draftLabel.textContent=t(draftLabel.dataset.activeAr,draftLabel.dataset.activeEn);
+  let controls=get("classoraPromoAdminFilters");
+  if(!controls){
+   controls=newNode("div","cp-admin-filters");
+   controls.id="classoraPromoAdminFilters";
+   const search=newNode("input");
+   search.type="search";search.id="classoraPromoSearch";search.placeholder=t("ابحث بعنوان الإعلان","Search announcements");
+   search.setAttribute("aria-label",t("بحث في الإعلانات","Search announcements"));
+   const filter=newNode("select");
+   filter.id="classoraPromoFilter";
+   filter.setAttribute("aria-label",t("فلترة حسب الحالة","Filter by status"));
+   for(const [value,ar,en] of [["all","الكل","All"],["active","المفعّلة","Active"],["paused","الموقوفة","Paused"]]){
+    const option=newNode("option","",t(ar,en));option.value=value;filter.append(option);
+   }
+   controls.append(search,filter);list.before(controls);
+   search.addEventListener("input",renderAdmin);
+   filter.addEventListener("change",renderAdmin);
+  }
+  const search=String(get("classoraPromoSearch")?.value||"").trim().toLocaleLowerCase();
+  const statusFilter=get("classoraPromoFilter")?.value||"all";
+  const filtered=allRows().filter(p=>
+   (!search||(p.titleAr+" "+p.titleEn+" "+p.bodyAr+" "+p.bodyEn).toLocaleLowerCase().includes(search))&&
+   (statusFilter==="all"||(statusFilter==="active"&&p.active)||(statusFilter==="paused"&&!p.active)));
   list.replaceChildren();
-  for(const p of allRows()){
+  for(const p of filtered){
    const row=newNode("div","cp-admin-row");
    const name=newNode("div","cp-admin-details");
    name.append(newNode("b","",p.titleAr||p.titleEn||"—"),newNode("small","",p.active?t("مفعّل","Active"):t("متوقف","Paused")));
    const actions=newNode("div","cp-admin-actions");
-   for(const [action,label] of [["toggle",p.active?t("إيقاف","Pause"):t("تشغيل","Enable")],["remove",t("حذف","Delete")]]){
+   for(const [action,label] of [["edit",t("تعديل","Edit")],["toggle",p.active?t("إيقاف","Pause"):t("تشغيل","Enable")],["remove",t("حذف","Delete")]]){
     const button=newNode("button","cp-admin-"+action,label);button.type="button";
-    button.addEventListener("click",()=>changePromo(action,p.id));actions.append(button);
+    button.addEventListener("click",()=>action==="edit"?editPromo(p):changePromo(action,p.id));actions.append(button);
    }
    row.append(name,actions);list.append(row);
   }
-  if(!allRows().length)list.append(newNode("p","ct-empty",t("ما في إعلانات بعد.","No announcements yet.")));
+  if(!filtered.length)list.append(newNode("p","ct-empty",t("ما في إعلانات مطابقة.","No matching announcements.")));
  }
  function message(ar,en){if(status)status.textContent=t(ar,en)}
+ function resetEditor(){
+  editingPromoId="";
+  get("classoraPromoAdminForm")?.reset();
+  const save=get("classoraPromoAdminAdd");
+  if(save)save.textContent=t("أضف إعلانًا","Add announcement");
+  const cancel=get("classoraPromoCancelEdit");
+  if(cancel)cancel.hidden=true;
+  const active=get("classoraPromoAdminForm")?.elements.namedItem("active");if(active)active.checked=true;
+ }
+ function editPromo(p){
+  if(!isAdmin())return;
+  const form=get("classoraPromoAdminForm");
+  if(!form)return;
+  editingPromoId=p.id;
+  for(const name of ["kind","titleAr","titleEn","bodyAr","bodyEn","target","classId","grade","subject","topicRef"]){
+   const field=form.elements.namedItem(name);
+   if(field)field.value=p[name]??"";
+  }
+  const activeField=form.elements.namedItem("active");
+  if(activeField)activeField.checked=p.active!==false;
+  const save=get("classoraPromoAdminAdd");
+  if(save)save.textContent=t("احفظ التعديلات","Save changes");
+  let cancel=get("classoraPromoCancelEdit");
+  if(!cancel){
+   cancel=newNode("button","cp-admin-cancel",t("إلغاء التعديل","Cancel edit"));
+   cancel.type="button";cancel.id="classoraPromoCancelEdit";
+   cancel.addEventListener("click",resetEditor);form.append(cancel);
+  }
+  cancel.hidden=false;
+  form.scrollIntoView({behavior:"smooth",block:"start"});
+  message("تعديل الإعلان المحدد","Editing selected announcement");
+ }
  async function updatePromos(compute){
   if(!isAdmin()||!api.auth.currentUser){message("ليس لديك صلاحية الإدارة.","No administrator access.");return}
   const ref=api.doc(api.db,"siteControls","main");
@@ -223,18 +321,21 @@ export function mountClassoraHomeV112(api){
     const snap=await transaction.get(ref);
     const old=Array.isArray(snap.data()?.homePromos)?snap.data().homePromos.map(normalize).filter(Boolean):defaultPromos.map(normalize);
     const next=compute(old);
-    if(next.length>5||next.filter(p=>p.active).length>5)throw Error("limit-five");
+    if(next.filter(p=>p.active).length>5)throw Error("limit-five");
+    if(next.length>50)throw Error("limit-stored");
     transaction.set(ref,{homePromos:next,updatedBy:api.auth.currentUser.uid,updatedAt:api.serverTimestamp()},{merge:true});
    });
-   message("تم الحفظ بنجاح.","Saved successfully.");
+   message("تم الحفظ بنجاح.","Saved successfully.");return true;
   }catch(err){
    console.error("Classora announcement save",err);
-   message(err?.message==="limit-five"?"الحد الأقصى 5 إعلانات. احذف إعلان قبل الإضافة.":"تعذّر الحفظ. افحص اتصالك وصلاحيات الأدمن.",
-     err?.message==="limit-five"?"Maximum 5 announcements. Remove one first.":"Couldn't save. Check your connection and admin permissions.");
+   message(err?.message==="limit-five"?"الحد الأقصى 5 إعلانات فعالة. أوقف إعلانًا أولًا.":err?.message==="limit-stored"?"وصلت لسعة أرشيف الإعلانات.":"تعذّر الحفظ. افحص اتصالك وصلاحيات الأدمن.",
+     err?.message==="limit-five"?"Only five active announcements are allowed. Pause one first.":err?.message==="limit-stored"?"Announcement archive limit reached.":"Couldn't save. Check your connection and admin permissions.");return false;
   }
  }
  function changePromo(action,id){
   if(!isAdmin())return;
+  if(action==="remove"&&!window.confirm(t("حذف الإعلان نهائيًا؟","Delete this announcement permanently?")))return;
+  if(action==="remove"&&editingPromoId===id)resetEditor();
   updatePromos(old=>action==="remove"?old.filter(p=>p.id!==id):old.map(p=>p.id===id?{...p,active:!p.active}:p));
  }
  function addPromo(){
@@ -242,18 +343,19 @@ export function mountClassoraHomeV112(api){
   if(!form||!isAdmin())return;
   const pick=name=>String(form.elements.namedItem(name)?.value||"").trim();
   const kind=pick("kind"),titleAr=pick("titleAr"),bodyAr=pick("bodyAr");
+  const activate=form.elements.namedItem("active")?.checked!==false;
   if(titleAr.length<2||bodyAr.length<5){message("اكتب عنوانًا ووصفًا واضحين.","Enter a title and description.");return}
-  const promo=normalize({id:"home_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),kind,titleAr,bodyAr,titleEn:pick("titleEn"),bodyEn:pick("bodyEn"),target:pick("target"),classId:pick("classId"),grade:pick("grade"),subject:pick("subject"),topicRef:pick("topicRef"),active:true});
+  const promo=normalize({id:"home_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),kind,titleAr,bodyAr,titleEn:pick("titleEn"),bodyEn:pick("bodyEn"),target:pick("target"),classId:pick("classId"),grade:pick("grade"),subject:pick("subject"),topicRef:pick("topicRef"),active:activate});
   if(promo.target==="class"&&!promo.classId){message("أدخل معرّف الصف المستهدف.","Enter the target class ID.");return}
-  updatePromos(old=>[...old,promo]).then(()=>{if(status?.textContent?.includes(t("بنجاح","successfully")))form.reset()});
+  updatePromos(old=>editingPromoId?old.map(row=>row.id===editingPromoId?{...promo,id:editingPromoId}:row):[...old,promo]).then(saved=>{if(saved)resetEditor()});
  }
- const setPromos=rows=>{stored=Array.isArray(rows)?rows.map(normalize).filter(Boolean).slice(0,5):null;render();renderAdmin()};
+ const setPromos=rows=>{stored=Array.isArray(rows)?rows.map(normalize).filter(Boolean).slice(0,50):null;render();renderAdmin()};
  get("classoraPromoPrev")?.addEventListener("click",()=>show(selected-1));
  get("classoraPromoNext")?.addEventListener("click",()=>show(selected+1));
  center?.addEventListener("mouseenter",()=>{paused=true});
  center?.addEventListener("mouseleave",()=>{paused=false});
  center?.addEventListener("focusin",()=>{paused=true});
- center?.addEventListener("focusout",()=>{paused=false});
+ center?.addEventListener("focusout",()=>{paused=center.contains(document.activeElement)});
  const refresh=()=>{
   render();
   if(role()==="student"&&!isAdmin())refreshTasks();

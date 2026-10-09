@@ -166,3 +166,55 @@
 @media(prefers-reduced-motion:reduce){
  #classoraIntro .intro-film-glow,#classoraIntro .intro-orbit-ring{animation:none!important}
 }
+
+
+/* Urgent class work is rendered only from actual open Firestore assignments. */
+#platformLobby .ct-urgent-title{
+ margin:5px 2px 2px!important;color:#ffdb9d!important;
+ font:900 14px/1.5 "Tajawal","Inter",system-ui!important
+}
+#platformLobby .ct-task.ct-urgent{
+ border-color:rgba(246,181,101,.55);background:linear-gradient(115deg,rgba(226,153,70,.12),rgba(255,255,255,.03))
+}
+#platformLobby .ct-target-assignment{
+ outline:3px solid #58edb5!important;outline-offset:3px;
+ transition:outline-color .2s ease
+}
+#adminViewPromos .cp-admin-cancel{
+ grid-column:1/-1;min-height:41px;border-radius:12px;
+ background:transparent;color:#c5d9df;border:1px solid #b8e2db55;
+ font:850 13px "Tajawal","Inter",sans-serif;cursor:pointer
+}
+#adminViewPromos .cp-admin-cancel[hidden]{display:none!important}
+#adminViewPromos .cp-admin-actions{flex-wrap:wrap}
+#adminViewPromos .cp-admin-edit{border-color:rgba(122,239,191,.55)!important;color:#9ff8cf!important}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .ct-target-assignment{transition:none!important}
+}
+
+
+#adminViewPromos .cp-admin-filters{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,180px);
+ gap:10px;margin:15px 0 10px
+}
+#adminViewPromos .cp-admin-filters :is(input,select){
+ width:100%;min-height:43px;padding:9px 12px;box-sizing:border-box;
+ border-radius:12px;border:1px solid rgba(151,228,204,.3);
+ color:#eefbf9;background:#0c2634;font:750 13px "Tajawal","Inter",sans-serif
+}
+#adminViewPromos .cp-admin-filters :is(input,select):focus-visible{
+ outline:2px solid #83f0c1;outline-offset:2px
+}
+@media(max-width:580px){
+ #adminViewPromos .cp-admin-filters{grid-template-columns:1fr}
+}
+
+
+#adminViewPromos form .cp-admin-active-toggle{
+ grid-column:1/-1;display:flex;align-items:center;gap:10px;
+ font:850 13px "Tajawal","Inter",system-ui;color:#d8f6eb
+}
+#adminViewPromos form .cp-admin-active-toggle input[type="checkbox"]{
+ width:19px!important;height:19px!important;min-height:19px!important;
+ accent-color:#4ce2ab;flex:0 0 auto;margin:0
+}
