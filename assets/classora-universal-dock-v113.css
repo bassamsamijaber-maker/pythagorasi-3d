@@ -1,0 +1,181 @@
+/* Classora phase 1 / v113: reliable universal five-tab dock.
+   Same navigation UI on phones, iPad and other touch tablets.
+   CSS owns layout only; original navigation, chat and role checks remain active. */
+body.classora-dock-enabled{
+  --classora-dock-height:74px;
+  --classora-dock-clearance:calc(84px + env(safe-area-inset-bottom,0px));
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  position:fixed!important;
+  inset:auto auto calc(7px + env(safe-area-inset-bottom,0px)) 50%!important;
+  transform:translateX(-50%)!important;
+  z-index:2147483646!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  gap:5px!important;
+  width:min(480px,calc(100vw - 18px))!important;
+  max-width:calc(100vw - 18px)!important;
+  min-height:var(--classora-dock-height)!important;
+  height:auto!important;
+  margin:0!important;
+  padding:7px!important;
+  box-sizing:border-box!important;
+  border:1px solid rgba(117,231,189,.35)!important;
+  border-radius:21px!important;
+  background:rgba(9,30,41,.97)!important;
+  box-shadow:0 15px 48px rgba(0,0,0,.40),inset 0 1px rgba(185,255,233,.1)!important;
+  backdrop-filter:blur(15px)!important;
+  -webkit-backdrop-filter:blur(15px)!important;
+  isolation:isolate!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  flex:1 1 0!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:58px!important;
+  height:auto!important;
+  max-height:none!important;
+  gap:5px!important;
+  margin:0!important;
+  padding:7px 3px!important;
+  box-sizing:border-box!important;
+  border-radius:15px!important;
+  border:1px solid transparent!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#c1d7e0!important;
+  font:800 11px/1.2 "Tajawal","Inter",system-ui,sans-serif!important;
+  -webkit-tap-highlight-color:transparent!important;
+  touch-action:manipulation!important;
+  cursor:pointer;
+  transition:background-color .16s,color .16s,border-color .16s!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button.is-active{
+  color:#9af6d0!important;
+  background:rgba(45,201,141,.17)!important;
+  border-color:rgba(87,225,168,.34)!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button svg{
+  width:23px!important;
+  height:23px!important;
+  flex:0 0 auto!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+  fill:none!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button span{
+  display:block!important;min-width:0;max-width:100%!important;
+  overflow:hidden!important;text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font:inherit!important;
+}
+body.classora-dock-enabled #classoraMobilePageNav button:focus-visible{
+  outline:3px solid #75f4c0!important;outline-offset:2px!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button:active{
+  transform:scale(.97)!important;
+  background:rgba(48,208,149,.2)!important;
+}
+/* Only hide the bar when auth is visible, on first splash, or when the
+   onscreen keyboard needs its space. Never hide merely because a modal opens. */
+body:not(.classora-dock-enabled) #classoraMobilePageNav,
+body.classora-dock-enabled:not(.classora-authenticated) #classoraMobilePageNav,
+body.classora-dock-enabled.classora-intro-active #classoraMobilePageNav,
+body.classora-dock-enabled:has(#authGate.show) #classoraMobilePageNav,
+body.classora-dock-enabled.classora-mobile-typing #classoraMobilePageNav{
+  display:none!important;
+}
+/* Room for the persistent dock in the lobby and all real overlays. */
+body.classora-dock-enabled #platformLobby{
+  padding-bottom:calc(var(--classora-dock-clearance) + 14px)!important;
+}
+body.classora-dock-enabled .modal.open{
+  padding-bottom:var(--classora-dock-clearance)!important;
+  box-sizing:border-box!important;
+}
+body.classora-dock-enabled .modal.open:not(#chatModal):not(#settingsModal) > .modalbox{
+  max-height:calc(100dvh - var(--classora-dock-clearance) - 14px)!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+}
+body.classora-dock-enabled #chatModal.open,
+body.classora-dock-enabled #settingsModal.open{
+  align-items:flex-start!important;
+  padding:7px 0 var(--classora-dock-clearance)!important;
+}
+body.classora-dock-enabled #chatModal.open .classora-chat-box{
+  height:calc(100dvh - var(--classora-dock-clearance) - 13px)!important;
+  max-height:calc(100dvh - var(--classora-dock-clearance) - 13px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+body.classora-dock-enabled #settingsModal.open .settings-modalbox{
+  max-height:calc(100dvh - var(--classora-dock-clearance) - 13px)!important;
+  overflow-y:auto!important;
+}
+/* The curriculum modal is dynamically appended to document.body, not
+   inside #platformLobby. Keep the dock visible across topics and quizzes. */
+body.classora-dock-enabled .classora-curriculum-modal.open{
+  padding-bottom:var(--classora-dock-clearance)!important;
+  box-sizing:border-box!important;
+}
+body.classora-dock-enabled .classora-curriculum-modal.open .classora-curriculum-shell{
+  height:calc(100dvh - var(--classora-dock-clearance))!important;
+  max-height:calc(100dvh - var(--classora-dock-clearance))!important;
+}
+/* The periodic table is a same-site iframe: shorten the iframe's parent page,
+   not its touch-enabled scroll content. The dock stays outside the iframe. */
+body.classora-dock-enabled .classora-subject-page:target{
+  bottom:var(--classora-dock-clearance)!important;
+}
+body.classora-dock-enabled .classora-subject-page:target .classora-subject-frame{
+  width:100%!important;height:100%!important;
+}
+/* Pythagoras already has separate Lobby/Settings floating buttons; while
+   the universal dock is present those would duplicate/overlap navigation. */
+body.classora-dock-enabled #labMobileNav{display:none!important}
+/* Keep the dock separate from on-screen content in low-height landscape. */
+@media (max-height:520px) and (orientation:landscape){
+  body.classora-dock-enabled{
+    --classora-dock-height:61px;
+    --classora-dock-clearance:calc(68px + env(safe-area-inset-bottom,0px));
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+    padding:4px!important;min-height:61px!important;border-radius:15px!important;
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button{
+    min-height:51px!important;padding:4px 2px!important;gap:2px!important;
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button svg{
+    width:19px!important;height:19px!important;
+  }
+}
+/* Phone: keep navigation readable even on narrow screens. */
+@media (max-width:350px){
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{width:calc(100vw - 8px)!important;gap:1px!important;padding:5px!important}
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button{font-size:10px!important;padding:6px 1px!important}
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button svg{width:20px!important;height:20px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  body.classora-dock-enabled #classoraMobilePageNav button{transition:none!important}
+}
+/* Keyboard visible => never leave a blank 80px gap at bottom of the chat. */
+body.classora-dock-enabled.classora-mobile-typing #chatModal.open,
+body.classora-dock-enabled.classora-mobile-typing #settingsModal.open{
+  padding-bottom:env(safe-area-inset-bottom,0px)!important;
+}
+body.classora-dock-enabled.classora-mobile-typing #chatModal.open .classora-chat-box{
+  height:calc(var(--chat-viewport-height,100dvh) - 7px)!important;
+  max-height:calc(var(--chat-viewport-height,100dvh) - 7px)!important;
+}
+body.classora-dock-enabled.classora-mobile-typing #settingsModal.open .settings-modalbox{
+  max-height:calc(100dvh - 15px)!important;
+}
