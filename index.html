@@ -4812,6 +4812,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 <script defer src="./assets/classora-polish-v110.js?v=1"></script>
 <link rel="stylesheet" href="./assets/classora-universal-dock-v111.css?v=1">
 <script defer src="./assets/classora-universal-dock-v111.js?v=1"></script>
+<link rel="stylesheet" href="./assets/classora-home-v112.css?v=1">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -5034,6 +5035,18 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     </div>
 
     
+    <!-- Classora v112: welcome + illustrations + tasks -->
+    <section class="classora-welcome" id="classoraWelcomeCard" hidden data-no-translate>
+      <div><span class="cw-role">CLASSORA</span><h2 class="cw-name">أهلًا في كلاسورا</h2><p class="cw-grade">تعلّم وجرّب واكتشف</p></div>
+      <span class="cw-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6c3-1 6-1 9 1 3-2 6-2 9-1v13c-3-1-6-1-9 1-3-2-6-2-9-1V6ZM12 7v13" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Classora</span></span>
+    </section>
+    <section class="classora-promo-center" id="classoraPromoCenter" hidden data-no-translate aria-label="إعلانات كلاسورا">
+      <div class="cp-titlebar"><div><h2 class="cp-section-heading">آخر الإضافات</h2><p class="cp-section-description">إعلانات كلاسورا التعليمية</p></div><span class="cp-timing">4s</span></div>
+      <div class="cp-slides" id="classoraPromoSlides" aria-live="off"></div>
+      <div class="cp-controls"><button id="classoraPromoPrev" class="cp-prev" type="button">‹</button><div id="classoraPromoDots" class="cp-dots"></div><span id="classoraPromoCounter">1 / 3</span><button id="classoraPromoNext" class="cp-next" type="button">›</button></div>
+    </section>
+    <section class="classora-student-tasks" id="classoraStudentTasks" hidden data-no-translate><h2>المطلوب منك</h2><div id="classoraStudentTasksList" class="ct-list">جاري التحقق من وظائف صفوفك...</div></section>
+
     <!-- Classora Global Mix / Phase 1: visual-first hero; existing actions remain authoritative -->
     
     <!-- Classora UI 2.0 / Phase 2: actual student profile dashboard. No new login system. -->
@@ -5327,6 +5340,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
     <div class="admin-tabs" id="adminTabs">
       <button class="active admin-poll-tab" data-admin-tab="polls">📊 Polls</button>
       <button data-admin-tab="studio">✨ Site Studio</button>
+      <button data-admin-tab="promos">الإعلانات</button>
       <button data-admin-tab="content">👁️ Content Manager</button>
       <button data-admin-tab="students">🎒 Student Overview</button>
       <button data-admin-tab="history">📝 Assignment History</button>
@@ -5338,6 +5352,22 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
       <button data-admin-tab="controls">🎛️ Control Center</button>
     </div>
 
+    <div class="admin-view hidden" id="adminViewPromos" data-no-translate>
+      <header class="cp-admin-header"><h3>مركز الإعلانات</h3><p>الحد الأقصى 5 إعلانات؛ يتبدل الإعلان كل أربع ثوانٍ. إدارة الإعلانات والصلاحيات مرتبطة بحساب الأدمن.</p><span class="cp-admin-count">3 / 5</span></header>
+      <form id="classoraPromoAdminForm">
+        <label>عنوان الإعلان بالعربي<input name="titleAr" maxlength="85" required></label>
+        <label>English title<input name="titleEn" maxlength="85"></label>
+        <label class="cp-wide">الوصف بالعربي<textarea name="bodyAr" maxlength="260" required></textarea></label>
+        <label class="cp-wide">English description<textarea name="bodyEn" maxlength="260"></textarea></label>
+        <label>الرابط إلى<select name="kind"><option value="arabic">المفعول به</option><option value="pythagoras">عجلة فيثاغورس</option><option value="periodic">جدول العناصر</option><option value="topic">درس آخر</option><option value="info">إعلان فقط</option></select></label>
+        <label>الفئة<select name="target"><option value="all">الجميع</option><option value="student">الطلاب</option><option value="teacher">المعلمون</option><option value="admin">الأدمن</option><option value="class">صف محدد</option></select></label>
+        <label>معرّف الصف المحدد<input name="classId" maxlength="110" placeholder="Class ID"></label>
+        <label>الصف<select name="grade"><option value="7">السابع</option><option value="8" selected>الثامن</option><option value="9">التاسع</option><option value="10">العاشر</option></select></label>
+        <label>المادة<select name="subject"><option value="arabic">عربي</option><option value="math">رياضيات</option><option value="science">علوم</option><option value="english">English</option><option value="history">تاريخ</option><option value="geography">جغرافيا</option></select></label>
+        <label>اسم الدرس<input name="topicRef" maxlength="110" placeholder="المفعول به"></label>
+        <button class="cp-admin-add" id="classoraPromoAdminAdd" type="submit">أضف إعلانًا</button>
+      </form><p role="status" id="classoraPromoAdminStatus"></p><div id="classoraPromoAdminList"></div>
+    </div>
     <div class="admin-view hidden" id="adminViewTeam"><h3>إدارة فريق الموقع</h3><p>مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.</p><input id="teamAccountSearch" placeholder="ابحث بالاسم أو معرّف الحساب"><div id="adminTeamList" class="admin-list"></div></div>
     <div class="admin-view" id="adminViewDashboard">
       <div class="admin-stat-grid">
@@ -7136,6 +7166,7 @@ import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountCurriculum} from "./assets/curriculum-v97.js?v=110";
+import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=1";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -7474,6 +7505,7 @@ function showPlatformLobby(){
   }
   document.body.classList.add("classora-authenticated");
   document.getElementById("platformLobby")?.classList.remove("hidden");
+  queueMicrotask(()=>window.classoraHomeV112?.refresh());
   const p=window.PythagorasiUser||{};
   const name=p.displayName||"مستخدم";
   const guestViewer=p.role==="guest";
@@ -17878,11 +17910,12 @@ function adminShowTab(tab){
   if(tab==="team"&&!isOwnerAdminProfile())return;
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Content","History","Support","Controls","Team"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Promos","Content","History","Support","Controls","Team"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
   if(tab==="studio")adminLoadStudio();
+  if(tab==="promos")window.classoraHomeV112?.refreshAdmin();
   if(tab==="content")adminLoadContentManager();
   if(tab==="students")adminLoadStudentOverview();
   if(tab==="history")adminLoadAssignmentHistory();
@@ -21755,10 +21788,18 @@ window.classoraLearningPlus=mountLearningPlus({
 window.classoraSubjectLabs=mountSubjectLabs({language:()=>currentUILanguage,THREE,isGuest:isGuestSession,requireLogin:()=>showGuestLoginReminder('protected'),acidTest:()=>window.classoraLearningPlus.acidTest()});
 window.classoraReturnNavigation=mountReturnNavigation(()=>currentUILanguage);
 installVectorIcons();
+window.classoraHomeV112=mountClassoraHomeV112({
+  db,auth,doc,getDoc,getDocs,collection,setDoc,runTransaction,serverTimestamp,
+  profile:()=>window.PythagorasiUser,isAdmin:()=>isSuperAdminProfile()
+});
 // Keep learning controls in sync even when chat has never been opened.
 onAuthStateChanged(auth,user=>{
  window.classoraLearningFlagsStop?.();window.classoraLearningFlagsStop=null;
- if(user)window.classoraLearningFlagsStop=onSnapshot(doc(db,'siteControls','main'),snap=>{siteControlsCache.learningFeatures=snap.data()?.learningFeatures||{};window.classoraLearningHub?.refresh()},()=>{});
+ if(user)window.classoraLearningFlagsStop=onSnapshot(doc(db,'siteControls','main'),snap=>{
+ siteControlsCache.learningFeatures=snap.data()?.learningFeatures||{};
+ window.classoraHomeV112?.setPromos(snap.data()?.homePromos);
+ window.classoraLearningHub?.refresh();
+},()=>{});
 });
 
 </script>
