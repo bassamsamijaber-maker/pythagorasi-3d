@@ -21,7 +21,7 @@ body.pwa-standalone,body.classora-intro-active{background-color:#06101b!importan
  fill:#e8fff7;stroke:#b8ffe6;stroke-width:.4px;paint-order:stroke fill;
  font-family:"Tajawal","Noto Sans Arabic","Segoe UI",Tahoma,sans-serif;
  font-size:74px;font-weight:900;letter-spacing:-1.5px;
- clip-path:inset(0 100% 0 0);animation:cw116-write 1.65s cubic-bezier(.32,.05,.36,1) .25s forwards
+ clip-path:inset(0 0 0 100%);animation:cw116-write 1.65s cubic-bezier(.32,.05,.36,1) .25s forwards
 }
 #classoraIntro .cw116-line{fill:none;stroke:#3ee4b4;stroke-width:4;stroke-linecap:round;
  stroke-dasharray:350;stroke-dashoffset:350;animation:cw116-line 0.4s ease-out forwards}
@@ -165,3 +165,18 @@ body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button:
 #cw116-welcome .cw116-close{position:absolute;top:12px;right:12px;border-radius:50%;min-height:38px;width:38px;padding:0;color:#dbfbf3;background:#fff1;border:1px solid #ffffff22}
 @keyframes cw116-appear{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){#cw116-welcome .cw116-card{animation:none!important}body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav::before{transition:none!important}}
+
+/* Stable dark first paint while Firebase restores a remembered session. */
+#cw116Wait{display:none!important;position:fixed;inset:0;z-index:2147483400;box-sizing:border-box;
+ flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;
+ background:radial-gradient(ellipse at 50% 40%,#174338,#06101b 67%);color:#cee6dc}
+body:not(.auth-ready):not(.classora-intro-active) #cw116Wait{display:flex!important}
+#cw116Wait .cw116-wait-mark{font:900 clamp(28px,6vw,46px) system-ui,Tahoma;letter-spacing:.04em;color:#adffdf}
+#cw116Wait span{font:600 13px system-ui,Tahoma;letter-spacing:.07em}
+#cw116Wait .cw116-wait-spin{width:30px;height:30px;border:3px solid #ffffff21;border-top-color:#70e6ba;
+ border-radius:50%;animation:cw116-spin .9s linear infinite}
+@keyframes cw116-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#cw116Wait .cw116-wait-spin{animation:none!important}}
+/* Keep standard system buttons legible in the new premium onboarding section. */
+#cw116-welcome .cw116-art svg{stroke:#83fbd3;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
+body.classora-onboarding-open{overflow:hidden!important}
