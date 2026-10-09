@@ -1,0 +1,116 @@
+/* Classora v111 — universal phone dock + clean topbar.
+   Presentation only: keep every original toolbar control in the DOM so its
+   click listeners, Firebase roles and permissions remain unchanged. */
+.classora-settings-shortcuts{display:none}
+@media(max-width:760px){
+  :root{--classora-dock-clearance:calc(var(--classora-mobile-nav-height,76px) + 18px + env(safe-area-inset-bottom))}
+  /* All toolbar actions are available inside settings instead of crowding the top. */
+  #platformLobby .lobby-top-actions{display:none!important}
+  #platformLobby .lobby-topbar{
+    justify-content:flex-start!important;align-items:center!important;
+    padding:14px 16px!important;min-height:65px!important;
+  }
+  #platformLobby .lobby-topbar>div:first-child{width:100%;min-width:0}
+  #platformLobby .lobby-brand{font-size:25px!important}
+  #platformLobby #lobbyGreeting{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  body.classora-authenticated #classoraMobilePageNav{
+    display:grid!important;
+    position:fixed!important;z-index:2147483646!important;
+    pointer-events:auto!important;
+    isolation:isolate!important;
+  }
+  /* Hide the dock only for authentication, launch intro, or an onscreen keyboard. */
+  body:not(.classora-authenticated) #classoraMobilePageNav,
+  body.classora-intro-active #classoraMobilePageNav,
+  body:has(#authGate.show) #classoraMobilePageNav,
+  body.classora-mobile-typing #classoraMobilePageNav{display:none!important}
+  #platformLobby{padding-bottom:var(--classora-dock-clearance)!important}
+
+  /* Keep the navigation above all main-page modals and nested lesson screens.
+     Give each screen its own room to scroll ABOVE the bar. */
+  .modal.open:not(#chatModal):not(#settingsModal){
+    padding-bottom:var(--classora-dock-clearance)!important;
+    box-sizing:border-box!important;
+  }
+  .modal.open:not(#chatModal):not(#settingsModal)>.modalbox{
+    max-height:calc(100dvh - var(--classora-dock-clearance) - 20px)!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+  }
+  .classora-curriculum-modal.open{
+    padding-bottom:var(--classora-dock-clearance)!important;
+    box-sizing:border-box!important;
+  }
+  .classora-curriculum-modal.open .classora-curriculum-shell{
+    max-height:calc(100dvh - var(--classora-dock-clearance) - 10px)!important;
+    height:min(92dvh,calc(100dvh - var(--classora-dock-clearance) - 10px))!important;
+  }
+  .classora-subject-page:target{
+    bottom:var(--classora-dock-clearance)!important;
+  }
+  .classora-subject-page:target .classora-subject-frame{height:100%!important}
+  #chatModal.open .classora-chat-box,
+  #settingsModal.open .settings-modalbox{
+    max-height:calc(100dvh - var(--classora-dock-clearance) - 7px)!important;
+  }
+  body.classora-mobile-typing #chatModal.open .classora-chat-box{
+    max-height:var(--chat-viewport-height,100dvh)!important;
+  }
+
+  #settingsModal .classora-settings-shortcuts{
+    display:block;
+    margin:16px 20px 0;
+    padding:18px;
+    border:1px solid rgba(107,232,188,.25);
+    border-radius:19px;
+    background:linear-gradient(132deg,#173544,#0a2634);
+    color:#f0fcfa;
+  }
+  #settingsModal .classora-settings-shortcuts h3{
+    font:900 19px "Tajawal","Inter",sans-serif;margin:0 0 6px;color:#f2fdfb;
+  }
+  #settingsModal .classora-settings-shortcuts p{
+    font:650 12px/1.7 "Tajawal","Inter",sans-serif;
+    color:#bbd6dc;margin:0 0 13px;
+  }
+  #settingsModal .classora-quick-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;
+  }
+  #settingsModal .classora-quick-grid button{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;min-width:0;min-height:87px;
+    border:1px solid rgba(140,225,201,.22);border-radius:14px;
+    background:rgba(255,255,255,.04);color:#e8f9fb;
+    padding:12px 5px;cursor:pointer;
+    font:800 12px/1.4 "Tajawal","Inter",sans-serif;
+    transition:background .15s,border-color .15s;
+  }
+  #settingsModal .classora-quick-grid button svg{
+    width:23px;height:23px;stroke:#77edbb;fill:none;
+    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;
+  }
+  #settingsModal .classora-quick-grid button:hover{
+    background:rgba(67,208,157,.12);border-color:rgba(110,246,192,.5);
+  }
+  #settingsModal .classora-quick-grid button:focus-visible{
+    outline:3px solid #72eebd!important;outline-offset:2px;
+  }
+  #settingsModal .classora-quick-grid button[hidden]{
+    display:none!important;
+  }
+  #settingsModal .classora-quick-grid button[data-classora-quick="logout"] svg{
+    stroke:#ffc9a4;
+  }
+  #settingsModal .classora-quick-grid button span{
+    max-width:100%;overflow-wrap:anywhere;text-align:center;
+  }
+}
+@media(max-width:700px){
+  #settingsModal .classora-settings-shortcuts{margin:12px 11px 0;padding:14px;border-radius:15px}
+}
+@media(max-width:365px){
+  #settingsModal .classora-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  #settingsModal .classora-quick-grid button{transition:none}
+}
