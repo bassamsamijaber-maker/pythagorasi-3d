@@ -6211,6 +6211,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
         <input id="settingsDisplayName" maxlength="40" placeholder="الاسم الظاهر">
         <div class="settings-note">هذا يغيّر الاسم الظاهر فقط. اسم الدخول الأصلي يبقى نفسه حتى ما يضيع حسابك.</div>
         <button class="exam-secondary" id="saveDisplayNameBtn">حفظ الاسم</button>
+        <p id="classoraNameCooldownNote" data-no-translate aria-live="polite"></p>
       </section>
 
       <section class="settings-card">
@@ -7841,7 +7842,10 @@ async function saveUserProfile(user,profile){
   };
   if(user.email)base.email=user.email;
   if(user.photoURL&&!base.photoData)base.photoURL=user.photoURL;
-  if(!existing.exists())base.createdAt=serverTimestamp();
+  if(!existing.exists()){
+    base.createdAt=serverTimestamp();
+    base.classoraOnboardingEligible=true; // Only freshly created accounts receive the automatic guided tour.
+  }
   await setDoc(ref,base,{merge:true});
   return {...existingData,...clean,...base};
 }
@@ -7899,6 +7903,17 @@ function paintUser(user,profile){
 
   const pending=authPendingAction;
   if(!pending)showPlatformLobby();
+  if(!guest && user?.uid){
+    window.classoraGuidedTourV117?.profileReady({
+      uid:user.uid,
+      eligible:profile?.classoraOnboardingEligible===true,
+      completed:Boolean(profile?.classoraOnboardingCompletedAt),
+      saveCompletion:async()=>{
+        await setDoc(doc(db,"users",user.uid),{classoraOnboardingCompletedAt:serverTimestamp()},{merge:true});
+        if(window.PythagorasiUser?.uid===user.uid)window.PythagorasiUser.classoraOnboardingCompletedAt=new Date();
+      }
+    });
+  }
   if(!guest)finishAuthIntent(); else authPendingAction=null;
   if(!guest)setTimeout(()=>maybeShowSecurityReminder(user.uid),1400);
 }
@@ -13516,6 +13531,36 @@ document.addEventListener("keydown",e=>{
   if(e.key.length===1||e.key==="Backspace"){lastTypingSound=now;soundFx("type")}
 },true);
 
+// Local status mirrors the 7-day Firestore rule; transaction/rules enforce the real limit.
+const CLASSORA_NAME_COOLDOWN_MS=7*24*60*60*1000;
+function classoraNameLastChangedMs(profile){
+  const stamp=profile?.displayNameChangedAt;
+  return typeof stamp?.toMillis==="function"?stamp.toMillis():
+    typeof stamp?.seconds==="number"?stamp.seconds*1000:0;
+}
+function classoraNameNextAllowedMs(profile){
+  const last=classoraNameLastChangedMs(profile);
+  return last>0?last+CLASSORA_NAME_COOLDOWN_MS:0;
+}
+function classoraFormatNameDate(timestamp){
+  return new Intl.DateTimeFormat(currentUILanguage==="en"?"en-US":"ar",
+    {dateStyle:"medium",timeStyle:"short"}).format(new Date(timestamp));
+}
+function classoraRefreshNameCooldown(){
+  const note=document.getElementById("classoraNameCooldownNote");
+  const button=document.getElementById("saveDisplayNameBtn");
+  const field=document.getElementById("settingsDisplayName");
+  if(!note||!button||!field)return;
+  const until=classoraNameNextAllowedMs(window.PythagorasiUser);
+  const locked=until>Date.now()&&!isSuperAdminProfile();
+  button.disabled=locked;
+  field.readOnly=locked;
+  note.dataset.locked=String(locked);
+  const en=currentUILanguage==="en";
+  note.textContent=locked?
+    (en?"You can change your display name again on ":"بتقدر تغيّر اسمك مرة ثانية بتاريخ ")+classoraFormatNameDate(until):
+    (en?"Display name can be changed once every 7 days. Admins can edit it anytime.":"بتقدر تغيّر الاسم مرة كل 7 أيام. الأدمن بقدر يعدّله بأي وقت.");
+}
 function refreshSettingsUI(){
   const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
   document.getElementById("settingsCurrentName").textContent=name;
@@ -13534,6 +13579,7 @@ function refreshSettingsUI(){
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
   document.getElementById("settingsStatus").textContent="";
+  classoraRefreshNameCooldown();
   document.getElementById("securityPhraseCurrentPassword")?.classList.toggle("hidden",!auth.currentUser?.providerData?.some(p=>p.providerId==="password"));
   const secState=document.getElementById("securityPhraseState");
   if(secState)secState.textContent=p.securityPhraseHash?(currentUILanguage==="en"?"Security phrase is configured ✅":"كلمة الأمان مفعّلة ✅"):(currentUILanguage==="en"?"Security phrase is not set yet.":"كلمة الأمان غير مفعّلة بعد.");
@@ -13613,23 +13659,57 @@ document.getElementById("settingsMotionToggle").addEventListener("change",e=>{
 
 document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>{
   if(!auth.currentUser||!window.PythagorasiUser)return;
+  const button=document.getElementById("saveDisplayNameBtn");
   const name=document.getElementById("settingsDisplayName").value.trim().replace(/\s+/g," ");
   const status=document.getElementById("settingsStatus");
-  if(name.length<2){status.textContent="اكتب اسمًا من حرفين على الأقل.";return}
+  const en=currentUILanguage==="en";
+  if(name.length<2||name.length>40){
+    status.textContent=en?"Use a name between 2 and 40 characters.":"اكتب اسمًا بين حرفين و40 حرفًا.";return;
+  }
+  if(name===window.PythagorasiUser.displayName){
+    status.textContent=en?"This is already your display name.":"هذا اسمك الحالي.";return;
+  }
+  button.disabled=true;
   try{
-    const originalLoginName=window.PythagorasiUser.loginName||window.PythagorasiUser.originalLoginName||window.PythagorasiUser.displayName||name;
-    await setDoc(doc(db,"users",auth.currentUser.uid),{displayName:name,originalLoginName,updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,displayName:name,originalLoginName};
+    const uid=auth.currentUser.uid,userRef=doc(db,"users",uid);
+    const oldName=window.PythagorasiUser.displayName;
+    const originalLoginName=window.PythagorasiUser.loginName||
+      window.PythagorasiUser.originalLoginName||oldName||name;
+    const adminChanging=isSuperAdminProfile();
+    await runTransaction(db,async tx=>{
+      const latest=await tx.get(userRef);
+      if(!latest.exists())throw new Error("name-profile-missing");
+      const nextAllowed=classoraNameNextAllowedMs(latest.data());
+      if(!adminChanging&&nextAllowed>Date.now())throw new Error("name-cooldown");
+      tx.update(userRef,{
+        displayName:name,originalLoginName,
+        displayNameChangedAt:serverTimestamp(),updatedAt:serverTimestamp()
+      });
+    });
+    const updated=await getDoc(userRef);
+    window.PythagorasiUser={
+      ...window.PythagorasiUser,displayName:name,originalLoginName,
+      displayNameChangedAt:updated.data()?.displayNameChangedAt||{seconds:Math.floor(Date.now()/1000)}
+    };
     activeProfile=window.PythagorasiUser;
     document.getElementById("authDisplayName").textContent=name;
     document.getElementById("lobbyProfileName").textContent=name;
-    document.getElementById("lobbyGreeting").textContent=`أهلًا ${name.split(/\s+/)[0]} 👋`;
+    document.getElementById("lobbyGreeting").textContent=
+      (en?"Welcome, ":"أهلًا ")+name.split(/\s+/)[0];
     if(isStudentLike())await syncStudentMemberStats();
     await syncPublicProfile(window.PythagorasiUser,auth.currentUser);
     refreshAIWelcome();refreshSettingsUI();
-    status.textContent="تم حفظ الاسم الظاهر ✅";
+    status.textContent=en?"Display name saved. You can change it again in 7 days.":
+      "تم تغيير الاسم. بتقدر تغيّره مرة ثانية بعد 7 أيام.";
     soundFx("correct");
-  }catch(err){console.error(err);status.textContent="تعذر حفظ الاسم."}
+  }catch(err){
+    console.error("weekly display-name change",err);
+    status.textContent=String(err?.message||"").includes("name-cooldown")?
+      (en?"You can only change your display name once every 7 days.":"تغيير الاسم متاح مرة كل 7 أيام فقط."):
+      (en?"Could not save your name. Please try again.":"تعذّر حفظ الاسم. جرّب مرة ثانية.");
+  }finally{
+    classoraRefreshNameCooldown();
+  }
 });
 
 
