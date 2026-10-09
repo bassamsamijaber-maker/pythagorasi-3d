@@ -1,0 +1,92 @@
+/* Classora v117: English wordmark, dark edge-to-edge entry, in-app guided spotlight. */
+html{background:#06101b!important;color-scheme:dark}
+html,body{margin:0!important;width:100%!important;max-width:100%!important;min-height:100dvh!important}
+body{background-color:#06101b!important;overflow-x:clip}
+#platformLobby{min-height:100dvh!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+#authGate{min-height:100dvh!important;height:100dvh!important;max-width:100%!important}
+body.pwa-standalone #platformLobby{min-height:100dvh!important}
+@supports (height:100svh){#classoraIntro{min-height:100svh!important}}
+#classoraIntro .cw116-word{
+  font-family:"Segoe UI",Inter,system-ui,sans-serif!important;letter-spacing:-4px!important;
+  font-size:81px!important;font-weight:820!important;
+  clip-path:inset(0 100% 0 0);
+  animation:cw117-write-ltr 1.65s cubic-bezier(.32,.05,.36,1) .25s forwards!important;
+}
+@keyframes cw117-write-ltr{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+#classoraIntro .cw116-pen{
+ left:calc(50% - min(32vw,164px))!important;
+ animation:cw117-pen-ltr 1.65s cubic-bezier(.32,.05,.36,1) .25s forwards!important;
+}
+@keyframes cw117-pen-ltr{
+  0%{opacity:0;transform:translate(0,12px) rotate(-22deg)}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{opacity:0;transform:translate(min(64vw,325px),10px) rotate(-22deg)}
+}
+#classoraIntro .cw116-skip{direction:ltr!important}
+#cw116Wait{background:radial-gradient(ellipse at 50% 45%,#123c35,#06101b 70%)!important}
+#cw116Wait span{direction:ltr}
+#sessionRecovery{background:#06101b!important;color:#eafff6!important}
+@media(prefers-reduced-motion:reduce){
+ #classoraIntro .cw116-word{animation:none!important;clip-path:none!important}
+ #classoraIntro .cw116-pen{animation:none!important;opacity:0!important}
+}
+
+/* Live guided tour draws a spotlight around actual page elements instead of showing a static slideshow. */
+#classoraTour117[hidden]{display:none!important}
+#classoraTour117{
+ position:fixed;inset:0;z-index:2147483647;pointer-events:none;
+ font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:#f0fff9;
+}
+#classoraTour117 .ct117-shade{position:absolute;background:rgba(1,8,13,.73);pointer-events:none;
+ transition:all .33s cubic-bezier(.2,.78,.23,1)}
+#classoraTour117 .ct117-ring{
+ position:absolute;pointer-events:none;border-radius:19px;
+ border:2px solid #78fbd3;box-shadow:0 0 0 4px #7aebc02a,0 0 42px #3ae4af60;
+ transition:all .33s cubic-bezier(.2,.78,.23,1);background:#48d9b006
+}
+#classoraTour117 .ct117-card{
+ position:fixed;pointer-events:auto;z-index:1;
+ width:min(382px,calc(100vw - 28px));max-height:min(420px,60dvh);overflow-y:auto;
+ padding:18px 19px 17px;box-sizing:border-box;
+ border:1px solid #a7ffe454;border-radius:22px;
+ background:radial-gradient(ellipse at 10% 0%,#28735c6b,transparent 70%),linear-gradient(145deg,#143039f7,#091b27fb);
+ box-shadow:0 22px 70px #000c,inset 0 1px #ffffff22;
+ transition:top .25s ease,left .25s ease;
+ text-align:start;scrollbar-width:thin;
+}
+#classoraTour117 .ct117-kicker{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;color:#9bffdb}
+#classoraTour117 .ct117-track{height:5px;background:#ffffff25;border-radius:99px;margin:12px 0 13px;overflow:hidden}
+#classoraTour117 .ct117-track>span{display:block;height:100%;width:var(--ct117-progress,10%);
+ background:linear-gradient(90deg,#3cc698,#a3ffe5);border-radius:99px;transition:width .2s}
+#classoraTour117 h2{color:#f2fff9;font-size:clamp(17px,3vw,21px);font-weight:840;line-height:1.4;margin:0 0 6px}
+#classoraTour117 p{color:#c9e2d9;font-size:13px;line-height:1.72;margin:0 0 15px}
+#classoraTour117 .ct117-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}
+#classoraTour117 button{
+ border:1px solid #a5ffde40;background:#ffffff10;color:#eafff6;
+ padding:9px 12px;min-height:43px;border-radius:12px;font:750 13px inherit;
+ cursor:pointer;touch-action:manipulation
+}
+#classoraTour117 button.ct117-next{background:linear-gradient(115deg,#2ad4a5,#77f7cf);border-color:#7fffe0;color:#062219}
+#classoraTour117 button.ct117-exit{background:none;border:0;text-decoration:underline;color:#c1e5d6}
+#classoraTour117 .ct117-hint{display:block;margin-top:12px;font-size:11px;color:#9bcebc;line-height:1.5}
+#classoraTour117:focus-within .ct117-card{outline:1px solid #8cffdf}
+#classoraTour117 button:focus-visible{outline:2px solid #a4ffe4;outline-offset:2px}
+body.classora-tour117-active{overflow:hidden!important}
+@media(max-width:550px){
+ #classoraTour117 .ct117-card{padding:14px 14px 13px;border-radius:18px;max-height:45dvh}
+ #classoraTour117 h2{font-size:17px}
+ #classoraTour117 p{font-size:12px;line-height:1.55}
+ #classoraTour117 button{min-height:40px}
+}
+@media(prefers-reduced-motion:reduce){
+ #classoraTour117 .ct117-ring,#classoraTour117 .ct117-shade,#classoraTour117 .ct117-card,#classoraTour117 .ct117-track>span{transition:none!important}
+}
+
+/* Name editing status mirrors the enforced 7-day timer in Firestore rules. */
+#classoraNameCooldownNote{
+ display:block;margin:8px 0 11px;padding:10px 12px;border:1px solid #66c6b448;
+ border-radius:12px;background:#12413730;color:#c5eddf;font-size:12px;line-height:1.6;
+}
+#classoraNameCooldownNote[data-locked="true"]{border-color:#d7b9775c;color:#e9d9b6;background:#5d4e2118}
+#saveDisplayNameBtn:disabled{opacity:.58;cursor:not-allowed}
