@@ -4805,6 +4805,8 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 <script defer src="./assets/classora-teacher-dashboard.js?v=1"></script>
 <link rel="stylesheet" href="./assets/classora-learning-phase4.css?v=1">
 <script defer src="./assets/classora-learning-phase4.js?v=1"></script>
+<link rel="stylesheet" href="./assets/classora-mobile-tablet-v108.css?v=1">
+<script defer src="./assets/classora-mobile-tablet-v108.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -7033,16 +7035,28 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
   </div>
 </div>
 
-<div class="classora-mobile-page-nav" id="classoraMobilePageNav" aria-label="Mobile navigation">
-  <button type="button" id="classoraMobileLobbyBtn">
+<nav class="classora-mobile-page-nav" id="classoraMobilePageNav" aria-label="التنقّل السريع" data-no-translate>
+  <button type="button" id="classoraMobileLobbyBtn" aria-label="اللوبي" aria-current="page" class="is-active">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h14V10M9 20v-6h6v6"/></svg>
     <span>اللوبي</span>
   </button>
-  <button type="button" id="classoraMobileSettingsBtn">
+  <button type="button" id="classoraMobileSubjectsBtn" aria-label="المواد">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1m0-14c3-2 6-2 9-1v14c-3-1-6-1-9 1m0-14v14"/></svg>
+    <span>المواد</span>
+  </button>
+  <button type="button" id="classoraMobileClassesBtn" aria-label="صفوفي">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V9l9-6 9 6v12M3 21h18"/></svg>
+    <span>صفوفي</span>
+  </button>
+  <button type="button" id="classoraMobileChatBtn" aria-label="الشات">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.8-3.5A7.5 7.5 0 1 1 20 11.5Z"/></svg>
+    <span>الشات</span>
+  </button>
+  <button type="button" id="classoraMobileSettingsBtn" aria-label="الإعدادات">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/></svg>
     <span>الإعدادات</span>
   </button>
-</div>
+</nav>
 
 <script type="importmap">
 {
