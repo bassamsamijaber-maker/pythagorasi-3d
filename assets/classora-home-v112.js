@@ -229,8 +229,30 @@ export function mountClassoraHomeV112(api){
   const page=get("adminViewPromos"),list=adminList;
   if(!page||!list)return;
   page.querySelector(".cp-admin-count").textContent=t("الإعلانات: ","Announcements: ")+allRows().filter(x=>x.active).length+" / 5";
+  let controls=get("classoraPromoAdminFilters");
+  if(!controls){
+   controls=newNode("div","cp-admin-filters");
+   controls.id="classoraPromoAdminFilters";
+   const search=newNode("input");
+   search.type="search";search.id="classoraPromoSearch";search.placeholder=t("ابحث بعنوان الإعلان","Search announcements");
+   search.setAttribute("aria-label",t("بحث في الإعلانات","Search announcements"));
+   const filter=newNode("select");
+   filter.id="classoraPromoFilter";
+   filter.setAttribute("aria-label",t("فلترة حسب الحالة","Filter by status"));
+   for(const [value,ar,en] of [["all","الكل","All"],["active","المفعّلة","Active"],["paused","الموقوفة","Paused"]]){
+    const option=newNode("option","",t(ar,en));option.value=value;filter.append(option);
+   }
+   controls.append(search,filter);list.before(controls);
+   search.addEventListener("input",renderAdmin);
+   filter.addEventListener("change",renderAdmin);
+  }
+  const search=String(get("classoraPromoSearch")?.value||"").trim().toLocaleLowerCase();
+  const statusFilter=get("classoraPromoFilter")?.value||"all";
+  const filtered=allRows().filter(p=>
+   (!search||(p.titleAr+" "+p.titleEn+" "+p.bodyAr+" "+p.bodyEn).toLocaleLowerCase().includes(search))&&
+   (statusFilter==="all"||(statusFilter==="active"&&p.active)||(statusFilter==="paused"&&!p.active)));
   list.replaceChildren();
-  for(const p of allRows()){
+  for(const p of filtered){
    const row=newNode("div","cp-admin-row");
    const name=newNode("div","cp-admin-details");
    name.append(newNode("b","",p.titleAr||p.titleEn||"—"),newNode("small","",p.active?t("مفعّل","Active"):t("متوقف","Paused")));
@@ -241,7 +263,7 @@ export function mountClassoraHomeV112(api){
    }
    row.append(name,actions);list.append(row);
   }
-  if(!allRows().length)list.append(newNode("p","ct-empty",t("ما في إعلانات بعد.","No announcements yet.")));
+  if(!filtered.length)list.append(newNode("p","ct-empty",t("ما في إعلانات مطابقة.","No matching announcements.")));
  }
  function message(ar,en){if(status)status.textContent=t(ar,en)}
  function resetEditor(){
