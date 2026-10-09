@@ -147,6 +147,21 @@ export function mountClassoraHomeV112(api){
     row.append(label,btn);list.append(row);
    }
   }
+  const last=lastLesson();
+  if(last){
+   const b=newNode("button","ct-resume",t("كمّل آخر درس: ","Continue: ")+last.topic);
+   b.type="button";
+   b.addEventListener("click",()=>window.classoraCurriculum?.openAt(last.grade,last.subject,last.topic));
+   list.append(b);
+  }
+ }
+ function lastLesson(){
+  try{
+   const uid=api.auth.currentUser?.uid;
+   const value=uid?JSON.parse(localStorage.getItem("classora_last_topic_v112_"+uid)||"null"):null;
+   if(!value||!value.topic||!Number.isFinite(Number(value.grade)))return null;
+   return value;
+  }catch{return null}
  }
  async function refreshTasks(force=false){
   const profile=api.profile(),uid=api.auth.currentUser?.uid;
@@ -246,6 +261,22 @@ export function mountClassoraHomeV112(api){
  new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&role()==="student")refreshTasks()});
  get("classoraPromoAdminForm")?.addEventListener("submit",event=>{event.preventDefault();addPromo()});
+ const curriculum=window.classoraCurriculum;
+ if(curriculum?.openAt&&!curriculum.__classoraV112Tracked){
+  const original=curriculum.openAt.bind(curriculum);
+  curriculum.__classoraV112Tracked=true;
+  curriculum.openAt=(grade,subject,topic)=>{
+   const result=original(grade,subject,topic);
+   try{
+    const uid=api.auth.currentUser?.uid;
+    if(uid&&topic&&Number(grade)>=7&&Number(grade)<=10){
+     localStorage.setItem("classora_last_topic_v112_"+uid,JSON.stringify({grade:Number(grade),subject:String(subject||"").slice(0,24),topic:String(topic).slice(0,90)}));
+    }
+   }catch{}
+   renderTasks();
+   return result;
+  };
+ }
  render();renderAdmin();
  return {setPromos,refresh,refreshAdmin:renderAdmin,refreshTasks};
 }
