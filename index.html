@@ -4816,20 +4816,22 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
 <link rel="stylesheet" href="./assets/classora-universal-dock-v113.css?v=2">
 <script defer src="./assets/classora-universal-dock-v113.js?v=4"></script>
 <link rel="stylesheet" href="./assets/classora-entrance-v116.css?v=1">
-<script defer src="./assets/classora-entrance-v116.js?v=1"></script>
+<script defer src="./assets/classora-entrance-v116.js?v=2"></script>
+<link rel="stylesheet" href="./assets/classora-v117.css?v=1">
+<script defer src="./assets/classora-guided-tour-v117.js?v=1"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
   <div class="cw116-stage">
-    <svg class="cw116-writing" viewBox="0 0 420 184" role="img" aria-label="كلاسورا — Classora">
-      <text class="cw116-word" x="210" y="102" text-anchor="middle" direction="rtl">كلاسورا</text>
+    <svg class="cw116-writing" viewBox="0 0 420 184" role="img" aria-label="Classora">
+      <text class="cw116-word" x="210" y="102" text-anchor="middle" direction="rtl">Classora</text>
       <path class="cw116-line one" d="M65 118 Q210 126 355 118"/>
       <path class="cw116-line two" d="M111 133 Q210 139 309 132"/>
     </svg>
     <div class="cw116-pen" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m30 5 13 13-23 23-15 3 3-15Z"/><path d="m25 10 13 13M8 29l11 11"/></svg></div>
     <small class="cw116-sub" aria-hidden="true">C L A S S O R A</small>
   </div>
-  <button class="cw116-skip" type="button" aria-label="تخطي الافتتاحية">تخطي / Skip</button>
+  <button class="cw116-skip" type="button" aria-label="Skip intro">Skip</button>
 </div>
 <script>(function(){
   var intro=document.getElementById("classoraIntro");
@@ -4856,7 +4858,7 @@ button[data-return-control]{display:inline-flex!important;align-items:center;jus
   setTimeout(finish,3000);
   setTimeout(finish,3600);
 })();</script>
-<div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading • جارٍ التحميل</span></div>
+<div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading your workspace…</span></div>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
