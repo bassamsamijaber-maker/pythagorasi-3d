@@ -1,8 +1,8 @@
 /* Classora unified subject picker and vetted question generation. Works with existing exam and live-competition actions. */
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=119';
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=122';
 import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=119';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
-import {scienceLiveQuestions} from './learning-hub.js?v=119';
+import {scienceLiveQuestions} from './learning-hub.js?v=122';
 const t=(ar,en,lang)=>lang==='en'?en:ar;
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
@@ -165,63 +165,50 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
 function installPicker(id,language=()=>document.documentElement.lang){
  const select=document.getElementById(id);if(!select||select.dataset.classoraCurriculumPicker)return;
  select.dataset.classoraCurriculumPicker='true';
- const legacyEnglish={
-  pythagoras:'Pythagoras',science:'Science — mixed topics','science-periodic':'Science — Periodic table',
-  'science-atoms':'Science — Atoms','science-motion':'Science — Forces and motion',
-  'arabic-idafa':'Arabic Grammar — Idafa',mixed:'Mixed — Pythagoras and equations',
-  equations2:'Two-variable equations',periodic:'Periodic table',atoms:'Atoms',motion:'Forces and motion'
- };
- const original=[...select.options].map(x=>({value:x.value,ar:x.textContent,en:legacyEnglish[x.value]||x.textContent}));
- const wrapper=select.closest('label')||select.parentElement;
+ const wrap=select.closest('label')||select.parentElement;
  const search=document.createElement('input');search.type='search';search.className='ca-topic-search';
  search.autocomplete='off';search.spellcheck=false;search.dataset.noTranslate='';
- const label=document.createElement('span');label.className='ca-topic-search-label';
- label.dataset.noTranslate='';
- wrapper.insertBefore(label,select);wrapper.insertBefore(search,select);
- const placeholders={
-  examSubject:['ابحث عن أي موضوع في الصفوف 7–10','Search all grades 7–10'],
-  compQuickSubject:['ابحث عن موضوع للمسابقة','Search competition topics'],
-  scienceExamTopic:['ابحث عن موضوع لتوليد الأسئلة','Search question topics']
- };
- const p=placeholders[id]||placeholders.examSubject;
- function fill(){
-  const lang=language()==='en'?'en':'ar',previous=select.value,query=norm(search.value);
-  label.textContent=t('ابحث عن أي موضوع من المنهاج','Find any curriculum topic',lang);
+ const label=document.createElement('span');label.className='ca-topic-search-label';label.dataset.noTranslate='';
+ wrap.insertBefore(label,select);wrap.insertBefore(search,select);
+ const grade=()=>{let n=8;try{n=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(n)?n:8};
+ const gradeLabel=(g,lang)=>lang==='en'?'Grade '+g:'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g);
+ let lastLang='',lastGrade=0;
+ function fill({preserve=true}={}){
+  const lang=language()==='en'?'en':'ar',g=grade(),query=norm(search.value);
+  const previous=preserve?select.value:'';
+  label.textContent=t('مواضيع '+gradeLabel(g,lang),'Topics for '+gradeLabel(g,lang),lang);
+  search.placeholder=t('ابحث عن موضوع من '+gradeLabel(g,lang),'Search a '+gradeLabel(g,lang)+' topic',lang);
   for(const fieldId of ['compQuickDifficulty','scienceExamDifficulty']){
-    const diff=document.getElementById(fieldId);
-    if(!diff)continue;
-    const labelNode=diff.closest('label')?.firstChild;
-    if(labelNode?.nodeType===3)labelNode.textContent=t('الصعوبة','Difficulty',lang)+'\n';
-    const trans={easy:['سهل','Easy'],medium:['متوسط','Medium'],hard:['صعب','Hard'],mixed:['مختلط','Mixed']};
-    for(const opt of diff.options){const val=trans[opt.value];if(val)opt.textContent=lang==='en'?val[1]:val[0]}
+   const diff=document.getElementById(fieldId);if(!diff)continue;
+   const node=diff.closest('label')?.firstChild;if(node?.nodeType===3)node.textContent=t('الصعوبة','Difficulty',lang)+'\n';
+   const translations={easy:['سهل','Easy'],medium:['متوسط','Medium'],hard:['صعب','Hard'],mixed:['مختلط','Mixed']};
+   for(const opt of diff.options){const parts=translations[opt.value];if(parts)opt.textContent=lang==='en'?parts[1]:parts[0]}
   }
-  search.placeholder=t(p[0],p[1],lang);
-  const options=[];
-  for(const x of original){
-   if(!query||norm(x.ar+' '+x.en).includes(query))options.push({value:x.value,title:lang==='en'?x.en:x.ar,group:''});
-  }
-  for(const obj of TOPICS){
-   const text=lang==='en'?obj.en:obj.title;
-   if(query&&!norm(obj.title+' '+obj.en+' '+subjectLabel(obj.subject,'en')+' '+subjectLabel(obj.subject,'ar')+' '+obj.grade).includes(query))continue;
-   options.push({value:obj.value,title:(lang==='en'?'Grade ':'صف ')+obj.grade+' · '+subjectLabel(obj.subject,lang)+' · '+text,group:String(obj.grade)+' · '+subjectLabel(obj.subject,lang)});
-  }
-  const fragment=document.createDocumentFragment();let group=null,name='';
-  for(const item of options){
-   if(item.group!==name){group=null;name=item.group}
-   if(item.group&&!group){group=document.createElement('optgroup');group.label=item.group;fragment.append(group)}
-   const opt=document.createElement('option');opt.value=item.value;opt.textContent=item.title;
-   (group||fragment).append(opt);
+  const matches=TOPICS.filter(obj=>obj.grade===g&&(!query||norm(obj.title+' '+obj.en+' '+subjectLabel(obj.subject,'ar')+' '+subjectLabel(obj.subject,'en')+' '+gradeLabel(g,lang)).includes(query)));
+  const fragment=document.createDocumentFragment();let parent=null,previousSubject='';
+  for(const obj of matches){
+   if(obj.subject!==previousSubject){
+    previousSubject=obj.subject;
+    parent=document.createElement('optgroup');parent.label=subjectLabel(obj.subject,lang);
+    fragment.append(parent);
+   }
+   const option=document.createElement('option');option.value=obj.value;option.textContent=(lang==='en'?obj.en:obj.title);
+   parent.append(option);
   }
   select.replaceChildren(fragment);
-  if([...select.options].some(x=>x.value===previous))select.value=previous;
-  else if(options.length)select.selectedIndex=0;
-  if(options.length&&!select.value)select.selectedIndex=0;
-  if(!options.length){const empty=document.createElement('option');empty.value='';empty.textContent=t('لا توجد نتائج','No matching topics',lang);empty.disabled=true;select.append(empty)}
+  const all=[...select.options];
+  const best=all.find(x=>x.value===previous)||(query?all[0]:all.find(x=>/فيثاغورس/.test(TOPIC_MAP.get(x.value)?.title||''))||all[0]);
+  if(best)select.value=best.value;
+  else{const empty=document.createElement('option');empty.value='';empty.disabled=true;empty.textContent=t('ما في مواضيع مطابقة','No matching topics',lang);select.append(empty);select.value=''}
   select.dispatchEvent(new Event('change',{bubbles:true}));
+  lastLang=lang;lastGrade=g;
  }
- search.addEventListener('input',fill);
- new MutationObserver(fill).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
- fill();
+ search.addEventListener('input',()=>fill());
+ document.addEventListener('classora:grade-change',()=>{search.value='';fill({preserve:false})});
+ new MutationObserver(()=>{
+  const l=language()==='en'?'en':'ar';if(l!==lastLang)fill();
+ }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ fill({preserve:false});
  return fill;
 }
 export const classoraAssessment={topics:TOPICS,get:val=>TOPIC_MAP.get(val),generate:pickQuestions,installPicker};

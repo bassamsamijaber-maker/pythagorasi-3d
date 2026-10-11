@@ -451,13 +451,19 @@ function editorDefaults(t){
 export function mountCurriculum(api){
  let disposeLesson=null;
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
+ const gradeLabel=g=>txt(api,"الصف "+({7:"السابع",8:"الثامن",9:"التاسع",10:"العاشر"}[g]||g),"Grade "+g);
+ function rememberGrade(g){
+  if(!G[g])return;
+  try{localStorage.setItem("classora_curriculum_grade",String(g))}catch{}
+  document.dispatchEvent(new CustomEvent("classora:grade-change",{detail:{grade:Number(g)}}));
+ }
  const modal=document.createElement("div");modal.className="classora-curriculum-modal";modal.id="classoraCurriculumModal";
  modal.innerHTML='<div class="classora-curriculum-shell" role="dialog" aria-modal="true"><div class="classora-curriculum-top"><button class="classora-curriculum-back" type="button"></button><div class="classora-curriculum-brand">'+svg("school")+'<div><b>Classora</b><small id="cv97TopSub"></small></div></div><button class="classora-curriculum-close" type="button" aria-label="Close">×</button></div><div class="classora-curriculum-body" id="cv97Body"></div></div>';
  document.body.appendChild(modal);
  const body=modal.querySelector("#cv97Body"),back=modal.querySelector(".classora-curriculum-back"),close=modal.querySelector(".classora-curriculum-close"),topSub=modal.querySelector("#cv97TopSub");
  function open(){state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
  function openAt(grade,subject,topicRef=""){
-  const g=Number(grade);state.grade=G[g]?g:7;state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
+  const g=Number(grade);state.grade=G[g]?g:7;rememberGrade(state.grade);state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
   if(state.subject&&topicRef){
    const candidates=["math","geometry"].includes(state.subject)?[...topicsFor(state.grade,"math"),...topicsFor(state.grade,"geometry")]:topicsFor(state.grade,state.subject);
    const found=candidates.find(x=>x.id===topicRef||x.title===topicRef);
@@ -477,19 +483,19 @@ export function mountCurriculum(api){
  };
  function setTop(){
   back.textContent=state.view==="grades"?txt(api,"إغلاق","Close"):txt(api,"رجوع","Back");
-  topSub.textContent=state.grade?txt(api,"الصف ","Grade ")+state.grade:txt(api,"المنهاج الدراسي","Curriculum");
+  topSub.textContent=state.grade?gradeLabel(state.grade):txt(api,"المنهاج الدراسي","Curriculum");
  }
  function renderGrades(){
   body.innerHTML='<section class="curriculum-hero"><span class="curriculum-kicker">CLASSORA CURRICULUM</span><h2>'+txt(api,"اختار صفك","Choose your grade")+'</h2><p>'+txt(api,"المواد مرتبة حسب الصف، والعربي قواعد فقط والإنجليزي Grammar فقط. لا يوجد عبري أو مدنيات.","Subjects are organized by grade. Arabic is grammar-only and English is grammar-only. Hebrew and civics are excluded.")+'</p></section><div class="curriculum-grid" id="cv97Grades"></div>';
   const host=body.querySelector("#cv97Grades");
   [7,8,9,10].forEach(function(g){
    const b=document.createElement("button");b.className="curriculum-grade-card";b.innerHTML=svg("school")+'<b>'+txt(api,"الصف "+(g===7?"السابع":g===8?"الثامن":g===9?"التاسع":"العاشر"),"Grade "+g)+'</b><small>'+subjectList(g).length+" "+txt(api,"مواد","subjects")+'</small>';
-   b.onclick=function(){state.grade=g;state.view="subjects";render()};host.appendChild(b)
+   b.onclick=function(){state.grade=g;rememberGrade(g);state.view="subjects";render()};host.appendChild(b)
   });
  }
  function renderSubjects(){
   const g=state.grade,subs=subjectList(g);
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+g+'</div></div><section class="curriculum-hero"><span class="curriculum-kicker">'+txt(api,"المواد","SUBJECTS")+'</span><h2>'+txt(api,"اختار المادة","Choose a subject")+'</h2><p>'+txt(api,"كل مادة تفتح المواضيع المناسبة لهذا الصف فقط.","Each subject shows only the topics assigned to this grade.")+'</p></section><div class="curriculum-grid" id="cv97Subjects"></div>';
+  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(g)+'</div></div><section class="curriculum-hero"><span class="curriculum-kicker">'+txt(api,"المواد","SUBJECTS")+'</span><h2>'+txt(api,"اختار المادة","Choose a subject")+'</h2><p>'+txt(api,"كل مادة تفتح المواضيع المناسبة لهذا الصف فقط.","Each subject shows only the topics assigned to this grade.")+'</p></section><div class="curriculum-grid" id="cv97Subjects"></div>';
   const host=body.querySelector("#cv97Subjects");
   subs.forEach(function(s){
    const count=topicsFor(g,s).length,b=document.createElement("button");b.className="curriculum-subject-card";b.innerHTML=svg(S[s].icon)+'<b>'+subjectName(api,s)+'</b><small>'+count+" "+txt(api,"موضوع","topics")+'</small>';
@@ -551,7 +557,7 @@ export function mountCurriculum(api){
   const extra=[];
   if(state.grade===10&&state.subject==="science")extra.push('<div class="curriculum-filter-row" id="cv97Track"><button data-track="all">'+txt(api,"الكل","All")+'</button><button data-track="physics">'+trackName(api,"physics")+'</button><button data-track="chemistry">'+trackName(api,"chemistry")+'</button><button data-track="biology">'+trackName(api,"biology")+'</button></div>');
   if(state.grade===10&&["math","geometry"].includes(state.subject))extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+state.grade+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
+  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(state.grade)+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
   const search=body.querySelector("#cv97Search");search.oninput=function(){state.query=search.value;paintTopicCards()};
   body.querySelectorAll("#cv97Track button").forEach(function(b){b.classList.toggle("active",b.dataset.track===state.track);b.onclick=function(){state.track=b.dataset.track;renderTopics()}});
   body.querySelectorAll("#cv97MathLevel button").forEach(function(b){b.classList.toggle("active",b.dataset.level===state.mathLevel);b.onclick=function(){state.mathLevel=b.dataset.level;renderTopics()}});

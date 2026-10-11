@@ -12,17 +12,30 @@ export function mountSubjectLabs(api){
   const page=node('dialog','subject-lab-page');page.dataset.learningPage=kind;page.dataset.noTranslate='';page.dir=api.language()==='ar'?'rtl':'ltr';
   const title=kind==='acids'?L('مختبر الحموضية والقاعدية','Acids & Bases Lab'):L('مختبر المضاف والمضاف إليه','Idafa Grammar Lab');
   const header=node('header','sl-header'),back=button(L('رجوع إلى اللوبي','Back to lobby'),()=>leave());
-  back.classList.add('sl-back');header.append(back,node('span','sl-brand','CLASSORA / LABS'));
+  back.classList.add('sl-back');
+  back.dataset.noTranslate='';
+  back.setAttribute('aria-label',L('رجوع للمواد','Back to subjects'));
+  back.insertAdjacentHTML('afterbegin','<svg class="sl-back-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>');
+  header.append(back,node('span','sl-brand','CLASSORA / LABS'));
   const main=node('main','sl-main');main.append(node('p','sl-eyebrow',kind==='acids'?L('علوم · اكتشف بالتجربة','SCIENCE · LEARN BY EXPLORING'):L('عربي · اللغة بين إيديك','ARABIC GRAMMAR · LEARN BY EXPLORING')),node('h1','',title));
   page.append(header,main);document.body.append(page);page.setAttribute('aria-label',title);page.showModal();
-  history.pushState({classoraSubject:kind},'',location.href);
+  let historyEntry=false;
+  try{history.pushState({classoraSubject:kind},'',location.href);historyEntry=true}catch{}
   let cleanup=()=>{},closed=false;
-  function leave(){if(history.state?.classoraSubject===kind)history.back();else page.close()}
-  function onPop(){page.close()}
+  function leave(){
+   // Close synchronously for touch devices: never wait for an async popstate to hide the lab.
+   if(page.open)page.close();
+  }
+  function onPop(){historyEntry=false;if(page.open)page.close()}
   window.addEventListener('popstate',onPop);
   page.addEventListener('cancel',e=>{e.preventDefault();leave()});
-  page.addEventListener('close',()=>{if(closed)return;closed=true;cleanup();window.removeEventListener('popstate',onPop);page.remove();active=null;requestAnimationFrame(()=>{if(lobby)lobby.scrollTop=scroll;window.scrollTo(0,windowY);if(source?.isConnected)source.focus({preventScroll:true})})},{once:true});
-  active={close:()=>page.close()};
+  page.addEventListener('close',()=>{
+   if(closed)return;closed=true;cleanup();window.removeEventListener('popstate',onPop);
+   if(historyEntry&&history.state?.classoraSubject===kind){historyEntry=false;try{history.back()}catch{}}
+   page.remove();active=null;
+   requestAnimationFrame(()=>{if(lobby)lobby.scrollTop=scroll;window.scrollTo(0,windowY);if(source?.isConnected)source.focus({preventScroll:true})});
+  },{once:true});
+  active={close:leave};
   const grid=node('div','sl-grid'),visual=node('section','sl-visual'),info=node('section','sl-info');grid.append(visual,info);main.append(grid);
   if(kind==='acids')cleanup=acidLab(visual,info);else cleanup=idafaLab(visual,info);
   main.append(node('p','sl-footnote',L('استكشف باللمس أو الماوس. زر الرجوع يعيدك لنفس مكانك.','Explore with touch or mouse. Back returns you to the same place.')));

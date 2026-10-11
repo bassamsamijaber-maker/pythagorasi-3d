@@ -277,19 +277,16 @@ $("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTabl
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
 function exitPeriodicTable(){
  if($("#elementModal")?.classList.contains("open"))closeModal();
- try{
-   sessionStorage.removeItem("classora_subject_origin");
-   sessionStorage.removeItem("classora_returning_from_subject");
- }catch{}
- const lobbyUrl=new URL("../#platformLobby",window.location.href).href;
- try{
-   /* Leave the periodic-table iframe completely and open the main Classora lobby. */
-   window.top.location.replace(lobbyUrl);
+ // The table is embedded in the existing Classora page: request that the parent closes it.
+ if(window.parent&&window.parent!==window){
+  try{
+   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin);
    return;
- }catch{}
- try{window.parent.location.replace(lobbyUrl);return}catch{}
- try{window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"lobby"},location.origin)}catch{}
- location.replace(lobbyUrl);
+  }catch(error){console.warn("Periodic table parent navigation unavailable",error)}
+ }
+ // Standalone/direct tab fallback, including Add to Home Screen.
+ try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
+ location.assign(new URL("../#platformLobby",window.location.href).href);
 }
 
 $("#backBtn").onclick=exitPeriodicTable;
