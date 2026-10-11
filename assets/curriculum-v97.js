@@ -383,6 +383,12 @@ function genericQuestion(api,t,diff,n){
  return {prompt:lead+" «"+display+"»؟ ("+(n+1)+")",options:opts,answer:correct,explanation:"الاختيار الصحيح هو الهدف المباشر من موضوع «"+display+"»."};
 }
 function makeQuestions(api,t,count,difficulty,live){
+ const assessment=window.classoraAssessment;
+ if(assessment&&t&&Number.isInteger(t.grade)){
+  try{return assessment.generate("curr:"+t.grade+":"+t.subject+":"+t.index,count,difficulty,lang(api),live).questions}
+  catch(error){console.warn("Classora topic question bank incomplete",t.title,error?.message);return []}
+ }
+ if(!["math","geometry","arabic"].includes(t?.subject))return [];
  const out=[],seen=new Set(),levels=difficulty==="mixed"?["easy","medium","hard"]: [difficulty];
  let guard=0;
  while(out.length<count&&guard<count*20){
@@ -1045,7 +1051,7 @@ export function mountCurriculum(api){
   }
   paint();
  }
- function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:correct=>{if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
+ function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:correct=>{if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");if(!qs.length){api.toast?.(txt(api,"لا توجد أسئلة مراجَعة كافية لهذا الدرس.","Not enough reviewed questions for this lesson."));return false}let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
  function renderLesson(){
   if(state.topic.subject==="arabic"&&arabicLesson(state.topic.title)){disposeLesson=mountArabicLesson(body,state.topic,studioApi(state.topic));return}
   if(["math","geometry"].includes(state.topic.subject)&&mathTopic(state.topic.title)){disposeLesson=mountMathLesson(body,state.topic,studioApi(state.topic));return}
@@ -1321,6 +1327,7 @@ export function mountCurriculum(api){
   if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
+   if(!qs.length){api.toast?.(T("هذا الموضوع يحتاج أسئلة مراجَعة قبل بدء الامتحان.","This topic needs reviewed questions before the exam can start."));return}
    if(state.editor?.question&&state.editor?.answer){qs.unshift({id:"custom-"+Date.now(),type:"open",prompt:state.editor.question,answer:state.editor.answer,options:[],explanation:state.editor.answer,points:10,topicKey:t.id,subjectKey:t.subject,curriculumTopicId:t.id,curriculumTopicTitle:t.title,curriculumGrade:t.grade,questionKind:"custom",level:2,typeLabel:subjectName(api,t.subject)+" • "+display});qs.splice(count)}
    const exam={title:(t.subject==="english"?"Grammar Exam — ":T("امتحان — ","Exam — "))+display,questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title};
    const ok=await api.startExam(exam);if(ok!==false)shut()
@@ -1328,11 +1335,13 @@ export function mountCurriculum(api){
   body.querySelector("#cv97StartLive").onclick=async function(){
    if(!api.isTeacher||!api.isTeacher()){api.toast&&api.toast(T("إنشاء المسابقة يحتاج حساب معلم.","A teacher account is required to create a competition."));return}
    const diff=body.querySelector("#cv97LiveDifficulty").value,count=Number(body.querySelector("#cv97LiveCount").value),seconds=Number(body.querySelector("#cv97LiveTime").value),teamMode=body.querySelector("#cv97LiveMode").value,qs=makeQuestions(api,t,count,diff,true);
+   if(!qs.length){api.toast?.(T("بنك الأسئلة مش جاهز للمسابقة بهذا الموضوع.","The question bank isn't ready for this topic competition."));return}
    shut();await api.startCompetition(qs,(t.subject==="english"?"Live Grammar — ":T("مسابقة — ","Live — "))+display,{teamMode,audienceMode:"projector",questionSeconds:seconds,curriculumTopicId:t.id,difficulty:diff})
   }
  }
  function renderPractice(){
   const host=body.querySelector("#cv97Practice");if(!host)return;const t=state.topic,q=makeQuestions(api,t,1,"easy",false)[0];
+  if(!q){host.textContent=txt(api,"هذا الدرس يحتاج بنك أسئلة إضافي قبل تفعيل التدريب.","This lesson needs a reviewed question bank before practice is available.");return}
   host.innerHTML='<div class="curriculum-mini-q"><b>'+esc(q.prompt)+'</b><div class="curriculum-mini-options"></div><div class="curriculum-feedback"></div></div>';
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})

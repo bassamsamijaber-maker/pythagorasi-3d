@@ -17166,6 +17166,7 @@ window.classoraLearningPlus=mountLearningPlus({
 });
 window.classoraSubjectLabs=mountSubjectLabs({language:()=>currentUILanguage,THREE,isGuest:isGuestSession,requireLogin:()=>showGuestLoginReminder('protected'),acidTest:()=>window.classoraLearningPlus.acidTest()});
 window.classoraCalculator=mountMathCalculator(()=>currentUILanguage);
+ window.classoraAssessment=classoraAssessment;
  window.classoraAssessmentTopics=classoraAssessment.topics;
  for(const id of ["examSubject","compQuickSubject","scienceExamTopic"])classoraAssessment.installPicker(id,()=>currentUILanguage);
 window.classoraReturnNavigation=mountReturnNavigation(()=>currentUILanguage);
