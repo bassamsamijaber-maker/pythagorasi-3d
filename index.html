@@ -2412,7 +2412,7 @@ body.classora-intro-active{overflow:auto!important}
 import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=124";
 import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=125";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=124';
@@ -8693,6 +8693,21 @@ function syncV99LanguageLabels(){
  setText("privacyPolicyLink","سياسة الخصوصية","Privacy Policy");
  setText("termsOfUseLink","شروط الاستخدام","Terms of Use");
  setText("publicSupportLink","صفحة الدعم","Support Page");
+ // Data-owned panels bypass automatic translation, so update their labels explicitly.
+ const taskArea=document.getElementById("classoraStudentTasks");
+ const taskTitle=taskArea?.querySelector("h2");
+ if(taskTitle)taskTitle.textContent=en?"Your assignments":"المطلوب منك";
+ const taskList=document.getElementById("classoraStudentTasksList");
+ if(taskList&&/^(جاري التحقق من وظائف صفوفك\.\.\.|Checking your class assignments\.\.\.)$/.test(taskList.textContent.trim()))
+   taskList.textContent=en?"Checking your class assignments...":"جاري التحقق من وظائف صفوفك...";
+ for(const [id,ar,enText] of [
+   ["classoraPromoCenter","إعلانات كلاسورا","Classora announcements"],
+   ["classoraMobilePageNav","التنقّل السريع","Quick navigation"],
+   ["classoraSettingsShortcuts","اختصارات الموقع","Site shortcuts"],
+   ["classoraTeacherDashboard","مساحة عمل المعلم","Teacher workspace"],
+   ["classoraStudentDashboard","لوحة تعليم الطالب","My learning dashboard"]
+ ]){const el=document.getElementById(id);if(el)el.setAttribute("aria-label",en?enText:ar)}
+ setText("manageSentAssignments","إدارة أو حذف الوظائف المرسلة","Manage / delete sent assignments");
 }
 function applySiteLanguage(lang,save=true){
   currentUILanguage=lang==='en'?'en':'ar';
