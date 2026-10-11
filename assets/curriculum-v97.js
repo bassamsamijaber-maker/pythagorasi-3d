@@ -1,5 +1,10 @@
+import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
+import {mountArabicLesson} from './arabic-studio-v119.js?v=119';
+import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=119';
+import {mountMathLesson} from './math-studio-v119.js?v=119';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
+ geometry:{ar:"هندسة",en:"Geometry",icon:"math"},
  math:{ar:"الرياضيات",en:"Mathematics",icon:"math"},
  science:{ar:"العلوم",en:"Science",icon:"science"},
  arabic:{ar:"العربي — قواعد",en:"Arabic Grammar",icon:"book"},
@@ -43,6 +48,7 @@ const G={
   english:["Present Simple","Present Continuous","Present Perfect","Present Perfect Continuous","Past Simple","Past Continuous","Past Perfect","Future Forms","Future Continuous","Future Perfect — Introduction","Active and Passive Voice","Zero Conditional","First Conditional","Second Conditional","Third Conditional — Introduction","Relative Clauses","Reported Speech","Reported Questions","Modal Verbs","Modal Perfects — Introduction","Gerunds","Infinitives","Gerunds vs Infinitives","Used to / Would","Wish / If Only — Introduction","Causative Have — Introduction","Question Tags","Articles","Determiners","Quantifiers","Prepositions","Linking Words"]
  }
 };
+splitMathCurriculum(G);
 export const CURRICULUM_DATA=G;
 export const CURRICULUM_SUBJECTS=S;
 
@@ -134,7 +140,7 @@ function txt(api,ar,en){return lang(api)==="en"?en:ar}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})}
 function normalizeTopic(raw,grade,subject,index){
  const o=typeof raw==="string"?{title:raw}:raw;
- return {id:"g"+grade+"-"+subject+"-"+index,grade:Number(grade),subject:subject,title:o.title,track:o.track||"",index:index};
+ return {id:o.id||"g"+grade+"-"+subject+"-"+index,grade:Number(grade),subject:subject,title:o.title,track:o.track||"",index:index};
 }
 function topicsFor(grade,subject){
  return (G[grade]&&G[grade][subject]||[]).map(function(x,i){return normalizeTopic(x,grade,subject,i)});
@@ -252,6 +258,8 @@ function workedExample(api,t){
  return en?"Geography example: locate “"+n+"” on a map or diagram, connect it to one natural or human factor, then state one effect.":"مثال جغرافي: حدّد «"+n+"» على خريطة أو مخطط، ثم اربطه بعامل طبيعي أو بشري واذكر نتيجة واحدة لهذا العامل.";
 }
 function skillText(api,t){
+ if(t.subject==="arabic"&&arabicLesson(t.title)){const d=arabicLesson(t.title);return lang(api)==="en"?d.english:d.ar}
+ if(["math","geometry"].includes(t.subject)&&mathTopic(t.title)){const d=mathTopic(t.title);return lang(api)==="en"?d.english:d.ar}
  const n=titleText(api,t);
  if(t.subject==="english")return "Apply "+t.title+" correctly in context";
  if(t.subject==="arabic")return lang(api)==="en"?"Recognize and apply the Arabic grammar rule "+n:"تمييز قاعدة "+t.title+" وتطبيقها وإعرابها";
@@ -357,6 +365,8 @@ function topicSpecificQuestion(api,t,diff,n){
  return null;
 }
 function genericQuestion(api,t,diff,n){
+ if(t.subject==="arabic"&&arabicLesson(t.title))return arabicQuestion(t,diff,n,lang(api));
+ if(["math","geometry"].includes(t.subject)&&mathTopic(t.title))return mathQuestion(t,diff,n,lang(api));
  const specific=topicSpecificQuestion(api,t,diff,n);if(specific)return specific;
  if(t.subject==="english"){
   const p=englishPractical(t,diff,n);if(p)return p;
@@ -385,13 +395,7 @@ function makeQuestions(api,t,count,difficulty,live){
  }
  return out;
 }
-function grade10MathAllowed(topic,level){
- if(topic.grade!==10||topic.subject!=="math")return true;
- const advanced=["الهندسة التحليلية","المسافة بين نقطتين","منتصف قطعة مستقيمة","حساب المثلثات","Sin","Cos","Tan"];
- if(level==="3")return advanced.indexOf(topic.title)<0;
- if(level==="4")return topic.title!=="Sin"&&topic.title!=="Cos"&&topic.title!=="Tan"||true;
- return true;
-}
+function grade10MathAllowed(topic,level){return mathLevelAllowed(topic,level)}
 function makeProgressKey(api){const p=api.profile&&api.profile();return "classora_curriculum_v97_"+String(p&&p.uid||p&&p.profileId||"guest")}
 function readProgress(api){
  const p=api.profile&&api.profile();const cloud=p&&(p.accountState&&p.accountState.curriculumProgress||p.curriculumProgress);
@@ -439,6 +443,7 @@ function editorDefaults(t){
  return {data:en?titleText({language:()=>"en"},t):t.title,words:"",question:en?"Write the question or idea you want to analyze.":"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
 }
 export function mountCurriculum(api){
+ let disposeLesson=null;
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
  const modal=document.createElement("div");modal.className="classora-curriculum-modal";modal.id="classoraCurriculumModal";
  modal.innerHTML='<div class="classora-curriculum-shell" role="dialog" aria-modal="true"><div class="classora-curriculum-top"><button class="classora-curriculum-back" type="button"></button><div class="classora-curriculum-brand">'+svg("school")+'<div><b>Classora</b><small id="cv97TopSub"></small></div></div><button class="classora-curriculum-close" type="button" aria-label="Close">×</button></div><div class="classora-curriculum-body" id="cv97Body"></div></div>';
@@ -448,13 +453,14 @@ export function mountCurriculum(api){
  function openAt(grade,subject,topicRef=""){
   const g=Number(grade);state.grade=G[g]?g:7;state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
   if(state.subject&&topicRef){
-   const found=topicsFor(state.grade,state.subject).find(x=>x.id===topicRef||x.title===topicRef);
-   if(found){state.topic=found;state.view="lesson";touchTopic(api,found)}
+   const candidates=["math","geometry"].includes(state.subject)?[...topicsFor(state.grade,"math"),...topicsFor(state.grade,"geometry")]:topicsFor(state.grade,state.subject);
+   const found=candidates.find(x=>x.id===topicRef||x.title===topicRef);
+   if(found){state.subject=found.subject;state.topic=found;state.view="lesson";touchTopic(api,found)}
    else state.view="topics";
   }else state.view=state.subject?"topics":"subjects";
   if(state.subject==="science")try{sessionStorage.setItem("classora_subject_origin","science")}catch{};modal.classList.add("open");render();
  }
- function shut(){modal.classList.remove("open")}
+ function shut(){disposeLesson?.();disposeLesson=null;modal.classList.remove("open");document.dispatchEvent(new window.Event("classora:math-context"))}
  close.onclick=shut;modal.addEventListener("click",function(e){if(e.target===modal)shut()});
  back.onclick=function(){
   if(state.view==="lesson"){state.view="topics";state.topic=null}
@@ -487,11 +493,12 @@ export function mountCurriculum(api){
  function filteredTopics(){
   let list=topicsFor(state.grade,state.subject);
   if(state.grade===10&&state.subject==="science"&&state.track!=="all")list=list.filter(function(t){return t.track===state.track});
-  if(state.grade===10&&state.subject==="math")list=list.filter(function(t){return grade10MathAllowed(t,state.mathLevel)});
-  const q=String(state.query||"").trim().toLowerCase();if(q)list=list.filter(function(t){return t.title.toLowerCase().indexOf(q)>=0});
+  if(state.grade===10&&["math","geometry"].includes(state.subject))list=list.filter(function(t){return grade10MathAllowed(t,state.mathLevel)});
+  const q=String(state.query||"").trim().toLowerCase();if(q)list=list.filter(function(t){return t.title.toLowerCase().indexOf(q)>=0||titleText(api,t).toLowerCase().indexOf(q)>=0});
   return list
  }
  function topicSection(t){
+  if(["math","geometry"].includes(t.subject)&&mathSection(t))return mathSection(t);
   const n=String(t.title||""),s=t.subject;
   const mk=(key,ar,en,icon)=>({key,ar,en,icon});
   if(s==="math"){
@@ -537,7 +544,7 @@ export function mountCurriculum(api){
  function renderTopics(){
   const extra=[];
   if(state.grade===10&&state.subject==="science")extra.push('<div class="curriculum-filter-row" id="cv97Track"><button data-track="all">'+txt(api,"الكل","All")+'</button><button data-track="physics">'+trackName(api,"physics")+'</button><button data-track="chemistry">'+trackName(api,"chemistry")+'</button><button data-track="biology">'+trackName(api,"biology")+'</button></div>');
-  if(state.grade===10&&state.subject==="math")extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
+  if(state.grade===10&&["math","geometry"].includes(state.subject))extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
   body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+txt(api,"الصف ","Grade ")+state.grade+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
   const search=body.querySelector("#cv97Search");search.oninput=function(){state.query=search.value;paintTopicCards()};
   body.querySelectorAll("#cv97Track button").forEach(function(b){b.classList.toggle("active",b.dataset.track===state.track);b.onclick=function(){state.track=b.dataset.track;renderTopics()}});
@@ -1038,7 +1045,11 @@ export function mountCurriculum(api){
   }
   paint();
  }
+ function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:correct=>{if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
  function renderLesson(){
+  if(state.topic.subject==="arabic"&&arabicLesson(state.topic.title)){disposeLesson=mountArabicLesson(body,state.topic,studioApi(state.topic));return}
+  if(["math","geometry"].includes(state.topic.subject)&&mathTopic(state.topic.title)){disposeLesson=mountMathLesson(body,state.topic,studioApi(state.topic));return}
+
   const t=state.topic,p=progressFor(api,t.id),flagship=flagshipAction(t),display=titleText(api,t),editor=state.editor||editorDefaults(t);state.editor=editor;
   const simpleSpec=topicSimpleControlSpec(api,t,editor);
   const T=(ar,en)=>txt(api,ar,en);
@@ -1326,7 +1337,7 @@ export function mountCurriculum(api){
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})
  }
- function render(){modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
+ function render(){modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}

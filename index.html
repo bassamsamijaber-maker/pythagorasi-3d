@@ -69,6 +69,7 @@ body.classora-intro-active{overflow:auto!important}
 <script defer src="./assets/classora-entrance-v116.js?v=2"></script>
 <link rel="stylesheet" href="./assets/classora-v117.css?v=1">
 <script defer src="./assets/classora-guided-tour-v117.js?v=1"></script>
+<link rel="stylesheet" href="./assets/math-studio-v119.css?v=119">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -598,7 +599,7 @@ body.classora-intro-active{overflow:auto!important}
         <label>الفئة<select name="target"><option value="all">الجميع</option><option value="student">الطلاب</option><option value="teacher">المعلمون</option><option value="admin">الأدمن</option><option value="class">صف محدد</option></select></label>
         <label>معرّف الصف المحدد<input name="classId" maxlength="110" placeholder="Class ID"></label>
         <label>الصف<select name="grade"><option value="7">السابع</option><option value="8" selected>الثامن</option><option value="9">التاسع</option><option value="10">العاشر</option></select></label>
-        <label>المادة<select name="subject"><option value="arabic">عربي</option><option value="math">رياضيات</option><option value="science">علوم</option><option value="english">English</option><option value="history">تاريخ</option><option value="geography">جغرافيا</option></select></label>
+        <label>المادة<select name="subject"><option value="arabic">عربي</option><option value="math">رياضيات</option><option value="geometry">هندسة</option><option value="science">علوم</option><option value="english">English</option><option value="history">تاريخ</option><option value="geography">جغرافيا</option></select></label>
         <label>اسم الدرس<input name="topicRef" maxlength="110" placeholder="المفعول به"></label>
         <button class="cp-admin-add" id="classoraPromoAdminAdd" type="submit">أضف إعلانًا</button>
       </form><p role="status" id="classoraPromoAdminStatus"></p><div id="classoraPromoAdminList"></div>
@@ -2396,13 +2397,14 @@ body.classora-intro-active{overflow:auto!important}
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=110";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=119";
 import {mountSubjectLabs} from "./assets/subject-labs.js?v=103";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=110";
-import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=2";
+import {mountMathCalculator} from './assets/math-calculator-v119.js?v=119';
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=119";
+import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -6928,7 +6930,7 @@ function curriculumManagerHtml(c){
       ${sections}
       <div class="custom-topic-add">
         <select class="custom-topic-subject">
-          <option value="math">رياضيات</option><option value="science">علوم</option>
+          <option value="math">رياضيات</option><option value="geometry">هندسة</option><option value="science">علوم</option>
           <option value="arabic">عربي</option><option value="hebrew">عبري</option>
           <option value="english">English</option><option value="geography">جغرافيا</option>
         </select>
@@ -17092,6 +17094,7 @@ const classoraLearningStore=createLearningStore({
  isAdmin:()=>isSuperAdminProfile()
 });
 window.classoraCurriculum=mountCurriculum({
+ isGuest:()=>isGuestSession()||!auth.currentUser,requireLogin:()=>showGuestLoginReminder("protected"),
  language:()=>currentUILanguage,
  profile:()=>auth.currentUser?{...(window.PythagorasiUser||{}),uid:auth.currentUser.uid}:window.PythagorasiUser,
  saveProgress:data=>queueAccountStateSave({curriculumProgress:data}),
@@ -17130,6 +17133,7 @@ window.classoraLearningPlus=mountLearningPlus({
  deleteRequest:(key,rows)=>classoraLearningStore.deleteRequest(key,rows),daily:async()=>[]
 });
 window.classoraSubjectLabs=mountSubjectLabs({language:()=>currentUILanguage,THREE,isGuest:isGuestSession,requireLogin:()=>showGuestLoginReminder('protected'),acidTest:()=>window.classoraLearningPlus.acidTest()});
+window.classoraCalculator=mountMathCalculator(()=>currentUILanguage);
 window.classoraReturnNavigation=mountReturnNavigation(()=>currentUILanguage);
 installVectorIcons();
 window.classoraHomeV112=mountClassoraHomeV112({

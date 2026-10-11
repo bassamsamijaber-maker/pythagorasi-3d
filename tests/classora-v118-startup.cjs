@@ -23,7 +23,7 @@ assert.match(page,/CLASSORA_NAME_COOLDOWN_MS=7\*24\*60\*60\*1000/,'Weekly name p
 assert.doesNotMatch(page,/classoraFormatNameDate\(/,'No visible name countdown/date formatter');
 assert.doesNotMatch(page,/change your display name again on/,'No remaining expiry-counter label');
 assert.match(page,/classora-guided-tour-v117\.js/,'Interactive onboarding retained');
-assert.match(sw,/classora-v118-0-no-white-first-paint/,'PWA SW revision bumped');
+assert.ok(sw.includes('classora-v'+JSON.parse(read('release.json')).version.split('.')[0]+'-'),'PWA SW matches current release');
 assert.match(sw,/classora-inline-core-v118.css\?v=1/,'Core stylesheet precached');
 assert.match(sw,/classora-inline-late-v118.css\?v=1/,'Late stylesheet precached');
 console.log('Classora v118 startup and settings static checks passed');
