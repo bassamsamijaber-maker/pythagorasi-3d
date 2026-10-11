@@ -7,10 +7,14 @@
     "mobile:prepare": "node scripts/prepare-mobile.mjs",
     "ios:add": "npm run mobile:prepare && npx cap add ios",
     "ios:sync": "npm run mobile:prepare && npx cap sync ios",
-    "ios:open": "npx cap open ios"
+    "ios:open": "npx cap open ios",
+    "android:add": "npm run mobile:prepare && npx cap add android",
+    "android:sync": "npm run mobile:prepare && npx cap sync android",
+    "android:open": "npx cap open android"
   },
   "dependencies": {
-    "@capacitor/core": "latest"
+    "@capacitor/core": "latest",
+    "@capacitor/android": "latest"
   },
   "devDependencies": {
     "@capacitor/cli": "latest",
