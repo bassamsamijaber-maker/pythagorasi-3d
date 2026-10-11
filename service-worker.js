@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v124-1-legal-assistant-periodic-stability";
+const CACHE_NAME="classora-v125-1-curriculum-flashcards-bilingual";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
@@ -44,7 +44,7 @@ const APP_SHELL=[
   "./assets/subject-labs.js?v=123",
   "./assets/subject-labs.css?v=99",
   "./assets/return-navigation.js?v=92",
-  "./assets/learning-plus.js?v=92",
+  "./assets/learning-plus.js?v=125",
   "./assets/learning-plus.css?v=92",
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
