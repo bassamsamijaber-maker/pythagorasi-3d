@@ -74,6 +74,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
 <link rel="stylesheet" href="./assets/classora-refinement-v122.css?v=122.2">
 <link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=123">
+<link rel="stylesheet" href="./assets/classora-legal-v124.css?v=124">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -471,9 +472,9 @@ body.classora-intro-active{overflow:auto!important}
             <span>Classora learning assistant</span>
           </div>
         </div>
-        <div class="lobby-ai-reply" id="lobbyAIReply">اسألني عن الوتر، القانون، مثلث قائم، ثلاثيات فيثاغورس أو أعطيني أرقام وأنا أحسبها.</div>
+        <div class="lobby-ai-reply" id="lobbyAIReply">اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.</div>
         <div class="lobby-ai-input">
-          <input id="lobbyAIInput" placeholder="مثال: إذا a=5 و b=12 شو c؟">
+          <input id="lobbyAIInput" placeholder="مثال: اشرح الماضي البسيط أو الأحماض والقواعد…">
           <button id="lobbyAISend">➤</button>
         </div>
       </div>
@@ -538,7 +539,7 @@ body.classora-intro-active{overflow:auto!important}
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=123"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=124"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -1543,6 +1544,7 @@ body.classora-intro-active{overflow:auto!important}
         <h3 id="privacySupportTitle">الخصوصية والدعم</h3>
         <div class="settings-note" id="privacySupportNote">راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.</div>
         <a class="exam-secondary settings-link-button" id="privacyPolicyLink" href="./privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a>
+        <a class="exam-secondary settings-link-button" id="termsOfUseLink" href="./terms.html" target="_blank" rel="noopener">شروط الاستخدام</a>
         <a class="exam-secondary settings-link-button" id="publicSupportLink" href="./support.html" target="_blank" rel="noopener">صفحة الدعم</a>
       </section>
 
@@ -1965,7 +1967,7 @@ body.classora-intro-active{overflow:auto!important}
       </div>
       <div class="dictnote">Classora Assistant • understands Arabic and English • remembers context on this device</div>
       <div class="ai-memory" id="aiMemoryStatus">الذاكرة المحلية جاهزة</div>
-      <div class="ai-scope">Classora Assistant can help with lessons, Pythagoras, equations, examples and calculations.</div>
+      <div class="ai-scope">Classora Assistant supports curriculum topics, Arabic and English grammar, word meanings, science, math, history and geography. It may not know every answer.</div>
     </section>
   </aside>
 </div>
@@ -2407,16 +2409,18 @@ body.classora-intro-active{overflow:auto!important}
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=122";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=124";
 import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=122';
-import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=122';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=124';
+import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=124';
+import {installClassoraLegal} from './assets/classora-legal-v124.js?v=124';
+import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=124';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=122";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=124";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -2452,6 +2456,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+ window.classoraLegal=installClassoraLegal();
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -3147,6 +3152,7 @@ function paintUser(user,profile){
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user?.uid||"guest-local",...profile};
+   if(user?.uid)window.setTimeout(()=>window.classoraLegal?.maybeShow({uid:user.uid,newUser:profile?.classoraOnboardingEligible===true}),850);
   activeProfile=window.PythagorasiUser;
 
   if(!guest){
@@ -3325,6 +3331,7 @@ function paintGuestSession(){
   clearClassoraRealtimeNotifications();
   document.getElementById("lobbyLogoutBtn").textContent=en?"Sign in":"تسجيل الدخول";
   showPlatformLobby();
+  window.setTimeout(()=>window.classoraLegal?.maybeShow({uid:"guest-device"}),850);
   startGuestReminderLoop();
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
 }
@@ -8684,6 +8691,7 @@ function syncV99LanguageLabels(){
  setText("privacySupportTitle","الخصوصية والدعم","Privacy & Support");
  setText("privacySupportNote","راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.","Review the privacy policy or open the public support page.");
  setText("privacyPolicyLink","سياسة الخصوصية","Privacy Policy");
+ setText("termsOfUseLink","شروط الاستخدام","Terms of Use");
  setText("publicSupportLink","صفحة الدعم","Support Page");
 }
 function applySiteLanguage(lang,save=true){
@@ -9505,6 +9513,8 @@ function generateTopicPracticeQuestion(topic){
   return `${q.prompt}\n${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`;
 }
 function topicAssistantAnswer(raw,topic){
+ const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
+ if(curriculumReply)return curriculumReply;
   const t=normalizeArabic(raw);
   const glossary=subjectGlossaryAnswer(raw,topic.subject);
   if(glossary)return glossary;
@@ -10011,6 +10021,8 @@ equationInputs.forEach(id=>{
 });
 
 function classoraLearningAnswer(raw){
+ const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
+ if(curriculumReply)return curriculumReply;
  const en=currentUILanguage==='en',q=latinDigits(String(raw)).toLowerCase(),index=en?1:0;
  const speed=q.match(/(?:distance|مساف[ةه])\s*[=:]?\s*(\d+(?:\.\d+)?)[\s\S]*?(?:time|زمن|وقت)\s*[=:]?\s*(\d+(?:\.\d+)?)/i);
  if(speed){const d=Number(speed[1]),t=Number(speed[2]);if(!t)return en?'Time must be greater than zero.':'الزمن لازم يكون أكبر من صفر.';return en?`Average speed = distance ÷ time = ${d} ÷ ${t} = ${pretty(d/t)}. Use compatible units: metres and seconds give m/s.`:`السرعة المتوسطة = المسافة ÷ الزمن = ${d} ÷ ${t} = ${pretty(d/t)}. استعمل وحدات متناسقة: متر وثانية يعطوا م/ث.`;}
@@ -10022,7 +10034,9 @@ function classoraLearningAnswer(raw){
  if(vals.c!=null&&(vals.a!=null||vals.b!=null)){const known=vals.a??vals.b,unknown=vals.a!=null?'b':'a';if(vals.c<=known)return en?'c is the hypotenuse and must be longer than either leg.':'الوتر c لازم يكون أطول من كل ضلع قائم.';return `${unknown} = √(c² − ${known}²) = √(${vals.c}² − ${known}²) = ${pretty(Math.sqrt(vals.c**2-known**2))}.`;}
  if(vals.a!=null&&vals.b!=null)return `c = √(a² + b²) = √(${vals.a}² + ${vals.b}²) = ${pretty(Math.hypot(vals.a,vals.b))}.`;
  }
- return pythagorasiAnswer(raw);
+ if(/فيثاغورس|مثلث|وتر|نظريه|نظرية|حساب الوتر|[abc]\s*=|pythagoras|hypotenuse|triangle/i.test(raw))
+   return pythagorasiAnswer(raw);
+ return currentUILanguage==="en"?"I can explain the Classora curriculum, vocabulary and some calculations. For a question outside those verified resources, I may need more context or a connected AI service.":"بقدر أشرح مواضيع منهاج كلاسورا والمفردات وبعض الحسابات. إذا السؤال خارج المعلومات المراجَعة عندي، اكتب تفاصيل أكثر أو نحتاج خدمة ذكاء اصطناعي متصلة.";
 }
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
@@ -16190,8 +16204,14 @@ function sendQuestion(forced=null){
   const typing=document.createElement("div");typing.className="msg bot typing";typing.textContent=`${assistantNameFor("pythagoras")} يفكّر…`;chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
   setTimeout(()=>{
     typing.remove();
-    const answer=pythagorasiAnswer(raw);
-    addMsg(answer,"bot");
+    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
+     const normalized=normalizeArabic(raw);
+     const basic=generalKnowledgeAnswer(raw,normalized);
+     const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
+     const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):currentUILanguage==="en"?
+       "I don't have a verified answer to that yet. I can help with Classora's school lessons, Arabic and English words, and calculations. Please provide a specific topic or example.":
+       "ما عندي جواب موثوق لهاد السؤال حاليًا. بقدر أساعدك بمواد كلاسورا، كلمات العربي والإنجليزي والحسابات؛ اكتبلي موضوعًا أو مثالًا محددًا.");
+     addMsg(answer,"bot");
     persistAIContext();
   },280+Math.min(650,raw.length*9));
 }

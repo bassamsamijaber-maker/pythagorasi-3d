@@ -1,8 +1,8 @@
 /* Classora unified subject picker and vetted question generation. Works with existing exam and live-competition actions. */
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=122';
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=124';
 import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=119';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
-import {scienceLiveQuestions} from './learning-hub.js?v=122';
+import {scienceLiveQuestions} from './learning-hub.js?v=124';
 const t=(ar,en,lang)=>lang==='en'?en:ar;
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{

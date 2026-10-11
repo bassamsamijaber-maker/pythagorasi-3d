@@ -276,6 +276,16 @@ function skillText(api,t){
  if(t.subject==="history")return "ترتيب وفهم أسباب ونتائج "+n;
  return "تحليل "+n+" وربطه بالمكان والإنسان والبيئة";
 }
+export function curriculumTopicGuide(title,subject,language="ar",mode="explain"){
+ const source=String(title||"");
+ const grade=Object.keys(G).map(Number).find(g=>(G[g]?.[subject]||[]).some(x=>(typeof x==="string"?x:x.title)===source));
+ const topic={title:source,subject,grade:grade||8};
+ const api={language:()=>language==="en"?"en":"ar"};
+ if(mode==="example")return workedExample(api,topic);
+ if(mode==="advanced")return advancedExplanation(api,topic);
+ const rule=skillText(api,topic),explanation=basicExplanation(api,topic);
+ return explanation+(rule&&rule!==explanation?"\n"+(language==="en"?"Learning goal: ":"هدف التعلم: ")+rule:"");
+}
 function rand(arr){return arr[Math.floor(Math.random()*arr.length)]}
 function shuffle(arr){return arr.slice().sort(function(){return Math.random()-.5})}
 function englishPractical(t,diff,n){

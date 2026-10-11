@@ -1,5 +1,5 @@
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=122";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=124";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
@@ -341,7 +341,7 @@ export function mountLearningHub(api){
   accounts.innerHTML=icon('instagram');accounts.append(node('span','',L('حساباتنا','Our accounts')));accounts.hidden=!enabled('social');
   document.body.classList.toggle('hub-bottom-dock',enabled('desktopDock'));document.body.classList.toggle('hub-motion',enabled('motion'));
   const reply=document.getElementById('lobbyAIReply'),prompt=document.getElementById('lobbyAIInput');
-  if(reply&&(!reply.dataset.hubInitial||reply.textContent===reply.dataset.hubInitial)){const welcome=L('اسألني عن الرياضيات أو العلوم. جرّب: اشرح الذرة، أو a=5 و b=12.','Ask about mathematics or science. Try: explain atoms, or a=5 and b=12.');reply.setAttribute('data-no-translate','');reply.textContent=welcome;reply.dataset.hubInitial=welcome}
+  if(reply&&(!reply.dataset.hubInitial||reply.textContent===reply.dataset.hubInitial)){const welcome=L('اسألني عن الرياضيات، العلوم، قواعد العربي والإنجليزي، التاريخ أو الجغرافيا. جرّب: اشرح الماضي البسيط.','Ask me about math, science, Arabic/English grammar, history or geography. Try: explain Past Simple.');reply.setAttribute('data-no-translate','');reply.textContent=welcome;reply.dataset.hubInitial=welcome}
   if(prompt){prompt.setAttribute('data-no-translate','');prompt.placeholder=L('اكتب سؤالك…','Type your question…')}
   const scienceOption=document.querySelector('#compQuickSubject option[value="science"]');if(scienceOption){scienceOption.disabled=!enabled('scienceLive')||!enabled('science');scienceOption.hidden=scienceOption.disabled;if(scienceOption.disabled&&scienceOption.selected)scienceOption.parentElement.value='mixed'}
   if(selected==='science'&&enabled('scienceExam'))tools.append(button(L('امتحانات العلوم الصفية','Science class exams'),()=>launch('scienceExam')));

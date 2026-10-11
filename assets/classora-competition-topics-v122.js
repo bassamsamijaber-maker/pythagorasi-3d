@@ -1,6 +1,6 @@
 /* Classora V122: Dedicated competition topic-selection step inside the EXISTING competition modal. */
-import {classoraAssessment} from './classora-assessment-v121.js?v=122';
-import {CURRICULUM_SUBJECTS} from './curriculum-v97.js?v=122';
+import {classoraAssessment} from './classora-assessment-v121.js?v=124';
+import {CURRICULUM_SUBJECTS} from './curriculum-v97.js?v=124';
 export function installClassoraCompetitionTopicStep(){
  const home=document.getElementById('competitionHome'),select=document.getElementById('compQuickSubject');
  if(!home||!select||home.dataset.caTopicStepReady)return;

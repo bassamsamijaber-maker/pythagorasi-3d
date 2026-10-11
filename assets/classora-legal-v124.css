@@ -1,0 +1,43 @@
+/* Classora legal welcome — fits iOS/iPad PWA without a white screen. */
+#classoraLegalModal[hidden]{display:none!important}
+#classoraLegalModal{
+ position:fixed;inset:0;z-index:2147483647;
+ overflow:auto;overscroll-behavior:contain;
+ display:grid;place-items:center;padding:clamp(12px,4vw,28px);
+ background:rgba(2,12,22,.90);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+ color:#f0fbff;box-sizing:border-box;
+}
+#classoraLegalModal *{box-sizing:border-box}
+#classoraLegalModal .classora-legal-card{
+ width:min(540px,100%);max-height:calc(100dvh - 30px);overflow:auto;
+ background:radial-gradient(circle at 92% 5%,rgba(51,174,164,.16),transparent 38%),linear-gradient(155deg,#133a51,#0c2238);
+ border:1px solid rgba(124,220,211,.42);border-radius:26px;
+ padding:clamp(18px,3vw,30px);
+ box-shadow:0 30px 80px #0009, inset 0 1px rgba(255,255,255,.08);
+}
+#classoraLegalModal .classora-legal-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#classoraLegalModal .classora-legal-logo{color:#89edd3;font-weight:1000;font-size:13px;letter-spacing:2px}
+#classoraLegalModal .classora-legal-later{border:1px solid #ffffff32;background:#1e4257;color:white;border-radius:12px;min-width:43px;min-height:43px;font-size:24px;cursor:pointer}
+#classoraLegalModal .classora-legal-art{margin:18px auto 7px;color:#7be8cc;display:grid;place-items:center}
+#classoraLegalModal h2{font-size:clamp(23px,3.5vw,29px);line-height:1.45;margin:10px 0;color:#f7fcff}
+#classoraLegalModal p{color:#c1dae7;font-size:14px;line-height:1.8;margin:0 0 17px}
+#classoraLegalModal .classora-legal-links{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:17px 0}
+#classoraLegalModal .classora-legal-links a{
+ display:flex;align-items:center;justify-content:center;min-height:52px;padding:10px;
+ border:1px solid #73dccc7a;background:rgba(69,159,165,.18);border-radius:14px;
+ color:#b5fbe8;text-align:center;font-size:14px;font-weight:900;text-decoration:none;
+}
+#classoraLegalModal .classora-legal-check{display:flex;gap:11px;align-items:flex-start;padding:14px 12px;line-height:1.7;border-radius:13px;background:#061b2c;border:1px solid #ffffff1e;color:#e0f2fa;font-size:13px}
+#classoraLegalModal .classora-legal-check input{margin-top:4px;accent-color:#75d8bb;width:20px;height:20px;flex:0 0 20px}
+#classoraLegalModal .classora-legal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+#classoraLegalModal .classora-legal-actions button{min-height:49px;border-radius:13px;font-weight:900;border:1px solid #ffffff29;cursor:pointer;color:#e8f9ff;background:#204459}
+#classoraLegalModal .classora-legal-actions .classora-legal-continue{background:linear-gradient(110deg,#68d7c0,#6eb8eb);color:#073044;border-color:#8cefcf}
+#classoraLegalModal .classora-legal-actions .classora-legal-continue:disabled{opacity:.43;cursor:not-allowed}
+#classoraLegalModal a:focus-visible,#classoraLegalModal button:focus-visible,#classoraLegalModal input:focus-visible{outline:3px solid #b4ffe5;outline-offset:2px}
+body.classora-legal-active{overflow:hidden!important}
+@media(max-width:550px){
+ #classoraLegalModal{padding:10px}
+ #classoraLegalModal .classora-legal-card{max-height:calc(100dvh - 20px);border-radius:19px;padding:18px}
+ #classoraLegalModal .classora-legal-actions,#classoraLegalModal .classora-legal-links{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){#classoraLegalModal{scroll-behavior:auto}}
