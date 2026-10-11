@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v122-grade-subject-navigation";
+const CACHE_NAME="classora-v122-1-grade-subject-navigation";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",

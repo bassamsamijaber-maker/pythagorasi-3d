@@ -17111,12 +17111,24 @@ window.classoraLearningHub=mountLearningHub({
  dialog:title=>{const modal=supportDialog(title);modal.close=()=>modal.dialog.close('close');return modal},
  action:async key=>{
   const ids={lab:'lobbyLabCard',equations:'equationLabBtn',practice:'lobbyQuestionBtn',challenge:'lobbyChallengeBtn',periodic:'periodicTableBtn',exam:'lobbyExamBtn',competition:'competitionBtn',classes:'lobbyJoinClassBtn',chat:'lobbyChatBtn',support:'lobbySupportBtn',settings:'lobbySettingsBtn'};
-  if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();document.getElementById('builderTitle').value=chatText('اختبار علوم — متنوع','Science exam — General');document.getElementById('scienceExamTopic').value='';document.getElementById('scienceExamQuestionCount').value='10';scienceLiveQuestions(10,currentUILanguage).forEach(q=>addBuilderQuestion('mcq',{...q,points:10}));return;}
+  if(key==='scienceExam'){if(!isTeacherLike()){await openExamWithIdentity();return}await openExamWithIdentity();if(!examModal.classList.contains('open'))return;const host=document.getElementById('builderQuestions');if(host.children.length){openBuilder();showToast(chatText('كمّل مسودة الامتحان الحالية أولًا.','Finish your current exam draft first.'));return}openBuilder();host.replaceChildren();const grade=Number(localStorage.getItem('classora_curriculum_grade')||8);const topic=classoraAssessment.topics.find(t=>t.grade===grade&&t.subject==='science');
+  document.getElementById('builderTitle').value=chatText('امتحان علوم — ','Science Exam — ')+(topic?(currentUILanguage==='en'?topic.en:topic.title):chatText('اختر الموضوع','Choose a topic'));
+  if(topic){document.getElementById('scienceExamTopic').value=topic.value;document.getElementById('scienceExamTopic').dispatchEvent(new Event('change',{bubbles:true}))}
+  document.getElementById('scienceExamQuestionCount').value='10';
+  showToast(chatText('اختر موضوع العلوم المناسب لصفك واضغط ولّد الأسئلة.','Choose a science topic for your grade, then press Generate Questions.'));return;}
   if(key==='acids'||key==='idafa'){window.classoraSubjectLabs.open(key);return}
   if(key==='study'){window.classoraLearningPlus?.study();return}
   if(key==='flashcards'){window.classoraLearningPlus?.flashcards();return}
   if(key==='progress'){window.classoraLearningPlus?.progress();return}
-  if(key==='scienceLive'){document.getElementById('compQuickSubject').value='science';document.getElementById('competitionBtn').click();return}
+  if(key==='scienceLive'){
+   await openCompetitionModal();if(!competitionModal.classList.contains('open'))return;
+   const grade=Number(localStorage.getItem('classora_curriculum_grade')||8);
+   const topic=classoraAssessment.topics.find(t=>t.grade===grade&&t.subject==='science');
+   const select=document.getElementById('compQuickSubject');
+   if(topic&&select){select.value=topic.value;select.dispatchEvent(new Event('change',{bubbles:true}))}
+   if(isTeacherLike())document.querySelector('#competitionTeacherCard .ca-comp-topic-trigger')?.click();
+   return;
+  }
   document.getElementById(ids[key])?.click();
  }
 });
