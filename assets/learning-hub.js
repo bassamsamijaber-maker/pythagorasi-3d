@@ -1,5 +1,5 @@
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=110";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=119";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
@@ -241,7 +241,7 @@ export function mountLearningHub(api){
  function launch(action){close();api.action(action)}
  const curriculumTopicTitle=x=>typeof x==="string"?x:x?.title||"";
  const curriculumTopicLabel=(x,subject)=>curriculumTopicDisplayName(curriculumTopicTitle(x),subject,api.language());
- const curriculumSubjectIcon=s=>({math:"math",science:"atom",arabic:"book",english:"book",history:"school",geography:"globe"}[s]||"book");
+ const curriculumSubjectIcon=s=>({geometry:"math",math:"math",science:"atom",arabic:"book",english:"book",history:"school",geography:"globe"}[s]||"book");
  const curriculumSubjectName=s=>{const m=CURRICULUM_SUBJECTS[s];if(s==="arabic")return L("العربي — قواعد","Arabic Grammar");if(s==="english")return "English Grammar";return m?L(m.ar,m.en):s};
  const curriculumTopics=(g,s)=>(CURRICULUM_DATA[g]?.[s]||[]);
  function openCurriculum(subject,topicRef=""){
@@ -268,19 +268,20 @@ export function mountLearningHub(api){
   if(!keys.length)section.append(node("p","hub-muted",L("هاي المادة مش مضافة لهذا الصف حاليًا.","This subject is not added for this grade yet.")));else section.append(grid);
   return section;
  }
- const mathCards=[['lab','math',['مختبر فيثاغورس','Pythagoras lab'],['نموذج ثلاثي الأبعاد وبرهان بالرمل','3D model and sand proof']],['equations','math',['معادلتان بمجهولين','Two-variable equations'],['حل النظام واستكشف الرسم البياني','Solve the system and explore its graph']],['practice','book',['تدريب الرياضيات','Math practice'],['أسئلة متغيرة مع تصحيح مباشر','Varied questions with instant feedback']],['challenge','trophy',['تحدّي الرياضيات','Math challenge'],['اختبر سرعتك واجمع نقاطًا','Test your speed and collect points']]];
+ const mathCards=[['lab','math',['مختبر فيثاغورس','Pythagoras lab'],['نموذج ثلاثي الأبعاد وبرهان بالرمل','3D model and sand proof']],['equations','math',['معادلتان بمجهولين','Two-variable equations'],['حل النظام واستكشف الرسم البياني','Solve the system and explore its graph']],['practice','book',['تدريب فيثاغورس','Pythagoras practice'],['أسئلة متغيرة مع تصحيح مباشر','Varied questions with instant feedback']],['challenge','trophy',['تحدّي فيثاغورس','Pythagoras challenge'],['اختبر سرعتك واجمع نقاطًا','Test your speed and collect points']]];
  const idafa={id:'idafa',title:['المضاف والمضاف إليه','Idafa: possessive construction'],summary:['افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.','Learn the idafa construction with clear examples and simple grammatical analysis.'],lesson:['الإضافة تركيب يتكوّن من اسمين متتابعين: الأول مضاف، والثاني مضاف إليه مجرور. يكتسب المضاف معنى التخصيص أو الملكية من الاسم الذي بعده. غالبًا لا يأتي المضاف مع أل ولا يقبل التنوين، أما المضاف إليه فيكون مجرورًا.','Idafa is a two-noun Arabic construct: the first noun is the muḍāf, and the second is the muḍāf ilayh in the genitive case. The second noun specifies or possesses the first. The first noun usually has no definite article or tanwīn; the second is genitive.'],example:['كتابُ الطالبِ جديدٌ: كتابُ = مضاف، والطالبِ = مضاف إليه مجرور وعلامة جره الكسرة. مثال آخر: بابُ المدرسةِ مفتوحٌ.','kitābu ṭ-ṭālibi jadīd: “book” is the muḍāf; “the student” is the muḍāf ilayh, genitive with kasra. Another example: bābu l-madrasati maftūḥ (“The school door is open”).'],icon:'book',subject:'arabic'};
  function render(){
+  hub.dataset.selectedSubject=selected;document.dispatchEvent(new window.Event("classora:math-context"));
   const savedQuery=hub.querySelector('input')?.value||'';if(selected==='science'&&!enabled('science'))selected='all';hub.replaceChildren();
   const intro=node('div','hub-hero');const copy=node('div','hub-hero-copy');copy.append(node('span','hub-kicker','CLASSORA / '+L('مساحتك للتعلّم','YOUR LEARNING SPACE')),node('h1','',L('فكّر. جرّب. افهم.','Think. Try. Understand.')),node('p','',L('اختار مادة، استكشف الفكرة وجرّبها بإيدك.','Choose a subject. Explore an idea. Make it click.')));
   const art=node('div','hub-hero-art');art.setAttribute('aria-hidden','true');art.innerHTML=`<div class="hub-art-ring"></div><div class="hub-art-tile math">${icon('math')}</div><div class="hub-art-tile atom">${icon('atom')}</div><div class="hub-art-tile book">${icon('book')}</div>`;intro.append(copy,art);hub.append(intro);
   const searchWrap=node('label','hub-search');searchWrap.innerHTML=icon('search');const search=node('input');search.type='search';search.value=savedQuery;search.placeholder=L('ابحث عن موضوع، مختبر أو أداة…','Search topics, labs or tools…');search.setAttribute('aria-label',search.placeholder);searchWrap.append(search);searchWrap.hidden=!enabled('search');hub.append(searchWrap);
-  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;try{if(key==="science")sessionStorage.setItem("classora_subject_origin","science");else if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render()});b.innerHTML=icon(ic);b.append(node('span','',key==="english"?"English Grammar":L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);hub.append(makeCurriculumShelf());
+  const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['geometry','هندسة','Geometry','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;try{if(key==="science")sessionStorage.setItem("classora_subject_origin","science");else if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render()});b.innerHTML=icon(ic);b.append(node('span','',key==="english"?"English Grammar":L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);hub.append(makeCurriculumShelf());
   const list=node('div','hub-card-grid'),status=node('p','hub-muted');status.setAttribute('role','status');hub.append(list,status);
   function fill(){
    list.replaceChildren();
    const q=search.value.trim().toLowerCase(),cards=[];
-   if(q||selected==="all"||selected==="math")for(const [id,ic,title,summary] of mathCards)cards.push({id:"math-"+id,ic,title,summary,subject:"math",go:()=>launch(id)});
+   for(const [id,ic,title,summary] of mathCards){const subject=id==="equations"?"math":"geometry";if(q||selected==="all"||selected===subject)cards.push({id:subject+"-"+id,ic,title,summary,subject,go:()=>launch(id)})}
    if((q||selected==="all"||selected==="science")&&enabled("science")){
     cards.push({id:"periodic",ic:"atom",title:["جدول العناصر","Periodic table"],summary:["118 عنصرًا، مقارنة واستكشاف واختبار","118 elements, comparisons and quizzes"],subject:"science",go:()=>launch("periodic")});
     for(const topic of scienceTopics)cards.push({id:topic.id,ic:topic.icon,title:topic.title,summary:topic.summary,subject:"science",go:()=>topic.id==="acids"?launch("acids"):lesson(topic)});
@@ -303,7 +304,7 @@ export function mountLearningHub(api){
    }
    const extras=[["chat",["الشات","Chat"],"chat"],["support",["الدعم","Support"],"help"],["settings",["الإعدادات","Settings"],"settings"],["exam",["الامتحانات","Exams"],"book"],["competition",["المسابقات","Competitions"],"trophy"]];if(q)for(const [id,title,ic]of extras)cards.push({id,ic,title,summary:["أدوات كلاسورا","Classora tools"],subject:"tools",go:()=>launch(id)});
    const filtered=cards.filter(c=>!q||topicMatches(q,[...c.title,...c.summary,c.subject,c.id].join(" ")));
-   const categoryLabel=s=>s==="math"?L("رياضيات","MATHEMATICS"):s==="science"?L("علوم","SCIENCE"):s==="arabic"?L("عربي — قواعد","ARABIC GRAMMAR"):s==="english"?"ENGLISH GRAMMAR":s==="history"?L("تاريخ","HISTORY"):s==="geography"?L("جغرافيا","GEOGRAPHY"):L("أدوات","TOOLS");
+   const categoryLabel=s=>s==="geometry"?L("هندسة","GEOMETRY"):s==="math"?L("رياضيات","MATHEMATICS"):s==="science"?L("علوم","SCIENCE"):s==="arabic"?L("عربي — قواعد","ARABIC GRAMMAR"):s==="english"?"ENGLISH GRAMMAR":s==="history"?L("تاريخ","HISTORY"):s==="geography"?L("جغرافيا","GEOGRAPHY"):L("أدوات","TOOLS");
    for(const card of filtered){
     const el=button("",card.go,"hub-topic-card "+card.subject+(card.curriculum?" curriculum-topic":""));if(card.subject==="english")el.dataset.noTranslate="";
     el.innerHTML='<span class="hub-card-icon">'+icon(card.ic)+'</span>';
@@ -415,7 +416,7 @@ export function mountLearningHub(api){
  }
 
  function refresh(){installAdminAssignmentGenerator();render();if(dialog&&renderOpen){if(quizState&&quizState.lang!==api.language()){close();api.toast(L('تغيرت اللغة. ابدأ تدريبًا جديدًا باللغة المختارة.','Language changed. Start a new practice in your selected language.'))}else{dialog.body.replaceChildren();renderOpen(dialog.body)}}}
- installAdminAssignmentGenerator();render();return {refresh,scienceAnswer,openScience:()=>{selected='science';try{sessionStorage.setItem("classora_subject_origin","science")}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},openSubject:key=>{if(!["all","math","science","arabic","english","history","geography"].includes(key))key="all";selected=key;try{if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},idafaQuestions:idafaLiveQuestions,renderControls};
+ installAdminAssignmentGenerator();render();return {refresh,scienceAnswer,openScience:()=>{selected='science';try{sessionStorage.setItem("classora_subject_origin","science")}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},openSubject:key=>{if(!["all","math","geometry","science","arabic","english","history","geography"].includes(key))key="all";selected=key;try{if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},idafaQuestions:idafaLiveQuestions,renderControls};
 }
 export function installVectorIcons(){
  const emoji=/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu;

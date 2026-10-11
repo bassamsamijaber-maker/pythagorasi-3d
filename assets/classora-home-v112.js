@@ -51,7 +51,7 @@ export function mountClassoraHomeV112(api){
    target:["all","student","teacher","admin","class"].includes(row.target)?row.target:"all",
    classId:String(row.classId||"").slice(0,110),
    grade:Math.max(7,Math.min(10,Number(row.grade)||8)),
-   subject:["math","science","arabic","english","history","geography"].includes(row.subject)?row.subject:"arabic",
+   subject:["math","geometry","science","arabic","english","history","geography"].includes(row.subject)?row.subject:"arabic",
    topicRef:String(row.topicRef||"").slice(0,110),
    active:row.active!==false
   };

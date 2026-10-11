@@ -1,5 +1,12 @@
-const CACHE_NAME="classora-v118-0-no-white-first-paint";
+const CACHE_NAME="classora-v119-0-subject-studios";
 const APP_SHELL=[
+  "./assets/math-catalog-v119.js?v=119",
+  "./assets/math-scenes-v119.js?v=119",
+  "./assets/math-studio-v119.js?v=119",
+  "./assets/math-calculator-v119.js?v=119",
+  "./assets/arabic-catalog-v119.js?v=119",
+  "./assets/arabic-studio-v119.js?v=119",
+  "./assets/math-studio-v119.css?v=119",
   "./assets/classora-inline-core-v118.css?v=1",
   "./assets/classora-inline-late-v118.css?v=1",
   "./assets/classora-v117.css?v=1",
@@ -9,7 +16,7 @@ const APP_SHELL=[
   "./assets/classora-universal-dock-v113.css?v=2",
   "./assets/classora-universal-dock-v113.js?v=4",
   "./assets/classora-home-v112.css?v=2",
-  "./assets/classora-home-v112.js?v=2",
+  "./assets/classora-home-v112.js?v=119",
   "./assets/classora-universal-dock-v111.css?v=1",
   "./assets/classora-universal-dock-v111.js?v=1",
   "./assets/classora-polish-v110.css?v=1",
@@ -33,9 +40,9 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=110",
+  "./assets/learning-hub.js?v=119",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=110",
+  "./assets/curriculum-v97.js?v=119",
   "./assets/curriculum-v97.css?v=110",
   "./offline.html",
 
