@@ -8693,6 +8693,18 @@ function syncV99LanguageLabels(){
  setText("privacyPolicyLink","سياسة الخصوصية","Privacy Policy");
  setText("termsOfUseLink","شروط الاستخدام","Terms of Use");
  setText("publicSupportLink","صفحة الدعم","Support Page");
+ const prompts=[
+  ["اشرح الماضي البسيط","Explain Past Simple"],
+  ["اشرح الحموض والقواعد","Explain acids and bases"],
+  ["اشرح المضاف والمضاف إليه","Explain the Idafa construction"],
+  ["اشرح نظرية فيثاغورس","Explain the Pythagorean theorem"]
+ ];
+ [...document.querySelectorAll(".suggestions button[data-q]")].forEach((button,index)=>{
+  const pair=prompts[index];if(!pair)return;
+  button.dataset.q=en?pair[1]:pair[0];
+  button.textContent=en?pair[1]:pair[0];
+  button.lang=en?"en":"ar";
+ });
  // Data-owned panels bypass automatic translation, so update their labels explicitly.
  const taskArea=document.getElementById("classoraStudentTasks");
  const taskTitle=taskArea?.querySelector("h2");
