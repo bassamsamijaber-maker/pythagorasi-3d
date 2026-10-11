@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v122-1-grade-subject-navigation";
+const CACHE_NAME="classora-v122-2-grade-subject-navigation";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
@@ -9,7 +9,7 @@ const APP_SHELL=[
   "./assets/classora-visuals-v120.css?v=120",
   "./assets/classora-assessment-v121.js?v=122",
   "./assets/classora-assessment-v121.css?v=121",
-  "./assets/classora-refinement-v122.css?v=122",
+  "./assets/classora-refinement-v122.css?v=122.2",
   "./assets/classora-competition-topics-v122.js?v=122",
   "./assets/classora-global-art-v121.js?v=121",
   "./assets/arabic-catalog-v119.js?v=119",
