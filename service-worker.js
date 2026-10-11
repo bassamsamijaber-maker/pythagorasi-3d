@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v124-legal-assistant-periodic-stability";
+const CACHE_NAME="classora-v124-1-legal-assistant-periodic-stability";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
