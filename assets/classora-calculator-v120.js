@@ -1,6 +1,6 @@
 /* Classora Cartoon Calculator v120: button-operated; no typing field or keyboard shortcuts. */
 import {evaluateCalculator} from './math-calculator-v119.js?v=119';
-import './classora-topic-art-v120.js?v=120';
+import './classora-topic-art-v120.js?v=121';
 let instance;
 export function mountMathCalculator(language=()=>document.documentElement.lang){
  if(instance)return instance;
@@ -35,7 +35,16 @@ export function mountMathCalculator(language=()=>document.documentElement.lang){
   host.querySelector('.cm-calc-tip').textContent=T('استخدم أزرار الحاسبة فقط. % تعني القسمة على 100','Use the calculator buttons only. % divides by 100');
   host.querySelector('.cm-calc-keyboard').setAttribute('aria-label',T('أزرار الحاسبة','Calculator keys'));
  }
+ function reset(){
+  state.buffer='';state.ans=0;state.history=[];state.degrees=true;
+  expression.textContent=' ';output.textContent='0';output.classList.remove('error');
+  history.hidden=true;history.replaceChildren();
+  host.querySelector('[data-mode="angle"]').textContent='DEG';
+  persist();
+ }
  function open(value){
+  if(!value)reset();
+  else if(!state.open)reset();
   state.open=!!value;host.classList.toggle('is-open',state.open);
   panel.hidden=!state.open;tab.setAttribute('aria-expanded',String(state.open));
   if(state.open)host.querySelector('.cm-calc-close').focus({preventScroll:true});
@@ -93,7 +102,7 @@ export function mountMathCalculator(language=()=>document.documentElement.lang){
   const inLegacy=eq?.classList.contains('open')||(!inCurr&&lobby&&getComputedStyle(lobby).display==='none'&&!document.querySelector('.modal.open'));
   const enabled=!blocked&&(inCurr?['math','geometry'].includes(subject):['math','geometry'].includes(subject)||inLegacy||(document.getElementById('examModal')?.classList.contains('open')&&document.body.dataset.classoraMathExam==='true'));
   host.hidden=!enabled;
-  if(!enabled){state.open=false;host.classList.remove('is-open');panel.hidden=true;tab.setAttribute('aria-expanded','false')}
+  if(!enabled){if(state.open)reset();state.open=false;host.classList.remove('is-open');panel.hidden=true;tab.setAttribute('aria-expanded','false')}
  }
  display();localize();host.querySelector('[data-mode="angle"]').textContent=state.degrees?'DEG':'RAD';
  const observe=el=>el&&new MutationObserver(refresh).observe(el,{attributes:true,attributeFilter:['class','style','data-subject','data-selected-subject']});

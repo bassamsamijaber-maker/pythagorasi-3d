@@ -95,3 +95,5 @@ document.addEventListener('classora:math-context',schedule);
 document.addEventListener('DOMContentLoaded',schedule,{once:true});
 window.addEventListener('classora-intro-finished',schedule);
 if(document.readyState!=='loading')schedule();
+
+export function classoraTopicArt(subject,title=""){return art(subject,title)}

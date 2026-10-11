@@ -71,6 +71,7 @@ body.classora-intro-active{overflow:auto!important}
 <script defer src="./assets/classora-guided-tour-v117.js?v=1"></script>
 <link rel="stylesheet" href="./assets/math-studio-v119.css?v=119">
 <link rel="stylesheet" href="./assets/classora-visuals-v120.css?v=120">
+<link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2132,6 +2133,9 @@ body.classora-intro-active{overflow:auto!important}
             <option value="arabic-idafa">📘 عربي — المضاف والمضاف إليه</option>
           </select>
         </label>
+        <label>الصعوبة
+          <select id="scienceExamDifficulty"><option value="easy">سهل</option><option value="medium" selected>متوسط</option><option value="hard">صعب</option><option value="mixed">مختلط</option></select>
+        </label>
         <label>عدد الأسئلة
           <input id="scienceExamQuestionCount" type="number" min="1" max="10" value="10">
         </label>
@@ -2204,6 +2208,9 @@ body.classora-intro-active{overflow:auto!important}
                 <option value="pythagoras">📐 فيثاغورس فقط</option>
                 <option value="equations2">🧮 معادلتان بمجهولين فقط</option>
               </select>
+            </label>
+            <label>الصعوبة
+              <select id="compQuickDifficulty"><option value="easy">سهل</option><option value="medium" selected>متوسط</option><option value="hard">صعب</option><option value="mixed">مختلط</option></select>
             </label>
             <label>عدد الأسئلة
               <input id="compQuickQuestionCount" type="number" min="3" max="30" value="10">
@@ -2403,7 +2410,9 @@ import {mountSubjectLabs} from "./assets/subject-labs.js?v=103";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
-import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=120';
+import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=121';
+import './assets/classora-global-art-v121.js?v=121';
 import {mountCurriculum} from "./assets/curriculum-v97.js?v=119";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
@@ -5443,6 +5452,12 @@ function makeTopicExam(topic){
 function createSurpriseExam(){
   const selected=document.getElementById("examSubject")?.value||examSubject||"pythagoras";
   examSubject=selected;
+  if(selected.startsWith("curr:")){
+   const gen=classoraAssessment.generate(selected,10,examDifficulty,currentUILanguage,false),topic=gen.topic;
+   return {title:(currentUILanguage==="en"?"Exam — ":"امتحان — ")+(currentUILanguage==="en"?topic.en:topic.title),
+     questions:gen.questions,total:gen.total,surprise:true,topicExam:true,level:examDifficulty,subject:topic.subject,
+     curriculumTopicId:selected,curriculumGrade:topic.grade,curriculumDifficulty:examDifficulty,curriculumTopicTitle:topic.title};
+  }
   if(selected==="arabic-idafa"){
     const qs=idafaLiveQuestions(10,currentUILanguage).map((q,i)=>({...q,type:"mcq",id:`arabic_idafa_${Date.now()}_${i}`,points:10}));
     return {title:currentUILanguage==="en"?"⚡ Arabic — Idafa":"⚡ عربي — المضاف والمضاف إليه",questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:true,level:"auto",subject:selected,arabicTopic:"idafa"};
@@ -5484,6 +5499,10 @@ function createSurpriseExam(){
     questions:qs,total:100,surprise:true,level:examDifficulty,subject:examSubject
   };
 }
+function startGeneratedExam(){
+  try{const exam=createSurpriseExam();if(!exam?.questions?.length)throw Error(chatText("لا توجد أسئلة مناسبة.","No appropriate questions."));startExam(exam);return true}
+  catch(err){showToast(err?.message||chatText("تعذّر توليد امتحان هذا الموضوع.","Could not generate this exam."));return false}
+}
 function showExamView(which){
   for(const id of ["examHome","examRunner","examResult","examBuilder","teacherResults"])
     document.getElementById(id).classList.toggle("hidden",id!==which);
@@ -5506,18 +5525,18 @@ function syncExamSubjectUI(){
   examSubject=select.value||"pythagoras";
   const science=examSubject==="science"||examSubject.startsWith("science-");
   const arabic=examSubject==="arabic-idafa";
-  const generated=science||arabic;
-  const teacher=isTeacherLike();
-  document.getElementById("examLevels").classList.toggle("hidden",!teacher||generated);
+  const curr=classoraAssessment.get(examSubject);
+   const generated=science||arabic||Boolean(curr),teacher=isTeacherLike();
+   document.getElementById("examLevels").classList.toggle("hidden",!teacher);
   document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
   const name=subjectNames[examSubject]||"مختلط";
   const englishNames={pythagoras:"Pythagoras",science:"General Science","science-periodic":"Periodic Table & Elements","science-atoms":"Atoms & Elements","science-motion":"Forces & Motion","arabic-idafa":"Arabic — Idafa"};
-  const displayName=currentUILanguage==="en"?(englishNames[examSubject]||name):name;
+  const displayName=curr?(currentUILanguage==="en"?curr.en:curr.title):currentUILanguage==="en"?(englishNames[examSubject]||name):name;
   document.getElementById("examLevelDesc").textContent=generated
     ?chatText(`${displayName} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${displayName} • Classora generates a fresh question set every time.`)
     :`${displayName} • ${levelDescriptions[examDifficulty]}`;
   const title=document.getElementById("autoExamPreviewTitle"),desc=document.getElementById("autoExamPreviewText");
-  if(title)title.textContent=arabic?chatText("⚡ امتحان عربي تلقائي","⚡ Auto-generated Arabic exam"):science?chatText("⚡ امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
+  if(title)title.textContent=curr?chatText("امتحان الموضوع: ","Topic exam: ")+displayName:arabic?chatText("⚡ امتحان عربي تلقائي","⚡ Auto-generated Arabic exam"):science?chatText("⚡ امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
   if(desc)desc.textContent=generated?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
 }
 document.getElementById("examSubject").addEventListener("change",syncExamSubjectUI);
@@ -5566,7 +5585,7 @@ document.getElementById("continueSavedExam").addEventListener("click",()=>{
 });
 document.getElementById("newExamInstead").addEventListener("click",()=>{
   clearSavedAttempt();refreshResumeBox();
-  startExam(createSurpriseExam());
+  startGeneratedExam();
 });
 
 function openExamCenter(){
@@ -5811,18 +5830,18 @@ document.getElementById("startSurpriseExam").addEventListener("click",()=>{
     showToast("الطالب يدخل امتحان المعلم بالكود.");
     soundFx("wrong");return;
   }
-  startExam(createSurpriseExam());
+  startGeneratedExam();
 });
 document.getElementById("changeExamBtn").addEventListener("click",()=>{
   if(activeExam?.cloud){
     stopExamTimer();
     showExamView("examHome");
     document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
-  }else if(activeExam?.surprise)startExam(createSurpriseExam());
+  }else if(activeExam?.surprise)startGeneratedExam();
   else showExamView("examBuilder");
 });
 document.getElementById("retryExam").addEventListener("click",()=>{
-  if(activeExam?.surprise)startExam(createSurpriseExam());else startExam(activeExam);
+  if(activeExam?.surprise)startGeneratedExam();else startExam(activeExam);
 });
 document.getElementById("backExamHome").addEventListener("click",()=>{stopExamTimer();showExamView("examHome");document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات"});
 
@@ -5998,17 +6017,25 @@ document.getElementById("openExamBuilder").addEventListener("click",openBuilder)
 document.getElementById("builderBack").addEventListener("click",()=>showExamView("examHome"));
 document.getElementById("addBuilderQuestion").addEventListener("click",()=>addBuilderQuestion("mcq"));
 document.getElementById("generateScienceExamQuestions")?.addEventListener("click",()=>{
-  if(!isTeacherLike()){showToast(chatText("توليد الامتحان للمعلم فقط.","Only teachers can generate exams."));return}
-  const topic=document.getElementById("scienceExamTopic")?.value||"";
-  const count=Math.max(1,Math.min(10,Number(document.getElementById("scienceExamQuestionCount")?.value)||10));
-  const isArabic=topic==="arabic-idafa";
-  const qs=(isArabic?idafaLiveQuestions(count,currentUILanguage):scienceLiveQuestions(count,currentUILanguage,topic)).map(q=>({...q,type:"mcq"}));
+ if(!isTeacherLike()){showToast(chatText("التوليد للمعلم فقط.","Only teachers can generate questions."));return}
+ const topic=document.getElementById("scienceExamTopic")?.value||"";
+ const count=Math.max(1,Math.min(10,Number(document.getElementById("scienceExamQuestionCount")?.value)||10));
+ try{
+  let qs=[],name="";
+  if(topic.startsWith("curr:")){
+    const out=classoraAssessment.generate(topic,count,document.getElementById("scienceExamDifficulty")?.value||"medium",currentUILanguage,false);
+    qs=out.questions;name=currentUILanguage==="en"?out.topic.en:out.topic.title;
+  }else{
+    qs=(topic==="arabic-idafa"?idafaLiveQuestions(count,currentUILanguage):scienceLiveQuestions(count,currentUILanguage,topic)).map(q=>({...q,type:"mcq"}));
+    name=({"periodic":chatText("الجدول الدوري","Periodic Table"),"atoms":chatText("الذرة","Atoms"),"motion":chatText("القوة والحركة","Forces and Motion"),"arabic-idafa":chatText("المضاف والمضاف إليه","Idafa")})[topic]||chatText("علوم متنوعة","General Science");
+  }
+  if(!qs.length)throw Error(chatText("لا توجد أسئلة مناسبة.","No valid questions."));
   const host=document.getElementById("builderQuestions");host.replaceChildren();
   qs.forEach(q=>addBuilderQuestion("mcq",{...q,points:10}));
-  const names={periodic:chatText("الجدول الدوري والعناصر","Periodic Table & Elements"),atoms:chatText("الذرة والعناصر","Atoms & Elements"),motion:chatText("القوة والحركة","Forces & Motion")};
-  document.getElementById("builderTitle").value=isArabic?chatText("اختبار عربي — المضاف والمضاف إليه","Arabic Exam — Idafa"):chatText("اختبار علوم — ","Science Exam — ")+(names[topic]||chatText("متنوع","General"));
-  showToast(isArabic?chatText(`تم توليد ${qs.length} أسئلة عربي جديدة.`,`Generated ${qs.length} fresh Arabic questions.`):chatText(`تم توليد ${qs.length} أسئلة علوم جديدة.`,`Generated ${qs.length} fresh science questions.`));
-});
+  document.getElementById("builderTitle").value=chatText("امتحان — ","Exam — ")+name;
+  showToast(chatText("تم توليد "+qs.length+" أسئلة عن "+name+".","Generated "+qs.length+" questions about "+name+"."));
+ }catch(err){showToast(err?.message||chatText("تعذّر توليد الأسئلة.","Couldn't generate questions."))}
+ });
 
 function addBuilderQuestion(type="mcq",data={}){
   const host=document.getElementById("builderQuestions");
@@ -14362,6 +14389,7 @@ function generatedEquationSystemLiveQuestion(i=0){
   return {topicKey:"equations2",questionKind:"system_type",prompt:`النظام: ${base} — كم عدد الحلول؟`,options:shuffle(["حل واحد","لا يوجد حل","حلول لا نهائية","حلّان"]),answer:"حل واحد",points:1000};
 }
 function makeLiveQuestions(subject="mixed",count=10){
+  if(subject.startsWith("curr:"))return classoraAssessment.generate(subject,count,document.getElementById("compQuickDifficulty")?.value||"medium",currentUILanguage,true).questions;
   if(subject==="arabic-idafa")return idafaLiveQuestions(count,currentUILanguage).map((q,i)=>({...q,type:"mcq",index:i,points:q.points||1000,typeLabel:competitionQuestionTypeLabel(q)}));
   if(subject==="science"||subject.startsWith("science-")){
     const topic=subject==="science"?"":subject.slice("science-".length);
@@ -14391,7 +14419,8 @@ function competitionSubjectTitle(subject){
     pythagoras:adminLang("مسابقة فيثاغورس","Pythagoras Competition"),
     mixed:"Classora Mixed"
   };
-  return names[subject]||adminLang("مسابقة Classora","Classora Competition");
+  const topic=classoraAssessment.get(subject);
+   return topic?(adminLang("مسابقة — ","Competition — ")+(currentUILanguage==="en"?topic.en:topic.title)):names[subject]||adminLang("مسابقة Classora","Classora Competition");
 }
 async function createLiveCompetition(customQuestions=null,customTitle="",createOptions=null){
   if(!isTeacherLike() || !auth.currentUser){
@@ -14405,13 +14434,14 @@ async function createLiveCompetition(customQuestions=null,customTitle="",createO
   const btn=document.getElementById("compCreateBtn");
   btn.disabled=true;btn.textContent="⏳ إنشاء الغرفة...";
   try{
-    const code=await reserveUniqueCode("competition");
     const quickSubject=document.getElementById("compQuickSubject")?.value||"mixed";
     const quickCount=Math.max(3,Math.min(30,Number(document.getElementById("compQuickQuestionCount")?.value)||10));
     const options=createOptions||competitionCreateOptions("quick");
     const questions=(customQuestions&&customQuestions.length?customQuestions:makeLiveQuestions(quickSubject,quickCount))
       .map((q,i)=>({...q,index:i,points:q.points||1000,typeLabel:q.typeLabel||competitionQuestionTypeLabel(q)}));
-    const ref=await addDoc(collection(db,"competitions"),{
+    if(!questions.length)throw Error(adminLang("لا توجد أسئلة صالحة.","No valid questions."));
+     const code=await reserveUniqueCode("competition");
+     const ref=await addDoc(collection(db,"competitions"),{
       ownerId:auth.currentUser.uid,
       ownerName:window.PythagorasiUser.displayName||"المعلم",
       title:customTitle||competitionSubjectTitle(quickSubject),
@@ -14437,7 +14467,8 @@ async function createLiveCompetition(customQuestions=null,customTitle="",createO
     showCompetitionView("competitionLobby");
   }catch(err){
     console.error("create competition",err);
-    document.getElementById("compJoinStatus").textContent="تعذر إنشاء المسابقة. حاول مرة ثانية.";
+    document.getElementById("compJoinStatus").textContent=err?.message||adminLang("تعذر إنشاء المسابقة. حاول مرة ثانية.","Couldn't create the competition.");
+     showToast(err?.message||adminLang("تعذر إنشاء المسابقة.","Could not create the competition."));
   }finally{
     btn.disabled=false;btn.textContent="＋ إنشاء غرفة جديدة";
   }
@@ -17135,6 +17166,8 @@ window.classoraLearningPlus=mountLearningPlus({
 });
 window.classoraSubjectLabs=mountSubjectLabs({language:()=>currentUILanguage,THREE,isGuest:isGuestSession,requireLogin:()=>showGuestLoginReminder('protected'),acidTest:()=>window.classoraLearningPlus.acidTest()});
 window.classoraCalculator=mountMathCalculator(()=>currentUILanguage);
+ window.classoraAssessmentTopics=classoraAssessment.topics;
+ for(const id of ["examSubject","compQuickSubject","scienceExamTopic"])classoraAssessment.installPicker(id,()=>currentUILanguage);
 window.classoraReturnNavigation=mountReturnNavigation(()=>currentUILanguage);
 installVectorIcons();
 window.classoraHomeV112=mountClassoraHomeV112({

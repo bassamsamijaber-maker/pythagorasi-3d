@@ -1,9 +1,15 @@
-const CACHE_NAME="classora-v119-0-subject-studios";
+const CACHE_NAME="classora-v121-fast-pwa-start";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
   "./assets/math-studio-v119.js?v=119",
   "./assets/math-calculator-v119.js?v=119",
+  "./assets/classora-calculator-v120.js?v=121",
+  "./assets/classora-topic-art-v120.js?v=121",
+  "./assets/classora-visuals-v120.css?v=120",
+  "./assets/classora-assessment-v121.js?v=121",
+  "./assets/classora-assessment-v121.css?v=121",
+  "./assets/classora-global-art-v121.js?v=121",
   "./assets/arabic-catalog-v119.js?v=119",
   "./assets/arabic-studio-v119.js?v=119",
   "./assets/math-studio-v119.css?v=119",
@@ -62,9 +68,12 @@ const APP_SHELL=[
 
 self.addEventListener("install",event=>{
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache=>cache.addAll(APP_SHELL.map(url=>new Request(url,{cache:"reload"}))))
-      .then(()=>self.skipWaiting())
+    caches.open(CACHE_NAME).then(async cache=>{
+      // Cache the dark, complete app document as the first priority for A2HS starts.
+      await cache.add(new Request("./index.html",{cache:"reload"}));
+      // A missing optional asset must not abort the whole offline shell installation.
+      await Promise.allSettled(APP_SHELL.map(url=>cache.add(new Request(url,{cache:"reload"}))));
+    }).then(()=>self.skipWaiting())
   );
 });
 
@@ -88,16 +97,29 @@ self.addEventListener("fetch",event=>{
   const publicCDN=(url.hostname==='www.gstatic.com'&&url.pathname.startsWith('/firebasejs/'))||(url.hostname==='cdn.jsdelivr.net'&&/\.(js|css)$/.test(url.pathname))||(url.hostname==='unpkg.com'&&/\.js$/.test(url.pathname));
   if(!publicNavigation&&!staticAsset&&!publicCDN)return;
   if(event.request.mode==="navigate"){
+    // Serve the cached dark app shell immediately on the main PWA entry.
+    // Refresh its cache in the background; any future opening gets newer content.
+    if(sameOrigin&&(url.pathname==="/"||/\/index\.html$/.test(url.pathname))){
+      const network=fetch(event.request,{cache:"no-store"}).then(async response=>{
+        if(response&&response.ok){
+          const copy=response.clone();
+          const cache=await caches.open(CACHE_NAME);
+          await cache.put("./index.html",copy);
+        }
+        return response;
+      });
+      event.waitUntil(network.then(()=>{},()=>{}));
+      event.respondWith(caches.match("./index.html").then(cached=>cached||network).catch(()=>caches.match("./offline.html")));
+      return;
+    }
     event.respondWith(
-      fetch(event.request,{cache:"no-store"})
-        .then(response=>{
-          if(response&&response.ok){
-            const copy=response.clone();
-            caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy));
-          }
-          return response;
-        })
-        .catch(()=>caches.match("./offline.html"))
+      fetch(event.request,{cache:"no-store"}).then(response=>{
+        if(response&&response.ok){
+          const copy=response.clone();
+          caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy));
+        }
+        return response;
+      }).catch(()=>caches.match("./offline.html"))
     );
     return;
   }

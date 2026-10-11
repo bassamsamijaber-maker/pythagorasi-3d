@@ -1,0 +1,83 @@
+/* Classora v121: assessment tools and contextual artwork. All buttons remain existing ones. */
+#examModal .modalbox,#competitionModal .modalbox{
+ --classora-panel-art:none;
+ background-image:linear-gradient(135deg,rgba(6,20,34,.96),rgba(9,35,55,.91)),var(--classora-panel-art)!important;
+ background-color:#071625!important;
+ background-position:center,right 20px top 115px;
+ background-size:cover,min(980px,100%) auto;
+ background-repeat:no-repeat;
+}
+#examModal .modalhead,#competitionModal .modalhead{
+ background:linear-gradient(120deg,rgba(33,91,125,.2),rgba(37,129,106,.09));
+ border-bottom:1px solid rgba(129,213,232,.16);
+ border-radius:18px;padding:14px;
+}
+#examModal :is(.exam-choice,.cloud-card,.builder-card,.teacher-cloud-box),
+#competitionModal :is(.live-card,.live-hero,.saved-comp-card,.competition-builder-note){
+ border:1px solid rgba(120,204,232,.19);
+ background-color:rgba(9,30,49,.84);
+ box-shadow:0 10px 32px rgba(0,0,0,.14);
+ border-radius:21px;
+}
+#examModal :is(.exam-choice,.cloud-card,.builder-card,.teacher-cloud-box),
+#competitionModal :is(.live-card,.live-hero,.saved-comp-card){backdrop-filter:blur(6px)}
+#examModal .exam-levels button.active{border-color:#65e9c2;box-shadow:inset 0 0 0 1px #65e9c2}
+#examModal :is(button,select,input),#competitionModal :is(button,select,input){transition:border-color .15s ease,background-color .15s ease,transform .15s ease}
+#examModal :is(button,select,input):focus-visible,#competitionModal :is(button,select,input):focus-visible{outline:3px solid #78dcca;outline-offset:2px}
+#examModal :is(#examSubject,#scienceExamTopic),
+#competitionModal #compQuickSubject{max-width:100%;min-width:0;width:100%}
+#examModal .ca-topic-search,#competitionModal .ca-topic-search{
+ display:block!important;width:100%!important;min-height:44px!important;max-width:100%;
+ border-radius:13px!important;background:rgba(5,20,34,.86)!important;
+ border:1px solid rgba(130,218,243,.26)!important;color:#f2fbff!important;
+ font-size:15px!important;padding:9px 14px!important;margin:9px 0!important;direction:auto;
+}
+#examModal .ca-topic-search::placeholder,#competitionModal .ca-topic-search::placeholder{color:#a4bbc9}
+#examModal .ca-topic-search-label,#competitionModal .ca-topic-search-label{
+ display:block;color:#9ae2d8;font-size:12px;font-weight:800;margin-top:10px;
+}
+#examModal .subject-strip,#competitionModal .competition-create-settings{
+ border:1px solid rgba(118,205,224,.14);border-radius:19px;
+ background:rgba(8,27,45,.66);padding:14px;
+}
+#examModal .competition-create-settings,#competitionModal .competition-create-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+#examModal .subject-strip select,#competitionModal .competition-create-settings select{min-height:44px}
+#examModal .subject-strip label,#examModal #scienceExamGenerator label,#competitionModal .competition-create-settings label{
+ display:block;min-width:0;overflow-wrap:anywhere;color:#eaf8ff;
+}
+#examModal #examBuilder,#competitionModal #competitionBuilder{padding-bottom:30px}
+/* Hide navigation only INSIDE opened curriculum lessons, retaining the close X. */
+.classora-curriculum-modal.lesson-open .classora-curriculum-back{display:none!important}
+.classora-curriculum-modal.lesson-open .classora-curriculum-close{display:inline-flex!important;align-items:center;justify-content:center}
+/* The announcement carousel continues auto-rotating every four seconds. Hide numbers and timer labels. */
+#platformLobby #classoraPromoCounter,
+#platformLobby .cp-timing{display:none!important}
+#platformLobby{
+ --classora-site-art:none;
+ background-image:radial-gradient(circle at 78% 11%,rgba(70,156,175,.07),transparent 38%),var(--classora-site-art);
+ background-position:center, right top 80px;background-size:auto,min(1000px,94%) auto;background-repeat:no-repeat;
+}
+#platformLobby :is(.lobby-section,.lobby-card,.hub-hero,.classora-promo-center){
+ position:relative;isolation:isolate;
+}
+#platformLobby :is(.lobby-section,.lobby-card,.hub-hero,.classora-promo-center)::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:var(--classora-site-art);background-position:right center;background-repeat:no-repeat;background-size:520px auto;
+ opacity:.32;border-radius:inherit;
+}
+#settingsModal .modalbox,#classModal .modalbox{
+ background-image:linear-gradient(140deg,rgba(9,24,39,.97),rgba(15,44,60,.93)),var(--classora-panel-art,none);
+ background-position:center,right top;background-size:cover,700px auto;background-repeat:no-repeat;
+}
+@media(max-width:700px){
+ #examModal .modalbox,#competitionModal .modalbox{
+  background-size:cover,700px auto;background-position:center,65% top 100px;
+ }
+ #examModal .subject-strip,#competitionModal .competition-create-settings{padding:11px}
+ #examModal .competition-create-settings,#competitionModal .competition-create-settings{grid-template-columns:1fr}
+ #examModal :is(.exam-choice,.cloud-card,.builder-card),#competitionModal :is(.live-card,.live-hero){border-radius:16px}
+ #examModal .ca-topic-search,#competitionModal .ca-topic-search{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #examModal *,#competitionModal *{scroll-behavior:auto!important;animation-duration:.001ms!important}
+}
