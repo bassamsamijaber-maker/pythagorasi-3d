@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v122-2-grade-subject-navigation";
+const CACHE_NAME="classora-v123-universal-lobby-return";
 const APP_SHELL=[
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
@@ -10,6 +10,7 @@ const APP_SHELL=[
   "./assets/classora-assessment-v121.js?v=122",
   "./assets/classora-assessment-v121.css?v=121",
   "./assets/classora-refinement-v122.css?v=122.2",
+  "./assets/classora-navigation-fix-v123.css?v=123",
   "./assets/classora-competition-topics-v122.js?v=122",
   "./assets/classora-global-art-v121.js?v=121",
   "./assets/arabic-catalog-v119.js?v=119",
@@ -40,7 +41,7 @@ const APP_SHELL=[
   "./assets/classora-student-dashboard.js?v=1",
   "./assets/classora-global-mix.css?v=1",
   "./assets/classora-global-mix.js?v=1",
-  "./assets/subject-labs.js?v=122",
+  "./assets/subject-labs.js?v=123",
   "./assets/subject-labs.css?v=99",
   "./assets/return-navigation.js?v=92",
   "./assets/learning-plus.js?v=92",
@@ -58,8 +59,8 @@ const APP_SHELL=[
   "./manifest.webmanifest",
   "./privacy.html",
   "./support.html",
-  "./chemistry/periodic-table.html?v=122",
-  "./chemistry/periodic-table.css?v=122",
+  "./chemistry/periodic-table.html?v=123",
+  "./chemistry/periodic-table.css?v=123",
   "./chemistry/periodic-table.js?v=122",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",

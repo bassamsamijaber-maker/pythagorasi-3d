@@ -1,0 +1,82 @@
+/* Classora v123 — single full-screen subject page + reliable persistent Lobby dock.
+   Do NOT shorten the subject iframe: that exposes the lobby behind it. */
+html:has(#periodic-table:target),
+body:has(#periodic-table:target),
+html.classora-periodic-active,
+body.classora-periodic-active{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+body:has(#periodic-table:target) #platformLobby,
+body.classora-periodic-active #platformLobby{
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+/* The subject page covers the ENTIRE viewport; the five-tab dock stays in front. */
+body.classora-dock-enabled .classora-subject-page:target,
+.classora-subject-page:target{
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#06111b!important;
+  z-index:2147483600!important;
+  isolation:isolate!important;
+}
+body.classora-dock-enabled .classora-subject-page:target .classora-subject-frame,
+.classora-subject-page:target .classora-subject-frame{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:auto!important;
+  background:#06111b!important;
+  z-index:1!important;
+}
+/* Keep the real dock clickable above the table and its embedded frame. */
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  z-index:2147483646!important;
+  pointer-events:auto!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn{
+  min-height:58px!important;
+  touch-action:manipulation!important;
+}
+/* When a native showModal() page opens, its dialog owns the live dock temporarily.
+   It is moved back to body on close by the return controller. */
+body.classora-dock-enabled dialog[open] #classoraMobilePageNav{
+  position:fixed!important;
+  z-index:2147483646!important;
+  pointer-events:auto!important;
+}
+body.classora-dock-enabled dialog.subject-lab-page[open]{
+  padding-bottom:calc(var(--classora-dock-clearance,90px) + 8px)!important;
+  box-sizing:border-box!important;
+  overscroll-behavior-y:contain!important;
+}
+body.classora-dock-enabled dialog.subject-lab-page[open] .sl-main{
+  padding-bottom:calc(var(--classora-dock-clearance,90px) + 22px)!important;
+}
+@media (max-width:760px){
+  body.classora-dock-enabled .classora-subject-page:target{
+    height:100dvh!important;
+    bottom:0!important;
+  }
+}

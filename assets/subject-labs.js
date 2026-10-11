@@ -116,5 +116,5 @@ export function mountSubjectLabs(api){
   render();return()=>{};
  }
 
- return {open};
+ return {open,close:()=>{if(active)active.close()}};
 }

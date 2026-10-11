@@ -73,6 +73,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-visuals-v120.css?v=120">
 <link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
 <link rel="stylesheet" href="./assets/classora-refinement-v122.css?v=122.2">
+<link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=123">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -537,7 +538,7 @@ body.classora-intro-active{overflow:auto!important}
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=122"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=123"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -2407,7 +2408,7 @@ body.classora-intro-active{overflow:auto!important}
 
 <script type="module">
 import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=122";
-import {mountSubjectLabs} from "./assets/subject-labs.js?v=122";
+import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=92";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
@@ -16424,12 +16425,32 @@ function classoraRestoreLobbyPosition(){
   setTimeout(restore,90);
 }
 function closeAllClassoraScreensForMobile(){
-  /* Respect existing exam/competition teardown. Hiding a modal alone leaves
-     its one-second timer or live Firebase subscriptions running indefinitely. */
+  // Return the live five-button dock to <body> before tearing down top-layer dialogs.
+  const dock=document.getElementById("classoraMobilePageNav");
+  if(dock&&dock.parentElement!==document.body)document.body.append(dock);
+
+  // Leave hash-based subject pages FIRST, so async dialog close handlers don't
+  // unexpectedly restore an older #periodic-table history entry.
+  if(location.hash!=="#platformLobby"){
+    try{history.replaceState(null,"",location.pathname+location.search+"#platformLobby")}
+    catch{location.hash="platformLobby"}
+  }
+  document.body.classList.remove("classora-periodic-active");
+  document.documentElement.classList.remove("classora-periodic-active");
+
+  // Close real study surfaces with their own cleanup (3D animations, listeners).
+  try{window.classoraSubjectLabs?.close?.()}catch(error){console.warn("Close science lab",error)}
+  try{window.classoraCurriculum?.close?.()}catch(error){console.warn("Close lesson",error)}
+  try{window.classoraLearningHub?.close?.()}catch(error){console.warn("Close learning tool",error)}
+  for(const page of document.querySelectorAll("dialog[open]")){
+    try{if(page.open)page.close()}catch(error){console.warn("Close dialog",error)}
+  }
+
+  // Preserve unsent exam answers and terminate timers/room listeners cleanly.
   const examView=document.getElementById("examModal");
   if(examView?.classList.contains("open")){
     if(!document.getElementById("examRunner")?.classList.contains("hidden")){
-      try{saveAttemptLocal()}catch(err){console.warn("Exam autosave",err)}
+      try{saveAttemptLocal()}catch(error){console.warn("Exam autosave",error)}
     }
     stopExamTimer();
   }
@@ -16438,25 +16459,30 @@ function closeAllClassoraScreensForMobile(){
   }
   document.querySelectorAll(".modal.open").forEach(modal=>modal.classList.remove("open"));
   document.getElementById("chatModal")?.classList.remove("chat-thread-open");
-  if(location.hash&&location.hash!=="#platformLobby"){
-    try{history.replaceState(null,"",location.pathname+location.search+"#platformLobby")}catch{location.hash="platformLobby"}
-  }
   classoraSyncOverlayState();
 }
 function classoraGoLobby(){
   closeAllClassoraScreensForMobile();
-  if(location.hash==="#periodic-table"){
-    try{history.replaceState(history.state||null,"",location.pathname+location.search+"#platformLobby")}catch{location.hash="platformLobby"}
-  }
-  showPlatformLobby();
-  let origin="";
-  try{origin=sessionStorage.getItem("classora_subject_origin")||""}catch{}
-  const phone=window.matchMedia?.("(max-width: 760px)")?.matches||false;
-  if(phone&&origin&&window.classoraLearningHub?.openSubject){
-    setTimeout(()=>window.classoraLearningHub.openSubject(origin),40);
-  }else{
-    classoraRestoreLobbyPosition();
-  }
+  try{sessionStorage.removeItem("classora_subject_origin")}catch{}
+  const success=showPlatformLobby();
+  if(success===false)return false;
+  const lobby=document.getElementById("platformLobby");
+  const goTop=()=>{
+    lobby?.scrollTo({top:0,behavior:"instant"});
+    if(lobby)lobby.scrollTop=0;
+    window.scrollTo({top:0,behavior:"instant"});
+  };
+  classoraLobbyReturnScroll=0;
+  classoraOverlayScrollTop=0;
+  try{sessionStorage.setItem(CLASSORA_LOBBY_SCROLL_KEY,"0")}catch{}
+  goTop();
+  requestAnimationFrame(goTop);
+  document.querySelectorAll("#classoraMobilePageNav button").forEach(button=>{
+    const active=button.id==="classoraMobileLobbyBtn";
+    button.classList.toggle("is-active",active);
+    if(active)button.setAttribute("aria-current","page");
+    else button.removeAttribute("aria-current");
+  });
   return false;
 }
 function mobileGoLobby(){return classoraGoLobby()}
@@ -16496,6 +16522,42 @@ new MutationObserver(syncMobileControlBar).observe(document.body,{attributes:tru
 new MutationObserver(syncMobileControlBar).observe(document.getElementById("authGate"),{attributes:true,attributeFilter:["class"]});
 window.addEventListener("resize",syncMobileControlBar);
 syncMobileControlBar();
+
+/* Keep the original persistent dock IN the active native dialog top layer.
+   CSS z-index alone cannot place an element over a <dialog>. */
+(function classoraAccessibleDockInDialogs(){
+  const dock=document.getElementById("classoraMobilePageNav");
+  if(!dock)return;
+  let queued=false;
+  function sync(){
+    queued=false;
+    const all=[...document.querySelectorAll("dialog[open]")];
+    let target=null;
+    for(const dialog of all){
+      try{if(dialog.matches(":modal"))target=dialog}catch{}
+    }
+    const host=target||document.body;
+    if(dock.parentElement!==host)host.append(dock);
+  }
+  const schedule=()=>{
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(sync);
+  };
+  new MutationObserver(records=>{
+    for(const record of records){
+      if(record.type==="attributes"&&record.attributeName==="open"){schedule();return}
+      if(record.type==="childList"){
+        const nodes=[...record.addedNodes,...record.removedNodes];
+        if(nodes.some(n=>n.nodeType===1&&(n.tagName==="DIALOG"||n.querySelector?.("dialog")))){schedule();return}
+      }
+    }
+  }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["open"]});
+  document.addEventListener("close",schedule,true);
+  document.addEventListener("cancel",schedule,true);
+  window.addEventListener("pageshow",schedule);
+  schedule();
+})();
 
 /* Stop wheel/touch from leaking through an open screen. */
 document.addEventListener("wheel",event=>{
