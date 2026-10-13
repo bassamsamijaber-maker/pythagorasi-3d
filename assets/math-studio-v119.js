@@ -1,3 +1,4 @@
+import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
 import {mathTopic,defaultValues,calculateLesson} from './math-catalog-v119.js?v=119';
 import {renderMathScene,escapeMath as E} from './math-scenes-v119.js?v=119';
 export function mountMathLesson(host,topic,api){
@@ -14,5 +15,5 @@ export function mountMathLesson(host,topic,api){
  const difficulty=()=>host.querySelector('.cm-difficulty').value;
  host.querySelector('[data-action="practice"]').onclick=()=>{if(api.isGuest?.()){api.requireLogin?.();return}const q=api.questions(1,difficulty(),false,questionIndex++);const item=q[0],box=host.querySelector('.cm-question');box.innerHTML=`<h3 dir="auto">${E(item.prompt)}</h3><div class="cm-answers">${item.options.map((o,i)=>`<button data-answer="${i}" dir="auto">${E(o)}</button>`).join('')}</div><p class="cm-feedback"></p>`;box.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{box.querySelectorAll('button').forEach(x=>x.disabled=true);const correct=item.options[Number(b.dataset.answer)]===item.answer;b.classList.add(correct?'correct':'incorrect');box.querySelector('.cm-feedback').textContent=(correct?T('صحيح. ','Correct. '):T('الجواب الصحيح: ','Correct answer: ')+item.answer+'. ')+item.explanation;api.record?.(correct)})};
  for(const type of ['exam','live']){const b=host.querySelector(`[data-action="${type}"]`);if(b)b.onclick=async()=>{b.disabled=true;try{await api.assess(type,Number(host.querySelector('.cm-count').value),difficulty())}finally{b.disabled=false}}}
- update();return()=>{disposed=true;cancelAnimationFrame(frame)};
+ update();const disposeExplorer=enhanceLesson(host,topic,api);return()=>{disposeExplorer();disposed=true;cancelAnimationFrame(frame)};
 }

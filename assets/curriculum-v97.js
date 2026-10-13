@@ -1,14 +1,15 @@
-import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=128';
+import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=129';
+import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=129';
 import {geographyLesson,geographyQuestion} from './geography-catalog-v128.js?v=128';
-import {mountGeographyLesson} from './geography-studio-v128.js?v=128';
+import {mountGeographyLesson} from './geography-studio-v128.js?v=129';
 import {englishLesson,englishQuestion} from './english-catalog-v127.js?v=127';
 import {historyLesson,historyQuestion} from './history-catalog-v127.js?v=127';
-import {mountEnglishLesson} from './english-studio-v127.js?v=127';
-import {mountHistoryLesson} from './history-studio-v127.js?v=127';
+import {mountEnglishLesson} from './english-studio-v127.js?v=129';
+import {mountHistoryLesson} from './history-studio-v127.js?v=129';
 import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
-import {mountArabicLesson} from './arabic-studio-v119.js?v=128';
+import {mountArabicLesson} from './arabic-studio-v119.js?v=129';
 import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=119';
-import {mountMathLesson} from './math-studio-v119.js?v=119';
+import {mountMathLesson} from './math-studio-v119.js?v=129';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
  geometry:{ar:"هندسة",en:"Geometry",icon:"math"},
@@ -479,7 +480,7 @@ function editorDefaults(t){
  return {data:en?titleText({language:()=>"en"},t):t.title,words:"",question:en?"Write the question or idea you want to analyze.":"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
 }
 export function mountCurriculum(api){
- let disposeLesson=null;
+ let disposeLesson=null,disposeGlobe=null;
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
  const gradeLabel=g=>txt(api,"الصف "+({7:"السابع",8:"الثامن",9:"التاسع",10:"العاشر"}[g]||g),"Grade "+g);
  function rememberGrade(g){
@@ -502,7 +503,7 @@ export function mountCurriculum(api){
   }else state.view=state.subject?"topics":"subjects";
   if(state.subject==="science")try{sessionStorage.setItem("classora_subject_origin","science")}catch{};modal.classList.add("open");render();
  }
- function shut(){disposeLesson?.();disposeLesson=null;modal.classList.remove("open");document.dispatchEvent(new window.Event("classora:math-context"))}
+ function shut(){disposeGlobe?.();disposeGlobe=null;disposeLesson?.();disposeLesson=null;modal.classList.remove("open");document.dispatchEvent(new window.Event("classora:math-context"))}
  close.onclick=shut;modal.addEventListener("click",function(e){if(e.target===modal)shut()});
  back.onclick=function(){
   if(state.view==="lesson"){state.view="topics";state.topic=null}
@@ -526,7 +527,7 @@ export function mountCurriculum(api){
  }
  function renderSubjects(){
   const g=state.grade,subs=subjectList(g);
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(g)+'</div></div><section class="curriculum-hero"><span class="curriculum-kicker">'+txt(api,"المواد","SUBJECTS")+'</span><h2>'+txt(api,"اختار المادة","Choose a subject")+'</h2><p>'+txt(api,"كل مادة تفتح المواضيع المناسبة لهذا الصف فقط.","Each subject shows only the topics assigned to this grade.")+'</p></section><div class="curriculum-grid" id="cv97Subjects"></div>';
+  body.innerHTML=(state.subject==="geography"?globeMarkup(lang(api)):'')+'<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(g)+'</div></div><section class="curriculum-hero"><span class="curriculum-kicker">'+txt(api,"المواد","SUBJECTS")+'</span><h2>'+txt(api,"اختار المادة","Choose a subject")+'</h2><p>'+txt(api,"كل مادة تفتح المواضيع المناسبة لهذا الصف فقط.","Each subject shows only the topics assigned to this grade.")+'</p></section><div class="curriculum-grid" id="cv97Subjects"></div>';
   const host=body.querySelector("#cv97Subjects");
   subs.forEach(function(s){
    const count=topicsFor(g,s).length,b=document.createElement("button");b.className="curriculum-subject-card";b.innerHTML=svg(S[s].icon)+'<b>'+subjectName(api,s)+'</b><small>'+count+" "+txt(api,"موضوع","topics")+'</small>';
@@ -585,13 +586,15 @@ export function mountCurriculum(api){
   return mk("general","الوحدة","Unit","book");
  }
  function renderTopics(){
+  disposeGlobe?.();disposeGlobe=null;
   const extra=[];
   if(state.grade===10&&state.subject==="science")extra.push('<div class="curriculum-filter-row" id="cv97Track"><button data-track="all">'+txt(api,"الكل","All")+'</button><button data-track="physics">'+trackName(api,"physics")+'</button><button data-track="chemistry">'+trackName(api,"chemistry")+'</button><button data-track="biology">'+trackName(api,"biology")+'</button></div>');
   if(state.grade===10&&["math","geometry"].includes(state.subject))extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
-  body.innerHTML='<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(state.grade)+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
+  body.innerHTML=(state.subject==="geography"?globeMarkup(lang(api)):'')+'<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(state.grade)+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
   const search=body.querySelector("#cv97Search");search.oninput=function(){state.query=search.value;paintTopicCards()};
   body.querySelectorAll("#cv97Track button").forEach(function(b){b.classList.toggle("active",b.dataset.track===state.track);b.onclick=function(){state.track=b.dataset.track;renderTopics()}});
   body.querySelectorAll("#cv97MathLevel button").forEach(function(b){b.classList.toggle("active",b.dataset.level===state.mathLevel);b.onclick=function(){state.mathLevel=b.dataset.level;renderTopics()}});
+  if(state.subject==="geography")disposeGlobe=mountGlobe(body,lang(api));
   paintTopicCards()
  }
  function paintTopicCards(){
@@ -1395,7 +1398,7 @@ export function mountCurriculum(api){
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})
  }
- function render(){modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
+ function render(){disposeGlobe?.();disposeGlobe=null;modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
