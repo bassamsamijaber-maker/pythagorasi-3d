@@ -1,3 +1,4 @@
+import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
 import {arabicStructure} from './arabic-scenes-v128.js?v=128';
 import {arabicLesson,arabicTokenDescription,AR_ROLES,arabicQuestion} from './arabic-catalog-v119.js?v=119';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
@@ -12,5 +13,5 @@ export function mountArabicLesson(host,topic,api){
  host.querySelector('.ca-example').onchange=e=>{exampleIndex=Number(e.target.value);active=0;render()};host.querySelector('[data-ar="next"]').onclick=()=>{exampleIndex=(exampleIndex+1)%d.examples.length;active=0;render()};host.querySelector('[data-ar="depth"]').onclick=e=>{flat=!flat;host.querySelector('.ca-scene').classList.toggle('is-flat',flat);e.currentTarget.setAttribute('aria-pressed',String(!flat))};host.querySelector('[data-ar="roles"]').onclick=e=>{showAll=!showAll;e.currentTarget.setAttribute('aria-pressed',String(showAll));render()};
  host.querySelector('[data-ar="practice"]').onclick=()=>{if(api.isGuest?.()){api.requireLogin?.();return}const q=questions[practiceIndex++%questions.length],box=host.querySelector('.cm-question');box.innerHTML=`<h3 dir="auto">${E(q.prompt)}</h3><div class="cm-answers">${q.options.map((o,i)=>`<button data-choice="${i}">${E(o)}</button>`).join('')}</div><p class="cm-feedback"></p>`;box.querySelectorAll('button').forEach(b=>b.onclick=()=>{const correct=q.options[Number(b.dataset.choice)]===q.answer;box.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add(correct?'correct':'incorrect');box.querySelector('.cm-feedback').textContent=(correct?T('صحيح. ','Correct. '):T('الجواب: ','Answer: ')+q.answer+'. ')+q.explanation;api.record?.(correct)})};
  for(const type of ['exam','live']){const b=host.querySelector(`[data-ar="${type}"]`);if(b)b.onclick=async()=>{b.disabled=true;try{await api.assess(type,Number(host.querySelector('.cm-count').value),'medium')}finally{b.disabled=false}}}
- render();return()=>{};
+ render();return enhanceLesson(host,topic,api);
 }

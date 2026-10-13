@@ -1,3 +1,4 @@
+import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
 export const SCIENCE_MODELS={};
 function add(titles,key,control,rule){for(const title of titles.split('|'))SCIENCE_MODELS[title]={key,control,rule};}
@@ -19,7 +20,7 @@ add('القدرة','power',['الزمن s','Time in s'],['القدرة = الش�
 add('الكهرباء|الدارات الكهربائية|التيار الكهربائي','circuit',['المقاومة Ω','Resistance in Ω'],['في دائرة مقاومة مثالية: I = V/R. يجب إغلاق مسار الدائرة ليمر تيار مستمر.','For an ideal resistive circuit, I = V/R. A closed conducting path is required for steady current.']);
 add('الضوء','light',['زاوية السقوط °','Angle of incidence in degrees'],['في الانعكاس عن مرآة مستوية، زاوية السقوط تساوي زاوية الانعكاس، وتقاسان عن العمود المقام.','For a plane mirror, incidence angle equals reflection angle; both are measured from the normal.']);
 add('الصوت','sound',['التردد النسبي','Relative frequency'],['الصوت اهتزاز ينتقل في وسط. التردد يرتبط بحدة الصوت، والسعة تؤثر في شدته.','Sound is a vibration travelling through a medium. Frequency relates to pitch; amplitude affects intensity.']);
-add('المركبات','compound',['زاوية عرض الجزيء','Molecule viewing angle'],['المركب يتكون من عناصر مختلفة مرتبطة كيميائيًا بنسب محددة. جزيء الماء يحتوي ذرتي هيدروجين وذرة أكسجين.','A compound contains different elements chemically bonded in fixed ratios. Water contains two hydrogen atoms and one oxygen atom.']);
+add('المركبات','compound',['زاوية عرض الجزيء °','Molecule viewing angle in degrees'],['المركب يتكون من عناصر مختلفة مرتبطة كيميائيًا بنسب محددة. جزيء الماء يحتوي ذرتي هيدروجين وذرة أكسجين.','A compound contains different elements chemically bonded in fixed ratios. Water contains two hydrogen atoms and one oxygen atom.']);
 add('المخاليط','mixture',['نسبة الجسيمات الزرقاء %','Blue particle share %'],['الخليط يحتوي مواد متعددة دون نسبة كيميائية ثابتة بينها، ويمكن فصل مكوناته بطرائق فيزيائية مناسبة.','A mixture contains substances without a fixed chemical ratio between them. Suitable physical methods can separate components.']);
 add('التفاعلات الكيميائية|الكيمياء|المعادلات الكيميائية','reaction',['تقدم التفاعل %','Reaction progress %'],['تعاد ترتيبات الذرات في التفاعل؛ عدد ذرات كل عنصر محفوظ. نغيّر معاملات المعادلة لموازنتها، لا الرموز داخل الصيغ.','A reaction rearranges atoms; each element’s atom count is conserved. Balance coefficients, not the subscripts within formulas.']);
 add('الروابط الكيميائية','bond',['فصل مكونات العرض','Separate the display'],['الرابطة التساهمية تتضمن مشاركة إلكترونات؛ الرابطة الأيونية تجاذب بين أيونات مختلفة الشحنة.','A covalent bond involves shared electrons; ionic bonding is attraction between oppositely charged ions.']);
@@ -35,7 +36,7 @@ add('الأنظمة البيئية|السلاسل الغذائية','foodweb',['
 add('البيئة والاستدامة|تأثير الإنسان على البيئة','habitat',['الموئل المحمي %','Protected habitat %'],['تجزئة الموائل قد تعزل مجموعات الكائنات؛ حماية الموائل وربطها يمكن أن يدعما التنوع الحيوي.','Habitat fragmentation can isolate populations; protecting and connecting habitats can support biodiversity.']);
 add('التكاثر','reproduction',['مرحلة النمو %','Development stage %'],['التكاثر ينشئ أفرادًا جددًا. الجنسي يجمع مادة وراثية من أمشاج، واللاجنسي يحدث دون اتحاد أمشاج.','Reproduction creates new individuals. Sexual reproduction combines genetic material from gametes; asexual reproduction does not fuse gametes.']);
 add('الوراثة الأساسية|الوراثة','genetics',['اختَر مربعًا من شبكة الاحتمالات','Select a cell in the probability grid'],['في مثال صفة مندلية مبسّطة، يأخذ النسل أليلًا من كل والد. شبكة الاحتمالات لا تضمن ترتيب نتائج الأبناء.','In a simplified Mendelian example, offspring receive one allele from each parent. A Punnett square does not guarantee an order of offspring outcomes.']);
-add('DNA','dna',['زاوية اللولب','Helix angle'],['يتكون DNA من سلسلتين؛ تقترن A مع T وC مع G. ترتيب القواعد يحمل المعلومات الوراثية.','DNA has two strands; A pairs with T and C with G. Base order carries genetic information.']);
+add('DNA','dna',['زاوية دوران اللولب °','Helix rotation in degrees'],['يتكون DNA من سلسلتين؛ تقترن A مع T وC مع G. ترتيب القواعد يحمل المعلومات الوراثية.','DNA has two strands; A pairs with T and C with G. Base order carries genetic information.']);
 add('الجينات','gene',['موضع المقطع الجيني','Gene-segment position'],['الجين مقطع من DNA يحمل معلومات لمنتج وظيفي. ليس كل DNA جينات ترمّز بروتينًا.','A gene is a DNA segment containing information for a functional product. Not all DNA consists of protein-coding genes.']);
 add('البروتينات','protein',['طول سلسلة الأحماض الأمينية','Amino-acid chain length'],['البروتين سلسلة أحماض أمينية تطوى إلى شكل يرتبط بوظيفتها. ترتيبها يعتمد على المعلومات الوراثية.','A protein is an amino-acid chain folded into a shape related to its function. Its sequence depends on genetic information.']);
 add('الانقسام الخلوي','division',['تقدم الانقسام %','Cell-division progress %'],['في الانقسام المتساوي تنفصل نسخ الكروموسومات بعد تضاعف DNA، فتتكون خليتان لهما العدد نفسه عادةً.','In mitosis, chromosome copies separate after DNA replication, usually producing two cells with the same chromosome number.']);
@@ -97,17 +98,54 @@ export function scienceScene(key,value=45,phase=0,language='ar'){
  }else if(key==='genetics'){
   const parents=[['A','a','A','a'],['A','A','a','a'],['a','a','a','a']][p],selected=Math.min(3,Math.floor(v/26));for(let i=0;i<4;i++){const a=parents[Math.floor(i/2)],b=parents[2+i%2],pair=[a,b].sort().join('');art+=box(230+i%2*130,85+Math.floor(i/2)*120,115,100,i===selected?'#356751':'#284657')+txt(287+i%2*130,145+Math.floor(i/2)*120,pair)}result=parents[0]+parents[1]+' × '+parents[2]+parents[3]+T(' · لكل مربع احتمال 25%',' · each cell represents 25%');
  }else if(key==='dna'||key==='gene'){
-  for(let i=0;i<10;i++){const a=i*.65+v*.04,x=350+Math.sin(a)*100,y=45+i*29,highlight=key==='gene'&&Math.abs(i-Math.floor(v/11))<=1;art+=line(x,y,700-x,y,highlight?C[2]:'#577987',highlight?10:5)+circle(x,y,10,C[0])+circle(700-x,y,10,C[1])+txt(x-20,y+5,i%2?'A':'C')+txt(720-x,y+5,i%2?'T':'G')}result=key==='dna'?'A ↔ T · C ↔ G':T('المقطع الملوّن يمثل جينًا ضمن DNA','The highlighted segment represents a gene within DNA');
+  for(let i=0;i<10;i++){const a=i*.65+v*Math.PI/50,x=350+Math.sin(a)*100,y=45+i*29,highlight=key==='gene'&&Math.abs(i-Math.floor(v/11))<=1;art+=line(x,y,700-x,y,highlight?C[2]:'#577987',highlight?10:5)+circle(x,y,10,C[0])+circle(700-x,y,10,C[1])+txt(x-20,y+5,i%2?'A':'C')+txt(720-x,y+5,i%2?'T':'G')}result=key==='dna'?'A ↔ T · C ↔ G':T('المقطع الملوّن يمثل جينًا ضمن DNA','The highlighted segment represents a gene within DNA');
  }else if(key==='protein'){
   const count=3+Math.floor(v/5);for(let i=0;i<count;i++){const x=120+i*21,y=185+Math.sin(i*.7)*75;if(i)art+=line(x-21,185+Math.sin((i-1)*.7)*75,x,y);art+=circle(x,y,12,C[i%4])}result=count+' '+T('حمضًا أمينيًا في السلسلة التوضيحية','amino acids in the illustrative chain');
+ }
+ // Distinct representations make related quantities visually distinguishable.
+ if(key==='properties'){
+  const width=60+v*1.7;art=cube(150,110,width,95,C[1])+line(150,255,150+width,255,C[0],3)+line(150,245,150,267,C[0],3)+line(150+width,245,150+width,267,C[0],3)+txt(350,315,T('عينة متجانسة: خواص قابلة للقياس','Uniform sample: measurable properties'));
+ }else if(key==='density'){
+  art=box(105,80,190,215,'#224756')+box(405,80,190,215,'#224756')+cube(155,140,65,70,C[1])+cube(455,140,65,70,C[0]);
+  for(let i=0;i<Math.round(v/4);i++)art+=circle(172+(i%5)*10,161+Math.floor(i/5)*11,3,C[2]);
+  for(let i=0;i<10;i++)art+=circle(472+(i%5)*10,161+Math.floor(i/5)*11,3,C[2]);
+  art+=txt(200,265,`${v} g / 20 cm³`)+txt(500,265,'40 g / 20 cm³')+txt(350,330,T('نفس الحجم، كتل مختلفة • النقاط توضيحية','Same volume, different masses • illustrative dots'));
+ }else if(key==='motion'){
+  const route=Array.from({length:61},(_,i)=>{const t=i/60;return (i?'L':'M')+(100+500*t)+' '+(230-100*t-85*Math.sin(t*Math.PI*2))}).join('');art=`<path d="${route}" fill="none" stroke="#416779" stroke-width="9"/>`;
+  const t=v/100,x=100+500*t,y=230-100*t-85*Math.sin(t*Math.PI*2);art+=circle(x,y,17,C[0])+line(100,285,x,285,C[1],3)+txt(350,330,T('موضع الجسم بالنسبة إلى نقطة البداية','Position relative to the starting point'));
+ }else if(key==='speed'){
+  art=line(90,145,615,145,'#426878',5)+line(90,250,615,250,'#426878',5)+cube(100+v*4.1,102,45,30,C[0])+cube(305,207,45,30,C[1])+txt(350,65,T('المقارنة خلال 5 ثوانٍ','Compare over 5 seconds'))+txt(350,190,`${v} m/s`)+txt(350,300,'50 m/s');
+ }else if(key==='acceleration'){
+  art=line(110,295,605,295,'#668b99',3)+line(110,295,110,60,'#668b99',3)+line(110,295,575,295-v*2,C[0],5)+circle(575,295-v*2,8,C[2])+txt(360,340,T('الزمن: من 0 إلى 2 s','Time: 0 to 2 s'))+txt(340,42,T('رسم السرعة مع الزمن','Velocity–time graph'))+txt(590,75,'200 m/s')+txt(90,320,'0');
+ }else if(key==='work'){
+  art=line(100,280,600,280,'#416577',5)+cube(300,165,70,65,C[0])+line(395,190,405+v*1.65,190,C[2],7)+txt(470,140,`${v} N`)+line(120,315,590,315,C[1],3)+txt(350,350,'4 m')+txt(180,90,T('قوة مع اتجاه الإزاحة','Force along displacement'));
+ }else if(key==='power'){
+  const time=Math.max(1,v);art=`<circle cx="210" cy="180" r="92" fill="#173746" stroke="#73bfff" stroke-width="7"/>`+line(210,180,210+65*Math.sin(time/100*Math.PI*2),180-65*Math.cos(time/100*Math.PI*2),C[2],5)+txt(210,310,time+' s')+box(440,95,120,190,'#254555')+box(447,102,106,176,C[0])+txt(500,195,'200 J')+txt(350,35,T('نفس الشغل في أزمنة مختلفة','The same work over different times'));
+ }else if(key==='respiration'){
+  art=`<ellipse cx="300" cy="180" rx="175" ry="100" fill="#324b50" stroke="#b89bf8" stroke-width="5"/><path d="M160 180Q185 100 210 180T260 180T310 180T360 180T420 180" fill="none" stroke="#f6b96e" stroke-width="12"/>`+line(470,180,555,180,C[0],6)+txt(570,220,'ATP')+txt(295,325,T('الميتوكندريا • مرحلة من التنفس الهوائي','Mitochondrion • a stage of aerobic respiration'));
+  for(let i=0;i<Math.round(v/12);i++)art+=circle(525+(i%3)*25,90+Math.floor(i/3)*25,8,C[0]);
  }
  if(!art)throw Error('Missing science model: '+key);
  return {svg:`<svg viewBox="0 0 700 370" role="img" aria-label="${E(result)}">${art}</svg>`,result};
 }
 export function mountScienceModel(host,topic,api){
  const d=SCIENCE_MODELS[topic.title];if(!d)return()=>{};const language=api.language(),en=language==='en',T=(a,b)=>en?b:a;let value=45,phase=0;
+ const scales={
+  atom:{min:1,max:18,step:1,read:v=>Math.round(1+v*.17),write:x=>(x-1)/.17},
+  ph:{min:0,max:14,step:.1,read:v=>Math.round(v*1.4)/10,write:x=>x/.14},
+  light:{min:0,max:80,step:.1,read:v=>Math.round(v*8)/10,write:x=>x/.8},
+  protein:{min:3,max:23,step:1,read:v=>3+Math.floor(v/5),write:x=>(x-3)*5},
+  angle:{min:0,max:360,step:.1,read:v=>Math.round(v*36)/10,write:x=>x/3.6},
+  genetics:{min:1,max:4,step:1,read:v=>Math.min(4,Math.floor(v/26)+1),write:x=>(x-1)*26},
+  gene:{min:1,max:10,step:1,read:v=>Math.min(10,Math.floor(v/11)+1),write:x=>(x-1)*11},
+  positive:{min:1,max:100,step:1,read:v=>Math.max(1,v),write:x=>x},
+  direct:{min:0,max:100,step:1,read:v=>v,write:x=>x}
+ };
+ const scale=scales[['atom','ion','elements'].includes(d.key)?'atom':['compound','dna'].includes(d.key)?'angle':['mass','properties','power','circuit','foodweb'].includes(d.key)?'positive':scales[d.key]?d.key:'direct'];
+ const actual=()=>scale.read(value);
  const modes={states:[['صلب','Solid'],['سائل','Liquid'],['غاز','Gas']],circuit:[['مغلقة','Closed'],['مفتوحة','Open']],bond:[['تساهمية','Covalent'],['أيونية','Ionic']],genetics:[['Aa × Aa','Aa × Aa'],['AA × aa','AA × aa'],['aa × aa','aa × aa']],cell:[['الغشاء','Membrane'],['النواة','Nucleus'],['الميتوكندريا','Mitochondria']],body:[['التنفسي','Respiratory'],['الدوري','Circulatory'],['الهضمي','Digestive']],sound:[['سعة صغيرة','Small amplitude'],['سعة متوسطة','Medium amplitude'],['سعة كبيرة','Large amplitude']]};
- host.innerHTML=`<section class="cm-studio cs-model" style="padding:12px"><div class="cg-model" data-model="${d.key}"></div><div class="cm-controls"><label class="cg-control">${E(T(...d.control))}<input data-cs="value" type="range" min="0" max="100" value="45"><output></output></label><div class="cg-modes">${(modes[d.key]||[]).map((m,i)=>`<button data-cs-mode="${i}" aria-pressed="${i===0}">${E(T(...m))}</button>`).join('')}<button data-cs="reset">${T('إعادة الضبط','Reset')}</button></div><p class="cm-rule">${E(T(...d.rule))}</p><p class="cm-scene-hint">${T('نموذج تعليمي مبسّط؛ الرسم غير مقياسي.','Simplified educational model; drawing is not to scale.')}</p></div></section>`;
- function render(){const r=scienceScene(d.key,value,phase,language);host.querySelector('.cg-model').innerHTML=r.svg;host.querySelector('output').textContent=r.result;host.querySelector('[data-cs="value"]').setAttribute('aria-valuetext',r.result);host.querySelectorAll('[data-cs-mode]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.csMode===phase)))}
- host.querySelector('[data-cs="value"]').oninput=e=>{value=+e.target.value;render()};host.querySelectorAll('[data-cs-mode]').forEach(b=>b.onclick=()=>{phase=+b.dataset.csMode;render()});host.querySelector('[data-cs="reset"]').onclick=()=>{value=45;phase=0;host.querySelector('[data-cs="value"]').value='45';render()};render();return()=>{};
+ host.innerHTML=`<section class="cm-studio cs-model" style="padding:12px"><div class="cg-model" data-model="${d.key}"></div><div class="cm-controls"><label class="cg-control">${E(T(...d.control))}<input data-cs="value" type="range" min="0" max="100" value="45"><output></output></label><label class="cs-number"><input data-cs-number type="number" min="${scale.min}" max="${scale.max}" step="${scale.step}" aria-label="${E(T(...d.control))}"><span>${T('اكتب القيمة أو اسحب المؤشر','Type a value or move the slider')}</span></label><div class="cg-modes">${(modes[d.key]||[]).map((m,i)=>`<button data-cs-mode="${i}" aria-pressed="${i===0}">${E(T(...m))}</button>`).join('')}<button data-cs="reset">${T('إعادة الضبط','Reset')}</button></div><p class="cm-rule">${E(T(...d.rule))}</p><p class="cm-scene-hint">${T('نموذج تعليمي مبسّط؛ الرسم غير مقياسي.','Simplified educational model; drawing is not to scale.')}</p></div></section>`;
+ function render(){host.querySelector('[data-cs-number]').removeAttribute('aria-invalid');host.querySelector('[data-cs-number]').value=String(+actual().toFixed(2));const r=scienceScene(d.key,value,phase,language);host.querySelector('.cg-model').innerHTML=r.svg;host.querySelector('output').textContent=r.result;host.querySelector('[data-cs="value"]').setAttribute('aria-valuetext',r.result);host.querySelectorAll('[data-cs-mode]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.csMode===phase)))}
+ host.querySelector('[data-cs-number]').oninput=e=>{const x=Number(e.target.value);if(e.target.value===''||!Number.isFinite(x)||x<scale.min||x>scale.max||Math.abs((x-scale.min)/scale.step-Math.round((x-scale.min)/scale.step))>1e-6){e.target.setAttribute('aria-invalid','true');return}e.target.removeAttribute('aria-invalid');value=scale.write(x);host.querySelector('[data-cs="value"]').value=String(value);render()};
+ host.querySelector('[data-cs="value"]').oninput=e=>{value=+e.target.value;render()};host.querySelectorAll('[data-cs-mode]').forEach(b=>b.onclick=()=>{phase=+b.dataset.csMode;render()});host.querySelector('[data-cs="reset"]').onclick=()=>{value=45;phase=0;host.querySelector('[data-cs="value"]').value='45';render()};render();return enhanceLesson(host,topic,api);
 }
