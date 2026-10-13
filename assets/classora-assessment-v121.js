@@ -1,10 +1,11 @@
+import {geographyLesson,geographyQuestions} from './geography-catalog-v128.js?v=128';
 /* Classora unified subject picker and vetted question generation. Works with existing exam and live-competition actions. */
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=127';
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './curriculum-v97.js?v=128';
 import {englishLesson,englishQuestions} from './english-catalog-v127.js?v=127';
 import {historyLesson,historyQuestions} from './history-catalog-v127.js?v=127';
 import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=119';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
-import {scienceLiveQuestions} from './learning-hub.js?v=127';
+import {scienceLiveQuestions} from './learning-hub.js?v=128';
 const t=(ar,en,lang)=>lang==='en'?en:ar;
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
@@ -136,6 +137,8 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   }
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
   for(const q of englishQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
+ }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
+  for(const q of geographyQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
   for(const q of historyQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
  }else if(topic.subject==='english'&&englishBank[topic.title]){

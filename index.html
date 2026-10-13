@@ -74,8 +74,9 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-visuals-v120.css?v=120">
 <link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
 <link rel="stylesheet" href="./assets/classora-refinement-v122.css?v=122.2">
-<link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=123">
+<link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=128">
 <link rel="stylesheet" href="./assets/classora-legal-v124.css?v=124">
+<link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -540,7 +541,7 @@ body.classora-intro-active{overflow:auto!important}
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=124"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=128"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -2410,18 +2411,18 @@ body.classora-intro-active{overflow:auto!important}
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=127";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=128";
 import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=127";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=128";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=127';
-import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=127';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=128';
+import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=128';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=124';
-import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=127';
+import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=128';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=127";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=128";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -2761,6 +2762,7 @@ function showPlatformLobby(){
     return false;
   }
   document.body.classList.add("classora-authenticated");
+  document.body.classList.remove("classora-pythagoras-active");
   document.getElementById("platformLobby")?.classList.remove("hidden");
   queueMicrotask(()=>window.classoraHomeV112?.refresh());
   const p=window.PythagorasiUser||{};
@@ -8772,10 +8774,14 @@ window.addEventListener("message",event=>{
   if(event.data?.type==="classora-subject-language"){applySiteLanguage(event.data.lang==="ar"?"ar":"en");}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
     try{if(event.data?.returnTo==="science")sessionStorage.setItem("classora_subject_origin","science")}catch{}
-    classoraGoLobby();
+    classoraReturnFromPeriodic();
   }
 });
+let classoraPreviousHash=location.hash;
 window.addEventListener("hashchange",()=>{
+  const leftPeriodic=classoraPreviousHash==="#periodic-table"&&location.hash!=="#periodic-table";
+  classoraPreviousHash=location.hash;
+  if(leftPeriodic){classoraReturnFromPeriodic();return}
   if(location.hash==="#periodic-table"){
     document.getElementById("periodic-table")?.style.removeProperty("display");
     try{periodicTableFrame?.contentWindow?.postMessage({type:"classora-language",lang:currentUILanguage},location.origin)}catch{}
@@ -9293,6 +9299,7 @@ let quickPythagNo=0;
 
 function enterPythagorasLab(target="lab"){
   hidePlatformLobby();
+  document.body.classList.add("classora-pythagoras-active");
   currentSubjectContext="pythagoras";
   updateAssistantLabels();
   setTimeout(()=>{
@@ -16474,6 +16481,8 @@ function classoraRestoreLobbyPosition(){
   setTimeout(restore,90);
 }
 function closeAllClassoraScreensForMobile(){
+  document.body.classList.remove("classora-pythagoras-active");
+  document.querySelectorAll("[data-return-origin]").forEach(el=>delete el.dataset.returnOrigin);
   // Return the live five-button dock to <body> before tearing down top-layer dialogs.
   const dock=document.getElementById("classoraMobilePageNav");
   if(dock&&dock.parentElement!==document.body)document.body.append(dock);
@@ -16537,6 +16546,11 @@ function classoraGoLobby(){
   });
   return false;
 }
+function classoraReturnFromPeriodic(){
+  classoraGoLobby();
+  if(document.body.classList.contains("classora-authenticated"))window.classoraLearningHub?.openScience?.();
+}
+window.classoraReturnFromPeriodic=classoraReturnFromPeriodic;
 function mobileGoLobby(){return classoraGoLobby()}
 function mobileGoSettings(){
   classoraGoLobby();
