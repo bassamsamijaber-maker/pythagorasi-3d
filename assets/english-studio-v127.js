@@ -1,8 +1,8 @@
 import {englishModel} from './language-models-v129.js?v=129';
-import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
+import {enhanceLesson} from './lesson-explorer-v129.js?v=130';
 import {englishLesson,englishQuestions} from './english-catalog-v127.js?v=127';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
-import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=127';
+import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=130';
 
 export function mountEnglishLesson(host,topic,api){
  const language=api.language(),en=language==='en',T=(ar,eng)=>en?eng:ar,d=englishLesson(topic.title);

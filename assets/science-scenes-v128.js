@@ -1,4 +1,4 @@
-import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
+import {enhanceLesson} from './lesson-explorer-v129.js?v=130';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
 export const SCIENCE_MODELS={};
 function add(titles,key,control,rule){for(const title of titles.split('|'))SCIENCE_MODELS[title]={key,control,rule};}
@@ -128,8 +128,7 @@ export function scienceScene(key,value=45,phase=0,language='ar'){
  if(!art)throw Error('Missing science model: '+key);
  return {svg:`<svg viewBox="0 0 700 370" role="img" aria-label="${E(result)}">${art}</svg>`,result};
 }
-export function mountScienceModel(host,topic,api){
- const d=SCIENCE_MODELS[topic.title];if(!d)return()=>{};const language=api.language(),en=language==='en',T=(a,b)=>en?b:a;let value=45,phase=0;
+export function scienceInputScale(key){
  const scales={
   atom:{min:1,max:18,step:1,read:v=>Math.round(1+v*.17),write:x=>(x-1)/.17},
   ph:{min:0,max:14,step:.1,read:v=>Math.round(v*1.4)/10,write:x=>x/.14},
@@ -141,7 +140,11 @@ export function mountScienceModel(host,topic,api){
   positive:{min:1,max:100,step:1,read:v=>Math.max(1,v),write:x=>x},
   direct:{min:0,max:100,step:1,read:v=>v,write:x=>x}
  };
- const scale=scales[['atom','ion','elements'].includes(d.key)?'atom':['compound','dna'].includes(d.key)?'angle':['mass','properties','power','circuit','foodweb'].includes(d.key)?'positive':scales[d.key]?d.key:'direct'];
+ return scales[['atom','ion','elements'].includes(key)?'atom':['compound','dna'].includes(key)?'angle':['mass','properties','power','circuit','foodweb'].includes(key)?'positive':scales[key]?key:'direct'];
+}
+export function mountScienceModel(host,topic,api){
+ const d=SCIENCE_MODELS[topic.title];if(!d)return()=>{};const language=api.language(),en=language==='en',T=(a,b)=>en?b:a;let value=45,phase=0;
+ const scale=scienceInputScale(d.key);
  const actual=()=>scale.read(value);
  const modes={states:[['صلب','Solid'],['سائل','Liquid'],['غاز','Gas']],circuit:[['مغلقة','Closed'],['مفتوحة','Open']],bond:[['تساهمية','Covalent'],['أيونية','Ionic']],genetics:[['Aa × Aa','Aa × Aa'],['AA × aa','AA × aa'],['aa × aa','aa × aa']],cell:[['الغشاء','Membrane'],['النواة','Nucleus'],['الميتوكندريا','Mitochondria']],body:[['التنفسي','Respiratory'],['الدوري','Circulatory'],['الهضمي','Digestive']],sound:[['سعة صغيرة','Small amplitude'],['سعة متوسطة','Medium amplitude'],['سعة كبيرة','Large amplitude']]};
  host.innerHTML=`<section class="cm-studio cs-model" style="padding:12px"><div class="cg-model" data-model="${d.key}"></div><div class="cm-controls"><label class="cg-control">${E(T(...d.control))}<input data-cs="value" type="range" min="0" max="100" value="45"><output></output></label><label class="cs-number"><input data-cs-number type="number" min="${scale.min}" max="${scale.max}" step="${scale.step}" aria-label="${E(T(...d.control))}"><span>${T('اكتب القيمة أو اسحب المؤشر','Type a value or move the slider')}</span></label><div class="cg-modes">${(modes[d.key]||[]).map((m,i)=>`<button data-cs-mode="${i}" aria-pressed="${i===0}">${E(T(...m))}</button>`).join('')}<button data-cs="reset">${T('إعادة الضبط','Reset')}</button></div><p class="cm-rule">${E(T(...d.rule))}</p><p class="cm-scene-hint">${T('نموذج تعليمي مبسّط؛ الرسم غير مقياسي.','Simplified educational model; drawing is not to scale.')}</p></div></section>`;

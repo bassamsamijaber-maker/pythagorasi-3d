@@ -78,6 +78,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-legal-v124.css?v=124">
 <link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
+<link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2412,18 +2413,18 @@ body.classora-intro-active{overflow:auto!important}
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=129";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=130";
 import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=129";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=130";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=129';
-import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=129';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=130';
+import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=130';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=124';
-import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=129';
+import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=130';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=129";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=130";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -2824,7 +2825,8 @@ function queueAccountStateSave(patch={}){
     window.PythagorasiUser={...window.PythagorasiUser,accountState:current};
     activeProfile=window.PythagorasiUser;
     try{
-      await setDoc(doc(db,"users",user.uid),{accountState:current,stateUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});
+      const {learningTools130,...accountStatePatch}=current;
+      await setDoc(doc(db,"users",user.uid),{accountState:accountStatePatch,stateUpdatedAt:serverTimestamp(),updatedAt:serverTimestamp()},{merge:true});
     }catch(err){console.warn("account state save",err)}
   },450);
 }
@@ -17276,6 +17278,8 @@ window.classoraCurriculum=mountCurriculum({
  language:()=>currentUILanguage,
  profile:()=>auth.currentUser?{...(window.PythagorasiUser||{}),uid:auth.currentUser.uid}:window.PythagorasiUser,
  saveProgress:data=>queueAccountStateSave({curriculumProgress:data}),
+ saveLearningState:async(data,uid)=>{if(!auth.currentUser||auth.currentUser.uid!==uid)throw Error('account-changed');await setDoc(doc(db,'users',uid),{accountState:{learningTools130:data}},{merge:true});if(auth.currentUser?.uid===uid){window.PythagorasiUser={...window.PythagorasiUser,accountState:{...(window.PythagorasiUser?.accountState||{}),learningTools130:data}}}},
+ openLessonReport:({topic,type,description,language})=>{window.classoraCurriculum?.close();openSupport('bug');document.getElementById('supportMessage').value=(language==='en'?'Lesson report':'بلاغ عن درس')+'\n'+topic.title+' · '+topic.grade+' · '+topic.subject+'\nID: '+topic.id+'\n'+type+'\n'+description;document.getElementById('supportMessage').focus()},
  toast:showToast,
  isTeacher:()=>isTeacherLike(),
  action:key=>{

@@ -26,13 +26,13 @@ export function globeMarkup(language='ar'){
 }
 export function mountGlobe(root,language='ar'){
  const svg=root.querySelector('.cg-globe'),button=root.querySelector('[data-globe-toggle]');if(!svg||!button)return()=>{};
- const media=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)');let paused=!!media?.matches,visible=true,disposed=false,frame=0,last=0,angle=15;
+ const media=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)');let paused=!!media?.matches||document.documentElement.dataset.learnMotion==='true',visible=true,disposed=false,frame=0,last=0,angle=15;
  const label=()=>{button.textContent=language==='en'?(paused?'Resume rotation':'Pause rotation'):(paused?'تشغيل الدوران':'إيقاف الدوران');button.setAttribute('aria-pressed',String(paused))};
  function stop(){cancelAnimationFrame(frame);frame=0;last=0}
  function tick(t){frame=0;if(disposed||paused||!visible||document.hidden)return;if(!last)last=t;if(t-last>=60){angle=(angle+Math.min(100,t-last)*.003)%360;svg.innerHTML=globeArtwork(angle);last=t}frame=requestAnimationFrame(tick)}
  function sync(){stop();if(!disposed&&!paused&&visible&&!document.hidden)frame=requestAnimationFrame(tick)}
- button.onclick=()=>{paused=!paused;label();sync()};const reduced=()=>{paused=!!media.matches;label();sync()};media?.addEventListener?.('change',reduced);
+ button.onclick=()=>{paused=!paused;label();sync()};const reduced=()=>{paused=!!media?.matches||document.documentElement.dataset.learnMotion==='true';label();sync()};media?.addEventListener?.('change',reduced);
  const observer=globalThis.IntersectionObserver?new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync()}):null;observer?.observe(root);
- document.addEventListener('visibilitychange',sync);label();sync();
- return()=>{disposed=true;stop();observer?.disconnect();document.removeEventListener('visibilitychange',sync);media?.removeEventListener?.('change',reduced);button.onclick=null};
+ document.addEventListener('classora:display-settings',reduced);document.addEventListener('visibilitychange',sync);label();sync();
+ return()=>{disposed=true;stop();observer?.disconnect();document.removeEventListener('classora:display-settings',reduced);document.removeEventListener('visibilitychange',sync);media?.removeEventListener?.('change',reduced);button.onclick=null};
 }
