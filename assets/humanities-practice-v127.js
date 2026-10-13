@@ -1,3 +1,4 @@
+import {answerFeedback} from './learning-feedback-v130.js?v=130';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
 
 // Finite, reviewed question sets: never pad an exam with repeated questions.
@@ -11,7 +12,7 @@ export function mountHumanitiesPractice(host, questions, api, language) {
   if(guest()||!questions.length)return;
   const q=questions[index++%questions.length],box=host.querySelector('.cm-question');
   box.innerHTML=`<h3 dir="auto">${E(q.prompt)}</h3><div class="cm-answers">${q.options.map((o,i)=>`<button dir="auto" data-answer="${i}">${E(o)}</button>`).join('')}</div><p class="cm-feedback"></p>`;
-  box.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{const correct=q.options[Number(b.dataset.answer)]===q.answer;box.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add(correct?'correct':'incorrect');box.querySelector('.cm-feedback').textContent=(correct?T('صحيح. ','Correct. '):T('الجواب: ','Answer: ')+q.answer+'. ')+q.explanation;api.record?.(correct)});
+  box.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{const correct=q.options[Number(b.dataset.answer)]===q.answer;box.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add(correct?'correct':'incorrect');box.querySelector('.cm-feedback').textContent=answerFeedback(q,q.options[Number(b.dataset.answer)],language);api.record?.(correct,{question:q,selected:q.options[Number(b.dataset.answer)]})});
  };
  for(const type of ['exam','live']){const b=host.querySelector(`[data-cx="${type}"]`);if(b)b.onclick=async()=>{if(guest())return;b.disabled=true;try{await api.assess(type,Number(host.querySelector('.cx-count').value),'medium')}finally{if(b.isConnected)b.disabled=false}}}
 }

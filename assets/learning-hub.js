@@ -1,6 +1,8 @@
-import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=129';
+import {mountLearningHome} from './learning-home-v130.js?v=130';
+import {smartTopicMatch} from './learning-search-v130.js?v=130';
+import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=130';
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=129";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=130";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
@@ -286,14 +288,14 @@ export function mountLearningHub(api){
  }
  const mathCards=[['lab','math',['مختبر فيثاغورس','Pythagoras lab'],['نموذج ثلاثي الأبعاد وبرهان بالرمل','3D model and sand proof']],['equations','math',['معادلتان بمجهولين','Two-variable equations'],['حل النظام واستكشف الرسم البياني','Solve the system and explore its graph']],['practice','book',['تدريب فيثاغورس','Pythagoras practice'],['أسئلة متغيرة مع تصحيح مباشر','Varied questions with instant feedback']],['challenge','trophy',['تحدّي فيثاغورس','Pythagoras challenge'],['اختبر سرعتك واجمع نقاطًا','Test your speed and collect points']]];
  const idafa={id:'idafa',title:['المضاف والمضاف إليه','Idafa: possessive construction'],summary:['افهم تركيب الإضافة مع أمثلة وإعراب مبسّط.','Learn the idafa construction with clear examples and simple grammatical analysis.'],lesson:['الإضافة تركيب يتكوّن من اسمين متتابعين: الأول مضاف، والثاني مضاف إليه مجرور. يكتسب المضاف معنى التخصيص أو الملكية من الاسم الذي بعده. غالبًا لا يأتي المضاف مع أل ولا يقبل التنوين، أما المضاف إليه فيكون مجرورًا.','Idafa is a two-noun Arabic construct: the first noun is the muḍāf, and the second is the muḍāf ilayh in the genitive case. The second noun specifies or possesses the first. The first noun usually has no definite article or tanwīn; the second is genitive.'],example:['كتابُ الطالبِ جديدٌ: كتابُ = مضاف، والطالبِ = مضاف إليه مجرور وعلامة جره الكسرة. مثال آخر: بابُ المدرسةِ مفتوحٌ.','kitābu ṭ-ṭālibi jadīd: “book” is the muḍāf; “the student” is the muḍāf ilayh, genitive with kasra. Another example: bābu l-madrasati maftūḥ (“The school door is open”).'],icon:'book',subject:'arabic'};
- let disposeHubGlobe=null;
+ let disposeHubGlobe=null,disposeLearningHome=null;
  function render(){
-  disposeHubGlobe?.();disposeHubGlobe=null;
+  disposeLearningHome?.();disposeLearningHome=null;disposeHubGlobe?.();disposeHubGlobe=null;
   if(selected!=="all"&&!CURRICULUM_DATA[selectedGrade]?.[selected]?.length)selected="all";
   hub.dataset.selectedSubject=selected;hub.dataset.grade=String(selectedGrade);document.dispatchEvent(new window.Event("classora:math-context"));
   const savedQuery=hub.querySelector('input')?.value||'';if(selected==='science'&&!enabled('science'))selected='all';hub.replaceChildren();
   const intro=node('div','hub-hero');const copy=node('div','hub-hero-copy');copy.append(node('span','hub-kicker','CLASSORA / '+L('مساحتك للتعلّم','YOUR LEARNING SPACE')),node('h1','',L('فكّر. جرّب. افهم.','Think. Try. Understand.')),node('p','',L('اختار مادة، استكشف الفكرة وجرّبها بإيدك.','Choose a subject. Explore an idea. Make it click.')));
-  const art=node('div','hub-hero-art');art.setAttribute('aria-hidden','true');art.innerHTML=`<div class="hub-art-ring"></div><div class="hub-art-tile math">${icon('math')}</div><div class="hub-art-tile atom">${icon('atom')}</div><div class="hub-art-tile book">${icon('book')}</div>`;intro.append(copy,art);hub.append(intro);
+  const art=node('div','hub-hero-art');art.setAttribute('aria-hidden','true');art.innerHTML=`<div class="hub-art-ring"></div><div class="hub-art-tile math">${icon('math')}</div><div class="hub-art-tile atom">${icon('atom')}</div><div class="hub-art-tile book">${icon('book')}</div>`;intro.append(copy,art);hub.append(intro);disposeLearningHome=mountLearningHome(hub,{language:api.language,grade:()=>selectedGrade,label:t=>curriculumTopicDisplayName(t.title,t.subject,api.language())});
   const searchWrap=node('label','hub-search');searchWrap.innerHTML=icon('search');const search=node('input');search.type='search';search.value=savedQuery;search.placeholder=L('ابحث عن موضوع، مختبر أو أداة…','Search topics, labs or tools…');search.setAttribute('aria-label',search.placeholder);searchWrap.append(search);searchWrap.hidden=!enabled('search');hub.append(searchWrap);
   const tabs=node('div','hub-subject-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',L('المواد','Subjects'));for(const [key,ar,en,ic] of [['all','الكل','Explore all','book'],['math','رياضيات','Mathematics','math'],['geometry','هندسة','Geometry','math'],['science','علوم','Science','atom'],['arabic','عربي — قواعد','Arabic Grammar','book'],['english','English Grammar','English Grammar','book'],['history','تاريخ','History','school'],['geography','جغرافيا','Geography','globe']]){if(key!=="all"&&!CURRICULUM_DATA[selectedGrade]?.[key]?.length)continue;if(key==='science'&&!enabled('science'))continue;const b=button('',()=>{selected=key;try{if(key==="science")sessionStorage.setItem("classora_subject_origin","science");else if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render()});b.innerHTML=icon(ic);b.append(node('span','',key==="english"?"English Grammar":L(ar,en)));b.classList.toggle('active',selected===key);b.setAttribute('aria-pressed',String(selected===key));tabs.append(b)}hub.append(tabs);if(selected==="geography"){const globe=node("div");globe.innerHTML=globeMarkup(api.language());hub.append(globe);disposeHubGlobe=mountGlobe(globe,api.language())}hub.append(makeCurriculumShelf());
   const list=node('div','hub-card-grid'),status=node('p','hub-muted');status.setAttribute('role','status');hub.append(list,status);
@@ -322,14 +324,14 @@ export function mountLearningHub(api){
    const curriculumKeys=selected==="all"?Object.keys(CURRICULUM_DATA[selectedGrade]||{}):[selected];
    for(const subject of curriculumKeys){
     if(!CURRICULUM_DATA[selectedGrade]?.[subject])continue;
-    const rawTopics=curriculumTopics(selectedGrade,subject),candidate=q?rawTopics.filter(raw=>topicMatches(q,curriculumTopicTitle(raw)+" "+curriculumTopicLabel(raw,subject)+" "+curriculumSubjectName(subject))):(selected!=="all"?rawTopics:[]);
+    const rawTopics=curriculumTopics(selectedGrade,subject),candidate=q?rawTopics.filter(raw=>smartTopicMatch(q,curriculumTopicTitle(raw)+" "+curriculumTopicLabel(raw,subject)+" "+curriculumSubjectName(subject))):(selected!=="all"?rawTopics:[]);
     for(const raw of candidate){
      const name=curriculumTopicTitle(raw),label=curriculumTopicLabel(raw,subject);
      cards.push({id:"curr-"+selectedGrade+"-"+subject+"-"+name,ic:curriculumSubjectIcon(subject),title:[name,label],summary:[gradeText(selectedGrade)+" • "+L("شرح + 3D + امتحان + مسابقة","lesson + 3D + exam + live competition"),"Grade "+selectedGrade+" • lesson + 3D + exam + live competition"],subject,go:()=>openCurriculum(subject,name),curriculum:true});
     }
    }
    const extras=[["chat",["الشات","Chat"],"chat"],["support",["الدعم","Support"],"help"],["settings",["الإعدادات","Settings"],"settings"],["exam",["الامتحانات","Exams"],"book"],["competition",["المسابقات","Competitions"],"trophy"]];if(q)for(const [id,title,ic]of extras)cards.push({id,ic,title,summary:["أدوات كلاسورا","Classora tools"],subject:"tools",go:()=>launch(id)});
-   const filtered=cards.filter(c=>!q||topicMatches(q,[...c.title,...c.summary,c.subject,c.id].join(" ")));
+   const filtered=cards.filter(c=>!q||smartTopicMatch(q,[...c.title,...c.summary,c.subject,c.id].join(" ")));
    const categoryLabel=s=>s==="geometry"?L("هندسة","GEOMETRY"):s==="math"?L("رياضيات","MATHEMATICS"):s==="science"?L("علوم","SCIENCE"):s==="arabic"?L("عربي — قواعد","ARABIC GRAMMAR"):s==="english"?"ENGLISH GRAMMAR":s==="history"?L("تاريخ","HISTORY"):s==="geography"?L("جغرافيا","GEOGRAPHY"):L("أدوات","TOOLS");
    for(const card of filtered){
     const el=button("",card.go,"hub-topic-card "+card.subject+(card.curriculum?" curriculum-topic":""));if(card.subject==="english")el.dataset.noTranslate="";

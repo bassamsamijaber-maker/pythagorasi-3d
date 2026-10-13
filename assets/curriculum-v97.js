@@ -1,15 +1,19 @@
-import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=129';
-import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=129';
+import {configureLearningMemory,recordLearningAttempt,learnerId} from './learning-memory-v130.js?v=130';
+import {smartTopicMatch} from './learning-search-v130.js?v=130';
+import {downloadUnit} from './learning-offline-v130.js?v=130';
+import {answerFeedback} from './learning-feedback-v130.js?v=130';
+import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=130';
+import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=130';
 import {geographyLesson,geographyQuestion} from './geography-catalog-v128.js?v=128';
-import {mountGeographyLesson} from './geography-studio-v128.js?v=129';
+import {mountGeographyLesson} from './geography-studio-v128.js?v=130';
 import {englishLesson,englishQuestion} from './english-catalog-v127.js?v=127';
 import {historyLesson,historyQuestion} from './history-catalog-v127.js?v=127';
-import {mountEnglishLesson} from './english-studio-v127.js?v=129';
-import {mountHistoryLesson} from './history-studio-v127.js?v=129';
+import {mountEnglishLesson} from './english-studio-v127.js?v=130';
+import {mountHistoryLesson} from './history-studio-v127.js?v=130';
 import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
-import {mountArabicLesson} from './arabic-studio-v119.js?v=129';
+import {mountArabicLesson} from './arabic-studio-v119.js?v=130';
 import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=119';
-import {mountMathLesson} from './math-studio-v119.js?v=129';
+import {mountMathLesson} from './math-studio-v119.js?v=130';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
  geometry:{ar:"هندسة",en:"Geometry",icon:"math"},
@@ -480,6 +484,7 @@ function editorDefaults(t){
  return {data:en?titleText({language:()=>"en"},t):t.title,words:"",question:en?"Write the question or idea you want to analyze.":"اكتب السؤال أو الفكرة التي تريد تحليلها.",answer:""};
 }
 export function mountCurriculum(api){
+ configureLearningMemory(api);
  let disposeLesson=null,disposeGlobe=null;
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
  const gradeLabel=g=>txt(api,"الصف "+({7:"السابع",8:"الثامن",9:"التاسع",10:"العاشر"}[g]||g),"Grade "+g);
@@ -538,7 +543,7 @@ export function mountCurriculum(api){
   let list=topicsFor(state.grade,state.subject);
   if(state.grade===10&&state.subject==="science"&&state.track!=="all")list=list.filter(function(t){return t.track===state.track});
   if(state.grade===10&&["math","geometry"].includes(state.subject))list=list.filter(function(t){return grade10MathAllowed(t,state.mathLevel)});
-  const q=String(state.query||"").trim().toLowerCase();if(q)list=list.filter(function(t){return t.title.toLowerCase().indexOf(q)>=0||titleText(api,t).toLowerCase().indexOf(q)>=0});
+  const q=String(state.query||"").trim().toLowerCase();if(q)list=list.filter(function(t){return smartTopicMatch(q,t.title+" "+titleText(api,t))});
   return list
  }
  function topicSection(t){
@@ -620,7 +625,8 @@ export function mountCurriculum(api){
     b.innerHTML='<span class="curriculum-topic-status">'+nativeStatus+'</span><div class="curriculum-topic-number">'+topicPrefix+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(api,t))+'</small>';
     b.onclick=function(){state.topic=t;state.view="lesson";state.showTranslation=false;state.editor=editorDefaults(t);touchTopic(api,t);render()};grid.appendChild(b);
    });
-   unit.append(head,grid);host.appendChild(unit);
+   const download=document.createElement("button");download.className="cl130-download";download.textContent=txt(api,"تنزيل الوحدة بدون إنترنت","Download unit for offline use");download.hidden=!!api.offline;download.onclick=async()=>{download.disabled=true;try{localStorage.setItem('classora_study_owner',learnerId());await downloadUnit({id:state.grade+':'+state.subject+':'+sec.key,grade:state.grade,subject:state.subject,title:[sec.ar,sec.en],topics:items.map(x=>x.t)},(n,total)=>{download.textContent=txt(api,"جاري التنزيل ","Downloading ")+Math.round(n/total*100)+'%'});download.textContent=txt(api,"تم التنزيل — افتح وحداتي","Downloaded — open my units");download.disabled=false;download.onclick=()=>{window.location.href='./study-offline.html'}}catch{download.textContent=txt(api,"تعذّر التنزيل؛ تحقق من الاتصال وحاول مجددًا","Download failed; check your connection and try again");download.disabled=false}};
+   unit.append(head,download,grid);host.appendChild(unit);
   });
  }
  function topicModelKey(t){
@@ -1091,7 +1097,7 @@ export function mountCurriculum(api){
   }
   paint();
  }
- function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:correct=>{if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");if(!qs.length){api.toast?.(txt(api,"لا توجد أسئلة مراجَعة كافية لهذا الدرس.","Not enough reviewed questions for this lesson."));return false}let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
+ function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:(correct,details)=>{recordLearningAttempt(t,correct,details);if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");if(!qs.length){api.toast?.(txt(api,"لا توجد أسئلة مراجَعة كافية لهذا الدرس.","Not enough reviewed questions for this lesson."));return false}let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
  function renderLesson(){
   if(state.topic.subject==="geography"&&geographyLesson(state.topic.title)){disposeLesson=mountGeographyLesson(body,state.topic,studioApi(state.topic));return}
   if(state.topic.subject==="english"&&englishLesson(state.topic.title)){disposeLesson=mountEnglishLesson(body,state.topic,studioApi(state.topic));return}
@@ -1383,7 +1389,7 @@ export function mountCurriculum(api){
   }
 
   if(t.subject==="science"&&SCIENCE_MODELS[t.title]){
-   disposeLesson=mountScienceModel(body.querySelector(".curriculum-3d-card"),t,api);
+   disposeLesson=mountScienceModel(body.querySelector(".curriculum-3d-card"),t,studioApi(t));
    body.querySelector(".curriculum-simple-data-card").hidden=true;
    body.querySelector(".curriculum-stage-help").hidden=true;
    body.querySelector("#cvTopicAuto").hidden=true;
@@ -1396,7 +1402,7 @@ export function mountCurriculum(api){
   if(!q){host.textContent=txt(api,"هذا الدرس يحتاج بنك أسئلة إضافي قبل تفعيل التدريب.","This lesson needs a reviewed question bank before practice is available.");return}
   host.innerHTML='<div class="curriculum-mini-q"><b>'+esc(q.prompt)+'</b><div class="curriculum-mini-options"></div><div class="curriculum-feedback"></div></div>';
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
-  q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})
+  q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=answerFeedback(q,opt,lang(api));recordLearningAttempt(t,ok,{question:q,selected:opt})};opts.appendChild(b)})
  }
  function render(){disposeGlobe?.();disposeGlobe=null;modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){

@@ -1,8 +1,8 @@
 import {historyModel} from './language-models-v129.js?v=129';
-import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
+import {enhanceLesson} from './lesson-explorer-v129.js?v=130';
 import {historyLesson,historyQuestions} from './history-catalog-v127.js?v=127';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
-import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=127';
+import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=130';
 
 export function mountHistoryLesson(host,topic,api){
  const language=api.language(),en=language==='en',T=(ar,eng)=>en?eng:ar,d=historyLesson(topic.title);let selected=0,flat=false,mode='explore';

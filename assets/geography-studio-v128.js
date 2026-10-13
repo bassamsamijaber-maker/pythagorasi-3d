@@ -1,8 +1,8 @@
-import {enhanceLesson} from './lesson-explorer-v129.js?v=129';
+import {enhanceLesson} from './lesson-explorer-v129.js?v=130';
 import {geographyLesson,geographyQuestions} from './geography-catalog-v128.js?v=128';
 import {geographyScene,GEO_CONTROLS} from './geography-scenes-v128.js?v=128';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
-import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=127';
+import {mountHumanitiesPractice} from './humanities-practice-v127.js?v=130';
 export function mountGeographyLesson(host,topic,api){
  const language=api.language(),en=language==='en',T=(a,b)=>en?b:a,d=geographyLesson(topic.title);let value=45,phase=0,flat=false;
  const variants={climate:[['مثال متوسطي','Mediterranean example'],['مثال صحراوي','Desert example'],['مثال قاري','Continental example']],weather:[['مطر خفيف','Light rain'],['مطر متوسط','Moderate rain'],['مطر غزير','Heavy rain']],growth:[['سنة واحدة','One year'],['سنتان','Two years'],['ثلاث سنوات','Three years']],coordinates:[['طول 0°','Longitude 0°'],['طول 30° شرقًا','Longitude 30° E'],['طول 60° شرقًا','Longitude 60° E']]};

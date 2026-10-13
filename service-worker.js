@@ -1,40 +1,52 @@
-const CACHE_NAME="classora-v129-globe-lesson-explorer";
+const CACHE_NAME="classora-v130-learning-tools-offline";
 const APP_SHELL=[
-  "./assets/geography-globe-v129.js?v=129",
+  "./assets/learning-offline-v130.js?v=130",
+  "./assets/learning-home-v130.js?v=130",
+  "./assets/learning-tools-v130.css?v=130",
+  "./assets/lesson-model-api-v130.js?v=130",
+  "./assets/learning-feedback-v130.js?v=130",
+  "./assets/learning-search-v130.js?v=130",
+  "./assets/learning-memory-v130.js?v=130",
+  "./assets/study-offline-v130.js?v=130",
+  "./assets/learning-knowledge-v130.js?v=130",
+  "./assets/learning-tools-v130.js?v=130",
+  "./study-offline.html",
+
+  "./assets/geography-globe-v129.js?v=130",
   "./assets/lesson-workbench-v129.js?v=129",
-  "./assets/lesson-explorer-v129.js?v=129",
+  "./assets/lesson-explorer-v129.js?v=130",
   "./assets/language-models-v129.js?v=129",
   "./assets/lesson-explorer-v129.css?v=129",
 
   "./assets/geography-catalog-v128.js?v=128",
   "./assets/geography-scenes-v128.js?v=128",
-  "./assets/geography-studio-v128.js?v=129",
+  "./assets/geography-studio-v128.js?v=130",
   "./assets/arabic-scenes-v128.js?v=128",
-  "./assets/science-scenes-v128.js?v=129",
+  "./assets/science-scenes-v128.js?v=130",
   "./assets/lesson-scenes-v128.css?v=128",
 
   "./assets/english-catalog-v127.js?v=127",
-  "./assets/english-studio-v127.js?v=129",
+  "./assets/english-studio-v127.js?v=130",
   "./assets/history-catalog-v127.js?v=127",
-  "./assets/history-studio-v127.js?v=129",
-  "./assets/humanities-practice-v127.js?v=127",
+  "./assets/history-studio-v127.js?v=130",
+  "./assets/humanities-practice-v127.js?v=130",
   "./assets/humanities-studio-v127.css?v=127",
 
   "./assets/math-catalog-v119.js?v=119",
   "./assets/math-scenes-v119.js?v=119",
-  "./assets/math-studio-v119.js?v=129",
+  "./assets/math-studio-v119.js?v=130",
   "./assets/math-calculator-v119.js?v=119",
   "./assets/classora-calculator-v120.js?v=121",
   "./assets/classora-topic-art-v120.js?v=121",
   "./assets/classora-visuals-v120.css?v=120",
-  "./assets/classora-assessment-v121.js?v=129",
+  "./assets/classora-assessment-v121.js?v=130",
   "./assets/classora-assessment-v121.css?v=121",
   "./assets/classora-refinement-v122.css?v=122.2",
   "./assets/classora-navigation-fix-v123.css?v=128",
-  "./assets/classora-competition-topics-v122.js?v=129",
+  "./assets/classora-competition-topics-v122.js?v=130",
   "./assets/classora-global-art-v121.js?v=121",
   "./assets/arabic-catalog-v119.js?v=119",
-  "./assets/arabic-studio-v119.js?v=129",
+  "./assets/arabic-studio-v119.js?v=130",
   "./assets/math-studio-v119.css?v=119",
   "./assets/classora-inline-core-v118.css?v=1",
   "./assets/classora-inline-late-v118.css?v=1",
@@ -64,14 +76,14 @@ const APP_SHELL=[
   "./assets/subject-labs.js?v=123",
   "./assets/subject-labs.css?v=99",
   "./assets/return-navigation.js?v=92",
-  "./assets/learning-plus.js?v=129",
+  "./assets/learning-plus.js?v=130",
   "./assets/learning-plus.css?v=126",
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=129",
+  "./assets/learning-hub.js?v=130",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=129",
+  "./assets/curriculum-v97.js?v=130",
   "./assets/curriculum-v97.css?v=110",
   "./offline.html",
 
@@ -81,7 +93,7 @@ const APP_SHELL=[
   "./terms.html",
   "./assets/classora-legal-v124.css?v=124",
   "./assets/classora-legal-v124.js?v=124",
-  "./assets/classora-study-assistant-v124.js?v=129",
+  "./assets/classora-study-assistant-v124.js?v=130",
   "./support.html",
   "./chemistry/periodic-table.html?v=128",
   "./chemistry/periodic-table.css?v=124",
@@ -107,7 +119,7 @@ self.addEventListener("install",event=>{
 self.addEventListener("activate",event=>{
   event.waitUntil(
     caches.keys()
-      .then(keys=>Promise.all(keys.filter(k=>k.startsWith("classora-")&&k!==CACHE_NAME).map(k=>caches.delete(k))))
+      .then(keys=>Promise.all(keys.filter(k=>k.startsWith("classora-")&&!k.startsWith("classora-study-units-")&&k!==CACHE_NAME).map(k=>caches.delete(k))))
       .then(()=>self.clients.claim())
   );
 });
@@ -119,10 +131,11 @@ self.addEventListener("fetch",event=>{
   if(url.origin===self.location.origin&&(url.pathname.endsWith("/release.json")||url.pathname.endsWith("/service-worker.js")))return;
 
   const sameOrigin=url.origin===self.location.origin;
-  const publicNavigation=sameOrigin&&(url.pathname==='/'||/\/(index|offline|periodic-table)\.html$/.test(url.pathname));
+  const publicNavigation=sameOrigin&&(url.pathname==='/'||/\/(index|offline|study-offline|periodic-table)\.html$/.test(url.pathname));
   const staticAsset=sameOrigin&&/\.(js|css|svg|png|jpg|jpeg|webp|webmanifest)$/.test(url.pathname);
   const publicCDN=(url.hostname==='www.gstatic.com'&&url.pathname.startsWith('/firebasejs/'))||(url.hostname==='cdn.jsdelivr.net'&&/\.(js|css)$/.test(url.pathname))||(url.hostname==='unpkg.com'&&/\.js$/.test(url.pathname));
   if(!publicNavigation&&!staticAsset&&!publicCDN)return;
+  if(sameOrigin&&url.pathname.endsWith('/study-offline.html')){event.respondWith(fetch(event.request).catch(()=>caches.match('./study-offline.html')));return;}
   if(event.request.mode==="navigate"){
     // Serve the cached dark app shell immediately on the main PWA entry.
     // Refresh its cache in the background; any future opening gets newer content.
