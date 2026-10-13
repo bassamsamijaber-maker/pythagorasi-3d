@@ -80,3 +80,8 @@ body.classora-dock-enabled dialog.subject-lab-page[open] .sl-main{
     bottom:0!important;
   }
 }
+
+/* The wheel is an explicit destination, never the background of a closing page. */
+body:not(.classora-pythagoras-active) > .shell{display:none!important}
+body.classora-authenticated.classora-pythagoras-active > .shell{display:grid!important}
+body.classora-pythagoras-active #platformLobby{display:none!important}

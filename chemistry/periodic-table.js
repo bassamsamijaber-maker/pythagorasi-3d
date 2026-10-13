@@ -280,6 +280,7 @@ function exitPeriodicTable(){
  // The table is embedded in the existing Classora page: request that the parent closes it.
  if(window.parent&&window.parent!==window){
   try{
+   if(typeof window.parent.classoraReturnFromPeriodic==="function"){window.parent.classoraReturnFromPeriodic();return}
    window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin);
    return;
   }catch(error){console.warn("Periodic table parent navigation unavailable",error)}

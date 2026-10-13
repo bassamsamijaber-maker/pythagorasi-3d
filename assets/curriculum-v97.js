@@ -1,9 +1,12 @@
+import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=128';
+import {geographyLesson,geographyQuestion} from './geography-catalog-v128.js?v=128';
+import {mountGeographyLesson} from './geography-studio-v128.js?v=128';
 import {englishLesson,englishQuestion} from './english-catalog-v127.js?v=127';
 import {historyLesson,historyQuestion} from './history-catalog-v127.js?v=127';
 import {mountEnglishLesson} from './english-studio-v127.js?v=127';
 import {mountHistoryLesson} from './history-studio-v127.js?v=127';
 import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
-import {mountArabicLesson} from './arabic-studio-v119.js?v=119';
+import {mountArabicLesson} from './arabic-studio-v119.js?v=128';
 import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=119';
 import {mountMathLesson} from './math-studio-v119.js?v=119';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
@@ -42,6 +45,7 @@ const G={
   geography:["إسرائيل في الشرق الأوسط","الموقع والحدود","التضاريس","المناخ","مصادر المياه","السكان","توزيع السكان","الهجرة","المدن","الاقتصاد","الصناعة","الزراعة","المواصلات","الطاقة","البيئة","الاستدامة"]
  },
  10:{
+  geography:["الخرائط ونظم المعلومات الجغرافية","خطوط الطول ودوائر العرض","النمو السكاني","التحضر","مؤشرات التنمية","التجارة العالمية","إدارة الموارد المائية","الطاقة والاستدامة","المخاطر الطبيعية","التخطيط البيئي"],
   math:["الجبر","المعادلات","المتباينات","أنظمة المعادلات","الدوال","الدالة الخطية","الدالة التربيعية","التحليل إلى عوامل","الهندسة","الهندسة التحليلية","المستوى الإحداثي","المسافة بين نقطتين","منتصف قطعة مستقيمة","ميل المستقيم","معادلة المستقيم","المثلثات","التشابه","حساب المثلثات","Sin","Cos","Tan","الإحصاء","الاحتمال"],
   science:[
    {title:"الحركة",track:"physics"},{title:"السرعة",track:"physics"},{title:"التسارع",track:"physics"},{title:"القوى",track:"physics"},{title:"قوانين نيوتن",track:"physics"},{title:"الشغل",track:"physics"},{title:"الطاقة",track:"physics"},{title:"القدرة",track:"physics"},{title:"الكهرباء",track:"physics"},{title:"الدارات الكهربائية",track:"physics"},
@@ -166,12 +170,14 @@ const EN_TO_AR={
 "Parts of Speech":"أقسام الكلام","Nouns":"الأسماء","Singular and Plural":"المفرد والجمع","Countable and Uncountable Nouns":"الأسماء المعدودة وغير المعدودة","Subject Pronouns":"ضمائر الفاعل","Object Pronouns":"ضمائر المفعول","Possessive Adjectives":"صفات الملكية","Possessive Pronouns":"ضمائر الملكية","Demonstratives":"أسماء الإشارة","Verb To Be":"فعل الكينونة To Be","Have / Has":"Have / Has للملكية","There is / There are":"يوجد / توجد","Articles: a / an / the":"أدوات التعريف والتنكير","Present Simple":"المضارع البسيط","Present Continuous":"المضارع المستمر","Present Simple vs Present Continuous":"المضارع البسيط مقابل المستمر","Past Simple":"الماضي البسيط","Regular and Irregular Verbs":"الأفعال المنتظمة وغير المنتظمة","Future with Will":"المستقبل باستخدام Will","Be Going To":"المستقبل باستخدام Be Going To","Can / Can’t":"القدرة باستخدام Can","Must / Mustn’t":"Must للوجوب والمنع","Should / Shouldn’t":"Should للنصيحة","Adjectives":"الصفات","Adverbs":"الظروف","Comparative":"صيغة المقارنة","Superlative":"صيغة التفضيل","Prepositions":"حروف الجر","Question Words":"أدوات السؤال","Some / Any":"Some / Any","Much / Many":"Much / Many","A lot of":"A lot of","Past Continuous":"الماضي المستمر","Present Perfect":"المضارع التام","Present Perfect vs Past Simple":"المضارع التام مقابل الماضي البسيط","Modals":"الأفعال الناقصة","Can / Could":"Can / Could","Must / Have to":"Must / Have to","Should":"Should","May / Might":"May / Might","Comparative and Superlative":"المقارنة والتفضيل","Too / Enough":"Too / Enough","First Conditional":"الشرط الأول","Zero Conditional":"الشرط الصفري","Passive Voice — Introduction":"مقدمة في المبني للمجهول","Relative Pronouns":"ضمائر الوصل","Who / Which / That":"Who / Which / That","Gerunds and Infinitives — Introduction":"مقدمة في Gerunds وInfinitives","Quantifiers":"ألفاظ الكمية","Few / Little":"Few / Little","Some / Any / No":"Some / Any / No","Question Tags — Introduction":"مقدمة في Question Tags","Present Perfect Continuous":"المضارع التام المستمر","Past Perfect":"الماضي التام","Past Perfect vs Past Simple":"الماضي التام مقابل الماضي البسيط","Future Forms":"صيغ المستقبل","Future Continuous":"المستقبل المستمر","Passive Voice":"المبني للمجهول","Present Passive":"المبني للمجهول في المضارع","Past Passive":"المبني للمجهول في الماضي","Future Passive":"المبني للمجهول في المستقبل","Second Conditional":"الشرط الثاني","Relative Clauses":"الجمل الموصولة","Defining Relative Clauses":"الجمل الموصولة المحددة","Reported Speech — Introduction":"مقدمة في الكلام المنقول","Modal Verbs":"الأفعال الناقصة","Gerunds":"Gerunds","Infinitives":"Infinitives","Gerunds vs Infinitives":"Gerunds مقابل Infinitives","Used to":"Used to","Question Tags":"Question Tags","Articles":"أدوات التعريف والتنكير","Adjective Order":"ترتيب الصفات","Future Perfect — Introduction":"مقدمة في المستقبل التام","Active and Passive Voice":"المبني للمعلوم والمجهول","Third Conditional — Introduction":"مقدمة في الشرط الثالث","Reported Speech":"الكلام المنقول","Reported Questions":"الأسئلة المنقولة","Modal Perfects — Introduction":"مقدمة في Modal Perfects","Used to / Would":"Used to / Would","Wish / If Only — Introduction":"مقدمة في Wish / If Only","Causative Have — Introduction":"مقدمة في Causative Have","Determiners":"المحددات","Linking Words":"كلمات الربط"
 };
 function titleText(api,topic){
+ if(topic.subject==="geography"&&geographyLesson(topic.title))return lang(api)==="en"?geographyLesson(topic.title).titleEn:topic.title;
  if(topic.subject==="history"&&historyLesson(topic.title))return lang(api)==="en"?historyLesson(topic.title).titleEn:topic.title;
  if(topic.subject==="arabic")return lang(api)==="en"?(AR_TO_EN[topic.title]||TOPIC_EN[topic.title]||topic.title):topic.title;
  if(topic.subject==="english")return topic.title;
  return lang(api)==="en"?(TOPIC_EN[topic.title]||topic.title):topic.title;
 }
 export function curriculumTopicDisplayName(title,subject,language="en"){
+ if(subject==="geography"&&geographyLesson(title))return language==="en"?geographyLesson(title).titleEn:title;
  if(subject==="history"&&historyLesson(title))return language==="en"?historyLesson(title).titleEn:title;
  if(subject==="arabic")return language==="en"?(AR_TO_EN[title]||TOPIC_EN[title]||title):title;
  if(subject==="english")return title;
@@ -286,6 +292,7 @@ function skillText(api,t){
 }
 export function curriculumTopicGuide(title,subject,language="ar",mode="explain"){
  const source=String(title||"");
+ if(subject==="geography"&&geographyLesson(source)){const d=geographyLesson(source),ix=language==="en"?1:0;return d.rule[ix]+"\n"+d.steps.map(s=>s.title[ix]+": "+s.detail[ix]).join("\n")}
  const lesson=subject==="english"?englishLesson(source):subject==="history"?historyLesson(source):null;
  if(lesson){const ix=language==="en"?1:0;if(mode==="example")return subject==="english"?lesson.examples[0].sentence+(ix===0?"\n"+lesson.examples[0].translation:""):lesson.events.map(e=>e.date[ix]+": "+e.title[ix]).join("\n");return lesson.rule[ix]+(mode==="advanced"?"\n"+(subject==="english"?lesson.examples.map(e=>e.sentence+" — "+e.note[ix]).join("\n"):lesson.events.map(e=>e.date[ix]+": "+e.detail[ix]).join("\n")):"")}
  const grade=Object.keys(G).map(Number).find(g=>(G[g]?.[subject]||[]).some(x=>(typeof x==="string"?x:x.title)===source));
@@ -386,6 +393,7 @@ function topicSpecificQuestion(api,t,diff,n){
 }
 function genericQuestion(api,t,diff,n){
  if(t.subject==="english"&&englishLesson(t.title))return englishQuestion(t,diff,n,lang(api));
+ if(t.subject==="geography"&&geographyLesson(t.title))return geographyQuestion(t,diff,n,lang(api));
  if(t.subject==="history"&&historyLesson(t.title))return historyQuestion(t,diff,n,lang(api));
  if(t.subject==="arabic"&&arabicLesson(t.title))return arabicQuestion(t,diff,n,lang(api));
  if(["math","geometry"].includes(t.subject)&&mathTopic(t.title))return mathQuestion(t,diff,n,lang(api));
@@ -410,7 +418,7 @@ function makeQuestions(api,t,count,difficulty,live){
   try{return assessment.generate("curr:"+t.grade+":"+t.subject+":"+t.index,count,difficulty,lang(api),live).questions}
   catch(error){console.warn("Classora topic question bank incomplete",t.title,error?.message);return []}
  }
- if(!["math","geometry","arabic","english","history"].includes(t?.subject))return [];
+ if(!["math","geometry","arabic","english","history","geography"].includes(t?.subject))return [];
  const out=[],seen=new Set(),levels=difficulty==="mixed"?["easy","medium","hard"]: [difficulty];
  let guard=0;
  while(out.length<count&&guard<count*20){
@@ -1082,6 +1090,7 @@ export function mountCurriculum(api){
  }
  function studioApi(t){return {...api,questions:(count,diff,live,index=0)=>index?Array.from({length:count},(_,i)=>({...mathQuestion(t,diff,index*31+i,lang(api)),points:10})):makeQuestions(api,t,count,diff,live),record:correct=>{if(correct)completeTopic(api,t,100)},assess:async(type,count,diff)=>{const qs=makeQuestions(api,t,count,diff,type==="live");if(!qs.length){api.toast?.(txt(api,"لا توجد أسئلة مراجَعة كافية لهذا الدرس.","Not enough reviewed questions for this lesson."));return false}let ok;if(type==="live")ok=await api.startCompetition(qs,titleText(api,t),{teamMode:"solo",audienceMode:"projector",questionSeconds:30,curriculumTopicId:t.id,difficulty:diff});else {document.body.dataset.classoraMathExam=String(["math","geometry"].includes(t.subject));ok=await api.startExam({title:titleText(api,t),questions:qs,total:qs.reduce((s,q)=>s+q.points,0),surprise:false,topicExam:true,subject:t.subject,curriculumTopicId:t.id,curriculumGrade:t.grade,curriculumDifficulty:diff,curriculumTopicTitle:t.title})}if(ok!==false)shut()}}}
  function renderLesson(){
+  if(state.topic.subject==="geography"&&geographyLesson(state.topic.title)){disposeLesson=mountGeographyLesson(body,state.topic,studioApi(state.topic));return}
   if(state.topic.subject==="english"&&englishLesson(state.topic.title)){disposeLesson=mountEnglishLesson(body,state.topic,studioApi(state.topic));return}
   if(state.topic.subject==="history"&&historyLesson(state.topic.title)){disposeLesson=mountHistoryLesson(body,state.topic,studioApi(state.topic));return}
   if(state.topic.subject==="arabic"&&arabicLesson(state.topic.title)){disposeLesson=mountArabicLesson(body,state.topic,studioApi(state.topic));return}
@@ -1145,7 +1154,7 @@ export function mountCurriculum(api){
       '<div class="curriculum-action-box"><h3>'+T("مسابقة مباشرة","Live competition")+'</h3><div class="curriculum-controls"><label>'+T("الصعوبة","Difficulty")+'<select id="cv97LiveDifficulty"><option value="easy">'+levelLabel(api,"easy")+'</option><option value="medium" selected>'+levelLabel(api,"medium")+'</option><option value="hard">'+levelLabel(api,"hard")+'</option><option value="mixed">'+levelLabel(api,"mixed")+'</option></select></label><label>'+T("الأسئلة","Questions")+'<select id="cv97LiveCount"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></label><label>'+T("وقت السؤال","Time per question")+'<select id="cv97LiveTime"><option>10</option><option>15</option><option selected>20</option><option>30</option><option>45</option><option>60</option></select></label><label>'+T("النمط","Mode")+'<select id="cv97LiveMode"><option value="solo">'+T("فردي","Solo")+'</option><option value="choice" selected>'+T("فرق","Teams")+'</option></select></label></div><button class="curriculum-main-action live" id="cv97StartLive">'+T("أنشئ مسابقة","Create competition")+'</button></div></div></section>'+
    '</aside>'+
   '</div>';
-  attach3D();renderPractice();
+  if(t.subject!=="science"||!SCIENCE_MODELS[t.title])attach3D();renderPractice();
   body.querySelector("#cv99ExplainBtn").onclick=()=>body.querySelector("#cvBasicExplanation")?.scrollIntoView({behavior:"smooth",block:"center"});
   body.querySelector("#cvTopicAuto")?.addEventListener("click",()=>body.querySelector("#cv3DAuto")?.click());
   body.querySelector("#cvStageReset")?.addEventListener("click",()=>body.querySelector("#cv3DReset")?.click());
@@ -1369,6 +1378,15 @@ export function mountCurriculum(api){
    if(!qs.length){api.toast?.(T("بنك الأسئلة مش جاهز للمسابقة بهذا الموضوع.","The question bank isn't ready for this topic competition."));return}
    shut();await api.startCompetition(qs,(t.subject==="english"?"Live Grammar — ":T("مسابقة — ","Live — "))+display,{teamMode,audienceMode:"projector",questionSeconds:seconds,curriculumTopicId:t.id,difficulty:diff})
   }
+
+  if(t.subject==="science"&&SCIENCE_MODELS[t.title]){
+   disposeLesson=mountScienceModel(body.querySelector(".curriculum-3d-card"),t,api);
+   body.querySelector(".curriculum-simple-data-card").hidden=true;
+   body.querySelector(".curriculum-stage-help").hidden=true;
+   body.querySelector("#cvTopicAuto").hidden=true;
+   body.querySelector("#cvStageReset").onclick=()=>body.querySelector('[data-cs="reset"]')?.click();
+   body.querySelector("#cvBasicExplanation p").textContent=SCIENCE_MODELS[t.title].rule[lang(api)==="en"?1:0];
+  }
  }
  function renderPractice(){
   const host=body.querySelector("#cv97Practice");if(!host)return;const t=state.topic,q=makeQuestions(api,t,1,"easy",false)[0];
@@ -1377,7 +1395,7 @@ export function mountCurriculum(api){
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=(ok?txt(api,"صحيح. ","Correct. "):txt(api,"الإجابة الصحيحة: ","Correct answer: ")+q.answer+". ")+q.explanation};opts.appendChild(b)})
  }
- function render(){modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
+ function render(){modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
