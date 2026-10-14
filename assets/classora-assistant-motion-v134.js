@@ -5,6 +5,7 @@ const getLanguage=()=>document.documentElement.lang==='en'?'en':'ar';
 function label(ar,en){return getLanguage()==='en'?en:ar}
 export function classoraAnimateAssistant(host,getAnswer,options={}){
  if(!host)return;
+ host.dataset.noTranslate=''; // Dynamic bilingual and user-entered text must not be re-translated mid-animation.
  const old=pending.get(host);if(old){old.cancelled=true;clearTimeout(old.timeout);clearInterval(old.interval)}
  const run={cancelled:false,timeout:0,interval:0};pending.set(host,run);
  const voice=host.querySelector('.msg-speak');if(voice)voice.remove();
