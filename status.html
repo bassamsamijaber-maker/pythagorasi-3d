@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Classora — فحص الموقع</title>
+<meta name="theme-color" content="#081a25">
+<style>
+:root{font-family:system-ui,"Tajawal",Arial,sans-serif;color:#eafbf7;background:#071722}*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:radial-gradient(circle at 50% -15%,#145c56,#071722 68%);display:flex;justify-content:center;align-items:center;padding:18px}
+main{width:min(560px,100%);background:#0c2735;border:1px solid #5eab9e80;border-radius:24px;padding:25px;box-shadow:0 30px 80px #0006}
+h1{font-size:clamp(24px,5vw,34px)}p{line-height:1.7;color:#bcd4d6}
+section{margin:18px 0} .row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #ffffff1a}
+small{font-size:12px;color:#98aaa9} .good{color:#6ef0b4}.bad{color:#ffc19a}.muted{color:#b0c5d0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+button,a.button{border-radius:12px;border:1px solid #63d8ad;background:#37c69a;color:#05221c;padding:12px 15px;font-size:14px;font-weight:800;text-decoration:none;cursor:pointer}
+button.secondary{background:transparent;color:#b6eadd;border-color:#608f8c}
+#notes{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+</style>
+</head>
+<body><main>
+<div style="font-weight:900;color:#65d6b5;letter-spacing:.8px">CLASSORA · STATUS</div>
+<h1>فحص تشغيل كلاسورا</h1>
+<p>هاي الصفحة مستقلة عن التطبيق. إذا ظهرت عندك، فالدومين قادر يحمّل صفحة ثابتة من الاستضافة. نتائج الفحص بتساعدنا نعرف سبب التعليق.</p>
+<section>
+<div class="row"><strong>صفحة الموقع الرئيسية</strong><span id="site">جاري الفحص…</span></div>
+<div class="row"><strong>ملف تشغيل الموقع</strong><span id="worker">جاري الفحص…</span></div>
+<div class="row"><strong>ملف التصميم</strong><span id="style">جاري الفحص…</span></div>
+<div class="row"><strong>حالة المساعد المحلي</strong><span id="ai">جاري الفحص…</span></div>
+</section>
+<small>اختبار الواجهة: recovery-v1</small>
+<div class="actions">
+<a class="button" href="./?refresh=1">افتح كلاسورا</a>
+<button type="button" class="secondary" id="refresh">إعادة الفحص</button>
+<button type="button" class="secondary" id="clear">إصلاح كاش التطبيق</button>
+</div>
+<p id="notes" role="status"></p>
+<script>
+const q=id=>document.getElementById(id);
+async function check(id,url,expected,timeout=6500){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);
+ try{
+  const response=await fetch(url,{cache:'no-store',signal:controller.signal});
+  const txt=await response.text();
+  if(!response.ok||!txt.includes(expected))throw Error('HTTP '+response.status);
+  q(id).textContent='✓ يعمل';
+  q(id).className='good';
+ }catch(error){
+  q(id).textContent='✕ لا يعمل';
+  q(id).className='bad';
+ }finally{clearTimeout(timer)}
+}
+async function run(){
+ ['site','worker','style','ai'].forEach(id=>{q(id).textContent='جاري الفحص…';q(id).className='muted'});
+ await Promise.all([
+   check('site','./index.html?status='+Date.now(),'<html'),
+   check('worker','./service-worker.js?status='+Date.now(),'CACHE_NAME'),
+   check('style','./assets/classora-dock-stable-v140.css?status='+Date.now(),'classora-dock'),
+   check('ai','https://ai.classora.study/health','Classora Local AI',4000)
+ ]);
+ q('notes').textContent='إذا الموقع الرئيسي ما فتح، جرّب كبسة إصلاح كاش التطبيق. إذا صفحة الفحص نفسها ما بتفتح، المشكلة غالبًا بالدومين أو الاستضافة، مش بكاش التطبيق.';
+}
+q('refresh').onclick=run;
+q('clear').onclick=async()=>{
+ if(!confirm('هل تريد حذف ملفات كاش كلاسورا المحلية وإعادة تحميل التطبيق؟ ما رح نحذف حسابك أو بيانات Firebase.'))return;
+ try{
+  const regs=await navigator.serviceWorker?.getRegistrations?.()||[];
+  await Promise.all(regs.filter(r=>new URL(r.scope).origin===location.origin).map(r=>r.unregister()));
+  const keys=await caches?.keys?.()||[];
+  await Promise.all(keys.filter(k=>k.startsWith('classora-')).map(k=>caches.delete(k)));
+  q('notes').textContent='تم تنظيف كاش التطبيق. سكّر كلاسورا وافتحه من جديد.';
+ }catch(error){q('notes').textContent='تعذر تنظيف الكاش: '+String(error?.message||error)}
+};
+run();
+</script>
+</main></body></html>
