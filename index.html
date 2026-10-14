@@ -125,6 +125,36 @@ body.classora-intro-active{overflow:auto!important}
 })();</script>
 <div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading your workspace…</span></div>
 <div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
+<script id="classora-boot-guard">(function(){
+  function install(){
+    var wait=document.getElementById("cw116Wait");
+    if(!wait)return;
+    setTimeout(function(){
+      if(document.body.classList.contains("auth-ready")&&!document.body.classList.contains("classora-session-restoring"))return;
+      var en=document.documentElement.lang!=="ar";
+      var label=wait.querySelector("span");
+      if(label)label.textContent=en?"Classora is taking longer than expected.":"كلاسورا تأخر بالتحميل. تقدر تصلح بيانات التشغيل المؤقتة.";
+      if(!wait.querySelector(".classora-safe-recovery")){
+        var action=document.createElement("a");
+        action.className="classora-safe-recovery";
+        action.href="./recovery.html";
+        action.textContent=en?"Repair and reopen Classora":"إصلاح وإعادة فتح كلاسورا";
+        action.style.cssText="display:inline-block;margin-top:8px;padding:12px 18px;border:1px solid #83e5bb;border-radius:12px;background:#18473d;color:#edfff7;text-decoration:none;font:700 14px system-ui";
+        wait.append(action);
+      }
+      if(!wait.querySelector(".classora-safe-status")){
+        var status=document.createElement("a");
+        status.className="classora-safe-status";
+        status.href="./status.html";
+        status.textContent=en?"Check site status":"فحص تشغيل الموقع";
+        status.style.cssText="color:#b8dfd4;font:600 13px system-ui;text-decoration:underline";
+        wait.append(status);
+      }
+    },11000);
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
+  else install();
+})();</script>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
@@ -3378,14 +3408,13 @@ async function resolveCurrentUser(user){
         profile={...profile,profileId:await ensureProfileId(user,profile)};
       }
     }
-    try{
-      await setDoc(doc(db,"users",user.uid),{
-        lastLoginAt:serverTimestamp(),
-        lastSeenAt:serverTimestamp()
-      },{merge:true});
-    }catch(err){console.warn("last visit save",err)}
+    // Last-visit metadata is optional: never hold up a successful login.
     paintUser(user,profile);
     authStatusText.textContent="";
+    setDoc(doc(db,"users",user.uid),{
+      lastLoginAt:serverTimestamp(),
+      lastSeenAt:serverTimestamp()
+    },{merge:true}).catch(err=>console.warn("last visit save",err));
   }catch(error){
     document.body.classList.remove("classora-authenticated");
     hidePlatformLobby();
@@ -3989,27 +4018,54 @@ authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
 });
 
 onAuthStateChanged(auth,async user=>{
-  await authPersistenceReady;
+  // Always settle the visual boot state, including a slow/offline Firestore.
   document.body.classList.toggle("classora-session-restoring",!!user);
   authResolved=true;
   document.body.classList.add("auth-ready");
-  if(user){
-    let expires=rememberedLoginExpiresAt();
-    if(!expires)expires=rememberLoginForTwoMonths();
-    if(Date.now()>=expires){
-      clearRememberedLogin();
-      document.body.classList.remove("classora-authenticated","classora-session-restoring");
-      try{await signOut(auth)}catch{}
-      activeProfile=null;window.PythagorasiUser=null;
-      hidePlatformLobby();authUserBar.classList.remove("show");authGate.classList.add("show");showRoleChooser();
-      authStatusText.textContent="انتهت مدة حفظ تسجيل الدخول بعد شهرين. سجّل دخولك من جديد.";
-      window.dispatchEvent(new Event("classora-auth-settled"));
-      return;
+  let bootTimer;
+  try{
+    await Promise.race([
+      authPersistenceReady,
+      new Promise((_,reject)=>setTimeout(()=>reject(new Error("auth-persistence-timeout")),9000))
+    ]);
+    if(user){
+      let expires=rememberedLoginExpiresAt();
+      if(!expires)expires=rememberLoginForTwoMonths();
+      if(Date.now()>=expires){
+        clearRememberedLogin();
+        document.body.classList.remove("classora-authenticated");
+        try{await signOut(auth)}catch{}
+        activeProfile=null;window.PythagorasiUser=null;
+        hidePlatformLobby();authUserBar.classList.remove("show");authGate.classList.add("show");showRoleChooser();
+        authStatusText.textContent="انتهت مدة حفظ تسجيل الدخول بعد شهرين. سجّل دخولك من جديد.";
+        return;
+      }
     }
+    await Promise.race([
+      resolveCurrentUser(user),
+      new Promise((_,reject)=>{bootTimer=setTimeout(()=>reject(new Error("account-load-timeout")),12000)})
+    ]);
+  }catch(error){
+    console.warn("Classora account startup needs recovery",error);
+    const recovery=document.getElementById("sessionRecovery");
+    if(user && auth.currentUser?.uid===user.uid){
+      authGate.classList.remove("show");
+      recovery.hidden=false;
+      document.getElementById("sessionRecoveryText").textContent=
+        document.documentElement.lang==="ar"
+          ?"حسابك محفوظ، بس الاتصال بحسابك تأخر. افحص اتصالك ثم حاول مجددًا."
+          :"Your account is saved, but loading it took too long. Check your connection and try again.";
+      document.getElementById("sessionRecoveryRetry").onclick=()=>location.assign("./recovery.html");
+    }else{
+      authGate.classList.add("show");
+      showRoleChooser();
+      authStatusText.textContent="تعذر الاتصال بتسجيل الدخول. حاول مرة ثانية.";
+    }
+  }finally{
+    clearTimeout(bootTimer);
+    document.body.classList.remove("classora-session-restoring");
+    window.dispatchEvent(new Event("classora-auth-settled"));
   }
-  await resolveCurrentUser(user);
-  document.body.classList.remove("classora-session-restoring");
-  window.dispatchEvent(new Event("classora-auth-settled"));
 });
 
 
