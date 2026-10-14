@@ -4,7 +4,7 @@
 (() => {
   "use strict";
   const byId = id => document.getElementById(id);
-  const locale = () => document.documentElement.lang === "en" ? "en" : "ar";
+  const locale = () => document.documentElement.lang !=="ar" ? "en" : "ar";
   const set = (id, value) => {
     const el = byId(id);
     if (el && el.textContent !== String(value)) el.textContent = String(value);

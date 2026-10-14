@@ -6,7 +6,7 @@
 export function mountClassoraHomeV112(api){
  "use strict";
  const get=id=>document.getElementById(id);
- const lang=()=>document.documentElement.lang==="en"?"en":"ar";
+ const lang=()=>document.documentElement.lang!=="ar"?"en":"ar";
  const t=(ar,en)=>lang()==="en"?en:ar;
  const svg=(type)=>{
   const paths={

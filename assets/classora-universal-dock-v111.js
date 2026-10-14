@@ -27,7 +27,7 @@
  function syncShortcuts(){
    const parent=menu();
    if(!parent)return;
-   const english=document.documentElement.lang==="en";
+   const english=document.documentElement.lang!=="ar";
    parent.setAttribute("lang",english?"en":"ar");
    parent.setAttribute("dir",english?"ltr":"rtl");
    parent.querySelectorAll("[data-quick-ar][data-quick-en]").forEach(el=>{

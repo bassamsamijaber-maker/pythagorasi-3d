@@ -13,7 +13,7 @@
     ["classoraMobileChatBtn", "الشات", "Chat"],
     ["classoraMobileSettingsBtn", "الإعدادات", "Settings"]
   ];
-  const language = () => document.documentElement.lang === "en" ? "en" : "ar";
+  const language = () => document.documentElement.lang !=="ar" ? "en" : "ar";
   const select = id => {
     const nav=root();
     if(!nav)return;

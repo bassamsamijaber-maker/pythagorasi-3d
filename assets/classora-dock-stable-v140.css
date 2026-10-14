@@ -1,0 +1,58 @@
+/* A single viewport anchor in portrait, landscape, and native study dialogs. */
+@media (max-width: 760px) {
+  body.classora-dock-enabled {
+    --classora-dock-clearance: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
+  /* Transformed ancestors turn position:fixed into dialog-relative positioning. */
+  body.classora-dock-enabled,
+  body.classora-dock-enabled dialog[open]:has(#classoraMobilePageNav) {
+    transform: none !important;
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    perspective: none !important;
+    contain: none !important;
+    will-change: auto !important;
+    animation: none !important;
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    inset-block: auto 0 !important;
+    inset-inline: 0 !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    translate: none !important;
+    transition: none !important;
+    animation: none !important;
+    width: min(480px, 100%) !important;
+    max-width: 100% !important;
+    height: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    min-height: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+    padding: 6px max(5px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(5px, env(safe-area-inset-left, 0px)) !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-rows: 52px !important;
+    gap: 3px !important;
+    align-content: start !important;
+    border-radius: 19px 19px 0 0 !important;
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn {
+    min-width: 0 !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+  }
+  body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav[aria-hidden="true"] {
+    display: none !important;
+  }
+  body.classora-dock-enabled .platform-lobby,
+  body.classora-dock-enabled dialog[open] {
+    scroll-padding-bottom: var(--classora-dock-clearance) !important;
+  }
+}
