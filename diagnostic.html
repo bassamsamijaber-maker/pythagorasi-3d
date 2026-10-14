@@ -19,7 +19,7 @@ h1{font-size:24px;margin:8px 0 12px}p{color:#b9d6ce;line-height:1.8}
 button,a.button{padding:12px 16px;background:#2fc8a0;color:#092620;border:0;border-radius:12px;font:700 14px system-ui;text-decoration:none;cursor:pointer}
 a.button.secondary,button.secondary{background:#143e46;color:#d3f8ec;border:1px solid #5b9e8d}
 small{display:block;margin-top:18px;color:#8fa9a3;line-height:1.7;overflow-wrap:anywhere}
-</style></head>
+</style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script></head>
 <body><main>
 <div style="font-weight:900;color:#80f4c4;letter-spacing:.1em">CLASSORA · DIAGNOSTICS</div>
 <h1>فحص تعليق كلاسورا</h1>
@@ -40,6 +40,12 @@ const tests=[
 ["firebase","مكتبات تسجيل الدخول Firebase"],
 ["auth","بدء Firebase Auth"],
 ["three","مكتبة النماذج ثلاثية الأبعاد"],
+["orbit","مكتبة تحريك النماذج 3D"],
+["firestore","Firebase Firestore"],
+["messaging","Firebase Messaging"],
+["functions","Firebase Functions"],
+["curriculum","وحدات المنهاج الدراسي"],
+["assistant","ملفات المساعد والامتحانات"],
 ["worker","حالة Service Worker"],
 ["network","اتصال الجهاز بالشبكة"]
 ];
@@ -52,7 +58,17 @@ const boot=()=>Promise.all([
  deadline(async()=>{const r=await fetch("./index.html?diag="+Date.now(),{cache:"no-store"});const text=await r.text();if(!r.ok||!text.includes('id="authGate"'))throw Error("HTTP "+r.status+" / invalid page");show("html","يعمل","ok")},10000).catch(e=>show("html",String(e.message||e),"bad")),
  deadline(async()=>{const r=await fetch("./assets/classora-entrance-v116.js?diag="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);show("core","يعمل","ok")},10000).catch(e=>show("core",String(e.message||e),"bad")),
  deadline(async()=>{const [app,auth]=await Promise.all([import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"),import("https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js")]);if(!app.initializeApp||!auth.getAuth)throw Error("module missing");show("firebase","يعمل","ok");await deadline(async()=>{const instance=app.initializeApp({apiKey:"AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",authDomain:"pythagorasi-school.firebaseapp.com",projectId:"pythagorasi-school",appId:"1:349960442962:web:53d13a319dfdc096187b8b"},"classora-debug-only");const a=auth.getAuth(instance);await a.authStateReady();show("auth","يعمل","ok");},8000).catch(e=>show("auth",String(e.message||e),"bad"));},10000).catch(e=>{show("firebase",String(e.message||e),"bad");show("auth","لم تبدأ المكتبة","bad")}),
- deadline(async()=>{const m=await import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js");if(!m.Scene)throw Error("module missing");show("three","يعمل","ok")},10000).catch(e=>show("three",String(e.message||e),"bad"))
+ deadline(async()=>{const m=await import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js");if(!m.Scene)throw Error("module missing");show("three","يعمل","ok")},10000).catch(e=>show("three",String(e.message||e),"bad")),
+ deadline(async()=>{const m=await import("three/addons/controls/OrbitControls.js");if(!m.OrbitControls)throw Error("missing OrbitControls");show("orbit","يعمل","ok")},14000).catch(e=>show("orbit",String(e.message||e),"bad")),
+ deadline(async()=>{const m=await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js");if(!m.getFirestore)throw Error("missing Firestore");show("firestore","يعمل","ok")},14000).catch(e=>show("firestore",String(e.message||e),"bad")),
+ deadline(async()=>{const m=await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js");if(!m.getMessaging)throw Error("missing Messaging");show("messaging","يعمل","ok")},14000).catch(e=>show("messaging",String(e.message||e),"bad")),
+ deadline(async()=>{const m=await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js");if(!m.getFunctions)throw Error("missing Functions");show("functions","يعمل","ok")},14000).catch(e=>show("functions",String(e.message||e),"bad")),
+ deadline(async()=>{const m=await import("./assets/curriculum-v97.js?v=131");if(!m.mountCurriculum)throw Error("missing mountCurriculum");show("curriculum","يعمل","ok")},20000).catch(e=>show("curriculum",String(e.message||e),"bad")),
+ deadline(async()=>{const [hub,assessment,assistant]=await Promise.all([
+ import("./assets/learning-hub.js?v=131"),
+ import("./assets/classora-assessment-v121.js?v=131"),
+ import("./assets/classora-study-assistant-v124.js?v=137")
+ ]);if(!hub.mountLearningHub||!assessment.classoraAssessment||!assistant.classoraStudyAnswer)throw Error("missing app exports");show("assistant","يعمل","ok")},20000).catch(e=>show("assistant",String(e.message||e),"bad"))
 ]);
 async function run(){
  for(const [id] of tests)show(id,"جاري الفحص…");
