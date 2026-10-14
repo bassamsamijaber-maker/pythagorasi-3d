@@ -260,3 +260,5 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
 );
 
 Object.assign(exports, require('./support-admin'));
+Object.assign(exports, require('./ai-assistant'));
+
