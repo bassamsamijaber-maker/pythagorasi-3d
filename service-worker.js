@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v143-online-first-recovery";
+const CACHE_NAME="classora-v144-startup-recovery";
 const APP_SHELL=[
+  "./index.html",
+  "./status.html",
   "./assets/classora-dock-stable-v140.css?v=140",
   "./assets/classora-locales-v140.css?v=140",
   "./assets/classora-locales-v140.js?v=141",
