@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v137-safe-area-assistant-final";
+const CACHE_NAME="classora-v138-iphone-dock-visible";
 const APP_SHELL=[
-  "./assets/classora-responsive-v131.css?v=136",
+  "./assets/classora-responsive-v131.css?v=138",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
   "./assets/learning-tools-v130.css?v=130",
