@@ -1,5 +1,5 @@
 import {learningState,reviewTopics,learnerId,saveDisplay} from './learning-memory-v130.js?v=130';
-import {downloadedUnits} from './learning-offline-v130.js?v=130';
+import {downloadedUnits} from './learning-offline-v130.js?v=131';
 import {escapeMath as E} from './math-scenes-v119.js?v=119';
 export function mountLearningHome(host,{language,grade,label}){
  const panel=document.createElement('section');panel.className='cl130-home';host.append(panel);

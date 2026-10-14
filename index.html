@@ -79,6 +79,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
+<link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=131">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -597,7 +598,7 @@ body.classora-intro-active{overflow:auto!important}
       <button data-admin-tab="controls">🎛️ Control Center</button>
     </div>
 
-    <div class="admin-view hidden" id="adminViewPromos" data-no-translate>
+    <div class="admin-view hidden" id="adminViewPromos">
       <header class="cp-admin-header"><h3>مركز الإعلانات</h3><p>الحد الأقصى 5 إعلانات؛ يتبدل الإعلان كل أربع ثوانٍ. إدارة الإعلانات والصلاحيات مرتبطة بحساب الأدمن.</p><span class="cp-admin-count">3 / 5</span></header>
       <form id="classoraPromoAdminForm">
         <label>عنوان الإعلان بالعربي<input name="titleAr" maxlength="85" required></label>
@@ -611,7 +612,7 @@ body.classora-intro-active{overflow:auto!important}
         <label>المادة<select name="subject"><option value="arabic">عربي</option><option value="math">رياضيات</option><option value="geometry">هندسة</option><option value="science">علوم</option><option value="english">English</option><option value="history">تاريخ</option><option value="geography">جغرافيا</option></select></label>
         <label>اسم الدرس<input name="topicRef" maxlength="110" placeholder="المفعول به"></label>
         <button class="cp-admin-add" id="classoraPromoAdminAdd" type="submit">أضف إعلانًا</button>
-      </form><p role="status" id="classoraPromoAdminStatus"></p><div id="classoraPromoAdminList"></div>
+      </form><p role="status" id="classoraPromoAdminStatus"></p><div id="classoraPromoAdminList" data-no-translate></div>
     </div>
     <div class="admin-view hidden" id="adminViewTeam"><h3>إدارة فريق الموقع</h3><p>مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.</p><input id="teamAccountSearch" placeholder="ابحث بالاسم أو معرّف الحساب"><div id="adminTeamList" class="admin-list"></div></div>
     <div class="admin-view" id="adminViewDashboard">
@@ -2413,18 +2414,18 @@ body.classora-intro-active{overflow:auto!important}
 
 
 <script type="module">
-import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=130";
-import {mountSubjectLabs} from "./assets/subject-labs.js?v=123";
+import {mountLearningHub, scienceLiveQuestions, idafaLiveQuestions, scienceTopics as hubScienceTopics, installVectorIcons, localizeScienceQuestion} from "./assets/learning-hub.js?v=131";
+import {mountSubjectLabs} from "./assets/subject-labs.js?v=131";
 import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
-import {mountLearningPlus} from "./assets/learning-plus.js?v=130";
+import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
-import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=121';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=130';
-import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=130';
+import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=131';
+import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=131';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=124';
-import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=130';
+import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=131';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=130";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=131";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -8558,6 +8559,562 @@ const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE
  ["✦ ولّد الأسئلة","✦ Generate questions"],
  ["اعمل مسابقة رياضيات أو علوم أو عربي، واختار الموضوع، وكلاسورا يولّد الأسئلة تلقائيًا.","Create a Math, Science or Arabic Grammar competition, choose the topic, and Classora will generate the questions automatically."]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+[
+  [
+    "أهلًا في كلاسورا",
+    "Welcome to Classora"
+  ],
+  [
+    "تعلّم وجرّب واكتشف",
+    "Learn, experiment and discover"
+  ],
+  [
+    "آخر الإضافات",
+    "Latest additions"
+  ],
+  [
+    "إعلانات كلاسورا التعليمية",
+    "Classora learning announcements"
+  ],
+  [
+    "المطلوب منك",
+    "Your tasks"
+  ],
+  [
+    "جاري التحقق من وظائف صفوفك...",
+    "Checking your class assignments…"
+  ],
+  [
+    "مساحة المعلم • CLASSORA",
+    "TEACHER WORKSPACE • CLASSORA"
+  ],
+  [
+    "أهلًا،",
+    "Welcome,"
+  ],
+  [
+    "صفوفك وامتحاناتك ونتائج طلابك، منظمة بمكان واحد. كل الأدوات اللي بتحتاجها لتدير تعليمك بسهولة.",
+    "Your classes, exams and student results in one place. Everything you need to manage your teaching."
+  ],
+  [
+    "إدارة صفوفي",
+    "Manage my classes"
+  ],
+  [
+    "إنشاء امتحان",
+    "Create exam"
+  ],
+  [
+    "صفوف أديرها",
+    "Classes I manage"
+  ],
+  [
+    "امتحانات منشورة",
+    "Published exams"
+  ],
+  [
+    "مواد دراسية",
+    "School subjects"
+  ],
+  [
+    "أدواتك السريعة",
+    "Quick tools"
+  ],
+  [
+    "اختار الأداة وابدأ مباشرة.",
+    "Choose a tool to get started."
+  ],
+  [
+    "إدارة الصفوف",
+    "Class management"
+  ],
+  [
+    "الطلاب وأكواد الصفوف والإعدادات",
+    "Students, class codes and settings"
+  ],
+  [
+    "الوظائف المدرسية",
+    "School assignments"
+  ],
+  [
+    "إنشاء الوظائف ومتابعة التسليم",
+    "Create assignments and track submissions"
+  ],
+  [
+    "أنشئ امتحانات وشارك الأكواد",
+    "Create exams and share access codes"
+  ],
+  [
+    "نتائج الطلاب",
+    "Student results"
+  ],
+  [
+    "العلامات وأداء الطلاب",
+    "Grades and student performance"
+  ],
+  [
+    "إنشاء غرف وإدارة المسابقات",
+    "Create rooms and manage competitions"
+  ],
+  [
+    "بنك الأسئلة",
+    "Question bank"
+  ],
+  [
+    "حضّر أسئلة واستعملها مجددًا",
+    "Prepare and reuse questions"
+  ],
+  [
+    "صفوفي بنظرة سريعة",
+    "My classes at a glance"
+  ],
+  [
+    "الصفوف الظاهرة بحسابك، بدون عرض بيانات طلابك هون.",
+    "A summary of your classes without displaying student details here."
+  ],
+  [
+    "عرض الكل ↗",
+    "View all ↗"
+  ],
+  [
+    "جاري جلب صفوفك…",
+    "Loading your classes…"
+  ],
+  [
+    "مساحتي التعليمية",
+    "My learning space"
+  ],
+  [
+    "كل اللي بتحتاجه لتتعلم وتتابع صفوفك وتمتحن، مرتب إلك بمكان واحد.",
+    "Everything you need to learn, follow your classes and take exams in one place."
+  ],
+  [
+    "استكشف موادي",
+    "Explore my subjects"
+  ],
+  [
+    "صفوفي وواجباتي",
+    "My classes and assignments"
+  ],
+  [
+    "تقدمك في كلاسورا",
+    "Your Classora progress"
+  ],
+  [
+    "امتحاناتي",
+    "My exams"
+  ],
+  [
+    "مواعيد قادمة",
+    "Upcoming deadlines"
+  ],
+  [
+    "من وين نبدأ؟",
+    "Where shall we start?"
+  ],
+  [
+    "اختار اللي بدك تعمله، والباقي علينا.",
+    "Choose what you want to do and get started."
+  ],
+  [
+    "المواد والدروس",
+    "Subjects and lessons"
+  ],
+  [
+    "رياضيات، علوم، لغات وأكثر",
+    "Math, science, languages and more"
+  ],
+  [
+    "تابع صفك والوظائف المطلوبة",
+    "Follow your class and assignments"
+  ],
+  [
+    "اختبر معلوماتك وشوف النتائج",
+    "Test your knowledge and see your results"
+  ],
+  [
+    "تدرّب الآن",
+    "Practice now"
+  ],
+  [
+    "أسئلة متنوعة وتصحيح فوري",
+    "Varied questions with instant feedback"
+  ],
+  [
+    "CLASSORA • تعلّم بطريقة مختلفة",
+    "CLASSORA • A DIFFERENT WAY TO LEARN"
+  ],
+  [
+    "تعلّم أبعد من الكتاب.",
+    "Learn beyond the textbook."
+  ],
+  [
+    "افهمها بالـ 3D.",
+    "Understand it in 3D."
+  ],
+  [
+    "مواد ودروس تفاعلية، تجارب ثلاثية الأبعاد، أسئلة واختبارات—كلها بمكان واحد، وبطريقة سهلة وممتعة.",
+    "Interactive lessons, 3D experiments, questions and tests, all in one place. Simple and engaging."
+  ],
+  [
+    "استكشف الأنشطة",
+    "Explore activities"
+  ],
+  [
+    "جرّب مختبر 3D",
+    "Try a 3D lab"
+  ],
+  [
+    "تعلّم تفاعلي",
+    "Interactive learning"
+  ],
+  [
+    "دروس ومواد متعددة",
+    "Multiple subjects and lessons"
+  ],
+  [
+    "تمارين وامتحانات",
+    "Practice and exams"
+  ],
+  [
+    "اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.",
+    "Ask me about all Classora subjects: math, science, grammar, history and geography, in Arabic or English."
+  ],
+  [
+    "الإعلانات",
+    "Announcements"
+  ],
+  [
+    "مركز الإعلانات",
+    "Announcement center"
+  ],
+  [
+    "الحد الأقصى 5 إعلانات؛ يتبدل الإعلان كل أربع ثوانٍ. إدارة الإعلانات والصلاحيات مرتبطة بحساب الأدمن.",
+    "Up to 5 announcements, rotating every four seconds. Only authorized admins can manage announcements."
+  ],
+  [
+    "عنوان الإعلان بالعربي",
+    "Arabic announcement title"
+  ],
+  [
+    "الوصف بالعربي",
+    "Arabic description"
+  ],
+  [
+    "الرابط إلى",
+    "Link to"
+  ],
+  [
+    "المفعول به",
+    "Direct object"
+  ],
+  [
+    "عجلة فيثاغورس",
+    "Pythagoras wheel"
+  ],
+  [
+    "درس آخر",
+    "Another lesson"
+  ],
+  [
+    "إعلان فقط",
+    "Announcement only"
+  ],
+  [
+    "الفئة",
+    "Audience"
+  ],
+  [
+    "الطلاب",
+    "Students"
+  ],
+  [
+    "المعلمون",
+    "Teachers"
+  ],
+  [
+    "الأدمن",
+    "Admin"
+  ],
+  [
+    "صف محدد",
+    "Specific class"
+  ],
+  [
+    "معرّف الصف المحدد",
+    "Target class ID"
+  ],
+  [
+    "السابع",
+    "Grade 7"
+  ],
+  [
+    "الثامن",
+    "Grade 8"
+  ],
+  [
+    "التاسع",
+    "Grade 9"
+  ],
+  [
+    "العاشر",
+    "Grade 10"
+  ],
+  [
+    "عربي",
+    "Arabic"
+  ],
+  [
+    "رياضيات",
+    "Math"
+  ],
+  [
+    "هندسة",
+    "Geometry"
+  ],
+  [
+    "تاريخ",
+    "History"
+  ],
+  [
+    "جغرافيا",
+    "Geography"
+  ],
+  [
+    "اسم الدرس",
+    "Lesson name"
+  ],
+  [
+    "أضف إعلانًا",
+    "Add announcement"
+  ],
+  [
+    "اختصارات الموقع",
+    "Site shortcuts"
+  ],
+  [
+    "كل الأزرار اللي كانت فوق، صارت هون بترتيب أسهل.",
+    "Your navigation buttons, organized in one place."
+  ],
+  [
+    "الشات",
+    "Chat"
+  ],
+  [
+    "مركز الدعم",
+    "Support center"
+  ],
+  [
+    "لوحة الأدمن",
+    "Admin panel"
+  ],
+  [
+    "تثبيت التطبيق",
+    "Install app"
+  ],
+  [
+    "تسجيل الخروج",
+    "Sign out"
+  ],
+  [
+    "شروط الاستخدام",
+    "Terms of use"
+  ],
+  [
+    "الصعوبة",
+    "Difficulty"
+  ],
+  [
+    "مختلط",
+    "Mixed"
+  ],
+  [
+    "المواد",
+    "Subjects"
+  ],
+  [
+    "إعلانات كلاسورا",
+    "Classora announcements"
+  ],
+  [
+    "مثال: اشرح الماضي البسيط أو الأحماض والقواعد…",
+    "Example: explain Past Simple or acids and bases…"
+  ],
+  [
+    "التنقّل السريع",
+    "Quick navigation"
+  ],
+  [
+    "عنوان الإعلان بالإنجليزي",
+    "English title"
+  ],
+  [
+    "الوصف بالإنجليزي",
+    "English description"
+  ],
+  [
+    "مساحة العمل",
+    "WORKSPACE"
+  ],
+  [
+    "نقاط الخبرة",
+    "XP"
+  ]
+].forEach(([ar,en])=>{uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)});
+[
+  [
+    "تخطّي",
+    "Skip"
+  ],
+  [
+    "تخطّي المقدمة",
+    "Skip intro"
+  ],
+  [
+    "🛡️ لوحة الأدمن",
+    "🛡️ Admin Panel"
+  ],
+  [
+    "📊 التصويتات",
+    "📊 Polls"
+  ],
+  [
+    "🎒 ملخص الطالب",
+    "🎒 Student Overview"
+  ],
+  [
+    "📝 سجل الوظائف",
+    "📝 Assignment History"
+  ],
+  [
+    "📈 لوحة النتائج",
+    "📈 Dashboard"
+  ],
+  [
+    "👥 الطلاب والمعلمون",
+    "👥 Students & Teachers"
+  ],
+  [
+    "🚀 إرسال / تعيين",
+    "🚀 Send / Assign"
+  ],
+  [
+    "🛡️ الفريق",
+    "🛡️ Team"
+  ],
+  [
+    "🎛️ مركز التحكم",
+    "🎛️ Control Center"
+  ],
+  [
+    "كل الحسابات",
+    "All accounts"
+  ],
+  [
+    "كل الصفوف",
+    "All classes"
+  ],
+  [
+    "إعلان",
+    "Announcement"
+  ],
+  [
+    "امتحان فيثاغورس مولّد كوظيفة",
+    "Generated Pythagoras exam as assignment"
+  ],
+  [
+    "وظيفة علوم",
+    "Science assignment"
+  ],
+  [
+    "رسالة / تعليمات",
+    "Message / instructions"
+  ],
+  [
+    "الأسئلة",
+    "Questions"
+  ],
+  [
+    "🚀 إرسال / نشر",
+    "🚀 Send / Publish"
+  ],
+  [
+    "عنوان التصويت",
+    "Poll title"
+  ],
+  [
+    "الخيار 1",
+    "Option 1"
+  ],
+  [
+    "الخيار 2",
+    "Option 2"
+  ],
+  [
+    "الخيار 3",
+    "Option 3"
+  ],
+  [
+    "الخيار 4",
+    "Option 4"
+  ],
+  [
+    "📊 نشر التصويت",
+    "📊 Publish poll"
+  ],
+  [
+    "📈 رسم ثنائي الأبعاد",
+    "📈 2D Graph"
+  ],
+  [
+    "🧊 رسم ثلاثي الأبعاد",
+    "🧊 3D Graph Pro"
+  ],
+  [
+    "◇ منظور",
+    "◇ Perspective"
+  ],
+  [
+    "⬇ من الأعلى",
+    "⬇ Top"
+  ],
+  [
+    "▣ من الأمام",
+    "▣ Front"
+  ],
+  [
+    "⟳ دوران تلقائي",
+    "⟳ Auto Rotate"
+  ],
+  [
+    "نسخ المعرّف",
+    "Copy ID"
+  ],
+  [
+    "دردشة كلاسورا",
+    "Classora Chat"
+  ],
+  [
+    "📊 التصويتات والتحديثات",
+    "📊 Polls and updates"
+  ],
+  [
+    "التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.",
+    "Polls appear first, followed by announcements and competitions."
+  ],
+  [
+    "⚙️ إدارة",
+    "⚙️ Manage"
+  ],
+  [
+    "🗑 حذف الظاهر",
+    "🗑 Delete visible items"
+  ],
+  [
+    "= يختفي من الطلاب ويقدر يرجع.",
+    "= hidden from students and can be restored."
+  ]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
 const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
@@ -8642,35 +9199,30 @@ function translateTextValue(arText){
 function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?en:ar)}
 function uiPrompt(ar,en,value=""){return prompt(currentUILanguage==="en"?en:ar,value)}
 
+// Track our last rendered value separately from text written by the application.
+const uiNodeTranslations=new WeakMap(),uiAttributeTranslations=new WeakMap();
 function translateElementNode(el){
   if(!(el instanceof Element))return;
-  if(el.matches('script,style')||el.closest('[data-no-translate]'))return;
-  if(el.closest?.('#siteUpdatesSection'))return;
+  if(el.matches('script,style')||el.closest('[data-no-translate],[translate="no"],[contenteditable="true"]'))return;
+  if(el.closest?.('#siteUpdatesList'))return;
   for(const node of [...el.childNodes]){
-    if(node.nodeType===Node.TEXT_NODE){
-      const original=node.__arOriginal??node.nodeValue;
-      if(node.__arOriginal==null)node.__arOriginal=latinDigits(original);
-      const lead=(original.match(/^\\s*/)||[''])[0],trail=(original.match(/\\s*$/)||[''])[0];
-      const core=latinDigits(original).trim();
-      const next=core?lead+translateTextValue(core)+trail:original;
-      if(node.nodeValue!==next)node.nodeValue=next;
-    }
+    if(node.nodeType!==Node.TEXT_NODE||el.matches('textarea'))continue;
+    const current=node.nodeValue,previous=uiNodeTranslations.get(node);
+    const source=previous&&current===previous.rendered?previous.source:current;
+    const lead=(source.match(/^\s*/)||[''])[0],trail=(source.match(/\s*$/)||[''])[0];
+    const core=latinDigits(source).trim(),next=core?lead+translateTextValue(core)+trail:source;
+    uiNodeTranslations.set(node,{source,rendered:next});if(current!==next)node.nodeValue=next;
   }
-  if('placeholder' in el && el.placeholder){
-    if(!el.dataset.arPlaceholder)el.dataset.arPlaceholder=latinDigits(el.placeholder);
-    el.placeholder=currentUILanguage==='en'
-      ?(uiPlaceholderTranslations.get(el.dataset.arPlaceholder)||uiDynamicEnglish(el.dataset.arPlaceholder))
-      :(uiEnglishToArabic.get(el.dataset.arPlaceholder)||[...uiPlaceholderTranslations].find(([ar,en])=>en===el.dataset.arPlaceholder)?.[0]||el.dataset.arPlaceholder);
+  const attributes=uiAttributeTranslations.get(el)||{};
+  for(const name of ['placeholder','aria-label','title','alt']){
+    if(!el.hasAttribute(name))continue;
+    const current=el.getAttribute(name),previous=attributes[name];
+    const source=previous&&current===previous.rendered?previous.source:current;
+    const next=currentUILanguage==='en'?(uiPlaceholderTranslations.get(source)||translateTextValue(source)):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
+    attributes[name]={source,rendered:next};if(current!==next)el.setAttribute(name,next);
   }
-  if(el.hasAttribute('aria-label')){
-    if(!el.dataset.arAria)el.dataset.arAria=el.getAttribute('aria-label');
-    el.setAttribute('aria-label',currentUILanguage==='en'?(uiExactTranslations.get(el.dataset.arAria)||uiDynamicEnglish(el.dataset.arAria)):el.dataset.arAria);
-  }
-  if(el.hasAttribute('title')){
-    if(!el.dataset.arTitle)el.dataset.arTitle=latinDigits(el.getAttribute('title')||'');
-    el.setAttribute('title',currentUILanguage==='en'?(uiExactTranslations.get(el.dataset.arTitle)||uiDynamicEnglish(el.dataset.arTitle)):el.dataset.arTitle);
-  }
-  if(el.matches('input[type="date"]')){el.lang='en-US';el.dir='ltr'}
+  uiAttributeTranslations.set(el,attributes);
+  if(el.matches('input[type="date"]')){el.lang=currentUILanguage==='en'?'en-US':'ar';el.dir='ltr'}
 }
 function translateSubtree(root=document.body){
   translateElementNode(root);
@@ -8739,7 +9291,7 @@ function applySiteLanguage(lang,save=true){
   translateSubtree(document.body);
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
   document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
-  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh()}catch{};syncV99LanguageLabels();
+  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh();window.classoraCurriculum?.refresh();window.classoraSubjectLabs?.refresh?.()}catch{};syncV99LanguageLabels();
   try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
   try{applyAdminLanguage()}catch{}
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
@@ -8758,11 +9310,12 @@ const bilingualObserver=new MutationObserver(records=>{
       else if(n.nodeType===Node.TEXT_NODE&&n.parentElement)translateElementNode(n.parentElement);
     });
     if(record.type==='characterData'&&record.target.parentElement)translateElementNode(record.target.parentElement);
+    if(record.type==='attributes')translateElementNode(record.target);
   }
 });
 setTimeout(()=>{
   applySiteLanguage(currentUILanguage,false);
-  bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
+  bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["placeholder","aria-label","title","alt"]});
 },0);
 
 

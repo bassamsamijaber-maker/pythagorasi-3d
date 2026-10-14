@@ -1,6 +1,6 @@
 import {configureLearningMemory,recordLearningAttempt,learnerId} from './learning-memory-v130.js?v=130';
 import {smartTopicMatch} from './learning-search-v130.js?v=130';
-import {downloadUnit} from './learning-offline-v130.js?v=130';
+import {downloadUnit} from './learning-offline-v130.js?v=131';
 import {answerFeedback} from './learning-feedback-v130.js?v=130';
 import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=130';
 import {mountScienceModel,SCIENCE_MODELS} from './science-scenes-v128.js?v=130';
@@ -493,7 +493,7 @@ export function mountCurriculum(api){
   try{localStorage.setItem("classora_curriculum_grade",String(g))}catch{}
   document.dispatchEvent(new CustomEvent("classora:grade-change",{detail:{grade:Number(g)}}));
  }
- const modal=document.createElement("div");modal.className="classora-curriculum-modal";modal.id="classoraCurriculumModal";
+ const modal=document.createElement("div");modal.className="classora-curriculum-modal";modal.id="classoraCurriculumModal";modal.dataset.noTranslate="";
  modal.innerHTML='<div class="classora-curriculum-shell" role="dialog" aria-modal="true"><div class="classora-curriculum-top"><button class="classora-curriculum-back" type="button"></button><div class="classora-curriculum-brand">'+svg("school")+'<div><b>Classora</b><small id="cv97TopSub"></small></div></div><button class="classora-curriculum-close" type="button" aria-label="Close">×</button></div><div class="classora-curriculum-body" id="cv97Body"></div></div>';
  document.body.appendChild(modal);
  const body=modal.querySelector("#cv97Body"),back=modal.querySelector(".classora-curriculum-back"),close=modal.querySelector(".classora-curriculum-close"),topSub=modal.querySelector("#cv97TopSub");

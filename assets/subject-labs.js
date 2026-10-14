@@ -2,7 +2,8 @@ import {mountPHScene} from './ph-lab.js?v=89';
 import {acidsTopic,phSamples,phColor} from './learning-content.js?v=89';
 
 export function mountSubjectLabs(api){
- const L=(a,e)=>api.language()==='ar'?a:e, pick=a=>a[api.language()==='ar'?0:1];
+ const labels=new Map();
+ const L=(a,e)=>{labels.set(a,[a,e]);labels.set(e,[a,e]);return api.language()==='ar'?a:e},pick=a=>L(...a);
  const node=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls||'';if(text)e.textContent=text;return e};
  const button=(text,fn)=>{const b=node('button','sl-button',text);b.type='button';b.onclick=fn;return b};
  let active=null;
@@ -35,7 +36,7 @@ export function mountSubjectLabs(api){
    page.remove();active=null;
    requestAnimationFrame(()=>{if(lobby)lobby.scrollTop=scroll;window.scrollTo(0,windowY);if(source?.isConnected)source.focus({preventScroll:true})});
   },{once:true});
-  active={close:leave};
+  active={close:leave,page};
   const grid=node('div','sl-grid'),visual=node('section','sl-visual'),info=node('section','sl-info');grid.append(visual,info);main.append(grid);
   if(kind==='acids')cleanup=acidLab(visual,info);else cleanup=idafaLab(visual,info);
   main.append(node('p','sl-footnote',L('استكشف باللمس أو الماوس. زر الرجوع يعيدك لنفس مكانك.','Explore with touch or mouse. Back returns you to the same place.')));
@@ -116,5 +117,11 @@ export function mountSubjectLabs(api){
   render();return()=>{};
  }
 
- return {open,close:()=>{if(active)active.close()}};
+ function refresh(){
+  const page=active?.page;if(!page)return;const lang=api.language()==='ar'?'ar':'en',i=lang==='ar'?0:1;
+  page.lang=lang;page.dir=i?'ltr':'rtl';
+  const translate=text=>{if(labels.has(text))return labels.get(text)[i];for(const [old,pair]of [...labels].sort((a,b)=>b[0].length-a[0].length)){if(old.endsWith(' ')&&text.startsWith(old))return pair[i]+text.slice(old.length)}return text};
+  for(const el of [page,...page.querySelectorAll('*')]){for(const n of el.childNodes)if(n.nodeType===3)n.nodeValue=translate(n.nodeValue);for(const key of ['aria-label','title','placeholder'])if(el.hasAttribute(key))el.setAttribute(key,translate(el.getAttribute(key)))}
+ }
+ return {open,refresh,close:()=>{if(active)active.close()}};
 }
