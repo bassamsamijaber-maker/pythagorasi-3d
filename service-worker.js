@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v141-stable-dock-eight-locales";
+const CACHE_NAME="classora-v142-stable-dock-local-ollama";
 const APP_SHELL=[
   "./assets/classora-dock-stable-v140.css?v=140",
   "./assets/classora-locales-v140.css?v=140",
@@ -96,7 +96,7 @@ const APP_SHELL=[
   "./privacy.html",
   "./terms.html",
   "./assets/classora-legal-v124.css?v=132",
-  "./assets/classora-legal-v124.js?v=139",
+  "./assets/classora-legal-v124.js?v=140",
   "./assets/classora-study-assistant-v124.js?v=137",
   "./assets/classora-assistant-motion-v134.js?v=139",
   "./assets/classora-assistant-motion-v134.css?v=134",
