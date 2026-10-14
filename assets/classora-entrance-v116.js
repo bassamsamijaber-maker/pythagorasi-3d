@@ -184,8 +184,8 @@
      if(document.body.classList.contains("auth-ready")&&!document.body.classList.contains("classora-session-restoring"))return;
      const host=$("cw116Wait");if(!host||$("cw116-retry"))return;
      const button=document.createElement("button");button.type="button";button.id="cw116-retry";
-     button.textContent=english()?"Try loading again":"حاول التحميل مرة ثانية";
-     button.addEventListener("click",()=>window.location.reload());host.append(button);
+     button.textContent=english()?"Repair and reopen Classora":"إصلاح وإعادة فتح كلاسورا";
+     button.addEventListener("click",()=>window.location.assign("./recovery.html"));host.append(button);
    },10000);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
