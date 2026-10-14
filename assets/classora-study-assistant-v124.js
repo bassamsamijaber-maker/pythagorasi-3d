@@ -119,7 +119,7 @@ function scienceQuickAnswer(raw,en){
 /* Keep lightweight topic context per chat surface to answer "explain again".
    This is in-memory lesson metadata, never account data or user messages. */
 const lastTopicByContext=new Map();
-const simplifiedRequest=raw=>/(?:مش فاهم|مش فاهمه|ما فهمت|مو فاهم|مش واضح|مش واضحه|وضحلي|وضح لي|فهمني|اعد الشرح|اعيد الشرح|مره ثانيه|مرة ثانية|explain again|explain more|i dont understand|i do not understand|didnt understand|not clear|clarify|say it again)/i.test(norm(raw));
+const simplifiedRequest=raw=>/(?:مش فاهم|مش فاهمه|ما فهمت|مو فاهم|مش واضح|مش واضحه|وضحلي|وضح لي|فهمني|اعد الشرح|اعيد الشرح|مره ثانيه|مرة ثانية|explain again|explain more|i dont understand|i don t understand|i do not understand|didnt understand|didn t understand|i dont get it|i don t get it|not clear|clarify|say it again|explain it again)/i.test(norm(raw));
 export function classoraStudyClarification(raw,language='ar'){
  const en=language==='en',q=norm(raw);
  if(/^(?:اشرح|شرح|explain|بدي شرح|شرح الدرس|موضوع|lesson|topic)$/.test(q))
