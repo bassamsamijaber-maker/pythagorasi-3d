@@ -17,9 +17,12 @@ export function classoraAnimateAssistant(host,getAnswer,options={}){
  const dots=document.createElement('span');dots.className='classora-ai-dots';dots.setAttribute('aria-hidden','true');
  for(let i=0;i<3;i++){const dot=document.createElement('i');dots.append(dot)}
  waiting.append(dots);host.append(waiting);
- const finish=()=>{
+ const finish=async()=>{
   if(run.cancelled)return;
-  const result=typeof getAnswer==='function'?getAnswer():getAnswer;
+  let result;
+  try{result=await (typeof getAnswer==='function'?getAnswer():getAnswer)}
+  catch(error){console.warn('Classora AI answer failed',error);result=label('تعذر جلب الإجابة. حاول مرة ثانية.','Could not retrieve an answer. Please try again.')}
+  if(run.cancelled||!host.isConnected)return;
   const answer=String(result??'');
   host.classList.remove('classora-ai-thinking');
   host.replaceChildren();
