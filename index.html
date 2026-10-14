@@ -2470,9 +2470,42 @@ const auth = getAuth(firebaseApp);
    Until the server function and OPENAI_API_KEY are deployed, local explanations still work. */
 const classoraCloudHistory=new Map();
 let classoraCloudUnavailableUntil=0;
+const classoraAIConsentKey=uid=>"classora_openai_consent_v1_"+uid;
+function classoraCloudConsent(uid){
+  let choice=null;
+  try{choice=localStorage.getItem(classoraAIConsentKey(uid))}catch{return false}
+  if(choice==="yes")return true;
+  if(choice==="no")return false;
+  const en=currentUILanguage==="en";
+  const agreed=window.confirm(en
+   ?"Enable OpenAI-powered answers? Your question and up to 6 recent chat messages will be sent to OpenAI through Firebase. Do not include private information. You can continue using Classora's local assistant if you decline. Ask a parent or guardian when needed.\n\nPrivacy: classora.study/privacy.html"
+   :"تفعيل مساعد OpenAI؟ سيتم إرسال سؤالك وما يصل إلى 6 رسائل سابقة إلى OpenAI عبر Firebase. لا تكتب معلومات شخصية أو كلمات مرور. إذا رفضت، سيبقى المساعد المحلي شغالًا. خذ موافقة ولي أمرك عند الحاجة.\n\nالخصوصية: classora.study/privacy.html");
+  try{localStorage.setItem(classoraAIConsentKey(uid),agreed?"yes":"no")}catch{return false}
+  return agreed;
+}
+function classoraAISettingsControl(){
+  const card=document.getElementById("settingsModal")?.querySelector(".settings-modalbox");
+  if(!card||card.querySelector(".classora-ai-consent-settings"))return;
+  const button=document.createElement("button");
+  button.className="classora-ai-consent-settings";
+  button.type="button";
+  button.style.cssText="display:block;width:calc(100% - 28px);max-width:520px;margin:14px auto;padding:12px;border:1px solid #4d978b;border-radius:13px;color:#baf8dd;background:#133d49;font:800 13px system-ui;cursor:pointer";
+  button.textContent=currentUILanguage==="en"?"OpenAI assistant privacy / consent":"خصوصية وموافقة مساعد OpenAI";
+  button.addEventListener("click",()=>{
+    const uid=auth.currentUser?.uid;
+    if(!uid)return;
+    try{localStorage.removeItem(classoraAIConsentKey(uid))}catch{}
+    const enabled=classoraCloudConsent(uid);
+    showToast(currentUILanguage==="en"?(enabled?"OpenAI assistant enabled.":"Local assistant only."):(enabled?"تم السماح بمساعد OpenAI.":"تم اختيار المساعد المحلي فقط."));
+  });
+  card.append(button);
+}
+document.addEventListener("DOMContentLoaded",classoraAISettingsControl,{once:true});
+if(document.readyState!=="loading")classoraAISettingsControl();
 async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
   const fallback=()=>typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
   if(!auth.currentUser||isGuestSession())return fallback();
+  if(!classoraCloudConsent(auth.currentUser.uid))return fallback();
   const en=currentUILanguage==="en";
   if(Date.now()<classoraCloudUnavailableUntil){
     return (en?"OpenAI is not connected yet. Here is the local Classora answer:\n":"خدمة OpenAI مش متصلة حاليًا. هاي إجابة كلاسورا المحلية:\n")+fallback();
