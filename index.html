@@ -2423,7 +2423,7 @@ import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=131';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
-import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=134';
+import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=132';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=131';
 import './assets/classora-global-art-v121.js?v=121';
@@ -2464,6 +2464,50 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
  window.classoraLegal=installClassoraLegal();
+
+/* OpenAI is invoked ONLY via authenticated Firebase Cloud Functions.
+   No API secret or raw OpenAI client request is ever sent from the browser.
+   Until the server function and OPENAI_API_KEY are deployed, local explanations still work. */
+const classoraCloudHistory=new Map();
+let classoraCloudUnavailableUntil=0;
+async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
+  const fallback=()=>typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
+  if(!auth.currentUser||isGuestSession())return fallback();
+  const en=currentUILanguage==="en";
+  if(Date.now()<classoraCloudUnavailableUntil){
+    return (en?"OpenAI is not connected yet. Here is the local Classora answer:\n":"خدمة OpenAI مش متصلة حاليًا. هاي إجابة كلاسورا المحلية:\n")+fallback();
+  }
+  const id=String(channel||"main");
+  const turns=classoraCloudHistory.get(id)||[];
+  try{
+    const callable=httpsCallable(getFunctions(firebaseApp,"us-central1"),"classoraAskOpenAI",{timeout:42000});
+    const result=await callable({
+      question:String(raw).slice(0,1700),
+      language:currentUILanguage==="en"?"en":"ar",
+      grade:Number(localStorage.getItem("classora_curriculum_grade")||8),
+      topic:String(topic||"").slice(0,100),
+      history:turns.slice(-6)
+    });
+    const answer=String(result.data?.answer||"").trim();
+    if(!answer)throw Error("empty-ai-response");
+    const updated=[...turns,{role:"user",content:String(raw).slice(0,1000)},{role:"assistant",content:answer.slice(0,1000)}].slice(-6);
+    classoraCloudHistory.set(id,updated);
+    return answer;
+  }catch(error){
+    const code=String(error?.code||"");
+    if(code.includes("resource-exhausted")){
+      return en
+       ?"Classora AI has reached its current usage limit. Please try again later. You can still use the lessons and local learning tools."
+       :"وصلت للحد الحالي من رسائل Classora AI. جرّب لاحقًا، وبإمكانك تستخدم الدروس والأدوات التعليمية المحلية.";
+    }
+    if(code.includes("unauthenticated"))return fallback();
+    if(code.includes("not-found")||code.includes("failed-precondition")||code.includes("unavailable")){
+      classoraCloudUnavailableUntil=Date.now()+120000;
+    }
+    console.warn("Classora cloud AI not available",code||"connection");
+    return (en?"OpenAI is temporarily unavailable; here is the local Classora explanation:\n":"OpenAI مش متاح حاليًا، هاي إجابة المساعد المحلي:\n")+fallback();
+  }
+}
 
 /* Classora Push Notifications
    Add the Firebase Web Push public VAPID key here after generating it in
@@ -10137,7 +10181,7 @@ function sendTopicAI(){
   const reply=appendTopicAI("","bot");
   classoraAnimateAssistant(reply,()=>{
     const graded=gradePracticeAnswer(raw);
-    return graded||topicAssistantAnswer(raw,currentTopic);
+    return graded||classoraSmartAnswer(raw,"topic",()=>topicAssistantAnswer(raw,currentTopic),currentTopic?.title||"");
   },{topic:match,onOpen:classoraOpenAssistantTopic,scrollTarget:document.getElementById("topicAIChat")});
 }
 document.getElementById("topicAISend").addEventListener("click",sendTopicAI);
@@ -10642,7 +10686,7 @@ function sendLobbyAI(){
   const reply=document.getElementById("lobbyAIReply");reply.setAttribute("data-no-translate","");
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
   const match=classoraStudyTopicMatch(raw,grade,"lobby");
-  classoraAnimateAssistant(reply,()=>classoraLearningAnswer(raw),{
+  classoraAnimateAssistant(reply,()=>classoraSmartAnswer(raw,"lobby",()=>classoraLearningAnswer(raw),match?.title||""),{
     topic:match,onOpen:classoraOpenAssistantTopic
   });
 }
@@ -16806,14 +16850,14 @@ function sendQuestion(forced=null){
   chat.appendChild(reply);chat.scrollTop=chat.scrollHeight;
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
   classoraAnimateAssistant(reply,()=>{
-    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,grade,"main");
-    const normalized=normalizeArabic(raw);
-    const basic=generalKnowledgeAnswer(raw,normalized);
-    const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
-    const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):currentUILanguage==="en"?
-      classoraStudyClarification(raw,"en"):
-      classoraStudyClarification(raw,"ar"));
-    return personalizeAssistantText(answer);
+    return classoraSmartAnswer(raw,"main",()=>{
+      const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,grade,"main");
+      const normalized=normalizeArabic(raw);
+      const basic=generalKnowledgeAnswer(raw,normalized);
+      const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
+      const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):classoraStudyClarification(raw,currentUILanguage));
+      return personalizeAssistantText(answer);
+    },classoraStudyTopicMatch(raw,grade,"main")?.title||"");
   },{
     topic:classoraStudyTopicMatch(raw,grade,"main"),onOpen:classoraOpenAssistantTopic,scrollTarget:chat,
     onComplete:()=>{
