@@ -2499,6 +2499,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 window.__classoraBoot?.step("firebase-initialized");
+// Language must be initialized before early settings controls run.
+let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
  window.classoraLegal=installClassoraLegal();
 
 /* Classora Local AI: Ollama running on the school operator's computer.
@@ -7772,7 +7774,7 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
 
 
 /* -------------------- V15 BILINGUAL UI -------------------- */
-let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
+// currentUILanguage is initialized with the Firebase app, before startup settings.
 
 const uiExactTranslations=new Map([
 ["أهلًا","Welcome"],
