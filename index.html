@@ -79,7 +79,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
-<link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=135">
+<link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=136">
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 </head>
 <body class="classora-intro-active">
@@ -2422,7 +2422,7 @@ import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=131';
-import {classoraStudyAnswer,classoraStudyTopicMatch} from './assets/classora-study-assistant-v124.js?v=134';
+import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=136';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=134';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=132';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=131';
@@ -10107,7 +10107,7 @@ function generateTopicPracticeQuestion(topic){
   return `${q.prompt}\n${q.options.map((x,i)=>`${i+1}) ${x}`).join("  |  ")}`;
 }
 function topicAssistantAnswer(raw,topic){
- const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
+ const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8),"topic");
  if(curriculumReply)return curriculumReply;
   const t=normalizeArabic(raw);
   const glossary=subjectGlossaryAnswer(raw,topic.subject);
@@ -10120,7 +10120,7 @@ function topicAssistantAnswer(raw,topic){
   if(has(t,"سؤال","اسالني","اسألني","تدريب"))return generateTopicPracticeQuestion(topic);
   const general=generalKnowledgeAnswer(raw,t);
   if(general)return general;
-  return `بهذا الموضوع «${topic.title}»: ${topic.summary}\nاسألني عن الشرح أو المثال أو اطلب سؤال تدريب.`;
+  return classoraStudyClarification(raw,currentUILanguage);
 }
 function appendTopicAI(text,who="bot"){
   const d=document.createElement("div");d.className=`msg ${who}`;d.textContent=text;
@@ -10133,7 +10133,7 @@ function sendTopicAI(){
   input.value="";appendTopicAI(raw,"user");
   logStudentActivity("ai_use",`استخدم مساعد موضوع ${currentTopic.title}`,currentTopic.subject);
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
-  const match=classoraStudyTopicMatch(raw,grade);
+  const match=classoraStudyTopicMatch(raw,grade,"topic");
   const reply=appendTopicAI("","bot");
   classoraAnimateAssistant(reply,()=>{
     const graded=gradePracticeAnswer(raw);
@@ -10619,7 +10619,7 @@ equationInputs.forEach(id=>{
 });
 
 function classoraLearningAnswer(raw){
- const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
+ const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8),"lobby");
  if(curriculumReply)return curriculumReply;
  const en=currentUILanguage==='en',q=latinDigits(String(raw)).toLowerCase(),index=en?1:0;
  const speed=q.match(/(?:distance|مساف[ةه])\s*[=:]?\s*(\d+(?:\.\d+)?)[\s\S]*?(?:time|زمن|وقت)\s*[=:]?\s*(\d+(?:\.\d+)?)/i);
@@ -10634,14 +10634,14 @@ function classoraLearningAnswer(raw){
  }
  if(/فيثاغورس|مثلث|وتر|نظريه|نظرية|حساب الوتر|[abc]\s*=|pythagoras|hypotenuse|triangle/i.test(raw))
    return pythagorasiAnswer(raw);
- return currentUILanguage==="en"?"I can explain the Classora curriculum, vocabulary and some calculations. For a question outside those verified resources, I may need more context or a connected AI service.":"بقدر أشرح مواضيع منهاج كلاسورا والمفردات وبعض الحسابات. إذا السؤال خارج المعلومات المراجَعة عندي، اكتب تفاصيل أكثر أو نحتاج خدمة ذكاء اصطناعي متصلة.";
+ return classoraStudyClarification(raw,currentUILanguage);
 }
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";
   const reply=document.getElementById("lobbyAIReply");reply.setAttribute("data-no-translate","");
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
-  const match=classoraStudyTopicMatch(raw,grade);
+  const match=classoraStudyTopicMatch(raw,grade,"lobby");
   classoraAnimateAssistant(reply,()=>classoraLearningAnswer(raw),{
     topic:match,onOpen:classoraOpenAssistantTopic
   });
@@ -16806,16 +16806,16 @@ function sendQuestion(forced=null){
   chat.appendChild(reply);chat.scrollTop=chat.scrollHeight;
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
   classoraAnimateAssistant(reply,()=>{
-    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,grade);
+    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,grade,"main");
     const normalized=normalizeArabic(raw);
     const basic=generalKnowledgeAnswer(raw,normalized);
     const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
     const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):currentUILanguage==="en"?
-      "I don't have a verified answer to that yet. I can help with Classora's school lessons, Arabic and English words, and calculations. Please provide a specific topic or example.":
-      "ما عندي جواب موثوق لهاد السؤال حاليًا. بقدر أساعدك بمواد كلاسورا، كلمات العربي والإنجليزي والحسابات؛ اكتبلي موضوعًا أو مثالًا محددًا.");
+      classoraStudyClarification(raw,"en"):
+      classoraStudyClarification(raw,"ar"));
     return personalizeAssistantText(answer);
   },{
-    topic:classoraStudyTopicMatch(raw,grade),onOpen:classoraOpenAssistantTopic,scrollTarget:chat,
+    topic:classoraStudyTopicMatch(raw,grade,"main"),onOpen:classoraOpenAssistantTopic,scrollTarget:chat,
     onComplete:()=>{
       const answer=reply.querySelector(".classora-ai-written")?.textContent||"";
       attachSpeaker(reply,answer);
