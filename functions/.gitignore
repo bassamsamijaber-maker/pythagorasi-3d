@@ -2,3 +2,9 @@ node_modules/
 .firebase/
 firebase-debug.log
 firebase-debug.*.log
+
+# Never commit local credentials
+.env
+.env.*
+.dev.vars
+.dev.vars.*
