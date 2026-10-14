@@ -26,7 +26,7 @@ for(const [grade,subjects] of Object.entries(CURRICULUM_DATA)){
     const languageAliases={'Present Simple':'المضارع البسيط','Present Continuous':'المضارع المستمر','Past Simple':'الماضي البسيط','Past Continuous':'الماضي المستمر','Present Perfect':'المضارع التام','Past Perfect':'الماضي التام','Future with Will':'المستقبل','Passive Voice':'المبني للمجهول','First Conditional':'الشرط الاول','Second Conditional':'الشرط الثاني'};
     if(languageAliases[title])aliases.push(languageAliases[title]);
    }
-   topics.push({grade:Number(grade),subject,title,en,aliases:aliases.map(norm).filter(x=>x.length>=5)});
+   topics.push({grade:Number(grade),subject,title,en,aliases:[...new Set(aliases.map(norm).filter(x=>x.length>=2))]});
   }
  }
 }
@@ -57,12 +57,15 @@ function wordLookup(raw,en){
  return null;
 }
 function matchTopic(raw,grade){
- const text=norm(raw);if(text.length<5)return null;
+ const text=norm(raw);if(text.length<2)return null;
  const matches=[];
  for(const row of topics){
   for(const alias of row.aliases){
-   if(text===alias||text.startsWith(alias+' ')||text.endsWith(' '+alias)||text.includes(' '+alias+' ')){
-    matches.push({row,score:alias.length+(row.grade===grade?6:0)});
+   // Short words such as DNA or pH must be exact; otherwise they match random prose.
+   const exact=text===alias;
+   const inSentence=alias.length>=5&&(text.startsWith(alias+' ')||text.endsWith(' '+alias)||text.includes(' '+alias+' '));
+   if(exact||inSentence){
+    matches.push({row,score:(exact?1000:0)+alias.length+(row.grade===grade?100:0)});
    }
   }
  }
@@ -112,9 +115,31 @@ function scienceQuickAnswer(raw,en){
  for(const entry of SCIENCE_QA)if(entry.re.test(q)||entry.re.test(original))return entry[en?'en':'ar'];
  return null;
 }
-export function classoraStudyTopicMatch(raw,grade=8){
+
+/* Keep lightweight topic context per chat surface to answer "explain again".
+   This is in-memory lesson metadata, never account data or user messages. */
+const lastTopicByContext=new Map();
+const simplifiedRequest=raw=>/(?:مش فاهم|مش فاهمه|ما فهمت|مو فاهم|مش واضح|مش واضحه|وضحلي|وضح لي|فهمني|اعد الشرح|اعيد الشرح|مره ثانيه|مرة ثانية|explain again|explain more|i dont understand|i do not understand|didnt understand|not clear|clarify|say it again)/i.test(norm(raw));
+export function classoraStudyClarification(raw,language='ar'){
+ const en=language==='en',q=norm(raw);
+ if(/^(?:اشرح|شرح|explain|بدي شرح|شرح الدرس|موضوع|lesson|topic)$/.test(q))
+  return en?'Which lesson should I explain? Type its name, or choose it from Subjects.':'أي درس بدك أشرحه؟ اكتب اسمه أو اختاره من المواد.';
+ return en?'I didn’t quite understand your question. Could you clarify what topic you mean, or give a short example?':'مش فاهم سؤالك بالضبط، وضّحلي شو قصدك أو اكتب اسم الموضوع ومثال صغير عشان أساعدك.';
+}
+function currentLesson(context){
+ return lastTopicByContext.get(String(context||'main'))||null;
+}
+function rememberLesson(context,topic){
+ lastTopicByContext.set(String(context||'main'),topic);
+}
+
+export function classoraStudyTopicMatch(raw,grade=8,context='main'){
  const selected=matchTopic(raw,[7,8,9,10].includes(Number(grade))?Number(grade):8);
  if(selected)return {grade:selected.grade,subject:selected.subject,title:selected.title,en:selected.en};
+ if(simplifiedRequest(raw)){
+  const recent=currentLesson(context);
+  if(recent)return {grade:recent.grade,subject:recent.subject,title:recent.title,en:recent.en};
+ }
  const q=norm(raw);
  const science=SCIENCE_QA.find(x=>x.hint&&(x.re.test(q)||x.re.test(String(raw||'').toLowerCase())));
  if(!science)return null;
@@ -126,7 +151,7 @@ export function classoraStudyTopicMatch(raw,grade=8){
  return row?{grade:row.grade,subject:row.subject,title:row.title,en:row.en}:null;
 }
 
-export function classoraStudyAnswer(raw,language='ar',grade=8){
+export function classoraStudyAnswer(raw,language='ar',grade=8,context='main'){
  const en=language==='en',q=String(raw||'').trim();
  if(!q)return null;
  const greeting=greetingAnswer(q,en);
@@ -141,9 +166,21 @@ export function classoraStudyAnswer(raw,language='ar',grade=8){
  }
  const lesson=matchTopic(q,g);
  if(lesson){
+  rememberLesson(context,lesson);
   const mode=/مثال|example|sentence|طبق|apply/i.test(q)?'example':/متقدم|تفصيل|advanced|in depth/i.test(q)?'advanced':'explain';
   const guidance=curriculumTopicGuide(lesson.title,lesson.subject,language,mode);
   return (en?lesson.en:lesson.title)+' — '+(en?'Grade ':'الصف ')+lesson.grade+'\n'+guidance;
+ }
+ if(simplifiedRequest(q)){
+  const previous=currentLesson(context);
+  if(previous){
+   const main=curriculumTopicGuide(previous.title,previous.subject,language,'explain');
+   const example=curriculumTopicGuide(previous.title,previous.subject,language,'example');
+   return en
+    ?'Sure! Let me explain '+previous.en+' more simply:\n'+main+(example&&example!==main?'\nExample: '+example:'')+'\nTell me which step is still unclear.'
+    :'أكيد! خليني أوضح «'+previous.title+'» بطريقة أسهل:\n'+main+(example&&example!==main?'\nمثال: '+example:'')+'\nإذا في خطوة مش واضحة، احكيلي أي واحدة.';
+  }
+  return en?'Of course! Which topic or step was unclear? Write the lesson name and I’ll explain with an example.':'أكيد! شو الموضوع أو الخطوة اللي مش واضحة؟ اكتب اسم الدرس وبشرحلك مع مثال.';
  }
  const science=scienceQuickAnswer(q,en);
  if(science)return science;
