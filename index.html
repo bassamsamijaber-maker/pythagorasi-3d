@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#06101b">
 <meta name="color-scheme" content="dark">
+<script src="./assets/classora-startup-diagnostics-v146.js?v=146"></script>
 <style id="classora-critical-first-paint">
 :root{color-scheme:dark;background:#06101b!important}
 html{background:#06101b!important;color-scheme:dark!important;overscroll-behavior:none}
@@ -2483,6 +2484,7 @@ import {
 
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
 /* -------------------- FIREBASE / LOGIN -------------------- */
+window.__classoraBoot?.step("module-imports-complete");
 const firebaseConfig = {
   apiKey: "AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",
   authDomain: "pythagorasi-school.firebaseapp.com",
@@ -2496,6 +2498,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+window.__classoraBoot?.step("firebase-initialized");
  window.classoraLegal=installClassoraLegal();
 
 /* Classora Local AI: Ollama running on the school operator's computer.
@@ -3287,6 +3290,7 @@ function finishAuthIntent(){
 }
 
 function paintUser(user,profile){
+  window.__classoraBoot?.step("profile-loaded");
   document.getElementById("sessionRecovery").hidden=true;
   sessionStorage.removeItem("classora_guest_session");
   stopGuestReminderLoop?.();
@@ -4017,7 +4021,9 @@ authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
   console.warn(friendlyAuthError(error));
 });
 
+window.__classoraBoot?.step("auth-listener-registered");
 onAuthStateChanged(auth,async user=>{
+  window.__classoraBoot?.step(user?"auth-user-found":"auth-no-user");
   // Always settle the visual boot state, including a slow/offline Firestore.
   document.body.classList.toggle("classora-session-restoring",!!user);
   authResolved=true;
@@ -4041,11 +4047,13 @@ onAuthStateChanged(auth,async user=>{
         return;
       }
     }
+    window.__classoraBoot?.step("resolving-account");
     await Promise.race([
       resolveCurrentUser(user),
       new Promise((_,reject)=>{bootTimer=setTimeout(()=>reject(new Error("account-load-timeout")),12000)})
     ]);
   }catch(error){
+    window.__classoraBoot?.error(error?.message||"auth-startup-recovery");
     console.warn("Classora account startup needs recovery",error);
     const recovery=document.getElementById("sessionRecovery");
     if(user && auth.currentUser?.uid===user.uid){
@@ -4062,6 +4070,7 @@ onAuthStateChanged(auth,async user=>{
       authStatusText.textContent="تعذر الاتصال بتسجيل الدخول. حاول مرة ثانية.";
     }
   }finally{
+    window.__classoraBoot?.step("auth-callback-settled");
     clearTimeout(bootTimer);
     document.body.classList.remove("classora-session-restoring");
     window.dispatchEvent(new Event("classora-auth-settled"));
@@ -18088,6 +18097,7 @@ onAuthStateChanged(auth,user=>{
 },()=>{});
 });
 
+window.__classoraBoot?.step("main-script-complete");
 </script>
 </body>
 </html>
