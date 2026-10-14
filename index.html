@@ -3159,7 +3159,7 @@ function paintUser(user,profile){
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user?.uid||"guest-local",...profile};
-   if(user?.uid)window.setTimeout(()=>window.classoraLegal?.maybeShow({uid:user.uid,newUser:profile?.classoraOnboardingEligible===true}),850);
+   if(user?.uid)window.classoraLegal?.maybeShow({uid:user.uid});
   activeProfile=window.PythagorasiUser;
 
   if(!guest){
@@ -3338,7 +3338,7 @@ function paintGuestSession(){
   clearClassoraRealtimeNotifications();
   document.getElementById("lobbyLogoutBtn").textContent=en?"Sign in":"تسجيل الدخول";
   showPlatformLobby();
-  window.setTimeout(()=>window.classoraLegal?.maybeShow({uid:"guest-device"}),850);
+  window.classoraLegal?.maybeShow({uid:"guest-device"});
   startGuestReminderLoop();
   setTimeout(()=>{refreshAIWelcome();updateAssistantLabels()},0);
 }
