@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v132-policy-phone";
+const CACHE_NAME="classora-v133-liquid-glass-mobile";
 const APP_SHELL=[
-  "./assets/classora-responsive-v131.css?v=132",
+  "./assets/classora-responsive-v131.css?v=133",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
   "./assets/learning-tools-v130.css?v=130",
