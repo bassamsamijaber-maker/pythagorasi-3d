@@ -79,7 +79,8 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
-<link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=133">
+<link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=134">
+<link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2421,7 +2422,8 @@ import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=131';
-import {classoraStudyAnswer} from './assets/classora-study-assistant-v124.js?v=131';
+import {classoraStudyAnswer,classoraStudyTopicMatch} from './assets/classora-study-assistant-v124.js?v=134';
+import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=134';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=132';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=131';
 import './assets/classora-global-art-v121.js?v=121';
@@ -10123,16 +10125,20 @@ function topicAssistantAnswer(raw,topic){
 function appendTopicAI(text,who="bot"){
   const d=document.createElement("div");d.className=`msg ${who}`;d.textContent=text;
   const chat=document.getElementById("topicAIChat");chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+  return d;
 }
 function sendTopicAI(){
   if(!currentTopic)return;
   const input=document.getElementById("topicAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";appendTopicAI(raw,"user");
   logStudentActivity("ai_use",`استخدم مساعد موضوع ${currentTopic.title}`,currentTopic.subject);
-  setTimeout(()=>{
+  const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
+  const match=classoraStudyTopicMatch(raw,grade);
+  const reply=appendTopicAI("","bot");
+  classoraAnimateAssistant(reply,()=>{
     const graded=gradePracticeAnswer(raw);
-    appendTopicAI(graded||topicAssistantAnswer(raw,currentTopic),"bot");
-  },160);
+    return graded||topicAssistantAnswer(raw,currentTopic);
+  },{topic:match,onOpen:classoraOpenAssistantTopic,scrollTarget:document.getElementById("topicAIChat")});
 }
 document.getElementById("topicAISend").addEventListener("click",sendTopicAI);
 document.getElementById("topicAIInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendTopicAI()}});
@@ -10634,8 +10640,11 @@ function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";
   const reply=document.getElementById("lobbyAIReply");reply.setAttribute("data-no-translate","");
-  reply.textContent=currentUILanguage==="en"?"Thinking…":"يفكّر…";
-  setTimeout(()=>{reply.textContent=classoraLearningAnswer(raw)},120);
+  const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
+  const match=classoraStudyTopicMatch(raw,grade);
+  classoraAnimateAssistant(reply,()=>classoraLearningAnswer(raw),{
+    topic:match,onOpen:classoraOpenAssistantTopic
+  });
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
 document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
@@ -16793,19 +16802,27 @@ document.getElementById("micBtn").addEventListener("click",()=>{
 function sendQuestion(forced=null){
   const raw=(forced??q.value).trim();if(!raw)return;
   addMsg(raw,"user");q.value="";
-  const typing=document.createElement("div");typing.className="msg bot typing";typing.textContent=`${assistantNameFor("pythagoras")} يفكّر…`;chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
-  setTimeout(()=>{
-    typing.remove();
-    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,Number(localStorage.getItem("classora_curriculum_grade")||8));
-     const normalized=normalizeArabic(raw);
-     const basic=generalKnowledgeAnswer(raw,normalized);
-     const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
-     const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):currentUILanguage==="en"?
-       "I don't have a verified answer to that yet. I can help with Classora's school lessons, Arabic and English words, and calculations. Please provide a specific topic or example.":
-       "ما عندي جواب موثوق لهاد السؤال حاليًا. بقدر أساعدك بمواد كلاسورا، كلمات العربي والإنجليزي والحسابات؛ اكتبلي موضوعًا أو مثالًا محددًا.");
-     addMsg(answer,"bot");
-    persistAIContext();
-  },280+Math.min(650,raw.length*9));
+  const reply=document.createElement("div");reply.className="msg bot";
+  chat.appendChild(reply);chat.scrollTop=chat.scrollHeight;
+  const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
+  classoraAnimateAssistant(reply,()=>{
+    const curriculumReply=classoraStudyAnswer(raw,currentUILanguage,grade);
+    const normalized=normalizeArabic(raw);
+    const basic=generalKnowledgeAnswer(raw,normalized);
+    const aboutPythagoras=/فيثاغورس|مثلث|وتر|برهان|رمل|كاميرا|مجسم|امتحان|مسابقة|[abc]\s*=|pythagoras|hypotenuse|triangle|proof|hello|hi|مرحبا|هلا|السلام|كيفك/i.test(raw);
+    const answer=curriculumReply||basic||(aboutPythagoras?pythagorasiAnswer(raw):currentUILanguage==="en"?
+      "I don't have a verified answer to that yet. I can help with Classora's school lessons, Arabic and English words, and calculations. Please provide a specific topic or example.":
+      "ما عندي جواب موثوق لهاد السؤال حاليًا. بقدر أساعدك بمواد كلاسورا، كلمات العربي والإنجليزي والحسابات؛ اكتبلي موضوعًا أو مثالًا محددًا.");
+    return personalizeAssistantText(answer);
+  },{
+    topic:classoraStudyTopicMatch(raw,grade),onOpen:classoraOpenAssistantTopic,scrollTarget:chat,
+    onComplete:()=>{
+      const answer=reply.querySelector(".classora-ai-written")?.textContent||"";
+      attachSpeaker(reply,answer);
+      saveAIHistoryMessage(answer,"bot");
+      persistAIContext();
+    }
+  });
 }
 document.getElementById("sendBtn").addEventListener("click",()=>sendQuestion());
 q.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendQuestion()}});
