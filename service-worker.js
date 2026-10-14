@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v142-stable-dock-local-ollama";
+const CACHE_NAME="classora-v143-online-first-recovery";
 const APP_SHELL=[
   "./assets/classora-dock-stable-v140.css?v=140",
   "./assets/classora-locales-v140.css?v=140",
@@ -143,19 +143,25 @@ self.addEventListener("fetch",event=>{
   if(!publicNavigation&&!staticAsset&&!publicCDN)return;
   if(sameOrigin&&url.pathname.endsWith('/study-offline.html')){event.respondWith(fetch(event.request).catch(()=>caches.match('./study-offline.html')));return;}
   if(event.request.mode==="navigate"){
-    // Serve the cached dark app shell immediately on the main PWA entry.
-    // Refresh its cache in the background; any future opening gets newer content.
+    // Network-first for the app entrance. A cache-first index.html can trap
+    // installed iPhone/Android PWAs on a broken old build even after deploy.
     if(sameOrigin&&(url.pathname==="/"||/\/index\.html$/.test(url.pathname))){
-      const network=fetch(event.request,{cache:"no-store"}).then(async response=>{
-        if(response&&response.ok){
-          const copy=response.clone();
-          const cache=await caches.open(CACHE_NAME);
-          await cache.put("./index.html",copy);
-        }
-        return response;
-      });
-      event.waitUntil(network.then(()=>{},()=>{}));
-      event.respondWith(caches.match("./index.html").then(cached=>cached||network).catch(()=>caches.match("./offline.html")));
+      event.respondWith((async()=>{
+        const controller=new AbortController();
+        const timeout=setTimeout(()=>controller.abort(),6500);
+        try{
+          const response=await fetch(event.request,{cache:"no-store",signal:controller.signal});
+          if(response&&response.ok){
+            const copy=response.clone();
+            event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.put("./index.html",copy)).catch(()=>{}));
+            return response;
+          }
+          const cached=await caches.match("./index.html");
+          return cached||response;
+        }catch{
+          return (await caches.match("./index.html"))||(await caches.match("./offline.html"))||Response.error();
+        }finally{clearTimeout(timeout)}
+      })());
       return;
     }
     event.respondWith(
