@@ -179,14 +179,6 @@
    window.addEventListener("classora-intro-finished",()=>{introReady=true;onAuth()});
    window.addEventListener("classora-auth-settled",onAuth);
    setTimeout(()=>{if(!$("classoraIntro"))introReady=true;askOnce()},3900);
-   // No automatic reload loop: offer a manual recovery action if external auth services never respond.
-   setTimeout(()=>{
-     if(document.body.classList.contains("auth-ready")&&!document.body.classList.contains("classora-session-restoring"))return;
-     const host=$("cw116Wait");if(!host||$("cw116-retry"))return;
-     const button=document.createElement("button");button.type="button";button.id="cw116-retry";
-     button.textContent=english()?"Repair and reopen Classora":"إصلاح وإعادة فتح كلاسورا";
-     button.addEventListener("click",()=>window.location.assign("./recovery.html"));host.append(button);
-   },10000);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
  window.classoraReplayOnboarding=()=>window.classoraGuidedTourV117?.start(true);
