@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v135-compact-phone-nav";
+const CACHE_NAME="classora-v136-safe-area-lesson-clarify";
 const APP_SHELL=[
-  "./assets/classora-responsive-v131.css?v=135",
+  "./assets/classora-responsive-v131.css?v=136",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
   "./assets/learning-tools-v130.css?v=130",
@@ -94,7 +94,7 @@ const APP_SHELL=[
   "./terms.html",
   "./assets/classora-legal-v124.css?v=132",
   "./assets/classora-legal-v124.js?v=132",
-  "./assets/classora-study-assistant-v124.js?v=134",
+  "./assets/classora-study-assistant-v124.js?v=136",
   "./assets/classora-assistant-motion-v134.js?v=134",
   "./assets/classora-assistant-motion-v134.css?v=134",
   "./support.html",
