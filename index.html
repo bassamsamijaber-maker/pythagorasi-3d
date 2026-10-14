@@ -2468,12 +2468,15 @@ const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
  window.classoraLegal=installClassoraLegal();
 
-/* OpenAI is invoked ONLY via authenticated Firebase Cloud Functions.
-   No API secret or raw OpenAI client request is ever sent from the browser.
-   Until the server function and OPENAI_API_KEY are deployed, local explanations still work. */
+/* Classora Local AI: Ollama running on the school operator's computer.
+   Only an authenticated Firebase ID token is sent to the Classora AI gateway.
+   The gateway validates the token and forwards the question to loopback Ollama.
+   Never access or expose the raw Ollama 11434 API from this web page. */
+const classoraLocalAiEndpoint="https://ai.classora.study";
 const classoraCloudHistory=new Map();
 let classoraCloudUnavailableUntil=0;
-const classoraAIConsentKey=uid=>"classora_openai_consent_v1_"+uid;
+let classoraCloudHealthyUntil=0;
+const classoraAIConsentKey=uid=>"classora_local_ai_consent_v1_"+uid;
 function classoraCloudConsent(uid){
   let choice=null;
   try{choice=localStorage.getItem(classoraAIConsentKey(uid))}catch{return false}
@@ -2481,8 +2484,8 @@ function classoraCloudConsent(uid){
   if(choice==="no")return false;
   const en=currentUILanguage==="en";
   const agreed=window.confirm(en
-   ?"Enable OpenAI-powered answers? Your question and up to 6 recent chat messages will be sent to OpenAI through Firebase. Do not include private information. You can continue using Classora's local assistant if you decline. Ask a parent or guardian when needed.\n\nPrivacy: classora.study/privacy.html"
-   :"تفعيل مساعد OpenAI؟ سيتم إرسال سؤالك وما يصل إلى 6 رسائل سابقة إلى OpenAI عبر Firebase. لا تكتب معلومات شخصية أو كلمات مرور. إذا رفضت، سيبقى المساعد المحلي شغالًا. خذ موافقة ولي أمرك عند الحاجة.\n\nالخصوصية: classora.study/privacy.html");
+   ?"Enable Classora Local AI? Your question and up to 6 previous messages will be processed on the Classora operator's computer through a protected connection. Do not include passwords or personal information. You can use the offline school assistant if you decline. Ask a parent or guardian where needed.\n\nPrivacy: classora.study/privacy.html"
+   :"تفعيل Classora AI المحلي؟ سيتم إرسال سؤالك وما يصل إلى 6 رسائل سابقة إلى الكمبيوتر الذي يشغّل مساعد كلاسورا عبر اتصال محمي. لا تكتب كلمات مرور أو بيانات شخصية. في حال الرفض، سيبقى المساعد التعليمي المحلي متاحًا. استشر ولي أمرك عند الحاجة.\n\nالخصوصية: classora.study/privacy.html");
   try{localStorage.setItem(classoraAIConsentKey(uid),agreed?"yes":"no")}catch{return false}
   return agreed;
 }
@@ -2493,55 +2496,84 @@ function classoraAISettingsControl(){
   button.className="classora-ai-consent-settings";
   button.type="button";
   button.style.cssText="display:block;width:calc(100% - 28px);max-width:520px;margin:14px auto;padding:12px;border:1px solid #4d978b;border-radius:13px;color:#baf8dd;background:#133d49;font:800 13px system-ui;cursor:pointer";
-  button.textContent=currentUILanguage==="en"?"OpenAI assistant privacy / consent":"خصوصية وموافقة مساعد OpenAI";
+  button.textContent=currentUILanguage==="en"?"Local AI privacy / consent":"خصوصية وموافقة Classora AI المحلي";
   button.addEventListener("click",()=>{
     const uid=auth.currentUser?.uid;
     if(!uid)return;
     try{localStorage.removeItem(classoraAIConsentKey(uid))}catch{}
     const enabled=classoraCloudConsent(uid);
-    showToast(currentUILanguage==="en"?(enabled?"OpenAI assistant enabled.":"Local assistant only."):(enabled?"تم السماح بمساعد OpenAI.":"تم اختيار المساعد المحلي فقط."));
+    showToast(currentUILanguage==="en"?(enabled?"Local AI enabled.":"School assistant only."):(enabled?"تم السماح بمساعد كلاسورا المحلي.":"تم اختيار المساعد التعليمي فقط."));
   });
   card.append(button);
 }
 document.addEventListener("DOMContentLoaded",classoraAISettingsControl,{once:true});
 if(document.readyState!=="loading")classoraAISettingsControl();
+async function classoraLocalAiAvailable(){
+  if(Date.now()<classoraCloudHealthyUntil)return true;
+  if(Date.now()<classoraCloudUnavailableUntil)return false;
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),4800);
+    try{
+      const response=await fetch(classoraLocalAiEndpoint+"/health",{
+        method:"GET",mode:"cors",cache:"no-store",signal:controller.signal
+      });
+      if(!response.ok)throw Error("offline");
+      const status=await response.json();
+      if(!status?.ok||status.service!=="Classora Local AI")throw Error("wrong-service");
+    } finally {clearTimeout(timer)}
+    classoraCloudHealthyUntil=Date.now()+60000;
+    return true;
+  }catch{
+    classoraCloudUnavailableUntil=Date.now()+60000;
+    return false;
+  }
+}
 async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
   const fallback=()=>typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
-  if(!auth.currentUser||isGuestSession())return fallback();
+  if(!auth.currentUser||auth.currentUser.isAnonymous||isGuestSession())return fallback();
+  if(!(await classoraLocalAiAvailable()))return fallback();
   if(!classoraCloudConsent(auth.currentUser.uid))return fallback();
-  const en=currentUILanguage==="en";
-  if(Date.now()<classoraCloudUnavailableUntil){
-    return (en?"OpenAI is not connected yet. Here is the local Classora answer:\n":"خدمة OpenAI مش متصلة حاليًا. هاي إجابة كلاسورا المحلية:\n")+fallback();
-  }
-  const id=String(channel||"main");
+  const en=currentUILanguage==="en",id=String(channel||"main");
   const turns=classoraCloudHistory.get(id)||[];
   try{
-    const callable=httpsCallable(getFunctions(firebaseApp,"us-central1"),"classoraAskOpenAI",{timeout:42000});
-    const result=await callable({
-      question:String(raw).slice(0,1700),
-      language:currentUILanguage==="en"?"en":"ar",
-      grade:Number(localStorage.getItem("classora_curriculum_grade")||8),
-      topic:String(topic||"").slice(0,100),
-      history:turns.slice(-6)
-    });
-    const answer=String(result.data?.answer||"").trim();
-    if(!answer)throw Error("empty-ai-response");
-    const updated=[...turns,{role:"user",content:String(raw).slice(0,1000)},{role:"assistant",content:answer.slice(0,1000)}].slice(-6);
-    classoraCloudHistory.set(id,updated);
+    const idToken=await auth.currentUser.getIdToken();
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),89000);
+    let response;
+    try{
+      response=await fetch(classoraLocalAiEndpoint+"/api/chat",{
+        method:"POST",mode:"cors",cache:"no-store",signal:controller.signal,
+        headers:{"Content-Type":"application/json","Authorization":"Bearer "+idToken},
+        body:JSON.stringify({
+          question:String(raw).slice(0,1700),
+          language:currentUILanguage==="en"?"en":"ar",
+          grade:Number(localStorage.getItem("classora_curriculum_grade")||8),
+          topic:String(topic||"").slice(0,100),
+          history:turns.slice(-6)
+        })
+      });
+    }finally{clearTimeout(timer)}
+    if(response.status===429){
+      return en
+        ?"Classora AI is at its daily limit. Here is the offline explanation:\n"+fallback()
+        :"وصل مساعد كلاسورا للحد اليومي. هاي إجابة المساعد التعليمي المحلي:\n"+fallback();
+    }
+    if(!response.ok)throw Error("local-ai-http-"+response.status);
+    const result=await response.json();
+    const answer=String(result?.answer||"").trim();
+    if(!answer)throw Error("empty-local-ai");
+    classoraCloudHistory.set(id,[
+      ...turns,{role:"user",content:String(raw).slice(0,800)},
+      {role:"assistant",content:answer.slice(0,800)}
+    ].slice(-6));
     return answer;
   }catch(error){
-    const code=String(error?.code||"");
-    if(code.includes("resource-exhausted")){
-      return en
-       ?"Classora AI has reached its current usage limit. Please try again later. You can still use the lessons and local learning tools."
-       :"وصلت للحد الحالي من رسائل Classora AI. جرّب لاحقًا، وبإمكانك تستخدم الدروس والأدوات التعليمية المحلية.";
-    }
-    if(code.includes("unauthenticated"))return fallback();
-    if(code.includes("not-found")||code.includes("failed-precondition")||code.includes("unavailable")){
-      classoraCloudUnavailableUntil=Date.now()+120000;
-    }
-    console.warn("Classora cloud AI not available",code||"connection");
-    return (en?"OpenAI is temporarily unavailable; here is the local Classora explanation:\n":"OpenAI مش متاح حاليًا، هاي إجابة المساعد المحلي:\n")+fallback();
+    classoraCloudUnavailableUntil=Date.now()+15000;
+    classoraCloudHealthyUntil=0;
+    console.warn("Classora Local AI temporarily unavailable",error?.message||"network");
+    return (en?"Local AI is busy or offline. Here is the school assistant's answer:\n"
+      :"الذكاء الاصطناعي المحلي مشغول أو غير متصل حاليًا. هاي إجابة المساعد التعليمي:\n")+fallback();
   }
 }
 
