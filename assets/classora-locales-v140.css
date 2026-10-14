@@ -1,0 +1,7 @@
+.auth-language-switch,.settings-choice-row:has([data-classora-language]){display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+[data-classora-language]{min-width:0!important;min-height:40px;padding:8px 12px!important;font-family:system-ui,sans-serif!important;letter-spacing:normal!important}
+[data-classora-language][aria-pressed="true"]{background:#176c58!important;border-color:#7ff3d0!important;color:#fff!important}
+.locale-preview-note{font-size:12px;line-height:1.6;color:#d4dce4;margin:10px 0 0}
+.locale-preview-note[hidden]{display:none}
+html:is([lang="ko"],[lang="hi"]) body{font-family:system-ui,sans-serif}
+html:not([lang="ar"]) #classoraMobilePageNav button span{font-family:system-ui,sans-serif!important;font-size:10px!important}

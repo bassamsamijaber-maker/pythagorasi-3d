@@ -4,7 +4,7 @@
 (() => {
   "use strict";
   const get = id => document.getElementById(id);
-  const en = () => document.documentElement.lang === "en";
+  const en = () => document.documentElement.lang !=="ar";
   const lang = (ar, english) => en() ? english : ar;
   function init(){
     const board=get("classoraTeacherDashboard");

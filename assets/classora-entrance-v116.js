@@ -23,7 +23,7 @@
  ["settings","الإعدادات","Settings","غيّر اللغة وشوف حسابك، ورجّع هذه الجولة بأي وقت.","Change language, manage your account and replay this guide anytime."]
  ];
  let overlay,mode="question",step=0,seenAccount="",introReady=false,preferred="classoraMobileLobbyBtn",frame=0;
- const english=()=>document.documentElement.lang==="en";
+ const english=()=>document.documentElement.lang!=="ar";
  const authed=()=>document.body.classList.contains("classora-authenticated")&&!$("authGate")?.classList.contains("show");
  const storageKey=()=>window.PythagorasiUser?.uid?"classora_guide_v116_"+String(window.PythagorasiUser.uid):"";
  function platform(){

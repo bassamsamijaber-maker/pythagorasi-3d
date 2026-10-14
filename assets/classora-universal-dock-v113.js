@@ -77,7 +77,7 @@
      if(activeExam && event.isTrusted){
        // The legacy tab handler may programmatically click Lobby afterwards.
        // Only confirm the original user tap, never the delegated second click.
-       const english=document.documentElement.lang==="en";
+       const english=document.documentElement.lang!=="ar";
        const approved=window.confirm(english?
          "Leave this exam? Your answers will be saved so you can resume later.":
          "بدك تطلع من الامتحان؟ رح نحفظ إجاباتك عشان تكمل بعدين.");

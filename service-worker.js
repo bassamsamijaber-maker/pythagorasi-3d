@@ -1,5 +1,8 @@
-const CACHE_NAME="classora-v139-secure-openai-prepared";
+const CACHE_NAME="classora-v141-stable-dock-eight-locales";
 const APP_SHELL=[
+  "./assets/classora-dock-stable-v140.css?v=140",
+  "./assets/classora-locales-v140.css?v=140",
+  "./assets/classora-locales-v140.js?v=141",
   "./assets/classora-responsive-v131.css?v=138",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",

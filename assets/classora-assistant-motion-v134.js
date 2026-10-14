@@ -1,7 +1,7 @@
 /* Classora assistant motion: actual answer only, no simulated network/AI claims. */
 const pending=new WeakMap();
 const reduceMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
-const getLanguage=()=>document.documentElement.lang==='en'?'en':'ar';
+const getLanguage=()=>document.documentElement.lang!=="ar"?'en':'ar';
 function label(ar,en){return getLanguage()==='en'?en:ar}
 export function classoraAnimateAssistant(host,getAnswer,options={}){
  if(!host)return;

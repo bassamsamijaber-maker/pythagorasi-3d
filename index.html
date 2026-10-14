@@ -80,6 +80,9 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
 <link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=138">
+<link rel="stylesheet" href="./assets/classora-dock-stable-v140.css?v=140">
+<link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
+<script src="./assets/classora-locales-v140.js?v=141"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 </head>
 <body class="classora-intro-active">
@@ -127,9 +130,9 @@ body.classora-intro-active{overflow:auto!important}
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
     <button id="authCloseBtn" type="button" aria-label="إغلاق" style="display:none">×</button>
     <div class="auth-language-switch" role="group" aria-label="Language">
-      <button id="authEnglishBtn" type="button" lang="en" data-no-translate>English</button>
-      <button id="authArabicBtn" type="button" lang="ar" data-no-translate>Arabic</button>
-    </div>
+      <button id="authEnglishBtn" data-classora-language="en" translate="no" type="button" lang="en" data-no-translate>English</button>
+      <button id="authArabicBtn" data-classora-language="ar" translate="no" type="button" lang="ar" data-no-translate>العربية</button><button class="exam-secondary" type="button" data-classora-language="es" lang="es" translate="no">Español</button><button class="exam-secondary" type="button" data-classora-language="ko" lang="ko" translate="no">한국어</button><button class="exam-secondary" type="button" data-classora-language="de" lang="de" translate="no">Deutsch</button><button class="exam-secondary" type="button" data-classora-language="it" lang="it" translate="no">Italiano</button><button class="exam-secondary" type="button" data-classora-language="hi" lang="hi" translate="no">हिन्दी</button><button class="exam-secondary" type="button" data-classora-language="tr" lang="tr" translate="no">Türkçe</button>
+    </div><p class="locale-preview-note" data-locale-preview-note hidden translate="no"></p>
     <div class="auth-logo">∟</div>
     <h2>أهلًا في Classora 👋</h2>
     <div class="auth-sub">ادخل لحسابك حتى ينحفظ تقدمك، نقاطك، امتحاناتك، مسابقاتك وإعداداتك.</div>
@@ -1496,10 +1499,10 @@ body.classora-intro-active{overflow:auto!important}
       <section class="settings-card">
         <h3 id="settingsLanguageTitle">🌐 اللغة / Language</h3>
         <div class="settings-choice-row">
-          <button class="exam-secondary" id="settingsArabicBtn">العربية</button>
-          <button class="exam-secondary" id="settingsEnglishBtn">English</button>
+          <button class="exam-secondary" id="settingsArabicBtn" data-classora-language="ar" translate="no">العربية</button>
+          <button class="exam-secondary" id="settingsEnglishBtn" data-classora-language="en" translate="no">English</button><button class="exam-secondary" type="button" data-classora-language="es" lang="es" translate="no">Español</button><button class="exam-secondary" type="button" data-classora-language="ko" lang="ko" translate="no">한국어</button><button class="exam-secondary" type="button" data-classora-language="de" lang="de" translate="no">Deutsch</button><button class="exam-secondary" type="button" data-classora-language="it" lang="it" translate="no">Italiano</button><button class="exam-secondary" type="button" data-classora-language="hi" lang="hi" translate="no">हिन्दी</button><button class="exam-secondary" type="button" data-classora-language="tr" lang="tr" translate="no">Türkçe</button>
         </div>
-        <div class="settings-note" id="settingsLanguageNote">التواريخ والأرقام تظل بالإنجليزية في اللغتين.</div>
+        <div class="settings-note" id="settingsLanguageNote" hidden>التواريخ والأرقام تظل بالإنجليزية في اللغتين.</div><p class="settings-note locale-preview-note" data-locale-preview-note hidden translate="no"></p>
       </section>
 
       <section class="settings-card">
@@ -2912,7 +2915,7 @@ function queueAccountStateSave(patch={}){
 }
 function collectAccountPreferences(){
   return {
-    language:typeof currentUILanguage!=="undefined"?currentUILanguage:(localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en"),
+    language:window.ClassoraLocale.language,
     theme:document.body.classList.contains("light")?"light":"dark",
     sound:typeof soundEnabled!=="undefined"?!!soundEnabled:localStorage.getItem("pythagorasi_sound")!=="off",
     motion:typeof motionEnabled!=="undefined"?!!motionEnabled:localStorage.getItem("pythagorasi_motion")!=="off"
@@ -2972,14 +2975,14 @@ function applySavedAccountState(profile){
   if(Number.isFinite(Number(state.challengeScore)))localStorage.setItem("pythagorasi_challenge_score",String(Number(state.challengeScore)));
 
   const pref=state.preferences||profile?.preferences||{};
-  if(pref.language==="ar"||pref.language==="en")localStorage.setItem("pythagorasi_language",pref.language);
+  if(Object.hasOwn(window.ClassoraLocale.languages,pref.language))localStorage.setItem("pythagorasi_language",pref.language);
   if(pref.theme==="light"||pref.theme==="dark")localStorage.setItem("pythagorasi_theme",pref.theme);
   if(typeof pref.sound==="boolean")localStorage.setItem("pythagorasi_sound",pref.sound?"on":"off");
   if(typeof pref.motion==="boolean")localStorage.setItem("pythagorasi_motion",pref.motion?"on":"off");
 
   setTimeout(()=>{
     try{
-      if(pref.language==="ar"||pref.language==="en")applySiteLanguage(pref.language,false);
+      if(Object.hasOwn(window.ClassoraLocale.languages,pref.language))applySiteLanguage(pref.language,false);
       if(pref.theme==="light"||pref.theme==="dark")applySiteTheme(pref.theme,false);
       if(typeof pref.sound==="boolean"){soundEnabled=pref.sound;document.getElementById("settingsSoundToggle").checked=soundEnabled}
       if(typeof pref.motion==="boolean"){motionEnabled=pref.motion;applyMotionSetting();document.getElementById("settingsMotionToggle").checked=motionEnabled}
@@ -9273,16 +9276,20 @@ function uiDynamicEnglish(text){
 function translateTextValue(arText){
   const raw=latinDigits(arText);
   if(currentUILanguage!=="en")return uiEnglishToArabic.get(raw.trim())||raw;
-  return uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw);
+  return window.ClassoraLocale?.t(uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw)) ?? (uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw));
 }
-function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?en:ar)}
-function uiPrompt(ar,en,value=""){return prompt(currentUILanguage==="en"?en:ar,value)}
+function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?window.ClassoraLocale.t(en):ar)}
+function uiPrompt(ar,en,value=""){return prompt(currentUILanguage==="en"?window.ClassoraLocale.t(en):ar,value)}
 
 // Track our last rendered value separately from text written by the application.
 const uiNodeTranslations=new WeakMap(),uiAttributeTranslations=new WeakMap();
 function translateElementNode(el){
   if(!(el instanceof Element))return;
-  if(el.matches('script,style')||el.closest('[data-no-translate],[translate="no"],[contenteditable="true"]'))return;
+  if(el.matches('script,style')||el.closest('[translate="no"],[contenteditable="true"]'))return;
+  const protectedRoot=el.closest('[data-no-translate]');
+  // Only opt known application UI into additional locales; keep names, messages,
+  // teacher-authored content and language-learning examples unchanged.
+  if(protectedRoot&&!(window.ClassoraLocale?.extended&&protectedRoot.matches('#classoraMobilePageNav,#classoraSettingsShortcuts,.learning-hub,.hub-shared-tools,#settingsAccountsBtn,.hub-dialog-body,.plus-dialog,.plus-toolbar,#manageSentAssignments')))return;
   if(el.closest?.('#siteUpdatesList'))return;
   for(const node of [...el.childNodes]){
     if(node.nodeType!==Node.TEXT_NODE||el.matches('textarea'))continue;
@@ -9297,7 +9304,7 @@ function translateElementNode(el){
     if(!el.hasAttribute(name))continue;
     const current=el.getAttribute(name),previous=attributes[name];
     const source=previous&&current===previous.rendered?previous.source:current;
-    const next=currentUILanguage==='en'?(uiPlaceholderTranslations.get(source)||translateTextValue(source)):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
+    const next=currentUILanguage==='en'?(window.ClassoraLocale?.t(uiPlaceholderTranslations.get(source)||translateTextValue(source)) ?? (uiPlaceholderTranslations.get(source)||translateTextValue(source))):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
     attributes[name]={source,rendered:next};if(current!==next)el.setAttribute(name,next);
   }
   uiAttributeTranslations.set(el,attributes);
@@ -9359,13 +9366,14 @@ function syncV99LanguageLabels(){
  setText("manageSentAssignments","إدارة أو حذف الوظائف المرسلة","Manage / delete sent assignments");
 }
 function applySiteLanguage(lang,save=true){
-  currentUILanguage=lang==='en'?'en':'ar';
-  document.documentElement.lang=currentUILanguage;
+  const selectedLanguage=window.ClassoraLocale.select(lang);
+  currentUILanguage=selectedLanguage==='ar'?'ar':'en';
+  document.documentElement.lang=selectedLanguage;
   document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
   document.body.classList.toggle('lang-en',currentUILanguage==='en');
   document.title='Classora';
   const firstName=String(window.PythagorasiUser?.displayName||'').trim().split(/\s+/)[0];if(firstName)document.getElementById('lobbyGreeting').textContent=currentUILanguage==='en'?`Welcome, ${firstName}`:`أهلًا ${firstName}`;
-  if(save)localStorage.setItem('pythagorasi_language',currentUILanguage);
+  if(save)localStorage.setItem('pythagorasi_language',selectedLanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
   document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
@@ -9378,8 +9386,16 @@ function applySiteLanguage(lang,save=true){
     const frame=document.getElementById("periodicTableFrame");
     if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:currentUILanguage},location.origin);
   }catch{}
+  window.ClassoraLocale.syncControls();
+  translateSubtree(document.body);
   setTimeout(()=>document.body.classList.remove('language-switching'),350);
 }
+document.addEventListener('click',event=>{
+  const button=event.target.closest?.('[data-classora-language]');
+  if(!button||button.id)return;
+  applySiteLanguage(button.dataset.classoraLanguage);
+  refreshSettingsUI();window.ClassoraLocale.syncControls();saveAccountPreferences();
+});
 document.getElementById("authEnglishBtn").addEventListener("click",()=>applySiteLanguage("en"));
 document.getElementById("authArabicBtn").addEventListener("click",()=>applySiteLanguage("ar"));
 const bilingualObserver=new MutationObserver(records=>{
@@ -9393,7 +9409,7 @@ const bilingualObserver=new MutationObserver(records=>{
   }
 });
 setTimeout(()=>{
-  applySiteLanguage(currentUILanguage,false);
+  applySiteLanguage(window.ClassoraLocale.language,false);
   bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["placeholder","aria-label","title","alt"]});
 },0);
 
@@ -9533,7 +9549,8 @@ function refreshSettingsUI(){
   document.getElementById("settingsSoundToggle").checked=soundEnabled;
   document.getElementById("settingsMotionToggle").checked=motionEnabled;
   document.getElementById("settingsArabicBtn").classList.toggle("active",currentUILanguage==="ar");
-  document.getElementById("settingsEnglishBtn").classList.toggle("active",currentUILanguage==="en");
+  document.getElementById("settingsEnglishBtn").classList.toggle("active",window.ClassoraLocale.language==="en");
+  window.ClassoraLocale.syncControls();
   const isLight=document.body.classList.contains("light");
   document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
   document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);

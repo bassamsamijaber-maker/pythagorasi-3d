@@ -30,7 +30,7 @@ export function installClassoraLegal(){
  const close=modal.querySelector('.classora-legal-close');
  const status=modal.querySelector('.classora-legal-status');
  let uid='',current='privacy',review=false,previousFocus=null,read={privacy:false,terms:false};
- const lang=()=>document.documentElement.lang==='en'?'en':'ar';
+ const lang=()=>document.documentElement.lang!=="ar"?'en':'ar';
  const phrase=(ar,en)=>lang()==='en'?en:ar;
  const storageGet=k=>{try{const v=localStorage.getItem(k);if(v)return v}catch{}try{return sessionStorage.getItem(k)}catch{return null}};
  const storagePut=(k,value)=>{try{localStorage.setItem(k,value)}catch{try{sessionStorage.setItem(k,value)}catch{}}};

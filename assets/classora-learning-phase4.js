@@ -4,7 +4,7 @@
  */
 (() => {
  "use strict";
- function localize(ar,en){return document.documentElement.lang==="en"?en:ar}
+ function localize(ar,en){return document.documentElement.lang!=="ar"?en:ar}
  function initialize(modal){
   if(modal.dataset.classoraPhase4Ready==="1")return;
   modal.dataset.classoraPhase4Ready="1";

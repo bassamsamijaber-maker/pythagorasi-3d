@@ -1,7 +1,7 @@
 /* Classora Global Mix UI — safe presentation-only behaviors. */
 (() => {
   "use strict";
-  const isEnglish = () => document.documentElement.lang === "en";
+  const isEnglish = () => document.documentElement.lang !=="ar";
   function localizeHero() {
     const hero = document.getElementById("classoraMixHero");
     if (!hero) return;

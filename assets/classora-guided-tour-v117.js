@@ -1,6 +1,6 @@
 /* Classora v117: interactive site tour, using actual Classora navigation and screens. */
 (()=>{"use strict";
-const $=id=>document.getElementById(id),english=()=>document.documentElement.lang==="en";
+const $=id=>document.getElementById(id),english=()=>document.documentElement.lang!=="ar";
 const steps=[
  {id:"lobby",nav:"classoraMobileLobbyBtn",target:"#classoraWelcomeCard,#platformLobby .lobby-topbar",title:["اللوبي","Lobby"],body:["هاي صفحة كلاسورا الفعلية: الترحيب، آخر درس، والإعلانات.","This is the real Classora dashboard with your greeting, recent lessons and news."]},
  {id:"subjects",nav:"classoraMobileSubjectsBtn",target:"#classoraMobileSubjectsBtn",title:["المواد","Subjects"],body:["فتحنا المواد. بتقدر تختار موضوع وتغيّر المعطيات وتتعلّم بالتجربة.","We opened Subjects. Choose a topic and explore interactive lessons."]},
