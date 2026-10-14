@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v134-smart-assistant-classic-dock";
+const CACHE_NAME="classora-v135-compact-phone-nav";
 const APP_SHELL=[
-  "./assets/classora-responsive-v131.css?v=134",
+  "./assets/classora-responsive-v131.css?v=135",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
   "./assets/learning-tools-v130.css?v=130",
