@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v131-bilingual-mobile";
+const CACHE_NAME="classora-v132-policy-phone";
 const APP_SHELL=[
-  "./assets/classora-responsive-v131.css?v=131",
+  "./assets/classora-responsive-v131.css?v=132",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
   "./assets/learning-tools-v130.css?v=130",
@@ -92,8 +92,8 @@ const APP_SHELL=[
   "./manifest.webmanifest",
   "./privacy.html",
   "./terms.html",
-  "./assets/classora-legal-v124.css?v=124",
-  "./assets/classora-legal-v124.js?v=124",
+  "./assets/classora-legal-v124.css?v=132",
+  "./assets/classora-legal-v124.js?v=132",
   "./assets/classora-study-assistant-v124.js?v=131",
   "./support.html",
   "./chemistry/periodic-table.html?v=128",
