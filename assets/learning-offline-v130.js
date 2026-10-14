@@ -1,4 +1,4 @@
-export const UNIT_CACHE='classora-study-units-v130';
+export const UNIT_CACHE='classora-study-units-v131';
 export function downloadedUnits(){try{return JSON.parse(localStorage.getItem('classora_downloaded_units_v130')||'{}')}catch{return {}}}
 export async function downloadUnit(unit,onProgress=()=>{}){
  if(!globalThis.caches||!navigator.serviceWorker)throw Error('offline-unavailable');

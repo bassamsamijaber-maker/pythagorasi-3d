@@ -33,6 +33,11 @@ export function mountMathCalculator(language=()=>document.documentElement.lang){
   expression.setAttribute('aria-label',T('العملية الحسابية','Expression'));
   host.querySelector('[data-mode="history"]').textContent=T('السجل','History');
   host.querySelector('.cm-calc-tip').textContent=T('استخدم أزرار الحاسبة فقط. % تعني القسمة على 100','Use the calculator buttons only. % divides by 100');
+  host.querySelector('[data-key=back]')?.setAttribute('aria-label',T('حذف آخر محرف','Backspace'));
+  host.querySelector('[data-key=clear]')?.setAttribute('aria-label',T('مسح العملية','Clear expression'));
+  host.querySelector('[data-key=ans]')?.setAttribute('aria-label',T('الإجابة السابقة','Previous answer'));
+  host.querySelector('[data-mode=angle]').setAttribute('aria-label',state.degrees?T('درجات','Degrees'):T('راديان','Radians'));
+  if(!history.hidden)renderHistory();
   host.querySelector('.cm-calc-keyboard').setAttribute('aria-label',T('أزرار الحاسبة','Calculator keys'));
  }
  function reset(){
@@ -89,7 +94,7 @@ export function mountMathCalculator(language=()=>document.documentElement.lang){
  });
  tab.onclick=()=>open(!state.open);
  host.querySelector('.cm-calc-close').onclick=()=>open(false);
- host.querySelector('[data-mode="angle"]').onclick=e=>{state.degrees=!state.degrees;e.currentTarget.textContent=state.degrees?'DEG':'RAD';persist()};
+ host.querySelector('[data-mode="angle"]').onclick=e=>{state.degrees=!state.degrees;e.currentTarget.textContent=state.degrees?'DEG':'RAD';localize();persist()};
  host.querySelector('[data-mode="history"]').onclick=()=>{history.hidden=!history.hidden;renderHistory()};
  function refresh(){
   localize();

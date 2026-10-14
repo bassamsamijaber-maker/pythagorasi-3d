@@ -1,11 +1,12 @@
 {
-  "version": "130.0",
+  "version": "131.0",
   "files": [
     "./assets/arabic-catalog-v119.js?v=119",
     "./assets/arabic-scenes-v128.js?v=128",
     "./assets/arabic-studio-v119.js?v=130",
+    "./assets/classora-responsive-v131.css?v=131",
     "./assets/curriculum-v97.css?v=110",
-    "./assets/curriculum-v97.js?v=130",
+    "./assets/curriculum-v97.js?v=131",
     "./assets/english-catalog-v127.js?v=127",
     "./assets/english-studio-v127.js?v=130",
     "./assets/geography-catalog-v128.js?v=128",
@@ -21,7 +22,7 @@
     "./assets/learning-feedback-v130.js?v=130",
     "./assets/learning-knowledge-v130.js?v=130",
     "./assets/learning-memory-v130.js?v=130",
-    "./assets/learning-offline-v130.js?v=130",
+    "./assets/learning-offline-v130.js?v=131",
     "./assets/learning-search-v130.js?v=130",
     "./assets/learning-tools-v130.css?v=130",
     "./assets/learning-tools-v130.js?v=130",
@@ -35,7 +36,7 @@
     "./assets/math-studio-v119.css?v=119",
     "./assets/math-studio-v119.js?v=130",
     "./assets/science-scenes-v128.js?v=130",
-    "./assets/study-offline-v130.js?v=130",
+    "./assets/study-offline-v130.js?v=131",
     "./study-offline.html"
   ]
 }
