@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v138-iphone-dock-visible";
+const CACHE_NAME="classora-v139-secure-openai-prepared";
 const APP_SHELL=[
   "./assets/classora-responsive-v131.css?v=138",
   "./assets/learning-offline-v130.js?v=131",
@@ -93,9 +93,9 @@ const APP_SHELL=[
   "./privacy.html",
   "./terms.html",
   "./assets/classora-legal-v124.css?v=132",
-  "./assets/classora-legal-v124.js?v=132",
+  "./assets/classora-legal-v124.js?v=139",
   "./assets/classora-study-assistant-v124.js?v=137",
-  "./assets/classora-assistant-motion-v134.js?v=134",
+  "./assets/classora-assistant-motion-v134.js?v=139",
   "./assets/classora-assistant-motion-v134.css?v=134",
   "./support.html",
   "./chemistry/periodic-table.html?v=128",
