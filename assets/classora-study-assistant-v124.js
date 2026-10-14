@@ -69,9 +69,66 @@ function matchTopic(raw,grade){
  matches.sort((a,b)=>b.score-a.score);
  return matches[0]?.row||null;
 }
+
+/* Friendly bilingual greetings and reviewed science quick answers.
+   This module is offline reference material, not an unrestricted cloud model. */
+const GREETING_REPLY=[
+ [/^(?:السلام عليكم(?: ورحمه الله(?: وبركاته)?)?|سلام عليكم|سلام|سلامات|السلا[مم] عليكم)(?: يا .*)?$/iu,['وعليكم السلام ورحمة الله وبركاته! أهلًا وسهلًا في كلاسورا 🌿 شو حابب نتعلّم اليوم؟','Wa alaikum assalam wa rahmatullahi wa barakatuh! Welcome to Classora. What would you like to learn today?']],
+ [/^(?:مرحبا+|مرحبتين|اهلا(?: وسهلا)?|اهلين|هلا+|هلا والله|يا هلا|هاي|يسعد (?:صباحك|مساك)|نورت|تحياتي|اهلا فيك)(?: يا .*)?$/iu,['أهلين وسهلين! 🌟 اسألني عن أي درس، وبقدر أفتحلك صفحته بكبسة.','Hey there! 🌟 Ask about a lesson and I can take you right to it.']],
+ [/^(?:صباح الخير|صباح النور|يسعد صباحك|good morning)(?: يا .*)?$/iu,['صباح النور! ☀️ جاهز نكتشف إشي جديد بكلاسورا؟','Good morning! ☀️ Ready to learn something new?']],
+ [/^(?:مساء الخير|مسا الخير|مسا النور|يسعد مساك|good evening|good afternoon)(?: يا .*)?$/iu,['مسا النور! 🌙 كيف بقدر أساعدك بالدراسة اليوم؟','Good evening! 🌙 How can I help you study?']],
+ [/^(?:كيفك|كيف الحال|شو اخبارك|شو اخباركم|كيف حالك|كيفك اليوم|how are you|how are you doing|how is it going|how s it going)$/iu,['تمام الحمد لله! 😊 جاهز أساعدك بالرياضيات والعلوم وباقي المواضيع. إيش بدك نسأل اليوم؟',"I'm doing well, thanks! 😊 Ready to help with science, math, and Classora lessons. What's your question?"]],
+ [/^(?:hello|hellooo+|hi|hii+|hey|hey there|hiya|greetings|yo|howdy|welcome|salam|assalamu alaikum|as salamu alaykum)(?: everyone)?$/iu,['أهلًا فيك بكلاسورا! 👋 احكيلي شو الموضوع اللي حابب تفهمه.','Hello and welcome to Classora! 👋 What would you like to explore?']],
+ [/^(?:thank you|thanks|thank you so much|شكرا|شكرا الك|يسلمو|يعطيك العافيه|يعطيك العافية)$/iu,['العفو، يسعدني أساعدك! 💚','You’re very welcome! 💚']]
+];
+function greetingAnswer(raw,en){
+ const q=norm(raw).replace(/\s+/g,' ');
+ for(const [pattern,answers] of GREETING_REPLY)if(pattern.test(q))return answers[en?1:0];
+ return null;
+}
+const SCIENCE_QA=[
+ {re:/(?:لماذا|ليش|why).*(?:السماء|سما).*(?:زرق|ازرق)|why is the sky blue/i,ar:'السماء تبدو زرقاء لأن جزيئات الهواء تشتّت ضوء الشمس الأزرق، ذا الموجة الأقصر، أكثر من الأحمر. هذه الظاهرة اسمها تشتّت رايلي.',en:'The sky appears blue because air molecules scatter shorter-wavelength blue sunlight more strongly than red light. This is Rayleigh scattering.',subject:'science',hint:/الضوء|ضوء/},
+ {re:/(?:لماذا|ليش|why).*(?:القمر|قمر|moon).*(?:يضوي|مضي|يضي|يظهر|shine|glow)|why does the moon shine/i,ar:'القمر لا يصدر ضوءًا مرئيًا من نفسه مثل الشمس؛ بنشوفه لأنه يعكس ضوء الشمس. تغيّر الجزء المضيء الذي نراه يسبّب أطوار القمر.',en:'The Moon does not shine by producing visible light like the Sun. We see it because it reflects sunlight. The visible sunlit portion changes through the lunar phases.',subject:'geography',hint:/القمر|النظام الشمسي/},
+ {re:/(?:لماذا|ليش|why).*(?:تطفو|طفو|float).*(?:سفن|سفينه|سفينة|ships?)|why do ships float/i,ar:'السفينة بتزيح ماءً يولّد قوة طفو إلى أعلى. إذا كانت قوة الطفو تساوي وزنها، بتطفو؛ المهم متوسط كثافة السفينة مع الفراغات داخلها، مش كثافة الحديد وحده.',en:'A ship displaces water, producing an upward buoyant force. It floats when buoyancy balances its weight. What matters is its overall average density, including its hollow interior.',subject:'science',hint:/الكثافة|القوى/},
+ {re:/(?:لماذا|ليش|why).*(?:النبات|plants?).*(?:اخضر|green)|why are plants green/i,ar:'الكلوروفيل في كثير من أوراق النباتات يمتص الضوء الأحمر والأزرق أكثر من الأخضر، لذلك ينعكس أو يمر جزء أكبر من الضوء الأخضر ونراها خضراء.',en:'Chlorophyll in many leaves absorbs red and blue light more strongly than green light, so more green light is reflected or transmitted.',subject:'science',hint:/النبات|البناء الضوئي/},
+ {re:/(?:البناء الضوئي|التمثيل الضوئي|photosynthesis)/i,ar:'البناء الضوئي عملية تستخدم فيها النباتات والطحالب وبعض البكتيريا طاقة الضوء لتحويل الماء وثاني أكسيد الكربون إلى مواد سكرية، وينطلق الأكسجين في البناء الضوئي الأكسجيني. الضوء والماء وثاني أكسيد الكربون عوامل مهمة.',en:'Photosynthesis uses light energy to make sugars from water and carbon dioxide in plants, algae, and some bacteria. Oxygen is released in oxygenic photosynthesis.',subject:'science',hint:/البناء الضوئي|التغذية/},
+ {re:/(?:سرعة الضوء|speed of light|how fast is light)/i,ar:'سرعة الضوء في الفراغ ثابتة تمامًا: 299,792,458 متر/ثانية (حوالي 300 ألف كيلومتر/ثانية). داخل مواد مثل الماء والزجاج ينتقل الضوء بسرعة أقل.',en:'The speed of light in vacuum is exactly 299,792,458 metres per second (about 300,000 km/s). Light travels more slowly through materials such as water and glass.',subject:'science',hint:/الضوء/},
+ {re:/(?:الجاذبية|gravity|لماذا تسقط الاشياء|why do things fall)/i,ar:'الجاذبية هي تأثير يسبب تجاذب الأجسام ذات الكتلة. قرب سطح الأرض تتسارع الأجسام الساقطة سقوطًا حرًا بنحو 9.8 م/ث² إذا أهملنا مقاومة الهواء.',en:'Gravity causes objects with mass to attract each other. Near Earth’s surface, freely falling objects accelerate at about 9.8 m/s² when air resistance is ignored.',subject:'science',hint:/القوى والحركة|قوانين الحركة/},
+ {re:/(?:ما هو|ما هي|اشرح|what is|explain).*(?:حمض|حموض|قاعد|acid|base|ph)\b|مقياس ph|pH scale/i,ar:'مقياس pH يصف حموضية المحلول المائي. قرب 25°م: أقل من 7 حمضي، و7 متعادل، وأكبر من 7 قاعدي. المقياس لوغاريتمي: فرق درجة واحدة يعني فرقًا بعامل 10 في نشاط أيونات الهيدروجين.',en:'pH measures acidity in aqueous solutions. Near 25°C, below 7 is acidic, 7 neutral, and above 7 basic. It is logarithmic: one pH unit corresponds to a tenfold difference in hydrogen-ion activity.',subject:'science',hint:/الأحماض والقواعد|الحموضية/},
+ {re:/(?:الذرات|الذرة|atom|atoms?)/i,ar:'الذرة تتكوّن من نواة فيها بروتونات ونيوترونات (عادةً)، وتحيط بها إلكترونات. عدد البروتونات يحدد العنصر الكيميائي؛ الإلكترونات تؤثر كثيرًا في التفاعلات والروابط.',en:'An atom has a nucleus containing protons and usually neutrons, with electrons around it. The number of protons defines the element, while electrons strongly influence chemical bonding.',subject:'science',hint:/بنية الذرة|الذرات/},
+ {re:/(?:لماذا|ليش|why).*(?:الثلج|جليد|ice).*(?:يطفو|float)/i,ar:'الثلج يطفو على الماء السائل لأن بنية الروابط الهيدروجينية تجعل كثافته أقل من كثافة الماء السائل قرب درجات الحرارة العادية.',en:'Ice floats in liquid water because hydrogen-bonded crystal structure makes ice less dense than liquid water under ordinary conditions.',subject:'science',hint:/الكثافة|حالات المادة/},
+ {re:/(?:لماذا|ليش|why).*(?:الفصول|الصيف|الشتاء|seasons)/i,ar:'الفصول تحدث أساسًا بسبب ميل محور دوران الأرض نحو 23.4° بالنسبة إلى العمود على مستوى مدارها، ما يغيّر طول النهار وزاوية أشعة الشمس خلال السنة، مش بسبب تغيّر المسافة عن الشمس.',en:'Seasons are mainly caused by Earth’s axis tilting about 23.4° relative to the perpendicular to its orbit, changing daylight duration and the Sun’s angle—not by changes in Earth–Sun distance.',subject:'geography',hint:/الفصول|الأرض والنظام الشمسي/},
+ {re:/(?:لماذا|ليش|why).*(?:نسمع|sound|صوت).*(?:البرق|الرعد|thunder)|why.*thunder/i,ar:'البرق يسخّن الهواء بسرعة كبيرة، فيتمدّد فجأة ويولّد موجة ضغط نسمعها رعدًا. منشوف البرق قبل الرعد لأن الضوء أسرع بكثير من الصوت.',en:'Lightning heats nearby air very rapidly, causing sudden expansion and a pressure wave we hear as thunder. We see lightning first because light travels much faster than sound.',subject:'science',hint:/الصوت|الضوء/},
+ {re:/(?:ما الفرق|difference).*(?:كتله|كتلة|mass).*(?:وزن|weight)|mass vs weight/i,ar:'الكتلة مقدار المادة/القصور الذاتي وتقاس بالكيلوغرام، أما الوزن فهو قوة الجاذبية المؤثرة في الجسم ويُقاس بالنيوتن: الوزن = الكتلة × تسارع الجاذبية.',en:'Mass measures inertia and is expressed in kilograms. Weight is the gravitational force on an object, measured in newtons: weight = mass × gravitational acceleration.',subject:'science',hint:/الكتلة|القوى/},
+ {re:/(?:ما الفرق|difference).*(?:حراره|حرارة|heat).*(?:درجه|temperature)|heat vs temperature/i,ar:'درجة الحرارة مرتبطة بمتوسط الطاقة الحركية المجهرية للجسيمات، أما الحرارة فهي طاقة تنتقل من جسم لآخر بسبب فرق درجة الحرارة.',en:'Temperature relates to average microscopic particle kinetic energy, while heat is energy transferred because of a temperature difference.',subject:'science',hint:/الحرارة|الطاقة/},
+ {re:/(?:ما هو|ما هي|اشرح|what is|explain).*(?:dna|الحمض النووي|الوراثه|الوراثة)/i,ar:'DNA جزيء يحمل معلومات وراثية على شكل تسلسل من القواعد A وT وC وG. الجينات أجزاء من DNA تحتوي تعليمات لصنع منتجات وظيفية، ومنها بروتينات.',en:'DNA carries genetic information as sequences of A, T, C and G bases. Genes are sections of DNA that contain instructions for functional products, including proteins.',subject:'science',hint:/DNA|الوراثة/},
+ {re:/(?:ما هو|ما هي|اشرح|what is|explain).*(?:الطاقه|الطاقة|energy)/i,ar:'الطاقة مقدار فيزيائي يصف القدرة على إحداث تغيّر أو بذل شغل. تظهر بأشكال منها الحركة والوضع والحرارة والكهرباء، وتتحول من شكل لآخر مع بقاء مجموعها محفوظًا في نظام معزول.',en:'Energy is a physical quantity associated with doing work and causing change. It appears as kinetic, potential, thermal and electrical energy. In an isolated system, total energy is conserved.',subject:'science',hint:/الطاقة/},
+ {re:/(?:لماذا|ليش|why).*(?:العين|eyes?).*(?:تري|ترى|see|vision)/i,ar:'نرى لأن الضوء المنعكس عن الأجسام يدخل العين ويركّزه سطحها وعدستها على الشبكية، حيث تحوّل الخلايا الحساسة للضوء الإشارة إلى نبضات عصبية.',en:'We see when light from objects enters the eye and is focused on the retina, where light-sensitive cells convert it into neural signals.',subject:'science',hint:/الضوء|أجهزة الجسم/},
+ {re:/(?:ما هو|ما هي|اشرح|what is|explain).*(?:الخلية|cell)/i,ar:'الخلية هي الوحدة الأساسية للبناء والوظيفة في الكائنات الحية. معظم الخلايا لها غشاء وسيتوبلازم ومادة وراثية؛ والخلايا حقيقية النواة تمتلك نواة.',en:'A cell is the basic structural and functional unit of life. Most cells have a membrane, cytoplasm and genetic material; eukaryotic cells have a nucleus.',subject:'science',hint:/الخلية/},
+ {re:/(?:لماذا|ليش|why).*(?:ماء|water).*(?:يغلي|boil)|boiling point of water/i,ar:'عند الضغط الجوي القياسي يغلي الماء النقي عند نحو 100°C. درجة الغليان تنخفض عند الضغط الأقل، مثل الأماكن المرتفعة.',en:'Pure water boils at about 100°C at standard atmospheric pressure. The boiling point decreases at lower pressures, such as at higher elevations.',subject:'science',hint:/حالات المادة|الحرارة/}
+];
+function scienceQuickAnswer(raw,en){
+ const q=norm(raw);
+ for(const entry of SCIENCE_QA)if(entry.re.test(q))return entry[en?'en':'ar'];
+ return null;
+}
+export function classoraStudyTopicMatch(raw,grade=8){
+ const selected=matchTopic(raw,[7,8,9,10].includes(Number(grade))?Number(grade):8);
+ if(selected)return {grade:selected.grade,subject:selected.subject,title:selected.title,en:selected.en};
+ const q=norm(raw);
+ const science=SCIENCE_QA.find(x=>x.hint&&x.hint.test(q));
+ if(!science)return null;
+ const all=topics.filter(x=>x.subject===science.subject&&science.hint.test(norm(x.title)+' '+norm(x.en)));
+ all.sort((a,b)=>(Number(b.grade)===Number(grade))-(Number(a.grade)===Number(grade))||a.grade-b.grade);
+ const row=all[0];
+ return row?{grade:row.grade,subject:row.subject,title:row.title,en:row.en}:null;
+}
+
 export function classoraStudyAnswer(raw,language='ar',grade=8){
  const en=language==='en',q=String(raw||'').trim();
  if(!q)return null;
+ const greeting=greetingAnswer(q,en);
+ if(greeting)return greeting;
  const word=wordLookup(q,en);
  if(word)return word;
  const g=[7,8,9,10].includes(Number(grade))?Number(grade):8;
@@ -81,6 +138,8 @@ export function classoraStudyAnswer(raw,language='ar',grade=8){
   const guidance=curriculumTopicGuide(lesson.title,lesson.subject,language,mode);
   return (en?lesson.en:lesson.title)+' — '+(en?'Grade ':'الصف ')+lesson.grade+'\n'+guidance;
  }
+ const science=scienceQuickAnswer(q,en);
+ if(science)return science;
  if(/ما معنى|معنى كلمة|ترجم|ترجمة|translate|meaning of|what does/i.test(q))
   return en?'This word is not in my checked vocabulary yet. Please add it in a sentence.':'هاي الكلمة مش موجودة في قاموسي المراجع حاليًا. اكتبها بجملة حتى يتضح السياق.';
  return null;
