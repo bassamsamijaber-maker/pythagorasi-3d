@@ -260,5 +260,5 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
 );
 
 Object.assign(exports, require('./support-admin'));
-Object.assign(exports, require('./ai-assistant'));
+// OpenAI callable left unregistered while Classora uses the local Ollama gateway.
 
