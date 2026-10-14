@@ -108,17 +108,19 @@ const SCIENCE_QA=[
  {re:/(?:لماذا|ليش|why).*(?:ماء|water).*(?:يغلي|boil)|boiling point of water/i,ar:'عند الضغط الجوي القياسي يغلي الماء النقي عند نحو 100°C. درجة الغليان تنخفض عند الضغط الأقل، مثل الأماكن المرتفعة.',en:'Pure water boils at about 100°C at standard atmospheric pressure. The boiling point decreases at lower pressures, such as at higher elevations.',subject:'science',hint:/حالات المادة|الحرارة/}
 ];
 function scienceQuickAnswer(raw,en){
- const q=norm(raw);
- for(const entry of SCIENCE_QA)if(entry.re.test(q))return entry[en?'en':'ar'];
+ const q=norm(raw),original=String(raw||'').toLowerCase();
+ for(const entry of SCIENCE_QA)if(entry.re.test(q)||entry.re.test(original))return entry[en?'en':'ar'];
  return null;
 }
 export function classoraStudyTopicMatch(raw,grade=8){
  const selected=matchTopic(raw,[7,8,9,10].includes(Number(grade))?Number(grade):8);
  if(selected)return {grade:selected.grade,subject:selected.subject,title:selected.title,en:selected.en};
  const q=norm(raw);
- const science=SCIENCE_QA.find(x=>x.hint&&x.hint.test(q));
+ const science=SCIENCE_QA.find(x=>x.hint&&(x.re.test(q)||x.re.test(String(raw||'').toLowerCase())));
  if(!science)return null;
- const all=topics.filter(x=>x.subject===science.subject&&science.hint.test(norm(x.title)+' '+norm(x.en)));
+ const all=topics.filter(x=>x.subject===science.subject&&(
+   science.hint.test(x.title+' '+x.en)||science.hint.test(norm(x.title)+' '+norm(x.en))
+ ));
  all.sort((a,b)=>(Number(b.grade)===Number(grade))-(Number(a.grade)===Number(grade))||a.grade-b.grade);
  const row=all[0];
  return row?{grade:row.grade,subject:row.subject,title:row.title,en:row.en}:null;
