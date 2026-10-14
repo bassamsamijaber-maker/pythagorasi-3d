@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v144-startup-recovery";
+const CACHE_NAME="classora-v145-lean-safe-startup";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
@@ -119,7 +119,18 @@ self.addEventListener("install",event=>{
       // Cache the dark, complete app document as the first priority for A2HS starts.
       await cache.add(new Request("./index.html",{cache:"reload"}));
       // A missing optional asset must not abort the whole offline shell installation.
-      await Promise.allSettled(APP_SHELL.map(url=>cache.add(new Request(url,{cache:"reload"}))));
+      const BOOT_SHELL=[
+        "./offline.html",
+        "./status.html",
+        "./recovery.html",
+        "./manifest.webmanifest",
+        "./assets/classora-dock-stable-v140.css?v=140",
+        "./assets/classora-locales-v140.css?v=140",
+        "./assets/classora-locales-v140.js?v=141"
+      ];
+      // Prevent large parallel precache requests from stalling mobile startup.
+      // Lesson assets are cached when requested instead.
+      await Promise.allSettled(BOOT_SHELL.map(url=>cache.add(new Request(url,{cache:"reload"}))));
     }).then(()=>self.skipWaiting())
   );
 });
@@ -155,7 +166,7 @@ self.addEventListener("fetch",event=>{
           const response=await fetch(event.request,{cache:"no-store",signal:controller.signal});
           if(response&&response.ok){
             const copy=response.clone();
-            event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.put("./index.html",copy)).catch(()=>{}));
+            caches.open(CACHE_NAME).then(cache=>cache.put("./index.html",copy)).catch(()=>{});
             return response;
           }
           const cached=await caches.match("./index.html");
