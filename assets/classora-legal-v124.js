@@ -32,7 +32,7 @@ export function installClassoraLegal(){
  let uid='',current='privacy',review=false,previousFocus=null,read={privacy:false,terms:false};
  const lang=()=>document.documentElement.lang==='en'?'en':'ar';
  const phrase=(ar,en)=>lang()==='en'?en:ar;
- const storageGet=k=>{try{return localStorage.getItem(k)||sessionStorage.getItem(k)}catch{return null}};
+ const storageGet=k=>{try{const v=localStorage.getItem(k);if(v)return v}catch{}try{return sessionStorage.getItem(k)}catch{return null}};
  const storagePut=(k,value)=>{try{localStorage.setItem(k,value)}catch{try{sessionStorage.setItem(k,value)}catch{}}};
  const accountKey=id=>PREFIX+id;
  const deviceMode=id=>id==='guest-device'||id==='installed-device'||id==='guest-local';
