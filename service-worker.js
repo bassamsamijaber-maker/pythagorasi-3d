@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v153-reviewed-lesson-locales";
+const CACHE_NAME="classora-v154-eight-language-curriculum";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
