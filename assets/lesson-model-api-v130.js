@@ -9,7 +9,7 @@ import {englishLesson} from './english-catalog-v127.js?v=127';
 import {historyLesson} from './history-catalog-v127.js?v=127';
 import {englishModel,historyModel} from './language-models-v129.js?v=129';
 export function lessonModel(host,topic,language){
- const en=language==='en',T=(a,b)=>en?b:a,q=s=>host.querySelector(s),subject=topic.subject;let fields=[],read,draw,restore,rule='',lesson;
+ const selectedLanguage=document.documentElement.lang||language,en=selectedLanguage!=='ar',T=(a,b)=>!en?a:(window.ClassoraLocale?.dictionaries?.[selectedLanguage]?.[b]||b),q=s=>host.querySelector(s),subject=topic.subject;let fields=[],read,draw,restore,rule='',lesson;
  const set=(selector,value,type='input')=>{const el=q(selector);if(el){el.value=String(value);el.dispatchEvent(new Event(type,{bubbles:true}))}};
  const selectMode=(selector,phase)=>q(selector.replace('$',String(phase)))?.click();
  const selected=(selector,attr)=>Number(q(selector+'[aria-pressed="true"]')?.getAttribute(attr)||0);
