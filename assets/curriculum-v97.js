@@ -437,16 +437,18 @@ function makeQuestions(api,t,count,difficulty,live){
   try{return assessment.generate("curr:"+t.grade+":"+t.subject+":"+t.index,count,difficulty,lang(api),live).questions}
   catch(error){console.warn("Classora topic question bank incomplete",t.title,error?.message);return []}
  }
- if(!["math","geometry","arabic","english","history","geography"].includes(t?.subject))return [];
- const out=[],seen=new Set(),levels=difficulty==="mixed"?["easy","medium","hard"]: [difficulty];
- let guard=0;
- while(out.length<count&&guard<count*20){
-  const d=levels[out.length%levels.length]||"medium";
-  const q=genericQuestion(api,t,d,guard++);
-  const key=q.prompt+"|"+q.answer;
-  if(seen.has(key))continue;seen.add(key);
-  const points=live?1000:10;
-  out.push({id:"cv97-"+t.id+"-"+Date.now()+"-"+out.length,type:"mcq",prompt:q.prompt,options:q.options,answer:q.answer,explanation:q.explanation,points:points,topicKey:t.id,subjectKey:t.subject,curriculumTopicId:t.id,curriculumTopicTitle:t.title,curriculumGrade:t.grade,questionKind:d,level:d==="easy"?1:d==="hard"?3:2,typeLabel:(t.subject==="english"?"English Grammar":subjectName(api,t.subject))+" • "+t.title});
+ // Reliable offline fallback: only use original, lesson-specific generators.
+ const generators={math:mathQuestion,geometry:mathQuestion,arabic:arabicQuestion,english:englishQuestion,history:historyQuestion,geography:geographyQuestion};
+ const generator=generators[t?.subject];if(!generator)return [];
+ const countWanted=Math.max(1,Math.min(30,Math.floor(Number(count)||10)));
+ const out=[],seen=new Set();
+ const levels=difficulty==="mixed"?["easy","medium","hard","expert"]:[difficulty];
+ for(let i=0;i<countWanted*12&&out.length<countWanted;i++){
+  const level=levels[i%levels.length]||"medium";
+  let q=null;try{q=generator(t,level,i,lang(api))}catch(error){console.warn("Lesson question unavailable",t.title,error?.message)}
+  if(!q||!Array.isArray(q.options)||!q.options.includes(q.answer)||new Set(q.options).size!==q.options.length)continue;
+  const key=String(q.prompt).trim();if(seen.has(key))continue;seen.add(key);
+  out.push({...q,type:"mcq",id:"cv97-"+t.id+"-"+i,points:live?1000:10,topicKey:t.id,subjectKey:t.subject,curriculumTopicId:t.id,curriculumTopicTitle:t.title,curriculumGrade:t.grade,questionKind:level,level:({easy:1,medium:2,hard:3,expert:4}[level]||2),typeLabel:subjectName(api,t.subject)+" • "+titleText(api,t)});
  }
  return out;
 }
