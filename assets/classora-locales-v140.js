@@ -473,6 +473,76 @@ Maps and GIS|Mapas y SIG|지도와 지리정보시스템|Karten und GIS|Carte e 
 Population growth|Crecimiento demográfico|인구 증가|Bevölkerungswachstum|Crescita della popolazione|जनसंख्या वृद्धि|Nüfus artışı
 Development indicators|Indicadores de desarrollo|개발 지표|Entwicklungsindikatoren|Indicatori di sviluppo|विकास संकेतक|Kalkınma göstergeleri
 Natural hazards|Peligros naturales|자연재해 위험|Naturgefahren|Pericoli naturali|प्राकृतिक खतरे|Doğal tehlikeler
+Parts of Speech|Categorías gramaticales|품사|Wortarten|Parti del discorso|शब्द भेद|Sözcük türleri
+Nouns|Sustantivos|명사|Substantive|Sostantivi|संज्ञाएँ|İsimler
+Singular and Plural|Singular y plural|단수와 복수|Singular und Plural|Singolare e plurale|एकवचन और बहुवचन|Tekil ve çoğul
+Countable and Uncountable Nouns|Sustantivos contables e incontables|셀 수 있는 명사와 셀 수 없는 명사|Zählbare und unzählbare Substantive|Nomi numerabili e non numerabili|गणनीय और अगणनीय संज्ञाएँ|Sayılabilen ve sayılamayan isimler
+Subject Pronouns|Pronombres sujeto|주격 대명사|Subjektpronomen|Pronomi soggetto|कर्ता सर्वनाम|Özne zamirleri
+Object Pronouns|Pronombres de objeto|목적격 대명사|Objektpronomen|Pronomi complemento|कर्म सर्वनाम|Nesne zamirleri
+Possessive Adjectives|Adjetivos posesivos|소유 형용사|Possessivadjektive|Aggettivi possessivi|संबंधसूचक विशेषण|İyelik sıfatları
+Possessive Pronouns|Pronombres posesivos|소유 대명사|Possessivpronomen|Pronomi possessivi|संबंधसूचक सर्वनाम|İyelik zamirleri
+Verb To Be|Verbo to be|be 동사|Verb to be|Verbo to be|टू बी क्रिया|To be fiili
+Have / Has|Have y has|have와 has|Have und Has|Have e has|हैव और हैज़|Have ve has
+There is / There are|Hay / existen|존재를 나타내는 표현|There is und There are|C'è e ci sono|वहाँ है और वहाँ हैं|There is ve there are
+Articles: a / an / the|Artículos a an y the|관사 a an the|Artikel a an und the|Articoli a an e the|आर्टिकल a an और the|A an ve the tanımlıkları
+Present Simple vs Present Continuous|Presente simple frente a continuo|현재 단순형과 진행형 비교|Simple Present und Present Progressive|Presente semplice e progressivo|सामान्य और निरंतर वर्तमान काल|Geniş zaman ile şimdiki zaman
+Regular and Irregular Verbs|Verbos regulares e irregulares|규칙 동사와 불규칙 동사|Regelmäßige und unregelmäßige Verben|Verbi regolari e irregolari|नियमित और अनियमित क्रियाएँ|Düzenli ve düzensiz fiiller
+Be Going To|Futuro con going to|going to 미래형|Zukunft mit going to|Futuro con going to|गोइंग टू से भविष्य|Going to ile gelecek zaman
+Can / Can’t|Can y can't|can과 can't|Can und Can't|Can e can't|कैन और कैन्ट|Can ve can't
+Must / Mustn’t|Must y mustn't|must와 mustn't|Must und Mustn't|Must e mustn't|मस्ट और मस्टन्ट|Must ve mustn't
+Should / Shouldn’t|Should y shouldn't|should와 shouldn't|Should und Shouldn't|Should e shouldn't|शुड और शुडन्ट|Should ve shouldn't
+Adjectives|Adjetivos|형용사|Adjektive|Aggettivi|विशेषण|Sıfatlar
+Adverbs|Adverbios|부사|Adverbien|Avverbi|क्रिया विशेषण|Zarflar
+Question Words|Palabras interrogativas|의문사|Fragewörter|Parole interrogative|प्रश्नवाचक शब्द|Soru sözcükleri
+Some / Any|Some y any|some과 any|Some und Any|Some e any|सम और एनी|Some ve any
+Much / Many|Much y many|much와 many|Much und Many|Much e many|मच और मेनी|Much ve many
+A lot of|A lot of: mucha cantidad|많은 양을 나타내는 표현|A lot of: große Menge|A lot of: grande quantità|अ लॉट ऑफ़: अधिक मात्रा|A lot of: çok
+Past Simple vs Past Continuous|Pasado simple frente a continuo|과거 단순형과 과거 진행형|Simple Past und Past Progressive|Passato semplice e progressivo|सामान्य और निरंतर भूतकाल|Geçmiş zaman ile geçmişte süreklilik
+Present Perfect vs Past Simple|Pretérito perfecto frente a pasado simple|현재 완료와 과거 시제|Present Perfect und Simple Past|Present Perfect e passato semplice|वर्तमान पूर्ण और सामान्य भूतकाल|Present perfect ve geçmiş zaman
+Modals|Verbos modales|조동사|Modalverben|Verbi modali|सहायक भावसूचक क्रियाएँ|Kip fiilleri
+Can / Could|Can y could|can과 could|Can und Could|Can e could|कैन और कुड|Can ve could
+Must / Have to|Must y have to|must와 have to|Must und Have to|Must e have to|मस्ट और हैव टू|Must ve have to
+Should|Should: consejo|should 조동사|Should: Ratschläge|Should: consigli|शुड: सलाह|Should: tavsiye
+May / Might|May y might|may와 might|May und Might|May e might|मे और माइट|May ve might
+Comparative and Superlative|Comparativo y superlativo|비교급과 최상급|Komparativ und Superlativ|Comparativo e superlativo|तुलनात्मक और सर्वोत्तम|Karşılaştırma ve üstünlük
+Too / Enough|Too y enough|too와 enough|Too und Enough|Too ed enough|टू और इनफ़|Too ve enough
+Passive Voice — Introduction|Introducción a la voz pasiva|수동태 입문|Einführung ins Passiv|Introduzione alla forma passiva|कर्मवाच्य का परिचय|Edilgen çatıya giriş
+Relative Pronouns|Pronombres relativos|관계대명사|Relativpronomen|Pronomi relativi|संबंधवाचक सर्वनाम|İlgi zamirleri
+Who / Which / That|Who which y that|who which that 관계대명사|Who Which und That|Who which e that|हू विच और दैट|Who which ve that
+Gerunds and Infinitives — Introduction|Introducción al gerundio y al infinitivo|동명사와 부정사 입문|Einführung in Gerundium und Infinitiv|Introduzione a gerundio e infinito|क्रियावाचक संज्ञा और अनंत रूप परिचय|İsim-fiil ve mastara giriş
+Quantifiers|Cuantificadores|수량 표현|Mengenangaben|Quantificatori|परिमाणसूचक शब्द|Miktar belirleyiciler
+Few / Little|Few y little|few와 little|Few und Little|Few e little|फ़्यू और लिटल|Few ve little
+Some / Any / No|Some any y no|some any no|Some Any und No|Some any e no|सम एनी और नो|Some any ve no
+Question Tags — Introduction|Introducción a las coletillas interrogativas|부가의문문 입문|Einführung in Frageanhängsel|Introduzione alle domande con coda|प्रश्न-पूँछ का परिचय|Soru eklerine giriş
+Present Perfect Continuous|Pretérito perfecto continuo|현재 완료 진행형|Present Perfect Progressive|Present Perfect Continuous|वर्तमान पूर्ण निरंतर काल|Süregelen present perfect
+Past Perfect|Pluscuamperfecto|과거 완료|Past Perfect|Trapassato prossimo|पूर्ण भूतकाल|Geçmişte tamamlanmış zaman
+Past Perfect vs Past Simple|Pluscuamperfecto frente a pasado simple|과거 완료와 과거 단순형|Past Perfect und Simple Past|Trapassato e passato semplice|पूर्ण और सामान्य भूतकाल|Past perfect ve simple past
+Future Forms|Formas del futuro|미래 표현|Zukunftsformen|Forme del futuro|भविष्य काल के रूप|Gelecek zaman yapıları
+Future Continuous|Futuro continuo|미래 진행형|Future Progressive|Futuro continuo|भविष्य निरंतर काल|Gelecekte devam eden zaman
+Present Passive|Pasiva en presente|현재 수동태|Passiv im Präsens|Passivo al presente|वर्तमान कर्मवाच्य|Şimdiki zamanda edilgen
+Past Passive|Pasiva en pasado|과거 수동태|Passiv in der Vergangenheit|Passivo al passato|भूतकाल कर्मवाच्य|Geçmiş zamanda edilgen
+Future Passive|Pasiva en futuro|미래 수동태|Passiv in der Zukunft|Passivo al futuro|भविष्य कर्मवाच्य|Gelecek zamanda edilgen
+Relative Clauses|Oraciones de relativo|관계절|Relativsätze|Proposizioni relative|संबंधवाचक उपवाक्य|İlgi cümleleri
+Defining Relative Clauses|Oraciones de relativo especificativas|제한적 관계절|Notwendige Relativsätze|Relative restrittive|सीमित करने वाले संबंधवाचक उपवाक्य|Tanımlayıcı ilgi cümleleri
+Reported Speech — Introduction|Introducción al estilo indirecto|간접화법 입문|Einführung in indirekte Rede|Introduzione al discorso indiretto|अप्रत्यक्ष कथन का परिचय|Dolaylı anlatıma giriş
+Modal Verbs|Verbos modales|법조동사|Modalverben|Verbi modali|भावसूचक क्रियाएँ|Kip belirten fiiller
+Gerunds|Gerundios|동명사|Gerundium|Gerundi|क्रियावाचक संज्ञाएँ|İsim-fiiller
+Infinitives|Infinitivos|부정사|Infinitive|Infiniti|क्रिया के अनंत रूप|Mastarlar
+Gerunds vs Infinitives|Gerundios frente a infinitivos|동명사와 부정사의 차이|Gerundium und Infinitiv|Gerundi e infiniti|क्रियावाचक संज्ञा बनाम अनंत रूप|İsim-fiil ve mastar farkı
+Used to|Used to: hábitos pasados|used to 과거 습관|Used to: frühere Gewohnheiten|Used to: abitudini passate|यूज़्ड टू: पुरानी आदतें|Used to: geçmiş alışkanlıklar
+Question Tags|Coletillas interrogativas|부가의문문|Frageanhängsel|Domande con coda|प्रश्न-पूँछ|Soru ekleri
+Articles|Artículos|관사|Artikel|Articoli|आर्टिकल|Tanımlıklar
+Adjective Order|Orden de los adjetivos|형용사 어순|Reihenfolge der Adjektive|Ordine degli aggettivi|विशेषणों का क्रम|Sıfat sıralaması
+Future Perfect — Introduction|Introducción al futuro perfecto|미래 완료 입문|Einführung ins Future Perfect|Introduzione al futuro anteriore|भविष्य पूर्ण काल परिचय|Gelecekte bitmiş zamana giriş
+Active and Passive Voice|Voz activa y pasiva|능동태와 수동태|Aktiv und Passiv|Forma attiva e passiva|कर्तृवाच्य और कर्मवाच्य|Etken ve edilgen çatı
+Third Conditional — Introduction|Introducción al tercer condicional|제3 조건문 입문|Einführung in Bedingungssatz Typ 3|Introduzione al terzo periodo ipotetico|तीसरी शर्त का परिचय|Üçüncü koşula giriş
+Reported Questions|Preguntas indirectas|간접의문문|Indirekte Fragen|Domande indirette|अप्रत्यक्ष प्रश्न|Dolaylı sorular
+Modal Perfects — Introduction|Introducción a los modales perfectos|완료 조동사 입문|Einführung in Modal Perfect|Introduzione ai modali perfetti|पूर्ण भावसूचक क्रिया परिचय|Perfect kip yapılarına giriş
+Used to / Would|Used to y would|used to와 would|Used to und Would|Used to e would|यूज़्ड टू और वुड|Used to ve would
+Wish / If Only — Introduction|Introducción a wish e if only|wish와 if only 입문|Einführung in Wish und If Only|Introduzione a wish e if only|विश और इफ़ ओनली परिचय|Wish ve if only giriş
+Causative Have — Introduction|Introducción al have causativo|사역 have 입문|Einführung in kausatives Have|Introduzione al causativo have|कारक हैव का परिचय|Ettirgen have yapısına giriş
+Determiners|Determinantes|한정사|Determinierer|Determinanti|निर्धारक|Belirteçler
+Linking Words|Conectores|연결어|Bindewörter|Connettivi|संयोजक शब्द|Bağlaçlar
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
