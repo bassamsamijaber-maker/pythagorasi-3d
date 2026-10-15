@@ -90,7 +90,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  const levels=difficulty==='mixed'?['easy','medium','hard','expert']:[['easy','medium','hard','expert'].includes(difficulty)?difficulty:'medium'];
  const sourceLanguage=language==='ar'?'ar':'en';
  const add=(q,level)=>{
-  if(!validate(q,language))return;
+  if(result.length>=n||!validate(q,language))return;
   const prompt=norm(q.prompt);if(seen.has(prompt))return;seen.add(prompt);
   result.push({...q,type:'mcq',id:'assessment-'+topic.value+'-'+Date.now()+'-'+result.length,
    points:live?1000:10,topicKey:topic.value,subjectKey:topic.subject,curriculumTopicId:topic.value,
@@ -191,8 +191,21 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   addGraded(englishQuestions(topic,sourceLanguage));
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
   const available=geographyQuestions(topic,sourceLanguage);
-   const eligible=difficulty==='mixed'?available:available.filter(q=>q.difficulty===difficulty);
-   for(const q of eligible){add(q,q.difficulty||'medium');if(result.length>=n)break}
+   if(difficulty==='mixed'){
+    const groups=['easy','medium','hard','expert'].map(level=>({level,bank:available.filter(q=>q.difficulty===level),cursor:0}));
+    let active=true;
+    while(result.length<n&&active){
+     active=false;
+     for(const group of groups){
+      if(group.cursor>=group.bank.length)continue;
+      add(group.bank[group.cursor++],group.level);
+      active=true;
+      if(result.length>=n)break;
+     }
+    }
+   }else{
+    for(const q of available.filter(q=>q.difficulty===difficulty)){add(q,q.difficulty||'medium');if(result.length>=n)break}
+   }
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
   addGraded(historyQuestions(topic,sourceLanguage));
  }else if(topic.subject==='english'&&englishBank[topic.title]){
