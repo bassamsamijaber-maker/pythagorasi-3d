@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v156-multilingual-main-and-periodic";
+const CACHE_NAME="classora-v157-localized-support-and-chemistry";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
