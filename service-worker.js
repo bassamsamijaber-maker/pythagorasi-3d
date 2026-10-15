@@ -1,10 +1,10 @@
-const CACHE_NAME="classora-v155-complete-curriculum-locales";
+const CACHE_NAME="classora-v156-multilingual-main-and-periodic";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
   "./assets/classora-dock-stable-v140.css?v=140",
   "./assets/classora-locales-v140.css?v=140",
-  "./assets/classora-locales-v140.js?v=141",
+  "./assets/classora-locales-v140.js?v=156",
   "./assets/classora-responsive-v131.css?v=138",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
@@ -105,9 +105,9 @@ const APP_SHELL=[
   "./assets/classora-assistant-motion-v134.js?v=139",
   "./assets/classora-assistant-motion-v134.css?v=134",
   "./support.html",
-  "./chemistry/periodic-table.html?v=128",
+  "./chemistry/periodic-table.html?v=156",
   "./chemistry/periodic-table.css?v=124",
-  "./chemistry/periodic-table.js?v=128",
+  "./chemistry/periodic-table.js?v=156",
   "./icons/favicon-32.png",
   "./icons/classora-180.png",
   "./icons/classora-192.png",
@@ -128,7 +128,7 @@ self.addEventListener("install",event=>{
         "./manifest.webmanifest",
         "./assets/classora-dock-stable-v140.css?v=140",
         "./assets/classora-locales-v140.css?v=140",
-        "./assets/classora-locales-v140.js?v=141"
+        "./assets/classora-locales-v140.js?v=156"
       ];
       // Prevent large parallel precache requests from stalling mobile startup.
       // Lesson assets are cached when requested instead.
