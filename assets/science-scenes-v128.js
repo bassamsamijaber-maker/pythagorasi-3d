@@ -49,7 +49,7 @@ const txt=(x,y,s)=>`<text x="${x}" y="${y}" text-anchor="middle" fill="#e6f1f6" 
 const box=(x,y,w,h,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="${c}"/>`;
 const cube=(x,y,w,h,c)=>`<path d="M${x} ${y}l${w} -20 20 12v${h}l-${w} 20 -20 -12Z" fill="${c}"/><path d="M${x+w} ${y-20}l20 12v${h}l-20 -12Z" fill="#000" opacity=".2"/><path d="M${x} ${y}l${w} -20 20 12 -${w} 20Z" fill="#fff" opacity=".15"/>`;
 export function scienceScene(key,value=45,phase=0,language='ar'){
- const en=language==='en',T=(a,b)=>en?b:a,v=Math.max(0,Math.min(100,Number(value)||0)),p=phase%3,n=Math.max(1,Math.min(18,Math.round(v*17/100)+1));let art='',result='';
+ const selectedLanguage=document.documentElement.lang||language,en=language!=='ar',T=(a,b)=>selectedLanguage==='ar'?a:(window.ClassoraLocale?.tFor?.(selectedLanguage,b)||b),v=Math.max(0,Math.min(100,Number(value)||0)),p=phase%3,n=Math.max(1,Math.min(18,Math.round(v*17/100)+1));let art='',result='';
  if(['properties','mass','density'].includes(key)){
   const volume=key==='density'?20:Math.max(1,v),mass=key==='density'?v:volume*2;art=cube(150,140,70,volume+20,C[1])+line(380,90,380,265)+line(285,130,535,130)+box(270,200,75,25,C[2])+box(470,200,75,25,C[0])+txt(410,310,`${mass} g · ${volume} cm³`);result=`ρ = ${mass} ÷ ${volume} = ${+(mass/volume).toFixed(2)} g/cm³`;
  }else if(key==='states'||key==='mixture'){
