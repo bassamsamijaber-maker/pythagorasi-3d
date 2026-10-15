@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v145-lean-safe-startup";
+const CACHE_NAME="classora-v150-locales-expert-assessments";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
