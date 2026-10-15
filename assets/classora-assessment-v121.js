@@ -8,6 +8,7 @@ import {statisticsCompleteQuestion} from './classora-statistics-v148.js?v=148';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
 import {scienceLiveQuestions} from './learning-hub.js?v=131';
 import {combineTopicQuestions} from './classora-assessment-levels-v152.js?v=152';
+import {scienceTopicQuestions} from './classora-science-bank-v152.js?v=152';
 const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.dictionaries?.[lang]?.[en]||en);
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
@@ -30,12 +31,13 @@ for(const grade of [7,8,9,10]){
 const TOPIC_MAP=new Map(TOPICS.map(x=>[x.value,x]));
 const scienceMap=[
  [/الجدول الدوري|العناصر/, 'periodic'],
- [/بنية الذرة|الذرة|الجسيمات/, 'atoms'],
+ [/بنية الذرة|الذرة/, 'atoms'],
+ [/المادة|حالات المادة|الجسيمات|خصائصها/, 'matter'],
  [/السرعة|الحركة|القوى/, 'motion'],
  [/الحماض|الأحماض|القواعد|pH/, 'acids'],
  [/الطاقة|تحولات الطاقة/, 'energy'],
- [/الخلية|أجهزة جسم الإنسان/, 'body'],
- [/التغذية|البناء الضوئي/, 'plants']
+ [/أجهزة جسم الإنسان|الجهاز التنفسي|جهاز الدوران|التغذية/, 'body'],
+ [/البناء الضوئي|النباتات/, 'plants']
 ];
 const englishBank={
  'Present Simple':[['She ___ to school every day.',['go','goes','going','went'],'goes'],['They ___ football on Fridays.',['play','plays','playing','played'],'play']],
@@ -139,10 +141,13 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    }
   }
  }else if(topic.subject==='science'){
+  const original=scienceTopicQuestions(topic.title,sourceLanguage);
   const kind=scienceMap.find(([re])=>re.test(topic.title))?.[1];
-  if(kind){
-   const available=scienceLiveQuestions(Math.max(n*3,30),sourceLanguage,kind);
-   for(const [i,q] of available.entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
+  const source=original.length?original:(kind?scienceLiveQuestions(Math.max(n,30),sourceLanguage,kind):[]);
+  const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
+  for(const level of requests){
+   for(const q of combineTopicQuestions(source,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}
+   if(result.length>=n)break;
   }
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
   const base=englishQuestions(topic,sourceLanguage);
