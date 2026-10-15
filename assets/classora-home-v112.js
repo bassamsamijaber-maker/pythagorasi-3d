@@ -66,8 +66,8 @@ export function mountClassoraHomeV112(api){
   return true;
  }
  function allRows(){return stored===null?defaultPromos:stored;}
- function localTitle(p){return (lang()==="en"?p.titleEn:p.titleAr)||p.titleAr||p.titleEn||t("جديد على كلاسورا","New on Classora");}
- function localBody(p){return (lang()==="en"?p.bodyEn:p.bodyAr)||p.bodyAr||p.bodyEn||"";}
+ function localTitle(p){return t(p.titleAr||p.titleEn||'Classora',p.titleEn||p.titleAr||'Classora');}
+ function localBody(p){return t(p.bodyAr||p.bodyEn||'',p.bodyEn||p.bodyAr||'');}
  const newNode=(tag,cls,text)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(text!=null)x.textContent=text;return x};
  function goTo(p){
   if(p.kind==="pythagoras"){get("lobbyLabBtn")?.click();return}
