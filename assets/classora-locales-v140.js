@@ -270,6 +270,56 @@ Question count|Número de preguntas|문항 수|Fragenanzahl|Numero di domande|�
 Select difficulty|Selecciona la dificultad|난이도 선택|Schwierigkeit wählen|Seleziona difficoltà|कठिनाई चुनें|Zorluk seç
 Expert challenge.|Desafío experto.|전문가 도전.|Expertenaufgabe.|Sfida esperta.|विशेषज्ञ चुनौती।|Uzman mücadelesi.
 Topic|Tema|주제|Thema|Argomento|विषय|Konu
+Positive and negative numbers|Números positivos y negativos|양수와 음수|Positive und negative Zahlen|Numeri positivi e negativi|धनात्मक और ऋणात्मक संख्याएँ|Pozitif ve negatif sayılar
+Order of operations|Orden de las operaciones|연산 순서|Rechenreihenfolge|Ordine delle operazioni|संचालन का क्रम|İşlem önceliği
+Powers and roots|Potencias y raíces|거듭제곱과 제곱근|Potenzen und Wurzeln|Potenze e radici|घात और मूल|Üslü sayılar ve kökler
+Algebraic expressions|Expresiones algebraicas|대수식|Algebraische Ausdrücke|Espressioni algebriche|बीजीय व्यंजक|Cebirsel ifadeler
+Variables|Variables|변수|Variablen|Variabili|चर|Değişkenler
+Combining like terms|Reducir términos semejantes|동류항 정리|Gleichartige Terme zusammenfassen|Riduzione dei termini simili|समान पदों को जोड़ना|Benzer terimleri birleştirme
+Distributive property|Propiedad distributiva|분배법칙|Distributivgesetz|Proprietà distributiva|वितरण नियम|Dağılma özelliği
+Linear equations|Ecuaciones lineales|일차방정식|Lineare Gleichungen|Equazioni lineari|रैखिक समीकरण|Doğrusal denklemler
+Word problems|Problemas de texto|문장제 문제|Textaufgaben|Problemi con testo|शब्द समस्याएँ|Sözel problemler
+Ratio and proportion|Razón y proporción|비와 비례|Verhältnis und Proportion|Rapporti e proporzioni|अनुपात और समानुपात|Oran ve orantı
+Coordinate plane|Plano cartesiano|좌표평면|Koordinatensystem|Piano cartesiano|निर्देशांक तल|Koordinat düzlemi
+Angles|Ángulos|각|Winkel|Angoli|कोण|Açılar
+Triangles|Triángulos|삼각형|Dreiecke|Triangoli|त्रिभुज|Üçgenler
+Perimeter and area|Perímetro y área|둘레와 넓이|Umfang und Fläche|Perimetro e area|परिमाप और क्षेत्रफल|Çevre ve alan
+Systems of equations|Sistemas de ecuaciones|연립방정식|Gleichungssysteme|Sistemi di equazioni|समीकरणों की प्रणाली|Denklem sistemleri
+System of two equations|Sistema de dos ecuaciones|연립일차방정식|System aus zwei Gleichungen|Sistema di due equazioni|दो समीकरणों का निकाय|İki denklemli sistem
+Equation of a line|Ecuación de la recta|직선의 방정식|Geradengleichung|Equazione della retta|रेखा का समीकरण|Doğrunun denklemi
+Parallel lines|Rectas paralelas|평행선|Parallele Geraden|Rette parallele|समांतर रेखाएँ|Paralel doğrular
+Triangle congruence|Congruencia de triángulos|삼각형의 합동|Dreieckskongruenz|Congruenza dei triangoli|त्रिभुजों की सर्वांगसमता|Üçgenlerde eşlik
+Triangle similarity|Semejanza de triángulos|삼각형의 닮음|Dreiecksähnlichkeit|Similitudine dei triangoli|त्रिभुजों की समरूपता|Üçgenlerde benzerlik
+Quadratic equations|Ecuaciones cuadráticas|이차방정식|Quadratische Gleichungen|Equazioni quadratiche|द्विघात समीकरण|İkinci dereceden denklemler
+Quadratic function|Función cuadrática|이차함수|Quadratische Funktion|Funzione quadratica|द्विघात फलन|İkinci dereceden fonksiyon
+Parabola|Parábola|포물선|Parabel|Parabola|परवलय|Parabol
+Factoring|Factorización|인수분해|Faktorisieren|Scomposizione in fattori|गुणनखंड करना|Çarpanlara ayırma
+Geometry|Geometría|기하학|Geometrie|Geometria|ज्यामिति|Geometri
+Trigonometry|Trigonometría|삼각법|Trigonometrie|Trigonometria|त्रिकोणमिति|Trigonometri
+Matter and its properties|Materia y sus propiedades|물질과 성질|Materie und ihre Eigenschaften|Materia e proprietà|पदार्थ और उसके गुण|Madde ve özellikleri
+States of matter|Estados de la materia|물질의 상태|Aggregatzustände|Stati della materia|पदार्थ की अवस्थाएँ|Maddenin halleri
+Mass and volume|Masa y volumen|질량과 부피|Masse und Volumen|Massa e volume|द्रव्यमान और आयतन|Kütle ve hacim
+Particles and atoms|Partículas y átomos|입자와 원자|Teilchen und Atome|Particelle e atomi|कण और परमाणु|Parçacıklar ve atomlar
+Energy transformations|Transformaciones de energía|에너지 전환|Energieumwandlungen|Trasformazioni energetiche|ऊर्जा रूपांतरण|Enerji dönüşümleri
+Heat and temperature|Calor y temperatura|열과 온도|Wärme und Temperatur|Calore e temperatura|ऊष्मा और तापमान|Isı ve sıcaklık
+Forces and motion|Fuerzas y movimiento|힘과 운동|Kräfte und Bewegung|Forze e movimento|बल और गति|Kuvvet ve hareket
+The cell|La célula|세포|Die Zelle|La cellula|कोशिका|Hücre
+Human body systems|Sistemas del cuerpo humano|인체의 기관계|Organsysteme des Menschen|Apparati del corpo umano|मानव शरीर तंत्र|İnsan vücut sistemleri
+Atomic structure|Estructura atómica|원자 구조|Atomaufbau|Struttura atomica|परमाणु संरचना|Atom yapısı
+Compounds|Compuestos|화합물|Verbindungen|Composti|यौगिक|Bileşikler
+Mixtures|Mezclas|혼합물|Gemische|Miscele|मिश्रण|Karışımlar
+Chemical reactions|Reacciones químicas|화학 반응|Chemische Reaktionen|Reazioni chimiche|रासायनिक अभिक्रियाएँ|Kimyasal tepkimeler
+Electricity|Electricidad|전기|Elektrizität|Elettricità|विद्युत|Elektrik
+Electric circuits|Circuitos eléctricos|전기 회로|Stromkreise|Circuiti elettrici|विद्युत परिपथ|Elektrik devreleri
+Electric current|Corriente eléctrica|전류|Elektrischer Strom|Corrente elettrica|विद्युत धारा|Elektrik akımı
+Reproduction|Reproducción|생식|Fortpflanzung|Riproduzione|प्रजनन|Üreme
+Basic genetics|Genética básica|기초 유전학|Grundlagen der Genetik|Genetica di base|आनुवंशिकी का परिचय|Temel genetik
+Ecosystems|Ecosistemas|생태계|Ökosysteme|Ecosistemi|पारिस्थितिकी तंत्र|Ekosistemler
+Food chains|Cadenas alimentarias|먹이 사슬|Nahrungsketten|Catene alimentari|खाद्य श्रृंखलाएँ|Besin zincirleri
+Acceleration|Aceleración|가속도|Beschleunigung|Accelerazione|त्वरण|İvme
+Chemical bonds|Enlaces químicos|화학 결합|Chemische Bindungen|Legami chimici|रासायनिक बंध|Kimyasal bağlar
+Cellular respiration|Respiración celular|세포 호흡|Zellatmung|Respirazione cellulare|कोशिकीय श्वसन|Hücresel solunum
+Photosynthesis|Fotosíntesis|광합성|Photosynthese|Fotosintesi|प्रकाश संश्लेषण|Fotosentez
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
