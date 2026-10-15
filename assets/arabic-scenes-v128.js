@@ -4,7 +4,7 @@ const verbRoles=new Set(['past','present','verb','command','passive','subjunctiv
 const subjectRoles=new Set(['subject','topic','kanaNoun','innaNoun','noNoun','pronoun']);
 const complements={object:['ماذا؟','What?'],state:['كيف؟','How?'],purpose:['لماذا؟','Why?'],time:['متى؟','When?'],place:['أين؟','Where?'],absolute:['كيف وقع الفعل أو كم مرة؟','How did it happen, or how often?'],with:['مع ماذا؟','Alongside what?'],specification:['ماذا تقصد الكمية أو النسبة؟','What does the quantity or relation mean?']};
 export function arabicStructure(d,example,active=0,showAll=false,language='ar'){
- const en=language==='en',ix=en?1:0,T=(a,b)=>en?b:a;
+ const selectedLanguage=document.documentElement.lang||language,en=language!=='ar',ix=en?1:0,T=(a,b)=>selectedLanguage==='ar'?a:(window.ClassoraLocale?.tFor?.(selectedLanguage,b)||b);
  const word=(t,i)=>`<button type="button" class="ca-word ${i===active?'selected':''}" data-token="${i}" aria-pressed="${i===active}"><b lang="ar" dir="rtl">${E(t.word)}</b><span dir="${en?'ltr':'rtl'}">${showAll||i===active?E(AR_ROLES[t.role][ix]):T('اكتشف الدور','Discover role')}</span></button>`;
  const rows=example.tokens.map((t,i)=>({t,i})),groups=[];
  const group=(label,items,extra='')=>{if(items.length)groups.push(`<section class="ca-station"><small>${E(label)}</small>${items.map(({t,i})=>word(t,i)).join('')}${extra}</section>`)};
