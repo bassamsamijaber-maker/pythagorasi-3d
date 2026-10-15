@@ -1259,6 +1259,7 @@ Suitable irrigation range in this example|Intervalo de riego adecuado en este ej
 Illustrative thresholds only; actual need depends on crop, soil and weather.|Umbrales ilustrativos; la necesidad real depende del cultivo, el suelo y el clima.|기준은 예시입니다. 실제 물 필요량은 작물, 토양, 날씨에 따라 다릅니다.|Nur Beispielgrenzen; der reale Bedarf hängt von Pflanze, Boden und Wetter ab.|Limiti illustrativi; il bisogno reale dipende da coltura, suolo e clima.|सीमाएँ उदाहरण हैं; असली जरूरत फसल, मिट्टी और मौसम पर निर्भर है।|Eşikler örnektir; gerçek ihtiyaç ürün, toprak ve havaya bağlıdır.
 Terrain + roads + services → location analysis|Relieve + carreteras + servicios → análisis de ubicación|지형 + 도로 + 서비스 → 입지 분석|Gelände + Straßen + Dienste → Standortanalyse|Terreno + strade + servizi → analisi del luogo|भूभाग + सड़क + सेवाएँ → स्थान विश्लेषण|Arazi + yollar + hizmetler → konum analizi
  exposed buildings in the model| edificios expuestos en el modelo| 모델에서 위험에 노출된 건물| gefährdete Gebäude im Modell| edifici esposti nel modello| मॉडल में जोखिम वाले भवन| modelde maruz kalan binalar
+Skip guide|Omitir guía|안내 건너뛰기|Anleitung überspringen|Salta la guida|मार्गदर्शन छोड़ें|Rehberi atla
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
