@@ -830,6 +830,54 @@ Clear comparison|Borrar comparación|비교 초기화|Vergleich zurücksetzen|Ca
 SAVED STATE|ESTADO GUARDADO|저장한 상태|GESPEICHERTER ZUSTAND|STATO SALVATO|सहेजी स्थिति|KAYDEDİLEN DURUM
 CURRENT STATE|ESTADO ACTUAL|현재 상태|AKTUELLER ZUSTAND|STATO ATTUALE|वर्तमान स्थिति|GEÇERLİ DURUM
 State saved. Change one thing and observe the difference.|Estado guardado. Cambia una cosa y observa la diferencia.|상태가 저장됐어요. 하나만 바꾸고 차이를 관찰하세요.|Zustand gespeichert. Ändere eine Sache und beobachte den Unterschied.|Stato salvato. Cambia una cosa e osserva la differenza.|स्थिति सहेजी गई। एक चीज़ बदलकर अंतर देखें।|Durum kaydedildi. Bir şeyi değiştirip farkı gözlemle.
+Follow Classora for news and new activities.|Sigue Classora para conocer novedades y actividades.|Classora를 팔로우하고 새 소식과 활동을 확인하세요.|Folge Classora für Neuigkeiten und neue Aktivitäten.|Segui Classora per notizie e nuove attività.|नई खबरों और गतिविधियों के लिए क्लासोरा को फ़ॉलो करें।|Haberler ve yeni etkinlikler için Classora'yı takip et.
+Our Instagram page|Nuestra página de Instagram|인스타그램 페이지|Unsere Instagram-Seite|La nostra pagina Instagram|हमारा इंस्टाग्राम पेज|Instagram sayfamız
+Curriculum is loading. Try again in a moment.|Se está cargando el currículo. Inténtalo de nuevo en un momento.|교육과정을 불러오는 중입니다. 잠시 후 다시 시도하세요.|Der Lehrplan wird geladen. Versuche es gleich erneut.|Il programma si sta caricando. Riprova tra poco.|पाठ्यक्रम लोड हो रहा है। थोड़ी देर बाद फिर प्रयास करें।|Müfredat yükleniyor. Biraz sonra yeniden dene.
+CURRICULUM|PLAN DE ESTUDIOS|교육과정|LEHRPLAN|PROGRAMMA|पाठ्यक्रम|MÜFREDAT
+Choose your grade, then a subject|Elige primero tu curso y luego la asignatura|먼저 학년, 다음으로 과목을 선택하세요|Wähle zuerst die Klasse und dann das Fach|Scegli prima la classe e poi la materia|पहले कक्षा, फिर विषय चुनें|Önce sınıfı ardından dersi seç
+Grades 7–10. Arabic is grammar-only and English is grammar-only. Every topic has learning, practice, an exam and live competition.|Cursos 7 a 10. Árabe e inglés incluyen gramática. Cada tema tiene lección, ejercicios, examen y competición en directo.|7~10학년 대상입니다. 아랍어와 영어는 문법 중심입니다. 각 주제에는 수업, 연습, 시험, 실시간 대회가 있습니다.|Klassen 7 bis 10. Arabisch und Englisch umfassen Grammatik. Jedes Thema bietet Lernen, Üben, Prüfung und Live-Wettbewerb.|Classi dalla 7 alla 10. Arabo e inglese trattano la grammatica. Ogni argomento offre studio, esercizi, esame e gara dal vivo.|कक्षा 7 से 10 तक। अरबी और अंग्रेज़ी में व्याकरण है। हर विषय में पाठ, अभ्यास, परीक्षा और लाइव प्रतियोगिता है।|7–10. sınıflar. Arapça ve İngilizce dil bilgisi odaklıdır. Her konuda ders, alıştırma, sınav ve canlı yarışma vardır.
+topics|temas|주제|Themen|argomenti|विषय|konular
+Physics|Física|물리|Physik|Fisica|भौतिक विज्ञान|Fizik
+Biology|Biología|생물학|Biologie|Biologia|जीव विज्ञान|Biyoloji
+This subject is not added for this grade yet.|Esta asignatura aún no está disponible para este curso.|이 학년에는 아직 이 과목이 없습니다.|Dieses Fach ist für diese Klasse noch nicht verfügbar.|Questa materia non è ancora disponibile per questa classe.|इस कक्षा में यह विषय अभी नहीं जोड़ा गया है।|Bu ders bu sınıfa henüz eklenmedi.
+YOUR LEARNING SPACE|TU ESPACIO DE APRENDIZAJE|나의 학습 공간|DEIN LERNBEREICH|IL TUO SPAZIO DI STUDIO|आपका सीखने का स्थान|ÖĞRENME ALANIN
+Think. Try. Understand.|Piensa. Prueba. Comprende.|생각하고 실험하고 이해하세요.|Denken. Ausprobieren. Verstehen.|Pensa. Prova. Comprendi.|सोचें। आज़माएँ। समझें।|Düşün. Dene. Anla.
+Choose a subject. Explore an idea. Make it click.|Elige una asignatura, explora una idea y compréndela.|과목을 골라 개념을 탐구하고 이해해 보세요.|Wähle ein Fach, erkunde eine Idee und verstehe sie.|Scegli una materia, esplora un concetto e comprendi.|एक विषय चुनें, विचार समझें और अभ्यास करें।|Ders seç, bir fikri keşfet ve kavra.
+Search topics, labs or tools…|Buscar temas, laboratorios o herramientas…|주제, 실험실, 도구 검색…|Themen, Labore oder Werkzeuge suchen…|Cerca argomenti, laboratori o strumenti…|विषय, प्रयोगशाला या उपकरण खोजें…|Konu, laboratuvar veya araç ara…
+lesson + 3D + exam + live competition|lección + 3D + examen + competición en directo|수업 + 3D + 시험 + 실시간 대회|Lektion + 3D + Prüfung + Live-Wettbewerb|lezione + 3D + esame + gara in diretta|पाठ + 3D + परीक्षा + लाइव प्रतियोगिता|ders + 3B + sınav + canlı yarışma
+GEOMETRY|GEOMETRÍA|기하학|GEOMETRIE|GEOMETRIA|ज्यामिति|GEOMETRİ
+MATHEMATICS|MATEMÁTICAS|수학|MATHEMATIK|MATEMATICA|गणित|MATEMATİK
+SCIENCE|CIENCIAS|과학|NATURWISSENSCHAFT|SCIENZE|विज्ञान|FEN BİLİMLERİ
+ARABIC GRAMMAR|GRAMÁTICA ÁRABE|아랍어 문법|ARABISCHE GRAMMATIK|GRAMMATICA ARABA|अरबी व्याकरण|ARAPÇA DİL BİLGİSİ
+TOOLS|HERRAMIENTAS|도구|WERKZEUGE|STRUMENTI|उपकरण|ARAÇLAR
+This topic is not currently available in Classora.|Este tema aún no está disponible en Classora.|이 주제는 아직 Classora에서 제공되지 않습니다.|Dieses Thema ist in Classora noch nicht verfügbar.|Questo argomento non è ancora disponibile in Classora.|यह विषय अभी क्लासोरा में उपलब्ध नहीं है।|Bu konu henüz Classora'da yok.
+Request this topic|Solicitar este tema|이 주제 요청하기|Dieses Thema anfragen|Richiedi questo argomento|इस विषय का अनुरोध करें|Bu konuyu iste
+Science live competition|Competición de ciencias en directo|실시간 과학 대회|Live-Wettbewerb in Naturwissenschaften|Gara di scienze in diretta|विज्ञान लाइव प्रतियोगिता|Canlı fen yarışması
+Science class exams|Exámenes de ciencias|과학 시험|Naturwissenschaftliche Prüfungen|Esami di scienze|विज्ञान परीक्षाएँ|Fen sınavları
+A clear example|Un ejemplo claro|쉬운 예시|Ein klares Beispiel|Un esempio chiaro|आसान उदाहरण|Açık bir örnek
+Try a question|Prueba una pregunta|문제 풀어보기|Eine Frage ausprobieren|Prova una domanda|एक प्रश्न हल करें|Bir soru dene
+Open particle lab|Abrir laboratorio de partículas|입자 실험실 열기|Teilchenlabor öffnen|Apri laboratorio di particelle|कण प्रयोगशाला खोलें|Parçacık laboratuvarını aç
+Explore elements|Explorar elementos|원소 탐구|Elemente erforschen|Esplora gli elementi|तत्वों का अध्ययन|Elementleri keşfet
+Ask about this idea|Pregunta sobre esta idea|이 개념 질문하기|Zu dieser Idee fragen|Chiedi di questo concetto|इस विचार के बारे में पूछें|Bu fikri sor
+Try: explain simply or give me an example|Prueba: explica de forma sencilla o dame un ejemplo|예시: 쉽게 설명해 줘 또는 예시를 보여 줘|Versuche: einfach erklären oder ein Beispiel geben|Prova: spiega semplicemente oppure fammi un esempio|कोशिश करें: आसान समझाओ या उदाहरण दो|Şunu dene: basitçe açıkla veya örnek ver
+Ask|Preguntar|질문하기|Fragen|Chiedi|पूछें|Sor
+Science challenge|Desafío de ciencias|과학 도전|Naturwissenschaftliche Aufgabe|Sfida di scienze|विज्ञान चुनौती|Fen meydan okuması
+Start practice|Empezar práctica|연습 시작|Übung starten|Inizia esercizio|अभ्यास शुरू करें|Alıştırmaya başla
+Self-test: 10 questions|Autoevaluación: 10 preguntas|자가 시험: 10문제|Selbsttest: 10 Fragen|Autoverifica: 10 domande|स्व-परीक्षा: 10 प्रश्न|Öz değerlendirme: 10 soru
+Science practice|Práctica de ciencias|과학 연습|Naturwissenschaftliche Übung|Esercizi di scienze|विज्ञान अभ्यास|Fen alıştırması
+Review every answer|Repasar todas las respuestas|모든 답 확인하기|Alle Antworten prüfen|Rivedi tutte le risposte|सभी उत्तरों की समीक्षा|Tüm cevapları gözden geçir
+Your answer: |Tu respuesta: |내 답: |Deine Antwort: |La tua risposta: |आपका उत्तर: |Cevabın: 
+Correct: |Correcto: |정답: |Richtig: |Corretto: |सही: |Doğru: 
+New questions|Nuevas preguntas|새 문제|Neue Fragen|Nuove domande|नए प्रश्न|Yeni sorular
+QUESTION |PREGUNTA |문제 |FRAGE |DOMANDA |प्रश्न |SORU 
+Correct answer: |Respuesta correcta: |정답: |Richtige Antwort: |Risposta corretta: |सही उत्तर: |Doğru cevap: 
+Answer recorded for this test.|Respuesta guardada para esta prueba.|이 시험의 답을 기록했습니다.|Antwort für diesen Test gespeichert.|Risposta registrata per il test.|इस परीक्षा के लिए उत्तर दर्ज हुआ।|Bu test için cevap kaydedildi.
+Identify what the question asks and the scientific idea.|Identifica qué se pide y el concepto científico.|문제의 요구와 과학 개념을 파악하세요.|Erkenne die Frage und das wissenschaftliche Konzept.|Individua la domanda e il concetto scientifico.|प्रश्न में क्या पूछा है और वैज्ञानिक विचार पहचानें।|Sorunun ne istediğini ve bilimsel fikri belirle.
+Compare the options with the lesson and eliminate unsuitable choices.|Compara las opciones con la lección y descarta las incorrectas.|선택지를 수업 내용과 비교하고 맞지 않는 답을 제외하세요.|Vergleiche die Optionen mit der Lektion und schließe unpassende aus.|Confronta le opzioni con la lezione ed elimina quelle inadatte.|विकल्पों की पाठ से तुलना करें और गलत उत्तर हटाएँ।|Seçenekleri dersle karşılaştır ve uygun olmayanları ele.
+Arabic test — Idafa|Prueba de árabe — Idafa|아랍어 시험 — 이다파|Arabischtest — Idafa|Test di arabo — Idafa|अरबी परीक्षा — इदाफ़ा|Arapça sınavı — İzafet
+Idafa practice|Práctica de Idafa|이다파 연습|Idafa-Übung|Esercizi di Idafa|इदाफ़ा अभ्यास|İzafet alıştırması
+Answer review|Revisión de respuestas|답안 검토|Antwortübersicht|Revisione delle risposte|उत्तर समीक्षा|Cevap incelemesi
+Answer recorded.|Respuesta guardada.|답이 기록됐어요.|Antwort gespeichert.|Risposta registrata.|उत्तर दर्ज हुआ।|Cevap kaydedildi.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
