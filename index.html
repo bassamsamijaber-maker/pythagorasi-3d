@@ -85,20 +85,31 @@ body.classora-intro-active{overflow:auto!important}
 <script src="./assets/classora-locales-v140.js?v=141"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 
-<style id="classora-statistics-tables-v147">
-.ca-stats-intro,.ca-stats-question{display:block;line-height:1.75;white-space:normal;overflow-wrap:anywhere}
-.ca-stats-intro{margin-bottom:10px}
-.ca-stats-question{font-weight:750;margin-top:12px}
-.ca-stats-scroll{overflow-x:auto;max-width:100%;margin:12px 0;padding:1px;border-radius:13px;-webkit-overflow-scrolling:touch;border:1px solid rgba(126,211,198,.28);background:rgba(4,20,31,.55)}
+<style id="classora-statistics-tables-v148">
+.ca-stats-intro,.ca-stats-question,.ca-stats-prose{display:block;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
+.ca-stats-intro,.ca-stats-prose{margin:8px 0}.ca-stats-question{font-weight:750;margin:12px 0}
+.ca-stats-scroll,.ca-stats-chart-wrap{max-width:100%;overflow-x:auto;margin:12px 0;padding:1px;border-radius:13px;-webkit-overflow-scrolling:touch;border:1px solid rgba(126,211,198,.28);background:rgba(4,20,31,.55)}
+.ca-stats-scroll{overflow-x:auto}
 .ca-stats-table{width:100%;min-width:265px;border-collapse:collapse;table-layout:fixed;text-align:center;direction:inherit;font-size:clamp(12px,2.9vw,15px);font-weight:600}
 .ca-stats-table th,.ca-stats-table td{border:1px solid rgba(126,211,198,.16);padding:9px 5px;overflow-wrap:anywhere;line-height:1.4}
 .ca-stats-table thead th{background:rgba(33,157,140,.22);font-weight:800}
 .ca-stats-table tbody tr:last-child td{background:rgba(33,157,140,.1);font-weight:800}
-.exam-q-title:has(.ca-stats-scroll){min-width:0;flex:1;max-width:100%;white-space:normal}
-#compQuestionText:has(.ca-stats-scroll){display:block;text-align:center;white-space:normal;max-width:100%;font-size:clamp(15px,3.6vw,20px)}
-#compQuestionText .ca-stats-scroll{max-width:670px;margin:12px auto}
-.auto-preview-q:has(.ca-stats-scroll){overflow:hidden}
-@media(max-width:450px){.exam-q-head:has(.ca-stats-scroll){flex-wrap:wrap}.ca-stats-table th,.ca-stats-table td{padding:7px 3px}}
+.ca-stats-chart-wrap{padding:10px 6px}
+.ca-stats-chart{width:100%;min-width:450px;max-width:680px;height:auto;margin:0 auto;display:block;overflow:visible}
+.ca-stats-chart text{fill:#d9e8ed;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:13px}
+.ca-stats-chart .ca-tick{fill:#a6c2cc;font-size:12px}
+.ca-stats-chart .ca-axis{stroke:#6a92a3;stroke-width:1.2}
+.ca-stats-chart .ca-grid{stroke:rgba(174,214,221,.2);stroke-width:1}
+.ca-stats-chart .ca-bar{stroke:rgba(255,255,255,.38);stroke-width:.8}
+.ca-stats-chart .ca-line{stroke:#46dac1;stroke-width:3.5;fill:none;stroke-linejoin:round}
+.ca-stats-chart .ca-dot{fill:#fff;stroke:#2fb99f;stroke-width:3}
+.ca-stats-chart .ca-slice{stroke:#081824;stroke-width:2}
+.ca-stats-chart .ca-chart-title{font-weight:750;fill:#f1fafb;font-size:14px}
+.exam-q-title:has(.ca-stats-scroll),.exam-q-title:has(.ca-stats-chart-wrap){min-width:0;flex:1;max-width:100%;white-space:normal;overflow:hidden}
+#compQuestionText:has(.ca-stats-scroll),#compQuestionText:has(.ca-stats-chart-wrap){display:block;text-align:center;white-space:normal;max-width:100%;font-size:clamp(15px,3.6vw,20px)}
+#compQuestionText .ca-stats-scroll,#compQuestionText .ca-stats-chart-wrap{max-width:670px;margin:12px auto}
+.auto-preview-q:has(.ca-stats-scroll),.auto-preview-q:has(.ca-stats-chart-wrap){overflow:hidden}
+@media(max-width:450px){.exam-q-head:has(.ca-stats-scroll),.exam-q-head:has(.ca-stats-chart-wrap){flex-wrap:wrap}.ca-stats-table th,.ca-stats-table td{padding:7px 3px}}
 </style>
 </head>
 <body class="classora-intro-active">
@@ -2440,7 +2451,7 @@ import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=147';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=148';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=140';
@@ -5858,19 +5869,78 @@ function renderExamQuestions(){
 }
 
 
-function formatStatisticsPrompt(value){
-  const s=String(value??"");
-  const match=/^([\s\S]*?)\[\[STAT_TABLE\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_TABLE\]\]([\s\S]*)$/.exec(s);
-  if(!match)return escapeHtml(s);
-  const rows=match[2].trim().split(/\r?\n/).map(line=>line.split("|").map(cell=>cell.trim()));
-  if(rows.length<3||rows.some(row=>row.length!==3))return escapeHtml(s);
-  const cells=(row,tag)=>"<tr>"+row.map(value=>"<"+tag+">"+escapeHtml(value)+"</"+tag+">").join("")+"</tr>";
-  return '<span class="ca-stats-intro">'+escapeHtml(match[1].trim())+'</span>'+
-   '<div class="ca-stats-scroll" role="region" aria-label="Frequency table" tabindex="0"><table class="ca-stats-table"><thead>'+cells(rows[0],"th")+'</thead><tbody>'+
-   rows.slice(1).map(row=>cells(row,"td")).join("")+'</tbody></table></div>'+
-   '<span class="ca-stats-question">'+escapeHtml(match[3].trim())+'</span>';
+function renderStatisticsTable(block){
+ const rows=String(block).trim().split(/\r?\n/).map(line=>line.split("|").map(cell=>cell.trim()));
+ if(rows.length<3||rows.length>16||rows.some(row=>row.length!==3))return '<span class="ca-stats-prose">'+escapeHtml(block)+'</span>';
+ const cells=(row,tag)=>"<tr>"+row.map(v=>"<"+tag+">"+escapeHtml(v)+"</"+tag+">").join("")+"</tr>";
+ return '<div class="ca-stats-scroll" role="region" aria-label="Frequency table" tabindex="0"><table class="ca-stats-table"><thead>'+cells(rows[0],"th")+'</thead><tbody>'+
+ rows.slice(1).map(row=>cells(row,"td")).join("")+'</tbody></table></div>';
 }
-
+function renderStatisticsChart(type,block){
+ const rows=String(block).trim().split(/\r?\n/).map(line=>line.split("|").map(part=>part.trim()));
+ const valid=['bar','line','pie','histogram'].includes(type)&&rows.length>=3&&rows.length<=13&&rows.every(r=>r.length===2);
+ if(!valid)return '<span class="ca-stats-prose">'+escapeHtml(block)+'</span>';
+ const labels=rows.slice(1).map(r=>r[0]),vals=rows.slice(1).map(r=>Number(r[1]));
+ if(vals.some(v=>!Number.isFinite(v)||v<0)||vals.every(v=>v===0))return '<span class="ca-stats-prose">'+escapeHtml(block)+'</span>';
+ const safe=s=>escapeHtml(String(s));
+ const palette=['#35c9b3','#5bb7f3','#f5bc60','#b6a0fd','#f38aa9','#a4d9ab','#f0a370','#78d4e5'];
+ const title=rows[0].join(' — ');
+ const text=(x,y,value,klass='',attrs='')=>'<text x="'+x+'" y="'+y+'" class="'+klass+'" '+attrs+'>'+safe(value)+'</text>';
+ const line=(x1,y1,x2,y2,klass)=>'<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="'+klass+'"/>';
+ const desc=labels.map((label,i)=>label+': '+vals[i]).join('; ');
+ let body='<title>'+safe(title)+'</title><desc>'+safe(desc)+'</desc>';
+ body+=text(324,24,title,'ca-chart-title','text-anchor="middle"');
+ if(type==='pie'){
+  const cx=190,cy=163,r=109,total=vals.reduce((a,b)=>a+b,0);
+  let start=-Math.PI/2;
+  vals.forEach((v,i)=>{
+   const sweep=2*Math.PI*v/total,end=start+sweep;
+   const sx=cx+r*Math.cos(start),sy=cy+r*Math.sin(start),ex=cx+r*Math.cos(end),ey=cy+r*Math.sin(end);
+   if(v>0)body+='<path class="ca-slice" fill="'+palette[i%palette.length]+'" d="M '+cx+' '+cy+' L '+sx.toFixed(3)+' '+sy.toFixed(3)+' A '+r+' '+r+' 0 '+(sweep>Math.PI?1:0)+' 1 '+ex.toFixed(3)+' '+ey.toFixed(3)+' Z"/>';
+   start=end;
+   const y=80+i*42;
+   body+='<rect x="365" y="'+(y-13)+'" width="13" height="13" rx="3" fill="'+palette[i%palette.length]+'"/>';
+   body+=text(388,y,safe(labels[i]).slice(0,0)+String(labels[i]).slice(0,17));
+   body+=text(388,y+17,vals[i]+' ('+(Math.round(v/total*1000)/10)+'%)','ca-tick');
+  });
+ }else{
+  const left=54,right=622,top=48,bottom=247,h=bottom-top,w=right-left,n=vals.length,maxVal=Math.max(...vals);
+  const ceiling=Math.max(4,Math.ceil(maxVal/4)*4),step=w/n;
+  for(let tick=0;tick<=4;tick++){
+   const yy=bottom-tick*h/4;
+   body+=line(left,yy,right,yy,'ca-grid');
+   body+=text(left-10,yy+4,Math.round(ceiling*tick/4),'ca-tick','text-anchor="end"');
+  }
+  body+=line(left,top,left,bottom,'ca-axis')+line(left,bottom,right,bottom,'ca-axis');
+  if(type==='line'){
+   const pts=vals.map((v,i)=>[left+step*(i+.5),bottom-v/ceiling*h]);
+   body+='<polyline class="ca-line" points="'+pts.map(p=>p.map(v=>v.toFixed(2)).join(',')).join(' ')+'"/>';
+   pts.forEach((p,i)=>{body+='<circle class="ca-dot" cx="'+p[0].toFixed(2)+'" cy="'+p[1].toFixed(2)+'" r="5"/>';body+=text(p[0],Math.max(top+12,p[1]-12),vals[i],'ca-tick','text-anchor="middle"')});
+  }else{
+   const hist=type==='histogram',bw=hist?step:step*.65;
+   vals.forEach((v,i)=>{
+    const ht=v/ceiling*h,x=left+i*step+(step-bw)/2,y=bottom-ht;
+    body+='<rect class="ca-bar" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+bw.toFixed(2)+'" height="'+ht.toFixed(2)+'" rx="'+(hist?0:5)+'" fill="'+palette[i%palette.length]+'"/>';
+    body+=text(left+step*(i+.5),Math.max(top+13,y-8),v,'ca-tick','text-anchor="middle"');
+   });
+  }
+  labels.forEach((s,i)=>body+=text(left+step*(i+.5),273,String(s).slice(0,13),'ca-tick','text-anchor="middle"'));
+ }
+ return '<div class="ca-stats-chart-wrap" role="region" tabindex="0" aria-label="'+safe(title)+'"><svg class="ca-stats-chart" viewBox="0 0 650 310" role="img" aria-label="'+safe(desc)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg></div>';
+}
+function formatStatisticsPrompt(value){
+ const source=String(value??"");
+ const pattern=/\[\[STAT_TABLE\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_TABLE\]\]|\[\[STAT_CHART:(bar|line|pie|histogram)\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_CHART\]\]/g;
+ let cursor=0,result='',match,found=false;
+ const prose=part=>part.trim()?'<span class="ca-stats-prose">'+escapeHtml(part.trim())+'</span>':'';
+ while((match=pattern.exec(source))){
+  found=true;result+=prose(source.slice(cursor,match.index));
+  result+=match[1]!==undefined?renderStatisticsTable(match[1]):renderStatisticsChart(match[2],match[3]);
+  cursor=pattern.lastIndex;
+ }
+ result+=prose(source.slice(cursor));
+ return found?result:escapeHtml(source);
+}
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
@@ -15762,7 +15832,7 @@ function renderLiveRoom(){
   const localizedScience=localizeScienceQuestion(r.currentQuestion,currentUILanguage);
   const livePrompt=localizedScience.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
   const liveQuestionElement=document.getElementById("compQuestionText");
-  if(String(livePrompt).includes("[[STAT_TABLE]]"))liveQuestionElement.innerHTML=formatStatisticsPrompt(livePrompt);
+  if(String(livePrompt).includes("[[STAT_"))liveQuestionElement.innerHTML=formatStatisticsPrompt(livePrompt);
   else liveQuestionElement.textContent=livePrompt;
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
   document.getElementById("compRevealBtn").classList.toggle("hidden",!["question","grading"].includes(r.status));
