@@ -5,7 +5,7 @@
   "use strict";
   const get = id => document.getElementById(id);
   const en = () => document.documentElement.lang !=="ar";
-  const lang = (ar, english) => en() ? english : ar;
+  const lang = (ar, english) => !en() ? ar : (window.ClassoraLocale?.tFor?.(document.documentElement.lang,english)||english);
   function init(){
     const board=get("classoraTeacherDashboard");
     const lobby=get("platformLobby");
