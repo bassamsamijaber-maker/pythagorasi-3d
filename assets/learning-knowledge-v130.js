@@ -45,7 +45,7 @@ const applications=[
 [/صخر|تعرية|تجوية|صفائح|زلازل|براكين|تضاريس/i,P('فسّر شكلًا أرضيًا من العمليات التي كوّنته، مع التمييز بين النموذج والقياس الحقيقي.','Explain a landform through the processes shaping it, distinguishing models from measurements.')]
 ];
 export function lessonKnowledge(topic,model,language){
- const en=language==='en',ix=en?1:0,T=(a,b)=>en?b:a,d=model.lesson;
+ const selectedLanguage=document.documentElement.lang||language,en=language!=='ar',ix=en?1:0,T=(a,b)=>selectedLanguage==='ar'?a:(window.ClassoraLocale?.tFor?.(selectedLanguage,b)||b),d=model.lesson;
  const title=en?(d.en||d.titleEn||d.title||topic.title):topic.title;
  let application=applications.find(([re])=>re.test(topic.title))?.[1]?.[ix];let example=model.draw(model.read()).result;
  if(topic.subject==='arabic'){application=T('اكتب رسالة واضحة وحدّد العلاقات بين كلماتها حتى لا يتغيّر المعنى.','Write a clear message and identify word relationships to preserve meaning.');example=d.examples[0].tokens.map(t=>t.word).join(' ')}
