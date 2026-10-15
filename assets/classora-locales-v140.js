@@ -878,6 +878,66 @@ Arabic test — Idafa|Prueba de árabe — Idafa|아랍어 시험 — 이다파|
 Idafa practice|Práctica de Idafa|이다파 연습|Idafa-Übung|Esercizi di Idafa|इदाफ़ा अभ्यास|İzafet alıştırması
 Answer review|Revisión de respuestas|답안 검토|Antwortübersicht|Revisione delle risposte|उत्तर समीक्षा|Cevap incelemesi
 Answer recorded.|Respuesta guardada.|답이 기록됐어요.|Antwort gespeichert.|Risposta registrata.|उत्तर दर्ज हुआ।|Cevap kaydedildi.
+Could not connect. Check your connection and try again.|No se pudo conectar. Comprueba la conexión e inténtalo de nuevo.|연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요.|Verbindung fehlgeschlagen. Prüfe die Verbindung und versuche es erneut.|Connessione non riuscita. Controlla la rete e riprova.|कनेक्शन नहीं हो सका। इंटरनेट जाँचकर फिर प्रयास करें।|Bağlanılamadı. İnternetini kontrol edip tekrar dene.
+Find|Halla|구하기|Finde|Trova|ज्ञात करें|Bul
+Identify the hypotenuse first.|Identifica primero la hipotenusa.|먼저 빗변을 확인하세요.|Bestimme zuerst die Hypotenuse.|Individua prima l'ipotenusa.|पहले कर्ण पहचानें।|Önce hipotenüsü belirle.
+Use a²+b²=c².|Utiliza a²+b²=c².|a²+b²=c² 공식을 사용하세요.|Verwende a²+b²=c².|Usa a²+b²=c².|a²+b²=c² का प्रयोग करें।|a²+b²=c² kullan.
+Add the leg squares for the hypotenuse, or subtract for a leg, then take the square root.|Suma los cuadrados de los catetos para hallar la hipotenusa; para hallar un cateto, resta y calcula la raíz.|빗변을 구할 때는 두 변의 제곱을 더하고, 다른 변을 구할 때는 빼서 제곱근을 구하세요.|Addiere die Quadrate der Katheten für die Hypotenuse. Für eine Kathete subtrahiere und ziehe die Wurzel.|Somma i quadrati dei cateti per l'ipotenusa oppure sottrai per un cateto, poi calcola la radice.|कर्ण के लिए दोनों भुजाओं के वर्ग जोड़ें; दूसरी भुजा के लिए घटाकर वर्गमूल लें।|Hipotenüs için dik kenarların karelerini topla; bir dik kenar için çıkarıp karekök al.
+Find x.|Halla x.|x를 구하세요.|Berechne x.|Trova x.|x ज्ञात करें।|x'i bul.
+Notice the signs of y.|Observa los signos de y.|y의 부호를 확인하세요.|Beachte die Vorzeichen von y.|Osserva i segni di y.|y के चिह्न देखें।|y'nin işaretlerine dikkat et.
+Add the equations to eliminate y.|Suma las ecuaciones para eliminar y.|방정식을 더해 y를 소거하세요.|Addiere die Gleichungen um y zu eliminieren.|Somma le equazioni per eliminare y.|y हटाने के लिए समीकरण जोड़ें।|y'yi yok etmek için denklemleri topla.
+After adding, divide by the coefficient of x, then check both equations.|Tras sumar, divide entre el coeficiente de x y verifica ambas ecuaciones.|더한 뒤 x의 계수로 나누고 두 식을 모두 확인하세요.|Teile nach dem Addieren durch den Koeffizienten von x und prüfe beide Gleichungen.|Dopo la somma dividi per il coefficiente di x e verifica entrambe le equazioni.|जोड़ने के बाद x के गुणांक से भाग दें और दोनों समीकरण जाँचें।|Topladıktan sonra x'in katsayısına böl ve iki denklemi kontrol et.
+Identify the scientific idea in the question.|Identifica el concepto científico de la pregunta.|문제의 과학 개념을 파악하세요.|Erkenne das wissenschaftliche Konzept in der Frage.|Individua il concetto scientifico della domanda.|प्रश्न की वैज्ञानिक अवधारणा पहचानें।|Sorudaki bilimsel fikri belirle.
+Identify what the question asks.|Identifica qué pide la pregunta.|문제에서 무엇을 묻는지 확인하세요.|Erkenne was die Frage verlangt.|Individua cosa chiede la domanda.|प्रश्न में क्या पूछा गया है, पहचानें।|Sorunun ne istediğini belirle.
+Eliminate options that contradict the lesson.|Descarta las opciones que contradigan la lección.|수업 내용과 맞지 않는 선택지를 제외하세요.|Schließe Antworten aus die der Lektion widersprechen.|Elimina le opzioni contrarie alla lezione.|पाठ से मेल न खाने वाले विकल्प हटाएँ।|Dersle çelişen seçenekleri ele.
+Interactive 3D beaker and pH scale|Vaso interactivo 3D y escala de pH|대화형 3D 비커와 pH 눈금|Interaktives 3D-Becherglas und pH-Skala|Bicchiere interattivo 3D e scala pH|इंटरैक्टिव 3D बीकर और पीएच पैमाना|Etkileşimli 3B beher ve pH ölçeği
+Acidic · 0–6|Ácido · 0–6|산성 · 0–6|Sauer · 0–6|Acido · 0–6|अम्लीय · 0–6|Asidik · 0–6
+Neutral · 7|Neutro · 7|중성 · 7|Neutral · 7|Neutro · 7|उदासीन · 7|Nötr · 7
+Basic · 8–14|Básico · 8–14|염기성 · 8–14|Basisch · 8–14|Basico · 8–14|क्षारीय · 8–14|Bazik · 8–14
+Simplified view for this device.|Vista simplificada para este dispositivo.|이 기기에 맞춘 간소화 보기입니다.|Vereinfachte Ansicht für dieses Gerät.|Vista semplificata per questo dispositivo.|इस डिवाइस के लिए सरल दृश्य।|Bu cihaz için basitleştirilmiş görünüm.
+pH value|Valor de pH|pH 값|pH-Wert|Valore pH|पीएच मान|pH değeri
+Change pH from zero to fourteen|Cambiar pH de cero a catorce|pH를 0에서 14까지 변경|pH von null bis vierzehn ändern|Modifica il pH da zero a quattordici|पीएच शून्य से चौदह तक बदलें|pH değerini sıfırdan on dörde değiştir
+Choose a sample|Elige una muestra|시료 선택|Probe wählen|Scegli un campione|नमूना चुनें|Örnek seç
+Advanced challenge|Desafío avanzado|고급 도전|Fortgeschrittene Aufgabe|Sfida avanzata|उन्नत चुनौती|İleri düzey görev
+Study Mode|Modo de estudio|학습 모드|Lernmodus|Modalità studio|अध्ययन मोड|Çalışma modu
+Subject|Asignatura|과목|Fach|Materia|विषय|Ders
+Search for a topic…|Busca un tema…|주제 검색…|Nach Thema suchen…|Cerca un argomento…|विषय खोजें…|Konu ara…
+Choose your grade, subject and topic, then start reviewing.|Elige tu curso, asignatura y tema, y empieza a repasar.|학년과 과목, 주제를 선택한 뒤 복습을 시작하세요.|Wähle Klasse, Fach und Thema und beginne mit der Wiederholung.|Scegli classe, materia e argomento, poi inizia il ripasso.|कक्षा, विषय और पाठ चुनकर दोहराना शुरू करें।|Sınıf, ders ve konu seçip tekrara başla.
+Session complete. Review the ideas you missed.|Sesión completada. Repasa lo que fallaste.|학습 완료. 틀린 개념을 복습하세요.|Sitzung beendet. Wiederhole die Fehler.|Sessione completata. Ripassa gli argomenti sbagliati.|सत्र पूरा हुआ। गलत अवधारणाएँ दोहराएँ।|Oturum tamamlandı. Yanlış yaptığın konuları tekrar et.
+Saving progress…|Guardando progreso…|진행 상황 저장 중…|Fortschritt wird gespeichert…|Salvataggio progressi…|प्रगति सहेजी जा रही है…|İlerleme kaydediliyor…
+Session already saved.|Sesión guardada anteriormente.|이미 저장된 학습입니다.|Sitzung bereits gespeichert.|Sessione già salvata.|सत्र पहले से सहेजा गया है।|Oturum zaten kaydedildi.
+Retry saving this session|Reintentar guardar esta sesión|학습 저장 다시 시도|Sitzung erneut speichern|Riprova a salvare la sessione|सत्र फिर सहेजें|Oturumu yeniden kaydet
+Progress saved.|Progreso guardado.|진행 상황 저장됨.|Fortschritt gespeichert.|Progressi salvati.|प्रगति सहेजी गई।|İlerleme kaydedildi.
+Local practice; no result or XP was sent while offline.|Práctica local; sin conexión no se enviaron resultados ni XP.|오프라인 연습입니다. 결과나 경험치가 전송되지 않았습니다.|Lokale Übung; offline wurden keine Ergebnisse oder XP übertragen.|Esercizio locale; offline non sono stati inviati risultati né XP.|स्थानीय अभ्यास; ऑफ़लाइन रहने पर परिणाम या XP नहीं भेजे गए।|Yerel alıştırma; çevrimdışıyken sonuç veya XP gönderilmedi.
+New session|Nueva sesión|새 학습|Neue Sitzung|Nuova sessione|नया सत्र|Yeni oturum
+Next question|Siguiente pregunta|다음 문제|Nächste Frage|Domanda successiva|अगला प्रश्न|Sonraki soru
+Review the idea: |Repasa la idea: |개념 복습: |Wiederhole die Idee: |Ripassa il concetto: |विचार दोहराएँ: |Konuyu tekrar et: 
+Answer: |Respuesta: |답: |Antwort: |Risposta: |उत्तर: |Cevap: 
+Recall your answer before showing options|Recuerda la respuesta antes de ver las opciones|선택지를 보기 전에 답을 떠올리세요|Überlege zuerst bevor du die Antworten siehst|Ricorda la risposta prima di vedere le opzioni|विकल्प देखने से पहले उत्तर याद करें|Seçenekleri görmeden yanıtı hatırla
+Recall the idea yourself…|Intenta recordar la idea…|스스로 개념을 떠올리세요…|Versuche dich selbst zu erinnern…|Prova a ricordare il concetto…|खुद अवधारणा याद करें…|Fikri kendin hatırlamaya çalış…
+Reveal choices to check|Mostrar opciones para comprobar|선택지 표시|Antwortmöglichkeiten zeigen|Mostra le opzioni|जाँच के लिए विकल्प दिखाएँ|Seçenekleri göster
+Flip card|Girar tarjeta|카드 뒤집기|Karte umdrehen|Gira la scheda|कार्ड पलटें|Kartı çevir
+Know it|Lo sé|알아요|Ich weiß es|Lo so|जानता हूँ|Biliyorum
+Review again|Repasar otra vez|다시 복습|Erneut wiederholen|Ripassa di nuovo|फिर दोहराएँ|Tekrar et
+Choose another topic|Elige otro tema|다른 주제 선택|Anderes Thema wählen|Scegli un altro argomento|दूसरा विषय चुनें|Başka konu seç
+Exam average|Media de exámenes|시험 평균|Prüfungsdurchschnitt|Media esami|परीक्षा औसत|Sınav ortalaması
+Level|Nivel|수준|Niveau|Livello|स्तर|Seviye
+Strongest subject|Asignatura más fuerte|가장 잘하는 과목|Stärkstes Fach|Materia migliore|सबसे मजबूत विषय|En güçlü ders
+Subject to focus on|Asignatura que debes reforzar|집중할 과목|Fach zum Vertiefen|Materia su cui concentrarsi|ध्यान देने वाला विषय|Odaklanılacak ders
+Progress to next level|Progreso al siguiente nivel|다음 수준까지 진행 상황|Fortschritt zur nächsten Stufe|Progresso al livello successivo|अगले स्तर की प्रगति|Sonraki seviyeye ilerleme
+No data|Sin datos|데이터 없음|Keine Daten|Nessun dato|कोई डेटा नहीं|Veri yok
+Achievements|Logros|성취|Erfolge|Traguardi|उपलब्धियाँ|Başarılar
+First exam|Primer examen|첫 시험|Erste Prüfung|Primo esame|पहली परीक्षा|İlk sınav
+Five exams|Cinco exámenes|시험 5회|Fünf Prüfungen|Cinque esami|पाँच परीक्षाएँ|Beş sınav
+Learning step|Paso de aprendizaje|학습 단계|Lernschritt|Passo di apprendimento|सीखने का चरण|Öğrenme adımı
+Topic explorer|Explorador de temas|주제 탐색기|Themen-Explorer|Esplora argomenti|विषय खोजकर्ता|Konu keşfi
+Topics to practice|Temas para practicar|연습할 주제|Themen zum Üben|Argomenti da esercitare|अभ्यास के विषय|Alıştırma konuları
+Now|Ahora|지금|Jetzt|Adesso|अभी|Şimdi
+New learning tools|Nuevas herramientas de aprendizaje|새 학습 도구|Neue Lernwerkzeuge|Nuovi strumenti didattici|नए सीखने के उपकरण|Yeni öğrenme araçları
+Request a topic|Solicitar un tema|주제 요청|Thema anfragen|Richiedi un argomento|विषय अनुरोध करें|Konu iste
+Send request|Enviar solicitud|요청 보내기|Anfrage senden|Invia richiesta|अनुरोध भेजें|İsteği gönder
+Request status|Estado de la solicitud|요청 상태|Anfragestatus|Stato della richiesta|अनुरोध की स्थिति|İstek durumu
+You’re offline. Saved lessons are available; results and requests need a connection.|Estás sin conexión. Puedes usar las lecciones guardadas; los resultados y solicitudes requieren Internet.|오프라인 상태입니다. 저장한 수업은 이용할 수 있지만 결과 및 요청 전송에는 연결이 필요합니다.|Du bist offline. Gespeicherte Lektionen sind verfügbar; Ergebnisse und Anfragen brauchen Internet.|Sei offline. Le lezioni salvate sono disponibili, ma risultati e richieste richiedono Internet.|आप ऑफ़लाइन हैं। सहेजे पाठ चलेंगे, पर परिणाम और अनुरोध के लिए इंटरनेट चाहिए।|Çevrimdışısın. Kayıtlı dersleri kullanabilirsin; sonuçlar ve istekler için internet gerekir.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
