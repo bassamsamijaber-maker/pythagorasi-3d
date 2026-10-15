@@ -373,6 +373,65 @@ Nominal sentence|Oración nominal|명사문|Nominalsatz|Frase nominale|संज
 Verbal sentence|Oración verbal|동사문|Verbalsatz|Frase verbale|क्रियात्मक वाक्य|Fiil cümlesi
 Direct object|Complemento directo|직접 목적어|Direktes Objekt|Complemento oggetto|प्रत्यक्ष कर्म|Nesne
 Idafa: possessive construction|Idafa: construcción posesiva|이다파 소유 구문|Idafa: Genitivverbindung|Idafa: costrutto possessivo|इदाफ़ा संबंध संरचना|İzafet tamlaması
+Basic ratio and proportion|Razones y proporciones básicas|기초 비와 비례|Grundlagen von Verhältnis und Proportion|Rapporti e proporzioni di base|मूल अनुपात और समानुपात|Temel oran ve orantı
+Introduction to functions|Introducción a las funciones|함수 입문|Einführung in Funktionen|Introduzione alle funzioni|फलनों का परिचय|Fonksiyonlara giriş
+Reading graphs|Lectura de gráficos|그래프 읽기|Diagramme lesen|Lettura dei grafici|ग्राफ़ पढ़ना|Grafikleri okuma
+Multi-step equations|Ecuaciones de varios pasos|여러 단계 방정식|Mehrstufige Gleichungen|Equazioni a più passaggi|बहु-चरणीय समीकरण|Çok adımlı denklemler
+Equations with parentheses|Ecuaciones con paréntesis|괄호가 있는 방정식|Gleichungen mit Klammern|Equazioni con parentesi|कोष्ठक वाले समीकरण|Parantezli denklemler
+Fractional equations|Ecuaciones fraccionarias|분수 방정식|Bruchgleichungen|Equazioni frazionarie|भिन्न वाले समीकरण|Kesirli denklemler
+Equations with variables on both sides|Ecuaciones con variables en ambos lados|양변에 변수가 있는 방정식|Gleichungen mit Variablen auf beiden Seiten|Equazioni con incognite su entrambi i lati|दोनों पक्षों में चर वाले समीकरण|İki tarafında değişken olan denklemler
+Equation word problems|Problemas de ecuaciones|방정식 문장제 문제|Textaufgaben zu Gleichungen|Problemi con equazioni|समीकरण आधारित शब्द समस्याएँ|Denklem problemleri
+Inequalities|Desigualdades|부등식|Ungleichungen|Disequazioni|असमानताएँ|Eşitsizlikler
+Axis intercepts|Intersecciones con los ejes|축과의 교점|Achsenschnittpunkte|Intersezioni con gli assi|अक्षों पर प्रतिच्छेद|Eksenleri kesme noktaları
+Speed, time and distance|Velocidad tiempo y distancia|속력 시간 거리|Geschwindigkeit Zeit und Strecke|Velocità tempo e distanza|चाल समय और दूरी|Hız zaman ve mesafe
+Advanced linear functions|Funciones lineales avanzadas|심화 일차함수|Vertiefte lineare Funktionen|Funzioni lineari avanzate|उन्नत रैखिक फलन|İleri doğrusal fonksiyonlar
+Factoring out a common factor|Extraer factor común|공통인수 묶기|Gemeinsamen Faktor ausklammern|Raccoglimento a fattor comune|सार्व गुणनखंड निकालना|Ortak çarpanı paranteze alma
+Algebraic identities|Identidades algebraicas|대수 항등식|Algebraische Identitäten|Identità algebriche|बीजीय सर्वसमिकाएँ|Cebirsel özdeşlikler
+Difference of two squares|Diferencia de cuadrados|제곱의 차|Differenz zweier Quadrate|Differenza di quadrati|दो वर्गों का अंतर|İki kare farkı
+Algebraic fractions|Fracciones algebraicas|대수 분수식|Algebraische Brüche|Frazioni algebriche|बीजीय भिन्न|Cebirsel kesirler
+Vertex of a parabola|Vértice de una parábola|포물선의 꼭짓점|Scheitelpunkt einer Parabel|Vertice di una parabola|परवलय का शीर्ष|Parabolün tepe noktası
+Axis of symmetry|Eje de simetría|대칭축|Symmetrieachse|Asse di simmetria|सममिति अक्ष|Simetri ekseni
+Zeros|Ceros de una función|함수의 영점|Nullstellen|Zeri di una funzione|फलन के शून्यक|Fonksiyonun sıfırları
+Positive and negative intervals|Intervalos positivos y negativos|양수 구간과 음수 구간|Positive und negative Intervalle|Intervalli positivi e negativi|धनात्मक और ऋणात्मक अंतराल|Pozitif ve negatif aralıklar
+Increasing and decreasing intervals|Intervalos crecientes y decrecientes|증가 구간과 감소 구간|Monotonieintervalle|Intervalli crescenti e decrescenti|वृद्धि और ह्रास के अंतराल|Artan ve azalan aralıklar
+Algebra|Álgebra|대수|Algebra|Algebra|बीजगणित|Cebir
+Functions|Funciones|함수|Funktionen|Funzioni|फलन|Fonksiyonlar
+Slope of a line|Pendiente de una recta|직선의 기울기|Steigung einer Geraden|Pendenza di una retta|रेखा की ढाल|Doğrunun eğimi
+3D solids|Sólidos tridimensionales|입체도형|Räumliche Körper|Solidi tridimensionali|त्रिविमीय ठोस|Üç boyutlu cisimler
+Scale|Escala|축척|Maßstab|Scala|मापनी|Ölçek
+Isosceles triangle|Triángulo isósceles|이등변삼각형|Gleichschenkliges Dreieck|Triangolo isoscele|समद्विबाहु त्रिभुज|İkizkenar üçgen
+Areas and volumes|Áreas y volúmenes|넓이와 부피|Flächen und Volumina|Aree e volumi|क्षेत्रफल और आयतन|Alanlar ve hacimler
+Quadrilaterals|Cuadriláteros|사각형|Vierecke|Quadrilateri|चतुर्भुज|Dörtgenler
+Coordinate geometry|Geometría de coordenadas|좌표기하학|Koordinatengeometrie|Geometria delle coordinate|निर्देशांक ज्यामिति|Koordinat geometrisi
+Analytic geometry|Geometría analítica|해석기하학|Analytische Geometrie|Geometria analitica|विश्लेषणात्मक ज्यामिति|Analitik geometri
+Distance between two points|Distancia entre dos puntos|두 점 사이 거리|Abstand zwischen zwei Punkten|Distanza tra due punti|दो बिंदुओं के बीच दूरी|İki nokta arası uzaklık
+Midpoint|Punto medio|중점|Mittelpunkt|Punto medio|मध्यबिंदु|Orta nokta
+Similarity|Semejanza|닮음|Ähnlichkeit|Similitudine|समरूपता|Benzerlik
+Sin|Seno|사인|Sinus|Seno|ज्या|Sinüs
+Cos|Coseno|코사인|Kosinus|Coseno|कोज्या|Kosinüs
+Tan|Tangente|탄젠트|Tangens|Tangente|स्पर्शज्या|Tanjant
+Respiratory system|Sistema respiratorio|호흡계|Atmungssystem|Apparato respiratorio|श्वसन तंत्र|Solunum sistemi
+Circulatory system|Sistema circulatorio|순환계|Kreislaufsystem|Sistema circolatorio|परिसंचरण तंत्र|Dolaşım sistemi
+Nutrition|Nutrición|영양|Ernährung|Nutrizione|पोषण|Beslenme
+Living organisms|Organismos vivos|생물|Lebewesen|Organismi viventi|जीवधारी|Canlı organizmalar
+Environment and sustainability|Medioambiente y sostenibilidad|환경과 지속 가능성|Umwelt und Nachhaltigkeit|Ambiente e sostenibilità|पर्यावरण और स्थिरता|Çevre ve sürdürülebilirlik
+Forces|Fuerzas|힘|Kräfte|Forze|बल|Kuvvetler
+Laws of motion|Leyes del movimiento|운동 법칙|Bewegungsgesetze|Leggi del moto|गति के नियम|Hareket yasaları
+Mechanical energy|Energía mecánica|역학적 에너지|Mechanische Energie|Energia meccanica|यांत्रिक ऊर्जा|Mekanik enerji
+Chemistry|Química|화학|Chemie|Chimica|रसायन विज्ञान|Kimya
+Genetics|Genética|유전학|Genetik|Genetica|आनुवंशिकी|Genetik
+DNA|ADN|DNA|DNA|DNA|डीएनए|DNA
+Human impact on the environment|Impacto humano en el medioambiente|인간 활동의 환경 영향|Menschliche Einflüsse auf die Umwelt|Impatto umano sull'ambiente|पर्यावरण पर मानवीय प्रभाव|İnsanın çevreye etkisi
+Newton's laws|Leyes de Newton|뉴턴의 운동 법칙|Newtonsche Gesetze|Leggi di Newton|न्यूटन के नियम|Newton yasaları
+Work|Trabajo mecánico|일|Arbeit|Lavoro|कार्य|İş
+Power|Potencia|일률|Leistung|Potenza|शक्ति|Güç
+Ions|Iones|이온|Ionen|Ioni|आयन|İyonlar
+Chemical equations|Ecuaciones químicas|화학 반응식|Chemische Gleichungen|Equazioni chimiche|रासायनिक समीकरण|Kimyasal denklemler
+pH|pH|수소 이온 농도 지수|pH-Wert|pH|पीएच|pH
+Cell organelles|Orgánulos celulares|세포 소기관|Zellorganellen|Organelli cellulari|कोशिका अंगक|Hücre organelleri
+Cell division|División celular|세포 분열|Zellteilung|Divisione cellulare|कोशिका विभाजन|Hücre bölünmesi
+Genes|Genes|유전자|Gene|Geni|जीन|Genler
+Proteins|Proteínas|단백질|Proteine|Proteine|प्रोटीन|Proteinler
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
