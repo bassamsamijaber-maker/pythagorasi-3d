@@ -53,7 +53,9 @@ const ui={
 };
 function readStorage(key){try{return localStorage.getItem(key)}catch{return null}}
 const requestedLang=new URLSearchParams(location.search).get("lang");
-let lang=requestedLang==="ar"?"ar":requestedLang==="en"?"en":(readStorage("pythagorasi_language")==="ar"?"ar":"en");
+const acceptedLocales=new Set(["ar","en","es","ko","de","it","hi","tr"]);
+const savedLanguage=readStorage("pythagorasi_language");
+let lang=acceptedLocales.has(requestedLang)?requestedLang:acceptedLocales.has(savedLanguage)?savedLanguage:"en";
 const $=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];
 const visualCache=new Map();
 const thumbnailCache=new Map();
@@ -65,9 +67,11 @@ function animationType(e){
  if(e.category==="actinide"||e.category==="lanthanide")return"pulse";
  return e.n%2?"shimmer":"pulse";
 }
-function t(k){return ui[lang][k]||k}
-function localName(e){return lang==="ar"?e.ar:e.en}
-function catName(e){return cats[e.category][lang]}
+function localeText(text){return lang==="ar"?text:(window.ClassoraLocale?.tFor?.(lang,String(text))||text)}
+function t(k){const source=ui[lang==="ar"?"ar":"en"]?.[k]||k;return lang==="ar"?source:localeText(source)}
+function localName(e){return lang==="ar"?e.ar:localeText(e.en)}
+function catName(e){return lang==="ar"?cats[e.category].ar:localeText(cats[e.category].en)}
+function categoryDescription(key){return lang==="ar"?categoryText[key].ar:localeText(categoryText[key].en)}
 function stateName(e){return t(e.state)}
 
 const categoryText={
@@ -134,7 +138,7 @@ function useText(e){
  };
  return lang==="ar"?fallback[e.category][1]:fallback[e.category][0];
 }
-function description(e){const base=categoryText[e.category][lang];const st=stateName(e);return lang==="ar"?`${e.ar} (${e.s}) هو العنصر رقم ${e.n} في الجدول الدوري. حالته عند الظروف العادية: ${st}. ${base}`:`${e.en} (${e.s}) is element ${e.n} on the periodic table. Its ordinary-condition state is ${st.toLowerCase()}. ${base}`}
+function description(e){const base=categoryDescription(e.category);const st=stateName(e);return lang==="ar"?`${e.ar} (${e.s}) هو العنصر رقم ${e.n} في الجدول الدوري. حالته عند الظروف العادية: ${st}. ${base}`:`${e.en} (${e.s}) is element ${e.n} on the periodic table. Its ordinary-condition state is ${st.toLowerCase()}. ${base}`}
 
 function gridPos(e){
  if(e.n>=57&&e.n<=71)return{row:9,col:e.n-53};
@@ -182,7 +186,7 @@ function applyLanguage(){
 let filter="all",search="",layout="periodic",propertyFilter="all";
 function buildFilters(){
  const host=$("#filters");host.innerHTML="";
- [["all","#72d9ff"],["favorites","#ffd76a"],...catOrder.map(k=>[k,cats[k].color])].forEach(([k,c])=>{const b=document.createElement("button");b.className="filter-chip"+(filter===k?" active":"");b.style.setProperty("--chip",c);b.innerHTML=`<i></i>${k==="all"?t("all"):k==="favorites"?ptIconMarkup("star")+" "+t("favorites"):cats[k][lang]}`;b.onclick=()=>{filter=k;buildFilters();renderTable()};host.append(b)});
+ [["all","#72d9ff"],["favorites","#ffd76a"],...catOrder.map(k=>[k,cats[k].color])].forEach(([k,c])=>{const b=document.createElement("button");b.className="filter-chip"+(filter===k?" active":"");b.style.setProperty("--chip",c);b.innerHTML=`<i></i>${k==="all"?t("all"):k==="favorites"?ptIconMarkup("star")+" "+t("favorites"):catName({category:k})}`;b.onclick=()=>{filter=k;buildFilters();renderTable()};host.append(b)});
 }
 function buildPropertyFilters(){
  const host=$("#propertyFilters");host.innerHTML="";
@@ -199,7 +203,7 @@ function matches(e){
 let fitWholeTable=true;
 function fitPeriodicTable(){
  const shell=document.querySelector('.periodic-scroll'),content=document.querySelector('.periodic-fit-content'),toggle=document.querySelector('#tableFitToggle');if(!shell||!content||!toggle)return;
- toggle.hidden=layout!=='periodic';toggle.textContent=fitWholeTable?(lang==='ar'?'تكبير الجدول':'Zoom in'):(lang==='ar'?'عرض الجدول كاملًا':'Fit full table');toggle.setAttribute('aria-pressed',String(fitWholeTable));
+ toggle.hidden=layout!=='periodic';toggle.textContent=fitWholeTable?(lang==='ar'?'تكبير الجدول':localeText('Zoom in')):(lang==='ar'?'عرض الجدول كاملًا':localeText('Fit full table'));toggle.setAttribute('aria-pressed',String(fitWholeTable));
  content.style.transform='';content.style.width='';content.style.position='';content.style.left='';content.style.margin='';content.style.transformOrigin='';shell.style.height='';shell.style.overflowX='';shell.style.overflowY='';
  if(layout!=='periodic')return;
  if(!fitWholeTable){shell.style.overflowX='auto';shell.style.overflowY='visible';return}
@@ -228,8 +232,8 @@ function renderTable(){
  elements.forEach((e,i)=>{const p=gridPos(e),ok=matches(e),anim=animationType(e);if(ok)shown++;if(!ok&&layout==="gallery")return;const b=document.createElement("button");b.type="button";b.className=`element-card anim-${anim}`+(ok?" hit":" dim");b.style.gridColumn=String(p.col);b.style.gridRow=String(p.row);b.style.setProperty("--element",cats[e.category].color);b.style.setProperty("--i",String(i));b.style.setProperty("--motion",String((e.n%7)+1));b.dataset.n=e.n;b.title=`${localName(e)} • ${e.s} • ${e.n}`;b.innerHTML=`<span class="atomic-num">${e.n}</span><img class="el-thumb" loading="lazy" decoding="async" src="${thumbnailVisual(e)}" alt=""><strong class="el-symbol">${e.s}</strong><span class="el-name">${localName(e)}</span><span class="el-family">${catName(e)}</span>${favorites.has(e.n)?`<span class="favorite-indicator" aria-label="favorite">${ptIconMarkup("star")}</span>`:""}`;b.onclick=()=>{b.classList.add("selected-element");openElement(e)};host.append(b)});
  $("#visibleCount").textContent=shown;$("#emptyState").hidden=shown!==0;requestAnimationFrame(fitPeriodicTable);
 }
-function buildLegend(){const h=$("#legend");h.innerHTML="";catOrder.forEach(k=>{const b=document.createElement("button");b.type="button";b.style.setProperty("--legend",cats[k].color);b.innerHTML=`<i></i>${cats[k][lang]}`;b.onclick=()=>{filter=k;buildFilters();renderTable();window.scrollTo({top:$("#exploreView").offsetTop-100,behavior:"smooth"})};h.append(b)})}
-function buildFamilies(){const h=$("#familyGrid");h.innerHTML="";catOrder.forEach(k=>{const card=document.createElement("article");card.className="family-card";card.style.setProperty("--family",cats[k].color);card.innerHTML=`<div class="family-dot"></div><h3>${cats[k][lang]}</h3><p>${categoryText[k][lang]}</p>`;h.append(card)})}
+function buildLegend(){const h=$("#legend");h.innerHTML="";catOrder.forEach(k=>{const b=document.createElement("button");b.type="button";b.style.setProperty("--legend",cats[k].color);b.innerHTML=`<i></i>${catName({category:k})}`;b.onclick=()=>{filter=k;buildFilters();renderTable();window.scrollTo({top:$("#exploreView").offsetTop-100,behavior:"smooth"})};h.append(b)})}
+function buildFamilies(){const h=$("#familyGrid");h.innerHTML="";catOrder.forEach(k=>{const card=document.createElement("article");card.className="family-card";card.style.setProperty("--family",cats[k].color);card.innerHTML=`<div class="family-dot"></div><h3>${catName({category:k})}</h3><p>${categoryDescription(k)}</p>`;h.append(card)})}
 function optionLabel(e){return `${e.s} — ${localName(e)}`}
 function fillSelects(){
  ["compareA","compareB","combineA","combineB"].forEach((id,idx)=>{const s=$("#"+id),value=s.value;s.innerHTML=elements.map(e=>`<option value="${e.n}">${optionLabel(e)}</option>`).join("");if(value)s.value=value;else s.selectedIndex=idx%2});
@@ -259,11 +263,11 @@ function newQuiz(){
  const e=quiz.current;let question,correct,pool;
  if(quiz.type==="name"){question=`${t("quizName")} ${e.s}`;correct=localName(e);pool=elements.filter(x=>x.n!==e.n).map(localName)}
  else if(quiz.type==="symbol"){question=`${t("quizSymbol")} ${localName(e)}`;correct=e.s;pool=elements.filter(x=>x.n!==e.n).map(x=>x.s)}
- else{question=`${t("quizCategory")} ${localName(e)}`;correct=catName(e);pool=catOrder.filter(k=>k!==e.category).map(k=>cats[k][lang])}
+ else{question=`${t("quizCategory")} ${localName(e)}`;correct=catName(e);pool=catOrder.filter(k=>k!==e.category).map(k=>catName({category:k}))}
  const opts=shuffle([correct,...shuffle(pool).slice(0,3)]);$("#quizQuestion").textContent=question;$("#quizAnswers").innerHTML="";opts.forEach(o=>{const b=document.createElement("button");b.className="quiz-answer";b.textContent=o;b.onclick=()=>answerQuiz(b,o,correct);$("#quizAnswers").append(b)});$("#quizFeedback").textContent="";$("#nextQuizBtn").textContent=t("next");$("#quizScore").textContent=`${quiz.score} / ${quiz.total}`;
 }
 function answerQuiz(btn,val,correct){if(quiz.answered)return;quiz.answered=true;quiz.total++;const ok=val===correct;if(ok)quiz.score++;qa(".quiz-answer").forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add("correct")});if(!ok)btn.classList.add("wrong");$("#quizFeedback").innerHTML=ok?ptIconMarkup("check")+" "+t("correct"):ptIconMarkup("close")+" "+t("wrong")+" — "+correct;$("#quizScore").textContent=`${quiz.score} / ${quiz.total}`}
-function updateQuizLanguage(){if(!quiz.started){$("#quizQuestion").textContent=lang==="ar"?"جاهز؟":"Ready?";$("#nextQuizBtn").textContent=t("startQuiz");return}newQuiz()}
+function updateQuizLanguage(){if(!quiz.started){$("#quizQuestion").textContent=lang==="ar"?"جاهز؟":localeText("Ready?");$("#nextQuizBtn").textContent=t("startQuiz");return}newQuiz()}
 $("#nextQuizBtn").onclick=newQuiz;
 
 qa(".mode[data-mode]").forEach(b=>b.onclick=()=>{qa(".mode").forEach(x=>x.classList.toggle("active",x===b));qa(".mode-view").forEach(v=>v.classList.remove("active"));$("#"+b.dataset.mode+"View").classList.add("active")});
@@ -301,11 +305,11 @@ document.addEventListener("keydown",event=>{
 });
 window.addEventListener("pageshow",()=>{if(!$("#elementModal")?.classList.contains("open"))document.body.style.overflow=""});
 
-window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=event.newValue==="ar"?"ar":"en";applyLanguage()}});
+window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language"){lang=acceptedLocales.has(event.newValue)?event.newValue:"en";applyLanguage()}});
 window.addEventListener("message",event=>{
  if(event.origin!==location.origin)return;
  if(event.data?.type==="classora-language"){
-   lang=event.data.lang==="ar"?"ar":"en";
+   lang=acceptedLocales.has(event.data.lang)?event.data.lang:"en";
    applyLanguage();
  }
 });
