@@ -37,6 +37,7 @@ export function combineTopicQuestions(bank,level='medium',language='ar',count=10
     const candidate=[...answers];
     const target=k%size;
     candidate[target]=wrong(chosen[target]);
+    if(size===2&&k===2)candidate[1]=wrong(chosen[1]);
     options.push(candidate.join('  |  '));
    }
    if(unique(options).length!==4)continue;
