@@ -84,6 +84,22 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
 <script src="./assets/classora-locales-v140.js?v=141"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
+
+<style id="classora-statistics-tables-v147">
+.ca-stats-intro,.ca-stats-question{display:block;line-height:1.75;white-space:normal;overflow-wrap:anywhere}
+.ca-stats-intro{margin-bottom:10px}
+.ca-stats-question{font-weight:750;margin-top:12px}
+.ca-stats-scroll{overflow-x:auto;max-width:100%;margin:12px 0;padding:1px;border-radius:13px;-webkit-overflow-scrolling:touch;border:1px solid rgba(126,211,198,.28);background:rgba(4,20,31,.55)}
+.ca-stats-table{width:100%;min-width:265px;border-collapse:collapse;table-layout:fixed;text-align:center;direction:inherit;font-size:clamp(12px,2.9vw,15px);font-weight:600}
+.ca-stats-table th,.ca-stats-table td{border:1px solid rgba(126,211,198,.16);padding:9px 5px;overflow-wrap:anywhere;line-height:1.4}
+.ca-stats-table thead th{background:rgba(33,157,140,.22);font-weight:800}
+.ca-stats-table tbody tr:last-child td{background:rgba(33,157,140,.1);font-weight:800}
+.exam-q-title:has(.ca-stats-scroll){min-width:0;flex:1;max-width:100%;white-space:normal}
+#compQuestionText:has(.ca-stats-scroll){display:block;text-align:center;white-space:normal;max-width:100%;font-size:clamp(15px,3.6vw,20px)}
+#compQuestionText .ca-stats-scroll{max-width:670px;margin:12px auto}
+.auto-preview-q:has(.ca-stats-scroll){overflow:hidden}
+@media(max-width:450px){.exam-q-head:has(.ca-stats-scroll){flex-wrap:wrap}.ca-stats-table th,.ca-stats-table td{padding:7px 3px}}
+</style>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2424,7 +2440,7 @@ import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=131';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=147';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=140';
@@ -5807,7 +5823,7 @@ function renderExamQuestions(){
     }else{
       input=`<textarea class="exam-textarea" data-answer-index="${i}" placeholder="اكتب إجابتك..."></textarea>`;
     }
-    card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${escapeHtml(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}
+    card.innerHTML=`<div class="exam-q-head"><div class="exam-q-title">${i+1}. ${formatStatisticsPrompt(q.prompt)}</div><div class="exam-points">${q.points} علامات</div></div>${input}
       <div class="question-actions" ${activeExam?.cloud?'style="display:none"':''}>
         <button type="button" class="check-one-btn" data-check-index="${i}">✓ فحص السؤال</button>
       </div>
@@ -5839,6 +5855,20 @@ function renderExamQuestions(){
     }
     saveAttemptLocal();
   }));
+}
+
+
+function formatStatisticsPrompt(value){
+  const s=String(value??"");
+  const match=/^([\s\S]*?)\[\[STAT_TABLE\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_TABLE\]\]([\s\S]*)$/.exec(s);
+  if(!match)return escapeHtml(s);
+  const rows=match[2].trim().split(/\r?\n/).map(line=>line.split("|").map(cell=>cell.trim()));
+  if(rows.length<3||rows.some(row=>row.length!==3))return escapeHtml(s);
+  const cells=(row,tag)=>"<tr>"+row.map(value=>"<"+tag+">"+escapeHtml(value)+"</"+tag+">").join("")+"</tr>";
+  return '<span class="ca-stats-intro">'+escapeHtml(match[1].trim())+'</span>'+
+   '<div class="ca-stats-scroll" role="region" aria-label="Frequency table" tabindex="0"><table class="ca-stats-table"><thead>'+cells(rows[0],"th")+'</thead><tbody>'+
+   rows.slice(1).map(row=>cells(row,"td")).join("")+'</tbody></table></div>'+
+   '<span class="ca-stats-question">'+escapeHtml(match[3].trim())+'</span>';
 }
 
 function escapeHtml(s){
@@ -12705,7 +12735,7 @@ function adminRenderGeneratedAssignmentPreview(questions,difficulty){
   questions.forEach((q,i)=>{
     const d=document.createElement("div");
     d.className="auto-preview-q";
-    d.innerHTML=`<b>${i+1}. ${escapeHtml(q.prompt)}</b>
+    d.innerHTML=`<b>${i+1}. ${formatStatisticsPrompt(q.prompt)}</b>
       <small>${q.type==="mcq"
         ? `${adminLang("اختيار من متعدد","Multiple choice")} • ${(q.options||[]).map(escapeHtml).join(" / ")}`
         : adminLang("إجابة رقمية","Numeric answer")}</small>`;
@@ -15730,7 +15760,10 @@ function renderLiveRoom(){
   const typeBadge=document.getElementById("compQuestionTypeBadge");
   if(typeBadge)typeBadge.textContent=competitionQuestionTypeLabel(r.currentQuestion||{});
   const localizedScience=localizeScienceQuestion(r.currentQuestion,currentUILanguage);
-  document.getElementById("compQuestionText").textContent=localizedScience.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
+  const livePrompt=localizedScience.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
+  const liveQuestionElement=document.getElementById("compQuestionText");
+  if(String(livePrompt).includes("[[STAT_TABLE]]"))liveQuestionElement.innerHTML=formatStatisticsPrompt(livePrompt);
+  else liveQuestionElement.textContent=livePrompt;
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
   document.getElementById("compRevealBtn").classList.toggle("hidden",!["question","grading"].includes(r.status));
   document.getElementById("compNextBtn").classList.toggle("hidden",r.status!=="result");
