@@ -7,12 +7,13 @@ import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=148';
 import {statisticsCompleteQuestion} from './classora-statistics-v148.js?v=148';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
 import {scienceLiveQuestions} from './learning-hub.js?v=131';
-const t=(ar,en,lang)=>lang==='en'?en:ar;
+const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.dictionaries?.[lang]?.[en]||en);
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
  if(subject==='arabic')return t('قواعد اللغة العربية','Arabic Grammar',lang);
  if(subject==='english')return 'English Grammar';
- return CURRICULUM_SUBJECTS[subject]?.[lang]||subject;
+ const name=CURRICULUM_SUBJECTS[subject]?.[lang==='ar'?'ar':'en']||subject;
+ return lang==='ar'?name:t(name,name,lang);
 };
 const TOPICS=[];
 for(const grade of [7,8,9,10]){
@@ -83,27 +84,28 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  if(!topic)throw Error(t('الموضوع غير معروف.','Unknown topic.',language));
  const n=Math.max(1,Math.min(30,Math.floor(Number(count)||10)));
  const result=[],seen=new Set();let trials=0;
- const levels=difficulty==='mixed'?['easy','medium','hard']:[difficulty==='expert'?'hard':difficulty];
+ const levels=difficulty==='mixed'?['easy','medium','hard','expert']:[['easy','medium','hard','expert'].includes(difficulty)?difficulty:'medium'];
+ const sourceLanguage=language==='ar'?'ar':'en';
  const add=(q,level)=>{
   if(!validate(q,language))return;
   const prompt=norm(q.prompt);if(seen.has(prompt))return;seen.add(prompt);
   result.push({...q,type:'mcq',id:'assessment-'+topic.value+'-'+Date.now()+'-'+result.length,
    points:live?1000:10,topicKey:topic.value,subjectKey:topic.subject,curriculumTopicId:topic.value,
-   curriculumTopicTitle:topic.title,curriculumGrade:topic.grade,questionKind:level,level:level==='easy'?1:level==='hard'?3:2,
-   typeLabel:subjectLabel(topic.subject,language)+' • '+(language==='en'?topic.en:topic.title)});
+   curriculumTopicTitle:topic.title,curriculumGrade:topic.grade,questionKind:level,level:({easy:1,medium:2,hard:3,expert:4}[level]||2),
+   typeLabel:subjectLabel(topic.subject,language)+' • '+(language==='ar'?topic.title:t(topic.en,topic.en,language))});
  };
  if(topic.subject==='math'&&/إحصاء/.test(topic.title)){
   for(let i=0;i<Math.max(n*8,60)&&result.length<n;i++){
    const level=difficulty==='expert'?'expert':(levels[i%levels.length]||'medium');
-   try{add(statisticsCompleteQuestion(topic,level,i,language),level)}catch(error){console.warn('Statistics question generation:',error)}
+   try{add(statisticsCompleteQuestion(topic,level,i,sourceLanguage),level)}catch(error){console.warn('Statistics question generation:',error)}
   }
  }else if((topic.subject==='math'||topic.subject==='geometry')&&mathTopic(topic.title)){
   for(let i=0;i<Math.max(n*9,45)&&result.length<n;i++){
    const level=levels[i%levels.length]||'medium';
-   try{add(mathQuestion(topic,level,Math.floor(Math.random()*100000)+i*31,language),level)}catch{}
+   try{add(mathQuestion(topic,level,Math.floor(Math.random()*100000)+i*31,sourceLanguage),level)}catch{}
   }
  }else if(topic.subject==='arabic'&&arabicLesson(topic.title)){
-  const lesson=arabicLesson(topic.title),langIndex=language==='en'?1:0;
+  const lesson=arabicLesson(topic.title),langIndex=sourceLanguage==='en'?1:0;
   const roleValues=Object.values(AR_ROLES).map(p=>p[langIndex]);
   const markerValues=Object.values(AR_MARKERS).map(p=>p[langIndex]);
   const build=(sentence,word,answer,pool,prompt,explanation,level)=>{
@@ -122,17 +124,17 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
     const role=AR_ROLES[token.role]?.[langIndex];
     const marker=token.marker&&AR_MARKERS[token.marker]?.[langIndex];
     if(!role)continue;
-    const prompt1=language==='en'?'What grammatical role does “'+token.word+'” have in “'+sentence+'”?':'ما الدور الإعرابي لكلمة «'+token.word+'» في «'+sentence+'»؟';
-    build(sentence,token.word,role,[...example.tokens.map(x=>AR_ROLES[x.role]?.[langIndex]),...roleValues],prompt1,language==='en'?lesson.english:lesson.ar,level);
+    const prompt1=sourceLanguage==='en'?'What grammatical role does “'+token.word+'” have in “'+sentence+'”?':'ما الدور الإعرابي لكلمة «'+token.word+'» في «'+sentence+'»؟';
+    build(sentence,token.word,role,[...example.tokens.map(x=>AR_ROLES[x.role]?.[langIndex]),...roleValues],prompt1,sourceLanguage==='en'?lesson.english:lesson.ar,level);
     if(marker){
-     const prompt2=language==='en'?'Which case or ending applies to “'+token.word+'” in “'+sentence+'”?':'ما علامة الإعراب أو حكم «'+token.word+'» في «'+sentence+'»؟';
-     build(sentence,token.word,marker,[...example.tokens.map(x=>AR_MARKERS[x.marker]?.[langIndex]),...markerValues],prompt2,language==='en'?lesson.english:lesson.ar,'hard');
+     const prompt2=sourceLanguage==='en'?'Which case or ending applies to “'+token.word+'” in “'+sentence+'”?':'ما علامة الإعراب أو حكم «'+token.word+'» في «'+sentence+'»؟';
+     build(sentence,token.word,marker,[...example.tokens.map(x=>AR_MARKERS[x.marker]?.[langIndex]),...markerValues],prompt2,sourceLanguage==='en'?lesson.english:lesson.ar,'hard');
     }
     if(result.length>=n)break;
     const pair=role+(marker?' — '+marker:'');
     const pool=[...roleValues].filter(x=>x!==role).map(x=>x+(marker?' — '+marker:''));
-    const prompt3=language==='en'?'Choose the correct analysis of “'+token.word+'” in “'+sentence+'”.':'اختر التحليل النحوي الصحيح لكلمة «'+token.word+'» في «'+sentence+'».';
-    build(sentence,token.word,pair,pool,prompt3,language==='en'?lesson.english:lesson.ar,'hard');
+    const prompt3=sourceLanguage==='en'?'Choose the correct analysis of “'+token.word+'” in “'+sentence+'”.':'اختر التحليل النحوي الصحيح لكلمة «'+token.word+'» في «'+sentence+'».';
+    build(sentence,token.word,pair,pool,prompt3,sourceLanguage==='en'?lesson.english:lesson.ar,difficulty==='expert'?'expert':'hard');
    }
   }
  }else if(topic.subject==='science'){
@@ -142,11 +144,11 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    for(const q of available){add(q,difficulty);if(result.length>=n)break}
   }
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
-  for(const q of englishQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
+  for(const [i,q] of englishQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
-  for(const q of geographyQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
+  for(const [i,q] of geographyQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
-  for(const q of historyQuestions(topic,language)){add(q,'medium');if(result.length>=n)break}
+  for(const [i,q] of historyQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
  }else if(topic.subject==='english'&&englishBank[topic.title]){
   const pairs=englishBank[topic.title];
   for(let i=0;i<pairs.length;i++){
@@ -156,7 +158,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  }else if((topic.subject==='history'||topic.subject==='geography')&&factBank[topic.title]){
   for(const row of factBank[topic.title]){
    const [en,ar,options,answer,answerAr]=row;
-   if(language==='en')add({prompt:en,options,answer,explanation:en+' — '+answer},difficulty);
+   if(sourceLanguage==='en')add({prompt:en,options,answer,explanation:en+' — '+answer},levels[result.length%levels.length]);
    else{
     const translation={
      'Italy':'إيطاليا','France':'فرنسا','Russia':'روسيا','China':'الصين',
@@ -167,7 +169,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
      'Evaporation':'التبخر','Condensation':'التكاثف','Freezing':'التجمّد','Precipitation':'الهطول','Melting':'الانصهار','Infiltration':'التسرّب',
      'Lava':'اللابة / الحمم','Magma only':'الصهارة تحت السطح','Granite':'الغرانيت','Sandstone':'الحجر الرملي'
     };
-    add({prompt:ar,options:options.map(x=>translation[x]||x),answer:translation[answer]||answerAr,explanation:answerAr},difficulty);
+    add({prompt:ar,options:options.map(x=>translation[x]||x),answer:translation[answer]||answerAr,explanation:answerAr},levels[result.length%levels.length]);
    }
   }
  }
@@ -175,7 +177,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   throw Error(t('الموضوع موجود بالمنهاج، لكن ما فيه '+n+' أسئلة متنوعة ومراجَعة لهذا المستوى حتى الآن. اختَر عددًا أقل أو موضوعًا ثانيًا. ما رح نعطيك أسئلة عامة مالها علاقة بالدرس.',
    'This topic is listed in the curriculum, but does not yet have '+n+' distinct, reviewed questions at this level. Choose a smaller count or another topic. Unrelated filler questions will not be used.',language));
  }
- return {topic,questions:result,total:result.reduce((s,q)=>s+q.points,0),difficulty};
+ return {topic,questions:result,total:result.reduce((s,q)=>s+q.points,0),difficulty,requestedCount:n,availableCount:result.length};
 }
 function installPicker(id,language=()=>document.documentElement.lang){
  const select=document.getElementById(id);if(!select||select.dataset.classoraCurriculumPicker)return;
@@ -186,18 +188,19 @@ function installPicker(id,language=()=>document.documentElement.lang){
  const label=document.createElement('span');label.className='ca-topic-search-label';label.dataset.noTranslate='';
  wrap.insertBefore(label,select);wrap.insertBefore(search,select);
  const grade=()=>{let n=8;try{n=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(n)?n:8};
- const gradeLabel=(g,lang)=>lang==='en'?'Grade '+g:'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g);
+ const gradeLabel=(g,lang)=>lang==='ar'?'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g):t('Grade','Grade',lang)+' '+g;
  let lastLang='',lastGrade=0;
  function fill({preserve=true}={}){
-  const lang=language()==='en'?'en':'ar',g=grade(),query=norm(search.value);
+  const lang=language(),g=grade(),query=norm(search.value);
   const previous=preserve?select.value:'';
   label.textContent=t('مواضيع '+gradeLabel(g,lang),'Topics for '+gradeLabel(g,lang),lang);
   search.placeholder=t('ابحث عن موضوع من '+gradeLabel(g,lang),'Search a '+gradeLabel(g,lang)+' topic',lang);
   for(const fieldId of ['compQuickDifficulty','scienceExamDifficulty']){
    const diff=document.getElementById(fieldId);if(!diff)continue;
    const node=diff.closest('label')?.firstChild;if(node?.nodeType===3)node.textContent=t('الصعوبة','Difficulty',lang)+'\n';
-   const translations={easy:['سهل','Easy'],medium:['متوسط','Medium'],hard:['صعب','Hard'],mixed:['مختلط','Mixed']};
-   for(const opt of diff.options){const parts=translations[opt.value];if(parts)opt.textContent=lang==='en'?parts[1]:parts[0]}
+   const translations={easy:['سهل','Easy'],medium:['متوسط','Medium'],hard:['صعب','Hard'],expert:['خبير','Expert'],mixed:['مختلط','Mixed']};
+   if(![...diff.options].some(option=>option.value==='expert')){const opt=document.createElement('option');opt.value='expert';diff.append(opt)}
+   for(const opt of diff.options){const parts=translations[opt.value];if(parts)opt.textContent=t(parts[0],parts[1],lang)}
   }
   const matches=TOPICS.filter(obj=>obj.grade===g&&(!query||norm(obj.title+' '+obj.en+' '+subjectLabel(obj.subject,'ar')+' '+subjectLabel(obj.subject,'en')+' '+gradeLabel(g,lang)).includes(query)));
   const fragment=document.createDocumentFragment();let parent=null,previousSubject='';
@@ -207,7 +210,7 @@ function installPicker(id,language=()=>document.documentElement.lang){
     parent=document.createElement('optgroup');parent.label=subjectLabel(obj.subject,lang);
     fragment.append(parent);
    }
-   const option=document.createElement('option');option.value=obj.value;option.textContent=(lang==='en'?obj.en:obj.title);
+   const option=document.createElement('option');option.value=obj.value;option.textContent=lang==='ar'?obj.title:t(obj.en,obj.en,lang);
    parent.append(option);
   }
   select.replaceChildren(fragment);
@@ -221,7 +224,7 @@ function installPicker(id,language=()=>document.documentElement.lang){
  search.addEventListener('input',()=>fill());
  document.addEventListener('classora:grade-change',()=>{search.value='';fill({preserve:false})});
  new MutationObserver(()=>{
-  const l=language()==='en'?'en':'ar';if(l!==lastLang)fill();
+  const l=language();if(l!==lastLang)fill();
  }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  fill({preserve:false});
  return fill;
