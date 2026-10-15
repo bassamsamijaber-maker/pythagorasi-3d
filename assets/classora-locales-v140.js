@@ -543,6 +543,73 @@ Wish / If Only — Introduction|Introducción a wish e if only|wish와 if only �
 Causative Have — Introduction|Introducción al have causativo|사역 have 입문|Einführung in kausatives Have|Introduzione al causativo have|कारक हैव का परिचय|Ettirgen have yapısına giriş
 Determiners|Determinantes|한정사|Determinierer|Determinanti|निर्धारक|Belirteçler
 Linking Words|Conectores|연결어|Bindewörter|Connettivi|संयोजक शब्द|Bağlaçlar
+Parts of speech|Categorías gramaticales|품사|Wortarten|Parti del discorso|शब्द भेद|Sözcük türleri
+Past, present and imperative verbs|Verbos en pasado presente e imperativo|과거 현재 명령형 동사|Verben in Vergangenheit Gegenwart und Imperativ|Verbi al passato presente e imperativo|भूत वर्तमान और आज्ञार्थक क्रियाएँ|Geçmiş geniş ve emir fiilleri
+Subject and predicate|Sujeto y predicado|주어와 서술어|Subjekt und Prädikat|Soggetto e predicato|कर्ता और विधेय|Özne ve yüklem
+Subject (doer)|Sujeto agente|행위 주체|Handelndes Subjekt|Soggetto agente|कार्य करने वाला कर्ता|İşi yapan özne
+Adjective and described noun|Adjetivo y sustantivo descrito|형용사와 수식받는 명사|Adjektiv und beschriebenes Nomen|Aggettivo e nome qualificato|विशेषण और विशेष्य|Sıfat ve nitelenen isim
+Definite and indefinite nouns|Nombres definidos e indefinidos|정관 명사와 부정관 명사|Bestimmte und unbestimmte Nomen|Nomi determinati e indeterminati|निश्चित और अनिश्चित संज्ञाएँ|Belirli ve belirsiz isimler
+Masculine and feminine|Masculino y femenino|남성과 여성|Maskulin und Feminin|Maschile e femminile|पुल्लिंग और स्त्रीलिंग|Eril ve dişil
+Singular, dual and plural|Singular dual y plural|단수 쌍수 복수|Singular Dual und Plural|Singolare duale e plurale|एकवचन द्विवचन और बहुवचन|Tekil ikil ve çoğul
+Sound masculine plural|Plural masculino regular|남성 규칙 복수|Regelmäßiger maskuliner Plural|Plurale maschile regolare|नियमित पुल्लिंग बहुवचन|Kurallı eril çoğul
+Sound feminine plural|Plural femenino regular|여성 규칙 복수|Regelmäßiger femininer Plural|Plurale femminile regolare|नियमित स्त्रीलिंग बहुवचन|Kurallı dişil çoğul
+Broken plural|Plural irregular árabe|아랍어 불규칙 복수|Gebrochener Plural|Plurale fratto arabo|अरबी अनियमित बहुवचन|Arapçada kırık çoğul
+Pronouns|Pronombres|대명사|Pronomen|Pronomi|सर्वनाम|Zamirler
+Demonstratives|Demostrativos|지시사|Demonstrativa|Dimostrativi|संकेतवाचक शब्द|İşaret sözcükleri
+Relative pronouns|Pronombres relativos|관계대명사|Relativpronomen|Pronomi relativi|संबंधवाचक सर्वनाम|İlgi zamirleri
+Prepositions|Preposiciones|전치사|Präpositionen|Preposizioni|संबंधबोधक अव्यय|Edatlar
+Basic case endings|Terminaciones gramaticales básicas|기본 격어미|Grundlegende Kasusendungen|Desinenze dei casi di base|मूल विभक्ति चिह्न|Temel hâl ekleri
+Passive subject|Sujeto de la voz pasiva|수동문 주어|Subjekt im Passiv|Soggetto passivo|कर्मवाच्य का कर्ता|Edilgen cümlenin öznesi
+Active and passive voice|Voz activa y pasiva|능동태와 수동태|Aktiv und Passiv|Forma attiva e passiva|कर्तृवाच्य और कर्मवाच्य|Etken ve edilgen çatı
+Circumstantial accusative|Complemento circunstancial de estado|상태 대격|Zustandsakkusativ|Complemento di stato|हाल बताने वाला कर्मकारक|Durum bildiren mansub öge
+Adjective|Adjetivo|형용사|Adjektiv|Aggettivo|विशेषण|Sıfat
+Coordination|Coordinación gramatical|접속 구조|Koordination|Coordinazione|समन्वय|Bağlama
+Emphasis|Énfasis gramatical|강조|Betonung|Enfasi|बलाघात|Pekiştirme
+Apposition|Aposición|동격|Apposition|Apposizione|समानाधिकरण|Açıklayıcı ad tamlaması
+Inflected and indeclinable verbs|Verbos flexivos e invariables|활용하는 동사와 불변 동사|Flektierte und unveränderliche Verben|Verbi flessi e invariabili|विभक्ति बदलने वाली और अविकारी क्रियाएँ|Çekimli ve değişmez fiiller
+Sound verb|Verbo regular sin letras débiles|정상 동사|Gesundes Verb ohne schwache Radikale|Verbo sano|सही क्रिया|Sahih fiil
+Weak verb|Verbo débil árabe|약동사|Schwaches Verb|Verbo debole arabo|कमज़ोर क्रिया|Mu'tel fiil
+Morphological pattern|Patrón morfológico|형태론적 틀|Morphologisches Muster|Schema morfologico|रूपात्मक पैटर्न|Sarf vezni
+Active participle|Participio activo|능동 분사|Aktives Partizip|Participio attivo|कर्तृवाचक कृदंत|İsm-i fâil
+Passive participle|Participio pasivo|수동 분사|Passives Partizip|Participio passivo|कर्मवाचक कृदंत|İsm-i mef'ûl
+Types of plurals|Tipos de plural|복수형의 종류|Pluralarten|Tipi di plurale|बहुवचन के प्रकार|Çoğul türleri
+Nominative markers|Marcas del nominativo|주격 표지|Nominativzeichen|Segni del nominativo|कर्ता कारक के चिह्न|Merfûluk alametleri
+Accusative markers|Marcas del acusativo|대격 표지|Akkusativzeichen|Segni dell'accusativo|कर्म कारक के चिह्न|Mansubiyet alametleri
+Genitive markers|Marcas del genitivo|속격 표지|Genitivzeichen|Segni del genitivo|संबंध कारक के चिह्न|Mecrurluk alametleri
+Indicative present verb|Presente de indicativo árabe|직설법 현재 동사|Präsens im Indikativ|Presente indicativo arabo|वर्तमान क्रिया का निर्देशार्थक रूप|Merfû muzari fiil
+Subjunctive present verb|Presente de subjuntivo árabe|접속법 현재 동사|Präsens im Konjunktiv|Presente congiuntivo arabo|वर्तमान क्रिया का संभावनार्थक रूप|Mansub muzari fiil
+Jussive present verb|Presente yusivo árabe|절단법 현재 동사|Präsens im Jussiv|Presente iussivo arabo|वर्तमान क्रिया का जज़्म रूप|Meczûm muzari fiil
+Absolute object|Complemento absoluto|절대 목적어|Absolutes Objekt|Complemento assoluto|निरपेक्ष कर्म|Mef'ûl-i mutlak
+Object of reason|Complemento de causa|이유 목적어|Kausalobjekt|Complemento di causa|कारणसूचक कर्म|Sebep bildiren mef'ûl
+Adverbial object|Complemento adverbial|부사어 목적어|Adverbiales Objekt|Complemento avverbiale|क्रिया विशेषण कर्म|Zaman ve yer zarfı
+Object of accompaniment|Complemento de compañía|동반 목적어|Begleitobjekt|Complemento di compagnia|साथ सूचक कर्म|Birliktelik mef'ûlü
+Specification|Complemento de especificación|명확화 구문|Spezifizierung|Specificazione|स्पष्टीकरण कारक|Temyiz
+Exception|Excepción|예외|Ausnahme|Eccezione|अपवाद|İstisna
+Vocative|Vocativo|호격|Vokativ|Vocativo|संबोधन|Nida
+Kana and its sisters|Kana y sus verbos afines|카나와 유사 동사|Kana und verwandte Verben|Kana e i verbi affini|काना और उसकी समान क्रियाएँ|Kâne ve benzerleri
+Inna and its sisters|Inna y sus partículas afines|인나와 유사 조사|Inna und verwandte Partikeln|Inna e particelle affini|इन्ना और समान अव्यय|İnne ve benzerleri
+La of absolute negation|La de negación absoluta|절대 부정의 라|La der absoluten Verneinung|La di negazione assoluta|पूर्ण निषेध का ला|Cinsini nefyeden lâ
+Adjective resembling participle|Adjetivo semejante al participio|분사형 유사 형용사|Partizipähnliches Adjektiv|Aggettivo simile al participio|कृदंत समान विशेषण|Sıfat-ı müşebbehe
+Intensive forms|Formas intensivas|강조형 어형|Intensivformen|Forme intensive|अतिशयोक्ति रूप|Mübalağa kalıpları
+Comparative/superlative noun|Nombre comparativo y superlativo|비교급 최상급 명사|Komparativ- und Superlativnomen|Nome comparativo e superlativo|तुलना और श्रेष्ठता संज्ञा|İsm-i tafdil
+Basic verb forms|Formas verbales básicas|기본 동사형|Grundformen der Verben|Forme verbali di base|मूल क्रिया रूप|Mücerred fiiller
+Augmented verb forms|Formas verbales aumentadas|확장 동사형|Erweiterte Verbformen|Forme verbali aumentate|विस्तारित क्रिया रूप|Mezid fiiller
+Sentences with grammatical position|Oraciones con función sintáctica|문법적 위치가 있는 문장|Sätze mit syntaktischer Funktion|Frasi con funzione sintattica|व्याकरणिक स्थान वाले वाक्य|İrabda yeri olan cümleler
+Sentences without grammatical position|Oraciones sin función sintáctica|문법적 위치가 없는 문장|Sätze ohne syntaktische Funktion|Frasi senza funzione sintattica|व्याकरणिक स्थान रहित वाक्य|İrabda yeri olmayan cümleler
+Detailed parsing|Análisis gramatical detallado|자세한 문장 분석|Detaillierte Satzanalyse|Analisi grammaticale dettagliata|विस्तृत व्याकरणिक विश्लेषण|Ayrıntılı irab
+Review of case endings|Repaso de terminaciones gramaticales|격어미 복습|Wiederholung der Kasusendungen|Ripasso delle desinenze|विभक्ति चिह्नों का पुनरावलोकन|İrab alametleri tekrarı
+Objects|Complementos de objeto|목적어|Objekte|Complementi oggetto|कर्म|Mef'ûller
+Diptotes|Nombres árabes sin tanwin|탄윈이 없는 아랍어 명사|Diptota|Nomi diptoti|बिना तन्वीन वाली अरबी संज्ञाएँ|Gayr-i munsarif isimler
+Numbers and counted nouns|Numerales y nombres contados|수사와 셈을 받는 명사|Zahlen und gezählte Nomen|Numerali e nomi contati|संख्या और गिनी जाने वाली संज्ञाएँ|Sayılar ve sayılan isimler
+Conditional style|Construcción condicional|조건문 구조|Bedingungskonstruktion|Costruzione condizionale|शर्तीय शैली|Şart üslubu
+Exclamation style|Construcción exclamativa|감탄 구문|Ausrufekonstruktion|Costruzione esclamativa|विस्मयादिबोधक शैली|Hayret üslubu
+Praise and blame style|Expresiones de elogio y reproche|칭찬과 비난 표현|Lob und Tadel|Lode e biasimo|प्रशंसा और निंदा शैली|Övgü ve yergi üslubu
+Encouragement and warning|Exhortación y advertencia|권유와 경고|Ermunterung und Warnung|Esortazione e avvertimento|प्रोत्साहन और चेतावनी|Teşvik ve uyarı
+Verbal nouns|Sustantivos verbales|동명사|Verbalsubstantive|Nomi verbali|क्रियावाचक संज्ञाएँ|Mastarlar
+Basic and augmented forms|Formas básicas y aumentadas|기본형과 확장형|Grund- und Erweiterungsformen|Forme di base e aumentate|मूल और विस्तारित रूप|Mücerred ve mezid
+Sound and weak verbs|Verbos sanos y débiles|정상 동사와 약동사|Gesunde und schwache Verben|Verbi sani e deboli|सही और कमज़ोर क्रियाएँ|Sahih ve mu'tel fiiller
+Vowel change and substitution|Cambio vocálico y sustitución|모음 변화와 교체|Vokalwechsel und Ersetzung|Cambio vocalico e sostituzione|स्वर परिवर्तन और प्रतिस्थापन|İlâl ve ibdâl
+Full grammatical parsing|Análisis gramatical completo|전체 문장 분석|Vollständige grammatische Analyse|Analisi grammaticale completa|पूर्ण व्याकरणिक विश्लेषण|Tam irab çözümlemesi
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
