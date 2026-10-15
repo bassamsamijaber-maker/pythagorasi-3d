@@ -5,7 +5,7 @@ const pick=a=>a[rnd(0,a.length-1)], sum=a=>a.reduce((v,x)=>v+x,0);
 const fmt=x=>String(Number(Number(x).toFixed(2)));
 const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
 const fraction=(a,b)=>{const g=gcd(a,b);return a/g+'/'+(b/g)};
-const lang=(ar,en,l)=>l==='en'?en:ar;
+const lang=(ar,en,l)=>l==='ar'?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang||l,en)||en);
 const shuffle=a=>{const v=[...a];for(let i=v.length-1;i>0;i--){const j=rnd(0,i);[v[i],v[j]]=[v[j],v[i]]}return v};
 function choices(answer,wrong,kind='number'){
  const s=String(answer),result=[s];for(const x of wrong){const v=String(x);if(!result.includes(v))result.push(v);if(result.length===4)break}
