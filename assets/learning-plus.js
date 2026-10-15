@@ -2,7 +2,8 @@ import {acidsTopic,phSamples,phColor,phClass,acidQuestions,levelFromXP,nextDiffi
 import {mountPHScene} from './ph-lab.js?v=89';
 import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName,curriculumTopicGuide} from './curriculum-v97.js?v=131';
 export function mountLearningPlus(api){
- const L=(a,e)=>api.language()==='ar'?a:e,txt=p=>p[api.language()==='ar'?0:1],N=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n},B=(text,fn)=>{const b=N('button','hub-button',text);b.type='button';b.onclick=fn;return b};
+ const selectedLanguage=()=>document.documentElement.lang||api.language();
+ const L=(a,e)=>selectedLanguage()==='ar'?a:(window.ClassoraLocale?.dictionaries?.[selectedLanguage()]?.[e]||e),txt=p=>L(p[0],p[1]),N=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n},B=(text,fn)=>{const b=N('button','hub-button',text);b.type='button';b.onclick=fn;return b};
  let dialog=null,cleanup=()=>{},openAgain=null,requestRows=[],requestStates={},dailyRows=[],dailyError=false,refreshGeneration=0;
  const enabled=k=>api.flags()?.[k]!==false;
  const featureList=[['acids','الحموض والقواعد','Acids & Bases'],['topicRequests','طلبات المواضيع','Topic requests'],['daily','ملخص اليوم','Classora Daily'],['study','وضع الدراسة','Study Mode'],['flashcards','البطاقات','Flashcards'],['progress','التقدّم والإنجازات','Progress & achievements']];
