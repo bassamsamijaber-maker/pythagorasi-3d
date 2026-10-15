@@ -122,7 +122,7 @@
  function render(){
    const en=english(),item=steps[step];
    overlay.querySelector(".cw116-card").dir=en?"ltr":"rtl";
-   $("cw116-close").setAttribute("aria-label",en?"Skip guide":"تخطي التعليم");
+   $("cw116-close").setAttribute("aria-label",L("تخطي التعليم","Skip guide"));
    const question=mode==="question";
    $("cw116-title").textContent=question?L("هل تحتاج لتعليم كيفية استخدام كلاسورا؟","Would you like to learn how to use Classora?"):L(item[1],item[2]);
    $("cw116-text").textContent=question?L("جولة قصيرة بتشرح لك المواد والصفوف والامتحانات والشات والإعدادات.","Get a quick tour of subjects, classes, exams, chat and settings."):L(item[3],item[4]);
