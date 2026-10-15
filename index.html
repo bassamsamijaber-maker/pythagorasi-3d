@@ -2455,13 +2455,13 @@ import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=131";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=148';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=149';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=140';
-import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=131';
+import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=149';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=148";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=149";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=119";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -15992,13 +15992,49 @@ async function liveHostAction(buttonId,action){
   if(liveHostActionPending)return;
   liveHostActionPending=true;
   const btn=document.getElementById(buttonId);btn.disabled=true;
-  try{await action()}catch(err){console.error("competition action",err);showToast("تعذر إكمال العملية. افحص الاتصال وحاول مرة ثانية.")}
+  try{await action()}catch(err){
+    console.error("competition action",err);
+    const code=String(err?.code||err?.message||"");
+    const message=code==="competition-question-missing"
+      ?adminLang("أسئلة الغرفة ناقصة. أنشئ غرفة جديدة وحاول مرة ثانية.","Room questions are missing. Create a new room.")
+      :code==="competition-host-required"
+      ?adminLang("لازم حساب المعلم صاحب الغرفة لبدء المسابقة.","Only the room's teacher can start the competition.")
+      :code==="competition-room-missing"
+      ?adminLang("الغرفة مش موجودة. افتح مسابقة جديدة.","The competition room no longer exists.")
+      :code==="competition-not-in-lobby"
+      ?adminLang("الغرفة مش في مرحلة الانتظار. ارجع للغرفة وشوف حالتها.","The room is no longer in the lobby.")
+      :/permission-denied|insufficient permissions/i.test(code)
+      ?adminLang("صلاحيات Firebase منعت تشغيل المسابقة. تأكد أنك داخل بحساب المعلم.","Firebase permissions blocked the start. Check your teacher login.")
+      :adminLang("تعذّر تشغيل الجولة. افحص الاتصال وحاول مرة ثانية.","Could not start the round. Check the connection and retry.");
+    showToast(message);
+  }
   finally{liveHostActionPending=false;btn.disabled=false}
 }
 document.getElementById("compStartBtn").addEventListener("click",()=>{
-  if(liveCompetitionRole!=="host"||liveCompetitionData?.status!=="lobby")return;
-  if(!livePlayers.length){showToast("خلي طالب واحد على الأقل يدخل الغرفة.");return}
-  return liveHostAction("compStartBtn",()=>hostSetQuestion(0));
+  if(liveCompetitionRole!=="host"||!liveCompetitionId){
+    showToast(adminLang("افتح غرفة المسابقة كمعلم أولًا.","Open the competition as a teacher first."));
+    return;
+  }
+  return liveHostAction("compStartBtn",async()=>{
+    // Read the authoritative room before starting; the realtime listener may lag.
+    const roomRef=doc(db,"competitions",liveCompetitionId);
+    const liveSnap=await getDocFromServer(roomRef);
+    if(!liveSnap.exists())throw new Error("competition-room-missing");
+    const room=liveSnap.data();
+    if(room.ownerId!==auth.currentUser?.uid)throw new Error("competition-host-required");
+    if(room.status!=="lobby"){
+      if(room.status==="question"||room.status==="grading"||room.status==="result"){
+        showToast(adminLang("المسابقة بدأت بالفعل. جاري مزامنة الغرفة.","The competition has already started. Synchronizing the room."));
+        return;
+      }
+      throw new Error("competition-not-in-lobby");
+    }
+    // Starting before student arrival is a useful host preview; players may still join mid-round.
+    const firstQuestion=await getDoc(doc(db,"competitions",liveCompetitionId,"questions","0"));
+    if(!firstQuestion.exists())throw new Error("competition-question-missing");
+    await hostSetQuestion(0);
+    if(!livePlayers.length)showToast(adminLang("بدأت المسابقة كتجربة بدون لاعبين. يمكن للطلاب الانضمام بالكود أثناء الجولة.","Competition started in preview mode. Students can still join with the code."));
+  });
 });
 document.getElementById("compRevealBtn").addEventListener("click",()=>{
   if(liveCompetitionRole!=="host"||!["question","grading"].includes(liveCompetitionData?.status))return;
