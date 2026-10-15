@@ -123,7 +123,7 @@ const uses={
  U:["Nuclear fuel and scientific research.","وقود نووي وأبحاث علمية."]
 };
 function useText(e){
- const u=uses[e.s];if(u)return lang==="ar"?u[1]:u[0];
+ const u=uses[e.s];if(u)return lang==="ar"?u[1]:localeText(u[0]);
  const fallback={
   alkali:["Specialized chemical compounds and research.","مركبات كيميائية متخصصة وأبحاث."],
   alkaline:["Materials, minerals and specialized compounds.","مواد ومعادن ومركبات متخصصة."],
@@ -136,9 +136,21 @@ function useText(e){
   lanthanide:["Magnets, optics, electronics and high-performance materials.","المغناطيس، البصريات، الإلكترونيات ومواد عالية الأداء."],
   actinide:["Mostly nuclear science, research and specialized energy applications.","غالبًا العلوم النووية والأبحاث وتطبيقات طاقة متخصصة."]
  };
- return lang==="ar"?fallback[e.category][1]:fallback[e.category][0];
+ return lang==="ar"?fallback[e.category][1]:localeText(fallback[e.category][0]);
 }
-function description(e){const base=categoryDescription(e.category);const st=stateName(e);return lang==="ar"?`${e.ar} (${e.s}) هو العنصر رقم ${e.n} في الجدول الدوري. حالته عند الظروف العادية: ${st}. ${base}`:`${e.en} (${e.s}) is element ${e.n} on the periodic table. Its ordinary-condition state is ${st.toLowerCase()}. ${base}`}
+function description(e){
+ const base=categoryDescription(e.category),st=stateName(e),name=localName(e);
+ if(lang==="ar")return `${e.ar} (${e.s}) هو العنصر رقم ${e.n} في الجدول الدوري. حالته عند الظروف العادية: ${st}. ${base}`;
+ const templates={
+  es:`${name} (${e.s}) es el elemento número ${e.n} de la tabla periódica. Estado en condiciones normales: ${st}. ${base}`,
+  ko:`${name} (${e.s})은 주기율표의 ${e.n}번 원소입니다. 일반 조건에서의 상태: ${st}. ${base}`,
+  de:`${name} (${e.s}) ist Element Nummer ${e.n} im Periodensystem. Zustand unter normalen Bedingungen: ${st}. ${base}`,
+  it:`${name} (${e.s}) è l'elemento numero ${e.n} della tavola periodica. Stato in condizioni normali: ${st}. ${base}`,
+  hi:`${name} (${e.s}) आवर्त सारणी का तत्व संख्या ${e.n} है। सामान्य दशाओं में अवस्था: ${st}। ${base}`,
+  tr:`${name} (${e.s}) periyodik tablodaki ${e.n} numaralı elementtir. Normal koşullardaki hâli: ${st}. ${base}`
+ };
+ return templates[lang]||`${name} (${e.s}) is element ${e.n} on the periodic table. Its ordinary-condition state is ${st.toLowerCase()}. ${base}`;
+}
 
 function gridPos(e){
  if(e.n>=57&&e.n<=71)return{row:9,col:e.n-53};
