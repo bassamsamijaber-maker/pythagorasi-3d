@@ -146,7 +146,9 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
   for(const [i,q] of englishQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
-  for(const [i,q] of geographyQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
+  const available=geographyQuestions(topic,sourceLanguage);
+   const eligible=difficulty==='mixed'?available:available.filter(q=>q.difficulty===difficulty);
+   for(const q of eligible){add(q,q.difficulty||'medium');if(result.length>=n)break}
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
   for(const [i,q] of historyQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
  }else if(topic.subject==='english'&&englishBank[topic.title]){
