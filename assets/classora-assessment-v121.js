@@ -126,33 +126,60 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   const lesson=arabicLesson(topic.title),langIndex=sourceLanguage==='en'?1:0;
   const roleValues=Object.values(AR_ROLES).map(p=>p[langIndex]);
   const markerValues=Object.values(AR_MARKERS).map(p=>p[langIndex]);
-  const build=(sentence,word,answer,pool,prompt,explanation,level)=>{
-   const others=[...new Set(pool)].filter(x=>x!==answer).slice(0,3);
+  const build=(word,answer,pool,prompt,explanation,level)=>{
+   const others=[...new Set(pool)].filter(x=>x&&x!==answer).slice(0,3);
    if(others.length!==3)return;
-   const options=[answer,...others];const offset=(result.length*3+word.length)%4;
+   const options=[answer,...others],offset=(result.length*3+word.length)%4;
    options.push(...options.splice(0,offset));
    add({prompt,answer,options,explanation},level);
   };
-  for(const [exampleIndex,example] of lesson.examples.entries()){
+  const pairQuestion=(tokens,explanation,level,sentence)=>{
+   const size=level==='expert'?3:2;
+   const chosen=tokens.filter(token=>AR_ROLES[token.role]).slice(0,size);
+   if(chosen.length!==size)return;
+   const roles=chosen.map(token=>AR_ROLES[token.role][langIndex]);
+   const answer=roles.join(' | '),options=[answer];
+   for(let i=0;i<3;i++){
+    const parts=[...roles],index=i%size;
+    parts[index]=roleValues.find(value=>value!==roles[index]);
+    if(size===2&&i===2)parts[1]=roleValues.find(value=>value!==roles[1]);
+    options.push(parts.join(' | '));
+   }
+   if(new Set(options).size!==4)return;
+   const prompt=sourceLanguage==='en'
+    ?'Analyze the grammatical roles of '+chosen.map(t=>'“'+t.word+'”').join(', ')+' in “'+sentence+'”, in order.'
+    :'حلّل الدور النحوي للكلمات '+chosen.map(t=>'«'+t.word+'»').join('، ')+' في «'+sentence+'» بالترتيب.';
+   add({prompt,options,answer,explanation},level);
+  };
+  for(const example of lesson.examples){
    if(result.length>=n)break;
    const sentence=example.tokens.map(token=>token.word).join(' ');
-   for(const [tokenIndex,token] of example.tokens.entries()){
+   for(const token of example.tokens){
     if(result.length>=n)break;
-    const level=levels[(result.length+exampleIndex)%levels.length]||'medium';
-    const role=AR_ROLES[token.role]?.[langIndex];
-    const marker=token.marker&&AR_MARKERS[token.marker]?.[langIndex];
+    const role=AR_ROLES[token.role]?.[langIndex],marker=token.marker&&AR_MARKERS[token.marker]?.[langIndex];
     if(!role)continue;
-    const prompt1=sourceLanguage==='en'?'What grammatical role does “'+token.word+'” have in “'+sentence+'”?':'ما الدور الإعرابي لكلمة «'+token.word+'» في «'+sentence+'»؟';
-    build(sentence,token.word,role,[...example.tokens.map(x=>AR_ROLES[x.role]?.[langIndex]),...roleValues],prompt1,sourceLanguage==='en'?lesson.english:lesson.ar,level);
-    if(marker){
-     const prompt2=sourceLanguage==='en'?'Which case or ending applies to “'+token.word+'” in “'+sentence+'”?':'ما علامة الإعراب أو حكم «'+token.word+'» في «'+sentence+'»؟';
-     build(sentence,token.word,marker,[...example.tokens.map(x=>AR_MARKERS[x.marker]?.[langIndex]),...markerValues],prompt2,sourceLanguage==='en'?lesson.english:lesson.ar,'hard');
+    const explanation=sourceLanguage==='en'?lesson.english:lesson.ar;
+    if(difficulty==='mixed'||difficulty==='easy'){
+     const prompt=sourceLanguage==='en'?'What is the grammatical role of “'+token.word+'” in “'+sentence+'”?':'ما الدور الإعرابي لكلمة «'+token.word+'» في «'+sentence+'»؟';
+     build(token.word,role,roleValues,prompt,explanation,'easy');
     }
-    if(result.length>=n)break;
-    const pair=role+(marker?' — '+marker:'');
-    const pool=[...roleValues].filter(x=>x!==role).map(x=>x+(marker?' — '+marker:''));
-    const prompt3=sourceLanguage==='en'?'Choose the correct analysis of “'+token.word+'” in “'+sentence+'”.':'اختر التحليل النحوي الصحيح لكلمة «'+token.word+'» في «'+sentence+'».';
-    build(sentence,token.word,pair,pool,prompt3,sourceLanguage==='en'?lesson.english:lesson.ar,difficulty==='expert'?'expert':'hard');
+    if(difficulty==='mixed'||difficulty==='medium'){
+     const prompt=sourceLanguage==='en'?'In the complete sentence “'+sentence+'”, identify the function of “'+token.word+'”.':'في الجملة الكاملة «'+sentence+'»، حدّد وظيفة «'+token.word+'» النحوية.';
+     build(token.word,role,roleValues,prompt,explanation,'medium');
+    }
+    if(difficulty==='mixed'||difficulty==='hard'){
+     if(marker){
+      const prompt=sourceLanguage==='en'?'Which case or ending applies to “'+token.word+'” in “'+sentence+'”?':'ما علامة الإعراب أو حكم «'+token.word+'» في «'+sentence+'»؟';
+      build(token.word,marker,markerValues,prompt,explanation,'hard');
+     }else pairQuestion(example.tokens,explanation,'hard',sentence);
+    }
+    if(difficulty==='mixed'||difficulty==='expert'){
+     if(marker){
+      const pair=role+' — '+marker,pool=roleValues.filter(x=>x!==role).map(x=>x+' — '+marker);
+      const prompt=sourceLanguage==='en'?'Choose the complete grammatical analysis of “'+token.word+'” in “'+sentence+'”.':'اختر التحليل النحوي الكامل لكلمة «'+token.word+'» في «'+sentence+'».';
+      build(token.word,pair,pool,prompt,explanation,'expert');
+     }else pairQuestion(example.tokens,explanation,'expert',sentence);
+    }
    }
   }
  }else if(topic.subject==='science'){
