@@ -4,7 +4,8 @@
 (() => {
   "use strict";
   const byId = id => document.getElementById(id);
-  const locale = () => document.documentElement.lang !=="ar" ? "en" : "ar";
+  const locale = () => document.documentElement.lang || "ar";
+  const tr = (en,ar) => locale()==="ar" ? ar : (window.ClassoraLocale?.tFor?.(locale(),en)||en);
   const set = (id, value) => {
     const el = byId(id);
     if (el && el.textContent !== String(value)) el.textContent = String(value);
@@ -16,7 +17,7 @@
     const upcoming = byId("studentUpcomingList");
     const upcomingSection = byId("studentUpcomingEvents");
     const profileLabel = byId("lobbyProfileName");
-    const number = n => new Intl.NumberFormat(locale() === "ar" ? "ar" : "en-US").format(n);
+    const number = n => new Intl.NumberFormat(({ar:"ar",en:"en-US",es:"es-ES",ko:"ko-KR",de:"de-DE",it:"it-IT",hi:"hi-IN",tr:"tr-TR"}[locale()]||"en-US")).format(n);
     let lastUserId = null;
 
     function refresh() {
@@ -32,11 +33,13 @@
       board.lang = lang;
       board.dir = lang === "ar" ? "rtl" : "ltr";
       board.querySelectorAll("[data-student-ar][data-student-en]").forEach(el => {
-        const label = el.getAttribute("data-student-" + lang);
+        const english = el.getAttribute("data-student-en");
+        const arabic = el.getAttribute("data-student-ar");
+        const label = tr(english||"",arabic||"");
         if (label !== null && el.textContent !== label) el.textContent = label;
       });
       const name = String(profile.displayName || "").trim();
-      const first = name.split(/\s+/)[0] || (lang === "en" ? "student" : "يا بطل");
+      const first = name.split(/\s+/)[0] || tr("student","يا بطل");
       set("studentDashName", first);
 
       // Exact XP level formula already used by Classora's profile.
@@ -50,19 +53,19 @@
         const lower = 120 * (level - 1) ** 2;
         const upper = 120 * level ** 2;
         const percent = Math.min(100, Math.max(0, ((xp - lower) / (upper - lower)) * 100));
-        set("studentDashLevel", (lang === "en" ? "Level " : "المستوى ") + number(level));
+        set("studentDashLevel", tr("Level ","المستوى ") + number(level));
         set("studentDashXP", number(xp) + " XP");
-        set("studentDashNext", (lang === "en" ? "XP to the next level: " : "نقطة للمستوى التالي: ") + number(Math.max(0, upper - xp)));
+        set("studentDashNext", tr("XP to the next level: ","نقطة للمستوى التالي: ") + number(Math.max(0, upper - xp)));
         if (progress) progress.style.width = percent + "%";
         if (track) {
           track.setAttribute("aria-valuenow", String(Math.round(percent)));
           track.setAttribute("aria-valuetext", Math.round(percent) + "%");
-          track.setAttribute("aria-label", lang === "en" ? "Progress towards the next XP level" : "التقدم نحو مستوى XP التالي");
+          track.setAttribute("aria-label", tr("Progress towards the next XP level","التقدم نحو مستوى XP التالي"));
         }
       } else {
-        set("studentDashLevel", lang === "en" ? "Your progress" : "تقدمك");
+        set("studentDashLevel", tr("Your progress","تقدمك"));
         set("studentDashXP", "— XP");
-        set("studentDashNext", lang === "en" ? "Your points will appear after your first activity." : "نقاطك بتظهر بعد أول نشاط.");
+        set("studentDashNext", tr("Your points will appear after your first activity.","نقاطك بتظهر بعد أول نشاط."));
         if (progress) progress.style.width = "0%";
         if (track) track.setAttribute("aria-valuenow", "0");
       }
