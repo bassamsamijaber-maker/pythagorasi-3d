@@ -12,7 +12,7 @@ import {mountEnglishLesson} from './english-studio-v127.js?v=130';
 import {mountHistoryLesson} from './history-studio-v127.js?v=130';
 import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
 import {mountArabicLesson} from './arabic-studio-v119.js?v=130';
-import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=119';
+import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=148';
 import {mountMathLesson} from './math-studio-v119.js?v=130';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
