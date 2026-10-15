@@ -996,7 +996,7 @@ Goal reached.|Objetivo alcanzado.|목표에 도달했습니다.|Ziel erreicht.|O
 The goal is not reached yet. Current result: |Todavía no alcanzaste el objetivo. Resultado actual: |아직 목표에 도달하지 못했습니다. 현재 결과: |Das Ziel ist noch nicht erreicht. Aktuelles Ergebnis: |Obiettivo non ancora raggiunto. Risultato attuale: |लक्ष्य अभी पूरा नहीं हुआ। वर्तमान परिणाम: |Hedefe henüz ulaşılmadı. Şu anki sonuç:
 Interactive lab: drag the model to rotate it, move the slider or choose a sample. Color simulates a universal indicator.|Laboratorio interactivo: gira el modelo, mueve el control o elige una muestra. El color simula un indicador universal.|대화형 실험실: 모델을 회전하고 슬라이더를 움직이거나 시료를 고르세요. 색상은 만능 지시약을 나타냅니다.|Interaktives Labor: Drehe das Modell, bewege den Regler oder wähle eine Probe. Die Farbe simuliert einen Universalindikator.|Laboratorio interattivo: ruota il modello, sposta il cursore o scegli un campione. Il colore simula un indicatore universale.|इंटरैक्टिव प्रयोगशाला: मॉडल घुमाएँ, स्लाइडर चलाएँ या नमूना चुनें। रंग सार्वत्रिक सूचक का अनुकरण करता है।|Etkileşimli laboratuvar: modeli döndür, sürgüyü hareket ettir veya örnek seç. Renk evrensel belirteci simgeler.
 `.trim().split('\n').map(line=>line.split('|'));
-const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
+const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
 try{const saved=localStorage.getItem('pythagorasi_language');if(Object.hasOwn(languages,saved))selected=saved}catch{}
 const normalize=value=>String(value).replace(/\s+/g,' ').trim();
