@@ -651,6 +651,56 @@ SELECTED WORD|PALABRA SELECCIONADA|선택한 단어|AUSGEWÄHLTES WORT|PAROLA SE
 Choose a role first.|Elige primero una función.|먼저 역할을 선택하세요.|Wähle zuerst eine Funktion.|Scegli prima un ruolo.|पहले भूमिका चुनें।|Önce bir görev seç.
 Correct. |Correcto. |정답입니다. |Richtig. |Corretto. |सही। |Doğru. 
 Try again: read the word’s relationship to the sentence.|Inténtalo de nuevo: observa la relación de la palabra con la oración.|다시 해보세요: 문장 속 단어의 관계를 살펴보세요.|Versuche es erneut: Achte auf die Rolle des Wortes im Satz.|Riprova: osserva la relazione della parola con la frase.|फिर प्रयास करें: वाक्य में शब्द का संबंध समझें।|Tekrar dene: kelimenin cümleyle ilişkisini incele.
+EXPLORE THE IDEA|EXPLORA LA IDEA|개념 탐색|IDEE ERFORSCHEN|ESPLORA IL CONCETTO|विचार समझें|FİKRİ KEŞFET
+LIVE MODEL|MODELO INTERACTIVO|실시간 모델|INTERAKTIVES MODELL|MODELLO INTERATTIVO|इंटरैक्टिव मॉडल|ETKİLEŞİMLİ MODEL
+Model: drag or use rotation buttons|Modelo: arrastra o utiliza los botones para girarlo|모델: 드래그하거나 회전 버튼 사용|Modell ziehen oder Drehknöpfe nutzen|Modello: trascina o usa i pulsanti di rotazione|मॉडल घुमाने के लिए खींचें या बटन दबाएँ|Modeli sürükle veya döndürme tuşlarını kullan
+Rotate left|Girar a la izquierda|왼쪽으로 회전|Nach links drehen|Ruota a sinistra|बाईं ओर घुमाएँ|Sola döndür
+Rotate right|Girar a la derecha|오른쪽으로 회전|Nach rechts drehen|Ruota a destra|दाईं ओर घुमाएँ|Sağa döndür
+Front|Frontal|정면|Vorne|Davanti|सामने|Ön
+Unfold net|Desplegar desarrollo|전개도 펼치기|Netz aufklappen|Apri sviluppo piano|जाल खोलें|Açınımı göster
+Overlay shapes|Superponer figuras|도형 겹치기|Formen überlagern|Sovrapponi figure|आकृतियाँ मिलाएँ|Şekilleri üst üste koy
+Play motion|Iniciar animación|애니메이션 시작|Animation starten|Avvia animazione|एनिमेशन चलाएँ|Hareketi başlat
+CHANGE THE VALUES|CAMBIA LOS VALORES|값 변경|WERTE ÄNDERN|CAMBIA I VALORI|मान बदलें|DEĞERLERİ DEĞİŞTİR
+Make it yours|Personalízalo|직접 바꿔 보세요|Selbst ausprobieren|Personalizzalo|खुद बदलें|Kendin dene
+Every change updates the model and solution immediately.|Cada cambio actualiza el modelo y la solución al instante.|값을 바꾸면 모델과 풀이가 즉시 업데이트됩니다.|Jede Änderung aktualisiert Modell und Lösung sofort.|Ogni modifica aggiorna subito modello e soluzione.|हर बदलाव से मॉडल और हल तुरंत बदलते हैं।|Her değişiklik modeli ve çözümü anında günceller.
+UNDERSTAND WHY|COMPRENDE POR QUÉ|이유 이해하기|WARUM VERSTEHEN|CAPIRE PERCHÉ|कारण समझें|NEDENİNİ ANLA
+From idea to solution|De la idea a la solución|개념에서 풀이까지|Von der Idee zur Lösung|Dall'idea alla soluzione|विचार से समाधान तक|Fikirden çözüme
+CHECK YOUR UNDERSTANDING|COMPRUEBA LO QUE APRENDISTE|이해도 확인|WISSEN ÜBERPRÜFEN|VERIFICA LA COMPRENSIONE|समझ की जाँच करें|ANLADIĞINI KONTROL ET
+Practice this topic|Practica este tema|이 주제 연습하기|Dieses Thema üben|Esercitati su questo argomento|इस विषय का अभ्यास करें|Bu konuda alıştırma yap
+Foundation|Básico|기초|Grundlagen|Base|आधारभूत|Temel
+Developing|Intermedio|중급|Aufbau|Intermedio|मध्यम|Gelişen
+Advanced|Avanzado|고급|Fortgeschritten|Avanzato|उन्नत|İleri
+Complete the values to display the model.|Completa los valores para mostrar el modelo.|값을 입력하면 모델이 표시됩니다.|Gib die Werte ein um das Modell zu zeigen.|Inserisci i valori per mostrare il modello.|मॉडल देखने के लिए मान भरें।|Modeli görmek için değerleri gir.
+Pause|Pausa|일시정지|Pause|Pausa|विराम|Duraklat
+HISTORY|HISTORIA|역사|GESCHICHTE|STORIA|इतिहास|TARİH
+Explore events and distinguish their order from explanations of their causes.|Explora los acontecimientos y distingue la cronología de sus causas.|사건 순서와 원인 설명을 구분해 탐구하세요.|Untersuche Ereignisse und unterscheide Reihenfolge und Ursachen.|Esplora gli eventi e distingui la sequenza dalle cause.|घटनाओं के क्रम और उनके कारणों में अंतर समझें।|Olayları incele; sıralamayı nedenlerinden ayır.
+A WINDOW INTO THE PAST|UNA VENTANA AL PASADO|과거 들여다보기|EIN BLICK IN DIE VERGANGENHEIT|UNA FINESTRA SUL PASSATO|अतीत की झलक|GEÇMİŞE BİR BAKIŞ
+SELECT AN EVENT|ELIGE UN ACONTECIMIENTO|사건 선택|EREIGNIS WÄHLEN|SCEGLI UN EVENTO|घटना चुनें|BİR OLAY SEÇ
+Topic scene|Escena del tema|주제 장면|Themenszene|Scena dell'argomento|विषय दृश्य|Konu sahnesi
+Timeline|Línea de tiempo|연표|Zeitleiste|Linea del tempo|समयरेखा|Zaman çizelgesi
+Causes & consequences|Causas y consecuencias|원인과 결과|Ursachen und Folgen|Cause e conseguenze|कारण और परिणाम|Nedenler ve sonuçlar
+EXPLORE THE PERIOD|EXPLORA LA ÉPOCA|시대 탐구|EPOCHE ERKUNDEN|ESPLORA IL PERIODO|कालखंड का अध्ययन|DÖNEMİ KEŞFET
+From event to idea|Del acontecimiento a la idea|사건에서 개념으로|Vom Ereignis zur Idee|Dall'evento al concetto|घटना से विचार तक|Olaydan fikre
+Historical event|Acontecimiento histórico|역사적 사건|Historisches Ereignis|Evento storico|ऐतिहासिक घटना|Tarihî olay
+Move through the events|Recorre los acontecimientos|사건 순서대로 보기|Durch Ereignisse navigieren|Esplora gli eventi|घटनाओं के बीच जाएँ|Olaylar arasında gez
+Event number|Número de acontecimiento|사건 번호|Ereignisnummer|Numero dell'evento|घटना संख्या|Olay numarası
+THE BIG IDEA|LA IDEA PRINCIPAL|핵심 개념|DIE KERNIDEE|L'IDEA PRINCIPALE|मुख्य विचार|ANA FİKİR
+THINK BEYOND DATES|MIRA MÁS ALLÁ DE LAS FECHAS|날짜를 넘어 생각하기|ÜBER DATEN HINAUSDENKEN|OLTRE LE DATE|तारीखों से आगे सोचें|TARİHLERİN ÖTESİNİ DÜŞÜN
+Context and impact|Contexto e impacto|배경과 영향|Kontext und Auswirkungen|Contesto e impatto|संदर्भ और प्रभाव|Bağlam ve etki
+Factors and context|Factores y contexto|요인과 배경|Faktoren und Kontext|Fattori e contesto|कारक और संदर्भ|Etkenler ve bağlam
+Consequences and changes|Consecuencias y cambios|결과와 변화|Folgen und Veränderungen|Conseguenze e cambiamenti|परिणाम और बदलाव|Sonuçlar ve değişimler
+THINK ABOUT IT|REFLEXIONA|생각해 보세요|DENK DARÜBER NACH|RIFLETTI|इस पर सोचें|ÜZERİNDE DÜŞÜN
+Sources & further reading|Fuentes y lecturas adicionales|자료 및 더 읽어보기|Quellen und weiterführende Literatur|Fonti e approfondimenti|स्रोत और अतिरिक्त अध्ययन|Kaynaklar ve ek okumalar
+FACTORS|FACTORES|요인|FAKTOREN|FATTORI|कारक|ETKENLER
+TOPIC|TEMA|주제|THEMA|ARGOMENTO|विषय|KONU
+IMPACTS|IMPACTOS|영향|AUSWIRKUNGEN|IMPATTI|प्रभाव|ETKİLER
+GEOGRAPHY|GEOGRAFÍA|지리|GEOGRAFIE|GEOGRAFIA|भूगोल|COĞRAFYA
+EXPLORE THE CONNECTION|EXPLORA LA RELACIÓN|연결 관계 탐구|ZUSAMMENHANG ERFORSCHEN|ESPLORA LA RELAZIONE|संबंध समझें|BAĞLANTIYI KEŞFET
+Depth view|Vista en profundidad|입체 보기|Tiefenansicht|Vista in profondità|गहराई दृश्य|Derinlik görünümü
+Change it and observe|Cambia y observa|변경하고 관찰하기|Ändern und beobachten|Cambia e osserva|बदलें और देखें|Değiştir ve gözlemle
+UNDERSTAND THE IDEA|COMPRENDE LA IDEA|개념 이해하기|IDEE VERSTEHEN|COMPRENDI IL CONCETTO|विचार समझें|FİKRİ ANLA
+Earth science|Ciencias de la Tierra|지구과학|Geowissenschaften|Scienze della Terra|पृथ्वी विज्ञान|Yer bilimleri
+Earth|Tierra|지구|Erde|Terra|पृथ्वी|Dünya
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
