@@ -1,6 +1,7 @@
 /* Classora v117: interactive site tour, using actual Classora navigation and screens. */
 (()=>{"use strict";
 const $=id=>document.getElementById(id),english=()=>document.documentElement.lang!=="ar";
+const L=(ar,en)=>!english()?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang,en)||en);
 const steps=[
  {id:"lobby",nav:"classoraMobileLobbyBtn",target:"#classoraWelcomeCard,#platformLobby .lobby-topbar",title:["اللوبي","Lobby"],body:["هاي صفحة كلاسورا الفعلية: الترحيب، آخر درس، والإعلانات.","This is the real Classora dashboard with your greeting, recent lessons and news."]},
  {id:"subjects",nav:"classoraMobileSubjectsBtn",target:"#classoraMobileSubjectsBtn",title:["المواد","Subjects"],body:["فتحنا المواد. بتقدر تختار موضوع وتغيّر المعطيات وتتعلّم بالتجربة.","We opened Subjects. Choose a topic and explore interactive lessons."]},
@@ -52,14 +53,14 @@ function render(){
  if(!open)return;
  const i=english()?1:0,question=stage<0,data=steps[Math.max(0,stage)];
  el.querySelector(".ct117-card").dir=english()?"ltr":"rtl";
- $("ct117-step").textContent=question?(english()?"WELCOME":"أهلًا وسهلًا"):(english()?"STEP ":"الخطوة ")+(stage+1)+" / "+steps.length;
- $("ct117-title").textContent=question?(english()?"Want a tour of Classora?":"بدك جولة داخل كلاسورا؟"):data.title[i];
- $("ct117-text").textContent=question?(english()?"We'll open the actual pages together and highlight their controls.":"رح نفتح صفحات الموقع نفسها ونفرجيك الأزرار خطوة بخطوة."):data.body[i];
- $("ct117-skip").textContent=english()?"Skip":"تخطي";
- $("ct117-back").textContent=question?(english()?"No, thanks":"لا، شكرًا"):(english()?"Back":"السابق");
- $("ct117-next").textContent=question?(english()?"Start tour":"ابدأ الجولة"):stage===steps.length-1?(english()?"Finish":"إنهاء"):(english()?"Next":"التالي");
- $("ct117-hint").textContent=question?(english()?"This appears automatically only for newly created accounts. Replay anytime from Settings.":"بتظهر تلقائيًا للحسابات الجديدة بس، وبتقدر تعيدها من الإعدادات."):
-   (english()?"These are the real Classora pages. You can tap their highlighted buttons.":"هاي الصفحات الحقيقية في كلاسورا. بتقدر تكبس على الأزرار المضيئة.");
+ $("ct117-step").textContent=question?L("أهلًا وسهلًا","WELCOME"):L("الخطوة ","STEP ")+(stage+1)+" / "+steps.length;
+ $("ct117-title").textContent=question?L("بدك جولة داخل كلاسورا؟","Want a tour of Classora?"):L(data.title[0],data.title[1]);
+ $("ct117-text").textContent=question?L("رح نفتح صفحات الموقع نفسها ونفرجيك الأزرار خطوة بخطوة.","We'll open the actual pages together and highlight their controls."):L(data.body[0],data.body[1]);
+ $("ct117-skip").textContent=L("تخطي","Skip");
+ $("ct117-back").textContent=question?L("لا، شكرًا","No, thanks"):L("السابق","Back");
+ $("ct117-next").textContent=question?L("ابدأ الجولة","Start tour"):stage===steps.length-1?L("إنهاء","Finish"):L("التالي","Next");
+ $("ct117-hint").textContent=question?L("بتظهر تلقائيًا للحسابات الجديدة بس، وبتقدر تعيدها من الإعدادات.","This appears automatically only for newly created accounts. Replay anytime from Settings."):
+   L("هاي الصفحات الحقيقية في كلاسورا. بتقدر تكبس على الأزرار المضيئة.","These are the real Classora pages. You can tap their highlighted buttons.");
  $("ct117-progress").style.width=(question?4:((stage+1)/steps.length)*100)+"%";
  place();
 }
