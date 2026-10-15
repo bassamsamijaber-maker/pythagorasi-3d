@@ -201,10 +201,21 @@ function localizedCurriculumIntro(api,topic,kind){
  const choices=group[category];
  return choices?choices[kind==='advanced'?1:0].replaceAll('{title}',titleText(api,topic)):'';
 }
+const CLASSORA_EXAMPLE_LOCALES={"es":{"math":"Ejemplo de «{title}»: identifica los datos, aplica la regla, sustituye los valores y comprueba el resultado.","statistics":"Ejemplo: datos 2, 4, 4, 6. Media = (2+4+4+6)/4 = 4. Mediana = 4; moda = 4; rango = 6−2 = 4.","equations":"Ejemplo: 3x+4=19. Resta 4 en ambos lados: 3x=15; divide entre 3: x=5. Comprueba sustituyendo.","science":"Ejemplo de «{title}»: observa un cambio, identifica su causa, registra lo que sucede y explica el resultado con evidencias.","history":"Ejemplo de «{title}»: coloca los hechos en orden temporal; distingue una causa, el acontecimiento y una consecuencia.","geography":"Ejemplo de «{title}»: ubica el fenómeno en un mapa y relaciona un factor natural o humano con su efecto.","language":"Ejemplo de «{title}»: observa una oración, identifica la estructura estudiada y explica por qué aplica la regla."},"ko":{"math":"«{title}» 예시: 주어진 값을 확인하고 공식을 적용한 뒤 계산 결과를 검산하세요.","statistics":"예시: 자료 2, 4, 4, 6. 평균 = (2+4+4+6)/4 = 4, 중앙값 = 4, 최빈값 = 4, 범위 = 6−2 = 4.","equations":"예시: 3x+4=19. 양변에서 4를 빼면 3x=15, 3으로 나누면 x=5입니다. 대입하여 확인하세요.","science":"«{title}» 예시: 변화를 관찰하고 원인을 찾아 기록한 뒤 증거를 사용해 결과를 설명하세요.","history":"«{title}» 예시: 사건을 시간순으로 놓고 원인과 사건, 결과를 구별하세요.","geography":"«{title}» 예시: 지도에서 현상을 찾고 자연적·인문적 요인 하나와 그 영향을 연결하세요.","language":"«{title}» 예시: 문장을 살펴보고 학습한 구조를 찾은 뒤 규칙을 적용한 이유를 설명하세요."},"de":{"math":"Beispiel zu „{title}“: Bestimme die Angaben, wende die Regel an, setze Werte ein und überprüfe das Ergebnis.","statistics":"Beispiel: Daten 2, 4, 4, 6. Mittelwert = (2+4+4+6)/4 = 4; Median = 4; Modalwert = 4; Spannweite = 6−2 = 4.","equations":"Beispiel: 3x+4=19. Ziehe auf beiden Seiten 4 ab: 3x=15. Teile durch 3: x=5. Prüfe durch Einsetzen.","science":"Beispiel zu „{title}“: Beobachte eine Veränderung, bestimme ihre Ursache und erkläre das Ergebnis mit Belegen.","history":"Beispiel zu „{title}“: Ordne Ereignisse zeitlich und unterscheide eine Ursache, das Ereignis und eine Folge.","geography":"Beispiel zu „{title}“: Finde das Phänomen auf einer Karte und verknüpfe einen natürlichen oder menschlichen Faktor mit seiner Wirkung.","language":"Beispiel zu „{title}“: Untersuche einen Satz, erkenne die behandelte Struktur und begründe die Regel."},"it":{"math":"Esempio su «{title}»: individua i dati, applica la regola, sostituisci i valori e verifica il risultato.","statistics":"Esempio: dati 2, 4, 4, 6. Media = (2+4+4+6)/4 = 4; mediana = 4; moda = 4; intervallo = 6−2 = 4.","equations":"Esempio: 3x+4=19. Sottrai 4 da entrambi i membri: 3x=15; dividi per 3: x=5. Verifica sostituendo.","science":"Esempio su «{title}»: osserva un cambiamento, trova la causa e spiega il risultato usando prove.","history":"Esempio su «{title}»: ordina gli eventi nel tempo e distingui una causa, l'evento e una conseguenza.","geography":"Esempio su «{title}»: individua il fenomeno su una carta e collega un fattore naturale o umano al suo effetto.","language":"Esempio su «{title}»: osserva una frase, trova la struttura studiata e spiega perché si applica la regola."},"hi":{"math":"«{title}» उदाहरण: दिए गए मान पहचानें, नियम लगाएँ, गणना करें और उत्तर की जाँच करें।","statistics":"उदाहरण: आँकड़े 2, 4, 4, 6। औसत = (2+4+4+6)/4 = 4; माध्यिका = 4; बहुलक = 4; परिसर = 6−2 = 4।","equations":"उदाहरण: 3x+4=19। दोनों पक्ष से 4 घटाएँ: 3x=15। फिर 3 से भाग दें: x=5। मान रखकर जाँचें।","science":"«{title}» उदाहरण: परिवर्तन देखें, उसका कारण पहचानें और प्रमाण के आधार पर परिणाम समझाएँ।","history":"«{title}» उदाहरण: घटनाएँ समयक्रम में रखें और एक कारण, घटना और परिणाम अलग-अलग पहचानें।","geography":"«{title}» उदाहरण: मानचित्र पर घटना खोजें और एक प्राकृतिक या मानवीय कारक को उसके प्रभाव से जोड़ें।","language":"«{title}» उदाहरण: वाक्य पढ़ें, सीखी गई संरचना पहचानें और नियम लगाने का कारण समझाएँ।"},"tr":{"math":"«{title}» örneği: Verilenleri belirle, kuralı uygula, değerleri yerine koy ve sonucu kontrol et.","statistics":"Örnek: 2, 4, 4, 6 verileri. Ortalama = (2+4+4+6)/4 = 4; ortanca = 4; tepe değer = 4; açıklık = 6−2 = 4.","equations":"Örnek: 3x+4=19. İki taraftan 4 çıkar: 3x=15. 3'e böl: x=5. Yerine koyarak kontrol et.","science":"«{title}» örneği: Bir değişikliği gözlemle, nedenini belirle ve sonucu kanıtlarla açıkla.","history":"«{title}» örneği: Olayları zaman sırasına koy; bir neden, olay ve sonucu birbirinden ayır.","geography":"«{title}» örneği: Olayı haritada bul ve doğal veya beşerî bir etkeni sonucuyla ilişkilendir.","language":"«{title}» örneği: Cümleyi incele, öğrenilen yapıyı bul ve kuralın neden geçerli olduğunu açıkla."}};
+function localizedCurriculumExample(api,topic){
+ const language=curriculumActiveLanguage(api);
+ const translated=CLASSORA_EXAMPLE_LOCALES[language];
+ if(!translated)return '';
+ const category=topic.subject==='geometry'?'math':['arabic','english'].includes(topic.subject)?'language':topic.subject;
+ let type=category;
+ if(category==='math'&&/إحصاء/.test(topic.title))type='statistics';
+ else if(category==='math'&&/(معادلات|المعادلات)/.test(topic.title))type='equations';
+ return (translated[type]||translated.math).replaceAll('{title}',titleText(api,topic));
+}
 function basicExplanation(api,t){
  const n=titleText(api,t);
  const translated=localizedCurriculumIntro(api,t,'basic');
- if(translated&&!((t.subject==='math'||t.subject==='geometry')&&/(معادلات|مسائل كلامية|إحصاء)/.test(t.title)))return translated;
+ if(translated)return translated;
  if(t.subject==="math"&&/(معادلات كسرية|كسور جبرية)/.test(t.title))return lang(api)==="en"
   ?"A fractional equation contains the unknown inside a fraction. First note every denominator and its restrictions. Multiply both sides by a common denominator to remove the fractions, simplify, isolate x using the same operation on both sides, and substitute the result back into the original equation to check it."
   :"المعادلة الكسرية هي معادلة يظهر فيها المجهول داخل كسر. نحدد المقامات أولًا والقيم الممنوعة، ثم نضرب طرفي المعادلة بالمقام المشترك للتخلص من الكسور، نبسّط، نعزل x بإجراء العملية نفسها على الطرفين، وفي النهاية نعوّض الحل في المعادلة الأصلية للتأكد.";
@@ -236,7 +247,7 @@ function basicExplanation(api,t){
 function advancedExplanation(api,t){
  const n=titleText(api,t);
  const translated=localizedCurriculumIntro(api,t,'advanced');
- if(translated&&!((t.subject==='math'||t.subject==='geometry')&&/(معادلات|مسائل كلامية|إحصاء)/.test(t.title)))return translated;
+ if(translated)return translated;
  if(t.subject==="math"&&/(معادلات كسرية|كسور جبرية)/.test(t.title))return lang(api)==="en"
   ?"Advanced fractional equations require domain restrictions before solving. Record any value that makes a denominator zero. After multiplying by the least common denominator, solve the resulting equation carefully and reject any solution that violates the original restrictions. For equations with several rational expressions, factor denominators first so the least common denominator is clear."
   :"في المعادلات الكسرية المتقدمة نكتب القيم الممنوعة قبل الحل، أي قيمة تجعل مقامًا يساوي صفرًا. بعد الضرب بالمقام المشترك الأصغر نحل المعادلة الناتجة بدقة، ثم نرفض أي حل يخالف القيود الأصلية. وإذا كان عندنا أكثر من كسر فمن الأفضل تحليل المقامات أولًا لتحديد المقام المشترك بسهولة.";
@@ -266,6 +277,7 @@ function advancedExplanation(api,t){
  return "الشرح المتقدم: حلّل «"+n+"» باستخدام أكثر من عامل مكاني وبشري، اقرأ البيانات أو الخريطة، ثم استنتج علاقة السبب بالنتيجة.";
 }
 function workedExample(api,t){
+ const translated=localizedCurriculumExample(api,t);if(translated)return translated;
  const en=lang(api)==="en",n=titleText(api,t);
  if(t.subject==="english"){const pair=EN_EXAMPLES[t.title]||["Choose the sentence that correctly follows the rule of "+t.title+".","Check the verb form, word order and context."];return "Example: "+pair[0]+" ✓  |  "+pair[1]+" ✕"}
  if(t.subject==="arabic"){
