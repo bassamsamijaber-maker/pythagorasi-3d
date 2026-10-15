@@ -1,7 +1,7 @@
 import {mountLearningTools} from './learning-tools-v130.js?v=130';
 import {mountWorkbench} from './lesson-workbench-v129.js?v=129';
 export function enhanceLesson(host,topic,api){
- const language=api.language(),en=language==='en',T=(a,b)=>en?b:a,subject=topic.subject;
+ const selectedLanguage=document.documentElement.lang||api.language(),language=selectedLanguage==='ar'?'ar':'en',en=language==='en',T=(a,b)=>selectedLanguage==='ar'?a:(window.ClassoraLocale?.dictionaries?.[selectedLanguage]?.[b]||b),subject=topic.subject;
  const q=s=>host.querySelector(s),qa=s=>[...host.querySelectorAll(s)].filter(el=>!el.closest('.cl-workbench'));
  const scene=subject==='arabic'?'.ca-scene':subject==='english'?'.ce-scene':subject==='history'?'.ch-scene':['science','geography'].includes(subject)?'.cg-model':'.cm-scene';
  const txt=s=>q(s)?.textContent.trim()||'';
