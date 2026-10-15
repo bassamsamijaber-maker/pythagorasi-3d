@@ -1296,6 +1296,30 @@ Position|Posición|위치|Position|Posizione|स्थिति|Konum
 About this element|Sobre este elemento|원소 설명|Über dieses Element|Informazioni sull'elemento|इस तत्व के बारे में|Bu element hakkında
 Common uses / importance|Usos habituales e importancia|주요 용도 및 중요성|Häufige Anwendungen und Bedeutung|Usi comuni e importanza|सामान्य उपयोग और महत्त्व|Yaygın kullanım ve önemi
 Add to comparison|Añadir a la comparación|비교에 추가|Zum Vergleich hinzufügen|Aggiungi al confronto|तुलना में जोड़ें|Karşılaştırmaya ekle
+Solid|Sólido|고체|Fest|Solido|ठोस|Katı
+Liquid|Líquido|액체|Flüssig|Liquido|द्रव|Sıvı
+Gas|Gas|기체|Gasförmig|Gas|गैस|Gaz
+Predicted / uncertain|Predicho / incierto|예측됨 / 불확실|Vorhergesagt / unsicher|Previsto / incerto|अनुमानित / अनिश्चित|Tahmini / belirsiz
+Period|Período|주기|Periode|Periodo|आवर्त|Periyot
+Group|Grupo|족|Gruppe|Gruppo|समूह|Grup
+f-block series|Serie del bloque f|f-블록 계열|f-Block-Reihe|Serie del blocco f|f-ब्लॉक श्रृंखला|f-blok serisi
+Correct!|¡Correcto!|정답입니다!|Richtig!|Corretto!|सही!|Doğru!
+Not quite|No exactamente|아쉽지만 틀렸어요|Nicht ganz|Non proprio|पूरी तरह सही नहीं|Tam değil
+Which element has this symbol?|¿Qué elemento tiene este símbolo?|이 기호는 어떤 원소인가요?|Welches Element hat dieses Symbol?|Quale elemento ha questo simbolo?|इस प्रतीक वाला तत्व कौन सा है?|Bu simge hangi elemente ait?
+What is the symbol for this element?|¿Cuál es el símbolo de este elemento?|이 원소의 기호는 무엇인가요?|Welches Symbol hat dieses Element?|Qual è il simbolo di questo elemento?|इस तत्व का प्रतीक क्या है?|Bu elementin simgesi nedir?
+Which family does this element belong to?|¿A qué familia pertenece este elemento?|이 원소는 어떤 계열에 속하나요?|Zu welcher Familie gehört dieses Element?|A quale famiglia appartiene questo elemento?|यह तत्व किस परिवार में है?|Bu element hangi aileye ait?
+No simple classroom example is saved for this pair. Not every two elements form a direct compound.|No hay ejemplo sencillo guardado para esta pareja. No todos los elementos forman un compuesto directo.|이 원소 쌍의 간단한 예시는 없습니다. 모든 원소 쌍이 직접 화합물을 만들지는 않습니다.|Für dieses Paar ist kein einfaches Beispiel gespeichert. Nicht alle Elemente bilden direkt Verbindungen.|Non è salvato un esempio semplice per questa coppia. Non tutti gli elementi formano direttamente composti.|इस जोड़ी का सरल उदाहरण नहीं है। हर दो तत्व सीधे यौगिक नहीं बनाते।|Bu ikili için basit örnek yok. Her iki element doğrudan bileşik oluşturmaz.
+A common educational example is|Un ejemplo educativo común es|흔한 교육용 예시는|Ein häufiges Lernbeispiel ist|Un esempio didattico comune è|सामान्य शैक्षिक उदाहरण है|Yaygın bir eğitim örneği
+Choose two elements to compare.|Elige dos elementos para comparar.|비교할 원소 두 개를 선택하세요.|Wähle zwei Elemente zum Vergleichen.|Scegli due elementi da confrontare.|तुलना के लिए दो तत्व चुनें।|Karşılaştırmak için iki element seç.
+Random element|Elemento aleatorio|무작위 원소|Zufälliges Element|Elemento casuale|यादृच्छिक तत्व|Rastgele element
+Educational illustration|Ilustración educativa|교육용 그림|Lernillustration|Illustrazione educativa|शैक्षिक चित्र|Eğitim çizimi
+Pause animation|Pausar animación|애니메이션 일시 정지|Animation pausieren|Metti in pausa l'animazione|एनिमेशन रोकें|Animasyonu duraklat
+Play animation|Reproducir animación|애니메이션 재생|Animation abspielen|Avvia animazione|एनिमेशन चलाएँ|Animasyonu oynat
+Favorite|Favorito|즐겨찾기|Favorit|Preferito|पसंदीदा|Favori
+Favorites|Favoritos|즐겨찾기|Favoriten|Preferiti|पसंदीदा|Favoriler
+Zoom in|Acercar|확대|Vergrößern|Ingrandisci|बड़ा करें|Yakınlaştır
+Fit full table|Ajustar tabla completa|전체 표 맞추기|Gesamte Tabelle einpassen|Adatta l'intera tavola|पूरी तालिका दिखाएँ|Tüm tabloyu sığdır
+Ready?|¿Listo?|준비됐나요?|Bereit?|Pronto?|तैयार हैं?|Hazır mısın?
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
