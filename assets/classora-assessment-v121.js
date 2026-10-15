@@ -4,7 +4,7 @@ import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from './
 import {englishLesson,englishQuestions} from './english-catalog-v127.js?v=127';
 import {historyLesson,historyQuestions} from './history-catalog-v127.js?v=127';
 import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=119';
-import {statisticsTableQuestion} from './classora-statistics-v147.js?v=147';
+import {statisticsCompleteQuestion} from './classora-statistics-v148.js?v=148';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
 import {scienceLiveQuestions} from './learning-hub.js?v=131';
 const t=(ar,en,lang)=>lang==='en'?en:ar;
@@ -93,9 +93,9 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    typeLabel:subjectLabel(topic.subject,language)+' • '+(language==='en'?topic.en:topic.title)});
  };
  if(topic.subject==='math'&&/إحصاء/.test(topic.title)){
-  for(let i=0;i<Math.max(n*5,50)&&result.length<n;i++){
-   const level=levels[i%levels.length]||'medium';
-   try{add(statisticsTableQuestion(topic,level,i,language),level)}catch(error){console.warn('Statistics question generation:',error)}
+  for(let i=0;i<Math.max(n*8,60)&&result.length<n;i++){
+   const level=difficulty==='expert'?'expert':(levels[i%levels.length]||'medium');
+   try{add(statisticsCompleteQuestion(topic,level,i,language),level)}catch(error){console.warn('Statistics question generation:',error)}
   }
  }else if((topic.subject==='math'||topic.subject==='geometry')&&mathTopic(topic.title)){
   for(let i=0;i<Math.max(n*9,45)&&result.length<n;i++){
