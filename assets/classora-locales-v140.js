@@ -610,6 +610,47 @@ Basic and augmented forms|Formas básicas y aumentadas|기본형과 확장형|Gr
 Sound and weak verbs|Verbos sanos y débiles|정상 동사와 약동사|Gesunde und schwache Verben|Verbi sani e deboli|सही और कमज़ोर क्रियाएँ|Sahih ve mu'tel fiiller
 Vowel change and substitution|Cambio vocálico y sustitución|모음 변화와 교체|Vokalwechsel und Ersetzung|Cambio vocalico e sostituzione|स्वर परिवर्तन और प्रतिस्थापन|İlâl ve ibdâl
 Full grammatical parsing|Análisis gramatical completo|전체 문장 분석|Vollständige grammatische Analyse|Analisi grammaticale completa|पूर्ण व्याकरणिक विश्लेषण|Tam irab çözümlemesi
+GRADE|CURSO|학년|KLASSE|CLASSE|कक्षा|SINIF
+SELECT A SENTENCE PART|SELECCIONA UNA PARTE|문장 성분 선택|SATZTEIL WÄHLEN|SELEZIONA UNA PARTE|वाक्य का भाग चुनें|CÜMLE BÖLÜMÜ SEÇ
+3D perspective|Perspectiva 3D|3D 시점|3D-Perspektive|Prospettiva 3D|3D दृश्य|3B görünüm
+Next example|Siguiente ejemplo|다음 예시|Nächstes Beispiel|Esempio successivo|अगला उदाहरण|Sonraki örnek
+SENTENCE|ORACIÓN|문장|SATZ|FRASE|वाक्य|CÜMLE
+CHANGE THE EXAMPLE|CAMBIAR EJEMPLO|예시 변경|BEISPIEL WECHSELN|CAMBIA ESEMPIO|उदाहरण बदलें|ÖRNEĞİ DEĞİŞTİR
+See the rule in action|Observa la regla en acción|규칙 적용 보기|Regel in der Anwendung|Osserva la regola|नियम का प्रयोग देखें|Kuralı uygulamada gör
+Lesson examples|Ejemplos de la lección|수업 예시|Lektionsbeispiele|Esempi della lezione|पाठ के उदाहरण|Ders örnekleri
+THE RULE|LA REGLA|규칙|DIE REGEL|LA REGOLA|नियम|KURAL
+WHY DOES THIS WORK?|¿POR QUÉ FUNCIONA?|왜 이렇게 될까요?|WARUM FUNKTIONIERT DAS?|PERCHÉ FUNZIONA?|यह कैसे काम करता है?|BU NEDEN İŞE YARAR?
+BUILD THE SENTENCE|CONSTRUYE LA ORACIÓN|문장 만들기|SATZ BILDEN|COSTRUISCI LA FRASE|वाक्य बनाइए|CÜMLEYİ OLUŞTUR
+Put the example together|Ordena las partes del ejemplo|예시 문장 조합|Beispiel zusammensetzen|Ricostruisci l'esempio|उदाहरण को जोड़ें|Örneği birleştir
+Start building|Empezar a construir|문장 만들기 시작|Zusammensetzen starten|Inizia a costruire|बनाना शुरू करें|Oluşturmaya başla
+Assembled sentence|Oración formada|완성한 문장|Zusammengesetzter Satz|Frase composta|बनाया गया वाक्य|Oluşturulan cümle
+Check order|Comprobar orden|순서 확인|Reihenfolge prüfen|Controlla l'ordine|क्रम जाँचें|Sırayı kontrol et
+Further reading|Lecturas adicionales|더 읽어보기|Weiterlesen|Approfondimenti|अतिरिक्त अध्ययन|Ek okumalar
+Your sentence here|Tu oración aquí|여기에 문장을 입력하세요|Dein Satz hier|La tua frase qui|अपना वाक्य यहाँ लिखें|Cümleni buraya yaz
+Correct order! Read the whole sentence.|¡Orden correcto! Lee toda la oración.|순서가 맞아요! 문장 전체를 읽어 보세요.|Richtige Reihenfolge! Lies den ganzen Satz.|Ordine corretto! Leggi tutta la frase.|क्रम सही है! पूरा वाक्य पढ़ें।|Doğru sıra! Cümlenin tamamını oku.
+The order differs from the example. Compare the pieces and try again.|El orden no coincide con el ejemplo. Compara las partes e inténtalo de nuevo.|순서가 예시와 달라요. 조각을 비교하고 다시 시도하세요.|Die Reihenfolge weicht vom Beispiel ab. Vergleiche die Teile und versuche es erneut.|L'ordine è diverso dall'esempio. Confronta le parti e riprova.|क्रम उदाहरण से अलग है। भागों की तुलना करके फिर प्रयास करें।|Sıra örnekten farklı. Parçaları karşılaştırıp tekrar dene.
+INSIDE THE SENTENCE|DENTRO DE LA ORACIÓN|문장 속으로|IM SATZ|DENTRO LA FRASE|वाक्य के अंदर|CÜMLENİN İÇİNDE
+SELECT A WORD|ELIGE UNA PALABRA|단어 선택|WORT WÄHLEN|SCEGLI UNA PAROLA|शब्द चुनें|BİR KELİME SEÇ
+Reveal all roles|Mostrar todas las funciones|모든 문법 역할 보기|Alle Funktionen anzeigen|Mostra tutti i ruoli|सभी व्याकरणिक भूमिकाएँ दिखाएँ|Tüm görevleri göster
+CHOOSE AN EXAMPLE|ELIGE UN EJEMPLO|예시 선택|BEISPIEL WÄHLEN|SCEGLI UN ESEMPIO|उदाहरण चुनें|ÖRNEK SEÇ
+Change the sentence|Cambiar la oración|문장 변경|Satz ändern|Cambia la frase|वाक्य बदलें|Cümleyi değiştir
+Your turn: identify the role|Tu turno: identifica la función|여러분 차례: 문법 역할 찾기|Du bist dran: Funktion bestimmen|Tocca a te: identifica il ruolo|अब आपकी बारी: भूमिका पहचानें|Sıra sende: görevi belirle
+Choose the role|Elige la función|문법 역할 선택|Funktion wählen|Scegli il ruolo|भूमिका चुनें|Görevi seç
+Check my answer|Comprobar mi respuesta|내 답 확인|Antwort prüfen|Controlla la risposta|मेरा उत्तर जाँचें|Cevabımı kontrol et
+HOW DOES IT WORK?|¿CÓMO FUNCIONA?|어떻게 작동하나요?|WIE FUNKTIONIERT ES?|COME FUNZIONA?|यह कैसे काम करता है?|NASIL ÇALIŞIR?
+READ THE STRUCTURE|LEE LA ESTRUCTURA|구조 읽기|STRUKTUR VERSTEHEN|LEGGI LA STRUTTURA|संरचना पढ़ें|YAPIYI OKU
+Every word has a role|Cada palabra tiene una función|모든 단어에는 역할이 있어요|Jedes Wort hat eine Funktion|Ogni parola ha un ruolo|हर शब्द की भूमिका होती है|Her kelimenin bir görevi vardır
+Grammar reference|Referencia gramatical|문법 참고자료|Grammatikreferenz|Riferimento grammaticale|व्याकरण संदर्भ|Dil bilgisi kaynağı
+TEST THE RULE|PON A PRUEBA LA REGLA|규칙 테스트|REGEL TESTEN|VERIFICA LA REGOLA|नियम की जाँच करें|KURALI TEST ET
+Practice with the lesson examples|Practica con ejemplos de la lección|수업 예시로 연습하기|Mit Lektionsbeispielen üben|Esercitati con gli esempi|पाठ के उदाहरणों से अभ्यास करें|Ders örnekleriyle alıştırma yap
+Unique questions|Preguntas diferentes|서로 다른 문제|Unterschiedliche Fragen|Domande diverse|अलग-अलग प्रश्न|Farklı sorular
+Practice question|Pregunta de práctica|연습 문제|Übungsfrage|Domanda di esercizio|अभ्यास प्रश्न|Alıştırma sorusu
+English meaning|Significado en inglés|영어 뜻|Bedeutung auf Englisch|Significato in inglese|अंग्रेज़ी अर्थ|İngilizce anlamı
+Choose an answer|Elige una respuesta|답 선택|Antwort wählen|Scegli una risposta|उत्तर चुनें|Bir cevap seç
+SELECTED WORD|PALABRA SELECCIONADA|선택한 단어|AUSGEWÄHLTES WORT|PAROLA SELEZIONATA|चुना हुआ शब्द|SEÇİLEN KELİME
+Choose a role first.|Elige primero una función.|먼저 역할을 선택하세요.|Wähle zuerst eine Funktion.|Scegli prima un ruolo.|पहले भूमिका चुनें।|Önce bir görev seç.
+Correct. |Correcto. |정답입니다. |Richtig. |Corretto. |सही। |Doğru. 
+Try again: read the word’s relationship to the sentence.|Inténtalo de nuevo: observa la relación de la palabra con la oración.|다시 해보세요: 문장 속 단어의 관계를 살펴보세요.|Versuche es erneut: Achte auf die Rolle des Wortes im Satz.|Riprova: osserva la relazione della parola con la frase.|फिर प्रयास करें: वाक्य में शब्द का संबंध समझें।|Tekrar dene: kelimenin cümleyle ilişkisini incele.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
