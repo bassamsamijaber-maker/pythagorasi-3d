@@ -14,7 +14,7 @@ export function combineTopicQuestions(bank,level='medium',language='ar',count=10
   return base.slice(0,max).map((q,i)=>({
    ...q,options:mode==='easy'&&q.options.length>3?q.options.filter(x=>x===q.answer).concat(q.options.filter(x=>x!==q.answer).slice(0,2)):q.options.slice(),
    difficulty:mode,
-   prompt:q.prompt,
+   prompt:mode==='easy'?(text('تدريب سهل: ','Easy practice: ',language)+q.prompt):q.prompt,
    explanation:q.explanation||''
   }));
  }
