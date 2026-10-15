@@ -97,6 +97,21 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    curriculumTopicTitle:topic.title,curriculumGrade:topic.grade,questionKind:level,level:({easy:1,medium:2,hard:3,expert:4}[level]||2),
    typeLabel:subjectLabel(topic.subject,language)+' • '+(language==='ar'?topic.title:t(topic.en,topic.en,language))});
  };
+ const addGraded=base=>{
+  const choices=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
+  const groups=choices.map(level=>({level,bank:combineTopicQuestions(base,level,sourceLanguage,n),cursor:0}));
+  let active=true;
+  while(result.length<n&&active){
+   active=false;
+   for(const group of groups){
+    if(group.cursor>=group.bank.length)continue;
+    const next=group.bank[group.cursor++];
+    add(next,group.level);
+    active=true;
+    if(result.length>=n)break;
+   }
+  }
+ };
  if(topic.subject==='math'&&/إحصاء/.test(topic.title)){
   for(let i=0;i<Math.max(n*8,60)&&result.length<n;i++){
    const level=difficulty==='expert'?'expert':(levels[i%levels.length]||'medium');
@@ -144,23 +159,15 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   const original=scienceTopicQuestions(topic.title,sourceLanguage);
   const kind=scienceMap.find(([re])=>re.test(topic.title))?.[1];
   const source=original.length?original:(kind?scienceLiveQuestions(Math.max(n,30),sourceLanguage,kind):[]);
-  const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
-  for(const level of requests){
-   for(const q of combineTopicQuestions(source,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}
-   if(result.length>=n)break;
-  }
+  addGraded(source);
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
-  const base=englishQuestions(topic,sourceLanguage);
-   const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
-   for(const level of requests){for(const q of combineTopicQuestions(base,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}if(result.length>=n)break}
+  addGraded(englishQuestions(topic,sourceLanguage));
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
   const available=geographyQuestions(topic,sourceLanguage);
    const eligible=difficulty==='mixed'?available:available.filter(q=>q.difficulty===difficulty);
    for(const q of eligible){add(q,q.difficulty||'medium');if(result.length>=n)break}
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
-  const base=historyQuestions(topic,sourceLanguage);
-   const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
-   for(const level of requests){for(const q of combineTopicQuestions(base,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}if(result.length>=n)break}
+  addGraded(historyQuestions(topic,sourceLanguage));
  }else if(topic.subject==='english'&&englishBank[topic.title]){
   const pairs=englishBank[topic.title];
   for(let i=0;i<pairs.length;i++){
