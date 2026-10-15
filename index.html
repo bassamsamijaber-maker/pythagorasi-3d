@@ -15353,6 +15353,10 @@ async function createLiveCompetition(customQuestions=null,customTitle="",createO
     localStorage.setItem("pythagorasi_last_host_room",JSON.stringify(lastHostRoom));
     queueAccountStateSave({lastHostRoom});
     subscribeCompetition(ref.id,"host");
+    // Show essential lobby controls immediately, even if Firestore realtime callbacks arrive late.
+    document.getElementById("compRoomCode").textContent=code;
+    document.getElementById("compStartBtn").classList.remove("hidden");
+    document.getElementById("compLobbyRole").textContent=adminLang("الغرفة جاهزة. شارك الكود أو ابدأ تجربة الآن.","Room ready. Share the code or start a preview.");
     showCompetitionView("competitionLobby");
   }catch(err){
     console.error("create competition",err);
@@ -15614,6 +15618,10 @@ function subscribeCompetition(id,role){
     if(!active())return;
     console.warn("competition connection",err);
     document.getElementById("compAnswerStatus").textContent=adminLang("انقطع الاتصال، جاري إعادة الاتصال…","Connection interrupted. Reconnecting…");
+    if(role==="host"){
+      document.getElementById("compStartBtn").classList.remove("hidden");
+      document.getElementById("compLobbyRole").textContent=adminLang("اتصال التحديث المباشر تعطل. تقدر تجرب زر البدء من الغرفة، أو تعيد الاتصال.","Realtime updates disconnected. You may retry Start in this room.");
+    }
     clearTimeout(liveReconnectHandle);
     liveReconnectHandle=setTimeout(()=>{if(active()&&competitionModal.classList.contains("open"))subscribeCompetition(id,role)},3000);
   };
