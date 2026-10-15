@@ -226,7 +226,8 @@ export function idafaLiveQuestions(count=10,lang='ar'){
 
 const features=[['search','البحث في المواضيع والأدوات','Search topics and tools'],['science','قسم العلوم','Science section'],['scienceLab','مختبر الجسيمات','Particle lab'],['sciencePractice','تدريب واختبار العلوم','Science practice and self-test'],['scienceLive','مسابقات العلوم','Science live competitions'],['scienceExam','امتحانات صفية للعلوم','Science class exams'],['social','حساباتنا','Our accounts'],['desktopDock','شريط الكمبيوتر السفلي','Desktop bottom dock'],['motion','حركة البطاقات','Card animations']];
 export function mountLearningHub(api){
- const L=(ar,en)=>api.language()==='ar'?ar:en,txt=p=>pickLang(p,api.language()),enabled=k=>api.flags()?.[k]!==false;
+ const selectedLanguage=()=>document.documentElement.lang||api.language();
+ const L=(ar,en)=>selectedLanguage()==='ar'?ar:(window.ClassoraLocale?.dictionaries?.[selectedLanguage()]?.[en]||en),txt=p=>L(p[0],p[1]),enabled=k=>api.flags()?.[k]!==false;
  let selected='all',dialog=null,quizState=null,renderOpen=null,searchTimer,selectedGrade=8;
  try{const g=Number(localStorage.getItem("classora_curriculum_grade")||8);if(CURRICULUM_DATA[g])selectedGrade=g}catch{}
  const node=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
