@@ -72,6 +72,7 @@ function statisticsCompleteQuestion(topic,difficulty='medium',serial=0,l='ar'){
  const numericLabels=d.values.map(String);
  const ct=table(c.labels,c.counts,c.heading,l),nt=table(numericLabels,d.counts,lang('عدد الكتب','Books',l),l);
  const pie=chart('pie',c.labels,c.counts,c.heading,l),bar=chart('bar',c.labels,c.counts,c.heading,l);
+ const relativeBar=chart('bar',c.labels,c.percent,c.heading,l,lang('التكرار النسبي (%)','Relative frequency (%)',l));
  const nbar=chart('bar',numericLabels,d.counts,lang('عدد الكتب','Books',l),l);
  const nline=chart('line',numericLabels,d.counts,lang('عدد الكتب','Books',l),l);
  const mean=fmt(d.mean),percentage=c.percent[a],relative=fmt(d.counts[a]/d.n*100);
@@ -92,7 +93,7 @@ function statisticsCompleteQuestion(topic,difficulty='medium',serial=0,l='ar'){
  const medium=[
   ()=>make(d.intro,nt,lang('ما الوسيط بعد ترتيب القيم حسب تكرارها؟','Find the median from the frequency table.',l),d.median,[d.mode,fmt(d.mean),d.median+.5,d.median-1],lang('الوسيط القيمة الوسطى بعد تكرار كل قيمة حسب عدد مرات ظهورها.','Expand the frequencies and take the middle value(s).',l),'median',level),
   ()=>make(d.intro,nbar,lang('احسب المعدّل الحسابي إلى منزلتين عشريتين.','Calculate the mean to 2 decimals.',l),mean,[fmt(d.mean+1),fmt(d.mean-.5),fmt(d.weighted/5)],d.weighted+'/'+d.n+' = '+mean,'mean',level),
-  ()=>make(c.intro,ct,lang('ما التكرار النسبي للفئة «','Find the relative frequency for ',l)+c.labels[a]+lang('» ككسر مبسّط؟',' as a simplified fraction.',l),fraction(c.counts[a],c.total),[fraction(c.counts[b],c.total),fraction(c.total-c.counts[a],c.total),fraction(combined,c.total)],c.counts[a]+'/'+c.total+' = '+fraction(c.counts[a],c.total),'relative-fraction',level,'fraction'),
+  ()=>make(c.intro,ct+'\n'+relativeBar,lang('ما التكرار النسبي للفئة «','Find the relative frequency for ',l)+c.labels[a]+lang('» ككسر مبسّط؟',' as a simplified fraction.',l),fraction(c.counts[a],c.total),[fraction(c.counts[b],c.total),fraction(c.total-c.counts[a],c.total),fraction(combined,c.total)],c.counts[a]+'/'+c.total+' = '+fraction(c.counts[a],c.total),'relative-fraction',level,'fraction'),
   ()=>make(d.intro,nline,lang('كم عدد الطلاب الذين قرأوا 0 أو 1 أو 2 كتاب؟','How many students read 0, 1 or 2 books?',l),cumulative,[d.n,cumulative+d.counts[3],cumulative-d.counts[2]],d.counts.slice(0,3).join('+')+'='+cumulative,'cumulative',level),
   ()=>make(c.intro,pie,lang('ما زاوية قطاع «','What is the sector angle for ',l)+c.labels[a]+lang('»؟','?',l),fmt(percentage*3.6)+'°',[percentage+'°',fmt(percentage*3.6+18)+'°',fmt((100-percentage)*3.6)+'°'],percentage+' ×3.6 = '+fmt(percentage*3.6)+'°','pie-angle',level,'degree'),
   ()=>make(d.intro,nt,lang('ما التكرار النسبي للقيمة ','What is the relative percentage for ',l)+a+lang(' بالنسبة المئوية؟','?',l),relative+'%',[fmt(d.counts[b]/d.n*100)+'%',fmt(100-relative)+'%',fmt(relative+10)+'%'],d.counts[a]+'/'+d.n+' ×100 = '+relative+'%','relative-percent',level,'percent'),
