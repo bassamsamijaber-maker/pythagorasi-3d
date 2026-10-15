@@ -2088,6 +2088,10 @@ body.classora-intro-active{overflow:auto!important}
       <button data-level="expert">خبير 🔥</button>
     </div>
     <div class="exam-level-desc" id="examLevelDesc">سهل: أسئلة مباشرة للتدريب على القانون.</div>
+    <div id="statsExamQuickStart" class="hidden" style="margin:12px 0;display:none">
+      <button id="statsExamQuickStartBtn" type="button" class="exam-secondary" style="width:100%;min-height:46px">ابدأ امتحان الإحصاء بالمستوى المختار</button>
+      <div class="cloud-note" id="statsExamQuickStartNote" style="margin-top:6px">جداول تكرارية ورسوم بيانية ومعدّل ووسيط ومنوال ومدى، بأسئلة تتجدد تلقائيًا.</div>
+    </div>
     
       <div class="exam-home teacher-exam-tools" id="teacherExamCreateTools">
         <div class="exam-choice">
@@ -5713,19 +5717,32 @@ function syncExamSubjectUI(){
   const arabic=examSubject==="arabic-idafa";
   const curr=classoraAssessment.get(examSubject);
    const generated=science||arabic||Boolean(curr),teacher=isTeacherLike();
-   document.getElementById("examLevels").classList.toggle("hidden",!teacher);
-  document.getElementById("examLevelDesc").classList.toggle("hidden",!teacher);
+   const statisticsTopic=Boolean(curr&&curr.subject==='math'&&/إحصاء/.test(curr.title));
+   document.getElementById("examLevels").classList.toggle("hidden",!(teacher||statisticsTopic));
+  document.getElementById("examLevelDesc").classList.toggle("hidden",!(teacher||statisticsTopic));
+  const quick=document.getElementById("statsExamQuickStart");
+  if(quick){quick.classList.toggle("hidden",!statisticsTopic);quick.style.display=statisticsTopic?"block":"none";}
+  const quickButton=document.getElementById("statsExamQuickStartBtn");
+  if(quickButton)quickButton.textContent=chatText("ابدأ امتحان الإحصاء بالمستوى المختار","Start statistics exam at the selected level");
+  const quickNote=document.getElementById("statsExamQuickStartNote");
+  if(quickNote)quickNote.textContent=chatText("أسئلة متجددة في التكرار والرسوم البيانية والمعدل والوسيط والمنوال.","Fresh questions on frequency, charts, mean, median and mode.");
   const name=subjectNames[examSubject]||"مختلط";
   const englishNames={pythagoras:"Pythagoras",science:"General Science","science-periodic":"Periodic Table & Elements","science-atoms":"Atoms & Elements","science-motion":"Forces & Motion","arabic-idafa":"Arabic — Idafa"};
   const displayName=curr?(currentUILanguage==="en"?curr.en:curr.title):currentUILanguage==="en"?(englishNames[examSubject]||name):name;
-  document.getElementById("examLevelDesc").textContent=generated
-    ?chatText(`${displayName} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${displayName} • Classora generates a fresh question set every time.`)
-    :`${displayName} • ${levelDescriptions[examDifficulty]}`;
+  document.getElementById("examLevelDesc").textContent=statisticsTopic
+    ?({easy:chatText("سهل: قراءة الجداول والأعمدة والتكرار والنسب.","Easy: read frequency tables, bars and percentages."),
+       medium:chatText("متوسط: المعدّل والوسيط والتكرار التراكمي والرسوم.","Medium: mean, median, cumulative frequency and charts."),
+       hard:chatText("صعب: المعدّل المرجّح والقطاعات والبيانات المفقودة.","Hard: weighted means, pie sectors and missing frequencies."),
+       expert:chatText("خبير: دمج مجموعات واستنتاج قيم مجهولة وتحليل البيانات.","Expert: combine datasets, infer missing values and analyze data.")})[examDifficulty]
+    :generated
+      ?chatText(`${displayName} • كلاسورا يولّد أسئلة جديدة تلقائيًا في كل مرة.`,`${displayName} • Classora generates a fresh question set every time.`)
+      :`${displayName} • ${levelDescriptions[examDifficulty]}`;
   const title=document.getElementById("autoExamPreviewTitle"),desc=document.getElementById("autoExamPreviewText");
   if(title)title.textContent=curr?chatText("امتحان الموضوع: ","Topic exam: ")+displayName:arabic?chatText("⚡ امتحان عربي تلقائي","⚡ Auto-generated Arabic exam"):science?chatText("⚡ امتحان علوم تلقائي","⚡ Auto-generated science exam"):chatText("⚡ معاينة امتحان فيثاغورس","⚡ Pythagoras exam preview");
   if(desc)desc.textContent=generated?chatText("10 أسئلة جديدة من الموضوع المختار، مع تصحيح تلقائي.","10 fresh questions from the selected topic with automatic grading."):chatText("10 أسئلة فيثاغورس متغيّرة قبل النشر.","10 varied Pythagoras questions to preview before publishing.");
 }
 document.getElementById("examSubject").addEventListener("change",syncExamSubjectUI);
+document.getElementById("statsExamQuickStartBtn")?.addEventListener("click",()=>startGeneratedExam());
 
 
 function getSavedAttempt(){
