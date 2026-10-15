@@ -1339,6 +1339,36 @@ Reactive group 17 nonmetals that often form salts with metals.|No metales reacti
 Group 18 elements with very low chemical reactivity under ordinary conditions.|Elementos del grupo 18 con reactividad química muy baja en condiciones normales.|18족 원소로 일반적인 조건에서 화학 반응성이 매우 낮습니다.|Elemente der Gruppe 18 mit sehr geringer Reaktivität unter Normalbedingungen.|Elementi del gruppo 18 con reattività chimica molto bassa in condizioni normali.|समूह 18 के तत्व, सामान्य दशाओं में अत्यंत कम क्रियाशील।|18. grup elementleri; normal koşullarda çok düşük tepkime gösterir.
 Rare-earth metals used in magnets, lighting, optics and advanced technology.|Metales de tierras raras usados en imanes, iluminación, óptica y tecnología.|자석, 조명, 광학 및 첨단 기술에 쓰이는 희토류 금속입니다.|Seltenerdmetalle für Magnete, Beleuchtung, Optik und moderne Technik.|Metalli delle terre rare usati in magneti, illuminazione, ottica e tecnologia.|दुर्लभ मृदा धातुएँ, चुंबक, प्रकाश, प्रकाशिकी और तकनीक में उपयोगी।|Mıknatıs, aydınlatma, optik ve ileri teknolojide kullanılan nadir toprak metalleri.
 Heavy radioactive elements; several are synthetic and mainly studied in nuclear science.|Elementos radiactivos pesados; algunos son sintéticos y se estudian en ciencia nuclear.|무거운 방사성 원소로 일부는 인공 합성이며 주로 핵과학에서 연구됩니다.|Schwere radioaktive Elemente; einige künstlich, besonders in der Kernforschung untersucht.|Elementi radioattivi pesanti; alcuni sintetici, studiati soprattutto nella scienza nucleare.|भारी रेडियोधर्मी तत्व; कई कृत्रिम हैं और मुख्यतः नाभिकीय विज्ञान में पढ़े जाते हैं।|Ağır radyoaktif elementler; bazıları yapaydır ve çoğunlukla nükleer bilimde incelenir.
+Hydrogen|Hidrógeno|수소|Wasserstoff|Idrogeno|हाइड्रोजन|Hidrojen
+Helium|Helio|헬륨|Helium|Elio|हीलियम|Helyum
+Lithium|Litio|리튬|Lithium|Litio|लिथियम|Lityum
+Beryllium|Berilio|베릴륨|Beryllium|Berillio|बेरिलियम|Berilyum
+Boron|Boro|붕소|Bor|Boro|बोरॉन|Bor
+Carbon|Carbono|탄소|Kohlenstoff|Carbonio|कार्बन|Karbon
+Nitrogen|Nitrógeno|질소|Stickstoff|Azoto|नाइट्रोजन|Azot
+Oxygen|Oxígeno|산소|Sauerstoff|Ossigeno|ऑक्सीजन|Oksijen
+Fluorine|Flúor|플루오린|Fluor|Fluoro|फ्लोरीन|Flor
+Neon|Neón|네온|Neon|Neon|नियॉन|Neon
+Sodium|Sodio|나트륨|Natrium|Sodio|सोडियम|Sodyum
+Magnesium|Magnesio|마그네슘|Magnesium|Magnesio|मैग्नीशियम|Magnezyum
+Aluminium|Aluminio|알루미늄|Aluminium|Alluminio|एल्युमिनियम|Alüminyum
+Silicon|Silicio|규소|Silicium|Silicio|सिलिकॉन|Silisyum
+Phosphorus|Fósforo|인|Phosphor|Fosforo|फॉस्फोरस|Fosfor
+Sulfur|Azufre|황|Schwefel|Zolfo|सल्फर|Kükürt
+Chlorine|Cloro|염소|Chlor|Cloro|क्लोरीन|Klor
+Argon|Argón|아르곤|Argon|Argon|आर्गन|Argon
+Potassium|Potasio|칼륨|Kalium|Potassio|पोटैशियम|Potasyum
+Calcium|Calcio|칼슘|Calcium|Calcio|कैल्शियम|Kalsiyum
+Scandium|Escandio|스칸듐|Scandium|Scandio|स्कैंडियम|Skandiyum
+Titanium|Titanio|타이타늄|Titan|Titanio|टाइटेनियम|Titanyum
+Vanadium|Vanadio|바나듐|Vanadium|Vanadio|वैनेडियम|Vanadyum
+Chromium|Cromo|크로뮴|Chrom|Cromo|क्रोमियम|Krom
+Manganese|Manganeso|망가니즈|Mangan|Manganese|मैंगनीज|Manganez
+Iron|Hierro|철|Eisen|Ferro|लोहा|Demir
+Cobalt|Cobalto|코발트|Kobalt|Cobalto|कोबाल्ट|Kobalt
+Nickel|Níquel|니켈|Nickel|Nichel|निकेल|Nikel
+Copper|Cobre|구리|Kupfer|Rame|ताँबा|Bakır
+Zinc|Zinc|아연|Zink|Zinco|जस्ता|Çinko
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
