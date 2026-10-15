@@ -24,6 +24,7 @@
  ];
  let overlay,mode="question",step=0,seenAccount="",introReady=false,preferred="classoraMobileLobbyBtn",frame=0;
  const english=()=>document.documentElement.lang!=="ar";
+ const L=(ar,en)=>!english()?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang,en)||en);
  const authed=()=>document.body.classList.contains("classora-authenticated")&&!$("authGate")?.classList.contains("show");
  const storageKey=()=>window.PythagorasiUser?.uid?"classora_guide_v116_"+String(window.PythagorasiUser.uid):"";
  function platform(){
@@ -123,16 +124,16 @@
    overlay.querySelector(".cw116-card").dir=en?"ltr":"rtl";
    $("cw116-close").setAttribute("aria-label",en?"Skip guide":"تخطي التعليم");
    const question=mode==="question";
-   $("cw116-title").textContent=question?(en?"Would you like to learn how to use Classora?":"هل تحتاج لتعليم كيفية استخدام كلاسورا؟"):item[en?2:1];
-   $("cw116-text").textContent=question?(en?"Get a quick tour of subjects, classes, exams, chat and settings.":"جولة قصيرة بتشرح لك المواد والصفوف والامتحانات والشات والإعدادات."):item[en?4:3];
+   $("cw116-title").textContent=question?L("هل تحتاج لتعليم كيفية استخدام كلاسورا؟","Would you like to learn how to use Classora?"):L(item[1],item[2]);
+   $("cw116-text").textContent=question?L("جولة قصيرة بتشرح لك المواد والصفوف والامتحانات والشات والإعدادات.","Get a quick tour of subjects, classes, exams, chat and settings."):L(item[3],item[4]);
    overlay.querySelector(".cw116-art").innerHTML=icons[question?"welcome":item[0]];
-   overlay.querySelector(".cw116-step-count").textContent=question?"":(en?"Step "+(step+1)+" of "+steps.length:"الخطوة "+(step+1)+" من "+steps.length);
+   overlay.querySelector(".cw116-step-count").textContent=question?"":(L("الخطوة ","Step ")+(step+1)+L(" من "," of ")+steps.length);
    overlay.querySelector(".cw116-progress").replaceChildren(...(question?[]:steps.map((_,i)=>{
      const dot=document.createElement("span");if(i<=step)dot.classList.add("on");return dot;
    })));
-   $("cw116-back").textContent=question?(en?"No, thanks":"لا، شكرًا"):(step===0?(en?"Back":"رجوع"):(en?"Previous":"السابق"));
-   $("cw116-primary").textContent=question?(en?"Yes, show me":"نعم، علّمني"):(step===steps.length-1?(en?"Start learning":"ابدأ التعلم"):(en?"Next":"التالي"));
-   $("cw116-remember-text").textContent=en?"Don't show this automatically again":"لا تظهر هذه الشاشة تلقائيًا مرة ثانية";
+   $("cw116-back").textContent=question?L("لا، شكرًا","No, thanks"):(step===0?L("رجوع","Back"):L("السابق","Previous"));
+   $("cw116-primary").textContent=question?L("نعم، علّمني","Yes, show me"):(step===steps.length-1?L("ابدأ التعلم","Start learning"):L("التالي","Next"));
+   $("cw116-remember-text").textContent=L("لا تظهر هذه الشاشة تلقائيًا مرة ثانية","Don't show this automatically again");
  }
  function closeWelcome(){
    if(!overlay||overlay.hidden)return;
@@ -164,7 +165,7 @@
    if(!grid||$("cw116-replay-tour"))return;
    const btn=document.createElement("button");btn.type="button";btn.id="cw116-replay-tour";
    btn.innerHTML=icons.welcome+"<span></span>";grid.append(btn);
-   const label=()=>{btn.querySelector("span").textContent=english()?"How to use Classora":"تعليم استخدام كلاسورا"};
+   const label=()=>{btn.querySelector("span").textContent=L("تعليم استخدام كلاسورا","How to use Classora")};
    label();new MutationObserver(label).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
    btn.addEventListener("click",replay);
  }
