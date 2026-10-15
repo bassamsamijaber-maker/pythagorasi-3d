@@ -3,7 +3,8 @@ import {acidsTopic,phSamples,phColor} from './learning-content.js?v=89';
 
 export function mountSubjectLabs(api){
  const labels=new Map();
- const L=(a,e)=>{labels.set(a,[a,e]);labels.set(e,[a,e]);return api.language()==='ar'?a:e},pick=a=>L(...a);
+ const selectedLanguage=()=>document.documentElement.lang||api.language();
+ const L=(a,e)=>{labels.set(a,[a,e]);labels.set(e,[a,e]);return selectedLanguage()==='ar'?a:(window.ClassoraLocale?.dictionaries?.[selectedLanguage()]?.[e]||e)},pick=a=>L(...a);
  const node=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls||'';if(text)e.textContent=text;return e};
  const button=(text,fn)=>{const b=node('button','sl-button',text);b.type='button';b.onclick=fn;return b};
  let active=null;
