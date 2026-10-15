@@ -3,7 +3,8 @@ import {escapeMath as E} from './math-scenes-v119.js?v=119';
 
 // Finite, reviewed question sets: never pad an exam with repeated questions.
 export function mountHumanitiesPractice(host, questions, api, language) {
- const T=(ar,en)=>language==='en'?en:ar;
+ const selectedLanguage=document.documentElement.lang||language;
+ const T=(ar,en)=>selectedLanguage==='ar'?ar:(window.ClassoraLocale?.dictionaries?.[selectedLanguage]?.[en]||en);
  const counts=[...new Set([Math.min(3,questions.length),Math.min(5,questions.length),questions.length])].filter(Boolean);
  let index=0;
  host.innerHTML=`<span class="cm-eyebrow">03 / ${T('جرّب فهمك','CHECK YOUR UNDERSTANDING')}</span><h2>${T('تدريب من نفس الدرس','Practice this lesson')}</h2><p>${T('الأسئلة مختلفة ومحددة لهذا الموضوع. عدد الامتحان محدود بالأسئلة المتاحة.','Distinct questions for this topic. Exam length is limited to the available questions.')}</p><div class="cm-assessment"><label>${T('عدد الأسئلة','Questions')}<select class="cx-count">${counts.map(n=>`<option>${n}</option>`).join('')}</select></label><button class="cm-primary" data-cx="practice">${T('سؤال تدريبي','Practice question')}</button><button data-cx="exam">${T('امتحان','Exam')}</button>${api.isTeacher?.()?`<button data-cx="live">${T('مسابقة مباشرة','Live competition')}</button>`:''}</div><div class="cm-question" aria-live="polite"></div>`;
