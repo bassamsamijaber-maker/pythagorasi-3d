@@ -432,6 +432,47 @@ Cell organelles|Orgánulos celulares|세포 소기관|Zellorganellen|Organelli c
 Cell division|División celular|세포 분열|Zellteilung|Divisione cellulare|कोशिका विभाजन|Hücre bölünmesi
 Genes|Genes|유전자|Gene|Geni|जीन|Genler
 Proteins|Proteínas|단백질|Proteine|Proteine|प्रोटीन|Proteinler
+Fatimid Caliphate|Califato fatimí|파티마 칼리프국|Fatimiden-Kalifat|Califfato fatimide|फ़ातिमी ख़िलाफ़त|Fâtımî Halifeliği
+Ayyubid state|Estado ayubí|아이유브 왕조|Ayyubidenstaat|Stato ayyubide|अय्यूबी राज्य|Eyyûbî Devleti
+Mamluk Sultanate|Sultanato mameluco|맘루크 술탄국|Mamluken-Sultanat|Sultanato mamelucco|ममलूक सल्तनत|Memlûk Sultanlığı
+Druze in the Middle Ages|Druzos en la Edad Media|중세 드루즈인|Drusen im Mittelalter|Drusi nel Medioevo|मध्य युग में द्रूज़|Orta Çağ'da Dürzîler
+Jews in medieval Islamic lands|Judíos en tierras islámicas medievales|중세 이슬람권의 유대인|Juden in mittelalterlichen islamischen Ländern|Ebrei nelle terre islamiche medievali|मध्यकालीन इस्लामी क्षेत्रों में यहूदी|Orta Çağ İslam topraklarında Yahudiler
+Renaissance humanism|Humanismo renacentista|르네상스 인문주의|Humanismus der Renaissance|Umanesimo rinascimentale|पुनर्जागरण मानवतावाद|Rönesans hümanizmi
+Oceanic exploration and encounters|Exploraciones oceánicas y encuentros|대양 탐험과 교류|Ozeanische Entdeckungsreisen und Begegnungen|Esplorazioni oceaniche e incontri|समुद्री खोज और संपर्क|Okyanus keşifleri ve karşılaşmalar
+Columbus and the Americas|Colón y las Américas|콜럼버스와 아메리카|Kolumbus und Amerika|Colombo e le Americhe|कोलंबस और अमेरिका महाद्वीप|Kolomb ve Amerika kıtaları
+Cape of Good Hope route|Ruta del cabo de Buena Esperanza|희망봉 항로|Seeweg um das Kap der Guten Hoffnung|Rotta del Capo di Buona Speranza|केप ऑफ़ गुड होप समुद्री मार्ग|Ümit Burnu rotası
+Ottoman Empire to the eighteenth century|Imperio otomano hasta el siglo XVIII|18세기까지의 오스만 제국|Osmanisches Reich bis zum 18. Jahrhundert|Impero ottomano fino al XVIII secolo|अठारहवीं सदी तक उस्मानी साम्राज्य|18. yüzyıla kadar Osmanlı İmparatorluğu
+Nineteenth-century Europe|Europa del siglo XIX|19세기 유럽|Europa im 19. Jahrhundert|Europa del XIX secolo|उन्नीसवीं सदी का यूरोप|19. yüzyıl Avrupası
+First World War|Primera Guerra Mundial|제1차 세계 대전|Erster Weltkrieg|Prima guerra mondiale|प्रथम विश्व युद्ध|Birinci Dünya Savaşı
+Causes of the First World War|Causas de la Primera Guerra Mundial|제1차 세계 대전의 원인|Ursachen des Ersten Weltkriegs|Cause della Prima guerra mondiale|प्रथम विश्व युद्ध के कारण|Birinci Dünya Savaşı'nın nedenleri
+Events of the First World War|Acontecimientos de la Primera Guerra Mundial|제1차 세계 대전의 주요 사건|Ereignisse des Ersten Weltkriegs|Eventi della Prima guerra mondiale|प्रथम विश्व युद्ध की घटनाएँ|Birinci Dünya Savaşı'nın olayları
+Consequences of the First World War|Consecuencias de la Primera Guerra Mundial|제1차 세계 대전의 결과|Folgen des Ersten Weltkriegs|Conseguenze della Prima guerra mondiale|प्रथम विश्व युद्ध के परिणाम|Birinci Dünya Savaşı'nın sonuçları
+Peace settlements of 1919|Acuerdos de paz de 1919|1919년 평화 조약|Friedensverträge von 1919|Accordi di pace del 1919|1919 के शांति समझौते|1919 barış antlaşmaları
+Nineteenth-century Middle East|Oriente Medio del siglo XIX|19세기 중동|Naher Osten im 19. Jahrhundert|Medio Oriente del XIX secolo|उन्नीसवीं सदी का मध्य पूर्व|19. yüzyıl Orta Doğusu
+Nineteenth-century Ottoman Empire|Imperio otomano del siglo XIX|19세기 오스만 제국|Osmanisches Reich im 19. Jahrhundert|Impero ottomano del XIX secolo|उन्नीसवीं सदी का उस्मानी साम्राज्य|19. yüzyılda Osmanlı İmparatorluğu
+Middle East through the end of the First World War|Oriente Medio hasta el fin de la Primera Guerra Mundial|제1차 세계 대전 종전까지의 중동|Naher Osten bis zum Ende des Ersten Weltkriegs|Medio Oriente fino alla fine della Prima guerra mondiale|प्रथम विश्व युद्ध के अंत तक मध्य पूर्व|Birinci Dünya Savaşı sonuna kadar Orta Doğu
+Global connections and trade|Conexiones mundiales y comercio|세계 교류와 무역|Globale Verflechtungen und Handel|Connessioni globali e commercio|वैश्विक संपर्क और व्यापार|Küresel bağlantılar ve ticaret
+Environment|Medioambiente|환경|Umwelt|Ambiente|पर्यावरण|Çevre
+Earth’s layers|Capas de la Tierra|지구의 층|Erdschichten|Strati della Terra|पृथ्वी की परतें|Dünya'nın katmanları
+Rocks|Rocas|암석|Gesteine|Rocce|चट्टानें|Kayaçlar
+Minerals|Minerales|광물|Mineralien|Minerali|खनिज|Mineraller
+Weathering|Meteorización|풍화|Verwitterung|Alterazione delle rocce|अपक्षय|Ayrışma
+Erosion|Erosión|침식|Erosion|Erosione|अपरदन|Erozyon
+Atmosphere|Atmósfera|대기|Atmosphäre|Atmosfera|वायुमंडल|Atmosfer
+Climate zones|Zonas climáticas|기후대|Klimazonen|Zone climatiche|जलवायु क्षेत्र|İklim bölgeleri
+Energy resources|Recursos energéticos|에너지 자원|Energieressourcen|Risorse energetiche|ऊर्जा संसाधन|Enerji kaynakları
+Israel in the Middle East|Israel en Oriente Medio|중동의 이스라엘|Israel im Nahen Osten|Israele in Medio Oriente|मध्य पूर्व में इज़राइल|Orta Doğu'da İsrail
+Location and coordinates|Ubicación y coordenadas|위치와 좌표|Lage und Koordinaten|Posizione e coordinate|स्थान और निर्देशांक|Konum ve koordinatlar
+Landforms|Formas del relieve|지형|Landformen|Forme del rilievo|भू-आकृतियाँ|Yer şekilleri
+Water resources|Recursos hídricos|수자원|Wasserressourcen|Risorse idriche|जल संसाधन|Su kaynakları
+Cities and urbanisation|Ciudades y urbanización|도시와 도시화|Städte und Urbanisierung|Città e urbanizzazione|शहर और शहरीकरण|Şehirler ve kentleşme
+Industry|Industria|산업|Industrie|Industria|उद्योग|Sanayi
+Agriculture|Agricultura|농업|Landwirtschaft|Agricoltura|कृषि|Tarım
+Transportation|Transporte|교통|Verkehr|Trasporti|परिवहन|Ulaşım
+Maps and GIS|Mapas y SIG|지도와 지리정보시스템|Karten und GIS|Carte e GIS|मानचित्र और जीआईएस|Haritalar ve CBS
+Population growth|Crecimiento demográfico|인구 증가|Bevölkerungswachstum|Crescita della popolazione|जनसंख्या वृद्धि|Nüfus artışı
+Development indicators|Indicadores de desarrollo|개발 지표|Entwicklungsindikatoren|Indicatori di sviluppo|विकास संकेतक|Kalkınma göstergeleri
+Natural hazards|Peligros naturales|자연재해 위험|Naturgefahren|Pericoli naturali|प्राकृतिक खतरे|Doğal tehlikeler
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
