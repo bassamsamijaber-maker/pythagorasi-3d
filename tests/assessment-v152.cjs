@@ -44,7 +44,10 @@ for(const lang of ['es','ko','de','it','hi','tr']){
 const assessment=load('assets/classora-assessment-v121.js');
 const curriculum=load('assets/curriculum-v97.js');
 for(const src of [assessment,curriculum,load('assets/classora-assessment-levels-v152.js'),load('assets/classora-science-bank-v152.js')])new Function(local(src));
-assert(assessment.includes('addGraded(source)'));
+assert(assessment.includes('addGraded(source)'))
+assert(assessment.includes("const groups=['easy','medium','hard','expert']"),'Geography mixed tiers must rotate');
+assert(assessment.includes('if(result.length>=n||!validate(q,language))return;'),'Do not exceed selected question count');
+assert(!curriculum.includes('const q=genericQuestion(api,t,d,guard++);'),'Unrelated generic fallback questions are forbidden');;
 assert(assessment.includes('scienceTopicQuestions(topic.title'));
 assert.equal((curriculum.match(/<option value="expert">/g)||[]).length,2);
 console.log('PASS: 21 science domains, 4 difficulties, subject-specific questions, 6 additional languages, and expert selectors');
