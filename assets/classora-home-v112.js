@@ -7,7 +7,7 @@ export function mountClassoraHomeV112(api){
  "use strict";
  const get=id=>document.getElementById(id);
  const lang=()=>document.documentElement.lang!=="ar"?"en":"ar";
- const t=(ar,en)=>lang()==="en"?en:ar;
+ const t=(ar,en)=>document.documentElement.lang==="ar"?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang,en)||en);
  const svg=(type)=>{
   const paths={
    arabic:'<path d="M4 6q4-2 8 1 4-3 8-1v13q-4-2-8 1-4-3-8-1zM12 7v13"/><path d="M6 11h3m6 0h3M6 14h3"/>',
