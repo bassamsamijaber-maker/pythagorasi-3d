@@ -943,13 +943,29 @@ const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,
 let selected='en';
 try{const saved=localStorage.getItem('pythagorasi_language');if(Object.hasOwn(languages,saved))selected=saved}catch{}
 const normalize=value=>String(value).replace(/\s+/g,' ').trim();
-function t(value){
- const dictionary=dictionaries[selected];if(!dictionary||typeof value!=='string')return value;
- const key=normalize(value);let result=dictionary[key];
- // Match the same UI label when an old module still prefixes an icon or appends a colon.
- if(!result){const clean=key.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'').replace(/[:：]$/,'');if(dictionary[clean])result=key.replace(clean,dictionary[clean]);}
+function formatGrade(num,language=selected){
+ const n=Number(num);
+ if(!Number.isInteger(n))return String(num);
+ if(language==='ar')return 'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[n]||n);
+ if(language==='ko')return n+'학년';
+ if(language==='tr')return n+'. sınıf';
+ const prefix={es:'Curso',de:'Klasse',it:'Classe',hi:'कक्षा',en:'Grade'}[language]||'Grade';
+ return prefix+' '+n;
+}
+function tFor(language,value){
+ const dictionary=dictionaries[language];
+ if(!dictionary||typeof value!=='string')return value;
+ const key=normalize(value);
+ const gradeMatch=key.match(/^Grade\s+(7|8|9|10)$/);
+ if(gradeMatch)return formatGrade(Number(gradeMatch[1]),language);
+ let result=dictionary[key]||dictionary[value];
+ if(!result){
+  const clean=key.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'').replace(/[:：]$/,'');
+  if(dictionary[clean])result=key.replace(clean,dictionary[clean]);
+ }
  return result?value.replace(value.trim(),result):value;
 }
+function t(value){return tFor(selected,value)}
 function select(language){selected=Object.hasOwn(languages,language)?language:'en';return selected}
 function syncControls(){
  document.querySelectorAll('[data-classora-language]').forEach(button=>{
@@ -959,5 +975,5 @@ function syncControls(){
   note.hidden=!dictionaries[selected];note.textContent=t('This language is in preview. Some lessons and messages are still shown in English.');
  });
 }
-window.ClassoraLocale={languages,dictionaries,t,select,syncControls,get language(){return selected},get extended(){return Boolean(dictionaries[selected])}};
+window.ClassoraLocale={languages,dictionaries,t,tFor,formatGrade,select,syncControls,get language(){return selected},get extended(){return Boolean(dictionaries[selected])}};
 })();
