@@ -1,6 +1,6 @@
 import {answerFeedback} from './learning-feedback-v130.js?v=130';
 import {enhanceLesson} from './lesson-explorer-v129.js?v=130';
-import {mathTopic,defaultValues,calculateLesson} from './math-catalog-v119.js?v=119';
+import {mathTopic,defaultValues,calculateLesson} from './math-catalog-v119.js?v=148';
 import {renderMathScene,escapeMath as E} from './math-scenes-v119.js?v=119';
 export function mountMathLesson(host,topic,api){
  const en=api.language()==='en',T=(a,b)=>en?b:a,d=mathTopic(topic.title),v=defaultValues(d),view={yaw:-.16,pitch:.15,zoom:1};let disposed=false,frame=0,drag=null,questionIndex=0;
