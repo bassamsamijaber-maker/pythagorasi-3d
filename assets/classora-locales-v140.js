@@ -995,6 +995,62 @@ Hide meaning|Ocultar significado|뜻 숨기기|Bedeutung ausblenden|Nascondi sig
 Goal reached.|Objetivo alcanzado.|목표에 도달했습니다.|Ziel erreicht.|Obiettivo raggiunto.|लक्ष्य पूरा हुआ।|Hedefe ulaşıldı.
 The goal is not reached yet. Current result: |Todavía no alcanzaste el objetivo. Resultado actual: |아직 목표에 도달하지 못했습니다. 현재 결과: |Das Ziel ist noch nicht erreicht. Aktuelles Ergebnis: |Obiettivo non ancora raggiunto. Risultato attuale: |लक्ष्य अभी पूरा नहीं हुआ। वर्तमान परिणाम: |Hedefe henüz ulaşılmadı. Şu anki sonuç:
 Interactive lab: drag the model to rotate it, move the slider or choose a sample. Color simulates a universal indicator.|Laboratorio interactivo: gira el modelo, mueve el control o elige una muestra. El color simula un indicador universal.|대화형 실험실: 모델을 회전하고 슬라이더를 움직이거나 시료를 고르세요. 색상은 만능 지시약을 나타냅니다.|Interaktives Labor: Drehe das Modell, bewege den Regler oder wähle eine Probe. Die Farbe simuliert einen Universalindikator.|Laboratorio interattivo: ruota il modello, sposta il cursore o scegli un campione. Il colore simula un indicatore universale.|इंटरैक्टिव प्रयोगशाला: मॉडल घुमाएँ, स्लाइडर चलाएँ या नमूना चुनें। रंग सार्वत्रिक सूचक का अनुकरण करता है।|Etkileşimli laboratuvar: modeli döndür, sürgüyü hareket ettir veya örnek seç. Renk evrensel belirteci simgeler.
+New on Classora|Novedades en Classora|Classora 새 소식|Neu bei Classora|Novità su Classora|क्लासोरा पर नया|Classora'da yenilikler
+Student workspace|Espacio del estudiante|학생 공간|Schülerbereich|Area studente|छात्र क्षेत्र|Öğrenci alanı
+Admin workspace|Panel de administración|관리자 공간|Adminbereich|Area amministratore|प्रशासक क्षेत्र|Yönetici alanı
+My class: |Mi clase: |내 학급: |Meine Klasse: |La mia classe: |मेरी कक्षा: |Sınıfım: 
+Classes: |Clases: |학급: |Klassen: |Classi: |कक्षाएँ: |Sınıflar: 
+Learn. Explore. Create.|Aprende. Explora. Crea.|배우고 탐구하고 창조하세요.|Lernen. Entdecken. Gestalten.|Impara. Esplora. Crea.|सीखें। खोजें। बनाएँ।|Öğren. Keşfet. Üret.
+What's new|Novedades|새 소식|Neuigkeiten|Novità|नया क्या है|Yenilikler
+Classora learning highlights|Novedades educativas de Classora|Classora 학습 소식|Lernhighlights von Classora|Novità didattiche Classora|क्लासोरा की शैक्षिक खबरें|Classora öğrenme haberleri
+Previous announcement|Anuncio anterior|이전 공지|Vorherige Ankündigung|Annuncio precedente|पिछली घोषणा|Önceki duyuru
+Next announcement|Anuncio siguiente|다음 공지|Nächste Ankündigung|Annuncio successivo|अगली घोषणा|Sonraki duyuru
+DISCOVER SOMETHING NEW|DESCUBRE ALGO NUEVO|새로운 것을 발견하세요|ENTDECKE ETWAS NEUES|SCOPRI QUALCOSA DI NUOVO|कुछ नया जानें|YENİ BİR ŞEY KEŞFET
+Explore|Explorar|탐색하기|Entdecken|Esplora|खोजें|Keşfet
+Announcement|Anuncio|공지|Ankündigung|Annuncio|घोषणा|Duyuru
+Go to announcement |Ir al anuncio |공지로 이동 |Zur Ankündigung |Vai all'annuncio |घोषणा पर जाएँ |Duyuruya git 
+Your assignments|Tus tareas|내 과제|Deine Aufgaben|I tuoi compiti|आपके कार्य|Ödevlerin
+Important now — due soon|Importante: entrega cercana|중요: 마감 임박|Wichtig: bald fällig|Importante: scadenza vicina|महत्त्वपूर्ण: समय सीमा नज़दीक|Önemli: teslim yaklaşıyor
+Checking class assignments...|Comprobando tareas de clase...|학급 과제 확인 중...|Klassenaufgaben werden geprüft...|Controllo dei compiti...|कक्षा के कार्य जाँचे जा रहे हैं...|Sınıf ödevleri kontrol ediliyor...
+No unfinished assignments right now.|No tienes tareas pendientes ahora.|지금 미완료 과제가 없습니다.|Derzeit keine offenen Aufgaben.|Al momento nessun compito incompleto.|अभी कोई अधूरा कार्य नहीं है।|Şu an tamamlanmamış ödev yok.
+ • Due: | • Entrega: | • 마감: | • Fällig: | • Scadenza: | • अंतिम तिथि: | • Son tarih: 
+Start now|Empezar ahora|지금 시작|Jetzt starten|Inizia ora|अभी शुरू करें|Şimdi başla
+Continue: |Continuar: |이어하기: |Weiter: |Continua: |जारी रखें: |Devam: 
+Announcements: |Anuncios: |공지: |Ankündigungen: |Annunci: |घोषणाएँ: |Duyurular: 
+Search announcements|Buscar anuncios|공지 검색|Ankündigungen suchen|Cerca annunci|घोषणाएँ खोजें|Duyuru ara
+Filter by status|Filtrar por estado|상태로 필터|Nach Status filtern|Filtra per stato|स्थिति से छाँटें|Duruma göre filtrele
+Active|Activo|활성|Aktiv|Attivo|सक्रिय|Etkin
+Paused|Pausado|일시 중지|Pausiert|In pausa|रुका हुआ|Duraklatıldı
+Enable|Activar|활성화|Aktivieren|Attiva|चालू करें|Etkinleştir
+No matching announcements.|No hay anuncios coincidentes.|일치하는 공지가 없습니다.|Keine passenden Ankündigungen.|Nessun annuncio corrispondente.|कोई मिलती घोषणा नहीं है।|Eşleşen duyuru yok.
+Add announcement|Añadir anuncio|공지 추가|Ankündigung hinzufügen|Aggiungi annuncio|घोषणा जोड़ें|Duyuru ekle
+Cancel edit|Cancelar edición|수정 취소|Bearbeitung abbrechen|Annulla modifica|संपादन रद्द करें|Düzenlemeyi iptal et
+Delete this announcement permanently?|¿Eliminar este anuncio para siempre?|이 공지를 영구 삭제할까요?|Diese Ankündigung dauerhaft löschen?|Eliminare definitivamente questo annuncio?|क्या यह घोषणा स्थायी रूप से हटाएँ?|Bu duyuru kalıcı olarak silinsin mi?
+Loading your classes from your account…|Cargando tus clases…|내 학급 불러오는 중…|Deine Klassen werden geladen…|Caricamento delle tue classi…|आपकी कक्षाएँ लोड हो रही हैं…|Sınıfların yükleniyor…
+No classes to show yet. Open class management to create or review one.|No hay clases todavía. Abre la gestión de clases para crearlas o verlas.|표시할 학급이 없습니다. 학급 관리에서 생성하거나 확인하세요.|Noch keine Klassen. Öffne die Klassenverwaltung zum Erstellen oder Ansehen.|Nessuna classe disponibile. Apri la gestione classi per crearne o vederne una.|अभी कोई कक्षा नहीं है। बनाने या देखने के लिए कक्षा प्रबंधन खोलें।|Henüz sınıf yok. Oluşturmak veya görmek için sınıf yönetimini aç.
+Unnamed class|Clase sin nombre|이름 없는 학급|Unbenannte Klasse|Classe senza nome|बिना नाम की कक्षा|Adsız sınıf
+Class owner|Responsable de la clase|학급 담당자|Klassenleitung|Responsabile della classe|कक्षा प्रभारी|Sınıf sahibi
+Co-teacher|Profesor auxiliar|보조 교사|Mit-Lehrkraft|Insegnante assistente|सहायक शिक्षक|Yardımcı öğretmen
+Unable to load class summary. You can still open class management.|No se pudo cargar el resumen. Puedes abrir igualmente la gestión de clases.|학급 요약을 불러오지 못했습니다. 학급 관리는 열 수 있습니다.|Klassenzusammenfassung konnte nicht geladen werden. Die Verwaltung bleibt verfügbar.|Impossibile caricare il riepilogo. Puoi comunque aprire la gestione classi.|कक्षा सारांश लोड नहीं हुआ। फिर भी कक्षा प्रबंधन खोल सकते हैं।|Sınıf özeti yüklenemedi. Sınıf yönetimini yine de açabilirsin.
+student|estudiante|학생|Schüler|studente|छात्र|öğrenci
+XP to the next level: |XP para el siguiente nivel: |다음 레벨까지 XP: |XP bis zur nächsten Stufe: |XP al livello successivo: |अगले स्तर के लिए XP: |Sonraki seviyeye XP: 
+Progress towards the next XP level|Progreso hacia el siguiente nivel de XP|다음 XP 레벨까지 진행 상황|Fortschritt zur nächsten XP-Stufe|Avanzamento al prossimo livello XP|अगले XP स्तर की प्रगति|Sonraki XP seviyesine ilerleme
+Your progress|Tu progreso|내 학습 진도|Dein Fortschritt|I tuoi progressi|आपकी प्रगति|İlerlemen
+Your points will appear after your first activity.|Tus puntos aparecerán tras tu primera actividad.|첫 활동을 마치면 포인트가 표시됩니다.|Deine Punkte erscheinen nach der ersten Aktivität.|I tuoi punti compariranno dopo la prima attività.|पहली गतिविधि के बाद अंक दिखेंगे।|İlk etkinliğinden sonra puanların görünecek.
+Open Classora calculator|Abrir calculadora de Classora|Classora 계산기 열기|Classora-Rechner öffnen|Apri calcolatrice Classora|क्लासोरा कैलकुलेटर खोलें|Classora hesap makinesini aç
+Classora scientific calculator|Calculadora científica de Classora|Classora 공학 계산기|Wissenschaftlicher Classora-Rechner|Calcolatrice scientifica Classora|क्लासोरा वैज्ञानिक कैलकुलेटर|Classora bilimsel hesap makinesi
+Minimize calculator|Minimizar calculadora|계산기 최소화|Rechner minimieren|Riduci calcolatrice|कैलकुलेटर छोटा करें|Hesap makinesini küçült
+Expression|Expresión|수식|Ausdruck|Espressione|व्यंजक|İfade
+Use the calculator buttons only. % divides by 100|Usa solo los botones. % significa dividir entre 100|버튼만 사용하세요. %는 100으로 나눕니다|Nur die Tasten verwenden. % teilt durch 100|Usa solo i pulsanti. % divide per 100|केवल बटन दबाएँ। % का अर्थ 100 से भाग है|Yalnızca tuşları kullan. % sayıyı 100'e böler
+Clear expression|Borrar expresión|수식 지우기|Ausdruck löschen|Cancella espressione|व्यंजक मिटाएँ|İfadeyi temizle
+Previous answer|Respuesta anterior|이전 답|Vorherige Antwort|Risposta precedente|पिछला उत्तर|Önceki cevap
+Degrees|Grados|도|Grad|Gradi|डिग्री|Derece
+Radians|Radianes|라디안|Bogenmaß|Radianti|रेडियन|Radyan
+Calculator keys|Teclas de calculadora|계산기 버튼|Rechnertasten|Tasti calcolatrice|कैलकुलेटर बटन|Hesap makinesi tuşları
+Cannot divide by zero|No se puede dividir entre cero|0으로 나눌 수 없습니다|Division durch null nicht möglich|Impossibile dividere per zero|शून्य से भाग नहीं दे सकते|Sıfıra bölünemez
+Value outside the domain|Valor fuera del dominio|정의역 밖의 값|Wert außerhalb des Definitionsbereichs|Valore fuori dal dominio|मान निर्धारित सीमा से बाहर है|Değer tanım kümesi dışında
+Check expression and parentheses|Comprueba expresión y paréntesis|수식과 괄호를 확인하세요|Prüfe Ausdruck und Klammern|Controlla espressione e parentesi|व्यंजक और कोष्ठक जाँचें|İfadeyi ve parantezleri kontrol et
+Your calculations appear here.|Tus cálculos aparecen aquí.|계산 기록이 여기에 표시됩니다.|Deine Berechnungen erscheinen hier.|I tuoi calcoli appaiono qui.|आपकी गणनाएँ यहाँ दिखेंगी।|Hesaplamaların burada görünür.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
