@@ -779,6 +779,57 @@ Those two do not form the pair. Try two different terms.|Estas palabras no forma
 Select two terms.|Selecciona dos términos.|단어 두 개를 선택하세요.|Wähle zwei Begriffe.|Seleziona due termini.|दो शब्द चुनें।|İki kelime seç.
 Mudaf: |Mudaf: |무다프: |Mudaf: |Mudaf: |मुदाफ़: |Mudaf: 
 Mudaf ilayh: |Mudaf ilayh: |무다프 일라이히: |Mudaf ilayh: |Mudaf ilayh: |मुदाफ़ इलैह: |Mudafun ileyh:
+Lesson & learning tools|Herramientas de aprendizaje|수업 및 학습 도구|Lern- und Unterrichtswerkzeuge|Strumenti per la lezione|पाठ और सीखने के उपकरण|Ders ve öğrenme araçları
+Model challenge|Desafío del modelo|모델 도전|Modellaufgabe|Sfida sul modello|मॉडल चुनौती|Model görevi
+Two live experiments|Dos experimentos interactivos|두 가지 실시간 실험|Zwei interaktive Experimente|Due esperimenti interattivi|दो इंटरैक्टिव प्रयोग|İki etkileşimli deney
+Present to class|Presentar a la clase|수업에서 발표하기|Vor der Klasse präsentieren|Presenta alla classe|कक्षा में प्रस्तुत करें|Sınıfa sun
+Why learn this?|¿Por qué aprender esto?|왜 배워야 할까요?|Warum das lernen?|Perché impararlo?|यह क्यों सीखें?|Bunu neden öğreniyoruz?
+Example from this lesson|Ejemplo de la lección|수업 예시|Beispiel aus dieser Lektion|Esempio della lezione|इस पाठ का उदाहरण|Bu dersten bir örnek
+Lesson dictionary — select a term|Glosario de la lección: elige un término|수업 용어집: 단어 선택|Lektionswörterbuch: Begriff wählen|Glossario della lezione: scegli un termine|पाठ शब्दावली: शब्द चुनें|Ders sözlüğü: terim seç
+Display preferences|Preferencias de visualización|화면 표시 설정|Anzeigeeinstellungen|Preferenze di visualizzazione|प्रदर्शन की पसंद|Görünüm tercihleri
+Report a lesson problem|Informar de un problema con la lección|수업 문제 신고|Problem in Lektion melden|Segnala un problema nella lezione|पाठ की समस्या बताएँ|Ders sorunu bildir
+Problem type|Tipo de problema|문제 유형|Problemtyp|Tipo di problema|समस्या का प्रकार|Sorun türü
+What happened?|¿Qué ocurrió?|무슨 문제가 있었나요?|Was ist passiert?|Che cosa è successo?|क्या हुआ?|Ne oldu?
+Continue to support|Continuar con soporte|지원팀으로 계속|Zum Support weiter|Continua con l'assistenza|सहायता से संपर्क करें|Desteğe devam et
+Example: |Ejemplo: |예시: |Beispiel: |Esempio: |उदाहरण: |Örnek: 
+Your last saved model inputs have been restored.|Se han restaurado los últimos valores guardados.|최근 저장한 모델 입력값을 복원했습니다.|Deine zuletzt gespeicherten Modellwerte wurden wiederhergestellt.|Sono stati ripristinati gli ultimi valori salvati.|पिछले सहेजे मॉडल मान बहाल कर दिए गए हैं।|Son kaydedilen model değerleri geri yüklendi.
+Model inputs save automatically on this device.|Los datos del modelo se guardan automáticamente en este dispositivo.|모델 입력값은 이 기기에 자동 저장됩니다.|Modelleingaben werden auf diesem Gerät automatisch gespeichert.|I valori del modello vengono salvati automaticamente sul dispositivo.|मॉडल के मान इस डिवाइस पर अपने आप सहेजते हैं।|Model girdileri bu cihaza otomatik kaydedilir.
+Could not save on this device. Check that storage is available.|No se pudo guardar. Comprueba el almacenamiento del dispositivo.|저장할 수 없습니다. 기기 저장 공간을 확인하세요.|Speichern fehlgeschlagen. Prüfe ob Speicher verfügbar ist.|Impossibile salvare. Controlla lo spazio disponibile.|सहेजा नहीं जा सका। डिवाइस का स्टोरेज जाँचें।|Bu cihazda kaydedilemedi. Depolamayı kontrol et.
+MODEL CHALLENGE|DESAFÍO DEL MODELO|모델 도전|MODELLAUFGABE|SFIDA SUL MODELLO|मॉडल चुनौती|MODEL GÖREVİ
+Check model|Comprobar modelo|모델 확인|Modell prüfen|Controlla il modello|मॉडल जाँचें|Modeli kontrol et
+Another challenge|Otro desafío|다른 도전|Weitere Aufgabe|Un'altra sfida|एक और चुनौती|Başka bir görev
+Complete valid inputs before starting a challenge.|Introduce valores válidos antes de empezar.|도전하기 전에 올바른 값을 입력하세요.|Gib gültige Werte ein bevor du die Aufgabe beginnst.|Inserisci valori validi prima della sfida.|चुनौती से पहले सही मान दर्ज करें।|Göreve başlamadan geçerli değerleri gir.
+Explore A and B independently|Explora A y B por separado|A와 B를 따로 탐구하기|A und B getrennt untersuchen|Esplora A e B separatamente|A और B का अलग-अलग अध्ययन करें|A ve B'yi ayrı incele
+Change one variable for a fair comparison. The main model keeps its inputs.|Cambia una variable para comparar. El modelo principal conserva sus valores.|공정하게 비교하려면 변수 하나만 바꾸세요. 기본 모델의 값은 유지됩니다.|Ändere nur eine Variable zum fairen Vergleich. Das Hauptmodell behält seine Werte.|Cambia una variabile per un confronto corretto. Il modello principale conserva i valori.|सही तुलना के लिए केवल एक चर बदलें। मुख्य मॉडल के मान बने रहेंगे।|Adil karşılaştırma için tek değişkeni değiştir. Ana model değerlerini korur.
+Reveal answer|Mostrar respuesta|정답 보기|Antwort anzeigen|Mostra risposta|उत्तर दिखाएँ|Cevabı göster
+Exit presentation|Salir de la presentación|발표 종료|Präsentation beenden|Esci dalla presentazione|प्रस्तुति बंद करें|Sunumdan çık
+Hide answer|Ocultar respuesta|정답 숨기기|Antwort ausblenden|Nascondi risposta|उत्तर छिपाएँ|Cevabı gizle
+Please write a short description.|Escribe una breve descripción.|간단한 설명을 입력하세요.|Schreibe eine kurze Beschreibung.|Scrivi una breve descrizione.|संक्षिप्त विवरण लिखें।|Kısa bir açıklama yaz.
+Open the main site online to send this report. Keep your description before leaving.|Abre la web principal con Internet para enviar este informe. Conserva la descripción.|인터넷에 연결해 기본 사이트에서 신고를 보내세요. 작성한 설명은 보관하세요.|Öffne die Hauptseite online um den Bericht zu senden. Sichere vorher deine Beschreibung.|Apri il sito principale online per inviare la segnalazione. Conserva la descrizione.|रिपोर्ट भेजने के लिए मुख्य वेबसाइट ऑनलाइन खोलें। जाने से पहले विवरण सँभालें।|Rapor göndermek için ana siteyi çevrimiçi aç. Açıklamanı sakla.
+PICK UP WHERE YOU LEFT OFF|CONTINÚA DONDE LO DEJASTE|이어서 학습하기|DORT WEITERMACHEN|RIPRENDI DA DOVE ERI|जहाँ छोड़ा था वहीं से शुरू करें|KALDIĞIN YERDEN DEVAM ET
+Grade |Curso |학년 |Klasse |Classe |कक्षा |Sınıf 
+Open a lesson, then return here to resume the same experiment.|Abre una lección y vuelve aquí para continuar la misma actividad.|수업을 연 뒤 여기로 돌아오면 같은 활동을 이어갈 수 있습니다.|Öffne eine Lektion und kehre hierher zurück um dieselbe Übung fortzusetzen.|Apri una lezione e torna qui per riprendere la stessa attività.|एक पाठ खोलें, फिर उसी गतिविधि को जारी रखने के लिए यहाँ लौटें।|Bir ders aç; aynı etkinliğe devam etmek için buraya dön.
+My offline units|Mis unidades sin conexión|오프라인 학습 단원|Meine Offline-Einheiten|Le mie unità offline|मेरी ऑफ़लाइन इकाइयाँ|Çevrimdışı ünitelerim
+Review based on your answers|Repaso según tus respuestas|답변 기반 복습|Wiederholung nach deinen Antworten|Ripasso in base alle risposte|आपके उत्तरों के आधार पर दोहराएँ|Yanıtlarına göre tekrar
+Start with topics that have more mistakes. Each button opens a short practice from that topic.|Empieza por los temas con más errores. Cada botón abre una práctica breve.|오답이 많은 주제부터 시작하세요. 각 버튼을 누르면 짧은 연습이 열립니다.|Beginne mit Themen bei denen du mehr Fehler gemacht hast. Jeder Knopf öffnet eine kurze Übung.|Inizia dagli argomenti con più errori. Ogni pulsante apre un breve esercizio.|जिन विषयों में गलतियाँ अधिक हैं, उनसे शुरू करें। हर बटन छोटा अभ्यास खोलता है।|En çok hata yaptığın konulardan başla. Her düğme kısa bir alıştırma açar.
+Mistakes / attempts: |Errores / intentos: |오답 / 시도: |Fehler / Versuche: |Errori / tentativi: |गलतियाँ / प्रयास: |Hatalar / denemeler: 
+Answer practice questions or model challenges to see suggestions here.|Responde ejercicios o desafíos del modelo para ver sugerencias aquí.|연습 문제나 모델 도전을 풀면 추천 주제가 표시됩니다.|Beantworte Übungsfragen oder Modellaufgaben um Vorschläge zu erhalten.|Rispondi agli esercizi o alle sfide per vedere consigli qui.|सुझाव देखने के लिए अभ्यास प्रश्न या मॉडल चुनौतियाँ हल करें।|Önerileri görmek için alıştırma ve model görevlerini çöz.
+TRY • NOTICE • EXPLAIN|PRUEBA • OBSERVA • EXPLICA|실험 • 관찰 • 설명|AUSPROBIEREN • BEOBACHTEN • ERKLÄREN|PROVA • OSSERVA • SPIEGA|प्रयोग • अवलोकन • व्याख्या|DENE • GÖZLEMLE • AÇIKLA
+Take a closer look|Explora más a fondo|자세히 살펴보기|Genauer hinschauen|Esplora più da vicino|ध्यान से देखें|Daha yakından incele
+Step-by-step guide|Guía paso a paso|단계별 안내|Schritt-für-Schritt-Anleitung|Guida passo per passo|चरण-दर-चरण मार्गदर्शन|Adım adım rehber
+Previous step|Paso anterior|이전 단계|Vorheriger Schritt|Passaggio precedente|पिछला चरण|Önceki adım
+Next step|Paso siguiente|다음 단계|Nächster Schritt|Passaggio successivo|अगला चरण|Sonraki adım
+Close guide|Cerrar guía|안내 닫기|Anleitung schließen|Chiudi guida|मार्गदर्शन बंद करें|Rehberi kapat
+Predict before you try|Predice antes de probar|실험 전에 예측하기|Vorher vorhersagen|Prevedi prima di provare|प्रयोग से पहले अनुमान लगाएँ|Denemeden önce tahmin et
+What do you expect to change, and why?|¿Qué crees que cambiará y por qué?|무엇이 왜 달라질 것으로 예상하나요?|Was wird sich deiner Meinung nach ändern und warum?|Che cosa pensi cambierà e perché?|क्या बदलेगा और क्यों, आपका अनुमान क्या है?|Sence ne değişecek ve neden?
+Write your prediction, then try it and compare…|Escribe tu predicción, prueba y compara…|예측을 적고 실험한 뒤 비교하세요…|Notiere deine Vorhersage, probiere es und vergleiche…|Scrivi la previsione, prova e confronta…|अनुमान लिखें, प्रयोग करें और तुलना करें…|Tahminini yaz, dene ve karşılaştır…
+A note for reflection and comparison in this lesson; not automatically graded.|Nota para reflexionar y comparar; no se califica automáticamente.|학습 성찰과 비교를 위한 메모이며 자동 채점되지 않습니다.|Eine Notiz zur Reflexion und zum Vergleich; keine automatische Bewertung.|Nota per riflettere e confrontare; non viene valutata automaticamente.|यह चिंतन और तुलना के लिए टिप्पणी है; इसका स्वचालित अंकन नहीं होगा।|Bu not düşünmek ve karşılaştırmak içindir; otomatik puanlanmaz.
+Save a state, change the inputs, and compare the results side by side.|Guarda un estado, cambia los datos y compara los resultados en paralelo.|상태를 저장하고 입력값을 바꾼 뒤 결과를 나란히 비교하세요.|Speichere einen Zustand, ändere die Werte und vergleiche beide Ergebnisse.|Salva uno stato, cambia i dati e confronta i risultati affiancati.|एक स्थिति सहेजें, मान बदलें और दोनों परिणामों की तुलना करें।|Bir durumu kaydet, değerleri değiştir ve sonuçları yan yana karşılaştır.
+Save state to compare|Guardar estado para comparar|비교할 상태 저장|Zustand zum Vergleich speichern|Salva stato per confronto|तुलना के लिए स्थिति सहेजें|Karşılaştırmak için durumu kaydet
+Clear comparison|Borrar comparación|비교 초기화|Vergleich zurücksetzen|Cancella confronto|तुलना साफ़ करें|Karşılaştırmayı temizle
+SAVED STATE|ESTADO GUARDADO|저장한 상태|GESPEICHERTER ZUSTAND|STATO SALVATO|सहेजी स्थिति|KAYDEDİLEN DURUM
+CURRENT STATE|ESTADO ACTUAL|현재 상태|AKTUELLER ZUSTAND|STATO ATTUALE|वर्तमान स्थिति|GEÇERLİ DURUM
+State saved. Change one thing and observe the difference.|Estado guardado. Cambia una cosa y observa la diferencia.|상태가 저장됐어요. 하나만 바꾸고 차이를 관찰하세요.|Zustand gespeichert. Ändere eine Sache und beobachte den Unterschied.|Stato salvato. Cambia una cosa e osserva la differenza.|स्थिति सहेजी गई। एक चीज़ बदलकर अंतर देखें।|Durum kaydedildi. Bir şeyi değiştirip farkı gözlemle.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
