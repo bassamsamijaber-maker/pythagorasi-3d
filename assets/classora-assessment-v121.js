@@ -247,7 +247,7 @@ function installPicker(id,language=()=>document.documentElement.lang){
  const label=document.createElement('span');label.className='ca-topic-search-label';label.dataset.noTranslate='';
  wrap.insertBefore(label,select);wrap.insertBefore(search,select);
  const grade=()=>{let n=8;try{n=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(n)?n:8};
- const gradeLabel=(g,lang)=>lang==='ar'?'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g):t('Grade','Grade',lang)+' '+g;
+ const gradeLabel=(g,lang)=>window.ClassoraLocale?.formatGrade?.(g,lang)||(lang==='ar'?'الصف '+g:'Grade '+g);
  let lastLang='',lastGrade=0;
  function fill({preserve=true}={}){
   const lang=language(),g=grade(),query=norm(search.value);
