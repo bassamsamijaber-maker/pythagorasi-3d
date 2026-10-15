@@ -1260,6 +1260,42 @@ Illustrative thresholds only; actual need depends on crop, soil and weather.|Umb
 Terrain + roads + services → location analysis|Relieve + carreteras + servicios → análisis de ubicación|지형 + 도로 + 서비스 → 입지 분석|Gelände + Straßen + Dienste → Standortanalyse|Terreno + strade + servizi → analisi del luogo|भूभाग + सड़क + सेवाएँ → स्थान विश्लेषण|Arazi + yollar + hizmetler → konum analizi
  exposed buildings in the model| edificios expuestos en el modelo| 모델에서 위험에 노출된 건물| gefährdete Gebäude im Modell| edifici esposti nel modello| मॉडल में जोखिम वाले भवन| modelde maruz kalan binalar
 Skip guide|Omitir guía|안내 건너뛰기|Anleitung überspringen|Salta la guida|मार्गदर्शन छोड़ें|Rehberi atla
+All properties|Todas las propiedades|모든 성질|Alle Eigenschaften|Tutte le proprietà|सभी गुण|Tüm özellikler
+Metals|Metales|금속|Metalle|Metalli|धातुएँ|Metaller
+Nonmetals|No metales|비금속|Nichtmetalle|Non metalli|अधातु|Ametaller
+Image gallery|Galería de imágenes|이미지 갤러리|Bildergalerie|Galleria immagini|चित्र गैलरी|Görsel galerisi
+No elements match. Try another name or category.|No hay elementos coincidentes. Prueba otro nombre o categoría.|일치하는 원소가 없습니다. 다른 이름이나 종류를 검색하세요.|Keine passenden Elemente. Versuche einen anderen Namen oder eine Kategorie.|Nessun elemento trovato. Prova altro nome o categoria.|कोई तत्व नहीं मिला। दूसरा नाम या वर्ग आज़माएँ।|Eşleşen element yok. Başka ad veya kategori dene.
+INTERACTIVE CHEMISTRY LAB|LABORATORIO INTERACTIVO DE QUÍMICA|대화형 화학 실험실|INTERAKTIVES CHEMIELABOR|LABORATORIO INTERATTIVO DI CHIMICA|इंटरैक्टिव रसायन प्रयोगशाला|ETKİLEŞİMLİ KİMYA LABORATUVARI
+Periodic Table of Elements|Tabla periódica de los elementos|원소 주기율표|Periodensystem der Elemente|Tavola periodica degli elementi|तत्वों की आवर्त सारणी|Elementlerin periyodik tablosu
+118 elements, each with its own illustration. Open a card to explore its properties, uses and animation.|118 elementos con ilustraciones. Abre una tarjeta para conocer sus propiedades, usos y animación.|118개 원소마다 그림이 있습니다. 카드를 열어 성질, 용도 및 애니메이션을 확인하세요.|118 Elemente mit eigenen Illustrationen. Öffne eine Karte für Eigenschaften, Anwendungen und Animation.|118 elementi con illustrazioni. Apri una scheda per proprietà, usi e animazione.|118 तत्व, हर एक के साथ चित्र। गुण, उपयोग और एनीमेशन देखने के लिए कार्ड खोलें।|118 elementin her birinin çizimi var. Özellik, kullanım ve hareketlerini görmek için kart aç.
+Groups|Grupos|족|Gruppen|Gruppi|समूह|Gruplar
+Periods|Períodos|주기|Perioden|Periodi|आवर्त|Periyotlar
+Search by name, symbol or atomic number…|Busca por nombre, símbolo o número atómico…|이름, 기호 또는 원자 번호로 검색…|Nach Name, Symbol oder Ordnungszahl suchen…|Cerca per nome, simbolo o numero atomico…|नाम, प्रतीक या परमाणु क्रमांक से खोजें…|Ad, simge veya atom numarasıyla ara…
+TAP ANY ELEMENT|TOCA UN ELEMENTO|원소를 눌러보세요|ELEMENT ANTIPpen|TOCCA UN ELEMENTO|किसी तत्व को दबाएँ|BİR ELEMENTE DOKUN
+Interactive Periodic Table|Tabla periódica interactiva|대화형 주기율표|Interaktives Periodensystem|Tavola periodica interattiva|इंटरैक्टिव आवर्त सारणी|Etkileşimli periyodik tablo
+shown|mostrados|표시됨|angezeigt|mostrati|दिखाए गए|gösterilen
+LEARN BY CATEGORY|APRENDE POR CATEGORÍA|종류별 학습|NACH KATEGORIE LERNEN|IMPARA PER CATEGORIA|वर्ग के अनुसार सीखें|KATEGORİYE GÖRE ÖĞREN
+Element Families|Familias de elementos|원소 계열|Elementfamilien|Famiglie di elementi|तत्व परिवार|Element aileleri
+Metals, nonmetals and metalloids|Metales, no metales y metaloides|금속, 비금속, 준금속|Metalle, Nichtmetalle und Halbmetalle|Metalli, non metalli e metalloidi|धातु, अधातु और उपधातु|Metaller, ametaller ve yarı metaller
+Metals usually conduct heat and electricity well. Nonmetals often behave differently, while metalloids share properties of both groups.|Los metales suelen conducir bien calor y electricidad. Los no metales se comportan de otra forma y los metaloides comparten propiedades de ambos grupos.|금속은 보통 열과 전기가 잘 통합니다. 비금속은 다르게 행동하며 준금속은 양쪽의 성질을 지닙니다.|Metalle leiten meist Wärme und Strom gut. Nichtmetalle verhalten sich anders; Halbmetalle haben Eigenschaften beider Gruppen.|I metalli conducono bene calore ed elettricità. I non metalli si comportano diversamente e i metalloidi hanno proprietà di entrambi.|धातु सामान्यतः ऊष्मा और बिजली चलाते हैं। अधातु अलग होते हैं और उपधातु दोनों के गुण रखते हैं।|Metaller genellikle ısıyı ve elektriği iyi iletir. Ametaller farklı davranır; yarı metaller ikisinin özelliklerini taşır.
+QUICK QUIZ|PRUEBA RÁPIDA|빠른 퀴즈|SCHNELLTEST|QUIZ RAPIDO|त्वरित परीक्षा|HIZLI TEST
+Start quiz|Empezar cuestionario|퀴즈 시작|Quiz starten|Inizia quiz|प्रश्नोत्तरी शुरू करें|Testi başlat
+CHEMISTRY TOOLS|HERRAMIENTAS DE QUÍMICA|화학 도구|CHEMIEWERKZEUGE|STRUMENTI DI CHIMICA|रसायन उपकरण|KİMYA ARAÇLARI
+Compare & combine|Comparar y combinar|비교와 결합|Vergleichen und verbinden|Confronta e combina|तुलना और संयोजन|Karşılaştır ve birleştir
+Compare two elements|Comparar dos elementos|두 원소 비교|Zwei Elemente vergleichen|Confronta due elementi|दो तत्वों की तुलना|İki elementi karşılaştır
+See their properties side by side|Ver sus propiedades lado a lado|성질 나란히 보기|Eigenschaften nebeneinander ansehen|Vedi le proprietà affiancate|गुणों को साथ-साथ देखें|Özelliklerini yan yana gör
+Compare|Comparar|비교|Vergleichen|Confronta|तुलना करें|Karşılaştır
+Combine elements|Combinar elementos|원소 결합|Elemente verbinden|Combina elementi|तत्व जोड़ें|Elementleri birleştir
+Educational examples of common compounds|Ejemplos educativos de compuestos comunes|흔한 화합물의 교육용 예시|Lernbeispiele häufiger Verbindungen|Esempi didattici di composti comuni|सामान्य यौगिकों के शैक्षिक उदाहरण|Yaygın bileşiklerin eğitim örnekleri
+Show example|Mostrar ejemplo|예시 보기|Beispiel anzeigen|Mostra esempio|उदाहरण दिखाएँ|Örnek göster
+Concept explanation only — not laboratory instructions. Not every pair reacts directly.|Solo explicación conceptual; no son instrucciones de laboratorio. No todos los pares reaccionan directamente.|개념 설명일 뿐 실험 지침이 아닙니다. 모든 원소 쌍이 직접 반응하지는 않습니다.|Nur konzeptionelle Erklärung, keine Laboranleitung. Nicht jedes Paar reagiert direkt.|Solo spiegazione concettuale, non istruzioni di laboratorio. Non tutte le coppie reagiscono direttamente.|यह केवल अवधारणा का वर्णन है, प्रयोगशाला निर्देश नहीं। हर जोड़ी सीधी प्रतिक्रिया नहीं करती।|Yalnızca kavramsal açıklamadır, laboratuvar talimatı değildir. Her çift doğrudan tepkimeye girmez.
+Atomic number|Número atómico|원자 번호|Ordnungszahl|Numero atomico|परमाणु क्रमांक|Atom numarası
+Atomic mass|Masa atómica|원자 질량|Atommasse|Massa atomica|परमाणु द्रव्यमान|Atom kütlesi
+State|Estado|상태|Zustand|Stato|अवस्था|Hâl
+Position|Posición|위치|Position|Posizione|स्थिति|Konum
+About this element|Sobre este elemento|원소 설명|Über dieses Element|Informazioni sull'elemento|इस तत्व के बारे में|Bu element hakkında
+Common uses / importance|Usos habituales e importancia|주요 용도 및 중요성|Häufige Anwendungen und Bedeutung|Usi comuni e importanza|सामान्य उपयोग और महत्त्व|Yaygın kullanım ve önemi
+Add to comparison|Añadir a la comparación|비교에 추가|Zum Vergleich hinzufügen|Aggiungi al confronto|तुलना में जोड़ें|Karşılaştırmaya ekle
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
