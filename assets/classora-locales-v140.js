@@ -320,6 +320,59 @@ Acceleration|Aceleración|가속도|Beschleunigung|Accelerazione|त्वरण
 Chemical bonds|Enlaces químicos|화학 결합|Chemische Bindungen|Legami chimici|रासायनिक बंध|Kimyasal bağlar
 Cellular respiration|Respiración celular|세포 호흡|Zellatmung|Respirazione cellulare|कोशिकीय श्वसन|Hücresel solunum
 Photosynthesis|Fotosíntesis|광합성|Photosynthese|Fotosintesi|प्रकाश संश्लेषण|Fotosentez
+Renaissance|Renacimiento|르네상스|Renaissance|Rinascimento|पुनर्जागरण|Rönesans
+Humanism|Humanismo|인문주의|Humanismus|Umanesimo|मानवतावाद|Hümanizm
+Reformation|Reforma protestante|종교개혁|Reformation|Riforma protestante|धर्म सुधार|Reform hareketi
+Age of Exploration|Era de los descubrimientos|대항해 시대|Zeitalter der Entdeckungen|Età delle esplorazioni|अन्वेषण युग|Keşifler Çağı
+French Revolution|Revolución francesa|프랑스 혁명|Französische Revolution|Rivoluzione francese|फ़्रांसीसी क्रांति|Fransız Devrimi
+Industrial Revolution|Revolución industrial|산업 혁명|Industrielle Revolution|Rivoluzione industriale|औद्योगिक क्रांति|Sanayi Devrimi
+Nationalism|Nacionalismo|민족주의|Nationalismus|Nazionalismo|राष्ट्रवाद|Milliyetçilik
+Imperialism|Imperialismo|제국주의|Imperialismus|Imperialismo|साम्राज्यवाद|Emperyalizm
+Colonialism|Colonialismo|식민주의|Kolonialismus|Colonialismo|उपनिवेशवाद|Sömürgecilik
+World War I|Primera Guerra Mundial|제1차 세계 대전|Erster Weltkrieg|Prima guerra mondiale|प्रथम विश्व युद्ध|I. Dünya Savaşı
+Umayyad Caliphate|Califato omeya|우마이야 왕조|Umayyaden-Kalifat|Califfato omayyade|उमय्यद ख़िलाफ़त|Emevî Halifeliği
+Abbasid Caliphate|Califato abasí|아바스 왕조|Abbasiden-Kalifat|Califfato abbaside|अब्बासी ख़िलाफ़त|Abbâsî Halifeliği
+Al-Andalus|Al-Ándalus|알안달루스|Al-Andalus|Al-Andalus|अल-अंदलुस|Endülüs
+Crusades|Cruzadas|십자군 전쟁|Kreuzzüge|Crociate|धर्मयुद्ध|Haçlı Seferleri
+Napoleon Bonaparte|Napoleón Bonaparte|나폴레옹 보나파르트|Napoleon Bonaparte|Napoleone Bonaparte|नेपोलियन बोनापार्ट|Napolyon Bonapart
+Europe in the Middle Ages|Europa medieval|중세 유럽|Europa im Mittelalter|Europa nel Medioevo|मध्यकालीन यूरोप|Orta Çağ Avrupası
+People and the environment|Las personas y el medioambiente|인간과 환경|Mensch und Umwelt|Persone e ambiente|मनुष्य और पर्यावरण|İnsan ve çevre
+Population|Población|인구|Bevölkerung|Popolazione|जनसंख्या|Nüfus
+Population distribution|Distribución de la población|인구 분포|Bevölkerungsverteilung|Distribuzione della popolazione|जनसंख्या वितरण|Nüfus dağılımı
+Migration|Migración|이주|Migration|Migrazione|प्रवासन|Göç
+Cities and villages|Ciudades y pueblos|도시와 마을|Städte und Dörfer|Città e villaggi|शहर और गाँव|Şehirler ve köyler
+Economy and work|Economía y trabajo|경제와 일|Wirtschaft und Arbeit|Economia e lavoro|अर्थव्यवस्था और कार्य|Ekonomi ve iş
+Globalization|Globalización|세계화|Globalisierung|Globalizzazione|वैश्वीकरण|Küreselleşme
+Natural resources|Recursos naturales|천연자원|Natürliche Ressourcen|Risorse naturali|प्राकृतिक संसाधन|Doğal kaynaklar
+Sustainable development|Desarrollo sostenible|지속 가능한 발전|Nachhaltige Entwicklung|Sviluppo sostenibile|सतत विकास|Sürdürülebilir kalkınma
+Earth and the Solar System|Tierra y sistema solar|지구와 태양계|Erde und Sonnensystem|Terra e sistema solare|पृथ्वी और सौरमंडल|Dünya ve Güneş Sistemi
+Plate tectonics|Tectónica de placas|판 구조론|Plattentektonik|Tettonica delle placche|प्लेट विवर्तनिकी|Levha tektoniği
+Earthquakes|Terremotos|지진|Erdbeben|Terremoti|भूकंप|Depremler
+Volcanoes|Volcanes|화산|Vulkane|Vulcani|ज्वालामुखी|Volkanlar
+Weather|Tiempo atmosférico|날씨|Wetter|Tempo atmosferico|मौसम|Hava durumu
+Climate|Clima|기후|Klima|Clima|जलवायु|İklim
+Water cycle|Ciclo del agua|물의 순환|Wasserkreislauf|Ciclo dell’acqua|जल चक्र|Su döngüsü
+Climate change|Cambio climático|기후 변화|Klimawandel|Cambiamento climatico|जलवायु परिवर्तन|İklim değişikliği
+Renewable energy|Energía renovable|재생 에너지|Erneuerbare Energie|Energia rinnovabile|नवीकरणीय ऊर्जा|Yenilenebilir enerji
+Non-renewable energy|Energía no renovable|비재생 에너지|Nicht erneuerbare Energie|Energia non rinnovabile|अनवीकरणीय ऊर्जा|Yenilenemeyen enerji
+Present Simple|Presente simple|현재 단순형|Simple Present|Presente semplice|सामान्य वर्तमान काल|Geniş zaman
+Present Continuous|Presente continuo|현재 진행형|Present Progressive|Presente progressivo|वर्तमान निरंतर काल|Şimdiki zaman
+Past Simple|Pasado simple|과거 단순형|Simple Past|Passato semplice|सामान्य भूतकाल|Geçmiş zaman
+Past Continuous|Pasado continuo|과거 진행형|Past Progressive|Passato progressivo|भूतकाल निरंतर|Geçmişte devam eden zaman
+Present Perfect|Pretérito perfecto|현재 완료|Present Perfect|Present Perfect|वर्तमान पूर्ण काल|Present perfect
+Future with Will|Futuro con will|will 미래형|Zukunft mit will|Futuro con will|Will के साथ भविष्य काल|Will ile gelecek zaman
+Comparative|Comparativo|비교급|Komparativ|Comparativo|तुलनात्मक|Karşılaştırma
+Superlative|Superlativo|최상급|Superlativ|Superlativo|श्रेष्ठतम|Üstünlük derecesi
+Passive Voice|Voz pasiva|수동태|Passiv|Forma passiva|कर्मवाच्य|Edilgen çatı
+Zero Conditional|Condicional cero|영 조건문|Bedingungssatz Typ 0|Periodo ipotetico di tipo zero|शून्य शर्तीय वाक्य|Sıfırıncı koşul
+First Conditional|Primer condicional|제1 조건문|Bedingungssatz Typ 1|Primo periodo ipotetico|प्रथम शर्तीय वाक्य|Birinci koşul
+Second Conditional|Segundo condicional|제2 조건문|Bedingungssatz Typ 2|Secondo periodo ipotetico|द्वितीय शर्तीय वाक्य|İkinci koşul
+Reported Speech|Estilo indirecto|간접화법|Indirekte Rede|Discorso indiretto|अप्रत्यक्ष कथन|Dolaylı anlatım
+Noun, verb and particle|Nombre verbo y partícula|명사 동사 조사|Nomen Verb und Partikel|Nome verbo e particella|संज्ञा क्रिया और अव्यय|İsim fiil ve edat
+Nominal sentence|Oración nominal|명사문|Nominalsatz|Frase nominale|संज्ञात्मक वाक्य|İsim cümlesi
+Verbal sentence|Oración verbal|동사문|Verbalsatz|Frase verbale|क्रियात्मक वाक्य|Fiil cümlesi
+Direct object|Complemento directo|직접 목적어|Direktes Objekt|Complemento oggetto|प्रत्यक्ष कर्म|Nesne
+Idafa: possessive construction|Idafa: construcción posesiva|이다파 소유 구문|Idafa: Genitivverbindung|Idafa: costrutto possessivo|इदाफ़ा संबंध संरचना|İzafet tamlaması
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
