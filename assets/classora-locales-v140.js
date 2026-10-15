@@ -243,6 +243,33 @@ Title|Título|제목|Titel|Titolo|शीर्षक|Başlık
 Optional|Opcional|선택 사항|Optional|Facoltativo|वैकल्पिक|İsteğe bağlı
 Required|Obligatorio|필수|Erforderlich|Obbligatorio|आवश्यक|Zorunlu
 This language is in preview. Some lessons and messages are still shown in English.|Este idioma está en versión preliminar. Algunas lecciones y mensajes siguen en inglés.|이 언어는 미리보기 버전입니다. 일부 수업과 안내는 영어로 표시됩니다.|Diese Sprache ist eine Vorschau. Einige Lektionen und Hinweise werden noch auf Englisch angezeigt.|Questa lingua è in anteprima. Alcune lezioni e alcuni avvisi sono ancora in inglese.|यह भाषा पूर्वावलोकन में है। कुछ पाठ और सूचनाएँ अभी अंग्रेज़ी में दिखाई जाती हैं।|Bu dil önizleme aşamasındadır. Bazı dersler ve iletiler hâlâ İngilizce gösterilmektedir.
+Expert|Experto|전문가|Experte|Esperto|विशेषज्ञ|Uzman
+Mixed|Mixto|혼합|Gemischt|Misto|मिश्रित|Karma
+Grade|Curso|학년|Klasse|Classe|कक्षा|Sınıf
+Choose competition topic|Elegir tema de competición|대회 주제 선택|Wettbewerbsthema wählen|Scegli argomento della gara|प्रतियोगिता का विषय चुनें|Yarışma konusu seç
+Choose a competition topic|Elige un tema de competición|대회 주제를 선택하세요|Wähle ein Wettbewerbsthema|Scegli un argomento della gara|प्रतियोगिता का विषय चुनें|Yarışma konusu seç
+Back to competition setup|Volver a configurar la competición|대회 설정으로 돌아가기|Zurück zur Wettbewerbs-Einrichtung|Torna alla configurazione della gara|प्रतियोगिता सेटअप पर वापस|Yarışma ayarlarına dön
+Choose your grade, subject and topic|Elige curso, asignatura y tema|학년, 과목, 주제 선택|Klasse, Fach und Thema wählen|Scegli classe, materia e argomento|कक्षा, विषय और पाठ चुनें|Sınıf, ders ve konu seç
+Choose grade|Elegir curso|학년 선택|Klasse wählen|Scegli classe|कक्षा चुनें|Sınıf seç
+Choose subject|Elegir asignatura|과목 선택|Fach wählen|Scegli materia|विषय चुनें|Ders seç
+Search topics|Buscar temas|주제 검색|Themen suchen|Cerca argomenti|विषय खोजें|Konu ara
+No matching topics. Try a different keyword.|No hay temas coincidentes. Prueba otra palabra.|일치하는 주제가 없습니다. 다른 검색어를 사용하세요.|Keine passenden Themen. Versuche ein anderes Wort.|Nessun argomento trovato. Prova un'altra parola.|कोई विषय नहीं मिला। दूसरा शब्द आज़माएँ।|Eşleşen konu yok. Başka kelime deneyin.
+Generate questions|Generar preguntas|문제 생성|Fragen erstellen|Genera domande|प्रश्न बनाएँ|Soruları oluştur
+Start exam|Empezar examen|시험 시작|Prüfung starten|Inizia esame|परीक्षा शुरू करें|Sınavı başlat
+Start competition|Empezar competición|대회 시작|Wettbewerb starten|Inizia gara|प्रतियोगिता शुरू करें|Yarışmayı başlat
+Mean|Media|평균|Mittelwert|Media|औसत|Ortalama
+Median|Mediana|중앙값|Median|Mediana|माध्यिका|Medyan
+Mode|Moda|최빈값|Modalwert|Moda|बहुलक|Mod
+Frequency|Frecuencia|도수|Häufigkeit|Frequenza|आवृत्ति|Frekans
+Relative frequency|Frecuencia relativa|상대도수|Relative Häufigkeit|Frequenza relativa|सापेक्ष आवृत्ति|Bağıl frekans
+Bar chart|Gráfico de barras|막대그래프|Balkendiagramm|Grafico a barre|दंड आलेख|Çubuk grafik
+Pie chart|Gráfico circular|원그래프|Kreisdiagramm|Grafico a torta|वृत्त आलेख|Pasta grafik
+Line chart|Gráfico de líneas|꺾은선그래프|Liniendiagramm|Grafico a linee|रेखा आलेख|Çizgi grafik
+Histogram|Histograma|히스토그램|Histogramm|Istogramma|आयतचित्र|Histogram
+Question count|Número de preguntas|문항 수|Fragenanzahl|Numero di domande|प्रश्नों की संख्या|Soru sayısı
+Select difficulty|Selecciona la dificultad|난이도 선택|Schwierigkeit wählen|Seleziona difficoltà|कठिनाई चुनें|Zorluk seç
+Expert challenge.|Desafío experto.|전문가 도전.|Expertenaufgabe.|Sfida esperta.|विशेषज्ञ चुनौती।|Uzman mücadelesi.
+Topic|Tema|주제|Thema|Argomento|विषय|Konu
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
