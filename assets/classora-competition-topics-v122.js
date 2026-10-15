@@ -5,14 +5,15 @@ export function installClassoraCompetitionTopicStep(){
  const home=document.getElementById('competitionHome'),select=document.getElementById('compQuickSubject');
  if(!home||!select||home.dataset.caTopicStepReady)return;
  home.dataset.caTopicStepReady='1';
- const lang=()=>document.documentElement.lang!=="ar"?'en':'ar';
- const L=(ar,en)=>lang()==='en'?en:ar;
+ const lang=()=>document.documentElement.lang||'ar';
+ const L=(ar,en)=>lang()==='ar'?ar:(window.ClassoraLocale?.t(en)||en);
+ const topicName=item=>lang()==='ar'?item.title:(window.ClassoraLocale?.t(item.en)||item.en);
  const grade=()=>{let x=8;try{x=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(x)?x:8};
- const gradeName=g=>lang()==='en'?'Grade '+g:'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g);
+ const gradeName=g=>lang()==='ar'?'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g):L('الصف','Grade')+' '+g;
  const subjectName=s=>{
   if(s==='arabic')return L('قواعد العربي','Arabic Grammar');
   if(s==='english')return 'English Grammar';
-  return lang()==='en'?(CURRICULUM_SUBJECTS[s]?.en||s):(CURRICULUM_SUBJECTS[s]?.ar||s);
+  return L(CURRICULUM_SUBJECTS[s]?.ar||s,CURRICULUM_SUBJECTS[s]?.en||s);
  };
  const icon='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-7-7 7 7-7 7"/></svg>';
  const openBtn=document.createElement('button');openBtn.className='ca-comp-topic-trigger';openBtn.type='button';openBtn.dataset.noTranslate='';
@@ -34,7 +35,7 @@ export function installClassoraCompetitionTopicStep(){
   const selected=getTopic();
   openBtn.querySelector('.ca-comp-topic-trigger-title').textContent=L('اختيار موضوع المسابقة','Choose competition topic');
   openBtn.querySelector('.ca-comp-topic-trigger-sub').textContent=selected?
-   gradeName(selected.grade)+' · '+subjectName(selected.subject)+' · '+(lang()==='en'?selected.en:selected.title):
+   gradeName(selected.grade)+' · '+subjectName(selected.subject)+' · '+topicName(selected):
    L('اضغط لاختيار الصف والمادة والموضوع','Choose your grade, subject and topic');
  }
  function closeStep(){
@@ -85,7 +86,7 @@ export function installClassoraCompetitionTopicStep(){
    const btn=document.createElement('button');btn.type='button';btn.className='ca-topic-choice';
    btn.classList.toggle('selected',item.value===select.value);
    const mark=document.createElement('span');mark.className='ca-choice-mark';mark.textContent=item.value===select.value?'✓':'↗';
-   const name=document.createElement('b');name.textContent=lang()==='en'?item.en:item.title;
+   const name=document.createElement('b');name.textContent=topicName(item);
    const sub=document.createElement('small');sub.textContent=gradeName(item.grade)+' · '+subjectName(item.subject);
    btn.append(mark,name,sub);
    btn.onclick=()=>{
