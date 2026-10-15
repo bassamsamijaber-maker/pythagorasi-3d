@@ -83,10 +83,30 @@ add('المخاطر الطبيعية','Natural hazards','risk','الخطر ال�
 ['خطر','Hazard','ظاهرة قد تسبب ضررًا مثل فيضان.','A potentially harmful event, such as a flood.'],['تعرض','Exposure','وجود الناس والممتلكات في منطقة الخطر.','People and property located in a hazardous area.'],['استعداد','Preparedness','خطط وإنذار وتدريب تحدّ من الأثر.','Plans, warnings and training reduce impacts.']]);
 export const geographyLesson=title=>GEOGRAPHY_LESSONS[title]||null;
 export function geographyQuestions(topic,language='ar'){
- const d=geographyLesson(topic.title);if(!d)return [];const ix=language==='en'?1:0;
- return d.steps.flatMap((step,i)=>[
- {prompt:ix?`Which explanation describes “${step.title[ix]}” in ${d.titleEn}?`:`أي تفسير يصف «${step.title[ix]}» في موضوع ${topic.title}؟`,options:d.steps.map((_,j)=>d.steps[(j+i)%d.steps.length].detail[ix]),answer:step.detail[ix],explanation:d.rule[ix]},
- {prompt:ix?`Which concept fits: ${step.detail[ix]}`:`أي مفهوم يناسب: ${step.detail[ix]}`,options:d.steps.map((_,j)=>d.steps[(j+i+1)%d.steps.length].title[ix]),answer:step.title[ix],explanation:step.detail[ix]+' '+d.rule[ix]}
+ const d=geographyLesson(topic.title);if(!d)return [];
+ const ix=language==='ar'?0:1;
+ const questions=d.steps.flatMap((step,i)=>[
+  {prompt:ix?`Which explanation describes “${step.title[ix]}” in ${d.titleEn}?`:`أي تفسير يصف «${step.title[ix]}» في موضوع ${topic.title}؟`,options:d.steps.map((_,j)=>d.steps[(j+i)%d.steps.length].detail[ix]),answer:step.detail[ix],explanation:d.rule[ix],difficulty:'easy'},
+  {prompt:ix?`Which concept fits: ${step.detail[ix]}`:`أي مفهوم يناسب: ${step.detail[ix]}`,options:d.steps.map((_,j)=>d.steps[(j+i+1)%d.steps.length].title[ix]),answer:step.title[ix],explanation:step.detail[ix]+' '+d.rule[ix],difficulty:'medium'}
  ]);
+ if(d.steps.length>=3){
+  for(let i=0;i<d.steps.length;i++){
+   const a=d.steps[i],b=d.steps[(i+1)%d.steps.length],c=d.steps[(i+2)%d.steps.length];
+   const title=step=>step.title[ix],detail=step=>step.detail[ix];
+   const correct=title(a)+' → '+title(b);
+   const sequences=[correct,title(b)+' → '+title(a),title(a)+' → '+title(c),title(c)+' → '+title(b)];
+   questions.push({
+    prompt:ix?`Match the two descriptions to concepts in the correct order: 1) ${detail(a)} 2) ${detail(b)}`:`طابق الوصفين مع المفهومين بالترتيب: ١) ${detail(a)} ٢) ${detail(b)}`,
+    options:[...new Set(sequences)],answer:correct,explanation:d.rule[ix],difficulty:'hard'
+   });
+   const expertAnswer=detail(a)+' | '+detail(b);
+   const expertOptions=[expertAnswer,detail(b)+' | '+detail(a),detail(c)+' | '+detail(a),detail(b)+' | '+detail(c)];
+   questions.push({
+    prompt:ix?`Expert: choose the pair of correct descriptions for “${title(a)}” and “${title(b)}” in that order.`:`خبير: اختر زوج الوصفين الصحيحين لمفهومي «${title(a)}» و«${title(b)}» بهذا الترتيب.`,
+    options:[...new Set(expertOptions)],answer:expertAnswer,explanation:d.rule[ix],difficulty:'expert'
+   });
+  }
+ }
+ return questions;
 }
 export const geographyQuestion=(topic,difficulty,index=0,language='ar')=>{const qs=geographyQuestions(topic,language);return qs[index%qs.length]||null};
