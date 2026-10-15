@@ -4,7 +4,7 @@ import './classora-topic-art-v120.js?v=121';
 let instance;
 export function mountMathCalculator(language=()=>document.documentElement.lang){
  if(instance)return instance;
- const T=(ar,en)=>language()==='en'?en:ar;
+ const T=(ar,en)=>language()==='ar'?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang||language(),en)||en);
  const host=document.createElement('div');
  host.id='classoraMathCalculator';host.hidden=true;host.dataset.noTranslate='';
  host.innerHTML='<button class="cm-calc-tab" type="button" aria-expanded="false" aria-controls="cmCalculatorPanel"><span class="cm-mini-display" aria-hidden="true">Classora</span><span class="cm-mini-keys" aria-hidden="true">'+('<i></i>'.repeat(12))+'</span><span class="cm-calc-caption"></span></button>'+
