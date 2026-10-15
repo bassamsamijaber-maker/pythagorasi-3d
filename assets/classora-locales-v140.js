@@ -994,6 +994,7 @@ The second noun is the mudaf ilayh. It completes the meaning and is always genit
 Hide meaning|Ocultar significado|뜻 숨기기|Bedeutung ausblenden|Nascondi significato|अर्थ छिपाएँ|Anlamı gizle
 Goal reached.|Objetivo alcanzado.|목표에 도달했습니다.|Ziel erreicht.|Obiettivo raggiunto.|लक्ष्य पूरा हुआ।|Hedefe ulaşıldı.
 The goal is not reached yet. Current result: |Todavía no alcanzaste el objetivo. Resultado actual: |아직 목표에 도달하지 못했습니다. 현재 결과: |Das Ziel ist noch nicht erreicht. Aktuelles Ergebnis: |Obiettivo non ancora raggiunto. Risultato attuale: |लक्ष्य अभी पूरा नहीं हुआ। वर्तमान परिणाम: |Hedefe henüz ulaşılmadı. Şu anki sonuç:
+Interactive lab: drag the model to rotate it, move the slider or choose a sample. Color simulates a universal indicator.|Laboratorio interactivo: gira el modelo, mueve el control o elige una muestra. El color simula un indicador universal.|대화형 실험실: 모델을 회전하고 슬라이더를 움직이거나 시료를 고르세요. 색상은 만능 지시약을 나타냅니다.|Interaktives Labor: Drehe das Modell, bewege den Regler oder wähle eine Probe. Die Farbe simuliert einen Universalindikator.|Laboratorio interattivo: ruota il modello, sposta il cursore o scegli un campione. Il colore simula un indicatore universale.|इंटरैक्टिव प्रयोगशाला: मॉडल घुमाएँ, स्लाइडर चलाएँ या नमूना चुनें। रंग सार्वत्रिक सूचक का अनुकरण करता है।|Etkileşimli laboratuvar: modeli döndür, sürgüyü hareket ettir veya örnek seç. Renk evrensel belirteci simgeler.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.map(row=>[row[0],row[i+1]]))]));
 let selected='en';
@@ -1008,10 +1009,27 @@ function formatGrade(num,language=selected){
  const prefix={es:'Curso',de:'Klasse',it:'Classe',hi:'कक्षा',en:'Grade'}[language]||'Grade';
  return prefix+' '+n;
 }
+const dynamicLocaleTemplates={"es":["Una escalera de {0} m llega a {1} m de altura en una pared. ¿A qué distancia de la pared está su base?","Práctica guardada. +{0} XP (una recompensa por tema y día).","{0} tarjetas repasadas","{0} d {1} h {2} min","{0} estudiantes"],"ko":["길이 {0}m인 사다리가 벽 높이 {1}m에 닿습니다. 사다리 아래쪽은 벽에서 얼마나 떨어져 있을까요?","연습 저장 완료. +{0} XP (주제당 하루 한 번 보상).","카드 {0}장 복습","{0}일 {1}시간 {2}분","학습자 {0}명"],"de":["Eine {0} m lange Leiter reicht an einer Wand {1} m hoch. Wie weit steht ihr Fuß von der Wand entfernt?","Übung gespeichert. +{0} XP (eine Belohnung pro Thema und Tag).","{0} Karten wiederholt","{0} T {1} Std {2} Min","{0} Lernende"],"it":["Una scala lunga {0} m raggiunge {1} m su un muro. A che distanza si trova la base dal muro?","Esercizio salvato. +{0} XP (una ricompensa per argomento al giorno).","{0} schede ripassate","{0} g {1} h {2} min","{0} studenti"],"hi":["{0} मीटर लंबी सीढ़ी दीवार पर {1} मीटर ऊँचाई तक पहुँचती है। सीढ़ी का आधार दीवार से कितना दूर है?","अभ्यास सहेजा गया। +{0} XP (हर विषय पर रोज़ एक इनाम)।","{0} कार्ड दोहराए","{0} दिन {1} घंटे {2} मिनट","{0} विद्यार्थी"],"tr":["{0} m uzunluğundaki merdiven duvarda {1} m yüksekliğe ulaşıyor. Ayağı duvardan kaç metre uzaktadır?","Alıştırma kaydedildi. +{0} XP (her konu için günde bir ödül).","{0} kart tekrar edildi","{0} gün {1} saat {2} dk","{0} öğrenci"]};
+const dynamicLocalePatterns=[
+ /^A ([0-9.,]+) m ladder reaches ([0-9.,]+) m up a wall\. How far is its foot from the wall\?$/,
+ /^Practice saved\. \+([0-9]+) XP \(one reward per topic per day\)\.$/,
+ /^Reviewed ([0-9]+) cards$/,
+ /^([0-9]+)d ([0-9]+)h ([0-9]+)m$/,
+ /^([0-9]+) learners$/
+];
+function translatedDynamic(language,value){
+ const messages=dynamicLocaleTemplates[language];if(!messages)return null;
+ for(let i=0;i<dynamicLocalePatterns.length;i++){
+  const parts=value.match(dynamicLocalePatterns[i]);if(!parts)continue;
+  return messages[i].replace(/\{([0-9]+)\}/g,(_,index)=>parts[Number(index)+1]||'');
+ }
+ return null;
+}
 function tFor(language,value){
  const dictionary=dictionaries[language];
  if(!dictionary||typeof value!=='string')return value;
  const key=normalize(value);
+ const dynamic=translatedDynamic(language,key);if(dynamic)return dynamic;
  const gradeMatch=key.match(/^Grade\s+(7|8|9|10)$/);
  if(gradeMatch)return formatGrade(Number(gradeMatch[1]),language);
  let result=dictionary[key]||dictionary[value];
