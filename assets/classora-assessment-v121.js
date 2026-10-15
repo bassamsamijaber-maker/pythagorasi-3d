@@ -140,8 +140,8 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  }else if(topic.subject==='science'){
   const kind=scienceMap.find(([re])=>re.test(topic.title))?.[1];
   if(kind){
-   const available=scienceLiveQuestions(Math.max(n*3,30),language,kind);
-   for(const q of available){add(q,difficulty);if(result.length>=n)break}
+   const available=scienceLiveQuestions(Math.max(n*3,30),sourceLanguage,kind);
+   for(const [i,q] of available.entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
   }
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
   for(const [i,q] of englishQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
@@ -173,7 +173,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    }
   }
  }
- if(result.length<n){
+ if(result.length===0){
   throw Error(t('الموضوع موجود بالمنهاج، لكن ما فيه '+n+' أسئلة متنوعة ومراجَعة لهذا المستوى حتى الآن. اختَر عددًا أقل أو موضوعًا ثانيًا. ما رح نعطيك أسئلة عامة مالها علاقة بالدرس.',
    'This topic is listed in the curriculum, but does not yet have '+n+' distinct, reviewed questions at this level. Choose a smaller count or another topic. Unrelated filler questions will not be used.',language));
  }
