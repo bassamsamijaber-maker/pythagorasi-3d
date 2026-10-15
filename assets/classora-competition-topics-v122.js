@@ -9,7 +9,7 @@ export function installClassoraCompetitionTopicStep(){
  const L=(ar,en)=>lang()==='ar'?ar:(window.ClassoraLocale?.t(en)||en);
  const topicName=item=>lang()==='ar'?item.title:(window.ClassoraLocale?.t(item.en)||item.en);
  const grade=()=>{let x=8;try{x=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(x)?x:8};
- const gradeName=g=>lang()==='ar'?'الصف '+({7:'السابع',8:'الثامن',9:'التاسع',10:'العاشر'}[g]||g):L('الصف','Grade')+' '+g;
+ const gradeName=g=>window.ClassoraLocale?.formatGrade?.(g,lang())||(lang()==='ar'?'الصف '+g:'Grade '+g);
  const subjectName=s=>{
   if(s==='arabic')return L('قواعد العربي','Arabic Grammar');
   if(s==='english')return 'English Grammar';
