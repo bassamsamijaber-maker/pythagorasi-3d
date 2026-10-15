@@ -3,7 +3,7 @@ export const escapeMath=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 const E=escapeMath;
 const C={mint:'#62e6bc',blue:'#71baff',gold:'#ffd18c',rose:'#fa9cb9',ink:'#d8e9f4',muted:'#8ea9bb'};
 export function renderMathScene(key,v,r,view={},language='ar'){
- const en=language==='en',T=(a,b)=>en?b:a;let world=7,shapes=[],labels=[];
+ const selectedLanguage=document.documentElement.lang||language,en=language!=='ar',T=(a,b)=>selectedLanguage==='ar'?a:(window.ClassoraLocale?.tFor?.(selectedLanguage,b)||b);let world=7,shapes=[],labels=[];
  const yaw=view.yaw??-.16,pitch=view.pitch??.15,zoom=view.zoom??1;
  const project=([x,y,z=0])=>{const xx=x*Math.cos(yaw)+z*Math.sin(yaw),zz=-x*Math.sin(yaw)+z*Math.cos(yaw),yy=y*Math.cos(pitch)-zz*Math.sin(pitch),depth=y*Math.sin(pitch)+zz*Math.cos(pitch),scale=42*zoom*7/world,perspective=28/(28-depth);return[500+xx*scale*perspective,325-yy*scale*perspective,depth]};
  const points=ps=>ps.map(p=>project(p).slice(0,2).map(F).join(',')).join(' ');
