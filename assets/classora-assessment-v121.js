@@ -7,6 +7,7 @@ import {mathQuestion,mathTopic} from './math-catalog-v119.js?v=148';
 import {statisticsCompleteQuestion} from './classora-statistics-v148.js?v=148';
 import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-v119.js?v=119';
 import {scienceLiveQuestions} from './learning-hub.js?v=131';
+import {combineTopicQuestions} from './classora-assessment-levels-v152.js?v=152';
 const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.dictionaries?.[lang]?.[en]||en);
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
@@ -144,13 +145,17 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
    for(const [i,q] of available.entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
   }
  }else if(topic.subject==='english'&&englishLesson(topic.title)){
-  for(const [i,q] of englishQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
+  const base=englishQuestions(topic,sourceLanguage);
+   const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
+   for(const level of requests){for(const q of combineTopicQuestions(base,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}if(result.length>=n)break}
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
   const available=geographyQuestions(topic,sourceLanguage);
    const eligible=difficulty==='mixed'?available:available.filter(q=>q.difficulty===difficulty);
    for(const q of eligible){add(q,q.difficulty||'medium');if(result.length>=n)break}
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
-  for(const [i,q] of historyQuestions(topic,sourceLanguage).entries()){add(q,levels[i%levels.length]);if(result.length>=n)break}
+  const base=historyQuestions(topic,sourceLanguage);
+   const requests=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
+   for(const level of requests){for(const q of combineTopicQuestions(base,level,sourceLanguage,n)){add(q,level);if(result.length>=n)break}if(result.length>=n)break}
  }else if(topic.subject==='english'&&englishBank[topic.title]){
   const pairs=englishBank[topic.title];
   for(let i=0;i<pairs.length;i++){
