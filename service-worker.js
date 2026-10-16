@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v159-full-lab-elements-locales";
+const CACHE_NAME="classora-v160-expanded-ui-localization";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
