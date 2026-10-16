@@ -1425,6 +1425,36 @@ If one of the legs is unknown|Si se desconoce un cateto|직각변 하나가 미�
 The converse is useful too|El recíproco también es útil|역도 유용합니다|Auch die Umkehrung ist nützlich|Anche il contrario è utile|विलोम भी उपयोगी है|Tersi de faydalıdır
 Where is it used?|¿Dónde se utiliza?|어디에 사용하나요?|Wo wird er verwendet?|Dove si usa?|कहाँ उपयोग होता है?|Nerelerde kullanılır?
 Important note|Nota importante|중요 사항|Wichtiger Hinweis|Nota importante|महत्त्वपूर्ण बात|Önemli not
+Gallium|Galio|갈륨|Gallium|Gallio|गैलियम|Galyum
+Germanium|Germanio|저마늄|Germanium|Germanio|जर्मेनियम|Germanyum
+Arsenic|Arsénico|비소|Arsen|Arsenico|आर्सेनिक|Arsenik
+Selenium|Selenio|셀레늄|Selen|Selenio|सेलेनियम|Selenyum
+Bromine|Bromo|브로민|Brom|Bromo|ब्रोमीन|Brom
+Krypton|Kriptón|크립톤|Krypton|Cripton|क्रिप्टॉन|Kripton
+Rubidium|Rubidio|루비듐|Rubidium|Rubidio|रुबिडियम|Rubidyum
+Strontium|Estroncio|스트론튬|Strontium|Stronzio|स्ट्रॉन्शियम|Stronsiyum
+Yttrium|Itrio|이트륨|Yttrium|Ittrio|इट्रियम|İtriyum
+Zirconium|Circonio|지르코늄|Zirconium|Zirconio|ज़िरकोनियम|Zirkonyum
+Niobium|Niobio|나이오븀|Niob|Niobio|नियोबियम|Niyobyum
+Molybdenum|Molibdeno|몰리브데넘|Molybdän|Molibdeno|मॉलिब्डेनम|Molibden
+Technetium|Tecnecio|테크네튬|Technetium|Tecnezio|टेक्नीशियम|Teknesyum
+Ruthenium|Rutenio|루테늄|Ruthenium|Rutenio|रुथेनियम|Rutenyum
+Rhodium|Rodio|로듐|Rhodium|Rodio|रोडियम|Rodyum
+Palladium|Paladio|팔라듐|Palladium|Palladio|पैलेडियम|Paladyum
+Silver|Plata|은|Silber|Argento|चाँदी|Gümüş
+Cadmium|Cadmio|카드뮴|Cadmium|Cadmio|कैडमियम|Kadmiyum
+Indium|Indio|인듐|Indium|Indio|इंडियम|İndiyum
+Tin|Estaño|주석|Zinn|Stagno|टिन|Kalay
+Antimony|Antimonio|안티모니|Antimon|Antimonio|एंटिमनी|Antimon
+Tellurium|Telurio|텔루륨|Tellur|Tellurio|टेल्यूरियम|Tellür
+Iodine|Yodo|아이오딘|Iod|Iodio|आयोडीन|İyot
+Xenon|Xenón|제논|Xenon|Xeno|ज़ेनॉन|Ksenon
+Caesium|Cesio|세슘|Cäsium|Cesio|सीज़ियम|Sezyum
+Barium|Bario|바륨|Barium|Bario|बेरियम|Baryum
+Lanthanum|Lantano|란타넘|Lanthan|Lantanio|लैंथेनम|Lantan
+Cerium|Cerio|세륨|Cer|Cerio|सीरियम|Seryum
+Praseodymium|Praseodimio|프라세오디뮴|Praseodym|Praseodimio|प्रेसियोडिमियम|Praseodim
+Neodymium|Neodimio|네오디뮴|Neodym|Neodimio|नियोडिमियम|Neodim
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
