@@ -1759,6 +1759,83 @@ Choose a grade, then a subject, then a topic. Questions stay tied to the selecte
 Search for a lesson…|Buscar una lección…|수업 검색…|Lektion suchen…|Cerca una lezione…|पाठ खोजें…|Ders ara…
 Unknown topic.|Tema desconocido.|알 수 없는 주제입니다.|Unbekanntes Thema.|Argomento sconosciuto.|अज्ञात विषय।|Bilinmeyen konu.
 No matching topics|No hay temas que coincidan|일치하는 주제가 없습니다|Keine passenden Themen|Nessun argomento corrispondente|कोई मिलता-जुलता विषय नहीं|Eşleşen konu yok
+Loading your workspace…|Cargando tu espacio de trabajo…|작업 공간을 불러오는 중…|Arbeitsbereich wird geladen…|Caricamento dello spazio di lavoro…|आपका कार्यक्षेत्र लोड हो रहा है…|Çalışma alanın yükleniyor…
+Welcome 👋|¡Bienvenido! 👋|환영합니다 👋|Willkommen 👋|Benvenuto 👋|स्वागत है 👋|Hoş geldin 👋
+Admin Panel|Panel de administración|관리자 패널|Adminbereich|Pannello amministratore|प्रशासन पैनल|Yönetici paneli
+CLASSORA · WORKSPACE|CLASSORA · ESPACIO DE TRABAJO|CLASSORA · 작업 공간|CLASSORA · ARBEITSBEREICH|CLASSORA · AREA DI LAVORO|CLASSORA · कार्यक्षेत्र|CLASSORA · ÇALIŞMA ALANI
+3D · INTERACTIVE|3D · INTERACTIVO|3D · 인터랙티브|3D · INTERAKTIV|3D · INTERATTIVO|3D · इंटरैक्टिव|3D · ETKİLEŞİMLİ
+3D LAB|LABORATORIO 3D|3D 실험실|3D-LABOR|LABORATORIO 3D|3D प्रयोगशाला|3D LABORATUVARI
+Interactive|Interactivo|인터랙티브|Interaktiv|Interattivo|इंटरैक्टिव|Etkileşimli
+Learn · Explore|Aprende · Explora|학습 · 탐색|Lernen · Entdecken|Impara · Esplora|सीखें · खोजें|Öğren · Keşfet
+COMING UP|PRÓXIMAMENTE|곧 공개|DEMNÄCHST|IN ARRIVO|जल्द आ रहा है|YAKINDA
+LIVE TIMER|TEMPORIZADOR EN VIVO|실시간 타이머|LIVE-TIMER|TIMER IN DIRETTA|लाइव टाइमर|CANLI ZAMANLAYICI
+Classora Assistant|Asistente de Classora|Classora 도우미|Classora-Assistent|Assistente Classora|क्लासोरा सहायक|Classora Asistanı
+Classora learning assistant|Asistente de aprendizaje de Classora|Classora 학습 도우미|Classora-Lernassistent|Assistente didattico Classora|क्लासोरा अध्ययन सहायक|Classora öğrenme asistanı
+Super Admin • full school management|Superadministrador • gestión completa de la escuela|최고 관리자 • 학교 전체 관리|Super-Admin • vollständige Schulverwaltung|Super amministratore • gestione completa della scuola|सुपर एडमिन • पूरे विद्यालय का प्रबंधन|Süper yönetici • tam okul yönetimi
+SUPER ADMIN|SUPERADMINISTRADOR|최고 관리자|SUPER-ADMIN|SUPER AMMINISTRATORE|सुपर एडमिन|SÜPER YÖNETİCİ
+● SYSTEM OK|● SISTEMA CORRECTO|● 시스템 정상|● SYSTEM OK|● SISTEMA ATTIVO|● सिस्टम ठीक है|● SİSTEM ÇALIŞIYOR
+Polls|Encuestas|설문조사|Umfragen|Sondaggi|मतदान|Anketler
+Site Studio|Estudio del sitio|사이트 스튜디오|Website-Studio|Studio del sito|साइट स्टूडियो|Site Stüdyosu
+Content Manager|Gestor de contenidos|콘텐츠 관리|Inhaltsverwaltung|Gestione contenuti|सामग्री प्रबंधक|İçerik yöneticisi
+Student Overview|Resumen de estudiantes|학생 현황|Schülerübersicht|Panoramica studenti|छात्रों का अवलोकन|Öğrenci özeti
+Assignment History|Historial de tareas|과제 기록|Aufgabenverlauf|Cronologia dei compiti|असाइनमेंट इतिहास|Ödev geçmişi
+Dashboard|Panel de control|대시보드|Übersicht|Dashboard|डैशबोर्ड|Gösterge paneli
+Students & Teachers|Estudiantes y profesores|학생 및 교사|Schüler und Lehrkräfte|Studenti e insegnanti|छात्र और शिक्षक|Öğrenciler ve öğretmenler
+Send / Assign|Enviar / Asignar|보내기 / 배정|Senden / Zuweisen|Invia / Assegna|भेजें / सौंपें|Gönder / Ata
+Team|Equipo|팀|Team|Squadra|टीम|Ekip
+Control Center|Centro de control|제어 센터|Kontrollzentrum|Centro di controllo|नियंत्रण केंद्र|Kontrol merkezi
+English title|Título en inglés|영어 제목|Englischer Titel|Titolo in inglese|अंग्रेज़ी शीर्षक|İngilizce başlık
+English description|Descripción en inglés|영어 설명|Englische Beschreibung|Descrizione in inglese|अंग्रेज़ी विवरण|İngilizce açıklama
+Account security|Seguridad de la cuenta|계정 보안|Kontosicherheit|Sicurezza dell'account|खाते की सुरक्षा|Hesap güvenliği
+QUICK|RÁPIDO|빠른 작업|SCHNELL|RAPIDO|त्वरित|HIZLI
+Accounts|Cuentas|계정|Konten|Account|खाते|Hesaplar
+Search by name, Profile ID, login name, teacher email or UID.|Busca por nombre, ID de perfil, usuario, correo del profesor o UID.|이름, 프로필 ID, 로그인 이름, 교사 이메일 또는 UID로 검색하세요.|Nach Name, Profil-ID, Benutzername, Lehrer-E-Mail oder UID suchen.|Cerca per nome, ID profilo, utente, email insegnante o UID.|नाम, प्रोफ़ाइल ID, लॉगिन नाम, शिक्षक ईमेल या UID से खोजें।|Ad, profil kimliği, kullanıcı adı, öğretmen e-postası veya UID ile ara.
+Passwords protected • Lobby messages can be deleted|Contraseñas protegidas • Los mensajes del inicio se pueden eliminar|비밀번호 보호 • 로비 메시지는 삭제할 수 있습니다|Passwörter geschützt • Lobby-Nachrichten können gelöscht werden|Password protette • I messaggi della lobby possono essere eliminati|पासवर्ड सुरक्षित • लॉबी संदेश हटाए जा सकते हैं|Şifreler korunur • Lobi mesajları silinebilir
+All accounts|Todas las cuentas|모든 계정|Alle Konten|Tutti gli account|सभी खाते|Tüm hesaplar
+Every class shows teachers, teacher emails, Profile IDs and students.|Cada clase muestra profesores, sus correos, IDs de perfil y estudiantes.|각 반에는 교사, 교사 이메일, 프로필 ID와 학생이 표시됩니다.|Jede Klasse zeigt Lehrkräfte, deren E-Mails, Profil-IDs und Schüler.|Ogni classe mostra insegnanti, email, ID profilo e studenti.|हर कक्षा में शिक्षक, उनके ईमेल, प्रोफ़ाइल ID और छात्र दिखते हैं।|Her sınıfta öğretmenler, e-postaları, profil kimlikleri ve öğrenciler görünür.
+Search from the top bar|Busca en la barra superior|상단 표시줄에서 검색|Über die obere Leiste suchen|Cerca dalla barra in alto|ऊपरी बार से खोजें|Üst çubuktan ara
+AUTO|AUTO|자동|AUTO|AUTO|स्वचालित|OTOMATİK
+Target|Destinatarios|대상|Ziel|Destinatari|लक्ष्य|Hedef
+All classes|Todas las clases|모든 반|Alle Klassen|Tutte le classi|सभी कक्षाएँ|Tüm sınıflar
+Type|Tipo|유형|Typ|Tipo|प्रकार|Tür
+Generated Pythagoras exam as assignment|Examen de Pitágoras generado como tarea|피타고라스 시험을 과제로 생성|Erstellte Pythagoras-Prüfung als Aufgabe|Esame di Pitagora generato come compito|पाइथागोरस की परीक्षा को कार्य के रूप में बनाएँ|Pisagor sınavını ödev olarak oluştur
+Science assignment|Tarea de ciencias|과학 과제|Naturwissenschaftsaufgabe|Compito di scienze|विज्ञान का कार्य|Fen ödevi
+Message / instructions|Mensaje / instrucciones|메시지 / 지침|Nachricht / Anweisungen|Messaggio / istruzioni|संदेश / निर्देश|Mesaj / yönergeler
+Due date|Fecha de entrega|제출 기한|Abgabetermin|Scadenza|जमा करने की तारीख|Teslim tarihi
+Send / Publish|Enviar / Publicar|보내기 / 게시|Senden / Veröffentlichen|Invia / Pubblica|भेजें / प्रकाशित करें|Gönder / Yayımla
+Everyone|Todos|모두|Alle|Tutti|सभी लोग|Herkes
+Poll title|Título de la encuesta|설문 제목|Umfragetitel|Titolo del sondaggio|मतदान शीर्षक|Anket başlığı
+Publish poll|Publicar encuesta|설문 게시|Umfrage veröffentlichen|Pubblica il sondaggio|मतदान प्रकाशित करें|Anketi yayımla
+LIVE STATUS|ESTADO EN VIVO|실시간 상태|LIVE-STATUS|STATO IN DIRETTA|लाइव स्थिति|CANLI DURUM
+MASTER CONTROL|CONTROL PRINCIPAL|마스터 제어|HAUPTSTEUERUNG|CONTROLLO PRINCIPALE|मुख्य नियंत्रण|ANA KONTROL
+READ ONLY|SOLO LECTURA|읽기 전용|NUR LESEN|SOLA LETTURA|केवल पढ़ने के लिए|SALT OKUNUR
+Solution|Solución|해답|Lösung|Soluzione|हल|Çözüm
+2D Graph|Gráfico 2D|2D 그래프|2D-Diagramm|Grafico 2D|2D ग्राफ़|2D Grafik
+3D Graph Pro|Gráfico 3D Pro|3D 그래프 Pro|3D-Diagramm Pro|Grafico 3D Pro|3D ग्राफ़ प्रो|3D Grafik Pro
+Perspective|Perspectiva|원근 보기|Perspektive|Prospettiva|परिप्रेक्ष्य|Perspektif
+Top|Vista superior|위에서 보기|Oben|Dall'alto|ऊपर से|Üst
+Auto Rotate|Rotación automática|자동 회전|Automatisch drehen|Rotazione automatica|स्वचालित घुमाव|Otomatik döndür
+Drag • Zoom • Rotate|Arrastra • Amplía • Gira|드래그 • 확대 • 회전|Ziehen • Zoomen • Drehen|Trascina • Zoom • Ruota|खींचें • ज़ूम • घुमाएँ|Sürükle • Yakınlaştır • Döndür
+Profile ID:|ID de perfil:|프로필 ID:|Profil-ID:|ID profilo:|प्रोफ़ाइल ID:|Profil kimliği:
+The assistant name is part of the Classora platform.|El nombre del asistente forma parte de la plataforma Classora.|도우미 이름은 Classora 플랫폼의 일부입니다.|Der Assistentenname ist Teil der Classora-Plattform.|Il nome dell'assistente fa parte della piattaforma Classora.|सहायक का नाम क्लासोरा प्लेटफ़ॉर्म का हिस्सा है।|Asistanın adı Classora platformunun bir parçasıdır.
+Save assistant name|Guardar nombre del asistente|도우미 이름 저장|Assistentennamen speichern|Salva il nome dell'assistente|सहायक का नाम सहेजें|Asistan adını kaydet
+MY CLASSES|MIS CLASES|내 반|MEINE KLASSEN|LE MIE CLASSI|मेरी कक्षाएँ|SINIFLARIM
+ASSIGNMENTS|TAREAS|과제|AUFGABEN|COMPITI|असाइनमेंट|ÖDEVLER
+Custom Question|Pregunta personalizada|사용자 지정 문제|Eigene Frage|Domanda personalizzata|मनचाहा प्रश्न|Özel soru
+General|General|일반|Allgemein|Generale|सामान्य|Genel
+Skip intro|Omitir introducción|인트로 건너뛰기|Intro überspringen|Salta l'introduzione|परिचय छोड़ें|Tanıtımı geç
+Loading Classora|Cargando Classora|Classora 불러오는 중|Classora wird geladen|Caricamento Classora|क्लासोरा लोड हो रहा है|Classora yükleniyor
+Teaching overview|Resumen de enseñanza|수업 개요|Unterrichtsübersicht|Panoramica didattica|शिक्षण का अवलोकन|Öğretim özeti
+Quick teacher actions|Acciones rápidas del profesor|교사용 빠른 작업|Lehrer-Schnellaktionen|Azioni rapide insegnante|शिक्षक के त्वरित कार्य|Öğretmen hızlı işlemleri
+Classes at a glance|Clases de un vistazo|학급 한눈에 보기|Klassen im Überblick|Classi a colpo d'occhio|कक्षाएँ एक नज़र में|Bir bakışta sınıflar
+Student statistics|Estadísticas de estudiantes|학생 통계|Schülerstatistiken|Statistiche studenti|छात्र आँकड़े|Öğrenci istatistikleri
+Classora learning|Aprendizaje Classora|Classora 학습|Classora-Lernen|Apprendimento Classora|क्लासोरा अध्ययन|Classora öğrenme
+Search students, teachers, classes or Profile ID...|Busca estudiantes, profesores, clases o ID de perfil...|학생, 교사, 반 또는 프로필 ID 검색...|Schüler, Lehrkräfte, Klassen oder Profil-ID suchen...|Cerca studenti, insegnanti, classi o ID profilo...|छात्र, शिक्षक, कक्षा या प्रोफ़ाइल ID खोजें...|Öğrenci, öğretmen, sınıf veya profil kimliği ara...
+Class ID|ID de clase|학급 ID|Klassen-ID|ID classe|कक्षा ID|Sınıf kimliği
+Write the message or assignment instructions...|Escribe el mensaje o las instrucciones de la tarea...|메시지 또는 과제 지침을 입력하세요...|Nachricht oder Aufgabenanweisungen schreiben...|Scrivi il messaggio o le istruzioni del compito...|संदेश या असाइनमेंट निर्देश लिखें...|Mesajı veya ödev yönergelerini yaz...
+What do you want to ask?|¿Qué quieres preguntar?|무엇을 질문하고 싶나요?|Was möchtest du fragen?|Che cosa vuoi chiedere?|आप क्या पूछना चाहते हैं?|Ne sormak istiyorsun?
+Talk to Classora Assistant|Hablar con el asistente de Classora|Classora 도우미와 대화|Mit dem Classora-Assistenten sprechen|Parla con l'assistente Classora|क्लासोरा सहायक से बात करें|Classora Asistanı ile konuş
+Classora opening|Inicio de Classora|Classora 시작|Classora-Start|Avvio di Classora|क्लासोरा खुल रहा है|Classora açılıyor
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
@@ -1808,11 +1885,28 @@ function translatedCompound(language,key){
  return null;
 }
 
+
+const numericLocale={
+ es:{option:n=>'Opción '+n,eq:n=>'Ecuación '+n,accounts:n=>n+' cuentas'},
+ ko:{option:n=>'선택지 '+n,eq:n=>'방정식 '+n,accounts:n=>'계정 '+n+'개'},
+ de:{option:n=>'Option '+n,eq:n=>'Gleichung '+n,accounts:n=>n+' Konten'},
+ it:{option:n=>'Opzione '+n,eq:n=>'Equazione '+n,accounts:n=>n+' account'},
+ hi:{option:n=>'विकल्प '+n,eq:n=>'समीकरण '+n,accounts:n=>n+' खाते'},
+ tr:{option:n=>'Seçenek '+n,eq:n=>'Denklem '+n,accounts:n=>n+' hesap'}
+};
+function translatedNumericLabel(language,key){
+ const forms=numericLocale[language];if(!forms)return null;
+ let m=key.match(/^Option ([1-9][0-9]*)$/);if(m)return forms.option(m[1]);
+ m=key.match(/^Eq ([1-9][0-9]*)$/);if(m)return forms.eq(m[1]);
+ m=key.match(/^([0-9]+) accounts$/);if(m)return forms.accounts(m[1]);
+ return null;
+}
+
 function tFor(language,value){
  const dictionary=dictionaries[language];
  if(!dictionary||typeof value!=='string')return value;
  const key=normalize(value);
- const dynamic=translatedDynamic(language,key)||translatedCompound(language,key);if(dynamic)return dynamic;
+ const dynamic=translatedDynamic(language,key)||translatedCompound(language,key)||translatedNumericLabel(language,key);if(dynamic)return dynamic;
  const gradeMatch=key.match(/^Grade\s+(7|8|9|10)$/);
  if(gradeMatch)return formatGrade(Number(gradeMatch[1]),language);
  let result=dictionary[key]||dictionary[value];
