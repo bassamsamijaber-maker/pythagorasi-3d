@@ -1513,6 +1513,31 @@ Moscovium|Moscovio|모스코븀|Moscovium|Moscovio|मोस्कोविय�
 Livermorium|Livermorio|리버모륨|Livermorium|Livermorio|लिवरमोरियम|Livermoryum
 Tennessine|Teneso|테네신|Tenness|Tennessio|टेनेसिन|Tenesin
 Oganesson|Oganesón|오가네손|Oganesson|Oganesson|ओगानेसोन|Oganesson
+Pythagoras Assistant|Asistente de Pitágoras|피타고라스 도우미|Pythagoras-Assistent|Assistente di Pitagora|पाइथागोरस सहायक|Pisagor Asistanı
+Ask me about the hypotenuse, the formula, right triangles, Pythagorean triples, or give me values to calculate.|Pregúntame por la hipotenusa, la fórmula, los triángulos rectángulos o dame valores para calcular.|빗변, 공식, 직각삼각형, 피타고라스 수를 물어보거나 계산할 값을 주세요.|Frage mich nach Hypotenuse, Formel, rechtwinkligen Dreiecken und Zahlentripeln oder gib Werte zum Berechnen.|Chiedimi di ipotenusa, formula, triangoli rettangoli o terne pitagoriche, oppure dammi dei valori.|कर्ण, सूत्र, समकोण त्रिभुज, पाइथागोरस त्रिक या गणना के मान पूछें।|Hipotenüs, formül, dik üçgenler ve Pisagor üçlülerini sor veya hesaplama değerlerini ver.
+All activities here are focused on the Pythagorean theorem.|Todas las actividades se centran en el teorema de Pitágoras.|여기의 모든 활동은 피타고라스 정리에 관한 것입니다.|Alle Aktivitäten behandeln den Satz des Pythagoras.|Tutte le attività riguardano il teorema di Pitagora.|यहाँ सभी गतिविधियाँ पाइथागोरस प्रमेय पर हैं।|Buradaki tüm etkinlikler Pisagor Teoremi üzerine.
+The hypotenuse c must be greater than b.|La hipotenusa c debe ser mayor que b.|빗변 c는 b보다 커야 합니다.|Die Hypotenuse c muss größer als b sein.|L'ipotenusa c deve essere maggiore di b.|कर्ण c, b से बड़ा होना चाहिए।|Hipotenüs c, b'den büyük olmalı.
+The hypotenuse c must be greater than a.|La hipotenusa c debe ser mayor que a.|빗변 c는 a보다 커야 합니다.|Die Hypotenuse c muss größer als a sein.|L'ipotenusa c deve essere maggiore di a.|कर्ण c, a से बड़ा होना चाहिए।|Hipotenüs c, a'dan büyük olmalı.
+Hypotenuse c|Hipotenusa c|빗변 c|Hypotenuse c|Ipotenusa c|कर्ण c|Hipotenüs c
+side|lado|변|Seite|lato|भुजा|kenar
+Welcome, |Bienvenido, |환영합니다, |Willkommen, |Benvenuto, |स्वागत है, |Hoş geldin, 
+Proof running...|Demostración en curso...|증명 진행 중...|Beweis läuft...|Dimostrazione in corso...|प्रमाण चल रहा है...|İspat sürüyor...
+Run proof again|Repetir demostración|증명 다시 실행|Beweis erneut starten|Ripeti la dimostrazione|प्रमाण फिर चलाएँ|İspatı yeniden başlat
+Read explanation|Leer explicación|설명 읽기|Erklärung vorlesen|Leggi spiegazione|व्याख्या पढ़ें|Açıklamayı oku
+Exam subject|Asignatura del examen|시험 과목|Prüfungsfach|Materia d'esame|परीक्षा विषय|Sınav dersi
+Preview Pythagoras Exam|Vista previa del examen de Pitágoras|피타고라스 시험 미리보기|Pythagoras-Prüfungsvorschau|Anteprima esame Pitagora|पाइथागोरस परीक्षा पूर्वावलोकन|Pisagor sınavı önizlemesi
+Teacher preview: 10 changing Pythagoras questions before publishing.|Vista previa docente de 10 preguntas variables antes de publicarlas.|공개 전 교사용 미리보기: 달라지는 피타고라스 문제 10개.|Lehrervorschau: zehn wechselnde Pythagoras-Fragen vor Veröffentlichung.|Anteprima docente: dieci domande variabili di Pitagora.|प्रकाशन से पहले 10 बदलते पाइथागोरस प्रश्नों का शिक्षक पूर्वावलोकन।|Yayınlamadan önce öğretmen önizlemesi: 10 değişken Pisagor sorusu.
+Class management|Gestión de clases|학급 관리|Klassenverwaltung|Gestione classi|कक्षा प्रबंधन|Sınıf yönetimi
+Classes you manage|Clases que gestionas|관리하는 학급|Deine verwalteten Klassen|Classi che gestisci|आपकी प्रबंधित कक्षाएँ|Yönettiğin sınıflar
+Copy class code|Copiar código de clase|학급 코드 복사|Klassencode kopieren|Copia codice classe|कक्षा कोड कॉपी करें|Sınıf kodunu kopyala
+Delete class|Eliminar clase|학급 삭제|Klasse löschen|Elimina classe|कक्षा हटाएँ|Sınıfı sil
+Pythagoras Questions|Preguntas de Pitágoras|피타고라스 문제|Pythagoras-Fragen|Domande di Pitagora|पाइथागोरस प्रश्न|Pisagor soruları
+Teacher sign-in for classes, exams, competitions and the question bank.|Acceso docente para clases, exámenes, concursos y banco de preguntas.|학급, 시험, 대회, 문제은행 이용을 위한 교사 로그인.|Lehrer-Anmeldung für Klassen, Prüfungen, Wettbewerbe und Fragenbank.|Accesso docente a classi, esami, gare e banca domande.|कक्षा, परीक्षा, प्रतियोगिता और प्रश्न बैंक के लिए शिक्षक लॉग इन।|Sınıflar, sınavlar, yarışmalar ve soru bankası için öğretmen girişi.
+Classes, students, assignments, activity log and co-teachers.|Clases, alumnos, tareas, actividad y profesores auxiliares.|학급, 학생, 과제, 활동 기록 및 보조 교사.|Klassen, Schüler, Aufgaben, Aktivitäten und Hilfslehrkräfte.|Classi, studenti, compiti, attività e assistenti.|कक्षाएँ, छात्र, कार्य, गतिविधि रिकॉर्ड और सहायक शिक्षक।|Sınıflar, öğrenciler, ödevler, etkinlik kaydı ve yardımcı öğretmenler.
+The model calculates the missing side and updates the shapes and sand.|El modelo calcula el lado desconocido y actualiza figuras y arena.|모델이 모르는 변을 계산하고 도형과 모래를 업데이트합니다.|Das Modell berechnet die fehlende Seite und aktualisiert Form und Sand.|Il modello calcola il lato mancante e aggiorna forme e sabbia.|मॉडल अज्ञात भुजा निकालकर आकार और रेत बदलता है।|Model eksik kenarı hesaplar, şekli ve kumu günceller.
+Drag left/right or up/down to rotate within the front view|Arrastra para girar dentro de la vista frontal|앞쪽 시점에서 드래그하여 회전하세요|Zum Drehen innerhalb der Vorderansicht ziehen|Trascina per ruotare nella vista frontale|सामने के दृश्य में घुमाने के लिए खींचें|Ön görünümde döndürmek için sürükle
+Use the mouse wheel to zoom|Usa la rueda del ratón para ampliar|마우스 휠로 확대하세요|Mit dem Mausrad zoomen|Usa la rotella per ingrandire|ज़ूम के लिए माउस व्हील चलाएँ|Yakınlaştırmak için fare tekerini kullan
+Day mode|Modo día|낮 모드|Tagmodus|Modalità giorno|दिन मोड|Gündüz modu
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
