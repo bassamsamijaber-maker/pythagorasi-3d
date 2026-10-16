@@ -33,7 +33,7 @@
       if(parsed.has(id))throw Error("Paddle preview contains duplicates");
       parsed.set(id,{formatted:form,subunits:Number(number),quantity:item.quantity});
     }
-    return {parsed,code,address:data?.address?.countryCode||""};
+    return {parsed,code,address:data?.details?.address?.countryCode||data?.address?.countryCode||""};
   }
   function fmt(subunits,code){
     if(!Number.isSafeInteger(subunits)||subunits<0)return null;
@@ -80,9 +80,9 @@
       .finally(()=>pending.delete(cacheKey));
   }
   function updateSelection(kind,tier,period,seats){
-    const next=[kind,tier,period,seats].join(":");
-    if(next===lastSelection)return;
-    lastSelection=next;
+    // Recheck after the asynchronous base preview finishes. Selection might
+    // have been rendered before the Paddle locale prices became available.
+    lastSelection=[kind,tier,period,seats].join(":");
     requestTotals(kind,tier,period,seats);
   }
   async function start(priceCatalog,options={}){
