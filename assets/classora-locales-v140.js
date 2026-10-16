@@ -1660,6 +1660,34 @@ Salts, chemical synthesis and specialized materials.|Sales, síntesis química y
 Lighting, controlled atmospheres and scientific applications.|Iluminación, atmósferas controladas y usos científicos.|조명, 제어된 기체 환경 및 과학 용도.|Beleuchtung, kontrollierte Atmosphären und Forschung.|Illuminazione, atmosfere controllate e scienza.|प्रकाश, नियंत्रित वातावरण और वैज्ञानिक उपयोग।|Aydınlatma, kontrollü atmosferler ve bilimsel uygulamalar.
 Magnets, optics, electronics and high-performance materials.|Imanes, óptica, electrónica y materiales avanzados.|자석, 광학, 전자제품 및 고성능 재료.|Magnete, Optik, Elektronik und Hochleistungsmaterialien.|Magneti, ottica, elettronica e materiali avanzati.|चुंबक, प्रकाशिकी, इलेक्ट्रॉनिक्स और उच्च प्रदर्शन सामग्री।|Mıknatıslar, optik, elektronik ve ileri malzemeler.
 Mostly nuclear science, research and specialized energy applications.|Principalmente ciencia nuclear, investigación y energía especializada.|주로 핵과학, 연구 및 특수 에너지 응용 분야.|Vorwiegend Kernforschung, Wissenschaft und spezielle Energieanwendungen.|Soprattutto scienza nucleare, ricerca ed energia specializzata.|मुख्यतः नाभिकीय विज्ञान, अनुसंधान और विशेष ऊर्जा अनुप्रयोग।|Çoğunlukla nükleer bilim, araştırma ve özel enerji uygulamaları.
+Platform Topic|Tema de la plataforma|플랫폼 주제|Plattformthema|Argomento della piattaforma|मंच का विषय|Platform konusu
+Ask about every Classora subject, including math, science, languages, history and geography.|Pregunta sobre todas las asignaturas de Classora: matemáticas, ciencias, idiomas, historia y geografía.|수학, 과학, 언어, 역사, 지리 등 Classora의 모든 과목을 질문하세요.|Frage zu allen Classora-Fächern: Mathematik, Naturwissenschaften, Sprachen, Geschichte und Geografie.|Chiedi di tutte le materie Classora: matematica, scienze, lingue, storia e geografia.|क्लासोरा के सभी विषय पूछें: गणित, विज्ञान, भाषा, इतिहास और भूगोल।|Matematik, fen, dil, tarih ve coğrafya dâhil tüm Classora derslerini sor.
+Choose a subject or activity|Elige una asignatura o actividad|과목 또는 활동 선택|Fach oder Aktivität wählen|Scegli una materia o attività|विषय या गतिविधि चुनें|Bir ders veya etkinlik seç
+Explore the subjects and learning tools available in Classora.|Explora las asignaturas y herramientas de aprendizaje de Classora.|Classora의 과목과 학습 도구를 살펴보세요.|Erkunde die Fächer und Lernwerkzeuge in Classora.|Esplora le materie e gli strumenti di Classora.|क्लासोरा में विषयों और सीखने के उपकरणों को देखें।|Classora'daki dersleri ve öğrenme araçlarını keşfet.
+Practice Questions|Preguntas de práctica|연습 문제|Übungsfragen|Domande di esercizio|अभ्यास प्रश्न|Alıştırma soruları
+Solve x and y using an adjustable 3D graph|Resuelve x e y con un gráfico 3D ajustable|조절 가능한 3D 그래프로 x와 y를 구하세요|Löse x und y mit einem veränderbaren 3D-Diagramm|Risolvi x e y con un grafico 3D regolabile|बदलने योग्य 3D ग्राफ़ से x और y हल करें|Ayarlanabilir 3B grafikle x ve y'yi çöz
+118 elements, interactive visuals, comparison and quiz|118 elementos, gráficos interactivos, comparación y cuestionario|118개 원소, 대화형 그림, 비교 및 퀴즈|118 Elemente, interaktive Bilder, Vergleiche und Quiz|118 elementi, immagini interattive, confronti e quiz|118 तत्व, इंटरैक्टिव चित्र, तुलना और प्रश्नोत्तरी|118 element, etkileşimli görseller, karşılaştırma ve test
+Reset view|Restablecer vista|보기 초기화|Ansicht zurücksetzen|Reimposta vista|दृश्य रीसेट करें|Görünümü sıfırla
+Fullscreen|Pantalla completa|전체 화면|Vollbild|Schermo intero|पूर्ण स्क्रीन|Tam ekran
+Current values: a = 3, b = 4, so c = 5. Sand is proportional to each square's area.|Valores actuales: a = 3, b = 4, así que c = 5. La arena representa el área de cada cuadrado.|현재 값: a = 3, b = 4, c = 5. 모래는 각 정사각형 넓이에 비례합니다.|Werte: a = 3, b = 4, daher c = 5. Der Sand ist proportional zur Quadratfläche.|Valori: a = 3, b = 4, quindi c = 5. La sabbia è proporzionale alle aree.|वर्तमान मान: a = 3, b = 4, इसलिए c = 5। रेत हर वर्ग के क्षेत्रफल के अनुपात में है।|Değerler: a = 3, b = 4, c = 5. Kum, karelerin alanıyla orantılıdır.
+0 points|0 puntos|0점|0 Punkte|0 punti|0 अंक|0 puan
+Ready|Listo|준비됨|Bereit|Pronto|तैयार|Hazır
+Hi 👋 I am|Hola 👋 Soy|안녕하세요 👋 저는|Hallo 👋 Ich bin|Ciao 👋 Sono|नमस्ते 👋 मैं|Merhaba 👋 Ben
+. Ask me about lessons, Pythagoras, equations, calculations, exams or competitions.|. Pregúntame por clases, Pitágoras, ecuaciones, cálculos, exámenes o concursos.|. 수업, 피타고라스, 방정식, 계산, 시험 또는 대회를 물어보세요.|. Frag mich nach Lektionen, Pythagoras, Gleichungen, Rechnungen, Prüfungen oder Wettbewerben.|. Chiedimi di lezioni, Pitagora, equazioni, calcoli, esami o gare.|। पाठ, पाइथागोरस, समीकरण, गणना, परीक्षा या प्रतियोगिता पूछें।|. Dersler, Pisagor, denklemler, hesaplamalar, sınavlar veya yarışmalar hakkında sor.
+Explain simply|Explica sencillamente|쉽게 설명하기|Einfach erklären|Spiega in modo semplice|आसान समझाएँ|Basitçe açıkla
+Why is it true?|¿Por qué es cierto?|왜 맞는 건가요?|Warum ist das richtig?|Perché è vero?|यह सही क्यों है?|Neden doğru?
+Calculate 3 and 4|Calcular 3 y 4|3과 4 계산|3 und 4 berechnen|Calcola 3 e 4|3 और 4 की गणना|3 ve 4'ü hesapla
+When do we use it?|¿Cuándo se utiliza?|언제 사용하나요?|Wann wird es verwendet?|Quando si usa?|इसका उपयोग कब करें?|Ne zaman kullanılır?
+Natural Arabic voice|Voz árabe natural|자연스러운 아랍어 음성|Natürliche arabische Stimme|Voce araba naturale|स्वाभाविक अरबी आवाज़|Doğal Arapça ses
+Slow|Lento|느림|Langsam|Lento|धीमा|Yavaş
+Normal|Normal|보통|Normal|Normale|सामान्य|Normal
+Fast|Rápido|빠름|Schnell|Veloce|तेज़|Hızlı
+Auto-read replies|Leer respuestas automáticamente|답변 자동 읽기|Antworten automatisch vorlesen|Leggi automaticamente le risposte|उत्तर अपने आप पढ़ें|Yanıtları otomatik oku
+Stop|Detener|중지|Stopp|Interrompi|रोकें|Durdur
+Arabic voice • speed|Voz árabe • velocidad|아랍어 음성 • 속도|Arabische Stimme • Geschwindigkeit|Voce araba • velocità|अरबी आवाज़ • गति|Arapça ses • hız
+Applies to|Se aplica a|적용 대상|Gilt für|Si applica a|लागू होता है|Şunun için geçerli
+right triangles only|solo triángulos rectángulos|직각삼각형에만|nur rechtwinklige Dreiecke|solo triangoli rettangoli|केवल समकोण त्रिभुज|yalnızca dik üçgenler
+When a = 3 and b = 4, the hypotenuse c = 5.|Si a = 3 y b = 4, la hipotenusa c = 5.|a = 3, b = 4이면 빗변 c = 5입니다.|Bei a = 3 und b = 4 gilt c = 5.|Se a = 3 e b = 4, l'ipotenusa c = 5.|a = 3 और b = 4 होने पर कर्ण c = 5 है।|a = 3 ve b = 4 ise hipotenüs c = 5 olur.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
