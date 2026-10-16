@@ -1,0 +1,230 @@
+{
+  "environment": "live",
+  "currency": "ILS",
+  "taxCategory": "standard",
+  "checkoutEnabled": false,
+  "requiresServerIntent": true,
+  "products": {
+    "student_plus": {
+      "name": "Classora Student Plus",
+      "productId": "pro_01m5353csat8ns68pmwehxbmc7",
+      "monthly": {
+        "priceId": "pri_01m5353cz4wg6htsfqdv7rh5nx",
+        "amountIls": 9.9,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353d4yen4heptczx6qx2cb",
+        "amountIls": 95,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "student_premium": {
+      "name": "Classora Student Premium",
+      "productId": "pro_01m5353dcgy51n3c3cxeyjpfk8",
+      "monthly": {
+        "priceId": "pri_01m5353djf0tgvtv47gsejwc8w",
+        "amountIls": 19.9,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353drcmsakeh4ta7tc0166",
+        "amountIls": 191,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "teacher_plus": {
+      "name": "Classora Teacher Plus",
+      "productId": "pro_01m5353dzv6acxwv919mteqv8c",
+      "monthly": {
+        "priceId": "pri_01m5353e5gmwjkw1s8y66rdfdg",
+        "amountIls": 24.9,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353ebfg02mnf04b00xdx98",
+        "amountIls": 239,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "teacher_premium": {
+      "name": "Classora Teacher Premium",
+      "productId": "pro_01m5353ejhszc09g18fex2zyn1",
+      "monthly": {
+        "priceId": "pri_01m5353er29658gwgysz1x3hs3",
+        "amountIls": 44.9,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353expyct85s0rtyw4a9tq",
+        "amountIls": 431,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "class_plus": {
+      "name": "Classora Class Plus",
+      "productId": "pro_01m5353f5605xhmg3cdpetxvnq",
+      "monthly": {
+        "priceId": "pri_01m5353fatgmcnp8230h0r0w52",
+        "amountIls": 129,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353fgs2pd7xvjsgdhhwc3a",
+        "amountIls": 1238,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "class_premium": {
+      "name": "Classora Class Premium",
+      "productId": "pro_01m5353frarn2zwza5papbjm2j",
+      "monthly": {
+        "priceId": "pri_01m5353fxx6wq6v2w1759x5g6h",
+        "amountIls": 199,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353g3rctv7f05gzw1krr3c",
+        "amountIls": 1910,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "school_plus": {
+      "name": "Classora School Plus",
+      "productId": "pro_01m5353gbg7hv27jyc13bgh2h4",
+      "monthly": {
+        "priceId": "pri_01m5353gh8g73ba78npmpckwtw",
+        "amountIls": 449,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353gq1j5tk1tg52j37m0f1",
+        "amountIls": 4310,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "school_premium": {
+      "name": "Classora School Premium",
+      "productId": "pro_01m5353gy5f41earfz1nzj1pas",
+      "monthly": {
+        "priceId": "pri_01m5353h572sbdbdxj7mr4jfjg",
+        "amountIls": 799,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353haz59j41sm0kfgq37x1",
+        "amountIls": 7670,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1
+        }
+      }
+    },
+    "extra_student": {
+      "name": "Classora Extra Student Seat",
+      "productId": "pro_01m5353hjkfqvkmxsq98jqvpxn",
+      "monthly": {
+        "priceId": "pri_01m5353hr7nkeamfss9q4vyncg",
+        "amountIls": 5,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1000
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353hy39fsjx3r7h226h604",
+        "amountIls": 48,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1000
+        }
+      }
+    },
+    "extra_teacher": {
+      "name": "Classora Extra Teacher Seat",
+      "productId": "pro_01m5353j5wavhnkwfrmjpgd5ax",
+      "monthly": {
+        "priceId": "pri_01m5353jbjj80c16km4hs3k3yy",
+        "amountIls": 10,
+        "interval": "month",
+        "quantity": {
+          "min": 1,
+          "max": 1000
+        }
+      },
+      "annual": {
+        "priceId": "pri_01m5353jhjzdgv1pbg7g21jjme",
+        "amountIls": 96,
+        "interval": "year",
+        "quantity": {
+          "min": 1,
+          "max": 1000
+        }
+      }
+    }
+  },
+  "notes": "Public catalog identifiers only. Never grant entitlements from a client checkout callback. Production checkout disabled pending webhook and verified entitlements."
+}
