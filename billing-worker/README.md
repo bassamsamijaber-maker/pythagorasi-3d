@@ -53,4 +53,4 @@ Paddle.Checkout.open({
 - Complete a security review and tests before enabling live mode.
 - The Flutter/Capacitor/native-app distribution may require separate review of app-store payment requirements.
 
-**No deployment or real-money billing was performed by these repository changes.**
+**Preview build check (2026-10-16):** A new GitHub commit triggers the separate Cloudflare Worker build connected to this preview branch. This Worker is sandbox-only. The presence of a successful build does NOT mean a validated payment flow, a configured Paddle signing secret, or a production launch. Never connect this to real customer payments before end-to-end security review.
