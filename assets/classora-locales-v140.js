@@ -1455,6 +1455,36 @@ Lanthanum|Lantano|란타넘|Lanthan|Lantanio|लैंथेनम|Lantan
 Cerium|Cerio|세륨|Cer|Cerio|सीरियम|Seryum
 Praseodymium|Praseodimio|프라세오디뮴|Praseodym|Praseodimio|प्रेसियोडिमियम|Praseodim
 Neodymium|Neodimio|네오디뮴|Neodym|Neodimio|नियोडिमियम|Neodim
+Promethium|Prometio|프로메튬|Promethium|Promezio|प्रोमेथियम|Prometyum
+Samarium|Samario|사마륨|Samarium|Samario|समेरियम|Samaryum
+Europium|Europio|유로퓸|Europium|Europio|यूरोपियम|Evropiyum
+Gadolinium|Gadolinio|가돌리늄|Gadolinium|Gadolinio|गैडोलिनियम|Gadolinyum
+Terbium|Terbio|터븀|Terbium|Terbio|टर्बियम|Terbiyum
+Dysprosium|Disprosio|디스프로슘|Dysprosium|Disprosio|डिस्प्रोसियम|Disprosyum
+Holmium|Holmio|홀뮴|Holmium|Olmio|होल्मियम|Holmiyum
+Erbium|Erbio|어븀|Erbium|Erbio|एर्बियम|Erbiyum
+Thulium|Tulio|툴륨|Thulium|Tulio|थूलियम|Tulyum
+Ytterbium|Iterbio|이터븀|Ytterbium|Itterbio|इटर्बियम|İterbiyum
+Lutetium|Lutecio|루테튬|Lutetium|Lutezio|ल्यूटेटियम|Lutesyum
+Hafnium|Hafnio|하프늄|Hafnium|Afnio|हैफ्नियम|Hafniyum
+Tantalum|Tántalo|탄탈럼|Tantal|Tantalio|टैंटलम|Tantal
+Tungsten|Wolframio|텅스텐|Wolfram|Tungsteno|टंगस्टन|Tungsten
+Rhenium|Renio|레늄|Rhenium|Renio|रेनियम|Renyum
+Osmium|Osmio|오스뮴|Osmium|Osmio|ऑस्मियम|Osmiyum
+Iridium|Iridio|이리듐|Iridium|Iridio|इरिडियम|İridyum
+Platinum|Platino|백금|Platin|Platino|प्लैटिनम|Platin
+Gold|Oro|금|Gold|Oro|सोना|Altın
+Mercury|Mercurio|수은|Quecksilber|Mercurio|पारा|Cıva
+Thallium|Talio|탈륨|Thallium|Tallio|थैलियम|Talyum
+Lead|Plomo|납|Blei|Piombo|सीसा|Kurşun
+Bismuth|Bismuto|비스무트|Bismut|Bismuto|बिस्मथ|Bizmut
+Polonium|Polonio|폴로늄|Polonium|Polonio|पोलोनियम|Polonyum
+Astatine|Astato|아스타틴|Astat|Astato|एस्टैटीन|Astatin
+Radon|Radón|라돈|Radon|Radon|रेडॉन|Radon
+Francium|Francio|프랑슘|Francium|Francio|फ्रैंसियम|Fransiyum
+Radium|Radio|라듐|Radium|Radio|रेडियम|Radyum
+Actinium|Actinio|악티늄|Actinium|Attinio|ऐक्टिनियम|Aktinyum
+Thorium|Torio|토륨|Thorium|Torio|थोरियम|Toryum
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
