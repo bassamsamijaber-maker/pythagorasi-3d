@@ -1,0 +1,43 @@
+/* 2026-10-16: additive enhancements; original chat/permissions remain intact. */
+/* Membership link blends with existing lobby and settings dock. */
+#lobbyMembershipBtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #498c76;background:linear-gradient(120deg,#184939,#154a51);color:#c9ffe6;border-radius:12px;min-height:40px;padding:8px 12px;text-decoration:none;font-weight:900;box-shadow:0 8px 25px #072b2355}
+#lobbyMembershipBtn svg{width:18px;height:18px;flex:none;fill:none;stroke:#abf7cf;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#lobbyMembershipBtn:hover{background:linear-gradient(110deg,#21674b,#205e62);border-color:#a3f0d0}
+#classoraSettingsMembershipLink{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0;padding:12px 15px;border:1px solid #5f9d82;border-radius:15px;background:linear-gradient(110deg,#194d39,#1d4655);color:#d4ffe9;text-decoration:none;font-weight:900;font-size:14px}
+#classoraSettingsMembershipLink svg{width:20px;height:20px;fill:none;stroke:#bff9d8;stroke-width:1.8}
+#classoraSettingsMembershipLink:hover{background:linear-gradient(125deg,#24664c,#246274)}
+/* Chat: more consistent spacing, accessible controls and mobile viewport. */
+#chatModal .classora-chat-box{background:linear-gradient(140deg,#0d2331,#0d1b2a 80%)!important;border:1px solid #315366!important;box-shadow:0 24px 75px #030911a8!important}
+#chatModal .classora-chat-layout{gap:8px}
+#chatModal .chat-contacts-pane,#chatModal .chat-thread-pane{background:linear-gradient(150deg,#102837,#0c202d);border:1px solid #29485a;border-radius:15px}
+#chatModal .chat-search-wrap{background:#102837;padding:5px 0 11px}
+#chatModal #chatPeopleSearch,#chatModal #chatMessageSearch{background:#0b1d2b!important;color:#f1fcff!important;border:1px solid #42687a!important;border-radius:12px!important;padding:10px 13px!important;min-height:43px!important}
+#chatModal .chat-contact{min-height:56px;border-color:#2d4b5a;background:#152c39;border-radius:13px;transition:background .15s,border-color .15s}
+#chatModal .chat-contact:hover,#chatModal .chat-contact:focus-visible{background:#1d3b46;border-color:#78cabc}
+#chatModal .chat-contact small,#chatModal .chat-thread-head small{color:#b4cad3!important;font-size:11px}
+#chatModal .chat-contact-avatar{border-radius:14px}
+#chatModal .chat-messages{background:radial-gradient(ellipse 390px 290px at 80% 100%,#123a3977,transparent),linear-gradient(155deg,#071d2a,#0d2832);padding:clamp(12px,2vw,22px)!important;gap:10px!important;scroll-padding-bottom:24px}
+#chatModal .chat-bubble{font-size:13px!important;line-height:1.65!important;max-width:min(83%,560px);border-radius:18px 18px 18px 5px;padding:11px 14px;box-shadow:0 5px 18px #03121d52;border:1px solid #45647380;background:#1b3744;color:#f0fbff}
+#chatModal .chat-bubble.mine{background:linear-gradient(135deg,#2b8378,#22739b)!important;border-radius:18px 18px 5px 18px;color:#fff}
+#chatModal .chat-bubble.theirs{background:linear-gradient(120deg,#1e3e4d,#172f40);border-color:#486477}
+#chatModal .chat-bubble time{font-size:10px;opacity:.78}
+#chatModal .chat-compose{display:grid;grid-template-columns:minmax(0,1fr) auto!important;align-items:end;gap:8px;border-top:1px solid #42647880;padding:11px 13px!important;background:#0f2734}
+#chatModal #chatMessageInput{font-size:14px!important;line-height:1.55;min-height:45px!important;max-height:128px!important;max-width:100%;resize:vertical;box-shadow:none!important;border:1px solid #497b83!important;border-radius:17px!important;background:#0a1e2b!important;color:#fff!important;padding:11px 14px!important}
+#chatModal #chatMessageInput:focus{outline:2px solid #67c7bc!important;outline-offset:0!important}
+#chatModal #chatSendBtn{min-width:67px!important;min-height:45px!important;border-radius:15px!important;background:linear-gradient(115deg,#8ae8d1,#59aee0)!important;color:#09263a!important;font-weight:900!important}
+#chatModal .chat-media-tools{padding:7px 12px;gap:8px;background:#0e2531}
+#chatModal .chat-media-tools button{border-radius:12px!important;min-height:42px!important}
+#chatModal .chat-thread-head{background:#112b3a;padding:12px 14px;border-bottom-color:#436a8066}
+#chatModal .chat-typing{color:#a5e8da}
+#chatModal .chat-receipt.read{color:#a5f6d7}
+#chatModal button:focus-visible,#chatModal textarea:focus-visible,#chatModal input:focus-visible{outline:2px solid #94f1d0!important;outline-offset:2px}
+@media(max-width:700px){
+ #lobbyMembershipBtn{font-size:12px;min-height:38px;padding:7px 10px}
+ #chatModal .classora-chat-box{width:calc(100vw - 14px)!important;max-width:none!important;height:min(calc(var(--chat-viewport-height,100dvh) - 78px),calc(100dvh - 78px))!important;max-height:none!important}
+ #chatModal .chat-contacts-pane,#chatModal .chat-thread-pane{border-radius:13px}
+ #chatModal .chat-compose{padding-bottom:max(11px,env(safe-area-inset-bottom))!important;gap:6px}
+ #chatModal #chatSendBtn{min-width:58px!important;font-size:13px!important}
+ #chatModal .chat-messages{padding:12px!important}
+ #chatModal .chat-bubble{max-width:89%!important;font-size:12px!important}
+}
+@media(prefers-reduced-motion:reduce){#chatModal .chat-contact{transition:none}}
