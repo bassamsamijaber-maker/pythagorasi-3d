@@ -1,0 +1,18 @@
+# Separate experimental Worker. Never use the main Classora Pages deployment.
+name = "classora-paddle-sandbox-billing"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+FIREBASE_PROJECT_ID = "REPLACE_WITH_TEST_PROJECT_ID"
+ALLOWED_ORIGIN = "https://preview-classora-paddle-sand.classora.pages.dev"
+
+[[d1_databases]]
+binding = "BILLING_DB"
+database_name = "classora-billing-sandbox"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# Secret: PADDLE_SANDBOX_WEBHOOK_SECRET
+# Set with: npx wrangler secret put PADDLE_SANDBOX_WEBHOOK_SECRET
+# NEVER put Paddle secrets or Firebase service-account private keys in this file.
