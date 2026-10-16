@@ -1688,6 +1688,35 @@ Arabic voice • speed|Voz árabe • velocidad|아랍어 음성 • 속도|Arab
 Applies to|Se aplica a|적용 대상|Gilt für|Si applica a|लागू होता है|Şunun için geçerli
 right triangles only|solo triángulos rectángulos|직각삼각형에만|nur rechtwinklige Dreiecke|solo triangoli rettangoli|केवल समकोण त्रिभुज|yalnızca dik üçgenler
 When a = 3 and b = 4, the hypotenuse c = 5.|Si a = 3 y b = 4, la hipotenusa c = 5.|a = 3, b = 4이면 빗변 c = 5입니다.|Bei a = 3 und b = 4 gilt c = 5.|Se a = 3 e b = 4, l'ipotenusa c = 5.|a = 3 और b = 4 होने पर कर्ण c = 5 है।|a = 3 ve b = 4 ise hipotenüs c = 5 olur.
+Welcome to Classora 👋|¡Bienvenido a Classora! 👋|Classora에 오신 것을 환영합니다 👋|Willkommen bei Classora 👋|Benvenuto su Classora 👋|क्लासोरा में स्वागत है 👋|Classora'ya hoş geldin 👋
+Sign in to save your progress, points, exams, competitions and settings.|Inicia sesión para guardar progreso, puntos, exámenes, concursos y ajustes.|로그인하여 진도, 점수, 시험, 대회 및 설정을 저장하세요.|Melde dich an, um Fortschritt, Punkte, Prüfungen, Wettbewerbe und Einstellungen zu speichern.|Accedi per salvare progressi, punti, esami, gare e impostazioni.|प्रगति, अंक, परीक्षाएँ, प्रतियोगिताएँ और सेटिंग्स सहेजने के लिए लॉग इन करें।|İlerleme, puan, sınav, yarışma ve ayarları kaydetmek için giriş yap.
+Sign in with your name and password, or create a new account.|Accede con nombre y contraseña o crea una cuenta.|이름과 비밀번호로 로그인하거나 새 계정을 만드세요.|Melde dich mit Name und Passwort an oder erstelle ein Konto.|Accedi con nome e password o crea un account.|नाम और पासवर्ड से लॉग इन करें या नया खाता बनाएँ।|Ad ve parolanla giriş yap veya yeni hesap oluştur.
+Continue as Guest|Continuar como invitado|게스트로 계속|Als Gast fortfahren|Continua come ospite|अतिथि के रूप में जारी रखें|Misafir olarak devam et
+Browse Classora without an account. Solving questions, exams and competitions require sign-in.|Explora Classora sin cuenta. Para resolver preguntas, exámenes y concursos debes iniciar sesión.|계정 없이 탐색할 수 있지만 문제, 시험 및 대회에는 로그인이 필요합니다.|Erkunde Classora ohne Konto. Für Aufgaben, Prüfungen und Wettbewerbe musst du dich anmelden.|Esplora Classora senza account. Per domande, esami e gare serve l'accesso.|बिना खाते क्लासोरा देखें। प्रश्न, परीक्षा और प्रतियोगिता के लिए लॉग इन ज़रूरी है।|Hesapsız gezinebilirsin. Soru, sınav ve yarışma için giriş gerekir.
+Class code — optional|Código de clase — opcional|학급 코드 — 선택 사항|Klassencode — optional|Codice classe — facoltativo|कक्षा कोड — वैकल्पिक|Sınıf kodu — isteğe bağlı
+Enter a class code if you have one, or continue without it. You can join a class later.|Si tienes código de clase, escríbelo. También puedes continuar sin él y unirte después.|학급 코드가 있으면 입력하세요. 없으면 계속 진행하고 나중에 참여할 수 있습니다.|Gib einen Klassencode ein, falls vorhanden. Du kannst auch ohne ihn fortfahren und später beitreten.|Inserisci il codice classe se lo hai, oppure continua senza e unisciti dopo.|कक्षा कोड हो तो दर्ज करें या बिना उसके जारी रखें। बाद में भी जुड़ सकते हैं।|Sınıf kodun varsa yaz veya kodsuz devam et. Daha sonra da katılabilirsin.
+Continue ←|Continuar ←|계속 ←|Weiter ←|Continua ←|जारी रखें ←|Devam et ←
+Continue without a class code|Continuar sin código de clase|학급 코드 없이 계속|Ohne Klassencode fortfahren|Continua senza codice classe|कक्षा कोड के बिना जारी रखें|Sınıf kodu olmadan devam et
+Login|Acceso|로그인|Anmeldung|Accesso|लॉग इन|Giriş
+New account|Cuenta nueva|새 계정|Neues Konto|Nuovo account|नया खाता|Yeni hesap
+Confirm password|Confirmar contraseña|비밀번호 확인|Passwort bestätigen|Conferma password|पासवर्ड की पुष्टि|Parolayı doğrula
+Username or email + password|Nombre de usuario o correo y contraseña|사용자 이름 또는 이메일과 비밀번호|Benutzername oder E-Mail und Passwort|Nome utente o e-mail e password|उपयोगकर्ता नाम या ईमेल और पासवर्ड|Kullanıcı adı veya e-posta ve parola
+New teacher account|Cuenta nueva de profesor|새 교사 계정|Neues Lehrerkonto|Nuovo account insegnante|नया शिक्षक खाता|Yeni öğretmen hesabı
+Username or email|Usuario o correo|사용자 이름 또는 이메일|Benutzername oder E-Mail|Nome utente o e-mail|उपयोगकर्ता नाम या ईमेल|Kullanıcı adı veya e-posta
+Teacher sign in|Acceso de profesor|교사 로그인|Lehrer-Anmeldung|Accesso insegnante|शिक्षक लॉग इन|Öğretmen girişi
+Teacher name|Nombre del profesor|교사 이름|Lehrername|Nome insegnante|शिक्षक का नाम|Öğretmen adı
+Create teacher account|Crear cuenta de profesor|교사 계정 만들기|Lehrerkonto erstellen|Crea account insegnante|शिक्षक खाता बनाएँ|Öğretmen hesabı oluştur
+Sign in to Classora|Iniciar sesión en Classora|Classora 로그인|Bei Classora anmelden|Accedi a Classora|क्लासोरा में लॉग इन करें|Classora'ya giriş yap
+Your account saves progress and lets you answer questions and join exams and competitions.|Tu cuenta guarda el progreso y permite responder preguntas, realizar exámenes y participar en concursos.|계정에 진도가 저장되며 문제, 시험 및 대회에 참여할 수 있습니다.|Dein Konto speichert den Fortschritt und ermöglicht Aufgaben, Prüfungen und Wettbewerbe.|Il tuo account salva i progressi e permette domande, esami e gare.|खाता आपकी प्रगति सहेजता है और प्रश्न, परीक्षा और प्रतियोगिता में भाग लेने देता है।|Hesabın ilerlemeni kaydeder ve soru, sınav ve yarışmalara katılmanı sağlar.
+Do not remind me every hour again|No volver a recordármelo cada hora|매시간 다시 알리지 않기|Nicht mehr stündlich erinnern|Non ricordarmelo più ogni ora|हर घंटे फिर याद न दिलाएँ|Her saat tekrar hatırlatma
+Later|Más tarde|나중에|Später|Più tardi|बाद में|Daha sonra
+Download|Descargar|다운로드|Herunterladen|Scarica|डाउनलोड|İndir
+Log out|Cerrar sesión|로그아웃|Abmelden|Esci|लॉग आउट|Çıkış yap
+Learn, experiment and discover|Aprende, experimenta y descubre|배우고 실험하고 발견하세요|Lernen, experimentieren, entdecken|Impara, sperimenta e scopri|सीखें, प्रयोग करें और खोजें|Öğren, dene ve keşfet
+Latest additions|Últimas novedades|최근 추가된 내용|Neu hinzugefügt|Ultime novità|हाल में जोड़ा गया|Son eklenenler
+Classora learning announcements|Novedades de aprendizaje de Classora|Classora 학습 공지|Classora-Lernmeldungen|Novità didattiche Classora|क्लासोरा शैक्षिक घोषणाएँ|Classora öğrenme duyuruları
+Your tasks|Tus tareas|내 할 일|Deine Aufgaben|Le tue attività|आपके कार्य|Görevlerin
+Checking your class assignments…|Comprobando las tareas de clase…|학급 과제 확인 중…|Klassenaufgaben werden geprüft…|Controllo compiti della classe…|कक्षा के कार्य जाँचे जा रहे हैं…|Sınıf ödevleri kontrol ediliyor…
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
