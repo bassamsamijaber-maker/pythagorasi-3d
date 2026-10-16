@@ -75,7 +75,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
 <link rel="stylesheet" href="./assets/classora-refinement-v122.css?v=122.2">
 <link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=128">
-<link rel="stylesheet" href="./assets/classora-legal-v124.css?v=132">
+<link rel="stylesheet" href="./assets/classora-legal-v124.css?v=166">
 <link rel="stylesheet" href="./assets/lesson-scenes-v128.css?v=128">
 <link rel="stylesheet" href="./assets/lesson-explorer-v129.css?v=129">
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
@@ -575,7 +575,7 @@ body.classora-intro-active{overflow:auto!important}
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=159"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=166"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -2458,7 +2458,7 @@ import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=161';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
-import {installClassoraLegal} from './assets/classora-legal-v124.js?v=165';
+import {installClassoraLegal} from './assets/classora-legal-v124.js?v=166';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=161';
 import './assets/classora-global-art-v121.js?v=121';
 import {mountCurriculum} from "./assets/curriculum-v97.js?v=159";
@@ -17475,8 +17475,27 @@ function classoraGoLobby(){
   return false;
 }
 function classoraReturnFromPeriodic(){
+  // Close the embedded table first. Do not open another study dialog while
+  // returning: on mobile that could hide the restored lobby behind a blank layer.
+  const page=document.getElementById("periodic-table");
+  page?.style.setProperty("display","none","important");
+  document.body.classList.remove("classora-periodic-active");
+  document.documentElement.classList.remove("classora-periodic-active");
   classoraGoLobby();
-  if(document.body.classList.contains("classora-authenticated"))window.classoraLearningHub?.openScience?.();
+  // Hash/overlay transitions do not always produce a hashchange event on iOS.
+  // Restore the lobby visibility explicitly after closing the iframe.
+  const lobby=document.getElementById("platformLobby");
+  if(document.body.classList.contains("classora-authenticated")&&lobby){
+    lobby.classList.remove("hidden");
+    lobby.style.removeProperty("display");
+    lobby.style.removeProperty("visibility");
+    requestAnimationFrame(()=>{
+      if(location.hash==="#platformLobby"){
+        lobby.classList.remove("hidden");
+        page?.style.setProperty("display","none","important");
+      }
+    });
+  }
 }
 window.classoraReturnFromPeriodic=classoraReturnFromPeriodic;
 function mobileGoLobby(){return classoraGoLobby()}
@@ -17557,11 +17576,19 @@ syncMobileControlBar();
 })();
 
 /* Stop wheel/touch from leaking through an open screen. */
+function classoraAllowScrollableOverlay(event){
+  // Privacy/Terms is a separate topmost overlay. Auth/login or a background
+  // modal may be visible simultaneously; it must not cancel its touch gestures.
+  const legal=document.getElementById("classoraLegalModal");
+  return legal&&!legal.hidden&&legal.contains(event.target);
+}
 document.addEventListener("wheel",event=>{
+  if(classoraAllowScrollableOverlay(event))return;
   const active=document.querySelector(".modal.open,.auth-gate.show");
   if(active&&!active.contains(event.target))event.preventDefault();
 },{capture:true,passive:false});
 document.addEventListener("touchmove",event=>{
+  if(classoraAllowScrollableOverlay(event))return;
   const active=document.querySelector(".modal.open,.auth-gate.show");
   if(active&&!active.contains(event.target))event.preventDefault();
 },{capture:true,passive:false});
