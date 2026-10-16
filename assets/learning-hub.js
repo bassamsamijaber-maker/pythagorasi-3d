@@ -2,7 +2,7 @@ import {mountLearningHome} from './learning-home-v130.js?v=131';
 import {smartTopicMatch} from './learning-search-v130.js?v=130';
 import {globeMarkup,mountGlobe} from './geography-globe-v129.js?v=130';
 import {acidsTopic,acidQuestions,topicMatches} from "./learning-content.js?v=89";
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=131";
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName} from "./curriculum-v97.js?v=159";
 /* Classora learning hub: bilingual content, local practice, no external AI service. */
 export const scienceTopics=[
  acidsTopic,
