@@ -993,28 +993,6 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // Paddle Sandbox billing. Only verified Cloud Functions write to these
-    // collections; browser apps cannot grant themselves paid entitlements.
-    match /billingEntitlements/{entitlementId} {
-      allow get: if signedIn() && resource.data.ownerUid == request.auth.uid;
-      allow list, create, update, delete: if false;
-    }
-    match /billingCheckoutIntents/{intentId} {
-      allow read, write: if false;
-    }
-    match /billingCheckoutThrottle/{uid} {
-      allow read, write: if false;
-    }
-    match /billingWebhookEvents/{eventId} {
-      allow read, write: if false;
-    }
-    match /billingSubscriptions/{subscriptionId} {
-      allow read, write: if false;
-    }
-    match /billingSchools/{schoolId} {
-      allow read, write: if false;
-    }
-
     // Server-only Classora support/recovery data.
     // Browser clients never read or write these collections directly.
     // Callable Cloud Functions use the Admin SDK and bypass Firestore rules.
