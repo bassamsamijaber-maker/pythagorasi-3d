@@ -1369,6 +1369,62 @@ Cobalt|Cobalto|코발트|Kobalt|Cobalto|कोबाल्ट|Kobalt
 Nickel|Níquel|니켈|Nickel|Nichel|निकेल|Nikel
 Copper|Cobre|구리|Kupfer|Rame|ताँबा|Bakır
 Zinc|Zinc|아연|Zink|Zinco|जस्ता|Çinko
+Pythagoras Lab|Laboratorio de Pitágoras|피타고라스 실험실|Pythagoras-Labor|Laboratorio di Pitagora|पाइथागोरस प्रयोगशाला|Pisagor Laboratuvarı
+3D Pythagoras Lab|Laboratorio 3D de Pitágoras|3D 피타고라스 실험실|3D-Pythagoras-Labor|Laboratorio 3D di Pitagora|3D पाइथागोरस प्रयोगशाला|3B Pisagor Laboratuvarı
+Open the 3D Pythagoras Lab|Abrir laboratorio 3D de Pitágoras|3D 피타고라스 실험실 열기|3D-Pythagoras-Labor öffnen|Apri il laboratorio 3D di Pitagora|3D पाइथागोरस प्रयोगशाला खोलें|3B Pisagor Laboratuvarını aç
+Learn the theorem with the 3D model, sand proof, examples, challenges, practice, exams and live competitions.|Aprende el teorema con el modelo 3D, demostración con arena, ejemplos, ejercicios, exámenes y concursos.|3D 모델, 모래 증명, 예시, 연습, 시험과 실시간 대회로 정리를 배워보세요.|Lerne den Satz mit 3D-Modell, Sandbeweis, Beispielen, Übungen, Prüfungen und Live-Wettbewerben.|Impara il teorema con modello 3D, prova con sabbia, esempi, esercizi, esami e gare dal vivo.|3D मॉडल, रेत के प्रमाण, उदाहरण, अभ्यास, परीक्षा और लाइव प्रतियोगिता से प्रमेय सीखें।|3B model, kum ispatı, örnekler, alıştırmalar, sınavlar ve canlı yarışmalarla teoremi öğren.
+Realistic interactive model|Modelo interactivo realista|실감 나는 대화형 모델|Realistisches interaktives Modell|Modello interattivo realistico|यथार्थवादी इंटरैक्टिव मॉडल|Gerçekçi etkileşimli model
+A complete interactive platform for the Pythagorean theorem: 3D lab, challenges, practice, exams and competitions.|Plataforma interactiva del teorema de Pitágoras: laboratorio 3D, desafíos, ejercicios, exámenes y concursos.|피타고라스 정리 학습 플랫폼: 3D 실험실, 도전, 연습, 시험 및 대회.|Interaktive Plattform zum Satz des Pythagoras mit 3D-Labor, Aufgaben, Prüfungen und Wettbewerben.|Piattaforma interattiva sul teorema di Pitagora con laboratorio 3D, esercizi, esami e gare.|पाइथागोरस प्रमेय के लिए 3D प्रयोगशाला, चुनौतियाँ, अभ्यास, परीक्षा और प्रतियोगिता।|Pisagor Teoremi için 3B laboratuvar, görevler, alıştırmalar, sınavlar ve yarışmalar.
+3D Lab|Laboratorio 3D|3D 실험실|3D-Labor|Laboratorio 3D|3D प्रयोगशाला|3B Laboratuvar
+Wheel, sand, side calculations and live proof|Rueda, arena, cálculo de lados y demostración en directo|바퀴, 모래, 변 길이 계산과 실시간 증명|Rad, Sand, Seitenberechnung und Live-Beweis|Ruota, sabbia, calcolo dei lati e prova dal vivo|पहिया, रेत, भुजाओं की गणना और लाइव प्रमाण|Çark, kum, kenar hesabı ve canlı ispat
+Pythagoras Challenge|Desafío de Pitágoras|피타고라스 도전|Pythagoras-Aufgabe|Sfida di Pitagora|पाइथागोरस चुनौती|Pisagor görevi
+Solve quickly and collect points|Resuelve rápido y consigue puntos|빠르게 풀고 점수를 모으세요|Löse schnell und sammle Punkte|Risolvi rapidamente e raccogli punti|जल्दी हल करें और अंक पाएँ|Hızlı çöz, puan topla
+Changing questions with instant checking|Preguntas variables con corrección inmediata|매번 달라지는 문제와 즉시 채점|Wechselnde Fragen mit sofortiger Kontrolle|Domande variabili con correzione immediata|बदलते प्रश्न और तुरंत जाँच|Anında kontrol edilen değişken sorular
+Two-Variable Equations|Ecuaciones con dos incógnitas|미지수 두 개의 방정식|Gleichungen mit zwei Variablen|Equazioni a due incognite|दो अज्ञातों वाले समीकरण|İki bilinmeyenli denklemler
+Easy, medium, hard and expert|Fácil, medio, difícil y experto|쉬움, 보통, 어려움, 전문가|Einfach, mittel, schwer und Experte|Facile, medio, difficile ed esperto|आसान, मध्यम, कठिन और विशेषज्ञ|Kolay, orta, zor ve uzman
+Live Competition|Competición en directo|실시간 대회|Live-Wettbewerb|Gara in diretta|लाइव प्रतियोगिता|Canlı yarışma
+Room code, teams and leaderboard|Código de sala, equipos y clasificación|방 코드, 팀과 순위표|Raumcode, Teams und Rangliste|Codice stanza, squadre e classifica|कक्ष कोड, टीमें और अंकतालिका|Oda kodu, takımlar ve liderlik tablosu
+My Classes|Mis clases|내 학급|Meine Klassen|Le mie classi|मेरी कक्षाएँ|Sınıflarım
+Join a class or view assignments|Únete a una clase o consulta tareas|학급에 참여하거나 과제를 확인하세요|Klasse beitreten oder Aufgaben ansehen|Entra in una classe o guarda i compiti|कक्षा से जुड़ें या कार्य देखें|Bir sınıfa katıl veya ödevleri gör
+My Profile|Mi perfil|내 프로필|Mein Profil|Il mio profilo|मेरी प्रोफ़ाइल|Profilim
+XP, level and progress|XP, nivel y progreso|XP, 레벨과 진도|XP, Stufe und Fortschritt|XP, livello e progressi|XP, स्तर और प्रगति|XP, seviye ve ilerleme
+Teacher Tools|Herramientas del profesor|교사용 도구|Lehrerwerkzeuge|Strumenti per insegnanti|शिक्षक उपकरण|Öğretmen araçları
+All teacher tools are focused on Pythagoras.|Todas las herramientas del profesor se centran en Pitágoras.|모든 교사용 도구는 피타고라스에 집중합니다.|Alle Lehrerwerkzeuge beziehen sich auf Pythagoras.|Tutti gli strumenti per insegnanti riguardano Pitagora.|शिक्षक के सभी उपकरण पाइथागोरस के लिए हैं।|Tüm öğretmen araçları Pisagor'a odaklıdır.
+Pythagoras Question Bank|Banco de preguntas de Pitágoras|피타고라스 문제은행|Pythagoras-Fragenbank|Banca domande di Pitagora|पाइथागोरस प्रश्न बैंक|Pisagor soru bankası
+Save your questions and reuse them later|Guarda preguntas para volver a usarlas|문제를 저장해 나중에 다시 사용하세요|Fragen speichern und später wiederverwenden|Salva domande e riutilizzale|प्रश्न सहेजें और फिर इस्तेमाल करें|Sorularını kaydet ve sonra yeniden kullan
+Manage students and assignments|Gestionar estudiantes y tareas|학생과 과제 관리|Schüler und Aufgaben verwalten|Gestisci studenti e compiti|छात्र और कार्य सँभालें|Öğrencileri ve ödevleri yönet
+Exam Results|Resultados de exámenes|시험 결과|Prüfungsergebnisse|Risultati degli esami|परीक्षा परिणाम|Sınav sonuçları
+Your students’ grades|Notas de tus estudiantes|학생 성적|Noten deiner Schüler|Voti dei tuoi studenti|छात्रों के अंक|Öğrencilerinin notları
+My Competitions|Mis concursos|내 대회|Meine Wettbewerbe|Le mie gare|मेरी प्रतियोगिताएँ|Yarışmalarım
+Saved competitions|Concursos guardados|저장된 대회|Gespeicherte Wettbewerbe|Gare salvate|सहेजी प्रतियोगिताएँ|Kayıtlı yarışmalar
+Calculate any side|Calcula cualquier lado|어느 변이든 계산하기|Beliebige Seite berechnen|Calcola qualsiasi lato|किसी भी भुजा की गणना|Herhangi bir kenarı hesapla
+Choose the unknown side, then enter the two known sides.|Elige el lado desconocido e introduce los otros dos.|모르는 변을 선택하고 나머지 두 변을 입력하세요.|Wähle die unbekannte Seite und gib die beiden bekannten Seiten ein.|Scegli il lato incognito e inserisci gli altri due.|अज्ञात भुजा चुनें और दो ज्ञात भुजाएँ दर्ज करें।|Bilinmeyen kenarı seç, diğer iki kenarı gir.
+Side c is always the hypotenuse|El lado c siempre es la hipotenusa|c는 항상 빗변입니다|Seite c ist immer die Hypotenuse|Il lato c è sempre l'ipotenusa|भुजा c हमेशा कर्ण है|c kenarı her zaman hipotenüstür
+Unknown a|Incógnita a|미지수 a|Unbekannt a|Incognita a|अज्ञात a|Bilinmeyen a
+Unknown b|Incógnita b|미지수 b|Unbekannt b|Incognita b|अज्ञात b|Bilinmeyen b
+Unknown c (hypotenuse)|Incógnita c (hipotenusa)|미지수 c (빗변)|Unbekannt c (Hypotenuse)|Incognita c (ipotenusa)|अज्ञात c (कर्ण)|Bilinmeyen c (hipotenüs)
+a — first leg|a — primer cateto|a — 첫 번째 직각변|a — erste Kathete|a — primo cateto|a — पहली लंब भुजा|a — birinci dik kenar
+b — second leg|b — segundo cateto|b — 두 번째 직각변|b — zweite Kathete|b — secondo cateto|b — दूसरी लंब भुजा|b — ikinci dik kenar
+c — always the hypotenuse|c — siempre la hipotenusa|c — 항상 빗변|c — immer Hypotenuse|c — sempre ipotenusa|c — हमेशा कर्ण|c — her zaman hipotenüs
+Calculate & apply to model|Calcular y aplicar al modelo|계산하고 모델에 적용|Berechnen und auf Modell anwenden|Calcola e applica al modello|गणना कर मॉडल पर लागू करें|Hesapla ve modele uygula
+Result|Resultado|결과|Ergebnis|Risultato|परिणाम|Sonuç
+Run the live sand proof|Iniciar demostración con arena|모래 증명 시작|Sandbeweis starten|Avvia prova con la sabbia|रेत से लाइव प्रमाण शुरू करें|Canlı kum ispatını başlat
+Surprise exam|Examen sorpresa|깜짝 시험|Überraschungsprüfung|Esame a sorpresa|अचानक परीक्षा|Sürpriz sınav
+Detailed theorem explanation|Explicación detallada del teorema|정리 자세히 설명|Ausführliche Erklärung des Satzes|Spiegazione dettagliata del teorema|प्रमेय की विस्तृत व्याख्या|Teoremin ayrıntılı açıklaması
+Move the sand again|Mover la arena otra vez|모래 다시 움직이기|Sand erneut bewegen|Sposta di nuovo la sabbia|रेत फिर चलाएँ|Kumu yeniden hareket ettir
+Ready: we will move the sand from a² and b² into c² to show that the areas are equal.|Listo: moveremos la arena de a² y b² a c² para mostrar que las áreas son iguales.|준비: a²와 b²의 모래를 c²로 옮겨 넓이가 같음을 보여 줍니다.|Bereit: Wir bewegen den Sand von a² und b² nach c² und zeigen die Flächengleichheit.|Pronto: spostiamo la sabbia da a² e b² a c² per mostrare l'uguaglianza delle aree.|तैयार: रेत a² और b² से c² में जाएगी और बराबर क्षेत्रफल दिखाएगी।|Hazır: a² ve b²'den kumu c²'ye taşıyıp alanların eşitliğini göreceğiz.
+Press “New question” and try to solve it before seeing the answer.|Pulsa «Nueva pregunta» y resuélvela antes de ver la respuesta.|'새 문제'를 누르고 정답을 보기 전에 풀어보세요.|Klicke auf „Neue Frage“ und löse sie ohne die Antwort anzusehen.|Premi «Nuova domanda» e prova a risolverla prima di vedere la risposta.|'नया प्रश्न' दबाकर उत्तर देखे बिना हल करें।|“Yeni soru”ya bas ve cevabı görmeden çöz.
+New question|Nueva pregunta|새 문제|Neue Frage|Nuova domanda|नया प्रश्न|Yeni soru
+Show solution|Mostrar solución|풀이 보기|Lösung zeigen|Mostra soluzione|हल दिखाएँ|Çözümü göster
+Local memory ready|Memoria local lista|로컬 메모리 준비됨|Lokaler Speicher bereit|Memoria locale pronta|स्थानीय स्मृति तैयार|Yerel bellek hazır
+Theorem explanation|Explicación del teorema|정리 설명|Satz-Erklärung|Spiegazione del teorema|प्रमेय का विवरण|Teorem açıklaması
+Detailed Pythagorean theorem explanation|Explicación detallada del teorema de Pitágoras|피타고라스 정리 자세한 설명|Ausführliche Erklärung des Satzes des Pythagoras|Spiegazione dettagliata del teorema di Pitagora|पाइथागोरस प्रमेय की विस्तृत व्याख्या|Pisagor Teoreminin ayrıntılı açıklaması
+What do the squares in the model mean?|¿Qué significan los cuadrados del modelo?|모델의 정사각형은 무엇을 뜻하나요?|Was bedeuten die Quadrate im Modell?|Cosa significano i quadrati del modello?|मॉडल के वर्गों का अर्थ क्या है?|Modeldeki kareler ne anlama geliyor?
+3–4–5 Example|Ejemplo 3–4–5|3–4–5 예시|3–4–5-Beispiel|Esempio 3–4–5|3–4–5 उदाहरण|3–4–5 örneği
+If one of the legs is unknown|Si se desconoce un cateto|직각변 하나가 미지수라면|Wenn eine Kathete unbekannt ist|Se un cateto è sconosciuto|यदि एक लंब भुजा अज्ञात हो|Dik kenarlardan biri bilinmiyorsa
+The converse is useful too|El recíproco también es útil|역도 유용합니다|Auch die Umkehrung ist nützlich|Anche il contrario è utile|विलोम भी उपयोगी है|Tersi de faydalıdır
+Where is it used?|¿Dónde se utiliza?|어디에 사용하나요?|Wo wird er verwendet?|Dove si usa?|कहाँ उपयोग होता है?|Nerelerde kullanılır?
+Important note|Nota importante|중요 사항|Wichtiger Hinweis|Nota importante|महत्त्वपूर्ण बात|Önemli not
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
