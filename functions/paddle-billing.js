@@ -237,4 +237,3 @@ exports.paddleClassoraSandboxWebhook = onRequest({
   }
 });
 
-exports._paddleBillingTest = { verifyPaddleSignature, identicalItems, selection };
