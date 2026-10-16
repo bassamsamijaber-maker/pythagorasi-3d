@@ -7,7 +7,14 @@ const esc=value=>String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;","
 const head=(h,v)=>"<h2>"+esc(h)+"</h2><p>"+esc(v)+"</p>";
 function render(kind,lang){
  const data=policies[lang];if(!data||!data[kind])return "";
- const p=data[kind],badge=kind==="privacy"?"PRIVACY POLICY":"CLASSORA / LEGAL";
+ const badgeTranslations={
+ es:{privacy:"POLÍTICA DE PRIVACIDAD",terms:"CLASSORA / INFORMACIÓN LEGAL"},
+ ko:{privacy:"개인정보 처리방침",terms:"CLASSORA / 이용 약관"},
+ de:{privacy:"DATENSCHUTZERKLÄRUNG",terms:"CLASSORA / RECHTLICHES"},
+ it:{privacy:"INFORMATIVA SULLA PRIVACY",terms:"CLASSORA / INFORMAZIONI LEGALI"},
+ hi:{privacy:"गोपनीयता नीति",terms:"CLASSORA / कानूनी जानकारी"},
+ tr:{privacy:"GİZLİLİK POLİTİKASI",terms:"CLASSORA / YASAL BİLGİLER"}};
+ const p=data[kind],badge=badgeTranslations[lang][kind];
  let html='<span class="eyebrow">'+esc(badge)+'</span><h1>'+esc(p.title)+'</h1><p>'+esc(p.intro)+'</p>';
  if(kind==="privacy"){
   html+='<h2>'+esc(p.info)+'</h2><ul>'+p.items.map(item=>'<li>'+esc(item)+'</li>').join("")+'</ul>';
@@ -23,5 +30,6 @@ function render(kind,lang){
  }
  return html+'<p class="updated">'+esc(p.updated)+'</p>';
 }
-window.ClassoraLegalTranslations={languages,locales:policies,render,title:(kind,lang)=>policies[lang]?.[kind]?.title||""};
+const defaultTitles={ar:{privacy:"الخصوصية في Classora",terms:"شروط استخدام Classora"},en:{privacy:"Privacy at Classora",terms:"Classora Terms of Use"}};
+window.ClassoraLegalTranslations={languages,locales:policies,render,title:(kind,lang)=>policies[lang]?.[kind]?.title||defaultTitles[lang]?.[kind]||""};
 })();
