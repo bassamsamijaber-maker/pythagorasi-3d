@@ -4297,7 +4297,7 @@ plaque.position.set(0,-4.70,.05);
 plaque.castShadow=true;
 root.add(plaque);
 const plaqueTxt=makeTextSprite(localStorage.getItem("pythagorasi_language")==="ar"?"نظرية فيثاغورس":"Pythagorean Theorem","#241a0a",42,.90);
-function updatePlaqueLanguage(){const canvas=plaqueTxt.material.map.image,ctx=canvas.getContext("2d");ctx.clearRect(0,0,512,256);ctx.fillStyle="#241a0a";ctx.font="900 42px Arial";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(currentUILanguage==="en"?"Pythagorean Theorem":"نظرية فيثاغورس",256,130);plaqueTxt.material.map.needsUpdate=true;}
+function updatePlaqueLanguage(){const canvas=plaqueTxt.material.map.image,ctx=canvas.getContext("2d");ctx.clearRect(0,0,512,256);ctx.fillStyle="#241a0a";ctx.font="900 42px Arial";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(currentUILanguage==="en"?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,"Pythagorean Theorem")||"Pythagorean Theorem"):"نظرية فيثاغورس",256,130);plaqueTxt.material.map.needsUpdate=true;}
 plaqueTxt.position.set(0,-4.69,.16);
 root.add(plaqueTxt);
 
@@ -4991,10 +4991,19 @@ function readTriangleValues(){
 
 function updateModelChangeText(){
  const a=currentA,b=currentB,c=currentC,solved={a,b,c}[unknownSide];
- const role=currentUILanguage==='en'?(unknownSide==='c'?'hypotenuse c':'side '+unknownSide):(unknownSide==='c'?'الوتر c':'الضلع '+unknownSide);
- lastChangeSummary=currentUILanguage==='en'?`Calculated ${role} = ${pretty(solved)}. Current values: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (hypotenuse).`:`حسبنا ${role} = ${pretty(solved)}. القيم الحالية: a = ${pretty(a)}، b = ${pretty(b)}، c = ${pretty(c)} (الوتر).`;
+ const role=currentUILanguage==='en'?(unknownSide==='c'?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,'hypotenuse')||'hypotenuse')+' c':(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,'side')||'side')+' '+unknownSide):(unknownSide==='c'?'الوتر c':'الضلع '+unknownSide);
+ const code=window.ClassoraLocale?.language||'en';
+  const summaryTemplates={
+   es:`Calculado ${role} = ${pretty(solved)}. Valores: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (hipotenusa).`,
+   ko:`${role} = ${pretty(solved)} 계산 완료. 현재 값: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (빗변).`,
+   de:`Berechnet: ${role} = ${pretty(solved)}. Werte: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (Hypotenuse).`,
+   it:`Calcolato ${role} = ${pretty(solved)}. Valori: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (ipotenusa).`,
+   hi:`${role} = ${pretty(solved)} की गणना हुई। मान: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (कर्ण)।`,
+   tr:`${role} = ${pretty(solved)} hesaplandı. Değerler: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (hipotenüs).`
+  };
+  lastChangeSummary=currentUILanguage==='en'?(summaryTemplates[code]||`Calculated ${role} = ${pretty(solved)}. Current values: a = ${pretty(a)}, b = ${pretty(b)}, c = ${pretty(c)} (hypotenuse).`):`حسبنا ${role} = ${pretty(solved)}. القيم الحالية: a = ${pretty(a)}، b = ${pretty(b)}، c = ${pretty(c)} (الوتر).`;
  const log=document.getElementById('changeLog');log.setAttribute('data-no-translate','');log.textContent=lastChangeSummary;
- const result=document.getElementById('result');result.setAttribute('data-no-translate','');result.textContent=(unknownSide==='c'?(currentUILanguage==='en'?'Hypotenuse c':'الوتر c'):unknownSide)+' = '+pretty(solved);
+ const result=document.getElementById('result');result.setAttribute('data-no-translate','');result.textContent=(unknownSide==='c'?(currentUILanguage==='en'?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,'Hypotenuse c')||'Hypotenuse c'):'الوتر c'):unknownSide)+' = '+pretty(solved);
 }
 function applyChange({silent=false}={}){
   document.getElementById("proofStatus").classList.remove("show");
@@ -5013,7 +5022,7 @@ function applyChange({silent=false}={}){
 
   document.getElementById("line1").textContent=`${pretty(a)}² + ${pretty(b)}² = ${pretty(c)}²`;
   document.getElementById("line2").textContent=`${pretty(a*a)} + ${pretty(b*b)} = ${pretty(c*c)}`;
-  document.getElementById("result").textContent=`${unknownSide==="c" ? "الوتر c" : unknownSide} = ${pretty({a,b,c}[unknownSide])}`;
+  document.getElementById("result").textContent=`${unknownSide==="c"?(currentUILanguage==="en"?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,"Hypotenuse c")||"Hypotenuse c"):"الوتر c"):unknownSide} = ${pretty({a,b,c}[unknownSide])}`;
   document.getElementById("aStat").textContent=pretty(a*a);
   document.getElementById("bStat").textContent=pretty(b*b);
   document.getElementById("cStat").textContent=pretty(c*c);
@@ -9375,6 +9384,8 @@ const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE
   ]
 ].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
 for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
+const PYTHAGORAS_ADDITIONAL_UI_PAIRS=[["الوضع النهاري","Day mode"],["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","Drag left/right or up/down to rotate within the front view"],["🔎 عجلة الماوس للتقريب","Use the mouse wheel to zoom"],["تسجيل خروج","Sign out"],["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. Sand is proportional to each square's area."],["0 نقاط","0 points"],["الصوت العربي • السرعة","Arabic voice • speed"],["عادي","Normal"],["إذن عندما a = 3 و b = 4 يكون طول الوتر c = 5.","When a = 3 and b = 4, the hypotenuse c = 5."],["مثلًا: إذا c = 13 و a = 5، فإن b = √(169 − 25) = √144 = 12.","Example: if c = 13 and a = 5, then b = √(169 − 25) = √144 = 12."],["في الهندسة، البناء، قياس المسافات، الخرائط، الإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والمسائل التي تتضمن مسافة قطرية أو زاوية قائمة.","It is used in geometry, construction, distances, maps, coordinates, 3D design and diagonal measurements."],["لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.","The formula a² + b² = c² works for right triangles only. Other triangles require different formulas, such as the cosine rule."],["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.","The model calculates the missing side and updates the shapes and sand."],["حل x و y مع رسم 3D قابل للتعديل","Solve x and y using an adjustable 3D graph"],["اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.","Ask about every Classora subject, including math, science, languages, history and geography."]];
+for(const [ar,en] of PYTHAGORAS_ADDITIONAL_UI_PAIRS){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
 const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
@@ -9481,7 +9492,7 @@ function translateElementNode(el){
     if(!el.hasAttribute(name))continue;
     const current=el.getAttribute(name),previous=attributes[name];
     const source=previous&&current===previous.rendered?previous.source:current;
-    const next=currentUILanguage==='en'?(window.ClassoraLocale?.t(uiPlaceholderTranslations.get(source)||translateTextValue(source)) ?? (uiPlaceholderTranslations.get(source)||translateTextValue(source))):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
+    const next=currentUILanguage==='en'?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,uiPlaceholderTranslations.get(source)||translateTextValue(source)) ?? (uiPlaceholderTranslations.get(source)||translateTextValue(source))):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
     attributes[name]={source,rendered:next};if(current!==next)el.setAttribute(name,next);
   }
   uiAttributeTranslations.set(el,attributes);
@@ -9549,7 +9560,7 @@ function applySiteLanguage(lang,save=true){
   document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
   document.body.classList.toggle('lang-en',currentUILanguage==='en');
   document.title='Classora';
-  const firstName=String(window.PythagorasiUser?.displayName||'').trim().split(/\s+/)[0];if(firstName)document.getElementById('lobbyGreeting').textContent=currentUILanguage==='en'?`Welcome, ${firstName}`:`أهلًا ${firstName}`;
+  const firstName=String(window.PythagorasiUser?.displayName||'').trim().split(/\s+/)[0];if(firstName){const prefix=currentUILanguage==='en'?(window.ClassoraLocale?.tFor?.(selectedLanguage,"Welcome, ")||"Welcome, "):"أهلًا ";document.getElementById("lobbyGreeting").textContent=prefix+firstName}
   if(save)localStorage.setItem('pythagorasi_language',selectedLanguage);
   document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
   translateSubtree(document.body);
@@ -9561,7 +9572,7 @@ function applySiteLanguage(lang,save=true){
   try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
   try{
     const frame=document.getElementById("periodicTableFrame");
-    if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:currentUILanguage},location.origin);
+    if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:selectedLanguage},location.origin);
   }catch{}
   window.ClassoraLocale.syncControls();
   translateSubtree(document.body);
@@ -9594,12 +9605,12 @@ setTimeout(()=>{
 /* -------------------- V58 EMBEDDED SUBJECT PAGE ENHANCEMENT -------------------- */
 const periodicTableFrame=document.getElementById("periodicTableFrame");
 periodicTableFrame?.addEventListener("load",()=>{
-  try{periodicTableFrame.contentWindow?.postMessage({type:"classora-language",lang:currentUILanguage},location.origin)}catch{}
+  try{periodicTableFrame.contentWindow?.postMessage({type:"classora-language",lang:window.ClassoraLocale.language},location.origin)}catch{}
 });
 window.addEventListener("message",event=>{
   if(event.origin!==location.origin)return;
   if(event.source!==periodicTableFrame?.contentWindow)return;
-  if(event.data?.type==="classora-subject-language"){applySiteLanguage(event.data.lang==="ar"?"ar":"en");}
+  if(event.data?.type==="classora-subject-language"&&Object.hasOwn(window.ClassoraLocale.languages,event.data.lang)){applySiteLanguage(event.data.lang);}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
     try{if(event.data?.returnTo==="science")sessionStorage.setItem("classora_subject_origin","science")}catch{}
     classoraReturnFromPeriodic();
@@ -9612,7 +9623,7 @@ window.addEventListener("hashchange",()=>{
   if(leftPeriodic){classoraReturnFromPeriodic();return}
   if(location.hash==="#periodic-table"){
     document.getElementById("periodic-table")?.style.removeProperty("display");
-    try{periodicTableFrame?.contentWindow?.postMessage({type:"classora-language",lang:currentUILanguage},location.origin)}catch{}
+    try{periodicTableFrame?.contentWindow?.postMessage({type:"classora-language",lang:window.ClassoraLocale.language},location.origin)}catch{}
   }else if(location.hash==="#platformLobby"){
     showPlatformLobby();
     classoraRestoreLobbyPosition();
