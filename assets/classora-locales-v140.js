@@ -1577,6 +1577,33 @@ Change denominator|Cambiar denominador|분모 변경|Nenner ändern|Cambia denom
 Denominator|Denominador|분모|Nenner|Denominatore|हर|Payda
 Change added value|Cambiar valor añadido|추가 값 변경|Addierten Wert ändern|Cambia valore aggiunto|जोड़ा गया मान बदलें|Eklenen değeri değiştir
 Added number|Número añadido|추가한 수|Addierte Zahl|Numero aggiunto|जोड़ी गई संख्या|Eklenen sayı
+Change result|Cambiar resultado|결과 변경|Ergebnis ändern|Cambia risultato|परिणाम बदलें|Sonucu değiştir
+Right side|Lado derecho|오른쪽|Rechte Seite|Lato destro|दायाँ पक्ष|Sağ taraf
+Solution: x =|Solución: x =|해: x =|Lösung: x =|Soluzione: x =|हल: x =|Çözüm: x =
+Change item price|Cambiar precio del artículo|물품 가격 변경|Artikelpreis ändern|Cambia prezzo dell'articolo|वस्तु का मूल्य बदलें|Ürün fiyatını değiştir
+Change quantity|Cambiar cantidad|수량 변경|Menge ändern|Cambia quantità|मात्रा बदलें|Miktarı değiştir
+Change right side|Cambiar lado derecho|오른쪽 값 변경|Rechte Seite ändern|Cambia lato destro|दायाँ पक्ष बदलें|Sağ tarafı değiştir
+Value|Valor|값|Wert|Valore|मान|Değer
+Spin|Girar|회전|Drehen|Gira|घुमाएँ|Çevir
+Spin to run a random trial|Gira para hacer una prueba aleatoria|돌려서 무작위 실험을 실행하세요|Für einen Zufallsversuch drehen|Gira per una prova casuale|यादृच्छिक परीक्षण के लिए घुमाएँ|Rastgele deneme için çevir
+Current|Actual|현재|Aktuell|Attuale|वर्तमान|Geçerli
+Ray angle|Ángulo del rayo|빛의 각도|Strahlwinkel|Angolo del raggio|किरण का कोण|Işın açısı
+Electrons|Electrones|전자|Elektronen|Elettroni|इलेक्ट्रॉन|Elektronlar
+Reaction level|Nivel de reacción|반응 수준|Reaktionsstufe|Livello di reazione|प्रतिक्रिया स्तर|Tepkime seviyesi
+Zoom level|Nivel de zoom|확대 수준|Zoomstufe|Livello zoom|ज़ूम स्तर|Yakınlaştırma seviyesi
+Available energy|Energía disponible|이용 가능한 에너지|Verfügbare Energie|Energia disponibile|उपलब्ध ऊर्जा|Kullanılabilir enerji
+Tap a card to inspect the grammatical role|Toca una tarjeta para ver la función gramatical|카드를 눌러 문법 역할을 확인하세요|Tippe auf eine Karte für die grammatische Funktion|Tocca una scheda per il ruolo grammaticale|व्याकरणिक भूमिका देखने के लिए कार्ड दबाएँ|Dil bilgisi görevini görmek için karta dokun
+Change example|Cambiar ejemplo|예시 변경|Beispiel ändern|Cambia esempio|उदाहरण बदलें|Örneği değiştir
+CAUSE|CAUSA|원인|URSACHE|CAUSA|कारण|NEDEN
+EVENT|ACONTECIMIENTO|사건|EREIGNIS|EVENTO|घटना|OLAY
+RESULT|RESULTADO|결과|ERGEBNIS|RISULTATO|परिणाम|SONUÇ
+Next event|Siguiente acontecimiento|다음 사건|Nächstes Ereignis|Evento successivo|अगली घटना|Sonraki olay
+Plate movement|Movimiento de placas|판의 이동|Plattenbewegung|Movimento delle placche|प्लेट की गति|Levha hareketi
+Impact factor|Factor de impacto|영향 요인|Einflussfaktor|Fattore d'impatto|प्रभाव कारक|Etki faktörü
+What is the total?|¿Cuál es el total?|합계는 얼마인가요?|Wie groß ist die Summe?|Qual è il totale?|कुल कितना है?|Toplam kaçtır?
+Result:|Resultado:|결과:|Ergebnis:|Risultato:|परिणाम:|Sonuç:
+Not enough reviewed questions for this lesson.|No hay suficientes preguntas revisadas para esta lección.|이 수업에는 검토된 문제가 충분하지 않습니다.|Nicht genug geprüfte Fragen für diese Lektion.|Non ci sono abbastanza domande verificate per la lezione.|इस पाठ के लिए पर्याप्त जाँचे गए प्रश्न नहीं हैं।|Bu ders için yeterince incelenmiş soru yok.
+This lesson needs a reviewed question bank before practice is available.|Esta lección necesita un banco de preguntas revisadas antes de ofrecer prácticas.|연습을 제공하기 전에 검토된 문제은행이 필요합니다.|Für Übungen braucht die Lektion zunächst eine geprüfte Fragenbank.|Servono domande verificate prima di poter fare esercizi.|अभ्यास से पहले इस पाठ के लिए जाँचे हुए प्रश्नों का बैंक चाहिए।|Alıştırma sunulmadan önce bu dersin incelenmiş soru bankası gerekir.
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
