@@ -125,9 +125,13 @@ tr:{
 };
 function forPlan(lang,kind,tier){
  const d=dict[lang]||dict.en;
- const items=tier==="premium"?d.premium:d.plus;
- // Classroom plans cover student benefit tiers; school plans cover teachers.
- // Separate category details are displayed at the beginning of each tier.
+ const source=tier==="premium"?d.premium:d.plus;
+ // Class purchases cover selected students. School purchases cover teachers.
+ // Never show teacher-only reporting or assessment authoring in student plans.
+ const studentOrClass=(kind==="student"||kind==="class");
+ const items=tier==="premium"&&studentOrClass
+   ?source.filter((_,index)=>![7,8,10].includes(index))
+   :source;
  return [...d[kind],...items];
 }
 window.ClassoraMemberPlanInfo=Object.freeze({
