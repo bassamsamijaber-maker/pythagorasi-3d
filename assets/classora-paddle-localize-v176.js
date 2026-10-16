@@ -7,7 +7,7 @@
   "use strict";
   let catalog=null, locale="ar", notify=()=>{}, initialized=false, loading=false, localized=false;
   let unitPrices=new Map(), currency="ILS", country="", tokenConfigured=false, unavailable=false;
-  const totals=new Map(), pending=new Set();
+  const totals=new Map(), pending=new Set(), totalsFailed=new Set();
   let lastSelection="", sequence=0;
   const supported = ["student_plus","student_premium","teacher_plus","teacher_premium","class_plus","class_premium","school_plus","school_premium","extra_student","extra_teacher"];
   const msg={
@@ -61,7 +61,7 @@
     const extra=Math.max(0,seats-base);
     if(!extra)return;
     const cacheKey=[kind,tier,period,seats].join(":");
-    if(pending.has(cacheKey)||totals.has(cacheKey))return;
+    if(pending.has(cacheKey)||totals.has(cacheKey)||totalsFailed.has(cacheKey))return;
     const mainId=catalog.products[kind+"_"+tier]?.[period]?.priceId;
     const addonId=catalog.products[kind==="class"?"extra_student":"extra_teacher"]?.[period]?.priceId;
     if(!mainId||!addonId)return;
@@ -76,7 +76,7 @@
         if(!display)throw Error("Paddle total could not be formatted");
         totals.set(cacheKey,display);
         notify();
-      }).catch(e=>console.warn("Paddle seat pricing preview unavailable",e))
+      }).catch(e=>{totalsFailed.add(cacheKey);console.warn("Paddle seat pricing preview unavailable",e);notify();})
       .finally(()=>pending.delete(cacheKey));
   }
   function updateSelection(kind,tier,period,seats){
