@@ -58,7 +58,7 @@ for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLAN
  assert(index.includes('const '+label+'='),label+' missing');
 for(const [file,version] of [['assets/classora-locales-v140.js',161],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',159]])
  assert(index.includes(file+'?v='+version),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v162-consistent-localized-assets'));
+assert(read('service-worker.js').includes('classora-v163-recovery-and-language-labels'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
@@ -84,6 +84,9 @@ for(const language of languages){
   assert(locale.tFor(language,key).trim(),language+' missing numeric UI '+key);
 }
 assert(read('study-offline.html').includes('<option value="tr">Türkçe</option>'));
+assert(index.includes('id="sessionRecoveryRetry">حاول مجددًا</button>'));
+assert(index.includes('uiExactTranslations.set("دخول بحساب Google","Sign in with Google")'));
+
 assert(read('assets/study-offline-v130.js').includes('tFor?.(language,b)'));
 
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
