@@ -58,7 +58,7 @@ for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLAN
  assert(index.includes('const '+label+'='),label+' missing');
 for(const [file,version] of [['assets/classora-locales-v140.js',161],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',159]])
  assert(index.includes(file+'?v='+version),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v164-legal-all-eight-languages'));
+assert(read('service-worker.js').includes('classora-v165-complete-legal-localization'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
@@ -112,14 +112,14 @@ for(const language of languages){
  }
 }
 for(const page of [standalonePrivacy,standaloneTerms]){
- assert(page.includes('classora-legal-translations-v164.js?v=164'),'Standalone legal translations not loaded');
+ assert(page.includes('classora-legal-translations-v164.js?v=165'),'Standalone legal translations not loaded');
  assert(page.includes("const codes=['ar','en','es','ko','de','it','hi','tr']"),'Not all eight legal languages selectable');
  const inlineScripts=[...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(Boolean);
  for(const script of inlineScripts)new Function(script);
 }
 assert(legalModule.includes("ClassoraLegalTranslations.render(policy,language)"),'In-app legal dialog has no translated policy');
 assert(legalModule.includes("document.documentElement.lang)?document.documentElement.lang:'en'"),'Legal dialog does not use selected language');
-assert(index.includes('classora-legal-v124.js?v=164'),'Main website has stale legal document module');
-assert(read('service-worker.js').includes('classora-legal-translations-v164.js?v=164'),'Legal files missing from offline cache');
+assert(index.includes('classora-legal-v124.js?v=165'),'Main website has stale legal document module');
+assert(read('service-worker.js').includes('classora-legal-translations-v164.js?v=165'),'Legal files missing from offline cache');
 
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
