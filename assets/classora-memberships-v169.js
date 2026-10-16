@@ -46,6 +46,9 @@ const catalogStatusMessages={
 };
 function catalogRecord(key,period){return liveCatalog?.products?.[key]?.[period]||null;}
 function currentCatalogPrice(key,period,fallback){return catalogRecord(key,period)?.amountIls??fallback;}
+function shownPlanPrice(key,period,fallback) {
+ return window.ClassoraPriceLocalization?.priceFor(key,period)||price(currentCatalogPrice(key,period,fallback));
+}
 function currentSelection(){
  if(!liveCatalog||state.account?.admin)return null;
  const key=state.kind+"_"+state.tier;
@@ -78,6 +81,7 @@ async function loadLiveCatalog(){
   }
   if(seen.size!==20)throw Error("Missing Live price");
   liveCatalog=data;
+  window.ClassoraPriceLocalization?.start(data,{onChange:()=>render()});
  }catch(e){console.error("Live catalog load failed",e);catalogLoadError=true;}
  render();
 }
@@ -133,7 +137,7 @@ function render(){
  put("cl-role-note",state.account?(info?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):info?.text(state.lang,"roleGuest")||"");
  put("cl-base-benefits",info?.text(state.lang,"base")||"");
  put("cl-benefits-disclaimer",info?.text(state.lang,"note")||"");
- put("cl-currency-info",info?.text(state.lang,"price")||"");
+ put("cl-currency-info",window.ClassoraPriceLocalization?.note(state.lang)||info?.text(state.lang,"price")||"");
  // Customers see product prices, not internal Live/Sandbox deployment details.
  $("cl-catalog-status").hidden=true;
 
@@ -142,7 +146,7 @@ function render(){
  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",state.period===b.dataset.period));
  document.querySelectorAll(".cl-plan").forEach(card=>card.classList.toggle("selected",card.dataset.tier===state.tier));
  for(const tier of ["plus","premium"]){
-   put("cl-"+tier+"-price",price(currentCatalogPrice(state.kind+"_"+tier,state.period,prices[state.kind][tier][state.period])));
+   put("cl-"+tier+"-price",shownPlanPrice(state.kind+"_"+tier,state.period,prices[state.kind][tier][state.period]));
    $("cl-"+tier+"-price").dir="ltr";
    put("cl-"+tier+"-term",t(state.period==="monthly"?"termMonth":"termYear"));
    const list=$("cl-"+tier+"-features");list.replaceChildren();
@@ -157,7 +161,9 @@ function render(){
  put("cl-role-note",state.account?(window.ClassoraMemberPlanInfo?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):window.ClassoraMemberPlanInfo?.text(state.lang,"roleGuest")||"");
  put("cl-summary-period",t(state.period==="monthly"?"monthly":"annual"));
  put("cl-summary-seats",String(extraSeats()));
- put("cl-total",price(total()));
+ const localizedTotal=window.ClassoraPriceLocalization?.totalFor(state.kind,state.tier,state.period,state.seats);
+ put("cl-total",state.account?.admin?price(0):(localizedTotal||price(total())));
+ window.ClassoraPriceLocalization?.updateSelection(state.kind,state.tier,state.period,state.seats);
  $("cl-total").dir="ltr";
  const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
  // Technical catalog diagnostics remain hidden from regular buyers.
