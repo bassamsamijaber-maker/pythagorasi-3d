@@ -151,7 +151,7 @@ body.classora-intro-active{overflow:auto!important}
   setTimeout(finish,3600);
 })();</script>
 <div id="cw116Wait" aria-live="polite" aria-label="Loading Classora"><div class="cw116-wait-mark">Classora</div><span>Loading your workspace…</span></div>
-<div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">Try again / حاول مجددًا</button></div>
+<div id="sessionRecovery" hidden><p id="sessionRecoveryText"></p><button type="button" id="sessionRecoveryRetry">حاول مجددًا</button></div>
 <div class="auth-gate show" id="authGate" aria-modal="true" role="dialog">
   <div class="auth-panel" id="authPanel" style="position:relative">
     <button class="site-theme-toggle auth-theme-toggle" id="authThemeBtn" type="button" aria-label="تبديل الوضع">☀️ نهار</button>
@@ -9385,6 +9385,8 @@ const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE
 for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
 const PYTHAGORAS_ADDITIONAL_UI_PAIRS=[["الوضع النهاري","Day mode"],["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","Drag left/right or up/down to rotate within the front view"],["🔎 عجلة الماوس للتقريب","Use the mouse wheel to zoom"],["تسجيل خروج","Sign out"],["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. Sand is proportional to each square's area."],["0 نقاط","0 points"],["الصوت العربي • السرعة","Arabic voice • speed"],["عادي","Normal"],["إذن عندما a = 3 و b = 4 يكون طول الوتر c = 5.","When a = 3 and b = 4, the hypotenuse c = 5."],["مثلًا: إذا c = 13 و a = 5، فإن b = √(169 − 25) = √144 = 12.","Example: if c = 13 and a = 5, then b = √(169 − 25) = √144 = 12."],["في الهندسة، البناء، قياس المسافات، الخرائط، الإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والمسائل التي تتضمن مسافة قطرية أو زاوية قائمة.","It is used in geometry, construction, distances, maps, coordinates, 3D design and diagonal measurements."],["لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.","The formula a² + b² = c² works for right triangles only. Other triangles require different formulas, such as the cosine rule."],["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.","The model calculates the missing side and updates the shapes and sand."],["حل x و y مع رسم 3D قابل للتعديل","Solve x and y using an adjustable 3D graph"],["اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.","Ask about every Classora subject, including math, science, languages, history and geography."]];
 for(const [ar,en] of PYTHAGORAS_ADDITIONAL_UI_PAIRS){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
+uiExactTranslations.set("حاول مجددًا","Try again");
+uiExactTranslations.set("دخول بحساب Google","Sign in with Google");
 const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
