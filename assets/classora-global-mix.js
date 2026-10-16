@@ -5,10 +5,12 @@
   function localizeHero() {
     const hero = document.getElementById("classoraMixHero");
     if (!hero) return;
-    const locale = isEnglish() ? "en" : "ar";
+    const locale = document.documentElement.lang || "en";
     hero.querySelectorAll("[data-mix-ar][data-mix-en]").forEach(el => {
-      const value = el.getAttribute("data-mix-" + locale);
-      if (value !== null && el.textContent !== value) el.textContent = value;
+      const english = el.getAttribute("data-mix-en") || "";
+      const arabic = el.getAttribute("data-mix-ar") || "";
+      const value = locale==="ar" ? arabic : (window.ClassoraLocale?.tFor?.(locale,english) || english);
+      if (el.textContent !== value) el.textContent = value;
     });
     hero.setAttribute("lang", locale);
     hero.setAttribute("dir", locale === "ar" ? "rtl" : "ltr");
