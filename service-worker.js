@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v162-consistent-localized-assets";
+const CACHE_NAME="classora-v163-recovery-and-language-labels";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
