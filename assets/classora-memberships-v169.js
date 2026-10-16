@@ -84,7 +84,11 @@ async function loadLiveCatalog(){
 
 function t(key){const idx=keys.indexOf(key);return idx>=0?(translationRows[state.lang][idx]||translationRows.en[idx]):key;}
 function put(id,value){const el=$(id);if(el)el.textContent=value;}
-function price(num){return new Intl.NumberFormat(state.lang,{style:"currency",currency:"ILS",minimumFractionDigits:2,maximumFractionDigits:2}).format(num);}
+function price(num){
+ // Never multiply an ILS price by 100 or show it as a foreign currency.
+ // Paddle checkout, not this static card, controls any country conversion.
+ return "₪" + new Intl.NumberFormat("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(num)||0);
+}
 function minSeats(){return state.kind==="class"?35:state.kind==="school"?55:0;}
 function extraSeats(){return Math.max(0,state.seats-minSeats());}
 function total(){
@@ -121,25 +125,42 @@ function render(){
  put("cl-account-subtitle",state.account?t("checked")+state.account.name:t("guestMessage"));
  put("cl-account-icon",state.account?.admin?"✦":state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
- $("cl-admin").hidden=!state.account?.admin;
+ const admin=!!state.account?.admin;
+ $("cl-admin").hidden=!admin;
+ document.querySelector(".cl-pricing").hidden=admin;
+ document.querySelector(".cl-checkout-preview").hidden=admin;
+ const info=window.ClassoraMemberPlanInfo;
+ put("cl-role-note",state.account?(info?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):info?.text(state.lang,"roleGuest")||"");
+ put("cl-base-benefits",info?.text(state.lang,"base")||"");
+ put("cl-benefits-disclaimer",info?.text(state.lang,"note")||"");
+ put("cl-currency-info",info?.text(state.lang,"price")||"");
+ // Customers see product prices, not internal Live/Sandbox deployment details.
+ $("cl-catalog-status").hidden=true;
+
  if(state.allowed.length&&!state.allowed.includes(state.kind))state.kind=state.allowed[0];
  document.querySelectorAll("[data-kind]").forEach(b=>{b.classList.toggle("allowed",state.allowed.includes(b.dataset.kind));b.classList.toggle("active",state.kind===b.dataset.kind);b.disabled=!state.allowed.includes(b.dataset.kind);});
  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",state.period===b.dataset.period));
  document.querySelectorAll(".cl-plan").forEach(card=>card.classList.toggle("selected",card.dataset.tier===state.tier));
  for(const tier of ["plus","premium"]){
    put("cl-"+tier+"-price",price(currentCatalogPrice(state.kind+"_"+tier,state.period,prices[state.kind][tier][state.period])));
+   $("cl-"+tier+"-price").dir="ltr";
    put("cl-"+tier+"-term",t(state.period==="monthly"?"termMonth":"termYear"));
    const list=$("cl-"+tier+"-features");list.replaceChildren();
-   for(const value of features[state.lang][tier]){const li=document.createElement("li");li.textContent=value;list.append(li);}
+   const details=window.ClassoraMemberPlanInfo?.get(state.lang,state.kind,tier)
+      ||features[state.lang][tier];
+   for(const value of details){const li=document.createElement("li");li.textContent=value;list.append(li);}
  }
  const min=minSeats();$("cl-seat-row").hidden=!min;
  if(min&&state.seats<min)state.seats=min;
  $("cl-seats").min=String(min||1);$("cl-seats").value=String(state.seats);
  put("cl-summary-title",t(state.kind)+" "+state.tier.toUpperCase());
+ put("cl-role-note",state.account?(window.ClassoraMemberPlanInfo?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):window.ClassoraMemberPlanInfo?.text(state.lang,"roleGuest")||"");
  put("cl-summary-period",t(state.period==="monthly"?"monthly":"annual"));
  put("cl-summary-seats",String(extraSeats()));
  put("cl-total",price(total()));
+ $("cl-total").dir="ltr";
  const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
+ // Technical catalog diagnostics remain hidden from regular buyers.
  put("cl-catalog-status",status[catalogLoadError?2:liveCatalog?1:0]);
  $("cl-catalog-status").dataset.status=catalogLoadError?"error":liveCatalog?"linked":"loading";
  put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?t("adminFree"):"");
@@ -147,16 +168,18 @@ function render(){
 }
 async function identify(user){
  state.checking=false;
- if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher","class","school"];state.error=false;render();return;}
+ if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher"];state.kind="student";state.error=false;render();return;}
  try{
   const profile=await getDoc(doc(db,"users",user.uid));if(!profile.exists())throw Error("Missing profile");
   const p=profile.data();if(!["student","teacher"].includes(p.role))throw Error("Invalid user role");
-  let staff=null;
-  try{const s=await getDoc(doc(db,"staffAccess",user.uid));if(s.exists())staff=s.data();}catch(e){console.warn("Optional admin role lookup",e)}
+  let staff=null,owner=null;
+  try{const s=await getDoc(doc(db,"staffAccess",user.uid));if(s.exists())staff=s.data();}catch(e){console.warn("Optional staff lookup",e)}
+  try{const o=await getDoc(doc(db,"profileIds","3228667330"));if(o.exists())owner=o.data();}catch(e){console.warn("Optional owner lookup",e)}
   if(auth.currentUser?.uid!==user.uid)return;
-  const admin=String(p.profileId||"")==="3228667330"||(staff&&staff.active!==false&&staff.role==="admin");
+  const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
   state.account={uid:user.uid,role:p.role,admin,name:String(p.displayName||user.displayName||"")};
-  state.allowed=admin?["student","teacher","class","school"]:p.role==="teacher"?["teacher","class"]:["student"];
+  state.allowed=admin?[]:p.role==="teacher"?["teacher","class","school"]:["student"];
+  state.kind=admin?p.role:state.allowed[0];
   state.kind=state.allowed[0];state.tier="plus";state.error=false;
  }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.allowed=[];state.error=true;}
  render();
@@ -177,4 +200,3 @@ $("cl-continue").addEventListener("click",()=>{
  put("cl-payment-status",t("prelaunch"));
 });
 logos();render();onAuthStateChanged(auth,identify);loadLiveCatalog();
-logos();render();onAuthStateChanged(auth,identify);
