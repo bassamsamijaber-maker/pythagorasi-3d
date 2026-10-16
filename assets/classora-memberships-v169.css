@@ -107,3 +107,9 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 .cl-continue:hover{transform:translateY(-1px);filter:brightness(1.06)}
 .cl-plan-select{min-height:48px;font-size:14px;box-shadow:0 10px 25px #102f243b}
 @media(max-width:600px){.cl-method{min-height:88px}.cl-method-brand{height:46px}.cl-method-brand svg{height:39px;max-width:96px}.cl-method>span:last-child{font-size:10px}}
+
+/* V172: clearly separate loaded live catalog metadata from real payment availability. */
+.cl-live-catalog{display:flex;align-items:center;gap:8px;max-width:max-content;border:1px solid #3b7566;background:#10392f;color:#bee9d5;font-weight:750;font-size:12px;border-radius:13px;padding:8px 12px;margin:0 0 15px}
+.cl-live-catalog[data-status="loading"]{border-color:#5c7276;color:#b8d1da;background:#1d3038}
+.cl-live-catalog[data-status="error"]{border-color:#9d695c;color:#ffe0ce;background:#482b28}
+@media(max-width:600px){.cl-live-catalog{max-width:100%;line-height:1.7;font-size:11px}}
