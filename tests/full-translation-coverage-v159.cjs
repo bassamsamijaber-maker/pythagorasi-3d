@@ -58,6 +58,21 @@ for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLAN
  assert(index.includes('const '+label+'='),label+' missing');
 for(const file of ['assets/classora-locales-v140.js','assets/curriculum-v97.js','chemistry/periodic-table.html'])
  assert(index.includes(file+'?v=159'),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v159-full-lab-elements-locales'));
+assert(read('service-worker.js').includes('classora-v160-expanded-ui-localization'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
+
+for(const language of languages){
+ for(const key of [
+  'Choose a grade, then a subject, then a topic. Questions stay tied to the selected lesson.',
+  '1. Choose grade','2. Choose subject','3. Search topics','Search for a lesson…',
+  'Unknown topic.','No matching topics','No matching topics. Try a different keyword.',
+  'Topics for '+locale.formatGrade(8,language),
+  'Search a '+locale.formatGrade(8,language)+' topic',
+  '12 topics in '+locale.formatGrade(8,language),
+  'This topic is listed in the curriculum, but does not yet have 8 distinct, reviewed questions at this level. Choose a smaller count or another topic. Unrelated filler questions will not be used.'
+ ])assert.notEqual(locale.tFor(language,key),key,language+' leaked English: '+key);
+}
+assert(read('assets/classora-assessment-v121.js').includes('tFor?.(lang,en)'));
+assert(read('assets/classora-competition-topics-v122.js').includes('tFor?.(lang(),en)'));
+
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
