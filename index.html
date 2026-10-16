@@ -4818,6 +4818,12 @@ function bezier3(a,b,c,t,out){
   return out;
 }
 
+const CLASSORA_PYTHAGORAS_PROOF_TEXT={"es":["Paso 1/3: la arena sale de <b>a²</b> y <b>b²</b> para sumar las dos áreas.","Paso 2/3: la arena conserva su color, dorado de a² y azul de b², y se mueve a <b>c²</b>.","Paso 3/3: <b>c²</b> se llena exactamente con la suma de ambas áreas.","La arena de <b>a² = {a}</b> y <b>b² = {b}</b> se mueve hacia <b>c²</b>.","✅ Demostración completa: <b>{a} + {b} = {c}</b>. Así, <b>a² + b² = c²</b>."],"ko":["1/3단계: <b>a²</b>와 <b>b²</b>의 모래로 두 넓이를 합칩니다.","2/3단계: 모래는 색을 유지하며 <b>c²</b>로 이동합니다.","3/3단계: <b>c²</b> 정사각형이 두 넓이의 합으로 채워집니다.","<b>a² = {a}</b>와 <b>b² = {b}</b>의 모래가 <b>c²</b>로 이동합니다.","✅ 증명 완료: <b>{a} + {b} = {c}</b>. 따라서 <b>a² + b² = c²</b>입니다."],"de":["Schritt 1/3: Sand aus <b>a²</b> und <b>b²</b> wird zusammengeführt.","Schritt 2/3: Der Sand behält seine Farbe und wandert nach <b>c²</b>.","Schritt 3/3: <b>c²</b> wird genau mit beiden Flächen gefüllt.","Der Sand aus <b>a² = {a}</b> und <b>b² = {b}</b> wandert zu <b>c²</b>.","✅ Beweis abgeschlossen: <b>{a} + {b} = {c}</b>. Daher gilt <b>a² + b² = c²</b>."],"it":["Passaggio 1/3: uniamo la sabbia dei quadrati <b>a²</b> e <b>b²</b>.","Passaggio 2/3: la sabbia conserva il colore e passa a <b>c²</b>.","Passaggio 3/3: <b>c²</b> si riempie esattamente con le due aree.","La sabbia da <b>a² = {a}</b> e <b>b² = {b}</b> passa a <b>c²</b>.","✅ Dimostrazione completa: <b>{a} + {b} = {c}</b>, quindi <b>a² + b² = c²</b>."],"hi":["चरण 1/3: <b>a²</b> और <b>b²</b> की रेत जोड़ें।","चरण 2/3: रेत अपना रंग रखकर <b>c²</b> में जाती है।","चरण 3/3: <b>c²</b> का वर्ग दोनों क्षेत्रफलों के योग से भरता है।","<b>a² = {a}</b> और <b>b² = {b}</b> की रेत <b>c²</b> में जाती है।","✅ प्रमाण पूरा: <b>{a} + {b} = {c}</b>, इसलिए <b>a² + b² = c²</b>।"],"tr":["Adım 1/3: <b>a²</b> ve <b>b²</b> karelerinin kumlarını birleştiriyoruz.","Adım 2/3: Kum rengini koruyarak <b>c²</b> karesine geçiyor.","Adım 3/3: <b>c²</b> karesi iki alanın toplamıyla tam doluyor.","<b>a² = {a}</b> ve <b>b² = {b}</b> kumları <b>c²</b> karesine gidiyor.","✅ İspat tamam: <b>{a} + {b} = {c}</b>; yani <b>a² + b² = c²</b>."]};
+function localizedProofText(phase){
+ const lang=window.ClassoraLocale?.language||'en',list=CLASSORA_PYTHAGORAS_PROOF_TEXT[lang];
+ if(!list)return '';
+ return (list[phase]||'').replaceAll('{a}',pretty(currentA*currentA)).replaceAll('{b}',pretty(currentB*currentB)).replaceAll('{c}',pretty(currentC*currentC));
+}
 function startProof(){
   if(!proofTrays || proofRunning)return;
 
@@ -4845,14 +4851,14 @@ function startProof(){
   const btn=document.getElementById("proofBtn");
   btn.disabled=true;
   btn.classList.add("running");
-  btn.textContent="⏳ البرهان شغّال الآن...";
+  btn.textContent=currentUILanguage==="ar"?"⏳ البرهان شغّال الآن...":"⏳ "+(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,"Proof running...")||"Proof running...");
 
   const status=document.getElementById("proofStatus");
   status.classList.add("show");
   document.getElementById("proofMeter").style.width="0%";
-  document.getElementById("proofText").innerHTML=currentUILanguage==="en"
+  document.getElementById("proofText").innerHTML=localizedProofText(3)||(currentUILanguage==="en"
     ?`We started with <b>a² = ${pretty(currentA*currentA)}</b> and <b>b² = ${pretty(currentB*currentB)}</b>. The sand is now moving into the <b>c²</b> square.`
-    :`بدأنا من <b>a² = ${pretty(currentA*currentA)}</b> و <b>b² = ${pretty(currentB*currentB)}</b>. الآن الرمل ينتقل إلى مربع <b>c²</b>.`;
+    :`بدأنا من <b>a² = ${pretty(currentA*currentA)}</b> و <b>b² = ${pretty(currentB*currentB)}</b>. الآن الرمل ينتقل إلى مربع <b>c²</b>.`);
 
   showToast("▶ بدأ البرهان الحي: نجمع الرمل من a² و b² داخل c².");
 }
@@ -4893,19 +4899,12 @@ function updateProof(now){
 
   document.getElementById("proofMeter").style.width=`${Math.round(t*100)}%`;
 
-  if(t<.33){
-    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
-      ?`Step 1/3: Empty the sand from <b>a²</b> and <b>b²</b> and begin combining the two areas.`
-      :`المرحلة 1/3: نفرّغ الرمل من <b>a²</b> و <b>b²</b> ونبدأ جمع المساحتين.`;
-  }else if(t<.78){
-    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
-      ?`Step 2/3: Each group of sand keeps <b>its color</b>: gold from a² and blue from b² move into c².`
-      :`المرحلة 2/3: كل رمل ينتقل <b>بنفس لونه</b>: الذهبي من a² والأزرق من b² إلى c².`;
-  }else{
-    document.getElementById("proofText").innerHTML=currentUILanguage==="en"
-      ?`Step 3/3: The <b>c²</b> square fills exactly with the combined amount.`
-      :`المرحلة 3/3: مربع <b>c²</b> يمتلئ بمجموع الكميتين تمامًا.`;
-  }
+  const phase=t<.33?0:t<.78?1:2;
+  const localizedPhase=localizedProofText(phase);
+  if(localizedPhase)document.getElementById("proofText").innerHTML=localizedPhase;
+  else document.getElementById("proofText").innerHTML=localizedProofText(4)||(currentUILanguage==="en"
+    ?["Step 1/3: Combine sand from a² and b².","Step 2/3: Move both colors into c².","Step 3/3: The c² square is filled."][phase]
+    :["المرحلة 1/3: نجمع الرمل من a² و b².","المرحلة 2/3: ننقل الرمل إلى c².","المرحلة 3/3: امتلأ مربع c²."][phase]);
 
   if(t>=1){
     proofRunning=false;
@@ -4917,7 +4916,7 @@ function updateProof(now){
     const btn=document.getElementById("proofBtn");
     btn.disabled=false;
     btn.classList.remove("running");
-    btn.textContent="↻ شغّل البرهان مرة ثانية";
+    btn.textContent=currentUILanguage==="ar"?"↻ شغّل البرهان مرة ثانية":"↻ "+(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,"Run proof again")||"Run proof again");
 
     document.getElementById("proofMeter").style.width="100%";
     document.getElementById("proofText").innerHTML=currentUILanguage==="en"
