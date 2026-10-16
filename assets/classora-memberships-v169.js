@@ -162,7 +162,8 @@ function render(){
  put("cl-summary-period",t(state.period==="monthly"?"monthly":"annual"));
  put("cl-summary-seats",String(extraSeats()));
  const localizedTotal=window.ClassoraPriceLocalization?.totalFor(state.kind,state.tier,state.period,state.seats);
- put("cl-total",state.account?.admin?price(0):(localizedTotal||price(total())));
+ const localizedReady=!!window.ClassoraPriceLocalization?.getInfo()?.localized;
+ put("cl-total",state.account?.admin?price(0):(localizedTotal||(localizedReady&&extraSeats()>0?"…":price(total()))));
  window.ClassoraPriceLocalization?.updateSelection(state.kind,state.tier,state.period,state.seats);
  $("cl-total").dir="ltr";
  const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
