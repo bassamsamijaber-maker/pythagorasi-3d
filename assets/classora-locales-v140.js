@@ -1538,6 +1538,45 @@ The model calculates the missing side and updates the shapes and sand.|El modelo
 Drag left/right or up/down to rotate within the front view|Arrastra para girar dentro de la vista frontal|앞쪽 시점에서 드래그하여 회전하세요|Zum Drehen innerhalb der Vorderansicht ziehen|Trascina per ruotare nella vista frontale|सामने के दृश्य में घुमाने के लिए खींचें|Ön görünümde döndürmek için sürükle
 Use the mouse wheel to zoom|Usa la rueda del ratón para ampliar|마우스 휠로 확대하세요|Mit dem Mausrad zoomen|Usa la rotella per ingrandire|ज़ूम के लिए माउस व्हील चलाएँ|Yakınlaştırmak için fare tekerini kullan
 Day mode|Modo día|낮 모드|Tagmodus|Modalità giorno|दिन मोड|Gündüz modu
+Cesium|Cesio|세슘|Cäsium|Cesio|सीज़ियम|Sezyum
+Completed|Completado|완료|Abgeschlossen|Completato|पूरा हुआ|Tamamlandı
+In progress|En curso|진행 중|In Bearbeitung|In corso|प्रगति में|Devam ediyor
+Not started|Sin empezar|시작 전|Nicht begonnen|Non iniziato|शुरू नहीं हुआ|Başlamadı
+School Curriculum|Plan de estudios|학교 교육과정|Schullehrplan|Programma scolastico|स्कूल पाठ्यक्रम|Okul müfredatı
+Grades 7–10 • lessons, practice, exams and live competitions|Cursos 7–10 • lecciones, ejercicios, exámenes y concursos en directo|7~10학년 • 수업, 연습, 시험 및 실시간 대회|Klassen 7–10 • Lektionen, Übungen, Prüfungen und Live-Wettbewerbe|Classi 7–10 • lezioni, esercizi, esami e gare dal vivo|कक्षा 7–10 • पाठ, अभ्यास, परीक्षा और लाइव प्रतियोगिता|7–10. sınıflar • dersler, alıştırmalar, sınavlar ve canlı yarışmalar
+Open curriculum|Abrir plan de estudios|교육과정 열기|Lehrplan öffnen|Apri programma|पाठ्यक्रम खोलें|Müfredatı aç
+Curriculum|Plan de estudios|교육과정|Lehrplan|Programma|पाठ्यक्रम|Müfredat
+Choose your grade|Elige tu curso|학년을 선택하세요|Wähle deine Klasse|Scegli la classe|अपनी कक्षा चुनें|Sınıfını seç
+Subjects are organized by grade. Arabic is grammar-only and English is grammar-only. Hebrew and civics are excluded.|Las asignaturas están organizadas por curso. Árabe e inglés incluyen solo gramática. No se incluyen hebreo ni educación cívica.|과목은 학년별로 정리되어 있습니다. 아랍어와 영어는 문법만 다룹니다. 히브리어와 시민교육은 제외됩니다.|Fächer sind nach Klassen geordnet. Arabisch und Englisch behandeln nur Grammatik. Hebräisch und Gemeinschaftskunde sind ausgeschlossen.|Materie divise per classe. Arabo e inglese comprendono solo grammatica. Ebraico ed educazione civica sono esclusi.|विषय कक्षा के अनुसार हैं। अरबी और अंग्रेज़ी में केवल व्याकरण है। हिब्रू और नागरिक शास्त्र शामिल नहीं हैं।|Dersler sınıfa göre düzenlenir. Arapça ve İngilizcede yalnızca dil bilgisi vardır. İbranice ve yurttaşlık yoktur.
+subjects|asignaturas|과목|Fächer|materie|विषय|dersler
+SUBJECTS|ASIGNATURAS|과목|FÄCHER|MATERIE|विषय|DERSLER
+Each subject shows only the topics assigned to this grade.|Cada asignatura muestra solo los temas de este curso.|각 과목에는 해당 학년의 주제만 표시됩니다.|Jedes Fach zeigt nur die Themen dieser Klasse.|Ogni materia mostra solo gli argomenti della classe.|हर विषय में उसी कक्षा के पाठ दिखते हैं।|Her ders yalnızca bu sınıfın konularını gösterir.
+units|unidades|단원|Einheiten|unità|इकाइयाँ|üniteler
+Search topics...|Buscar temas...|주제 검색...|Themen suchen...|Cerca argomenti...|विषय खोजें...|Konu ara...
+No matching topics.|No hay temas coincidentes.|일치하는 주제가 없습니다.|Keine passenden Themen.|Nessun argomento corrispondente.|कोई मिलता विषय नहीं है।|Eşleşen konu yok.
+UNIT|UNIDAD|단원|EINHEIT|UNITÀ|इकाई|ÜNİTE
+Download unit for offline use|Descargar unidad para usar sin conexión|오프라인용 단원 다운로드|Einheit zur Offline-Nutzung herunterladen|Scarica unità per uso offline|ऑफ़लाइन उपयोग के लिए इकाई डाउनलोड करें|Üniteyi çevrimdışı kullanmak için indir
+Downloading|Descargando|다운로드 중|Wird heruntergeladen|Download in corso|डाउनलोड हो रहा है|İndiriliyor
+Downloaded — open my units|Descargado — abrir mis unidades|다운로드 완료 — 내 단원 열기|Heruntergeladen — meine Einheiten öffnen|Scaricato — apri le mie unità|डाउनलोड हुआ — मेरी इकाइयाँ खोलें|İndirildi — ünitelerimi aç
+Download failed; check your connection and try again|Falló la descarga; comprueba la conexión e inténtalo otra vez|다운로드 실패. 인터넷 연결을 확인하고 다시 시도하세요|Download fehlgeschlagen. Prüfe die Verbindung und versuche es erneut|Download non riuscito; controlla la connessione e riprova|डाउनलोड विफल; इंटरनेट जाँचकर फिर प्रयास करें|İndirme başarısız. Bağlantını kontrol edip tekrar dene
+Data type|Tipo de dato|자료 유형|Datentyp|Tipo di dato|डेटा प्रकार|Veri türü
+Height (cm)|Altura (cm)|키 (cm)|Größe (cm)|Altezza (cm)|ऊँचाई (सेमी)|Boy (cm)
+Price (₪)|Precio (₪)|가격 (₪)|Preis (₪)|Prezzo (₪)|मूल्य (₪)|Fiyat (₪)
+Quantity|Cantidad|수량|Anzahl|Quantità|मात्रा|Miktar
+Marks|Notas|점수|Noten|Voti|अंक|Notlar
+Edit the numbers inside the bars|Edita los números de las barras|막대 안의 숫자를 수정하세요|Ändere die Zahlen in den Balken|Modifica i numeri nelle barre|स्तंभों के अंदर संख्याएँ बदलें|Çubuklardaki sayıları düzenle
+Student 1 height: 150 cm|Altura del estudiante 1: 150 cm|학생 1 키: 150cm|Größe Schüler 1: 150 cm|Altezza studente 1: 150 cm|छात्र 1 की ऊँचाई: 150 सेमी|1. öğrencinin boyu: 150 cm
+First value|Primer valor|첫 번째 값|Erster Wert|Primo valore|पहला मान|Birinci değer
+Second value|Segundo valor|두 번째 값|Zweiter Wert|Secondo valore|दूसरा मान|İkinci değer
+Third value|Tercer valor|세 번째 값|Dritter Wert|Terzo valore|तीसरा मान|Üçüncü değer
+Fourth value|Cuarto valor|네 번째 값|Vierter Wert|Quarto valore|चौथा मान|Dördüncü değer
+Observations|Observaciones|관찰|Beobachtungen|Osservazioni|अवलोकन|Gözlemler
+Range|Rango|범위|Spannweite|Intervallo|परिसर|Aralık
+Edit values inside the chart or drag to rotate|Edita los valores del gráfico o arrastra para girar|차트의 값을 수정하거나 드래그하여 회전하세요|Werte im Diagramm ändern oder zum Drehen ziehen|Modifica i valori del grafico o trascina per ruotare|चार्ट में मान बदलें या घुमाने के लिए खींचें|Grafikteki değerleri değiştir veya döndürmek için sürükle
+Change denominator|Cambiar denominador|분모 변경|Nenner ändern|Cambia denominatore|हर बदलें|Paydayı değiştir
+Denominator|Denominador|분모|Nenner|Denominatore|हर|Payda
+Change added value|Cambiar valor añadido|추가 값 변경|Addierten Wert ändern|Cambia valore aggiunto|जोड़ा गया मान बदलें|Eklenen değeri değiştir
+Added number|Número añadido|추가한 수|Addierte Zahl|Numero aggiunto|जोड़ी गई संख्या|Eklenen sayı
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
