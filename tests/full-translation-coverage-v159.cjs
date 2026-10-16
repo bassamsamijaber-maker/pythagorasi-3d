@@ -58,7 +58,7 @@ for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLAN
  assert(index.includes('const '+label+'='),label+' missing');
 for(const file of ['assets/classora-locales-v140.js','assets/curriculum-v97.js','chemistry/periodic-table.html'])
  assert(index.includes(file+'?v=159'),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v160-expanded-ui-localization'));
+assert(read('service-worker.js').includes('classora-v161-offline-eight-language'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
@@ -74,5 +74,16 @@ for(const language of languages){
 }
 assert(read('assets/classora-assessment-v121.js').includes('tFor?.(lang,en)'));
 assert(read('assets/classora-competition-topics-v122.js').includes('tFor?.(lang(),en)'));
+
+
+for(const language of languages){
+ for(const key of ['My offline units','Open main site to sync','Remove download','Back to lesson','Local practice',
+ 'Admin Panel','Control Center','Polls','Support requests','Teaching overview','Skip intro'])
+ assert(Object.hasOwn(locale.dictionaries[language],key),language+' missing main navigation text '+key);
+ for(const key of ['Option 3','Eq 2','5 accounts'])
+  assert(locale.tFor(language,key).trim(),language+' missing numeric UI '+key);
+}
+assert(read('study-offline.html').includes('<option value="tr">Türkçe</option>'));
+assert(read('assets/study-offline-v130.js').includes('tFor?.(language,b)'));
 
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
