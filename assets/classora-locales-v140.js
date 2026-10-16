@@ -1843,7 +1843,55 @@ Remove download|Eliminar descarga|다운로드 삭제|Download entfernen|Rimuovi
 No downloaded units yet. Open a subject’s topic list online and choose Download unit.|Aún no hay unidades descargadas. Abre los temas de una asignatura con conexión y elige Descargar unidad.|아직 다운로드한 단원이 없습니다. 온라인에서 과목의 주제 목록을 열고 단원 다운로드를 선택하세요.|Noch keine Einheiten heruntergeladen. Öffne online die Themenliste eines Fachs und wähle Einheit herunterladen.|Non hai ancora scaricato unità. Apri online gli argomenti di una materia e scegli Scarica unità.|अभी कोई इकाई डाउनलोड नहीं हुई है। ऑनलाइन विषय सूची खोलें और इकाई डाउनलोड करें चुनें।|Henüz indirilmiş ünite yok. Çevrimiçiyken bir dersin konu listesini açıp Üniteyi indir seçeneğini seç.
 Back to lesson|Volver a la lección|수업으로 돌아가기|Zurück zur Lektion|Torna alla lezione|पाठ पर वापस जाएँ|Derse dön
 Local practice|Práctica sin conexión|오프라인 연습|Offline-Übung|Esercizio offline|ऑफ़लाइन अभ्यास|Çevrimdışı alıştırma
-`.trim().split('\n').map(line=>line.split('|'));
+
+CLASSORA • TEACHER WORKSPACE|CLASSORA • ESPACIO DOCENTE|CLASSORA • 교사 공간|CLASSORA • LEHRERBEREICH|CLASSORA • AREA DOCENTI|CLASSORA • शिक्षक कार्यक्षेत्र|CLASSORA • ÖĞRETMEN ALANI
+Welcome,|Bienvenido,|환영합니다,|Willkommen,|Benvenuto,|स्वागत है,|Hoş geldiniz,
+Your classes, exams and student results in one organized workspace. Everything you need to manage your teaching.|Tus clases, exámenes y resultados de los estudiantes en un solo espacio. Todo para organizar tu enseñanza.|수업, 시험, 학생 성적을 한곳에서 관리하세요. 수업 운영에 필요한 모든 도구가 모여 있습니다.|Deine Klassen, Prüfungen und Schülerergebnisse an einem Ort. Alles für deinen Unterricht.|Classi, esami e risultati degli studenti in un unico spazio. Tutto ciò che serve per insegnare.|आपकी कक्षाएँ, परीक्षाएँ और छात्रों के परिणाम एक जगह। पढ़ाने के लिए सभी ज़रूरी साधन।|Sınıflarınız, sınavlarınız ve öğrenci sonuçlarınız tek bir yerde. Eğitim yönetimi için gereken her şey.
+Create an exam|Crear un examen|시험 만들기|Prüfung erstellen|Crea un esame|परीक्षा बनाएँ|Sınav oluştur
+My managed classes|Clases que gestiono|관리 중인 학급|Meine verwalteten Klassen|Le classi che gestisco|मेरी प्रबंधित कक्षाएँ|Yönettiğim sınıflar
+Learning subjects|Asignaturas|학습 과목|Schulfächer|Materie scolastiche|पढ़ाई के विषय|Ders konuları
+Quick teaching tools|Herramientas rápidas para docentes|교사 빠른 도구|Schnelle Lehrertools|Strumenti rapidi per docenti|शिक्षक के त्वरित उपकरण|Hızlı öğretmen araçları
+Choose a tool and get straight to work.|Elige una herramienta y empieza.|도구를 골라 바로 시작하세요.|Wähle ein Werkzeug und lege los.|Scegli uno strumento e inizia.|उपकरण चुनें और शुरू करें।|Bir araç seçin ve hemen başlayın.
+Manage classes|Gestionar clases|학급 관리|Klassen verwalten|Gestisci le classi|कक्षाएँ प्रबंधित करें|Sınıfları yönet
+Students, class codes & settings|Alumnos, códigos de clase y ajustes|학생, 학급 코드 및 설정|Schüler, Klassencodes und Einstellungen|Studenti, codici classe e impostazioni|छात्र, कक्षा कोड और सेटिंग्स|Öğrenciler, sınıf kodları ve ayarlar
+Class assignments|Tareas de clase|학급 과제|Klassenaufgaben|Compiti della classe|कक्षा के कार्य|Sınıf ödevleri
+Create & review class assignments|Crear y revisar tareas de clase|학급 과제 만들기 및 검토|Klassenaufgaben erstellen und prüfen|Crea e correggi i compiti|कक्षा कार्य बनाएँ और जाँचें|Sınıf ödevlerini oluştur ve incele
+Create tests and share codes|Crear pruebas y compartir códigos|시험 만들기 및 코드 공유|Tests erstellen und Codes teilen|Crea test e condividi i codici|परीक्षण बनाएँ और कोड साझा करें|Test oluştur ve kod paylaş
+Review scores and performance|Revisar notas y rendimiento|점수와 성과 확인|Noten und Leistungen ansehen|Controlla voti e risultati|अंक और प्रदर्शन देखें|Notları ve başarıyı incele
+Live competitions|Competiciones en directo|실시간 대회|Live-Wettbewerbe|Gare in diretta|लाइव प्रतियोगिताएँ|Canlı yarışmalar
+Create rooms & manage activities|Crear salas y gestionar actividades|방 만들기 및 활동 관리|Räume erstellen und Aktivitäten verwalten|Crea stanze e gestisci attività|कमरे बनाएँ और गतिविधियाँ सँभालें|Oda oluştur ve etkinlikleri yönet
+Managed classes only. Student details stay in the protected class manager.|Solo se muestran las clases administradas. Los datos de los alumnos permanecen en el gestor protegido.|관리 중인 학급만 표시됩니다. 학생 정보는 보호된 학급 관리 화면에서만 확인할 수 있습니다.|Nur verwaltete Klassen. Schülerdaten bleiben in der geschützten Klassenverwaltung.|Solo le classi gestite. I dati degli studenti restano nell'area protetta.|केवल प्रबंधित कक्षाएँ। छात्रों की जानकारी सुरक्षित कक्षा प्रबंधक में रहती है।|Yalnızca yönetilen sınıflar. Öğrenci bilgileri korumalı sınıf yöneticisinde kalır.
+MY LEARNING SPACE|MI ESPACIO DE APRENDIZAJE|나의 학습 공간|MEIN LERNBEREICH|IL MIO SPAZIO DI STUDIO|मेरा अध्ययन क्षेत्र|ÖĞRENME ALANIM
+Your lessons, classes, practice and exams—all in one organized place.|Tus lecciones, clases, ejercicios y exámenes, todo organizado en un lugar.|수업, 학급, 연습과 시험을 한곳에서 관리하세요.|Deine Lektionen, Klassen, Übungen und Prüfungen an einem Ort.|Lezioni, classi, esercizi ed esami organizzati in un unico posto.|आपके पाठ, कक्षाएँ, अभ्यास और परीक्षाएँ — सब एक जगह।|Dersleriniz, sınıflarınız, alıştırmalarınız ve sınavlarınız tek yerde.
+Explore subjects|Explorar asignaturas|과목 탐색|Fächer entdecken|Esplora le materie|विषय देखें|Dersleri keşfet
+Classes & assignments|Clases y tareas|학급과 과제|Klassen und Aufgaben|Classi e compiti|कक्षाएँ और कार्य|Sınıflar ve ödevler
+Exams taken|Exámenes realizados|응시한 시험|Abgelegte Prüfungen|Esami sostenuti|दी गई परीक्षाएँ|Girilen sınavlar
+Upcoming events|Próximos eventos|다가오는 일정|Bevorstehende Termine|Eventi in arrivo|आगामी कार्यक्रम|Yaklaşan etkinlikler
+Where to next?|¿Qué quieres hacer ahora?|다음은 무엇을 할까요?|Was möchtest du als Nächstes tun?|Cosa vuoi fare ora?|अब आगे क्या करें?|Sırada ne var?
+Choose what you want to do next.|Elige qué quieres hacer ahora.|다음에 할 활동을 선택하세요.|Wähle deine nächste Aktivität.|Scegli cosa fare adesso.|अब आप क्या करना चाहते हैं, चुनें।|Şimdi yapmak istediğini seç.
+Subjects & lessons|Asignaturas y lecciones|과목과 수업|Fächer und Lektionen|Materie e lezioni|विषय और पाठ|Dersler ve konular
+Math, science, languages & more|Matemáticas, ciencias, idiomas y más|수학, 과학, 언어 등|Mathe, Naturwissenschaften, Sprachen und mehr|Matematica, scienze, lingue e altro|गणित, विज्ञान, भाषाएँ और बहुत कुछ|Matematik, fen, diller ve daha fazlası
+View classes and assignments|Ver clases y tareas|학급과 과제 보기|Klassen und Aufgaben ansehen|Visualizza classi e compiti|कक्षाएँ और कार्य देखें|Sınıfları ve ödevleri gör
+Test your skills and review results|Pon a prueba tus conocimientos y revisa los resultados|실력을 확인하고 결과를 살펴보세요|Teste dein Wissen und prüfe Ergebnisse|Mettiti alla prova e controlla i risultati|अपना ज्ञान जाँचें और परिणाम देखें|Bilgini test et ve sonuçları incele
+Practice with instant feedback|Practica con corrección inmediata|즉각적인 피드백으로 연습|Üben mit sofortigem Feedback|Esercitati con riscontro immediato|तुरंत प्रतिक्रिया के साथ अभ्यास|Anında geri bildirimle alıştırma yap
+CLASSORA • LEARNING REIMAGINED|CLASSORA • APRENDER DE OTRA MANERA|CLASSORA • 새로운 학습 경험|CLASSORA • LERNEN NEU GEDACHT|CLASSORA • UN NUOVO MODO DI IMPARARE|CLASSORA • सीखने का नया तरीका|CLASSORA • YENİ NESİL ÖĞRENME
+Learning beyond the textbook.|Aprender más allá de los libros.|교과서 너머의 배움.|Lernen über das Schulbuch hinaus.|Impara oltre i libri.|किताबों से आगे सीखें।|Kitapların ötesinde öğren.
+Bring ideas to life in 3D.|Da vida a las ideas en 3D.|아이디어를 3D로 생생하게.|Ideen in 3D erleben.|Dai vita alle idee in 3D.|विचारों को 3D में जीवंत बनाएँ।|Fikirleri 3D ile canlandır.
+Interactive subjects and lessons, 3D experiments, practice and quizzes—all together in one clear learning space.|Materias y lecciones interactivas, experimentos 3D, prácticas y pruebas en un mismo espacio.|대화형 과목과 수업, 3D 실험, 연습 문제와 퀴즈를 한곳에서 만나보세요.|Interaktive Fächer und Lektionen, 3D-Experimente, Übungen und Quiz an einem Ort.|Materie e lezioni interattive, esperimenti 3D, esercizi e quiz in un unico spazio.|इंटरैक्टिव विषय, पाठ, 3D प्रयोग, अभ्यास और क्विज़ — सब एक जगह।|Etkileşimli dersler, 3D deneyler, alıştırmalar ve testler tek yerde.
+Explore activities|Explorar actividades|활동 둘러보기|Aktivitäten entdecken|Esplora le attività|गतिविधियाँ देखें|Etkinlikleri keşfet
+Try the 3D lab|Prueba el laboratorio 3D|3D 실험실 체험|3D-Labor ausprobieren|Prova il laboratorio 3D|3D लैब आज़माएँ|3D laboratuvarını dene
+Interactive learning|Aprendizaje interactivo|체험형 학습|Interaktives Lernen|Apprendimento interattivo|इंटरैक्टिव अध्ययन|Etkileşimli öğrenme
+Multiple subjects|Varias asignaturas|다양한 과목|Mehrere Fächer|Più materie|अनेक विषय|Birden çok ders
+Practice and quizzes|Práctica y pruebas|연습과 퀴즈|Übungen und Quiz|Esercizi e quiz|अभ्यास और क्विज़|Alıştırma ve testler
+Create an exam or join as a student with a code|Crea un examen o entra como alumno con un código|시험을 만들거나 코드로 학생으로 참여|Prüfung erstellen oder als Schüler mit Code teilnehmen|Crea un esame o entra come studente con un codice|परीक्षा बनाएँ या कोड से छात्र के रूप में जुड़ें|Sınav oluştur veya kodla öğrenci olarak katıl
+Create an exam and one code for all students|Crea un examen y un código para todos los alumnos|모든 학생을 위한 시험과 공통 코드 만들기|Prüfung mit einem Code für alle Schüler erstellen|Crea un esame con un codice unico per tutti|सभी छात्रों के लिए परीक्षा और एक कोड बनाएँ|Tüm öğrenciler için tek kodlu sınav oluştur
+Join the teacher's exam with a code|Únete al examen del profesor con un código|코드로 교사의 시험에 참여|Mit Code an der Prüfung der Lehrkraft teilnehmen|Partecipa all'esame del docente con un codice|कोड से शिक्षक की परीक्षा में जुड़ें|Öğretmenin sınavına kodla katıl
+Create a competition or join as a player|Crea una competición o únete como jugador|대회를 만들거나 참가자로 참여|Wettbewerb erstellen oder als Spieler teilnehmen|Crea una gara o partecipa come giocatore|प्रतियोगिता बनाएँ या खिलाड़ी बनकर जुड़ें|Yarışma oluştur veya oyuncu olarak katıl
+Create a room and competitions for your class|Crea una sala y competiciones para tu clase|학급 대회와 방 만들기|Raum und Wettbewerbe für deine Klasse erstellen|Crea una stanza e gare per la classe|अपनी कक्षा के लिए कमरा और प्रतियोगिताएँ बनाएँ|Sınıfın için oda ve yarışmalar oluştur
+Join the competition with the room code|Únete a la competición con el código de sala|방 코드로 대회 참가|Mit Raumcode am Wettbewerb teilnehmen|Partecipa alla gara con il codice stanza|रूम कोड से प्रतियोगिता में जुड़ें|Oda koduyla yarışmaya katıl
+Admin + Teacher + Student|Administrador + profesor + alumno|관리자 + 교사 + 학생|Admin + Lehrkraft + Schüler|Amministratore + docente + studente|एडमिन + शिक्षक + छात्र|Yönetici + öğretmen + öğrenci
+Classora educational announcements|Novedades educativas de Classora|Classora 교육 소식|Classora-Lernankündigungen|Novità didattiche Classora|Classora शैक्षिक घोषणाएँ|Classora eğitim duyuruları
+Checking your class assignments...|Revisando tus tareas de clase...|학급 과제 확인 중...|Klassenaufgaben werden geprüft...|Controllo dei compiti...|कक्षा कार्यों की जाँच हो रही है...|Sınıf ödevlerin kontrol ediliyor...`.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
 try{const saved=localStorage.getItem('pythagorasi_language');if(Object.hasOwn(languages,saved))selected=saved}catch{}
