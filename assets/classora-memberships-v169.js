@@ -82,7 +82,7 @@ function render(){
 }
 async function identify(user){
  state.checking=false;
- if(!user||user.isAnonymous){state.account=null;state.allowed=[];state.error=false;render();return;}
+ if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher","class","school"];state.error=false;render();return;}
  try{
   const profile=await getDoc(doc(db,"users",user.uid));if(!profile.exists())throw Error("Missing profile");
   const p=profile.data();if(!["student","teacher"].includes(p.role))throw Error("Invalid user role");
