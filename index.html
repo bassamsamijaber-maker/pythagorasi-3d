@@ -81,6 +81,8 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
 <link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=138">
 <link rel="stylesheet" href="./assets/classora-dock-stable-v140.css?v=140">
+<link rel="stylesheet" href="./assets/classora-chat-memberships-v169.css?v=169">
+<script defer src="./assets/classora-memberships-nav-v169.js?v=169"></script>
 <link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
 <script src="./assets/classora-locales-v140.js?v=166"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
@@ -297,7 +299,7 @@ body.classora-intro-active{overflow:auto!important}
       <div class="lobby-top-actions">
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
-        <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
+        <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button><a class="lobby-icon-btn" id="lobbyMembershipBtn" href="./subscriptions.html" title="Plus وPremium" aria-label="الاشتراكات" data-no-translate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M18 7l-6 5 6 5"/><path d="m16 2 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3L11.5 6.5l3-1.5L16 2Z"/></svg><span id="cl-membership-label" data-no-translate>الاشتراكات</span></a>
         <button class="lobby-icon-btn hidden" id="lobbySupportRequestsBtn" type="button">📥 <span>طلبات الدعم</span></button><button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
         <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" aria-label="الإشعارات" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تحميل Classora على الهاتف"><span aria-hidden="true">📲</span><span class="pwa-install-text">تحميل على الهاتف</span></button>
@@ -1497,6 +1499,7 @@ body.classora-intro-active{overflow:auto!important}
         <button type="button" data-classora-quick="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span data-quick-ar="ملفي الشخصي" data-quick-en="My profile">ملفي الشخصي</span></button>
         <button type="button" data-classora-quick="logout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4v18h5M13 7l5 5-5 5M8 12h10"/></svg><span data-quick-ar="تسجيل الخروج" data-quick-en="Sign out">تسجيل الخروج</span></button>
       </div>
+      <a id="classoraSettingsMembershipLink" href="./subscriptions.html" data-no-translate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M18 7l-6 5 6 5"/><path d="m16 2 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3L11.5 6.5l3-1.5L16 2Z"/></svg><span id="cl-membership-settings-label" data-no-translate>الاشتراكات والمميزات</span></a>
     </section>
 
     <div class="settings-grid">
