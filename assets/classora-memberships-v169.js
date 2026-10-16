@@ -54,7 +54,7 @@ function currentSelection(){
  const items=[{priceId:main.priceId,quantity:1}];
  const extra=extraSeats();
  if(extra){const add=catalogRecord(state.kind==="class"?"extra_student":"extra_teacher",state.period);if(!add)return null;items.push({priceId:add.priceId,quantity:extra});}
- return {kind:state.kind,tier:state.tier,period:state.period,seats:minSeats()||1,requestedSeats:minSeats()?state.seats:1,items};
+ return {kind:state.kind,tier:state.tier,period:state.period,seats:minSeats()?state.seats:1,items};
 }
 async function loadLiveCatalog(){
  try {
