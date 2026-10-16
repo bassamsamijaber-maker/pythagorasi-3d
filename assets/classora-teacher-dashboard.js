@@ -59,11 +59,14 @@
       if(!teacher){activeUid=null;classRows=null;examCount=null;return}
       const uid=String(profile.uid);
       if(uid!==activeUid){activeUid=uid;classRows=null;examCount=null}
-      board.lang=en()?"en":"ar";
-      board.dir=en()?"ltr":"rtl";
+      const locale=document.documentElement.lang||"en";
+      board.lang=locale;
+      board.dir=locale==="ar"?"rtl":"ltr";
       board.querySelectorAll("[data-teacher-ar][data-teacher-en]").forEach(el=>{
-        const content=el.getAttribute(en()?"data-teacher-en":"data-teacher-ar");
-        if(content!==null&&el.textContent!==content)el.textContent=content;
+        const english=el.getAttribute("data-teacher-en")||"";
+        const arabic=el.getAttribute("data-teacher-ar")||"";
+        const content=locale==="ar"?arabic:(window.ClassoraLocale?.tFor?.(locale,english)||english);
+        if(el.textContent!==content)el.textContent=content;
       });
       const first=String(profile.displayName||"").trim().split(/\s+/)[0]||lang("يا معلم","teacher");
       title("teacherDashName",first);
