@@ -56,9 +56,9 @@ const moduleSrc=[...index.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].f
 assert(moduleSrc,'Main module missing');new Function(noImports(moduleSrc));
 for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLANATIONS','CLASSORA_PYTHAGORAS_CHALLENGE_TEXT'])
  assert(index.includes('const '+label+'='),label+' missing');
-for(const [file,version] of [['assets/classora-locales-v140.js',161],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',159]])
+for(const [file,version] of [['assets/classora-locales-v140.js',166],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',166]])
  assert(index.includes(file+'?v='+version),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v165-complete-legal-localization'));
+assert(read('service-worker.js').includes('classora-v166-mobile-lobby-legal-translation'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
@@ -119,7 +119,37 @@ for(const page of [standalonePrivacy,standaloneTerms]){
 }
 assert(legalModule.includes("ClassoraLegalTranslations.render(policy,language)"),'In-app legal dialog has no translated policy');
 assert(legalModule.includes("document.documentElement.lang)?document.documentElement.lang:'en'"),'Legal dialog does not use selected language');
-assert(index.includes('classora-legal-v124.js?v=165'),'Main website has stale legal document module');
+assert(index.includes('classora-legal-v124.js?v=166'),'Main website has stale legal document module');
 assert(read('service-worker.js').includes('classora-legal-translations-v164.js?v=165'),'Legal files missing from offline cache');
+
+
+const lobbyHtml=index.slice(index.indexOf('<div class="platform-lobby" id="platformLobby">'),index.indexOf('<div class="classora-subject-page" id="periodic-table"'));
+const authoredLobbyLabels=[...lobbyHtml.matchAll(/data-(?:teacher|student|mix)-en="([^"]+)"/g)].map(x=>x[1]);
+const uniqueLobbyLabels=[...new Set(authoredLobbyLabels)].filter(x=>x!=='CLASSORA');
+assert(uniqueLobbyLabels.length>=38,'Missing lobby labels in audit');
+for(const text of uniqueLobbyLabels){
+ for(const language of languages){
+  assert(Object.hasOwn(locale.dictionaries[language],text),language+' missing lobby dashboard label: '+text);
+  assert(locale.tFor(language,text).trim()!==text || /^(?:Exams|Question bank)$/.test(text),
+   language+' untranslated lobby dashboard label: '+text);
+ }
+}
+for(const file of ['assets/classora-teacher-dashboard.js','assets/classora-global-mix.js']){
+ const code=read(file);
+ assert(code.includes('ClassoraLocale?.tFor?.(locale,'),file+' does not use the selected locale');
+ new Function(code);
+}
+const legalCss=read('assets/classora-legal-v124.css');
+assert(legalCss.includes('-webkit-overflow-scrolling:touch')&&legalCss.includes('touch-action:pan-y'),'iPhone legal scrolling unavailable');
+assert(legalModule.includes('next.disabled=review;'),'Legal document navigation stays locked until scroll end');
+assert(legalModule.includes('close.hidden=false;'),'Legal modal has no visible exit');
+assert(index.includes('function classoraAllowScrollableOverlay(event)'),'Global touch guard still blocks legal scrolling');
+assert(index.includes('if(classoraAllowScrollableOverlay(event))return;'),'Legal scroll exceptions are not applied');
+assert(!index.includes('window.classoraLearningHub?.openScience?.();'),'Periodic return still opens an additional modal');
+assert(periodic.includes('returnTo:"lobby"')&&periodic.includes('../index.html#platformLobby'),'Periodic table exit is not routed back to lobby');
+assert(read('chemistry/periodic-table.html').includes('./periodic-table.js?v=166'),'Periodic table still uses old back handler');
+assert(read('service-worker.js').includes('classora-global-mix.js?v=166'),'Lobby hero not refreshed in offline cache');
+assert(read('service-worker.js').includes('classora-teacher-dashboard.js?v=166'),'Teacher dashboard not refreshed in offline cache');
+assert(index.includes('classora-student-dashboard.js?v=166'),'Student dashboard uses stale version');
 
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
