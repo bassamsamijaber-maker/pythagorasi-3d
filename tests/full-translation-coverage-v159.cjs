@@ -58,7 +58,7 @@ for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLAN
  assert(index.includes('const '+label+'='),label+' missing');
 for(const [file,version] of [['assets/classora-locales-v140.js',161],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',159]])
  assert(index.includes(file+'?v='+version),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v163-recovery-and-language-labels'));
+assert(read('service-worker.js').includes('classora-v164-legal-all-eight-languages'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
@@ -88,5 +88,38 @@ assert(index.includes('id="sessionRecoveryRetry">حاول مجددًا</button>'
 assert(index.includes('uiExactTranslations.set("دخول بحساب Google","Sign in with Google")'));
 
 assert(read('assets/study-offline-v130.js').includes('tFor?.(language,b)'));
+
+
+const legalModule=read('assets/classora-legal-v124.js');
+const legalAsset=read('assets/classora-legal-translations-v164.js');
+const standalonePrivacy=read('privacy.html'),standaloneTerms=read('terms.html');
+const translationHost={};
+new Function('window',legalAsset)(translationHost);
+const legalTranslations=translationHost.ClassoraLegalTranslations;
+assert(legalTranslations,'Legal translations unavailable');
+const requiredPrivacy=['intro','info','items','usage','providers','ai','media','deleteStart','deleteAction','deleteEnd','choices','kids','contactBefore'];
+const requiredTerms=['intro','accounts','conduct','learning','dataBefore','dataAfter','ai','devices','minors','helpBefore'];
+for(const language of languages){
+ for(const type of ['privacy','terms']){
+  const content=legalTranslations.locales[language][type];
+  for(const key of type==='privacy'?requiredPrivacy:requiredTerms)
+   assert(content[key]&&(!Array.isArray(content[key])||content[key].length===6),language+' missing '+type+'.'+key);
+  const rendered=legalTranslations.render(type,language);
+  assert(rendered.includes('<h1>')&&rendered.includes('Classora'),language+' missing rendered legal title');
+  assert(rendered.includes('Cloudflare')&&rendered.includes('Firebase')=== (type==='privacy'),language+' missing provider content');
+  assert(rendered.includes('./support.html?lang='+language),language+' missing matching support link');
+  assert(rendered.includes('<p class="updated">'),language+' missing legal update');
+ }
+}
+for(const page of [standalonePrivacy,standaloneTerms]){
+ assert(page.includes('classora-legal-translations-v164.js?v=164'),'Standalone legal translations not loaded');
+ assert(page.includes("const codes=['ar','en','es','ko','de','it','hi','tr']"),'Not all eight legal languages selectable');
+ const inlineScripts=[...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(Boolean);
+ for(const script of inlineScripts)new Function(script);
+}
+assert(legalModule.includes("ClassoraLegalTranslations.render(policy,language)"),'In-app legal dialog has no translated policy');
+assert(legalModule.includes("document.documentElement.lang)?document.documentElement.lang:'en'"),'Legal dialog does not use selected language');
+assert(index.includes('classora-legal-v124.js?v=164'),'Main website has stale legal document module');
+assert(read('service-worker.js').includes('classora-legal-translations-v164.js?v=164'),'Legal files missing from offline cache');
 
 console.log('PASS: '+checked+' language entries verified; '+instances+' curriculum topics ('+distinct.size+' unique), 118 elements, 66 table UI strings, '+Object.keys(uses).length+' uses, and '+Object.keys(compounds).length+' compounds.');
