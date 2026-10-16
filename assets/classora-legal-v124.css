@@ -79,3 +79,65 @@ body.classora-legal-active{overflow:hidden!important}
  #classoraLegalModal .classora-legal-check{font-size:11px;gap:8px}
  #classoraLegalModal .classora-legal-actions button{font-size:12px}
 }
+
+/* V166 — iOS/Safari: usable nested policy scroll, reachable controls and exit. */
+#classoraLegalModal{
+ overflow-y:auto;
+ -webkit-overflow-scrolling:touch;
+ touch-action:pan-y;
+}
+#classoraLegalModal .classora-legal-card{
+ min-height:0;
+ overflow-y:auto;
+ overscroll-behavior-y:auto;
+ -webkit-overflow-scrolling:touch;
+ touch-action:pan-y;
+}
+#classoraLegalModal .classora-legal-reader{
+ overflow-x:hidden;
+ overflow-y:auto;
+ overscroll-behavior-y:auto;
+ -webkit-overflow-scrolling:touch;
+ touch-action:pan-y;
+}
+#classoraLegalModal .classora-legal-header{
+ position:sticky;
+ top:0;
+ z-index:2;
+ padding-block:4px;
+ background:#103047;
+}
+@media(max-width:760px){
+ #classoraLegalModal{
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:calc(8px + env(safe-area-inset-top,0px)) 7px calc(8px + env(safe-area-inset-bottom,0px));
+ }
+ #classoraLegalModal .classora-legal-card{
+  width:100%;
+  height:auto;
+  max-height:calc(100dvh - 16px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+  overflow-y:auto;
+  padding:12px;
+ }
+ #classoraLegalModal .classora-legal-reader{
+  flex:0 0 auto;
+  height:clamp(190px,43dvh,390px);
+  min-height:190px;
+  max-height:none;
+ }
+ #classoraLegalModal .classora-legal-actions{
+  position:sticky;
+  bottom:0;
+  z-index:2;
+  background:#103047;
+  padding:7px 0 calc(4px + env(safe-area-inset-bottom,0px));
+ }
+ #classoraLegalModal .classora-legal-close{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  flex-shrink:0;
+ }
+}
