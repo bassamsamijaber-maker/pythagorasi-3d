@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v164-legal-all-eight-languages";
+const CACHE_NAME="classora-v165-complete-legal-localization";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
@@ -100,8 +100,8 @@ const APP_SHELL=[
   "./privacy.html",
   "./terms.html",
   "./assets/classora-legal-v124.css?v=132",
-  "./assets/classora-legal-v124.js?v=164",
-  "./assets/classora-legal-translations-v164.js?v=164",
+  "./assets/classora-legal-v124.js?v=165",
+  "./assets/classora-legal-translations-v164.js?v=165",
   "./assets/classora-study-assistant-v124.js?v=137",
   "./assets/classora-assistant-motion-v134.js?v=139",
   "./assets/classora-assistant-motion-v134.css?v=134",
