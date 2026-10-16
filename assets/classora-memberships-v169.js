@@ -32,8 +32,31 @@ teacher:{plus:{monthly:24.9,annual:239},premium:{monthly:44.9,annual:431}},
 class:{plus:{monthly:129,annual:1238},premium:{monthly:199,annual:1910}},
 school:{plus:{monthly:449,annual:4310},premium:{monthly:799,annual:7670}}
 };
-const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:"plus",period:"monthly",seats:35,checking:true,error:false};
+const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false};
 let liveCatalog=null,catalogLoadError=false;
+// Draft checkout choices only live in memory. Never store these in
+// localStorage, sessionStorage, Firebase, or Paddle before verified purchase.
+const emptyDraftWords={
+ ar:"لم تختَر باقة بعد",en:"No plan selected",es:"Ningún plan seleccionado",
+ ko:"선택한 요금제 없음",de:"Noch kein Tarif gewählt",it:"Nessun piano selezionato",
+ hi:"अभी कोई प्लान नहीं चुना",tr:"Henüz plan seçilmedi"
+};
+function emptyDraftLabel(){return emptyDraftWords[state.lang]||emptyDraftWords.en;}
+function zeroPrice(){
+ const loc=window.ClassoraPriceLocalization?.getInfo();
+ if(loc?.localized&&/^[A-Z]{3}$/.test(loc.currency||"")){
+  try{return new Intl.NumberFormat("en-US",{style:"currency",currency:loc.currency}).format(0);}catch(e){console.warn("Currency display failed",e);}
+ }
+ return price(0);
+}
+function resetDraft(){
+ state.tier=null;
+ state.period="monthly";
+ state.kind=state.account?.admin?(state.account.role||"student"):state.allowed[0]||(state.account?.role||"student");
+ state.seats=state.kind==="class"?35:state.kind==="school"?55:1;
+ put("cl-payment-status","");
+}
+
 const catalogStatusMessages={
  ar:["عم نحمّل بيانات أسعار Paddle Live…","✓ تم ربط أرقام 10 منتجات و20 سعرًا من Paddle Live. الدفع الحقيقي لسه غير مفعّل.","تعذر تحميل قائمة أسعار Live؛ ما في إمكانية لإتمام الدفع حاليًا."],
  en:["Loading Paddle Live catalog IDs…","✓ Mapped 10 products and 20 Paddle Live price IDs. Live checkout is not yet enabled.","Couldn't load the Live price catalog. Checkout is unavailable."],
@@ -50,7 +73,7 @@ function shownPlanPrice(key,period,fallback) {
  return window.ClassoraPriceLocalization?.priceFor(key,period)||price(currentCatalogPrice(key,period,fallback));
 }
 function currentSelection(){
- if(!liveCatalog||state.account?.admin)return null;
+ if(!liveCatalog||!state.tier||state.account?.admin)return null;
  const key=state.kind+"_"+state.tier;
  const main=catalogRecord(key,state.period);
  if(!main)return null;
@@ -96,6 +119,7 @@ function price(num){
 function minSeats(){return state.kind==="class"?35:state.kind==="school"?55:0;}
 function extraSeats(){return Math.max(0,state.seats-minSeats());}
 function total(){
+ if(!state.tier)return 0;
  const fallback=prices[state.kind][state.tier][state.period];
  const base=currentCatalogPrice(state.kind+"_"+state.tier,state.period,fallback);
  const extraCost=currentCatalogPrice(state.kind==="class"?"extra_student":"extra_teacher",state.period,state.kind==="class"?(state.period==="monthly"?5:48):(state.period==="monthly"?10:96));
@@ -154,28 +178,28 @@ function render(){
       ||features[state.lang][tier];
    for(const value of details){const li=document.createElement("li");li.textContent=value;list.append(li);}
  }
- const min=minSeats();$("cl-seat-row").hidden=!min;
+ const min=minSeats();$("cl-seat-row").hidden=!min||!state.tier;
  if(min&&state.seats<min)state.seats=min;
  $("cl-seats").min=String(min||1);$("cl-seats").value=String(state.seats);
- put("cl-summary-title",t(state.kind)+" "+state.tier.toUpperCase());
+ put("cl-summary-title",state.tier?t(state.kind)+" "+state.tier.toUpperCase():emptyDraftLabel());
  put("cl-role-note",state.account?(window.ClassoraMemberPlanInfo?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):window.ClassoraMemberPlanInfo?.text(state.lang,"roleGuest")||"");
- put("cl-summary-period",t(state.period==="monthly"?"monthly":"annual"));
- put("cl-summary-seats",String(extraSeats()));
- const localizedTotal=window.ClassoraPriceLocalization?.totalFor(state.kind,state.tier,state.period,state.seats);
+ put("cl-summary-period",state.tier?t(state.period==="monthly"?"monthly":"annual"):"—");
+ put("cl-summary-seats",String(state.tier?extraSeats():0));
+ const localizedTotal=state.tier?window.ClassoraPriceLocalization?.totalFor(state.kind,state.tier,state.period,state.seats):null;
  const localizedReady=!!window.ClassoraPriceLocalization?.getInfo()?.localized;
- put("cl-total",state.account?.admin?price(0):(localizedTotal||(localizedReady&&extraSeats()>0?"…":price(total()))));
- window.ClassoraPriceLocalization?.updateSelection(state.kind,state.tier,state.period,state.seats);
+ put("cl-total",!state.tier||state.account?.admin?zeroPrice():(localizedTotal||(localizedReady&&extraSeats()>0?"…":price(total()))));
+ if(state.tier)window.ClassoraPriceLocalization?.updateSelection(state.kind,state.tier,state.period,state.seats);
  $("cl-total").dir="ltr";
  const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
  // Technical catalog diagnostics remain hidden from regular buyers.
  put("cl-catalog-status",status[catalogLoadError?2:liveCatalog?1:0]);
  $("cl-catalog-status").dataset.status=catalogLoadError?"error":liveCatalog?"linked":"loading";
  put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?t("adminFree"):"");
- $("cl-continue").disabled=false;
+ $("cl-continue").disabled=!state.tier||!!state.account?.admin;
 }
 async function identify(user){
  state.checking=false;
- if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher"];state.kind="student";state.error=false;render();return;}
+ if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher"];resetDraft();state.error=false;render();return;}
  try{
   const profile=await getDoc(doc(db,"users",user.uid));if(!profile.exists())throw Error("Missing profile");
   const p=profile.data();if(!["student","teacher"].includes(p.role))throw Error("Invalid user role");
@@ -186,19 +210,19 @@ async function identify(user){
   const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
   state.account={uid:user.uid,role:p.role,admin,name:String(p.displayName||user.displayName||"")};
   state.allowed=admin?[]:p.role==="teacher"?["teacher","class","school"]:["student"];
-  state.kind=admin?p.role:state.allowed[0];
-  state.kind=state.allowed[0];state.tier="plus";state.error=false;
- }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.allowed=[];state.error=true;}
+  resetDraft();state.error=false;
+ }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.allowed=[];resetDraft();state.error=true;}
  render();
 }
 $("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
-document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.seats=minSeats()||1;render();}));
+document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;state.period="monthly";state.seats=minSeats()||1;render();}));
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render();}));
 document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{state.tier=b.dataset.choose;render();$("cl-checkout-title").scrollIntoView({block:"center",behavior:"smooth"});}));
-$("cl-seats").addEventListener("change",()=>{const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
+$("cl-seats").addEventListener("change",()=>{if(!state.tier)return;const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
 $("cl-continue").addEventListener("click",()=>{
  if(!state.account){window.location.assign("./index.html");return;}
  if(state.account.admin){put("cl-payment-status",t("adminFree"));return;}
+ if(!state.tier){put("cl-payment-status",emptyDraftLabel());return;}
  const selection=currentSelection();
  if(!selection){put("cl-payment-status",catalogStatusMessages[state.lang][catalogLoadError?2:0]);return;}
  // Catalog mapping is not proof of payment. No browser-side role or price
@@ -206,4 +230,8 @@ $("cl-continue").addEventListener("click",()=>{
  // verified server-issued checkout intent can grant entitlements.
  put("cl-payment-status",t("prelaunch"));
 });
+// Browsers may restore the page from back/forward cache. Reset the draft
+// when the user leaves and when an old page instance is restored.
+window.addEventListener("pagehide",()=>{resetDraft();});
+window.addEventListener("pageshow",event=>{if(event.persisted){resetDraft();render();}});
 logos();render();onAuthStateChanged(auth,identify);loadLiveCatalog();
