@@ -107,7 +107,7 @@ class:{plus:["35 مقعدًا من Plus للطلاب المختارين","إضا
 school:{plus:["55 مقعد Plus للمعلمين المختارين","إدارة المقاعد من مسؤول المدرسة","لا يشمل اشتراكات الطلاب"],premium:["55 مقعد Premium للمعلمين المختارين","مركز تحليل وتقارير احترافية","لا يشمل اشتراكات الطلاب"]}
 };
 const titles={student:"طالب",teacher:"معلم",class:"صف",school:"مدرسة"};
-const s={role:"student",tier:"plus",cycle:"monthly",count:35,initialized:false,token:""};
+const s={role:"student",tier:"plus",cycle:"monthly",count:35,initialized:false,token:"",account:null,allowed:[],isAdmin:false};
 const el=x=>document.getElementById(x),fmt=n=>"₪"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 const limit=()=>s.role==="class"?35:s.role==="school"?55:0;
 const extra=()=>limit()?Math.max(0,s.count-limit()):0;
@@ -117,7 +117,11 @@ const total=()=>price()[1]+(extra()?extra()*C[addon()][s.cycle][1]:0);
 const items=()=>{const it=[{priceId:price()[0],quantity:1}];if(extra())it.push({priceId:C[addon()][s.cycle][0],quantity:extra()});return it;};
 function go(p){document.querySelectorAll(".page").forEach(n=>n.classList.toggle("shown",n.id==="page-"+p));document.querySelectorAll("[data-page]").forEach(n=>n.classList.toggle("current",n.dataset.page===p));window.scrollTo({top:0,behavior:"smooth"});}
 function render(){
-document.querySelectorAll("[data-role]").forEach(b=>b.classList.toggle("active",b.dataset.role===s.role));
+document.querySelectorAll("[data-role]").forEach(b=>{
+ b.classList.toggle("active",b.dataset.role===s.role);
+ b.classList.toggle("allowed",s.allowed.includes(b.dataset.role));
+ b.disabled=!s.allowed.includes(b.dataset.role);
+});
 document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",b.dataset.period===s.cycle));
 document.querySelectorAll("[data-tier]").forEach(b=>b.classList.toggle("active",b.dataset.tier===s.tier));
 el("plus-price").textContent=fmt(C[s.role+"_plus"][s.cycle][1]);
@@ -126,30 +130,75 @@ el("plus-period").textContent=el("premium-period").textContent=s.cycle==="monthl
 el("seat-section").hidden=!limit();
 if(limit()){el("seat-count").min=limit();el("seat-count").value=s.count;el("seat-title").textContent="عدد المقاعد المدفوعة";el("seat-note").textContent="الباقة تشمل "+limit()+" "+(s.role==="class"?"طالبًا":"معلمًا")+" ويمكنك إضافة مقاعد";el("seat-extra").textContent="المقاعد الإضافية: "+extra()+ " · "+(s.cycle==="monthly"?"شهريًا":"سنويًا")+" مقابل "+fmt(extra()*C[addon()][s.cycle][1]);}
 el("feature-list").replaceChildren(...offers[s.role][s.tier].map(t=>{const li=document.createElement("li");li.textContent=t;return li;}));
-el("sum-role").textContent=titles[s.role];el("sum-tier").textContent=s.tier==="plus"?"Plus":"Premium";el("sum-cycle").textContent=s.cycle==="annual"?"سنوية":"شهرية";el("sum-extras").textContent=String(extra());el("sum-total").textContent=fmt(total());el("sum-note").textContent="السعر "+(s.cycle==="annual"?"لسنة مدفوعة مسبقًا":"للشهر")+" قبل الضريبة وتحويل العملة النهائي.";
+el("sum-role").textContent=titles[s.role];el("sum-tier").textContent=s.tier==="plus"?"Plus":"Premium";el("sum-cycle").textContent=s.cycle==="annual"?"سنوية":"شهرية";el("sum-extras").textContent=String(extra());el("sum-total").textContent=s.isAdmin?"₪0.00":fmt(total());el("sum-note").textContent=s.isAdmin?"الأدمن يحصل على كل مميزات Plus وPremium بدون اشتراك.":"السعر "+(s.cycle==="annual"?"لسنة مدفوعة مسبقًا":"للشهر")+" قبل الضريبة وتحويل العملة النهائي.";
 el("checkout-tier").textContent=titles[s.role]+" · "+(s.tier==="plus"?"Plus":"Premium");el("checkout-period").textContent=s.cycle==="annual"?"سنوي":"شهري";
-el("manage-plan").textContent=titles[s.role]+" · "+(s.tier==="plus"?"Plus":"Premium");el("manage-cycle").textContent=s.cycle==="annual"?"سنوي":"شهري";el("manage-seats").textContent=String(extra());
+el("manage-plan").textContent=s.isAdmin?"Admin · Premium / كل الصلاحيات":titles[s.role]+" · "+(s.tier==="plus"?"Plus":"Premium");el("manage-cycle").textContent=s.cycle==="annual"?"سنوي":"شهري";el("manage-seats").textContent=String(extra());
 }
-function updateSelection(fn){fn();render();if(s.initialized&&el("paddle-panel").style.display==="block"){try{window.Paddle.Checkout.updateCheckout({items:items()});}catch(e){el("payment-error").textContent="يحتاج نموذج الدفع لإعادة الفتح بعد تغيير الخطة.";}}}
+function updateSelection(fn){
+ if(!s.account)return;
+ fn();render();
+ if(el("paddle-panel").style.display==="block"){
+   try{window.Paddle?.Checkout.close();}catch(e){}
+   el("paddle-panel").style.display="none";
+   el("open-checkout").textContent="متابعة الدفع الآمن — Sandbox فقط";
+ }
+ el("checkout-scope").hidden=s.role!=="class";
+}
+window.ClassoraSubscriptionPreview={
+ getAccount:()=>s.account,
+ setAccount:(account,entitlements=[])=>{
+  s.account=account;
+  s.isAdmin=!!account?.isAdmin;
+  s.allowed=Array.isArray(account?.allowedCategories)?account.allowedCategories:[];
+  document.body.classList.toggle("member-waiting",!account);
+  el("account-banner").dataset.state=account?"success":"warning";
+  el("account-icon").textContent=s.isAdmin?"✦":account?.role==="teacher"?"م":account?.role==="student"?"ط":"C";
+  el("account-title").textContent=!account?"سجل دخولك لتظهر الاشتراكات المناسبة":s.isAdmin?"أهلًا بالأدمن • كل المميزات مفتوحة":account.role==="teacher"?"اشتراكات المعلم والصف":"اشتراكات الطالب";
+  el("admin-unlocked").hidden=!s.isAdmin;
+  el("role-description").textContent=s.isAdmin?"الأدمن بيقدر يشوف جميع فئات الخطط للمراجعة. كل المميزات إله مجانية.":account?.role==="teacher"?"متاح إلك اشتراك المعلم أو الصف، حسب حسابك.":"باقتك للطالب فقط، حسب حسابك.";
+  el("member-benefit").hidden=!account||s.isAdmin||account.effectiveTier==="free";
+  if(account&&!s.isAdmin&&account.effectiveTier!=="free")el("member-benefit").textContent="الاشتراك المسجل في بيئة الاختبار: "+String(account.effectiveTier).toUpperCase();
+  if(account){
+    s.role=s.isAdmin?"student":account.allowedCategories[0];
+    s.tier=s.isAdmin?"premium":account.effectiveTier==="premium"?"premium":"plus";
+    s.count=limit();
+  }
+  el("pay-next").textContent=s.isAdmin?"مميزاتي مفتوحة — عرض حسابي ✦":"المتابعة للدفع التجريبي ←";
+  el("open-checkout").disabled=!account||s.isAdmin;
+  el("checkout-scope").hidden=!account||s.role!=="class";
+  render();
+ }
+};
 document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
-document.querySelectorAll("[data-role]").forEach(b=>b.addEventListener("click",()=>updateSelection(()=>{s.role=b.dataset.role;s.count=limit();})));
+document.querySelectorAll("[data-role]").forEach(b=>b.addEventListener("click",()=>{if(!s.allowed.includes(b.dataset.role))return;updateSelection(()=>{s.role=b.dataset.role;s.count=limit();});}));
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>updateSelection(()=>{s.cycle=b.dataset.period;})));
 document.querySelectorAll("[data-tier]").forEach(b=>b.addEventListener("click",()=>updateSelection(()=>{s.tier=b.dataset.tier;})));
 el("seat-count").addEventListener("change",()=>updateSelection(()=>{const n=Number(el("seat-count").value);s.count=Number.isFinite(n)?Math.max(limit(),Math.min(1000,Math.floor(n))):limit();}));
-el("pay-next").addEventListener("click",()=>go("checkout"));el("see-plans").addEventListener("click",()=>go("plans"));el("change-plan").addEventListener("click",()=>go("plans"));
+el("pay-next").addEventListener("click",()=>{if(!s.account){window.scrollTo({top:0,behavior:"smooth"});return;}go(s.isAdmin?"manage":"checkout");});el("see-plans").addEventListener("click",()=>go("plans"));el("change-plan").addEventListener("click",()=>go("plans"));
 el("upgrade-plus").addEventListener("click",()=>{updateSelection(()=>s.tier="plus");go("plans");});
 el("upgrade-premium").addEventListener("click",()=>{updateSelection(()=>s.tier="premium");go("plans");});
 el("manage-change").addEventListener("click",()=>go("plans"));
 el("manage-cancel").addEventListener("click",()=>{el("cancel-message").hidden=false;el("manage-renewal").textContent="معاينة إلغاء التجديد";});
-el("open-checkout").addEventListener("click",()=>{
+el("open-checkout").addEventListener("click",async()=>{
 const token=el("client-token").value.trim(),err=el("payment-error");err.textContent="";
+if(!s.account){err.textContent="سجّل دخولك بكلاسورا أولًا.";return;}
+if(s.isAdmin){err.textContent="كل مميزات الأدمن مفتوحة بدون دفع.";return;}
+if(!s.allowed.includes(s.role)){err.textContent="الاشتراك مش مناسب لنوع حسابك.";return;}
+if(typeof window.ClassoraBillingAuthorizePurchase!=="function"){err.textContent="تسجيل الدخول لسه قيد التجهيز.";return;}
 if(!/^test_[a-zA-Z0-9_-]{8,}$/.test(token)){err.textContent="استخدم Client-side Token من Paddle Sandbox يبدأ بـ test_، وليس API key.";return;}
 if(!window.Paddle){err.textContent="مكتبة Paddle.js غير متاحة. تأكد من اتصال الإنترنت.";return;}
 if(s.initialized&&s.token!==token){err.textContent="لتغيير الرمز، حدّث الصفحة قبل فتح الدفع مرة ثانية.";return;}
 try{
+  el("open-checkout").disabled=true;
+  el("open-checkout").textContent="جاري تجهيز طلب دفع موثّق…";
+  const checked=await window.ClassoraBillingAuthorizePurchase({
+    kind:s.role,tier:s.tier,period:s.cycle,
+    seats:limit()?s.count:1,
+    ...(s.role==="class"?{scopeId:el("checkout-class-id").value.trim()}:{})
+  });
  if(!s.initialized){window.Paddle.Environment.set("sandbox");window.Paddle.Initialize({token:token,checkout:{settings:{displayMode:"inline",variant:"one-page",frameTarget:"checkout-container",frameInitialHeight:"540",frameStyle:"width:100%;min-width:312px;border:0;background-color:transparent;",theme:"light"}}});s.initialized=true;s.token=token;}
- el("paddle-panel").style.display="block";window.Paddle.Checkout.open({items:items()});el("open-checkout").textContent="تحديث نموذج الدفع";
-}catch(e){err.textContent="فشل فتح نموذج Paddle: "+String(e.message||e);}
+ el("paddle-panel").style.display="block";window.Paddle.Checkout.open({items:checked.items,customData:{classora_checkout_intent:checked.checkoutIntentId}});el("open-checkout").textContent="بدء طلب دفع جديد";
+}catch(e){err.textContent="فشل فتح نموذج الدفع: "+String(e.message||e);}finally{el("open-checkout").disabled=false;}
 });
 document.body.classList.add("member-waiting");
 render();
