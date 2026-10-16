@@ -1,14 +1,14 @@
 (() => {
 "use strict";
 const names={
- ar:{link:"الاشتراكات",title:"Plus وPremium",settings:"الاشتراكات والمميزات"},
- en:{link:"Memberships",title:"Plus & Premium",settings:"Memberships & benefits"},
- es:{link:"Suscripciones",title:"Plus y Premium",settings:"Suscripciones y ventajas"},
- ko:{link:"구독",title:"Plus 및 Premium",settings:"구독 및 혜택"},
- de:{link:"Abonnements",title:"Plus und Premium",settings:"Tarife und Vorteile"},
- it:{link:"Abbonamenti",title:"Plus e Premium",settings:"Abbonamenti e vantaggi"},
- hi:{link:"सदस्यता",title:"Plus और Premium",settings:"सदस्यता और फायदे"},
- tr:{link:"Üyelikler",title:"Plus ve Premium",settings:"Üyelikler ve avantajlar"}
+ ar:{link:"Upgrade · الترقية",title:"Plus وPremium",settings:"الاشتراكات والمميزات"},
+ en:{link:"Upgrade",title:"Plus & Premium",settings:"Memberships & benefits"},
+ es:{link:"Mejorar",title:"Plus y Premium",settings:"Suscripciones y ventajas"},
+ ko:{link:"업그레이드",title:"Plus 및 Premium",settings:"구독 및 혜택"},
+ de:{link:"Upgrade",title:"Plus und Premium",settings:"Tarife und Vorteile"},
+ it:{link:"Upgrade",title:"Plus e Premium",settings:"Abbonamenti e vantaggi"},
+ hi:{link:"अपग्रेड",title:"Plus और Premium",settings:"सदस्यता और फायदे"},
+ tr:{link:"Yükselt",title:"Plus ve Premium",settings:"Üyelikler ve avantajlar"}
 };
 function update(){
  const lang=window.ClassoraLocale?.language||localStorage.getItem("pythagorasi_language")||"ar";
