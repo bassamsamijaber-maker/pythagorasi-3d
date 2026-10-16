@@ -33,12 +33,66 @@ class:{plus:{monthly:129,annual:1238},premium:{monthly:199,annual:1910}},
 school:{plus:{monthly:449,annual:4310},premium:{monthly:799,annual:7670}}
 };
 const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:"plus",period:"monthly",seats:35,checking:true,error:false};
+let liveCatalog=null,catalogLoadError=false;
+const catalogStatusMessages={
+ ar:["عم نحمّل بيانات أسعار Paddle Live…","✓ تم ربط أرقام 10 منتجات و20 سعرًا من Paddle Live. الدفع الحقيقي لسه غير مفعّل.","تعذر تحميل قائمة أسعار Live؛ ما في إمكانية لإتمام الدفع حاليًا."],
+ en:["Loading Paddle Live catalog IDs…","✓ Mapped 10 products and 20 Paddle Live price IDs. Live checkout is not yet enabled.","Couldn't load the Live price catalog. Checkout is unavailable."],
+ es:["Cargando identificadores de Paddle Live…","✓ Vinculados 10 productos y 20 precios Live. El pago real aún no está activo.","No se pudo cargar el catálogo Live."],
+ ko:["Paddle Live 가격 정보를 불러오는 중…","✓ 10개 상품과 20개 Live 가격 ID 연결. 실제 결제는 아직 준비 중입니다.","Live 가격 정보를 불러오지 못했습니다."],
+ de:["Paddle-Live-Preisdaten werden geladen…","✓ 10 Produkte und 20 Live-Preis-IDs zugeordnet. Live-Zahlung noch nicht aktiviert.","Live-Preisdaten konnten nicht geladen werden."],
+ it:["Caricamento ID dei prezzi Paddle Live…","✓ Collegati 10 prodotti e 20 prezzi Live. Il pagamento reale non è ancora attivo.","Impossibile caricare il catalogo Live."],
+ hi:["Paddle Live कीमतों का डेटा लोड हो रहा है…","✓ 10 उत्पाद और 20 Live कीमत ID लिंक हैं। असली भुगतान अभी चालू नहीं है।","Live कीमतों का डेटा उपलब्ध नहीं है।"],
+ tr:["Paddle Live fiyat bilgileri yükleniyor…","✓ 10 ürün ve 20 Live fiyat ID'si eşlendi. Gerçek ödeme henüz açık değil.","Live fiyat kataloğu yüklenemedi."]
+};
+function catalogRecord(key,period){return liveCatalog?.products?.[key]?.[period]||null;}
+function currentCatalogPrice(key,period,fallback){return catalogRecord(key,period)?.amountIls??fallback;}
+function currentSelection(){
+ if(!liveCatalog||state.account?.admin)return null;
+ const key=state.kind+"_"+state.tier;
+ const main=catalogRecord(key,state.period);
+ if(!main)return null;
+ const items=[{priceId:main.priceId,quantity:1}];
+ const extra=extraSeats();
+ if(extra){const add=catalogRecord(state.kind==="class"?"extra_student":"extra_teacher",state.period);if(!add)return null;items.push({priceId:add.priceId,quantity:extra});}
+ return {kind:state.kind,tier:state.tier,period:state.period,seats:minSeats()||1,requestedSeats:minSeats()?state.seats:1,items};
+}
+async function loadLiveCatalog(){
+ try {
+  const response=await fetch("./assets/classora-paddle-live-catalog.json",{cache:"no-store"});
+  if(!response.ok)throw Error("Live catalog HTTP "+response.status);
+  const data=await response.json();
+  if(data.environment!=="live"||data.currency!=="ILS"||data.checkoutEnabled!==false||data.requiresServerIntent!==true)throw Error("Catalog environment or safety flag invalid");
+  const names=["student_plus","student_premium","teacher_plus","teacher_premium","class_plus","class_premium","school_plus","school_premium","extra_student","extra_teacher"];
+  if(Object.keys(data.products||{}).length!==10)throw Error("Wrong product count");
+  const seen=new Set();
+  for(const name of names){
+   const product=data.products[name];
+   if(!/^pro_[a-z0-9]{26}$/.test(product?.productId||""))throw Error("Invalid Live product");
+   for(const period of ["monthly","annual"]){
+    const row=product[period];
+    if(!/^pri_[a-z0-9]{26}$/.test(row?.priceId||"")||seen.has(row.priceId))throw Error("Duplicate or invalid price ID");
+    if(!Number.isFinite(row.amountIls)||row.amountIls<=0)throw Error("Invalid Live price amount");
+    if(!name.startsWith("extra_") && row.amountIls!==prices[name.split("_")[0]][name.split("_")[1]][period])throw Error("Unexpected Classora price for "+name);
+    seen.add(row.priceId);
+   }
+  }
+  if(seen.size!==20)throw Error("Missing Live price");
+  liveCatalog=data;
+ }catch(e){console.error("Live catalog load failed",e);catalogLoadError=true;}
+ render();
+}
+
 function t(key){const idx=keys.indexOf(key);return idx>=0?(translationRows[state.lang][idx]||translationRows.en[idx]):key;}
 function put(id,value){const el=$(id);if(el)el.textContent=value;}
 function price(num){return new Intl.NumberFormat(state.lang,{style:"currency",currency:"ILS",minimumFractionDigits:2,maximumFractionDigits:2}).format(num);}
 function minSeats(){return state.kind==="class"?35:state.kind==="school"?55:0;}
 function extraSeats(){return Math.max(0,state.seats-minSeats());}
-function total(){const base=prices[state.kind][state.tier][state.period],cost=extraSeats()*(state.kind==="class"?(state.period==="monthly"?5:48):(state.period==="monthly"?10:96));return state.account?.admin?0:base+cost;}
+function total(){
+ const fallback=prices[state.kind][state.tier][state.period];
+ const base=currentCatalogPrice(state.kind+"_"+state.tier,state.period,fallback);
+ const extraCost=currentCatalogPrice(state.kind==="class"?"extra_student":"extra_teacher",state.period,state.kind==="class"?(state.period==="monthly"?5:48):(state.period==="monthly"?10:96));
+ return state.account?.admin?0:base+extraSeats()*extraCost;
+}
 function logos(){
  const entries=[
  {name:"Google Pay",symbol:'<svg viewBox="0 0 120 48" role="img" aria-label="Google Pay"><path d="M25 23.5h18.7c.2 1.1.3 2.2.3 3.3 0 12-8 20.5-20 20.5C10.5 47.3 0 36.8 0 24S10.5.7 24 .7c6.4 0 12 2.5 16.3 6.7l-6.7 6.7c-2.6-2.5-5.7-3.8-9.6-3.8-7.7 0-13.8 6.2-13.8 13.7S16.3 37.7 24 37.7c7.1 0 10.4-5 11-8H25v-6.5Z" fill="#4285F4"/><path d="M1.6 15.1 10.1 21C11.3 14.3 17 10.3 24 10.3c3.9 0 7 1.3 9.6 3.8l6.7-6.7C36 3.2 30.4.7 24 .7 13.9.7 5.3 6.2 1.6 15.1Z" fill="#EA4335"/><path d="M24 47.3c6.2 0 11.6-2.1 15.6-5.9l-7.6-5.7c-2.1 1.4-4.7 2-8 2-7 0-12.7-4-14-10l-8.5 6.4C5.1 41.8 13.8 47.3 24 47.3Z" fill="#34A853"/><path d="M10 27.7a14.2 14.2 0 0 1 0-7.4l-8.4-5.2a23.5 23.5 0 0 0 0 17.8L10 27.7Z" fill="#FBBC04"/><text x="51" y="32" font-family="Arial, sans-serif" font-weight="600" font-size="24" fill="#f3fbff">Pay</text></svg>'},
@@ -73,7 +127,7 @@ function render(){
  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",state.period===b.dataset.period));
  document.querySelectorAll(".cl-plan").forEach(card=>card.classList.toggle("selected",card.dataset.tier===state.tier));
  for(const tier of ["plus","premium"]){
-   put("cl-"+tier+"-price",price(prices[state.kind][tier][state.period]));
+   put("cl-"+tier+"-price",price(currentCatalogPrice(state.kind+"_"+tier,state.period,prices[state.kind][tier][state.period])));
    put("cl-"+tier+"-term",t(state.period==="monthly"?"termMonth":"termYear"));
    const list=$("cl-"+tier+"-features");list.replaceChildren();
    for(const value of features[state.lang][tier]){const li=document.createElement("li");li.textContent=value;list.append(li);}
@@ -85,6 +139,9 @@ function render(){
  put("cl-summary-period",t(state.period==="monthly"?"monthly":"annual"));
  put("cl-summary-seats",String(extraSeats()));
  put("cl-total",price(total()));
+ const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
+ put("cl-catalog-status",status[catalogLoadError?2:liveCatalog?1:0]);
+ $("cl-catalog-status").dataset.status=catalogLoadError?"error":liveCatalog?"linked":"loading";
  put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?t("adminFree"):"");
  $("cl-continue").disabled=false;
 }
@@ -109,5 +166,15 @@ document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",(
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render();}));
 document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{state.tier=b.dataset.choose;render();$("cl-checkout-title").scrollIntoView({block:"center",behavior:"smooth"});}));
 $("cl-seats").addEventListener("change",()=>{const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
-$("cl-continue").addEventListener("click",()=>{if(!state.account){window.location.assign("./index.html");return;}put("cl-payment-status",state.account.admin?t("adminFree"):t("prelaunch"));});
+$("cl-continue").addEventListener("click",()=>{
+ if(!state.account){window.location.assign("./index.html");return;}
+ if(state.account.admin){put("cl-payment-status",t("adminFree"));return;}
+ const selection=currentSelection();
+ if(!selection){put("cl-payment-status",catalogStatusMessages[state.lang][catalogLoadError?2:0]);return;}
+ // Catalog mapping is not proof of payment. No browser-side role or price
+ // request may ever grant benefits: only a signed Paddle webhook and a
+ // verified server-issued checkout intent can grant entitlements.
+ put("cl-payment-status",t("prelaunch"));
+});
+logos();render();onAuthStateChanged(auth,identify);loadLiveCatalog();
 logos();render();onAuthStateChanged(auth,identify);
