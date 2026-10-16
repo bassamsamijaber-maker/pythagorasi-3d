@@ -1485,6 +1485,34 @@ Francium|Francio|프랑슘|Francium|Francio|फ्रैंसियम|Fransiyu
 Radium|Radio|라듐|Radium|Radio|रेडियम|Radyum
 Actinium|Actinio|악티늄|Actinium|Attinio|ऐक्टिनियम|Aktinyum
 Thorium|Torio|토륨|Thorium|Torio|थोरियम|Toryum
+Protactinium|Protactinio|프로트악티늄|Protactinium|Protoattinio|प्रोटैक्टिनियम|Protaktinyum
+Uranium|Uranio|우라늄|Uran|Uranio|यूरेनियम|Uranyum
+Neptunium|Neptunio|넵투늄|Neptunium|Nettunio|नेप्टूनियम|Neptünyum
+Plutonium|Plutonio|플루토늄|Plutonium|Plutonio|प्लूटोनियम|Plütonyum
+Americium|Americio|아메리슘|Americium|Americio|अमेरिसियम|Amerikyum
+Curium|Curio|퀴륨|Curium|Curio|क्यूरियम|Küriyum
+Berkelium|Berkelio|버클륨|Berkelium|Berkelio|बर्केलियम|Berkelyum
+Californium|Californio|캘리포늄|Californium|Californio|कैलिफोर्नियम|Kaliforniyum
+Einsteinium|Einstenio|아인슈타이늄|Einsteinium|Einsteinio|आइंस्टीनियम|Aynştaynyum
+Fermium|Fermio|페르뮴|Fermium|Fermio|फर्मियम|Fermiyum
+Mendelevium|Mendelevio|멘델레븀|Mendelevium|Mendelevio|मेंडेलेवियम|Mendelevyum
+Nobelium|Nobelio|노벨륨|Nobelium|Nobelio|नोबेलियम|Nobelyum
+Lawrencium|Laurencio|로렌슘|Lawrencium|Laurenzio|लॉरेन्शियम|Lavrensiyum
+Rutherfordium|Rutherfordio|러더포듐|Rutherfordium|Rutherfordio|रदरफोर्डियम|Rutherfordyum
+Dubnium|Dubnio|더브늄|Dubnium|Dubnio|डब्नियम|Dubniyum
+Seaborgium|Seaborgio|시보귬|Seaborgium|Seaborgio|सीबोर्गियम|Seaborgiyum
+Bohrium|Bohrio|보륨|Bohrium|Bohrio|बोरियम|Bohriyum
+Hassium|Hassio|하슘|Hassium|Assio|हैसियम|Hassiyum
+Meitnerium|Meitnerio|마이트너륨|Meitnerium|Meitnerio|माइटनेरियम|Meitneryum
+Darmstadtium|Darmstadtio|다름슈타튬|Darmstadtium|Darmstadtio|डार्मस्टाड्टियम|Darmstadtiyum
+Roentgenium|Roentgenio|뢴트게늄|Röntgenium|Roentgenio|रॉन्टजेनियम|Röntgenyum
+Copernicium|Copernicio|코페르니슘|Copernicium|Copernicio|कोपरनिसियम|Kopernikyum
+Nihonium|Nihonio|니호늄|Nihonium|Nihonio|निहोनियम|Nihonyum
+Flerovium|Flerovio|플레로븀|Flerovium|Flerovio|फ्लेरोवियम|Flerovyum
+Moscovium|Moscovio|모스코븀|Moscovium|Moscovio|मोस्कोवियम|Moskovyum
+Livermorium|Livermorio|리버모륨|Livermorium|Livermorio|लिवरमोरियम|Livermoryum
+Tennessine|Teneso|테네신|Tenness|Tennessio|टेनेसिन|Tenesin
+Oganesson|Oganesón|오가네손|Oganesson|Oganesson|ओगानेसोन|Oganesson
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
