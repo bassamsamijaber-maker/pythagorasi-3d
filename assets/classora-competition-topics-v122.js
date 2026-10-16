@@ -6,8 +6,8 @@ export function installClassoraCompetitionTopicStep(){
  if(!home||!select||home.dataset.caTopicStepReady)return;
  home.dataset.caTopicStepReady='1';
  const lang=()=>document.documentElement.lang||'ar';
- const L=(ar,en)=>lang()==='ar'?ar:(window.ClassoraLocale?.t(en)||en);
- const topicName=item=>lang()==='ar'?item.title:(window.ClassoraLocale?.t(item.en)||item.en);
+ const L=(ar,en)=>lang()==='ar'?ar:(window.ClassoraLocale?.tFor?.(lang(),en)||en);
+ const topicName=item=>lang()==='ar'?item.title:(window.ClassoraLocale?.tFor?.(lang(),item.en)||item.en);
  const grade=()=>{let x=8;try{x=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(x)?x:8};
  const gradeName=g=>window.ClassoraLocale?.formatGrade?.(g,lang())||(lang()==='ar'?'الصف '+g:'Grade '+g);
  const subjectName=s=>{
