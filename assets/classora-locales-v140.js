@@ -1717,6 +1717,41 @@ Latest additions|Últimas novedades|최근 추가된 내용|Neu hinzugefügt|Ult
 Classora learning announcements|Novedades de aprendizaje de Classora|Classora 학습 공지|Classora-Lernmeldungen|Novità didattiche Classora|क्लासोरा शैक्षिक घोषणाएँ|Classora öğrenme duyuruları
 Your tasks|Tus tareas|내 할 일|Deine Aufgaben|Le tue attività|आपके कार्य|Görevlerin
 Checking your class assignments…|Comprobando las tareas de clase…|학급 과제 확인 중…|Klassenaufgaben werden geprüft…|Controllo compiti della classe…|कक्षा के कार्य जाँचे जा रहे हैं…|Sınıf ödevleri kontrol ediliyor…
+TEACHER WORKSPACE • CLASSORA|ÁREA DEL PROFESOR • CLASSORA|교사 공간 • CLASSORA|LEHRERBEREICH • CLASSORA|AREA INSEGNANTE • CLASSORA|शिक्षक क्षेत्र • CLASSORA|ÖĞRETMEN ALANI • CLASSORA
+Your classes, exams and student results in one place. Everything you need to manage your teaching.|Tus clases, exámenes y resultados en un solo lugar. Todo para organizar tu enseñanza.|학급, 시험과 학생 성적을 한곳에서 관리하세요. 수업 관리에 필요한 도구가 있습니다.|Klassen, Prüfungen und Schülerergebnisse an einem Ort. Alles zur Unterrichtsverwaltung.|Classi, esami e risultati degli studenti in un solo posto. Tutto per gestire l'insegnamento.|कक्षाएँ, परीक्षाएँ और छात्र परिणाम एक जगह। शिक्षण प्रबंधन के उपकरण।|Sınıfların, sınavların ve öğrenci sonuçların tek yerde. Eğitimi yönetmek için her şey.
+Manage my classes|Gestionar mis clases|내 학급 관리|Meine Klassen verwalten|Gestisci le mie classi|मेरी कक्षाएँ प्रबंधित करें|Sınıflarımı yönet
+Create exam|Crear examen|시험 만들기|Prüfung erstellen|Crea esame|परीक्षा बनाएँ|Sınav oluştur
+Classes I manage|Clases que gestiono|관리하는 학급|Von mir verwaltete Klassen|Classi che gestisco|मेरे प्रबंधन की कक्षाएँ|Yönettiğim sınıflar
+Published exams|Exámenes publicados|공개된 시험|Veröffentlichte Prüfungen|Esami pubblicati|प्रकाशित परीक्षाएँ|Yayımlanan sınavlar
+School subjects|Asignaturas escolares|학교 과목|Schulfächer|Materie scolastiche|स्कूल विषय|Okul dersleri
+Quick tools|Herramientas rápidas|빠른 도구|Schnellwerkzeuge|Strumenti rapidi|त्वरित उपकरण|Hızlı araçlar
+Choose a tool to get started.|Elige una herramienta para empezar.|시작할 도구를 선택하세요.|Wähle ein Werkzeug zum Starten.|Scegli uno strumento per iniziare.|शुरू करने के लिए उपकरण चुनें।|Başlamak için bir araç seç.
+Students, class codes and settings|Estudiantes, códigos de clase y ajustes|학생, 학급 코드 및 설정|Schüler, Klassencodes und Einstellungen|Studenti, codici classe e impostazioni|छात्र, कक्षा कोड और सेटिंग्स|Öğrenciler, sınıf kodları ve ayarlar
+School assignments|Tareas escolares|학교 과제|Schulaufgaben|Compiti scolastici|स्कूल कार्य|Okul ödevleri
+Create assignments and track submissions|Crea tareas y sigue las entregas|과제 만들기와 제출 현황 확인|Aufgaben erstellen und Abgaben verfolgen|Crea compiti e segui le consegne|कार्य बनाएँ और जमा की स्थिति देखें|Ödev oluştur ve teslimleri takip et
+Create exams and share access codes|Crea exámenes y comparte códigos|시험을 만들고 코드를 공유하세요|Prüfungen erstellen und Zugangscodes teilen|Crea esami e condividi codici|परीक्षाएँ बनाकर कोड साझा करें|Sınav oluştur ve erişim kodlarını paylaş
+Student results|Resultados de estudiantes|학생 성적|Schülerergebnisse|Risultati studenti|छात्र परिणाम|Öğrenci sonuçları
+Grades and student performance|Notas y rendimiento del alumnado|학생 성적과 학습 성과|Noten und Schülerleistungen|Voti e rendimento degli studenti|अंक और छात्रों का प्रदर्शन|Notlar ve öğrenci başarısı
+Create rooms and manage competitions|Crea salas y gestiona concursos|대회 방을 만들고 관리하세요|Räume erstellen und Wettbewerbe verwalten|Crea stanze e gestisci gare|कमरे बनाएँ और प्रतियोगिता सँभालें|Oda oluştur ve yarışmaları yönet
+Question bank|Banco de preguntas|문제은행|Fragenbank|Banca domande|प्रश्न बैंक|Soru bankası
+Prepare and reuse questions|Prepara y reutiliza preguntas|문제를 만들고 다시 사용하세요|Fragen vorbereiten und wiederverwenden|Prepara e riutilizza domande|प्रश्न तैयार कर फिर उपयोग करें|Soruları hazırla ve yeniden kullan
+My classes at a glance|Mis clases de un vistazo|내 학급 한눈에 보기|Meine Klassen im Überblick|Le mie classi a colpo d'occhio|मेरी कक्षाओं का सार|Sınıflarıma genel bakış
+A summary of your classes without displaying student details here.|Resumen de tus clases sin mostrar los datos de alumnos.|학생 개인정보를 표시하지 않는 학급 요약입니다.|Klassenübersicht ohne personenbezogene Schülerdaten.|Riepilogo classi senza dati personali degli studenti.|छात्रों के निजी विवरण के बिना कक्षाओं का सार।|Öğrenci kişisel bilgileri gösterilmeden sınıf özeti.
+View all ↗|Ver todo ↗|모두 보기 ↗|Alle ansehen ↗|Mostra tutti ↗|सभी देखें ↗|Tümünü gör ↗
+Loading your classes…|Cargando tus clases…|내 학급 불러오는 중…|Klassen werden geladen…|Caricamento classi…|कक्षाएँ लोड हो रही हैं…|Sınıfların yükleniyor…
+My learning space|Mi espacio de aprendizaje|내 학습 공간|Mein Lernbereich|Il mio spazio di apprendimento|मेरा अध्ययन क्षेत्र|Öğrenme alanım
+Everything you need to learn, follow your classes and take exams in one place.|Todo lo necesario para aprender, seguir tus clases y hacer exámenes en un solo lugar.|학습, 학급 활동 및 시험에 필요한 모든 것을 한곳에서 이용하세요.|Alles für Lernen, Klassen und Prüfungen an einem Ort.|Tutto per studiare, seguire le classi e sostenere esami in un posto.|सीखने, कक्षाओं से जुड़ने और परीक्षा देने के लिए सब कुछ एक जगह।|Öğrenmek, sınıflarını takip etmek ve sınava girmek için her şey tek yerde.
+Explore my subjects|Explorar mis asignaturas|내 과목 탐색|Meine Fächer erkunden|Esplora le mie materie|मेरे विषय देखें|Derslerimi keşfet
+My classes and assignments|Mis clases y tareas|내 학급과 과제|Meine Klassen und Aufgaben|Le mie classi e i compiti|मेरी कक्षाएँ और कार्य|Sınıflarım ve ödevlerim
+Your Classora progress|Tu progreso en Classora|Classora 학습 진도|Dein Classora-Fortschritt|I tuoi progressi su Classora|क्लासोरा में आपकी प्रगति|Classora ilerlemen
+My exams|Mis exámenes|내 시험|Meine Prüfungen|I miei esami|मेरी परीक्षाएँ|Sınavlarım
+Upcoming dates|Próximas fechas|다가오는 일정|Anstehende Termine|Date in arrivo|आगामी तारीखें|Yaklaşan tarihler
+Where do we start?|¿Por dónde empezamos?|어디부터 시작할까요?|Womit fangen wir an?|Da dove iniziamo?|कहाँ से शुरू करें?|Nereden başlayalım?
+Choose what you want to do; we'll take care of the rest.|Elige qué quieres hacer; nosotros nos encargamos del resto.|하고 싶은 활동을 선택하세요. 나머지는 도와드릴게요.|Wähle dein Ziel; wir kümmern uns um den Rest.|Scegli cosa fare e al resto pensiamo noi.|आप जो करना चाहते हैं चुनें; बाकी हम सँभालेंगे।|Ne yapmak istediğini seç, gerisini hallederiz.
+Subjects and lessons|Asignaturas y lecciones|과목과 수업|Fächer und Lektionen|Materie e lezioni|विषय और पाठ|Dersler ve konular
+Math, science, languages and more|Matemáticas, ciencias, idiomas y más|수학, 과학, 언어 등|Mathe, Naturwissenschaften, Sprachen und mehr|Matematica, scienze, lingue e altro|गणित, विज्ञान, भाषाएँ और अन्य|Matematik, fen, dil ve daha fazlası
+Practice now|Practicar ahora|지금 연습|Jetzt üben|Esercitati ora|अभी अभ्यास करें|Şimdi alıştırma yap
+Various questions with instant grading|Preguntas variadas con corrección inmediata|다양한 문제와 즉시 채점|Vielfältige Fragen mit sofortiger Bewertung|Domande varie con correzione immediata|विभिन्न प्रश्न और तुरंत मूल्यांकन|Anında değerlendirilen çeşitli sorular
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
