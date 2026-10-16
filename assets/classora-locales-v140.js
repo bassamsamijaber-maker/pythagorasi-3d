@@ -1836,6 +1836,13 @@ Write the message or assignment instructions...|Escribe el mensaje o las instruc
 What do you want to ask?|¿Qué quieres preguntar?|무엇을 질문하고 싶나요?|Was möchtest du fragen?|Che cosa vuoi chiedere?|आप क्या पूछना चाहते हैं?|Ne sormak istiyorsun?
 Talk to Classora Assistant|Hablar con el asistente de Classora|Classora 도우미와 대화|Mit dem Classora-Assistenten sprechen|Parla con l'assistente Classora|क्लासोरा सहायक से बात करें|Classora Asistanı ile konuş
 Classora opening|Inicio de Classora|Classora 시작|Classora-Start|Avvio di Classora|क्लासोरा खुल रहा है|Classora açılıyor
+Classora — Offline study|Classora — Estudio sin conexión|Classora — 오프라인 학습|Classora — Offline-Lernen|Classora — Studio offline|क्लासोरा — ऑफ़लाइन अध्ययन|Classora — Çevrimdışı çalışma
+Lessons, models and practice are available here. Progress stays on this device and syncs when you open the main site with your account online. Assignment submission and live competitions need internet.|Aquí puedes acceder a lecciones, modelos y prácticas. Tu progreso se guarda en este dispositivo y se sincroniza al abrir la web con tu cuenta y conexión. Para enviar tareas y participar en concursos en directo se necesita internet.|여기서 수업, 모형, 연습문제를 이용할 수 있습니다. 학습 진도는 이 기기에 저장되며 계정으로 온라인 접속하면 동기화됩니다. 과제 제출과 실시간 대회에는 인터넷이 필요합니다.|Hier sind Lektionen, Modelle und Übungen verfügbar. Dein Fortschritt bleibt auf diesem Gerät und wird synchronisiert, wenn du die Hauptseite online mit deinem Konto öffnest. Für Abgaben und Live-Wettbewerbe ist Internet erforderlich.|Qui trovi lezioni, modelli ed esercizi. I progressi sono salvati sul dispositivo e si sincronizzano quando apri il sito principale con il tuo account online. Per inviare compiti e partecipare alle gare in diretta serve internet.|यहाँ पाठ, मॉडल और अभ्यास उपलब्ध हैं। आपकी प्रगति इस डिवाइस पर सहेजी जाती है और अपने खाते से मुख्य साइट ऑनलाइन खोलने पर सिंक होती है। कार्य जमा करने और लाइव प्रतियोगिताओं के लिए इंटरनेट चाहिए।|Dersler, modeller ve alıştırmalar burada kullanılabilir. İlerlemen bu cihazda saklanır ve hesabınla ana siteyi çevrimiçi açınca eşitlenir. Ödev teslimi ve canlı yarışmalar internet gerektirir.
+Open main site to sync|Sinc. en el sitio principal|메인 사이트에서 동기화|Hauptseite zum Synchronisieren öffnen|Apri il sito principale per sincronizzare|सिंक करने के लिए मुख्य साइट खोलें|Eşitlemek için ana siteyi aç
+Remove download|Eliminar descarga|다운로드 삭제|Download entfernen|Rimuovi il download|डाउनलोड हटाएँ|İndirmeyi kaldır
+No downloaded units yet. Open a subject’s topic list online and choose Download unit.|Aún no hay unidades descargadas. Abre los temas de una asignatura con conexión y elige Descargar unidad.|아직 다운로드한 단원이 없습니다. 온라인에서 과목의 주제 목록을 열고 단원 다운로드를 선택하세요.|Noch keine Einheiten heruntergeladen. Öffne online die Themenliste eines Fachs und wähle Einheit herunterladen.|Non hai ancora scaricato unità. Apri online gli argomenti di una materia e scegli Scarica unità.|अभी कोई इकाई डाउनलोड नहीं हुई है। ऑनलाइन विषय सूची खोलें और इकाई डाउनलोड करें चुनें।|Henüz indirilmiş ünite yok. Çevrimiçiyken bir dersin konu listesini açıp Üniteyi indir seçeneğini seç.
+Back to lesson|Volver a la lección|수업으로 돌아가기|Zurück zur Lektion|Torna alla lezione|पाठ पर वापस जाएँ|Derse dön
+Local practice|Práctica sin conexión|오프라인 연습|Offline-Übung|Esercizio offline|ऑफ़लाइन अभ्यास|Çevrimdışı alıştırma
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
@@ -1911,7 +1918,7 @@ function tFor(language,value){
  if(gradeMatch)return formatGrade(Number(gradeMatch[1]),language);
  let result=dictionary[key]||dictionary[value];
  if(!result){
-  const clean=key.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'').replace(/[:：]$/,'');
+  const clean=key.replace(/^[\p{Extended_Pictographic}\p{S}\uFE0F\u200D\s]+/u,'').replace(/[:：]$/,'');
   if(dictionary[clean])result=key.replace(clean,dictionary[clean]);
  }
  return result?value.replace(value.trim(),result):value;
