@@ -1,3 +1,2 @@
 Classora Cloudflare Pages production redeploy trigger — 2026-10-16
-Release: V165 — full Privacy Policy and Terms of Use in Arabic, English, Spanish, Korean, German, Italian, Hindi, and Turkish.
-Includes the in-app consent dialog, persistent language selection, localized legal links, and cache refresh.
+Release V166: fix blank return from periodic table, enable scrolling and exit/navigation for mobile privacy/terms, localize lobby/teacher/student panels in eight languages, and refresh service worker cache.
