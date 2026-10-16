@@ -17179,15 +17179,21 @@ document.querySelectorAll(".suggestions button").forEach(b=>b.addEventListener("
 /* -------------------- QUICK CHALLENGE -------------------- */
 let challenge={a:3,b:4,c:5,score:Number(localStorage.getItem("pythagorasi_challenge_score")||0)||0};
 
+const CLASSORA_PYTHAGORAS_CHALLENGE_TEXT={"es":["Si <b>a = {a}</b> y <b>b = {b}</b>, ¿cuánto vale la hipotenusa <b>c</b>?","Escribe primero una respuesta 👀","¡Correcto! 🔥 Porque {a}² + {b}² = {c}². +10 puntos","¡Casi! Prueba: c = √({a}² + {b}²).","{a}² + {b}² = {a2} + {b2} = {c2}; por tanto c = {c}.","{score} puntos"],"ko":["<b>a = {a}</b>, <b>b = {b}</b>이면 빗변 <b>c</b>는 얼마인가요?","먼저 답을 입력하세요 👀","정답! 🔥 {a}² + {b}² = {c}²이므로 +10점","아쉬워요! c = √({a}² + {b}²)를 사용해 보세요.","{a}² + {b}² = {a2} + {b2} = {c2}, 따라서 c = {c}.","{score}점"],"de":["Wenn <b>a = {a}</b> und <b>b = {b}</b>, wie lang ist die Hypotenuse <b>c</b>?","Bitte erst eine Antwort eingeben 👀","Richtig! 🔥 Denn {a}² + {b}² = {c}². +10 Punkte","Fast! Versuche c = √({a}² + {b}²).","{a}² + {b}² = {a2} + {b2} = {c2}, also c = {c}.","{score} Punkte"],"it":["Se <b>a = {a}</b> e <b>b = {b}</b>, quanto misura l'ipotenusa <b>c</b>?","Inserisci prima una risposta 👀","Corretto! 🔥 Perché {a}² + {b}² = {c}². +10 punti","Ci sei quasi! Prova c = √({a}² + {b}²).","{a}² + {b}² = {a2} + {b2} = {c2}, quindi c = {c}.","{score} punti"],"hi":["यदि <b>a = {a}</b> और <b>b = {b}</b> हैं, तो कर्ण <b>c</b> कितना है?","पहले उत्तर लिखें 👀","सही! 🔥 क्योंकि {a}² + {b}² = {c}²। +10 अंक","करीब! c = √({a}² + {b}²) आज़माएँ।","{a}² + {b}² = {a2} + {b2} = {c2}, इसलिए c = {c}।","{score} अंक"],"tr":["<b>a = {a}</b> ve <b>b = {b}</b> ise hipotenüs <b>c</b> kaçtır?","Önce bir cevap yaz 👀","Doğru! 🔥 Çünkü {a}² + {b}² = {c}². +10 puan","Yaklaştın! c = √({a}² + {b}²) dene.","{a}² + {b}² = {a2} + {b2} = {c2}; yani c = {c}.","{score} puan"]};
+function pythagorasChallengeLocale(kind){
+ const entries=CLASSORA_PYTHAGORAS_CHALLENGE_TEXT[window.ClassoraLocale?.language];
+ if(!entries)return '';
+ return entries[kind].replace(/\{(a2|b2|c2|a|b|c|score)\}/g,(_,key)=>String(({a:challenge.a,b:challenge.b,c:challenge.c,a2:challenge.a*challenge.a,b2:challenge.b*challenge.b,c2:challenge.c*challenge.c,score:challenge.score})[key]));
+}
 function newChallenge(){
   const triples=[
     [3,4,5],[5,12,13],[6,8,10],[8,15,17],[7,24,25],[9,12,15]
   ];
   const pick=triples[Math.floor(Math.random()*triples.length)];
   challenge.a=pick[0];challenge.b=pick[1];challenge.c=pick[2];
-  document.getElementById("challengeQuestion").innerHTML=currentUILanguage==="en"
+  document.getElementById("challengeQuestion").innerHTML=pythagorasChallengeLocale(0)||(currentUILanguage==="en"
     ?`If <b>a = ${challenge.a}</b> and <b>b = ${challenge.b}</b>, what is the hypotenuse <b>c</b>?`
-    :`إذا كان <b>a = ${challenge.a}</b> و <b>b = ${challenge.b}</b>، كم يساوي الوتر <b>c</b>؟`;
+    :`إذا كان <b>a = ${challenge.a}</b> و <b>b = ${challenge.b}</b>، كم يساوي الوتر <b>c</b>؟`);
   document.getElementById("challengeAnswer").value="";
   const f=document.getElementById("challengeFeedback");
   f.className="challenge-feedback";
@@ -17205,24 +17211,24 @@ document.getElementById("challengeNew").addEventListener("click",newChallenge);
 document.getElementById("challengeCheck").addEventListener("click",()=>{
   const val=parseFloat(document.getElementById("challengeAnswer").value);
   if(!Number.isFinite(val)){
-    challengeFeedback(currentUILanguage==="en"?"Enter an answer first 👀":"اكتب جواب أولًا 👀",false);return;
+    challengeFeedback(pythagorasChallengeLocale(1)||(currentUILanguage==="en"?"Enter an answer first 👀":"اكتب جواب أولًا 👀"),false);return;
   }
   if(Math.abs(val-challenge.c)<.01){
     challenge.score+=10;
     localStorage.setItem("pythagorasi_challenge_score",String(challenge.score));
     queueAccountStateSave({challengeScore:challenge.score});
-    document.getElementById("challengeScore").textContent=currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`;
-    challengeFeedback(currentUILanguage==="en"?`Correct! 🔥 Because ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 pts`:`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`,true);
+    document.getElementById("challengeScore").textContent=pythagorasChallengeLocale(5)||(currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`);
+    challengeFeedback(pythagorasChallengeLocale(2)||(currentUILanguage==="en"?`Correct! 🔥 Because ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 pts`:`صح! 🔥 لأن ${challenge.a}² + ${challenge.b}² = ${challenge.c}². +10 نقاط`),true);
     soundFx("correct");fxElement(document.getElementById("pythagChallengeBox"),"win");
   }else{
-    challengeFeedback(currentUILanguage==="en"?`Close! Try: c = √(${challenge.a}² + ${challenge.b}²).`:`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`,false);
+    challengeFeedback(pythagorasChallengeLocale(3)||(currentUILanguage==="en"?`Close! Try: c = √(${challenge.a}² + ${challenge.b}²).`:`قريب! جرّب: c = √(${challenge.a}² + ${challenge.b}²).`),false);
     soundFx("wrong");fxElement(document.getElementById("pythagChallengeBox"),"shake");
   }
 });
 
 document.getElementById("challengeShow").addEventListener("click",()=>{
   challengeFeedback(
-    currentUILanguage==="en"?`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}, so c = ${challenge.c}.`:`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}، إذن c = ${challenge.c}.`,
+    pythagorasChallengeLocale(4)||(currentUILanguage==="en"?`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}, so c = ${challenge.c}.`:`${challenge.a}² + ${challenge.b}² = ${challenge.a*challenge.a} + ${challenge.b*challenge.b} = ${challenge.c*challenge.c}، إذن c = ${challenge.c}.`),
     true
   );
 });
@@ -17232,7 +17238,7 @@ document.getElementById("challengeAnswer").addEventListener("keydown",e=>{
 });
 
 newChallenge();
-document.getElementById("challengeScore").textContent=currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`;
+document.getElementById("challengeScore").textContent=pythagorasChallengeLocale(5)||(currentUILanguage==="en"?`${challenge.score} pts`:`${challenge.score} نقاط`);
 
 
 /* resize and render */
