@@ -113,3 +113,20 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 .cl-live-catalog[data-status="loading"]{border-color:#5c7276;color:#b8d1da;background:#1d3038}
 .cl-live-catalog[data-status="error"]{border-color:#9d695c;color:#ffe0ce;background:#482b28}
 @media(max-width:600px){.cl-live-catalog{max-width:100%;line-height:1.7;font-size:11px}}
+
+/* Subscription UI improvements: public buyers are not creator/admin users. */
+.cl-pricing[hidden],.cl-checkout-preview[hidden],.cl-admin[hidden],.cl-seat-row[hidden],.cl-live-catalog[hidden]{display:none!important}
+.cl-role-note{color:#b9e8d6;font-weight:850;font-size:14px;margin:0 0 14px;line-height:1.7}
+.cl-benefits-disclaimer,.cl-currency-info,.cl-base-benefits{padding:14px 16px;border-radius:15px;border:1px solid #44785f66;background:#112d2c;color:#d7eee1;font-size:12px;line-height:1.85}
+.cl-base-benefits{border-color:#4f8676;background:linear-gradient(110deg,#163b35,#0f3133);margin-top:18px}
+.cl-benefits-disclaimer{margin:18px 0 9px;color:#ebdab4;background:linear-gradient(95deg,#42382666,#183331);border-color:#877043}
+.cl-currency-info{margin:9px 0 0;border:1px solid #405f7980;background:#142d3c;color:#c8e3f7}
+.cl-price-line strong,.cl-total strong{direction:ltr!important;unicode-bidi:isolate!important;display:inline-block;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cl-plan{display:flex;flex-direction:column;align-items:stretch}
+.cl-plan-select{margin-top:4px}
+.cl-plan ul{margin-top:20px;align-content:start;gap:10px}
+.cl-plan li{line-height:1.65}
+.cl-plan li:first-child{font-weight:850;color:#ddfced}
+.cl-plan.premium li:first-child{color:#ffe6ae}
+.cl-admin{margin-top:18px}
+@media(max-width:640px){.cl-benefits-disclaimer,.cl-currency-info,.cl-base-benefits{padding:12px;font-size:11px}.cl-plan li{line-height:1.6}.cl-plan ul{gap:8px}}
