@@ -9,11 +9,11 @@ import {arabicQuestion,arabicLesson,AR_ROLES,AR_MARKERS} from './arabic-catalog-
 import {scienceLiveQuestions} from './learning-hub.js?v=131';
 import {combineTopicQuestions} from './classora-assessment-levels-v152.js?v=152';
 import {scienceTopicQuestions} from './classora-science-bank-v152.js?v=152';
-const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.dictionaries?.[lang]?.[en]||en);
+const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.tFor?.(lang,en)||en);
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const subjectLabel=(subject,lang)=>{
  if(subject==='arabic')return t('قواعد اللغة العربية','Arabic Grammar',lang);
- if(subject==='english')return 'English Grammar';
+ if(subject==='english')return t('قواعد الإنجليزي','English Grammar',lang);
  const name=CURRICULUM_SUBJECTS[subject]?.[lang==='ar'?'ar':'en']||subject;
  return lang==='ar'?name:t(name,name,lang);
 };
