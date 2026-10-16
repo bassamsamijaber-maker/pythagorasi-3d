@@ -210,7 +210,7 @@ function matches(e){
  if(propertyFilter==="nonmetals"&&!isNonmetal)return false;
  if(["solid","liquid","gas","unknown"].includes(propertyFilter)&&e.state!==propertyFilter)return false;
  const q=search.trim().toLowerCase();const catOk=filter==="all"||(filter==="favorites"?favorites.has(e.n):e.category===filter);if(!catOk)return false;if(!q)return true;
- return e.s.toLowerCase().includes(q)||e.en.toLowerCase().includes(q)||e.ar.includes(search.trim())||String(e.n)===q;
+ return e.s.toLowerCase().includes(q)||e.en.toLowerCase().includes(q)||e.ar.includes(search.trim())||localName(e).toLocaleLowerCase().includes(q)||catName(e).toLocaleLowerCase().includes(q)||String(e.n)===q;
 }
 let fitWholeTable=true;
 function fitPeriodicTable(){
@@ -266,7 +266,7 @@ const compounds={
  "1-8":["H₂O","Water","ماء"],"11-17":["NaCl","Sodium chloride","كلوريد الصوديوم"],"6-8":["CO₂","Carbon dioxide","ثاني أكسيد الكربون"],"12-8":["MgO","Magnesium oxide","أكسيد المغنيسيوم"],"20-8":["CaO","Calcium oxide","أكسيد الكالسيوم"],"26-8":["Fe₂O₃","Iron(III) oxide","أكسيد الحديد الثلاثي"],"7-1":["NH₃","Ammonia","أمونيا"],"19-17":["KCl","Potassium chloride","كلوريد البوتاسيوم"],"1-17":["HCl","Hydrogen chloride","كلوريد الهيدروجين"],"20-17":["CaCl₂","Calcium chloride","كلوريد الكالسيوم"],"13-8":["Al₂O₃","Aluminium oxide","أكسيد الألومنيوم"],"14-8":["SiO₂","Silicon dioxide","ثاني أكسيد السيليكون"]
 };
 function pairKey(a,b){return compounds[`${a}-${b}`]?`${a}-${b}`:`${b}-${a}`}
-$("#combineBtn").onclick=()=>{const a=+$("#combineA").value,b=+$("#combineB").value,key=pairKey(a,b),c=compounds[key];$("#combineResult").innerHTML=c?`<strong>${c[0]}</strong><br>${t("compoundIntro")}: ${lang==="ar"?c[2]:c[1]}.`:`<span>${t("noCompound")}</span>`};
+$("#combineBtn").onclick=()=>{const a=+$("#combineA").value,b=+$("#combineB").value,key=pairKey(a,b),c=compounds[key];$("#combineResult").innerHTML=c?`<strong>${c[0]}</strong><br>${t("compoundIntro")}: ${lang==="ar"?c[2]:localeText(c[1])}.`:`<span>${t("noCompound")}</span>`};
 
 let quiz={started:false,score:0,total:0,current:null,answered:false,type:null};
 function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1])}
