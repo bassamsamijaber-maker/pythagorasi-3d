@@ -1,10 +1,10 @@
-const CACHE_NAME="classora-v160-expanded-ui-localization";
+const CACHE_NAME="classora-v161-offline-eight-language";
 const APP_SHELL=[
   "./index.html",
   "./status.html",
   "./assets/classora-dock-stable-v140.css?v=140",
   "./assets/classora-locales-v140.css?v=140",
-  "./assets/classora-locales-v140.js?v=159",
+  "./assets/classora-locales-v140.js?v=161",
   "./assets/classora-responsive-v131.css?v=138",
   "./assets/learning-offline-v130.js?v=131",
   "./assets/learning-home-v130.js?v=131",
@@ -13,7 +13,7 @@ const APP_SHELL=[
   "./assets/learning-feedback-v130.js?v=130",
   "./assets/learning-search-v130.js?v=130",
   "./assets/learning-memory-v130.js?v=130",
-  "./assets/study-offline-v130.js?v=131",
+  "./assets/study-offline-v130.js?v=161",
   "./assets/learning-knowledge-v130.js?v=130",
   "./assets/learning-tools-v130.js?v=130",
   "./study-offline.html",
