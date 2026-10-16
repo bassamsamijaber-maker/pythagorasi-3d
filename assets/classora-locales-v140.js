@@ -1752,6 +1752,13 @@ Subjects and lessons|Asignaturas y lecciones|과목과 수업|Fächer und Lektio
 Math, science, languages and more|Matemáticas, ciencias, idiomas y más|수학, 과학, 언어 등|Mathe, Naturwissenschaften, Sprachen und mehr|Matematica, scienze, lingue e altro|गणित, विज्ञान, भाषाएँ और अन्य|Matematik, fen, dil ve daha fazlası
 Practice now|Practicar ahora|지금 연습|Jetzt üben|Esercitati ora|अभी अभ्यास करें|Şimdi alıştırma yap
 Various questions with instant grading|Preguntas variadas con corrección inmediata|다양한 문제와 즉시 채점|Vielfältige Fragen mit sofortiger Bewertung|Domande varie con correzione immediata|विभिन्न प्रश्न और तुरंत मूल्यांकन|Anında değerlendirilen çeşitli sorular
+Choose a grade, then a subject, then a topic. Questions stay tied to the selected lesson.|Elige un curso, luego una asignatura y un tema. Las preguntas serán solo de la lección elegida.|학년, 과목, 주제를 차례로 선택하세요. 문제는 선택한 수업에서만 나옵니다.|Wähle eine Klasse, dann ein Fach und ein Thema. Die Fragen beziehen sich nur auf die gewählte Lektion.|Scegli la classe, poi la materia e l'argomento. Le domande riguarderanno solo la lezione scelta.|पहले कक्षा, फिर विषय और पाठ चुनें। प्रश्न केवल चुने गए पाठ से होंगे।|Önce sınıfı, sonra dersi ve konuyu seç. Sorular yalnızca seçilen konuyla ilgili olacak.
+1. Choose grade|1. Elige el curso|1. 학년 선택|1. Klasse wählen|1. Scegli la classe|1. कक्षा चुनें|1. Sınıf seç
+2. Choose subject|2. Elige la asignatura|2. 과목 선택|2. Fach wählen|2. Scegli la materia|2. विषय चुनें|2. Ders seç
+3. Search topics|3. Busca un tema|3. 주제 검색|3. Thema suchen|3. Cerca gli argomenti|3. विषय खोजें|3. Konu ara
+Search for a lesson…|Buscar una lección…|수업 검색…|Lektion suchen…|Cerca una lezione…|पाठ खोजें…|Ders ara…
+Unknown topic.|Tema desconocido.|알 수 없는 주제입니다.|Unbekanntes Thema.|Argomento sconosciuto.|अज्ञात विषय।|Bilinmeyen konu.
+No matching topics|No hay temas que coincidan|일치하는 주제가 없습니다|Keine passenden Themen|Nessun argomento corrispondente|कोई मिलता-जुलता विषय नहीं|Eşleşen konu yok
 `.trim().split('\n').map(line=>line.split('|'));
 const dictionaries=Object.fromEntries(['es','ko','de','it','hi','tr'].map((lang,i)=>[lang,Object.fromEntries(rows.flatMap(row=>[[row[0],row[i+1]],[row[0].trim(),row[i+1]]]))]));
 let selected='en';
@@ -1782,11 +1789,30 @@ function translatedDynamic(language,value){
  }
  return null;
 }
+
+const compoundLocale={
+ es:{topicsFor:g=>'Temas de '+g,searchTopic:g=>'Buscar un tema de '+g,topicCount:(n,g)=>n+' temas en '+g,unavailable:n=>'Este tema está en el plan de estudios, pero aún no tiene '+n+' preguntas distintas y revisadas de este nivel. Elige menos preguntas u otro tema. No se usarán preguntas genéricas sin relación.'},
+ ko:{topicsFor:g=>g+'의 주제',searchTopic:g=>g+' 주제 검색',topicCount:(n,g)=>g+' 주제 '+n+'개',unavailable:n=>'이 주제는 교육과정에 있지만 이 수준에서 검토된 서로 다른 문제 '+n+'개가 아직 없습니다. 문제 수를 줄이거나 다른 주제를 선택하세요. 관련 없는 문제는 사용하지 않습니다.'},
+ de:{topicsFor:g=>'Themen für '+g,searchTopic:g=>'Thema für '+g+' suchen',topicCount:(n,g)=>n+' Themen in '+g,unavailable:n=>'Dieses Thema steht im Lehrplan, hat aber noch keine '+n+' unterschiedlichen, geprüften Fragen auf diesem Niveau. Wähle weniger Fragen oder ein anderes Thema. Es werden keine unpassenden Fragen verwendet.'},
+ it:{topicsFor:g=>'Argomenti di '+g,searchTopic:g=>'Cerca un argomento di '+g,topicCount:(n,g)=>n+' argomenti in '+g,unavailable:n=>'Questo argomento è nel programma, ma non dispone ancora di '+n+' domande diverse e verificate a questo livello. Scegli meno domande o un altro argomento. Non saranno usate domande non pertinenti.'},
+ hi:{topicsFor:g=>g+' के विषय',searchTopic:g=>g+' का विषय खोजें',topicCount:(n,g)=>g+' में '+n+' विषय',unavailable:n=>'यह विषय पाठ्यक्रम में है, लेकिन इस स्तर पर अभी '+n+' अलग-अलग जाँचे हुए प्रश्न उपलब्ध नहीं हैं। प्रश्नों की संख्या घटाएँ या दूसरा विषय चुनें। असंबंधित प्रश्न नहीं दिए जाएँगे।'},
+ tr:{topicsFor:g=>g+' konuları',searchTopic:g=>g+' için konu ara',topicCount:(n,g)=>g+' için '+n+' konu',unavailable:n=>'Bu konu müfredatta var, ancak bu seviyede henüz '+n+' farklı ve gözden geçirilmiş soru yok. Daha az soru veya başka bir konu seç. Konuyla ilgisiz sorular kullanılmayacak.'}
+};
+function translatedCompound(language,key){
+ const forms=compoundLocale[language];if(!forms)return null;
+ let match=key.match(/^Topics for (.+)$/);if(match)return forms.topicsFor(match[1]);
+ match=key.match(/^Search a (.+) topic$/);if(match)return forms.searchTopic(match[1]);
+ match=key.match(/^([0-9]+) topics in (.+)$/);if(match)return forms.topicCount(match[1],match[2]);
+ match=key.match(/^This topic is listed in the curriculum, but does not yet have ([0-9]+) distinct, reviewed questions at this level\. Choose a smaller count or another topic\. Unrelated filler questions will not be used\.$/);
+ if(match)return forms.unavailable(match[1]);
+ return null;
+}
+
 function tFor(language,value){
  const dictionary=dictionaries[language];
  if(!dictionary||typeof value!=='string')return value;
  const key=normalize(value);
- const dynamic=translatedDynamic(language,key);if(dynamic)return dynamic;
+ const dynamic=translatedDynamic(language,key)||translatedCompound(language,key);if(dynamic)return dynamic;
  const gradeMatch=key.match(/^Grade\s+(7|8|9|10)$/);
  if(gradeMatch)return formatGrade(Number(gradeMatch[1]),language);
  let result=dictionary[key]||dictionary[value];
