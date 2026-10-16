@@ -46,6 +46,49 @@ async function firestoreDoc(env,auth,documentPath) {
   const record=await r.json();
   return record.fields||{};
 }
+// Read the canonical Classora role and protected admin registrations. Never
+// trust a role sent in a checkout request, a query parameter, or localStorage.
+async function accountIdentity(env,auth) {
+  const userDoc=await firestoreDoc(env,auth,"users/"+encodeURIComponent(auth.uid));
+  const role=userDoc.role?.stringValue;
+  if(!["student","teacher"].includes(role))throw new Error("Unsupported Classora account role");
+  const [staff,owner]=await Promise.all([
+    firestoreDocOptional(env,auth,"staffAccess/"+encodeURIComponent(auth.uid)),
+    firestoreDocOptional(env,auth,"profileIds/3228667330")
+  ]);
+  const isAdmin=(staff?.role?.stringValue==="admin"&&staff?.active?.booleanValue===true)
+    ||owner?.uid?.stringValue===auth.uid;
+  const categories=isAdmin?["student","teacher","class","school"]:
+    role==="teacher"?["teacher","class"]:["student"];
+  return {
+    uid:auth.uid,role:isAdmin?"admin":role,baseRole:role,isAdmin,
+    displayName:String(userDoc.displayName?.stringValue||""),
+    allowedCategories:categories,effectiveTier:isAdmin?"premium":null,
+    adminFullAccess:isAdmin
+  };
+}
+async function firestoreDocOptional(env,auth,path){
+  const url="https://firestore.googleapis.com/v1/projects/"+
+    encodeURIComponent(env.FIREBASE_PROJECT_ID)+"/databases/(default)/documents/"+path;
+  const response=await fetch(url,{headers:{authorization:"Bearer "+auth.token}});
+  if(response.status===404)return null;
+  if(!response.ok)throw new Error("Unable to verify privileged account registration");
+  return (await response.json()).fields||{};
+}
+async function myAccount(req,env){
+  let auth;try{auth=await firebaseUser(req,env);}catch(e){return fail("Authentication required",401);}
+  try{
+    const profile=await accountIdentity(env,auth);
+    const records=await env.BILLING_DB.prepare(
+      "SELECT scope,kind,tier,period,seats,status,active,period_end FROM billing_entitlements WHERE uid=?"
+    ).bind(auth.uid).all();
+    const entitlements=records.results||[];
+    const paidTier=entitlements.some(x=>x.active===1&&x.kind===profile.baseRole&&x.tier==="premium")?"premium":
+      entitlements.some(x=>x.active===1&&x.kind===profile.baseRole&&x.tier==="plus")?"plus":"free";
+    return json({ok:true,account:{...profile,effectiveTier:profile.isAdmin?"premium":paidTier},
+      entitlements});
+  }catch(e){console.warn("Classora role verification failed",String(e));return fail("Cannot verify Classora account",403);}
+}
 function planItems(kind,tier,period,seats) {
   if(!["student","teacher","class","school"].includes(kind)||!["plus","premium"].includes(tier)||!["monthly","annual"].includes(period))throw new Error("Invalid plan");
   const base=kind==="class"?35:kind==="school"?55:1;
@@ -67,6 +110,11 @@ async function prepare(req,env) {
   let data;try{data=await req.json();}catch{return fail("Invalid JSON");}
   const kind=data?.kind,tier=data?.tier,period=data?.period,seats=data?.seats??(kind==="class"?35:kind==="school"?55:1);
   let plan;try{plan=planItems(kind,tier,period,seats);}catch(e){return fail(e.message);}
+  try {
+    const account=await accountIdentity(env,auth);
+    if(account.isAdmin)return fail("Administrator has all Premium benefits without billing",403);
+    if(!account.allowedCategories.includes(kind))return fail("This plan is not available for your account role",403);
+  }catch(e){return fail("Cannot verify account subscription eligibility",403);}
   if(kind==="school")return fail("School verification and seat allocator not connected yet",403);
   const scopeId=kind==="class"?data.scopeId:null;
   if(kind==="class"&&!safeId(scopeId))return fail("Missing class ID",400);
@@ -176,6 +224,13 @@ export default {
     if(url.pathname==="/api/checkout/prepare"&&req.method==="POST"){
       try{const r=await prepare(req,env);const h=new Headers(r.headers);for(const [k,v] of Object.entries(cross))h.set(k,v);return new Response(r.body,{status:r.status,headers:h});}
       catch(e){console.error("Checkout preparation failed",String(e));return json({ok:false,error:"Checkout temporarily unavailable"},500,cross);}
+    }
+    if(url.pathname==="/api/me/account"&&req.method==="GET"){
+      try{
+        const r=await myAccount(req,env);
+        const h=new Headers(r.headers);for(const [k,v] of Object.entries(cross))h.set(k,v);
+        return new Response(r.body,{status:r.status,headers:h});
+      }catch(e){console.error("Account status error",String(e));return json({ok:false,error:"Account check unavailable"},500,cross);}
     }
     if(url.pathname==="/api/me/entitlements"&&req.method==="GET"){
       try{const r=await entitlements(req,env);const h=new Headers(r.headers);for(const [k,v] of Object.entries(cross))h.set(k,v);return new Response(r.body,{status:r.status,headers:h});}
