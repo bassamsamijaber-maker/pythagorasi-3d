@@ -56,9 +56,9 @@ const moduleSrc=[...index.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].f
 assert(moduleSrc,'Main module missing');new Function(noImports(moduleSrc));
 for(const label of ['CLASSORA_PYTHAGORAS_PROOF_TEXT','CLASSORA_PYTHAGORAS_EXPLANATIONS','CLASSORA_PYTHAGORAS_CHALLENGE_TEXT'])
  assert(index.includes('const '+label+'='),label+' missing');
-for(const file of ['assets/classora-locales-v140.js','assets/curriculum-v97.js','chemistry/periodic-table.html'])
- assert(index.includes(file+'?v=159'),file+' old version reference');
-assert(read('service-worker.js').includes('classora-v161-offline-eight-language'));
+for(const [file,version] of [['assets/classora-locales-v140.js',161],['assets/classora-assessment-v121.js',161],['assets/classora-competition-topics-v122.js',161],['assets/curriculum-v97.js',159],['chemistry/periodic-table.html',159]])
+ assert(index.includes(file+'?v='+version),file+' old version reference');
+assert(read('service-worker.js').includes('classora-v162-consistent-localized-assets'));
 for(const file of ['chemistry/periodic-table.js','service-worker.js'])new Function(read(file));
 
 for(const language of languages){
