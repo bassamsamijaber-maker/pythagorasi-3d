@@ -1,0 +1,6 @@
+{
+  "environment": "live",
+  "enabled": false,
+  "clientSideToken": "",
+  "usage": "Public Paddle.js client-side token only (live_ prefix). Do NOT enter an API secret. Set enabled=true only after Live token is added. Automatic location selection is delegated to Paddle.PricePreview."
+}
