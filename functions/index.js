@@ -262,5 +262,3 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
 Object.assign(exports, require('./support-admin'));
 // OpenAI callable left unregistered while Classora uses the local Ollama gateway.
 
-// Paddle Sandbox billing: authenticated checkout intents and verified webhooks.
-Object.assign(exports, require("./paddle-billing"));
