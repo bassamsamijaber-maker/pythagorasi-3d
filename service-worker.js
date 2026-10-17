@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v194-heritage-gallery-voting";
+const CACHE_NAME="classora-v197-complete-appearance";
 const APP_SHELL=[
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
@@ -6,7 +6,7 @@ const APP_SHELL=[
   "./assets/classora-heritage-v191.js?v=194",
   "./assets/classora-heritage-v191.css?v=194",
   "./index.html",
-  "./chemistry/periodic-table.html?v=167",
+  "./chemistry/periodic-table.html?v=197",
   "./chemistry/periodic-table.js?v=167",
   "./assets/classora-chat-memberships-v169.css?v=186",
   "./assets/classora-memberships-nav-v169.js?v=186",
@@ -68,6 +68,9 @@ const APP_SHELL=[
   "./assets/classora-navigation-fix-v123.css?v=128",
   "./assets/classora-competition-topics-v122.js?v=161",
   "./assets/classora-global-art-v121.js?v=121",
+  "./assets/classora-appearance-v197.js?v=197",
+  "./assets/classora-appearance-v197.css?v=197",
+  "./assets/classora-theme-bridge-v197.js?v=197",
   "./assets/arabic-catalog-v119.js?v=119",
   "./assets/arabic-studio-v119.js?v=130",
   "./assets/math-studio-v119.css?v=119",
@@ -121,6 +124,9 @@ const APP_SHELL=[
   "./assets/classora-assistant-motion-v134.js?v=139",
   "./assets/classora-assistant-motion-v134.css?v=134",
   "./support.html",
+  "./privacy.html",
+  "./terms.html",
+  "./heritage-draw.html",
   "./chemistry/periodic-table.html?v=166",
   "./chemistry/periodic-table.css?v=124",
   "./chemistry/periodic-table.js?v=166",
