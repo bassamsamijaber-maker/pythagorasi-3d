@@ -629,6 +629,7 @@ body.classora-intro-active{overflow:auto!important}
       <button data-admin-tab="send">🚀 Send / Assign</button>
       <button data-admin-tab="support">📥 Support requests</button><button class="hidden" data-admin-tab="team">🛡️ Team</button>
       <button data-admin-tab="controls">🎛️ Control Center</button>
+      <button data-admin-tab="grants">✦ عضويات مجانية</button>
     </div>
 
     <div class="admin-view hidden" id="adminViewPromos">
@@ -647,6 +648,42 @@ body.classora-intro-active{overflow:auto!important}
         <button class="cp-admin-add" id="classoraPromoAdminAdd" type="submit">أضف إعلانًا</button>
       </form><p role="status" id="classoraPromoAdminStatus"></p><div id="classoraPromoAdminList" data-no-translate></div>
     </div>
+    <div class="admin-view hidden" id="adminViewGrants" dir="rtl">
+      <section class="cl-admin-grants-head">
+        <span class="cl-admin-grants-kicker">CLASSORA · COURTESY ACCESS</span>
+        <h3>منح الاشتراكات للأعضاء</h3>
+        <p>اختَر شخصًا وخطة ومدة بالأيام. المنحة مجانية، لا تطلب بطاقة، وتنتهي تلقائيًا. لا تفتح عملية دفع Paddle ولا تُجدد نفسها.</p>
+      </section>
+      <form id="clGrantForm" class="cl-admin-grants-form">
+        <label>UID أو Profile ID (10 أرقام)
+          <input id="clGrantUid" required autocomplete="off" spellcheck="false" placeholder="UID / Profile ID"/>
+        </label>
+        <div class="cl-admin-grant-resolved" id="clGrantResolved" role="status"></div>
+        <label>نوع الاشتراك
+          <select id="clGrantKind">
+            <option value="student">طالب / Student</option>
+            <option value="teacher">معلم / Teacher</option>
+            <option value="class">صف / Class</option>
+            <option value="school">مدرسة / School</option>
+          </select>
+        </label>
+        <label>الباقة
+          <select id="clGrantTier"><option value="plus">Plus</option><option value="premium">Premium</option></select>
+        </label>
+        <label>عدد الأيام
+          <input id="clGrantDays" type="number" min="1" max="365" step="1" value="7" required/>
+        </label>
+        <label>سبب المنحة (اختياري)
+          <input id="clGrantNote" maxlength="180" placeholder="هدية، مسابقة، دعم…"/>
+        </label>
+        <button id="clGrantSave" type="submit">منح الاشتراك</button>
+      </form>
+      <p class="cl-admin-grant-warning">منحة الأدمن غير مدفوعة ولا تتحول تلقائيًا لاشتراك شهري. صلاحية المنحة تعتمد على الوقت وصلاحيات Firestore؛ الباقات الجماعية تحتاج لاحقًا تحديد الأشخاص المشمولين بها.</p>
+      <div class="cl-admin-grants-listhead"><strong>المنح المسجلة</strong><button id="clGrantRefresh" type="button">تحديث</button></div>
+      <div id="clGrantStatus" class="cl-admin-grants-status" role="status"></div>
+      <div id="clGrantList" class="cl-admin-grants-list"></div>
+    </div>
+
     <div class="admin-view hidden" id="adminViewTeam"><h3>إدارة فريق الموقع</h3><p>مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.</p><input id="teamAccountSearch" placeholder="ابحث بالاسم أو معرّف الحساب"><div id="adminTeamList" class="admin-list"></div></div>
     <div class="admin-view" id="adminViewDashboard">
       <div class="admin-stat-grid">
@@ -14195,7 +14232,7 @@ function adminShowTab(tab){
   if(tab==="team"&&!isOwnerAdminProfile())return;
   adminActiveTab=tab;
   document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("active",b.dataset.adminTab===tab));
-  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Promos","Content","History","Support","Controls","Team"]){
+  for(const key of ["Dashboard","People","Students","Classes","Send","Polls","Studio","Promos","Content","History","Support","Controls","Team","Grants"]){
     document.getElementById(`adminView${key}`)?.classList.toggle("hidden",key.toLowerCase()!==tab);
   }
   if(tab==="polls")adminLoadPolls();
@@ -14207,6 +14244,7 @@ function adminShowTab(tab){
   if(tab==="support")adminLoadSupportRequests();
   if(tab==="team")adminRenderTeam();
   if(tab==="controls")adminLoadControls();
+  if(tab==="grants")window.classoraAdminGrants?.refresh();
 }
 function openAdminPanel(){if(!requireSuperAdmin())return;refreshTeamAccessButtons();applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
 document.getElementById("adminPanelBtn").addEventListener("click",openAdminPanel);
@@ -18292,6 +18330,7 @@ onAuthStateChanged(auth,user=>{
 });
 
 </script>
+<script type="module" src="./assets/classora-admin-memberships-v181.js?v=181"></script>
 </body>
 </html>
 
