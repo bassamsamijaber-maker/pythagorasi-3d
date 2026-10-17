@@ -5,7 +5,7 @@
 #classoraAppearanceSettings h3{margin:0;font-size:17px;line-height:1.4;font-weight:900;color:inherit}
 #classoraAppearanceSettings .cl-appearance-desc{margin:0 0 12px;color:#bdd4ce;font-size:12px;line-height:1.5}
 #classoraAppearanceSettings .cl-appearance-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-#classoraAppearanceSettings .cl-appearance-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:107px;padding:10px 7px;border:1px solid #78938778;border-radius:14px;background:#1a3741;color:#eef9f4;font:800 12px/1.4 inherit;cursor:pointer;transition:border-color .16s,transform .16s,box-shadow .16s}
+#classoraAppearanceSettings .cl-appearance-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:107px;padding:10px 7px;border:1px solid #78938778;border-radius:14px;background:#1a3741;color:#eef9f4;font-weight:800;font-size:12px;line-height:1.4;font-family:inherit;cursor:pointer;transition:border-color .16s,transform .16s,box-shadow .16s}
 #classoraAppearanceSettings .cl-appearance-choice svg{width:44px;height:40px;flex:none}
 #classoraAppearanceSettings .cl-appearance-choice span{text-align:center;overflow-wrap:anywhere}
 #classoraAppearanceSettings .cl-appearance-choice[aria-pressed=true]{border-color:#e8ba69;box-shadow:0 0 0 2px #e8ba69aa;background:#23483e}
@@ -53,3 +53,11 @@ body[data-classora-theme="embroidery"] #platformLobby .lobby-section-head h3::be
 body[data-classora-theme="embroidery"] #classoraMobilePageNav{border-top:3px solid #a33748!important}
 @media(max-width:600px){#classoraAppearanceSettings{margin:12px 11px 3px;padding:12px}#classoraAppearanceSettings .cl-appearance-options{gap:6px}#classoraAppearanceSettings .cl-appearance-choice{min-height:104px;padding:8px 4px;font-size:11px}#classoraAppearanceSettings .cl-appearance-choice svg{height:34px;width:38px}}
 @media(prefers-reduced-motion:reduce){#classoraAppearanceSettings .cl-appearance-choice{transition:none}}
+
+/* Final contrast polish for the appearance selector and textile pattern. */
+body[data-classora-theme="morning"] #platformLobby :is(.lobby-section-head h3,.mix-eyebrow,.lobby-brand,.cp-title){color:#24594a!important}
+body[data-classora-theme="morning"] #platformLobby .lobby-ai-input input{background:#f5faf8!important;color:#203b3e!important;border-color:#c8e0d7!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-section-head h3,.cp-title){color:#7c3040!important}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-ai-input input{background:#fffdf8!important;color:#5b3037!important;border-color:#dec1a9!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.classora-mix-hero,.pythag-lobby-hero){background-image:var(--cl-embroidered-pattern),linear-gradient(135deg,#792f40,#2d252a)!important;background-size:110px 110px,cover!important}
+body[data-classora-theme="embroidery"] #settingsModal .settings-profile-row{box-shadow:inset 0 0 0 1px #d5a97950!important}
