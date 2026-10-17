@@ -9,8 +9,8 @@ async function pngFromSvg(svg){
  const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
  const url=URL.createObjectURL(blob);
  try{
-  const img=new Image();img.decoding="async";img.src=url;
-  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});
+  const img=new Image();img.decoding="async";
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
   const c=document.createElement("canvas");c.width=640;c.height=480;
   const ctx=c.getContext("2d");if(!ctx)throw Error("canvas unavailable");
   ctx.fillStyle="#fffaf0";ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,640,480);
@@ -24,9 +24,9 @@ export async function saveHeritagePng(svg,name="classora-heritage.png"){
  try{
   if(navigator.canShare && navigator.share && typeof File!=="undefined"){
    const response=await fetch(png);const file=new File([await response.blob()],name,{type:"image/png"});
-   if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"Classora • Heritage"});return}
+   if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"Classora • Heritage"});link.remove();return}
   }
- }catch(error){if(error?.name==="AbortError")return}
+ }catch(error){if(error?.name==="AbortError"){link.remove();return}}
  link.click();link.remove();
 }
 let servicesPromise;
