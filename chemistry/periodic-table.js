@@ -293,18 +293,20 @@ $("#clearSearch").onclick=()=>{$("#searchInput").value="";search="";scheduleTabl
 $("#randomElementBtn").onclick=()=>{const e=elements[Math.floor(Math.random()*elements.length)];openElement(e)};
 function exitPeriodicTable(){
  if($("#elementModal")?.classList.contains("open"))closeModal();
- // The table is embedded in the existing Classora page: request that the parent closes it.
+ try{sessionStorage.setItem("classora_subject_origin","lobby")}catch{}
+ // Same-origin embedded Classora: use the real Lobby controller. Don't post the
+ // old classora-close-subject message: older listeners could reopen Science.
  if(window.parent&&window.parent!==window){
   try{
-   // Send a single, explicit return request to the host. Avoid reopening
-   // another science modal while the current iframe is being dismissed.
-   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"lobby"},location.origin);
-   return;
-  }catch(error){console.warn("Periodic table parent navigation unavailable",error)}
+   if(window.parent.location.origin===location.origin&&
+      window.parent.__classoraReturnToLobbyV204?.()===true)return;
+  }catch(error){console.warn("Periodic direct Lobby exit unavailable",error)}
+  // If the host is running an older cached version, a top-level navigation
+  // is safer than leaving an iframe over a hidden black/white Lobby.
+  try{window.parent.location.assign(new URL("../index.html#platformLobby",location.href).href);return}
+  catch(error){console.warn("Periodic fallback navigation failed",error)}
  }
- // Direct browser-tab / installed PWA fallback (never navigate to a bare fragment).
- try{sessionStorage.setItem("classora_subject_origin","lobby")}catch{}
- location.assign(new URL("../index.html#platformLobby",window.location.href).href);
+ location.assign(new URL("../index.html#platformLobby",location.href).href);
 }
 
 $("#backBtn").onclick=exitPeriodicTable;
