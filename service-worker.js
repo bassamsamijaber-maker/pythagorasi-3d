@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v190-periodic-science-hub-return";
+const CACHE_NAME="classora-v191-palestinian-heritage-week";
 const APP_SHELL=[
+  "./assets/classora-heritage-v191.js?v=191",
+  "./assets/classora-heritage-v191.css?v=191",
   "./index.html",
   "./chemistry/periodic-table.html?v=167",
   "./chemistry/periodic-table.js?v=167",
@@ -75,7 +77,7 @@ const APP_SHELL=[
   "./assets/classora-universal-dock-v113.css?v=2",
   "./assets/classora-universal-dock-v113.js?v=4",
   "./assets/classora-home-v112.css?v=2",
-  "./assets/classora-home-v112.js?v=166",
+  "./assets/classora-home-v112.js?v=191",
   "./assets/classora-universal-dock-v111.css?v=1",
   "./assets/classora-universal-dock-v111.js?v=1",
   "./assets/classora-polish-v110.css?v=1",

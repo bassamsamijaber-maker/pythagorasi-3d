@@ -70,6 +70,7 @@ export function mountClassoraHomeV112(api){
  function localBody(p){return t(p.bodyAr||p.bodyEn||'',p.bodyEn||p.bodyAr||'');}
  const newNode=(tag,cls,text)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(text!=null)x.textContent=text;return x};
  function goTo(p){
+  if(p.kind==="heritage"){window.classoraHeritage?.open();return}
   if(p.kind==="pythagoras"){get("lobbyLabBtn")?.click();return}
   if(p.kind==="periodic"){get("periodicTableBtn")?.click();return}
   if(p.kind==="arabic"||p.kind==="topic"){
@@ -93,7 +94,9 @@ export function mountClassoraHomeV112(api){
   center.querySelector(".cp-section-description").textContent=t("إعلانات كلاسورا التعليمية","Classora learning highlights");
   center.querySelector(".cp-prev").setAttribute("aria-label",t("الإعلان السابق","Previous announcement"));
   center.querySelector(".cp-next").setAttribute("aria-label",t("الإعلان التالي","Next announcement"));
-  items=allRows().filter(allowed).slice(0,5);
+  const heritage=window.classoraHeritage;
+  heritage?.refresh();
+  items=[...(heritage?.active()?[heritage.promo]:[]),...allRows()].filter(allowed).slice(0,5);
   center.hidden=!items.length||!api.profile();
   slides.replaceChildren();dots.replaceChildren();
   if(!items.length){stop();renderTasks();return}
@@ -101,7 +104,7 @@ export function mountClassoraHomeV112(api){
   for(const [idx,p] of items.entries()){
    const slide=newNode("article","cp-slide cp-"+p.kind);
    slide.dataset.index=String(idx);
-   const art=newNode("div","cp-illustration");art.innerHTML=svg(p.kind);
+   const art=newNode("div","cp-illustration");art.innerHTML=p.kind==="heritage"?heritage.art("thobe"):svg(p.kind);
    const caption=newNode("div","cp-copy");
    caption.append(newNode("div","cp-eyebrow",t("اكتشف شيئًا جديدًا","DISCOVER SOMETHING NEW")),newNode("h3","cp-title",localTitle(p)),newNode("p","cp-description",localBody(p)));
    const button=newNode("button","cp-enter",t("ادخل عليه","Explore"));
