@@ -1,0 +1,57 @@
+@import url("./classora-appearance-v200.css?v=201");
+/* V201 — contrast fix for Settings Quick Access & all pale embroidery panels. */
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links){
+ background:#fffbf5!important;background-image:none!important;
+ color:#382b31!important;border:1px solid #d8b9a8!important;
+ box-shadow:0 10px 28px #51363a12!important;
+}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(
+ h1,h2,h3,h4,strong,b,.title,.heading,.section-title
+){color:#382b31!important;opacity:1!important;text-shadow:none!important}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(
+ p,small,.subtitle,.description,.settings-note
+){color:#66535b!important;opacity:1!important;text-shadow:none!important}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a){
+ background:#fff9f1!important;color:#4b333a!important;
+ border:1px solid #dcc3b4!important;box-shadow:none!important;
+ opacity:1!important;text-shadow:none!important;
+}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a) :is(
+ span,small,b,strong,.label,.title
+){color:#4b333a!important;opacity:1!important;text-shadow:none!important}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a) :is(svg,.classora-icon,.cl-drawn-symbol){
+ color:#872d43!important;opacity:1!important;filter:none!important;
+}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a) svg :is(path,circle,rect,line,polyline,polygon,ellipse):not([fill]){
+ stroke:#872d43!important;opacity:1!important;
+}
+body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a):is(:hover,:focus-visible){
+ background:#f5e7e0!important;border-color:#a96872!important
+}
+/* Fallback for quick-action cards nested in settings-grid, without impacting the account form. */
+body[data-classora-theme="embroidery"] #settingsModal .classora-settings-shortcuts :is(.quick-action,.shortcut,.shortcut-card,.quick-link){
+ color:#4b333a!important;background:#fff9f1!important;border-color:#dcc3b4!important
+}
+body[data-classora-theme="embroidery"] #settingsModal .classora-settings-shortcuts :is(.quick-action,.shortcut,.shortcut-card,.quick-link) *{
+ color:#4b333a!important
+}
+/* Guard heading, hint, icon and link contrast in every ordinary settings tile. */
+body[data-classora-theme="embroidery"] #settingsModal .settings-grid :is(.settings-card,.settings-card *):not(.apply):not([aria-pressed="true"]):not(.danger){
+ --settings-readable:#382b31
+}
+body[data-classora-theme="embroidery"] #settingsModal .settings-card :is(h2,h3,h4,label,legend,output){
+ color:#382b31!important;opacity:1!important
+}
+body[data-classora-theme="embroidery"] #settingsModal .settings-card :is(.settings-note,small,.helper,.hint){
+ color:#66535b!important;opacity:1!important
+}
+/* CSS numeral font features: digits are rendered by the normalization script. */
+body :is(.curriculum-topic-stage,.curriculum-topic-sidebar,.curriculum-lesson-copy,
+ .curriculum-topic-card,.cm-studio,.hub-dialog,.subject-lab-page,#examModal,#competitionModal){
+ font-variant-numeric:lining-nums tabular-nums
+}
+@media(max-width:700px){
+ body[data-classora-theme="embroidery"] #settingsModal :is(.classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,.settings-quick-links) :is(button,a){
+  min-width:0;line-height:1.4
+ }
+}
