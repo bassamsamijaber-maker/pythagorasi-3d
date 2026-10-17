@@ -1,0 +1,128 @@
+@import url("./classora-appearance-v202.css?v=203");
+/* V203 • legibility repair for the actual lesson canvas + settings and number fields.
+   No changes to layout, animation geometry, chart values or scientific illustration colors. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]){
+ --lesson-ink:var(--clt-ink);
+ --lesson-hint:var(--clt-muted);
+ --lesson-line:var(--clt-stroke);
+ --lesson-paper:var(--clt-panel);
+ --lesson-tint:var(--clt-panel-alt);
+ --lesson-action:var(--clt-primary);
+}
+/* Lesson studio screenshot: pale text on pale cards, and an unreadable dark result. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(
+ .cm-lab,.cm-controls,.cm-explain,.cm-practice,.cm-heading,.cm-scene,
+ .cm-lab-bar,.cm-fields,.cm-field,.cm-rule,.cm-steps li,.cm-metrics>div,
+ .cm-assessment,.cm-question,.cm-calc-panel
+){color:var(--lesson-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(
+ .cm-lab,.cm-controls,.cm-explain,.cm-practice,.cm-steps li,.cm-field,.cm-rule
+){background:var(--lesson-paper)!important;border-color:var(--lesson-line)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(
+ .cm-controls h2,.cm-explain h2,.cm-heading h1,
+ .cm-rule b,.cm-metrics b,.cm-steps li,.cm-result strong,
+ .cm-question h3,.cm-field label
+){color:var(--lesson-ink)!important;opacity:1!important;text-shadow:none!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(
+ .cm-controls>p,.cm-explain>p,.cm-scene-hint,.cm-grade,
+ .cm-heading>p,.cm-studio p,.cm-metrics span
+){color:var(--lesson-hint)!important;opacity:1!important;text-shadow:none!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-lab-bar{
+ background:var(--lesson-tint)!important;color:var(--lesson-hint)!important;border-color:var(--lesson-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(.cm-eyebrow,.cm-rule>span,.cm-live){
+ color:var(--lesson-action)!important;opacity:1!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-result{
+ background:var(--lesson-tint)!important;border:1px solid var(--lesson-line)!important;
+ color:var(--lesson-ink)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-result>span{
+ color:var(--lesson-action)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-result :is(strong,p){
+ color:var(--lesson-ink)!important;opacity:1!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-result.invalid strong{
+ color:#9f273b!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-field label{
+ color:var(--lesson-ink)!important;font-weight:750!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-field input[type="number"]{
+ background:#fffefa!important;color:#22333e!important;border:1px solid var(--lesson-line)!important;
+ font-family:Arial,Helvetica,sans-serif!important;
+ font-variant-numeric:lining-nums tabular-nums!important;
+ direction:ltr!important;unicode-bidi:isolate!important;
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-field input[type="range"]{
+ accent-color:var(--lesson-action)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(.cm-scene-tools button,.cm-assessment button,.cm-difficulty,.cm-count){
+ background:var(--lesson-tint)!important;color:var(--lesson-ink)!important;border-color:var(--lesson-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio :is(.cm-primary,.cm-assessment button.primary){
+ background:var(--lesson-action)!important;color:#fff!important;border-color:var(--lesson-action)!important
+}
+/* Ensure original geometry of the model, including ratio drawings, remains untouched. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio .cm-scene svg{
+ filter:none!important
+}
+/* Other lesson controls that carry numeric inputs from different subject modules. */
+:is(.cm-studio,.classora-curriculum-modal,.subject-lab-page,.learning-hub,.hub-dialog) input[type="number"],
+:is(.cm-studio,.classora-curriculum-modal,.subject-lab-page,.learning-hub,.hub-dialog) input[inputmode="numeric"]{
+ font-family:Arial,Helvetica,sans-serif!important;
+ direction:ltr!important;font-variant-numeric:lining-nums tabular-nums!important;
+}
+:is(.cm-studio,.classora-curriculum-modal,.subject-lab-page,.learning-hub,.hub-dialog)
+ :is(input[type="number"],input[inputmode="numeric"])::placeholder{font-family:Arial,Helvetica,sans-serif!important}
+/* Settings — links inside "Our pages"/Quick Access must not keep old light-on-dark glyph colors. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(
+ .classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,
+ .settings-quick-links,.settings-social-links,.settings-pages,.settings-our-pages,
+ .settings-accounts,.settings-links,.accounts-panel,.social-links,.settings-nav,
+ .settings-profile-links
+){
+ background:var(--lesson-paper)!important;color:var(--lesson-ink)!important;
+ border-color:var(--lesson-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(
+ .classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,
+ .settings-quick-links,.settings-social-links,.settings-pages,.settings-our-pages,
+ .settings-accounts,.settings-links,.accounts-panel,.social-links,.settings-nav,
+ .settings-profile-links
+) :is(h1,h2,h3,h4,p,a,button,label,small,span,b,strong){
+ color:var(--lesson-ink)!important;text-shadow:none!important;opacity:1!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(
+ .classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,
+ .settings-quick-links,.settings-social-links,.settings-pages,.settings-our-pages,
+ .settings-accounts,.settings-links,.accounts-panel,.social-links,.settings-nav,
+ .settings-profile-links
+) :is(button,a){
+ background:var(--lesson-tint)!important;border:1px solid var(--lesson-line)!important;
+ color:var(--lesson-ink)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(
+ .classora-settings-shortcuts,.settings-shortcuts,.settings-quick-access,.quick-access,
+ .settings-quick-links,.settings-social-links,.settings-pages,.settings-our-pages,
+ .settings-accounts,.settings-links,.accounts-panel,.social-links,.settings-nav,
+ .settings-profile-links
+) :is(svg,.cl-drawn-symbol){
+ color:var(--lesson-action)!important;opacity:1!important;filter:none!important
+}
+/* Settings heading and status text when a nested pane opens */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(
+ .settings-card,.settings-link-button,.settings-note,.settings-profile-row
+) :is(h2,h3,h4,b,strong,label,p,small,span):not([aria-live="assertive"]){
+ opacity:1!important;text-shadow:none!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card :is(
+ .settings-link-button,.exam-secondary
+){background:var(--lesson-tint)!important;border-color:var(--lesson-line)!important;color:var(--lesson-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card :is(
+ .settings-link-button,.exam-secondary
+) :is(svg,span,b,small){color:var(--lesson-ink)!important;opacity:1!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card .apply{
+ background:var(--lesson-action)!important;color:#fff!important;border-color:var(--lesson-action)!important
+}
