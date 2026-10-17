@@ -1,7 +1,7 @@
-const CACHE_NAME="classora-v191-palestinian-heritage-week";
+const CACHE_NAME="classora-v192-heritage-art-festival";
 const APP_SHELL=[
-  "./assets/classora-heritage-v191.js?v=191",
-  "./assets/classora-heritage-v191.css?v=191",
+  "./assets/classora-heritage-v191.js?v=192",
+  "./assets/classora-heritage-v191.css?v=192",
   "./index.html",
   "./chemistry/periodic-table.html?v=167",
   "./chemistry/periodic-table.js?v=167",
