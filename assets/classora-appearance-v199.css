@@ -1,0 +1,141 @@
+@import url("./classora-appearance-v198.css?v=199");
+/* Classora v199 — high contrast in Morning mode without changing the UI design.
+   The following selectors target light surfaces only. The colored embroidery hero
+   and success / error / answer-color indicators are intentionally excluded. */
+body[data-classora-theme="morning"]{
+ --v198-ink:#172c38;--v198-sub:#465d69;
+ --v198-line:#ccdfe4;
+ --clt-ink:#172c38;--clt-muted:#465d69;--hub-text:#172c38;
+ --hub-muted:#465d69;--mix-white:#172c38;--mix-muted:#465d69;
+ --c6-text:#172c38;--c6-muted:#465d69;
+ color-scheme:light;
+}
+body[data-classora-theme="morning"] :is(
+ #platformLobby,.learning-hub,.classora-curriculum-shell,
+ .curriculum-topic-sidebar,.subject-lab-page,
+ #examModal,#competitionModal,#settingsModal,#chatModal,#classModal
+){--txt:#172c38;--muted:#465d69;--clt-ink:#172c38;--clt-muted:#465d69;color:#172c38}
+/* White backgrounds and correct dark foreground are always paired. */
+body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-topbar,.classora-welcome,.student-dash-hero,.student-dash-stat,
+ .student-dash-action,.student-dash-progress,.tw-hero,.tw-metric,
+ .tw-class-item,.tw-action,.classora-promo-center,.cp-slide,
+ .classora-student-tasks,.ct-task,.hub-hero,.hub-curriculum-shelf,
+ .hub-topic-card,.hub-curriculum-subject,.pythag-action-card,
+ .lobby-action,.subject-card,.hub-card,.hub-search
+){
+ background:#fff!important;color:#172c38!important;
+ border-color:#dce8ed!important;
+}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-brand,.lobby-topbar .lobby-sub,.lobby-user-name,
+ .classora-welcome h2,.classora-welcome strong,.classora-welcome b,
+ .student-dash-hero h1,.student-dash-hero h2,.student-dash-hero h3,
+ .student-dash-heading,.student-dash-section-head,.student-dash-stat-number,
+ .student-dash-action h3,.student-dash-action b,
+ .tw-heading,.tw-title-row,.tw-metric-value,.tw-action h3,
+ .lobby-section-head h3,.classora-student-tasks h2,.ct-task-copy b,
+ .cp-titlebar h2,.cp-title,.cp-slide h2,.cp-slide h3,
+ .hub-hero h1,.hub-curriculum-head h2,.hub-topic-card h3,
+ .hub-curriculum-copy b,.pythag-action-card h3,.subject-card h3
+){color:#172c38!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-sub,.lobby-welcome,.lobby-section-head p,
+ .classora-welcome p,.classora-welcome small,
+ .student-dash-eyebrow,.student-dash-description,.student-dash-stat-label,
+ .student-dash-action small,.student-dash-action p,.student-dash-hero p,
+ .tw-eyebrow,.tw-intro,.tw-metric-label,.tw-action small,
+ .ct-task-copy small,.cp-titlebar p,.cp-description,.cp-timing,.cp-slide p,
+ .hub-kicker,.hub-hero p,.hub-topic-card p,.hub-topic-card small,
+ .hub-curriculum-copy em,.pythag-action-card p,.subject-card p
+){color:#465d69!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .hub-subject-tabs button,.hub-grade-button,.hub-button,
+ .lobby-icon-btn,.lobby-profile-btn,.lobby-logout-btn,.cp-controls button,
+ .student-dash-outline,.tw-secondary,.mix-btn-secondary
+):not(.active):not([aria-pressed="true"]){
+ background:#f3f8f9!important;color:#172c38!important;border-color:#cadfe2!important
+}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-ai-card,.lobby-ai-input,.cp-illustration,.hub-card-icon,.hub-curriculum-icon
+){background:#f3f9f7!important;color:#173e3e!important;border-color:#d7e8e2!important}
+/* Exam, competition, classroom and lesson content are readable against white. */
+body[data-classora-theme="morning"] :is(
+ #examModal .modalbox,#competitionModal .modalbox,
+ .classora-curriculum-shell,.classora-curriculum-top,
+ .curriculum-topic-stage,.curriculum-topic-sidebar,.curriculum-lesson-copy,
+ .curriculum-panel,.curriculum-3d-card,.curriculum-hero,.curriculum-topic-card,
+ .curriculum-grade-card,.curriculum-subject-card,.curriculum-unit-section,
+ .subject-lab-page,.subject-lab-page .sl-info,
+ .cm-studio,.cm-lab,.cm-explain,.cl130-tools,.cl130-home,
+ #settingsModal .settings-modalbox,#settingsModal .settings-card,
+ #chatModal .modalbox,#chatModal .chat-contacts-pane,
+ #chatModal .chat-thread-pane,#chatModal .chat-compose,
+ .plus-panel,.plus-dialog
+){color:#172c38!important}
+body[data-classora-theme="morning"] :is(
+ .curriculum-hero h1,.curriculum-hero h2,
+ .curriculum-lesson-copy h1,.curriculum-lesson-copy h2,
+ .curriculum-panel h2,.curriculum-panel h3,
+ .curriculum-topic-card b,.curriculum-grade-card b,
+ .curriculum-subject-card b,.curriculum-unit-head,
+ .curriculum-topic-sidebar h2,.curriculum-topic-sidebar h3,
+ .hub-dialog h2,.cm-studio h1,.cm-studio h2,.cm-studio h3,
+ .sl-info h2,.sl-explanation h2,
+ #examModal .modalhead h2,#examModal .exam-q h3,
+ #competitionModal .modalhead h2,#competitionModal .live-card h3,
+ #settingsModal .settings-card h3,#settingsCurrentName,
+ #chatModal #chatThreadName
+){color:#172c38!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] :is(
+ .curriculum-lesson-copy p,.curriculum-hero p,.curriculum-panel p,
+ .curriculum-topic-card small,.curriculum-grade-card small,
+ .curriculum-subject-card small,.hub-topic-card p,
+ .cm-studio p,.cl130-home p,.cl130-tools p,.sl-footnote,
+ #examModal .exam-choice p,#competitionModal .live-card p,
+ #settingsModal .settings-note,#settingsModal .settings-profile-info span,
+ #chatModal .chat-receipt
+){color:#465d69!important;opacity:1!important}
+/* Fix old white text on selection panels & readable button labels. */
+body[data-classora-theme="morning"] :is(
+ #examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page,#settingsModal,#chatModal,.hub-dialog
+) :is(
+ label,.builder-help,.subject-strip label,.ca-topic-search-label,
+ .hub-topic-chip,.curriculum-topic-number,.curriculum-topic-status
+){color:#465d69!important}
+body[data-classora-theme="morning"] :is(
+ #examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page,#settingsModal,#chatModal,.hub-dialog
+) :is(input:not([type="radio"]):not([type="checkbox"]),select,textarea){
+ background:#fff!important;color:#172c38!important;
+ border-color:#c9dde1!important
+}
+body[data-classora-theme="morning"] :is(
+ #examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page,#settingsModal,#chatModal,.hub-dialog
+) :is(input,textarea)::placeholder{color:#657d87!important;opacity:1!important}
+/* Ensure pale secondary controls never retain white lettering from dark mode. */
+body[data-classora-theme="morning"] :is(
+ #examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page,#settingsModal,.hub-dialog
+) :is(.exam-secondary,.secondary,.ca-topic-choice,.ca-step-back,
+ .ca-subject-chip,.ca-grade-chip,.sl-back,.curriculum-back,.hub-back,
+ .settings-photo-btn,.settings-link-button){
+ background:#f2f8f8!important;color:#213943!important;
+ border-color:#cbdfe2!important
+}
+/* Dark enough while keeping Classora's original green buttons. */
+body[data-classora-theme="morning"] :is(
+ #platformLobby,#examModal,#competitionModal,
+ .classora-curriculum-modal,.subject-lab-page
+) :is(.primary,.btn-primary,.apply,.hub-primary,.student-dash-primary,.tw-primary){
+ background:#187764!important;color:#fff!important;border-color:#187764!important
+}
+/* Keep the cultural event intentionally distinct; do not darken lettering over its green illustration banner. */
+body[data-classora-theme="morning"] #platformLobby .hw-card{
+ background:linear-gradient(125deg,#e8f7ee,#fff)!important;color:#245340!important
+}
+body[data-classora-theme="morning"] #platformLobby .hw-card :is(h1,h2,h3,p,.hw-eyebrow,.hw-countdown){
+ color:#245340!important
+}
