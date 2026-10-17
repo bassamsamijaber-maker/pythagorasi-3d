@@ -983,6 +983,40 @@ service cloud.firestore {
       }
     }
 
+    // Staff-assigned courtesy memberships (never charge, never create a Paddle subscription).
+    // One grant per account. Access is checked with request.time; expired grants
+    // automatically stop qualifying even when their document still exists.
+    match /membershipGrants/{uid} {
+      allow get: if rawSignedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow create, update: if isSuperAdmin()
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly([
+          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked'
+        ])
+        && request.resource.data.keys().hasAll([
+          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.kind in ['student','teacher','class','school']
+        && request.resource.data.tier in ['plus','premium']
+        && request.resource.data.days is int
+        && request.resource.data.days >= 1 && request.resource.data.days <= 365
+        && request.resource.data.grantedAt == request.time
+        && request.resource.data.expiresAt is timestamp
+        && request.resource.data.expiresAt > request.time
+        && request.resource.data.expiresAt <= request.time + duration.value(366, 'd')
+        && request.resource.data.grantedBy == request.auth.uid
+        && request.resource.data.note is string
+        && request.resource.data.note.size() <= 180
+        && request.resource.data.revoked == false
+        && ((get(/databases/$(database)/documents/users/$(uid)).data.role == 'student'
+             && request.resource.data.kind == 'student')
+            || (get(/databases/$(database)/documents/users/$(uid)).data.role == 'teacher'
+             && request.resource.data.kind in ['teacher','class','school']));
+      allow delete: if isSuperAdmin();
+    }
+
     match /siteControls/{docId} {
       allow read: if signedIn();
       allow create, update, delete: if isSuperAdmin();
