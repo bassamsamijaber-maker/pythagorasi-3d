@@ -32,7 +32,7 @@ teacher:{plus:{monthly:24.9,annual:239},premium:{monthly:44.9,annual:431}},
 class:{plus:{monthly:129,annual:1238},premium:{monthly:199,annual:1910}},
 school:{plus:{monthly:449,annual:4310},premium:{monthly:799,annual:7670}}
 };
-const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false};
+const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false,gift:null};
 let liveCatalog=null,catalogLoadError=false;
 // Draft checkout choices only live in memory. Never store these in
 // localStorage, sessionStorage, Firebase, or Paddle before verified purchase.
@@ -150,7 +150,11 @@ function render(){
  $("cl-account").dataset.state=state.account?"success":"warning";
  const title=state.account?(state.account.admin?t("adminAccountTitle"):t(state.account.role==="teacher"?"teacherTitle":"studentTitle")):state.error?t("unavailable"):state.checking?t("guestMessage"):t("guestTitle");
  put("cl-account-title",title);
- put("cl-account-subtitle",state.account?t("checked")+state.account.name:t("guestMessage"));
+ const gift=state.gift;
+ const giftLabel=gift?(" · "+gift.kind.toUpperCase()+" "+gift.tier.toUpperCase()+" · "+
+   (state.lang==="ar"?"منحة لغاية ":"Gift until ")+
+   new Date(gift.expiresAt.toMillis()).toLocaleDateString(state.lang==="ar"?"ar":"en-US")):"";
+ put("cl-account-subtitle",state.account?t("checked")+state.account.name+giftLabel:t("guestMessage"));
  put("cl-account-icon",state.account?.admin?"✦":state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
  const admin=!!state.account?.admin;
@@ -200,7 +204,7 @@ function render(){
 }
 async function identify(user){
  state.checking=false;
- if(!user||user.isAnonymous){state.account=null;state.allowed=["student","teacher"];resetDraft();state.error=false;render();return;}
+ if(!user||user.isAnonymous){state.account=null;state.gift=null;state.allowed=["student","teacher"];resetDraft();state.error=false;render();return;}
  try{
   const profile=await getDoc(doc(db,"users",user.uid));if(!profile.exists())throw Error("Missing profile");
   const p=profile.data();if(!["student","teacher"].includes(p.role))throw Error("Invalid user role");
@@ -211,8 +215,18 @@ async function identify(user){
   const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
   state.account={uid:user.uid,role:p.role,admin,name:String(p.displayName||user.displayName||"")};
   state.allowed=admin?[]:p.role==="teacher"?["teacher","class","school"]:["student"];
+  state.gift=null;
+  try {
+    const grantSnap=await getDoc(doc(db,"membershipGrants",user.uid));
+    const grant=grantSnap.data();
+    if(grantSnap.exists()&&grant?.uid===user.uid&&
+       grant.revoked===false&&["plus","premium"].includes(grant.tier)&&
+       (grant.kind===p.role||(p.role==="teacher"&&["class","school"].includes(grant.kind)))&&
+       grant.expiresAt?.toMillis?.()>Date.now())state.gift=grant;
+  }catch(e){console.warn("Courtesy subscription not available",e);}
+  if(auth.currentUser?.uid!==user.uid)return;
   resetDraft();state.error=false;
- }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.allowed=[];resetDraft();state.error=true;}
+ }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.gift=null;state.allowed=[];resetDraft();state.error=true;}
  render();
 }
 $("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
