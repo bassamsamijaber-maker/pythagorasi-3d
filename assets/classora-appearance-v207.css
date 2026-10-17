@@ -1,0 +1,269 @@
+@import url("./classora-appearance-v206.css?v=207");
+/* Classora V207 – targeted heritage/morning polish.
+   Avoid modifying markup, interaction, 3D visuals, score logic or student data.
+   This intentionally follows the previous theme cascade. */
+body[data-classora-theme="embroidery"]{
+  --ui-paper:#fffbf5;
+  --ui-paper-alt:#f5ece2;
+  --ui-text:#382b31;
+  --ui-muted:#67565c;
+  --ui-accent:#872d43;
+  --ui-edge:#ddc7b9;
+  --ui-inverse:#fff9f0;
+}
+body[data-classora-theme="morning"]{
+  --ui-paper:#ffffff;
+  --ui-paper-alt:#f1f8f8;
+  --ui-text:#193442;
+  --ui-muted:#496575;
+  --ui-accent:#167d67;
+  --ui-edge:#d0e2e6;
+  --ui-inverse:#ffffff;
+}
+/* Make the theme fill the whole viewport, including the area BEHIND the floating dock.
+   The old underlying navy document background created a black horizontal strip. */
+html:has(body[data-classora-theme="embroidery"]),
+body[data-classora-theme="embroidery"]{
+  background-color:#fbf6ee!important;
+  color:var(--ui-text)!important;
+}
+html:has(body[data-classora-theme="morning"]),
+body[data-classora-theme="morning"]{
+  background-color:#fff!important;
+  color:var(--ui-text)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby{
+  min-height:100dvh!important;
+  background-color:var(--ui-paper)!important;
+}
+body[data-classora-theme="embroidery"] #platformLobby{
+  background-color:#fbf6ee!important;
+  background-image:var(--cl-embroidered-pattern)!important;
+}
+body[data-classora-theme="morning"] #platformLobby{
+  background-color:#fff!important;
+  background-image:radial-gradient(circle at 84% 0%,#c7efe736,transparent 36%)!important;
+}
+/* The assistant used hard-coded DARK theme colors for hint text on an ivory card. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card){
+  background:var(--ui-paper-alt)!important;
+  background-image:none!important;
+  color:var(--ui-text)!important;
+  border:1px solid var(--ui-edge)!important;
+  box-shadow:0 8px 24px #4c383d10!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) :is(.lobby-ai-head,.lobby-ai-head b,.lobby-ai-head strong,h1,h2,h3){
+  color:var(--ui-text)!important;
+  opacity:1!important;text-shadow:none!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) :is(.lobby-ai-head span,.hub-muted,.lobby-ai-hint,.lobby-ai-note,.lobby-ai-subtitle,.lobby-ai-description,small,p){
+  color:var(--ui-muted)!important;
+  opacity:1!important;text-shadow:none!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) .lobby-ai-reply{
+  background:var(--ui-paper)!important;
+  border:1px solid var(--ui-edge)!important;
+  color:var(--ui-text)!important;
+  opacity:1!important;
+  white-space:pre-wrap;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) .lobby-ai-reply *{
+  color:inherit!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) .lobby-ai-input input{
+  color:var(--ui-text)!important;
+  background:var(--ui-paper)!important;
+  border:1px solid var(--ui-edge)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) .lobby-ai-input input::placeholder{
+  color:var(--ui-muted)!important;
+  opacity:1!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(.hub-assistant,.lobby-ai-card) .lobby-ai-input button{
+  color:var(--ui-inverse)!important;
+  background:var(--ui-accent)!important;
+  border:1px solid var(--ui-accent)!important;
+}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-ai-orb{
+  background:linear-gradient(140deg,#9c3750,#3f7662)!important;
+  box-shadow:0 7px 18px #86374728!important;
+}
+body[data-classora-theme="morning"] #platformLobby .lobby-ai-orb{
+  background:linear-gradient(140deg,#22ab8b,#1685b2)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby .hub-assistant .classora-icon{
+  color:var(--ui-accent)!important;opacity:1!important;
+}
+/* Contrast for subtitles, card categories and shared secondary UI. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(
+  .hub-card-category,.hub-kicker,.hub-curriculum-subject small,.cw-role,
+  .cp-eyebrow,.lobby-section-head p,.hub-curriculum-copy em,
+  .student-dash-stat-label,.student-dash-action p,.student-dash-eyebrow
+){
+  color:var(--ui-muted)!important;
+  opacity:1!important;text-shadow:none!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(
+  .hub-topic-card,.hub-curriculum-subject,.student-dash-action,.lobby-card,.cp-slide
+) :is(h2,h3,h4,b,strong,.hub-curriculum-subject-main){
+  color:var(--ui-text)!important;
+  text-shadow:none!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby :is(
+  .hub-topic-card,.hub-curriculum-subject,.student-dash-action,.lobby-card,.cp-slide
+) :is(p,small,.description){
+  color:var(--ui-muted)!important;
+  opacity:1!important;
+}
+/* Arabic Idafa exam is generated in an independent native dialog.
+   Its title and the question bar stayed DARK ON NAVY; the body was ivory. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body),.hub-dialog
+){
+  --hub-text:var(--ui-text);
+  --hub-muted:var(--ui-muted);
+  --hub-mint:var(--ui-accent);
+  color:var(--ui-text)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body)
+){
+  background:var(--ui-paper)!important;
+  border-color:var(--ui-edge)!important;
+}
+/* Keep the dark bar, BUT supply genuinely light text against it. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body)
+) :is(.modalhead,.dialog-head,.hub-dialog-head,.dialog-titlebar){
+  background:var(--ui-accent)!important;
+  border-color:var(--ui-accent)!important;
+  color:var(--ui-inverse)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body)
+) :is(.modalhead,.dialog-head,.hub-dialog-head,.dialog-titlebar) :is(h1,h2,h3,b,strong,span){
+  color:var(--ui-inverse)!important;
+  opacity:1!important;text-shadow:none!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body{
+  color:var(--ui-text)!important;
+  background:var(--ui-paper)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body :is(
+ h1,h2,h3,.hub-question,.hub-review b,.hub-score
+){
+  color:var(--ui-text)!important;
+  text-shadow:none!important;opacity:1!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-question{
+  display:block;
+  background:var(--ui-paper-alt)!important;
+  border:1px solid var(--ui-edge)!important;
+  border-radius:12px;
+  padding:16px!important;
+  color:var(--ui-text)!important;
+  font-weight:850!important;line-height:1.65!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body :is(
+ p,.hub-muted,.hub-feedback,.hub-review p,.hub-example,.hub-kicker
+){
+  color:var(--ui-muted)!important;opacity:1!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-kicker{
+  color:var(--ui-accent)!important;font-weight:800!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices button{
+  background:var(--ui-paper-alt)!important;
+  color:var(--ui-text)!important;
+  border:1px solid var(--ui-edge)!important;
+  opacity:1!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices button.correct{
+  background:#e3f5e9!important;color:#205337!important;border-color:#2d8859!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices button.incorrect{
+  background:#fbe9e8!important;color:#812632!important;border-color:#b74956!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices button:disabled:not(.correct):not(.incorrect){
+  opacity:.7!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body>button:not(.correct):not(.incorrect){
+  background:var(--ui-accent)!important;
+  color:var(--ui-inverse)!important;
+  border:1px solid var(--ui-accent)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body>button:disabled{
+  background:var(--ui-paper-alt)!important;
+  color:var(--ui-muted)!important;
+  border:1px solid var(--ui-edge)!important;
+  opacity:.8!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-review{
+  background:var(--ui-paper-alt)!important;
+  border-color:var(--ui-edge)!important;
+}
+/* The dark footer is from the old dialog skin. Use the same paper as the dialog,
+   so a navy bar no longer sits behind the Liquid Glass dock at the bottom. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body)
+) :is(.modalfoot,.dialog-footer,footer){
+  background:var(--ui-paper)!important;
+  background-image:none!important;
+  border-color:var(--ui-edge)!important;
+  color:var(--ui-text)!important;
+}
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) :is(
+  dialog:has(.hub-dialog-body),.modalbox:has(.hub-dialog-body)
+) :is(.modalfoot,.dialog-footer,footer) :is(a,button,span){
+  color:var(--ui-text)!important;
+}
+/* Floating dock: transparent glass only. No full-screen shadow/backplate.
+   Preserve position, five buttons and their click/touch handling. */
+body.classora-dock-enabled.classora-authenticated :is(#classoraMobilePageNav,.classora-mobile-page-nav){
+  box-shadow:0 5px 20px rgba(35,45,47,.16),inset 0 1px rgba(255,255,255,.32)!important;
+  background-image:none!important;
+}
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav::before,
+body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav::after{
+  content:none!important;display:none!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="embroidery"] #classoraMobilePageNav{
+  background:rgba(255,250,244,.88)!important;
+  border-color:#d8bfb2!important;
+  color:#49353b!important;
+  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+  backdrop-filter:blur(18px) saturate(130%)!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav{
+  background:rgba(248,253,251,.88)!important;
+  border-color:#c7dfd8!important;
+  color:#193442!important;
+  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+  backdrop-filter:blur(18px) saturate(130%)!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="embroidery"] #classoraMobilePageNav button:not(.is-active):not(.active){
+  color:#67565c!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button:not(.is-active):not(.active){
+  color:#496575!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="embroidery"] #classoraMobilePageNav button:is(.is-active,.active,[aria-current="page"]){
+  color:#872d43!important;background:#f3e0dd!important;border-color:#d9b8ad!important;
+}
+body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button:is(.is-active,.active,[aria-current="page"]){
+  color:#146f5a!important;background:#dff5eb!important;border-color:#b4ded0!important;
+}
+/* Hide decorative backdrop overlays, not functional exam/dialog backdrops. */
+body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) #platformLobby::after{
+  pointer-events:none!important;
+}
+@media(max-width:680px){
+  body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  body:is([data-classora-theme="embroidery"],[data-classora-theme="morning"]) .hub-dialog-body .hub-choices button{
+    padding:12px 9px!important;
+    min-width:0!important;
+  }
+}
