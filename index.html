@@ -11048,7 +11048,7 @@ function applyAdminLanguage(){
     ["students","🎒 كل الطلاب","🎒 Student Overview"],
     ["history","📝 سجل الوظائف","📝 Assignment History"],["dashboard","📈 الرئيسية","📈 Dashboard"],
     ["people","👥 الطلاب والمعلمين","👥 Students & Teachers"],["classes","🏫 الصفوف","🏫 Classes"],
-    ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","🎛️ مركز التحكم","🎛️ Control Center"]
+    ["send","🚀 إرسال / وظائف","🚀 Send / Assign"],["controls","🎛️ مركز التحكم","🎛️ Control Center"],["grants","✦ منح العضويات","✦ Membership Grants"]
   ];
   tabs.forEach(([key,ar,enText])=>{const b=document.querySelector(`[data-admin-tab="${key}"]`);if(b)b.textContent=en?enText:ar});
   const stats=document.querySelectorAll(".admin-stat small"),statWords=en?["Students","Teachers","Classes","Assignments"]:["طلاب","معلمين","صفوف","وظائف"];
