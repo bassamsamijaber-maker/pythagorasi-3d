@@ -445,7 +445,19 @@ export function mountLearningHub(api){
  }
 
  function refresh(){installAdminAssignmentGenerator();render();if(dialog&&renderOpen){if(quizState&&quizState.lang!==api.language()){close();api.toast(L('تغيرت اللغة. ابدأ تدريبًا جديدًا باللغة المختارة.','Language changed. Start a new practice in your selected language.'))}else{dialog.body.replaceChildren();renderOpen(dialog.body)}}}
- installAdminAssignmentGenerator();render();return {refresh,scienceAnswer,openScience:()=>{selected='science';try{sessionStorage.setItem("classora_subject_origin","science")}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},openSubject:key=>{if(!["all","math","geometry","science","arabic","english","history","geography"].includes(key))key="all";selected=key;try{if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},idafaQuestions:idafaLiveQuestions,renderControls};
+ installAdminAssignmentGenerator();render();return {refresh,scienceAnswer,
+ returnToScienceSection:()=>{
+  selected="science";
+  try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
+  render();
+  // Keep the last selected grade (e.g. Grade 8) and reveal the actual Science
+  // filter, curriculum shelf and cards instead of opening a separate modal.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   const anchor=hub.querySelector(".hub-subject-tabs")||hub.querySelector(".hub-curriculum-shelf");
+   anchor?.scrollIntoView({block:"start",behavior:"instant"});
+  }));
+ },
+ openScience:()=>{selected='science';try{sessionStorage.setItem("classora_subject_origin","science")}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},openSubject:key=>{if(!["all","math","geometry","science","arabic","english","history","geography"].includes(key))key="all";selected=key;try{if(key!=="all")sessionStorage.setItem("classora_subject_origin",key)}catch{}render();setTimeout(()=>hub.scrollIntoView({block:"start"}),0)},idafaQuestions:idafaLiveQuestions,renderControls};
 }
 export function installVectorIcons(){
  const emoji=/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu;

@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v189-periodic-restore-parent";
+const CACHE_NAME="classora-v190-periodic-science-hub-return";
 const APP_SHELL=[
   "./index.html",
   "./chemistry/periodic-table.html?v=167",
@@ -99,7 +99,7 @@ const APP_SHELL=[
   "./assets/learning-content.js?v=92",
   "./assets/learning-store.js?v=92",
   "./assets/ph-lab.js?v=92",
-  "./assets/learning-hub.js?v=159",
+  "./assets/learning-hub.js?v=190",
   "./assets/learning-hub.css?v=99",
   "./assets/curriculum-v97.js?v=159",
   "./assets/curriculum-v97.css?v=110",
