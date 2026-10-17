@@ -278,3 +278,48 @@ body[data-classora-theme="embroidery"] #platformLobby :is(
   box-shadow:0 4px 14px #4e30330c!important
  }
 }
+
+
+/* Palette consistency for branded dark hero surfaces (not neutral cards). */
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .classora-mix-hero,.pythag-lobby-hero
+){
+ background:var(--cl-embroidered-pattern),linear-gradient(120deg,#782c41,#302c30)!important;
+ background-size:112px 112px,cover!important;
+ border-color:#c79c80!important;color:#fff8ec!important
+}
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .classora-mix-hero,.pythag-lobby-hero
+) :is(h1,h2,h3,p,strong,b,.mix-eyebrow,.mix-art-pill,.mix-hero-title,.mix-hero-copy){
+ color:#fff8ec!important;text-shadow:none!important
+}
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .classora-mix-hero,.pythag-lobby-hero
+) :is(.mix-btn-secondary,.mix-art-pill){
+ color:#fff8ec!important;background:#ffffff1b!important;border-color:#f0cead80!important
+}
+/* AI widgets use pale cards with dark text and primary burgundy interaction. */
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .lobby-ai-card,.lobby-ai-input,.lobby-ai-input input
+){
+ background:#fffbf5!important;color:#382b31!important;border-color:#ddc7b9!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-ai-card :is(
+ h1,h2,h3,strong,b,p,small,.lobby-ai-description
+){color:#382b31!important}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-ai-input button{
+ background:#872d43!important;border-color:#872d43!important;color:#fff9f0!important
+}
+/* Ensure little explanatory SVG badges stay visible, but leave interactive topic art intact. */
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .cp-illustration,.hub-card-icon,.hub-curriculum-icon,
+ .student-dash-action-icon,.student-dash-stat-icon
+) svg:not([fill]){
+ color:#872d43!important;stroke:currentColor;opacity:1!important
+}
+body[data-classora-theme="embroidery"] :is(
+ #settingsModal,#examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page
+) :is(button,input,select,textarea):focus-visible{
+ outline:3px solid #872d43!important;outline-offset:2px!important
+}
