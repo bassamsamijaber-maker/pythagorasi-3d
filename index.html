@@ -579,7 +579,7 @@ body.classora-intro-active{overflow:auto!important}
     <div class="classora-subject-spinner" aria-hidden="true"></div>
     <b>Classora</b>
   </div>
-  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=166"></iframe>
+  <iframe id="periodicTableFrame" class="classora-subject-frame" title="Periodic Table" scrolling="yes" src="chemistry/periodic-table.html?v=167"></iframe>
 </div>
 
 <div class="modal" id="adminPanelModal">
@@ -9674,7 +9674,6 @@ window.addEventListener("message",event=>{
   if(event.source!==periodicTableFrame?.contentWindow)return;
   if(event.data?.type==="classora-subject-language"&&Object.hasOwn(window.ClassoraLocale.languages,event.data.lang)){applySiteLanguage(event.data.lang);}
   if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
-    try{if(event.data?.returnTo==="science")sessionStorage.setItem("classora_subject_origin","science")}catch{}
     classoraReturnFromPeriodic();
   }
 });
@@ -9857,7 +9856,7 @@ document.getElementById("lobbySettingsBtn").addEventListener("click",openSetting
 document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("mobileLabSettingsBtn").addEventListener("click",openSettingsModal);
 document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
-settingsModal.addEventListener("click",e=>{if(e.target===settingsModal)closeSettingsModal()});
+// Settings remain open until the user taps the visible close button.
 document.getElementById("copyProfileIdBtn").addEventListener("click",async()=>{
   const id=String(window.PythagorasiUser?.profileId||"");
   if(!/^\d{10}$/.test(id))return;
@@ -10269,7 +10268,7 @@ document.getElementById("lobbyLabCard").addEventListener("click",()=>enterPythag
 document.getElementById("lobbyChallengeBtn").addEventListener("click",()=>enterPythagorasLab("challenge"));
 document.getElementById("lobbyQuestionBtn").addEventListener("click",openQuickPythagQuestions);
 document.getElementById("closePythagQuestionsModal").addEventListener("click",()=>pythagQuestionsModal.classList.remove("open"));
-pythagQuestionsModal.addEventListener("click",e=>{if(e.target===pythagQuestionsModal)pythagQuestionsModal.classList.remove("open")});
+// Question screen stays open until its close button or an intentional transition.
 document.getElementById("nextQuickPythagQuestion").addEventListener("click",nextQuickPythagQuestion);
 document.getElementById("quickPythagExamBtn").addEventListener("click",()=>{
   pythagQuestionsModal.classList.remove("open");
@@ -14371,7 +14370,7 @@ function adminShowTab(tab){
 function openAdminPanel(){if(!requireSuperAdmin())return;refreshTeamAccessButtons();applyAdminLanguage();adminPanelModal.classList.add("open");adminShowTab(adminActiveTab);adminLoadAllData()}
 document.getElementById("adminPanelBtn").addEventListener("click",openAdminPanel);
 document.getElementById("closeAdminPanel").addEventListener("click",()=>adminPanelModal.classList.remove("open"));
-adminPanelModal.addEventListener("click",e=>{if(e.target===adminPanelModal)adminPanelModal.classList.remove("open")});
+// Admin Panel remains open until the user taps its close button.
 document.querySelectorAll("#adminTabs button").forEach(b=>b.addEventListener("click",()=>adminShowTab(b.dataset.adminTab)));
 document.getElementById("adminRefreshBtn").addEventListener("click",adminLoadAllData);
 document.getElementById("adminGlobalSearch").addEventListener("input",()=>{
@@ -15381,9 +15380,7 @@ document.getElementById("competitionBtn").addEventListener("click",openCompetiti
 document.getElementById("closeCompetitionModal").addEventListener("click",()=>{
   clearLiveSubscriptions();competitionModal.classList.remove("open");showPlatformLobby();
 });
-competitionModal.addEventListener("click",e=>{
-  if(e.target===competitionModal){clearLiveSubscriptions();competitionModal.classList.remove("open")}
-});
+// Tapping outside the competition must not cancel the active room.
 document.getElementById("compFinishedClose").addEventListener("click",()=>{
   clearLiveSubscriptions();competitionModal.classList.remove("open");
 });
@@ -17493,29 +17490,27 @@ function classoraUnlockBackground(){
     requestAnimationFrame(()=>{lobby.scrollTop=classoraOverlayScrollTop});
   }
 }
+// Opening another page does not destroy a page the user left open.
+// Stack the active dialogs, and only let an explicit close action dismiss them.
+let classoraModalOrder=0;
+const classoraModalZ=new WeakMap();
 function classoraSyncOverlayState(preferred=null){
   if(classoraOverlaySyncing)return;
   classoraOverlaySyncing=true;
   try{
-    let open=classoraOpenOverlays();
-
-    /* Only one normal modal at a time. */
-    if(open.length>1){
-      const keep=(preferred&&preferred.classList?.contains("open"))?preferred:open[open.length-1];
-      for(const modal of open){
-        if(modal!==keep)modal.classList.remove("open");
-      }
-      open=[keep];
+    const open=classoraOpenOverlays();
+    if(preferred?.classList?.contains("open"))classoraModalZ.set(preferred,++classoraModalOrder);
+    for(const modal of open){
+      if(!classoraModalZ.has(modal))classoraModalZ.set(modal,++classoraModalOrder);
+      modal.style.zIndex=String(10000+classoraModalZ.get(modal));
     }
-
     const authVisible=document.getElementById("authGate")?.classList.contains("show");
-    if(authVisible&&open.length){
-      const support=open.find(m=>m.id==="supportModal");
-      for(const modal of open)if(modal!==support)modal.classList.remove("open");
-      open=support?[support]:[];
+    // A genuine sign-out is the only automatic teardown: don't expose one
+    // person's protected screens when another person logs into this browser.
+    if(authVisible&&!auth?.currentUser&&!isGuestSession()){
+      for(const modal of open)if(modal.id!=="supportModal")modal.classList.remove("open");
     }
-
-    if(authVisible||open.length)classoraLockBackground();
+    if(authVisible||classoraOpenOverlays().length)classoraLockBackground();
     else classoraUnlockBackground();
   }finally{
     classoraOverlaySyncing=false;
@@ -17540,11 +17535,23 @@ document.addEventListener("click",event=>{
   close.closest(".modal")?.classList.remove("open");
   classoraSyncOverlayState();
 });
+document.addEventListener("click",event=>{
+  if(event.target instanceof Element&&event.target.matches(".modal.open")){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+  if(event.target?.closest?.("#classoraMobilePageNav button")&&classoraOpenOverlays().length){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
+  }
+},true);
 document.addEventListener("keydown",event=>{
-  if(event.key!=="Escape")return;
-  const open=classoraOpenOverlays();
-  open[open.length-1]?.querySelector(".close")?.click();
-});
+  if(event.key==="Escape"&&classoraOpenOverlays().length){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+},true);
 
 /* ================= V96 UNIVERSAL LOBBY RETURN ================= */
 const CLASSORA_LOBBY_SCROLL_KEY="classora_lobby_scroll_v1";
@@ -17586,6 +17593,8 @@ function closeAllClassoraScreensForMobile(){
   }
   document.body.classList.remove("classora-periodic-active");
   document.documentElement.classList.remove("classora-periodic-active");
+  // Keep hash bookkeeping in sync when replaceState emits no hashchange event.
+  classoraPreviousHash="#platformLobby";
   // Force-hide the embedded page even on browsers that delay :target updates after replaceState.
   const periodicPage=document.getElementById("periodic-table");
   if(periodicPage)periodicPage.style.setProperty("display","none","important");
@@ -17614,6 +17623,10 @@ function closeAllClassoraScreensForMobile(){
   classoraSyncOverlayState();
 }
 function classoraGoLobby(){
+  if(location.hash!=="#periodic-table"&&classoraOpenOverlays().length){
+    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
+    return false;
+  }
   closeAllClassoraScreensForMobile();
   try{sessionStorage.removeItem("classora_subject_origin")}catch{}
   const success=showPlatformLobby();
@@ -17638,31 +17651,35 @@ function classoraGoLobby(){
   return false;
 }
 function classoraReturnFromPeriodic(){
-  // Close the embedded table first. Do not open another study dialog while
-  // returning: on mobile that could hide the restored lobby behind a blank layer.
+  // A stale iframe/hash event must not disrupt another open screen.
   const page=document.getElementById("periodic-table");
+  if(location.hash!=="#periodic-table"&&page?.style.getPropertyValue("display")==="none")return;
   page?.style.setProperty("display","none","important");
   document.body.classList.remove("classora-periodic-active");
   document.documentElement.classList.remove("classora-periodic-active");
+  // Explicit X/back from the table returns to the Science topic chooser,
+  // rather than uncovering a hidden 3D page or a black iframe backdrop.
   classoraGoLobby();
-  // Hash/overlay transitions do not always produce a hashchange event on iOS.
-  // Restore the lobby visibility explicitly after closing the iframe.
+  classoraPreviousHash="#platformLobby";
   const lobby=document.getElementById("platformLobby");
-  if(document.body.classList.contains("classora-authenticated")&&lobby){
+  if(lobby){
     lobby.classList.remove("hidden");
     lobby.style.removeProperty("display");
     lobby.style.removeProperty("visibility");
-    requestAnimationFrame(()=>{
-      if(location.hash==="#platformLobby"){
-        lobby.classList.remove("hidden");
-        page?.style.setProperty("display","none","important");
-      }
-    });
   }
+  requestAnimationFrame(()=>{
+    if(!window.PythagorasiUser?.uid||document.getElementById("authGate")?.classList.contains("show"))return;
+    page?.style.setProperty("display","none","important");
+    try{void openSubject("science")}catch(error){console.warn("Restore Science after periodic table",error)}
+  });
 }
 window.classoraReturnFromPeriodic=classoraReturnFromPeriodic;
 function mobileGoLobby(){return classoraGoLobby()}
 function mobileGoSettings(){
+  if(classoraOpenOverlays().length){
+    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
+    return;
+  }
   classoraGoLobby();
   setTimeout(()=>document.getElementById("lobbySettingsBtn")?.click(),60);
 }

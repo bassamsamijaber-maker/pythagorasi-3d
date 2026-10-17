@@ -1,6 +1,8 @@
-const CACHE_NAME="classora-v186-remove-settings-upgrade-history";
+const CACHE_NAME="classora-v187-persistent-screens-science-return";
 const APP_SHELL=[
   "./index.html",
+  "./chemistry/periodic-table.html?v=167",
+  "./chemistry/periodic-table.js?v=167",
   "./assets/classora-chat-memberships-v169.css?v=186",
   "./assets/classora-memberships-nav-v169.js?v=186",
   "./subscriptions.html",
