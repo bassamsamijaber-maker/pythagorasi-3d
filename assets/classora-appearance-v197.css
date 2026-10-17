@@ -400,3 +400,85 @@ html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
  .wrap a,.cl-pricing a,.cl-brand,.cl-back
 ){color:var(--clt-primary)!important}
 html[data-classora-theme="embroidery"] :is(.wrap .card,.cl-hero,.cl-pricing){background-image:var(--cl-embroidered-pattern)!important;background-size:110px 110px!important}
+
+
+/* Deep subject pages: math studio, humanities and science labs, earth globe lesson. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cm-studio{
+ --cm-ink:var(--clt-ink);--cm-muted:var(--clt-muted);--cm-line:var(--clt-stroke);
+ --cm-mint:var(--clt-primary);color:var(--clt-ink)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cm-studio,.cm-heading,.cm-lab,.cm-controls,.cm-steps,.cm-explain,
+ .cm-practice,.cm-rule,.cm-metrics,.cm-answers,.cm-calc-panel,.cm-field,
+ .cl-workbench,.cl-guide,.cl-guide-detail,.cl-snapshot,.cl-comparison,
+ .cl-prediction,.ch129-events,.ce129-flow,.ce129-measures,
+ .cl130-tools,.cl130-home,.cl130-challenge,.cl130-present,
+ .cl130-report,.cg-globe-hero
+){color:var(--clt-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cm-lab,.cm-controls,.cm-steps,.cm-explain,.cm-practice,.cm-rule,
+ .cm-metrics,.cm-answers,.cm-calc-panel,.cm-field,.cl-workbench,
+ .cl-guide,.cl-snapshot,.cl-comparison,.cl-prediction,.ch129-events,
+ .ce129-flow,.ce129-measures,.cl130-tools,.cl130-home,.cl130-challenge,
+ .cl130-report,.cg-globe-hero
+){
+ background:var(--clt-panel)!important;color:var(--clt-ink)!important;
+ border-color:var(--clt-stroke)!important;box-shadow:var(--clt-shadow)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cm-studio p,.cm-explain p,.cl130-tools p,.cl130-home p,.cl-guide p,
+ .cl-workbench p,.cg-globe-copy p,.ch129-events p,.ce129-flow p
+){color:var(--clt-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cm-studio button:not(.cm-calc-keyboard button),.cl-step-tabs button,
+ .cl-presets button,.cl130-actions button,.cl130-twin-controls button,
+ .sl-button,.sl-word-chip,.sl-mode-toolbar button
+):not(.correct):not(.wrong):not(.active){
+ background:var(--clt-panel-alt)!important;color:var(--clt-ink)!important;border-color:var(--clt-stroke)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cm-studio button.active,.cl-step-tabs button.active,.cl130-actions button.active,
+ .sl-button.active,.sl-mode-toolbar button.active
+){background:var(--clt-primary)!important;color:var(--clt-primaryText)!important;border-color:var(--clt-primary)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .subject-lab-page :is(
+ .sl-main,.sl-grid,.sl-info,.sl-explanation,.sl-translation-box,.sl-footnote,
+ .sl-word-picker,.sl-samples,.sl-note
+){background:var(--clt-panel)!important;color:var(--clt-ink)!important;border-color:var(--clt-stroke)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .subject-lab-page :is(.sl-label,.sl-eyebrow,.sl-footnote){color:var(--clt-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .subject-lab-page :is(.sl-scene,.sl-visual,.sl-beaker,.sl-scale,.sl-book-space,.sl-book-leaf){filter:none!important}
+/* Student dashboard, classroom teacher workspace, plus tools and administrative surfaces. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .student-dash{
+ --sd-green:var(--clt-primary);--sd-blue:var(--clt-highlight);
+ --sd-ink:var(--clt-ink);--sd-sub:var(--clt-muted);--sd-stroke:var(--clt-stroke);
+ color:var(--clt-ink)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-hero,.student-dash-stat,.student-dash-progress,
+ .student-dash-insights,.student-dash-action,
+ .teacher-workspace,.tw-hero,.tw-metric,.tw-subpanel,
+ .tw-class-item,.tw-action,.plus-panel,.plus-stat,.plus-dialog
+){
+ background:var(--clt-panel)!important;border-color:var(--clt-stroke)!important;
+ color:var(--clt-ink)!important;box-shadow:var(--clt-shadow)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-heading,.student-dash-section-head,.student-dash-stat-number,
+ .tw-heading,.tw-metric-value,.tw-title-row
+){color:var(--clt-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-description,.student-dash-stat-label,.tw-intro,.tw-metric-label
+){color:var(--clt-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-primary,.tw-primary
+){background:var(--clt-primary)!important;color:var(--clt-primaryText)!important;border-color:var(--clt-primary)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-outline,.tw-secondary,.tw-mini-link
+){background:var(--clt-panel-alt)!important;color:var(--clt-ink)!important;border-color:var(--clt-stroke)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .plus-panel,.plus-stat,.plus-flash-face,.plus-ph-guide,.plus-toolbar,
+ .plus-dialog .modalbox
+){background:var(--clt-panel)!important;color:var(--clt-ink)!important;border-color:var(--clt-stroke)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.plus-muted,.plus-ph-guide p){color:var(--clt-muted)!important}
+body[data-classora-theme="embroidery"] :is(.cm-lab,.cg-globe-hero,.plus-panel,.tw-hero,.student-dash-hero){
+ background-image:var(--cl-embroidered-pattern)!important;background-size:110px 110px!important
+}
