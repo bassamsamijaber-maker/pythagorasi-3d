@@ -1,8 +1,6 @@
 /* 2026-10-16: additive enhancements; original chat/permissions remain intact. */
-/* Membership link blends with existing lobby and settings dock. */
-#lobbyMembershipBtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #498c76;background:linear-gradient(120deg,#184939,#154a51);color:#c9ffe6;border-radius:12px;min-height:40px;padding:8px 12px;text-decoration:none;font-weight:900;box-shadow:0 8px 25px #072b2355}
-#lobbyMembershipBtn svg{width:18px;height:18px;flex:none;fill:none;stroke:#abf7cf;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-#lobbyMembershipBtn:hover{background:linear-gradient(110deg,#21674b,#205e62);border-color:#a3f0d0}
+/* Hide stale lobby Upgrade link. Keep Settings shortcut intact. */
+#lobbyMembershipBtn{display:none!important}
 #classoraSettingsMembershipLink{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0;padding:12px 15px;border:1px solid #5f9d82;border-radius:15px;background:linear-gradient(110deg,#194d39,#1d4655);color:#d4ffe9;text-decoration:none;font-weight:900;font-size:14px}
 #classoraSettingsMembershipLink svg{width:20px;height:20px;fill:none;stroke:#bff9d8;stroke-width:1.8}
 #classoraSettingsMembershipLink:hover{background:linear-gradient(125deg,#24664c,#246274)}
@@ -32,7 +30,6 @@
 #chatModal .chat-receipt.read{color:#a5f6d7}
 #chatModal button:focus-visible,#chatModal textarea:focus-visible,#chatModal input:focus-visible{outline:2px solid #94f1d0!important;outline-offset:2px}
 @media(max-width:700px){
- #lobbyMembershipBtn{font-size:12px;min-height:38px;padding:7px 10px}
  #chatModal .classora-chat-box{width:calc(100vw - 14px)!important;max-width:none!important;height:min(calc(var(--chat-viewport-height,100dvh) - 78px),calc(100dvh - 78px))!important;max-height:none!important}
  #chatModal .chat-contacts-pane,#chatModal .chat-thread-pane{border-radius:13px}
  #chatModal .chat-compose{padding-bottom:max(11px,env(safe-area-inset-bottom))!important;gap:6px}
