@@ -319,3 +319,46 @@ body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
  body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.hub-topic-card,.curriculum-topic-card,.hub-curriculum-subject){box-shadow:0 3px 14px #0000000b!important}
  body[data-classora-theme="embroidery"] #platformLobby{background-size:90px 90px,cover!important}
 }
+
+
+/* Standalone periodic table: the same chosen theme follows from the lobby.
+   Element family colors and atomic diagrams remain scientifically meaningful. */
+html[data-classora-theme="morning"]{
+ --bg:#ffffff;--panel:#ffffff;--panel2:#f4f9f8;--text:#203a43;--muted:#536f7f;--line:#dce8ea;
+ --accent:#1b8d77;--shadow:0 12px 32px #34545b13;background:#ffffff!important
+}
+html[data-classora-theme="embroidery"]{
+ --bg:#fff8ef;--panel:#fffaf5;--panel2:#f8ece2;--text:#4c3038;--muted:#795d62;
+ --line:#dfc9bd;--accent:#a1394e;--shadow:0 12px 32px #79465016;background:#fff8ef!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) body{
+ background:var(--bg)!important;color:var(--text)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .topbar,.control-panel,.search-wrap,.table-shell,.tool-card,.lesson-card,.family-card,.quiz-card,
+ .element-sheet,.element-modal,.modal-backdrop .element-detail,.detail-copy,.property-grid>div,
+ .gallery-note,.section-head,.hero-stats>div
+){background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .hero h1,.section-head h2,.detail-copy h3,.tool-title,.brand,.symbol-lockup h2
+){color:var(--text)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.hero p,.eyebrow,.kicker,.lesson-card p,.detail-copy p){
+ color:var(--muted)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .back-btn,.lang-btn,.mode,.filter-chip,.layout-switch button,.visual-animation-btn,.favorite-btn,.quiz-answer
+):not(.correct):not(.wrong){
+ background:var(--panel2)!important;color:var(--text)!important;border-color:var(--line)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .mode.active,.filter-chip.active,.layout-switch button.active,.primary
+){background:var(--accent)!important;color:#ffffff!important;border-color:var(--accent)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) .search-wrap input{
+ background:transparent!important;color:var(--text)!important
+}
+html[data-classora-theme="embroidery"] :is(.topbar,.control-panel,.hero-stats>div){
+ background-image:var(--cl-embroidered-pattern)!important;background-size:110px 110px!important
+}
+html[data-classora-theme="morning"] .ambient{opacity:.13!important}
+html[data-classora-theme="embroidery"] .ambient{opacity:.10!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.element-card,.el-thumb,.hero-atom){filter:none!important}
