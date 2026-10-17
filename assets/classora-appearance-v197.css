@@ -430,7 +430,7 @@ body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
  .cl-workbench p,.cg-globe-copy p,.ch129-events p,.ce129-flow p
 ){color:var(--clt-muted)!important}
 body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
- .cm-studio button:not(.cm-calc-keyboard button),.cl-step-tabs button,
+ .cm-controls button,.cm-answers button,.cl-step-tabs button,
  .cl-presets button,.cl130-actions button,.cl130-twin-controls button,
  .sl-button,.sl-word-chip,.sl-mode-toolbar button
 ):not(.correct):not(.wrong):not(.active){
