@@ -1,8 +1,10 @@
-const CACHE_NAME="classora-v193-heritage-drawing-challenge";
+const CACHE_NAME="classora-v194-heritage-gallery-voting";
 const APP_SHELL=[
   "./assets/heritage-needle-background.svg?v=193",
-  "./assets/classora-heritage-v191.js?v=193",
-  "./assets/classora-heritage-v191.css?v=193",
+  "./assets/classora-heritage-gallery-v194.js?v=194",
+  "./assets/classora-heritage-i18n-v194.js?v=194",
+  "./assets/classora-heritage-v191.js?v=194",
+  "./assets/classora-heritage-v191.css?v=194",
   "./index.html",
   "./chemistry/periodic-table.html?v=167",
   "./chemistry/periodic-table.js?v=167",
