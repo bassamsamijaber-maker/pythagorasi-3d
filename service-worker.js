@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v207-ui-contrast-glass";
+const CACHE_NAME="classora-v208-mobile-dock";
 const APP_SHELL=[
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
@@ -121,7 +121,8 @@ const APP_SHELL=[
   "./privacy.html",
   "./terms.html",
   "./assets/classora-legal-v124.css?v=166",
-  "./assets/classora-legal-v124.js?v=166",
+  "./assets/classora-legal-v124.js?v=208",
+  "./assets/classora-mobile-v208.css?v=208",
   "./assets/classora-legal-translations-v164.js?v=165",
   "./assets/classora-study-assistant-v124.js?v=137",
   "./assets/classora-assistant-motion-v134.js?v=139",

@@ -119,7 +119,7 @@ for(const page of [standalonePrivacy,standaloneTerms]){
 }
 assert(legalModule.includes("ClassoraLegalTranslations.render(policy,language)"),'In-app legal dialog has no translated policy');
 assert(legalModule.includes("document.documentElement.lang)?document.documentElement.lang:'en'"),'Legal dialog does not use selected language');
-assert(index.includes('classora-legal-v124.js?v=166'),'Main website has stale legal document module');
+assert(index.includes('classora-legal-v124.js?v=208'),'Main website has stale legal document module');
 assert(read('service-worker.js').includes('classora-legal-translations-v164.js?v=165'),'Legal files missing from offline cache');
 
 

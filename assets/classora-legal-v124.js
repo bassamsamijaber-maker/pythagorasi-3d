@@ -120,6 +120,9 @@ export function installClassoraLegal(){
   (review?close:modal.querySelector('[data-policy="privacy"]')).focus({preventScroll:true});
  }
  function maybeShow(options={}){
+  // Phones enter directly. This is not a recorded policy acceptance; Settings still opens review.
+  if(window.matchMedia("(max-width:760px)").matches ||
+     (/iPhone|iPod|Android.*Mobile/i.test(navigator.userAgent)))return;
   if(!modal.hidden)return;
   const id=String(options.uid||window.PythagorasiUser?.uid||'');
   if(!id||accepted(id))return;
