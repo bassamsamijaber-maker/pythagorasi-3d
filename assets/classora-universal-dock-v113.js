@@ -70,8 +70,20 @@
        '#classoraMobilePageNav button,#mobileReturnLobbyBtn,#returnLobbyBtn,[data-return-control][data-return-target="lobby"]'
      );
      if(!clicked)return;
-     // An active exam may have unsent answers. The core Lobby route autosaves
-     // the attempt and stops timers, but ask before leaving it.
+     const toLobby=clicked.id==="classoraMobileLobbyBtn" ||
+       clicked.id==="mobileReturnLobbyBtn" ||
+       clicked.id==="returnLobbyBtn" ||
+       clicked.dataset?.returnTarget==="lobby";
+     if(toLobby&&typeof window.classoraNavigateToLobby==="function"){
+       // Handle Lobby before document-level modal click blockers can intervene.
+       // The core route saves exam progress, closes 3D/labs and reveals the lobby.
+       event.preventDefault();
+       event.stopImmediatePropagation();
+       select("classoraMobileLobbyBtn");
+       window.classoraNavigateToLobby();
+       return;
+     }
+     // Preserve confirmation for switching to other tabs during a live exam.
      const activeExam=$("examModal")?.classList.contains("open") &&
        !$("examRunner")?.classList.contains("hidden");
      if(activeExam && event.isTrusted){

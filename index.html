@@ -65,7 +65,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-home-v112.css?v=2">
 <link rel="stylesheet" href="./assets/classora-heritage-v191.css?v=193">
 <link rel="stylesheet" href="./assets/classora-universal-dock-v113.css?v=2">
-<script defer src="./assets/classora-universal-dock-v113.js?v=4"></script>
+<script defer src="./assets/classora-universal-dock-v113.js?v=212"></script>
 <link rel="stylesheet" href="./assets/classora-entrance-v116.css?v=1">
 <script defer src="./assets/classora-entrance-v116.js?v=2"></script>
 <link rel="stylesheet" href="./assets/classora-v117.css?v=1">
@@ -17553,7 +17553,10 @@ document.addEventListener("click",event=>{
     event.preventDefault();
     event.stopImmediatePropagation();
   }
-  if(event.target?.closest?.("#classoraMobilePageNav button")&&classoraOpenOverlays().length){
+  // Lobby must remain usable even while a modal or native 3D dialog is open.
+  // Other tabs still respect the deliberate-close rule.
+  const dockTarget=event.target?.closest?.("#classoraMobilePageNav button");
+  if(dockTarget&&dockTarget.id!=="classoraMobileLobbyBtn"&&classoraOpenOverlays().length){
     event.preventDefault();
     event.stopImmediatePropagation();
     showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
@@ -17610,7 +17613,20 @@ function closeAllClassoraScreensForMobile(){
   classoraPreviousHash="#platformLobby";
   // Force-hide the embedded page even on browsers that delay :target updates after replaceState.
   const periodicPage=document.getElementById("periodic-table");
-  if(periodicPage)periodicPage.style.setProperty("display","none","important");
+  if(periodicPage){
+    // A full-screen iframe must not remain an invisible click/scroll blocker.
+    periodicPage.inert=true;
+    periodicPage.setAttribute("aria-hidden","true");
+    periodicPage.style.setProperty("display","none","important");
+    periodicPage.style.setProperty("visibility","hidden","important");
+    periodicPage.style.setProperty("pointer-events","none","important");
+    periodicPage.querySelectorAll("iframe").forEach(frame=>{
+      frame.blur?.();
+      frame.inert=true;
+      frame.setAttribute("aria-hidden","true");
+      frame.style.setProperty("pointer-events","none","important");
+    });
+  }
 
   // Close real study surfaces with their own cleanup (3D animations, listeners).
   try{window.classoraSubjectLabs?.close?.()}catch(error){console.warn("Close science lab",error)}
@@ -17636,15 +17652,24 @@ function closeAllClassoraScreensForMobile(){
   classoraSyncOverlayState();
 }
 function classoraGoLobby(){
-  if(location.hash!=="#periodic-table"&&classoraOpenOverlays().length){
-    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
-    return false;
-  }
+  // An intentional Lobby tap takes precedence over the page stack.
+  // closeAllClassoraScreensForMobile autosaves active exams and performs cleanup.
   closeAllClassoraScreensForMobile();
   try{sessionStorage.removeItem("classora_subject_origin")}catch{}
   const success=showPlatformLobby();
   if(success===false)return false;
   const lobby=document.getElementById("platformLobby");
+  if(lobby){
+    lobby.hidden=false;
+    lobby.inert=false;
+    lobby.classList.remove("hidden","is-hidden");
+    for(const prop of ["display","visibility","pointer-events","overflow"]){
+      lobby.style.removeProperty(prop);
+    }
+  }
+  // Remove stale subject-page scroll locks, not the lobby's own scrolling.
+  document.documentElement.style.removeProperty("overflow");
+  document.body.style.removeProperty("overflow");
   const goTop=()=>{
     lobby?.scrollTo({top:0,behavior:"instant"});
     if(lobby)lobby.scrollTop=0;
@@ -17663,6 +17688,8 @@ function classoraGoLobby(){
   });
   return false;
 }
+// Stable imperative entry point for the earliest dock/window capture handler.
+window.classoraNavigateToLobby=classoraGoLobby;
 function classoraReturnFromPeriodic(){
  const page=document.getElementById("periodic-table");
  if(location.hash!=="#periodic-table"&&page?.style.getPropertyValue("display")==="none")return;

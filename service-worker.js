@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v211-iphone-bottom-gap";
+const CACHE_NAME="classora-v212-universal-lobby";
 const APP_SHELL=[
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
@@ -84,7 +84,7 @@ const APP_SHELL=[
   "./assets/classora-entrance-v116.css?v=1",
   "./assets/classora-entrance-v116.js?v=2",
   "./assets/classora-universal-dock-v113.css?v=2",
-  "./assets/classora-universal-dock-v113.js?v=4",
+  "./assets/classora-universal-dock-v113.js?v=212",
   "./assets/classora-home-v112.css?v=2",
   "./assets/classora-home-v112.js?v=191",
   "./assets/classora-universal-dock-v111.css?v=1",
