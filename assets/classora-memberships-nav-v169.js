@@ -8,15 +8,12 @@ de:{title:"Plus und Premium",settings:"Tarife und Vorteile"},
 it:{title:"Plus e Premium",settings:"Abbonamenti e vantaggi"},
 hi:{title:"Plus और Premium",settings:"सदस्यता और फायदे"},
 tr:{title:"Plus ve Premium",settings:"Üyelikler ve avantajlar"}};
-function removeUpgrade(){document.getElementById("lobbyMembershipBtn")?.remove()}
+function removeUpgrade(){document.getElementById("lobbyMembershipBtn")?.remove();document.getElementById("classoraSettingsMembershipLink")?.remove()}
 function update(){
  removeUpgrade();
  const language=window.ClassoraLocale?.language||localStorage.getItem("pythagorasi_language")||"ar";
  const words=names[language]||names.en;
- const label=document.getElementById("cl-membership-settings-label");
- if(label)label.textContent=words.settings;
- const shortcut=document.getElementById("classoraSettingsMembershipLink");
- if(shortcut)shortcut.title=words.title;
+ document.getElementById("classoraSettingsMembershipLink")?.remove();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",update,{once:true});else update();
 const top=document.querySelector(".lobby-top-actions");

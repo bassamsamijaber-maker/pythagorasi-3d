@@ -13,8 +13,7 @@ if(app){
   lobbyExamBtn:"exams",examBtn:"exams",competitionBtn:"competitions",
   lobbyChallengeBtn:"competitions",compStartBtn:"competition_start",
   lobbyQuestionBtn:"questions",lobbyAISend:"assistant",
-  classoraMixDiscoverBtn:"lessons",learningHubTopBtn:"lessons",
-  classoraSettingsMembershipLink:"subscriptions"
+  classoraMixDiscoverBtn:"lessons",learningHubTopBtn:"lessons"
  };
  const allowed=new Set(["visit","lesson","lobby",...Object.values(actions)]);
  let currentUid="",countryCode=null,lastWrite=0,lastAction="";

@@ -1,9 +1,6 @@
 /* 2026-10-16: additive enhancements; original chat/permissions remain intact. */
 /* Hide stale lobby Upgrade link. Keep Settings shortcut intact. */
-#lobbyMembershipBtn{display:none!important}
-#classoraSettingsMembershipLink{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0;padding:12px 15px;border:1px solid #5f9d82;border-radius:15px;background:linear-gradient(110deg,#194d39,#1d4655);color:#d4ffe9;text-decoration:none;font-weight:900;font-size:14px}
-#classoraSettingsMembershipLink svg{width:20px;height:20px;fill:none;stroke:#bff9d8;stroke-width:1.8}
-#classoraSettingsMembershipLink:hover{background:linear-gradient(125deg,#24664c,#246274)}
+#lobbyMembershipBtn,#classoraSettingsMembershipLink{display:none!important}
 /* Chat: more consistent spacing, accessible controls and mobile viewport. */
 #chatModal .classora-chat-box{background:linear-gradient(140deg,#0d2331,#0d1b2a 80%)!important;border:1px solid #315366!important;box-shadow:0 24px 75px #030911a8!important}
 #chatModal .classora-chat-layout{gap:8px}

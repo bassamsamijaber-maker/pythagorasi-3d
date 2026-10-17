@@ -1,8 +1,8 @@
-const CACHE_NAME="classora-v185-remove-old-upgrade";
+const CACHE_NAME="classora-v186-remove-settings-upgrade-history";
 const APP_SHELL=[
   "./index.html",
-  "./assets/classora-chat-memberships-v169.css?v=185",
-  "./assets/classora-memberships-nav-v169.js?v=185",
+  "./assets/classora-chat-memberships-v169.css?v=186",
+  "./assets/classora-memberships-nav-v169.js?v=186",
   "./subscriptions.html",
   "./assets/classora-membership-luxe-v182.js?v=182",
   "./assets/classora-membership-luxe-v182.css?v=182",

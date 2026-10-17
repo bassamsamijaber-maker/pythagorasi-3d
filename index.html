@@ -81,9 +81,9 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/learning-tools-v130.css?v=130">
 <link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=138">
 <link rel="stylesheet" href="./assets/classora-dock-stable-v140.css?v=140">
-<link rel="stylesheet" href="./assets/classora-chat-memberships-v169.css?v=185">
-<script defer src="./assets/classora-memberships-nav-v169.js?v=185"></script>
-<style id="classora-hide-old-upgrade">#lobbyMembershipBtn{display:none!important}</style>
+<link rel="stylesheet" href="./assets/classora-chat-memberships-v169.css?v=186">
+<script defer src="./assets/classora-memberships-nav-v169.js?v=186"></script>
+<style id="classora-hide-old-upgrade">#lobbyMembershipBtn,#classoraSettingsMembershipLink{display:none!important}</style>
 <link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
 <script src="./assets/classora-locales-v140.js?v=166"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
@@ -1538,7 +1538,7 @@ body.classora-intro-active{overflow:auto!important}
         <button type="button" data-classora-quick="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span data-quick-ar="ملفي الشخصي" data-quick-en="My profile">ملفي الشخصي</span></button>
         <button type="button" data-classora-quick="logout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4v18h5M13 7l5 5-5 5M8 12h10"/></svg><span data-quick-ar="تسجيل الخروج" data-quick-en="Sign out">تسجيل الخروج</span></button>
       </div>
-      <a id="classoraSettingsMembershipLink" href="./subscriptions.html" data-no-translate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M18 7l-6 5 6 5"/><path d="m16 2 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3L11.5 6.5l3-1.5L16 2Z"/></svg><span id="cl-membership-settings-label" data-no-translate>الاشتراكات والمميزات</span></a>
+      
     </section>
 
     <div class="settings-grid">
@@ -11281,6 +11281,82 @@ function adminConnectionCountry(code){
   return escapeHtml((label||code)+" ("+code+")");
  }catch{return escapeHtml(code)}
 }
+
+function adminKnownLastVisit(u){
+  const recorded=[u.lastLoginAt,u.lastSeenAt].map(adminTimestampMs).filter(t=>t>0);
+  return recorded.length?new Date(Math.max(...recorded)) : null;
+}
+let adminHistoricalActivity=new Map();
+let adminHistoricalActivityLoading=false;
+let adminHistoricalActivityRun=0;
+function adminLegacyCandidate(uid,time,detail,source){
+  const when=adminTimestampMs(time);
+  if(!uid||!when||when>Date.now()+86400000)return;
+  const previous=adminHistoricalActivity.get(uid);
+  if(!previous||when>previous.when){
+    adminHistoricalActivity.set(uid,{when,detail:String(detail||"").slice(0,180),source});
+  }
+}
+async function adminLoadHistoricalActivity(){
+  const run=++adminHistoricalActivityRun;
+  adminHistoricalActivityLoading=true;
+  adminHistoricalActivity=new Map();
+  // First recover dates and activity names already stored on user profiles.
+  for(const u of adminUsersCache){
+    const exams=Array.isArray(u.examHistory)?u.examHistory.slice(0,80):[];
+    for(const ex of exams){
+      if(!ex||typeof ex!=="object")continue;
+      const name=String(ex.title||"").slice(0,90);
+      const desc=name?
+        adminLang("أكمل امتحان: ","Completed exam: ")+name:
+        adminLang("أكمل امتحانًا","Completed an exam");
+      adminLegacyCandidate(u.uid,ex.submittedAt,desc,"exam");
+    }
+  }
+  adminRenderPeople();
+  // Older class activity documents are already persisted from before this update.
+  // Limit reads per class; a busy class may have older entries beyond this window.
+  const classes=adminClassesCache.slice();
+  for(let start=0;start<classes.length;start+=5){
+    if(run!==adminHistoricalActivityRun)return;
+    const batch=classes.slice(start,start+5);
+    const results=await Promise.allSettled(batch.map(c=>
+      getDocs(query(collection(db,"classes",c.id,"activity"),orderBy("createdAt","desc"),limit(250)))
+    ));
+    if(run!==adminHistoricalActivityRun)return;
+    results.forEach((result,idx)=>{
+      if(result.status!=="fulfilled")return;
+      const group=String(batch[idx].name||"").slice(0,65);
+      for(const record of result.value.docs){
+        const act=record.data(),uid=String(act.studentUid||"");
+        if(!uid)continue;
+        const title=String(act.detail||act.type||"").slice(0,150);
+        const description=title||adminLang("نشاط في الصف","Class activity");
+        adminLegacyCandidate(uid,act.createdAt,
+          group?description+" — "+group:description,"class");
+      }
+    });
+    if(document.getElementById("adminPanelModal")?.classList.contains("open"))
+      adminRenderPeople();
+  }
+  if(run!==adminHistoricalActivityRun)return;
+  adminHistoricalActivityLoading=false;
+  adminRenderPeople();
+}
+function adminBestRecordedAction(u,activity){
+  const recent=adminTimestampMs(activity?.lastActionAt);
+  const legacy=adminHistoricalActivity.get(u.uid);
+  const visit=activity?.lastAction==="visit";
+  if(legacy && (!recent||recent<legacy.when||visit)){
+    // An uninformative visit event should not erase earlier meaningful actions.
+    return {description:legacy.detail,date:new Date(legacy.when),source:legacy.source};
+  }
+  if(recent && activity?.lastAction){
+    return {description:adminLastActivityLabel(activity.lastAction),date:new Date(recent),source:"tracker"};
+  }
+  return legacy?{description:legacy.detail,date:new Date(legacy.when),source:legacy.source}:null;
+}
+
 function adminAvatarHTML(u){
   const name=adminUserDisplay(u),photo=u?.photoData||u?.photoURL||"";
   return `<div class="admin-person-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>${photo?"":escapeHtml((name[0]||"?").toUpperCase())}</div>`;
@@ -11328,6 +11404,7 @@ async function adminLoadAllData(){
     adminAssignmentHistoryLoaded=false;
     adminQuickAddSelectedStudent=null;
     adminRenderDashboard();adminRenderPeople();adminRenderClasses();adminPopulateTargets();
+    void adminLoadHistoricalActivity().catch(error=>{console.warn("Older Classora activity could not be loaded",error);adminHistoricalActivityLoading=false;adminRenderPeople();});
     adminV34UpdateSystemBadge();
     if(adminActiveTab==="polls")adminLoadPolls();
     if(adminActiveTab==="content")adminLoadContentManager();
@@ -12358,8 +12435,15 @@ function adminRenderPeople(){
     const provider=teacher?adminLang("تسجيل خارجي","External sign-in"):adminLang("كلمة سر","Password sign-in"),loginName=u.loginName||u.originalLoginName||u.displayName||"—";
     const passwordText=teacher?adminLang("مُدار عبر تسجيل خارجي — غير قابل للعرض","Managed by external sign-in — not viewable"):adminLang("محمي — غير قابل للعرض","Protected — not viewable");
     const activity=adminActivityCache.get(u.uid)||{};
-    const lastActionAt=activity.lastActionAt?adminHistoryTimestamp(activity.lastActionAt):"—";
-    const lastVisitAt=u.lastLoginAt?adminHistoryTimestamp(u.lastLoginAt):"—";
+    const bestAction=adminBestRecordedAction(u,activity);
+    const actionDescription=bestAction?.description||adminLang(adminHistoricalActivityLoading?"جاري البحث في السجلات القديمة…":"لم يُحفظ نشاط سابق","No previous activity recorded");
+    const lastActionAt=bestAction?.date?adminHistoryTimestamp(bestAction.date):"—";
+    const lastVisit=adminKnownLastVisit(u);
+    const lastVisitAt=lastVisit?adminHistoryTimestamp(lastVisit):adminLang("لا يوجد تاريخ دخول محفوظ","No saved login time");
+    const actionOrigin=bestAction?.source==="tracker"?
+      adminLang("سجل النشاط الجديد","New activity record"):
+      bestAction?adminLang("من سجلات قديمة محفوظة","Recovered from older records"):"";
+    const countryCode=activity.countryCode||u.lastCountryCode||"";
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
     card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
       <div class="admin-detail-grid">
@@ -12372,9 +12456,9 @@ function adminRenderPeople(){
         <div class="admin-detail-item"><small>${adminLang("كلمة الأمان","SECURITY PHRASE")}</small><span>${u.securityPhraseHash?"✅ "+adminLang("مفعّلة ومشفّرة","Configured + hashed"):"—"}</span></div>
         <div class="admin-detail-item"><small>${adminLang("الصفوف","CLASSES")}</small><span>${memberships.length}</span></div>
         <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
-        <div class="admin-detail-item"><small>${adminLang("آخر نشاط مسجّل","LAST RECORDED ACTION")}</small><span>${escapeHtml(adminLastActivityLabel(activity.lastAction))}<small style="display:block;opacity:.7">${escapeHtml(lastActionAt)}</small></span></div>
+        <div class="admin-detail-item"><small>${adminLang("آخر نشاط مسجّل","LAST RECORDED ACTION")}</small><span>${escapeHtml(actionDescription)}<small style="display:block;opacity:.7">${escapeHtml(lastActionAt)}${actionOrigin?" • "+escapeHtml(actionOrigin):""}</small></span></div>
         <div class="admin-detail-item"><small>${adminLang("آخر دخول / فتح الموقع","LAST SITE VISIT")}</small><span>${escapeHtml(lastVisitAt)}</span></div>
-        <div class="admin-detail-item"><small>${adminLang("الدولة التقريبية حسب الاتصال","APPROXIMATE CONNECTION COUNTRY")}</small><span>${adminConnectionCountry(activity.countryCode)}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("الدولة التقريبية حسب الاتصال","APPROXIMATE CONNECTION COUNTRY")}</small><span>${adminConnectionCountry(countryCode)}</span></div>
       </div>
       <div class="admin-account-classes">${memberships.length?`${adminLang("الصفوف","Classes")}: ${memberships.map(c=>escapeHtml(c.name||"Class")).join(" • ")}`:adminLang("مش مربوط بأي صف.","Not linked to a class.")}</div>
       <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><button class="admin-reset-name-clock admin-action-primary">${adminLang("فتح تغيير الاسم","Reset name timer")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
