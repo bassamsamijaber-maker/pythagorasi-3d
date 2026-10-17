@@ -362,3 +362,41 @@ html[data-classora-theme="embroidery"] :is(.topbar,.control-panel,.hero-stats>di
 html[data-classora-theme="morning"] .ambient{opacity:.13!important}
 html[data-classora-theme="embroidery"] .ambient{opacity:.10!important}
 html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.element-card,.el-thumb,.hero-atom){filter:none!important}
+
+
+/* Unified styling for legal/help pages opened from Settings, and membership UI. */
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]){color-scheme:light}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(body,.classora-membership-page){
+ background:var(--clt-base)!important;color:var(--clt-ink)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap>.card,.wrap .card,.cl-plan,.cl-plan-top,.cl-hero,.cl-checkout-preview,
+ .cl-summary,.cl-account,.cl-method,.cl-faq,.cl-admin,.cl-highlights,
+ .cl-luxe-trust,.cl-luxe-compare,.cl-luxe-trial,.cl-live-catalog
+){
+ background:var(--clt-panel)!important;color:var(--clt-ink)!important;
+ border-color:var(--clt-stroke)!important;box-shadow:var(--clt-shadow)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap p,.wrap li,.wrap .updated,.cl-hero p,.cl-plan p,.cl-faq p,.cl-hero-copy p,.cl-summary p
+){color:var(--clt-muted)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap h1,.wrap h2,.wrap h3,.cl-hero h1,.cl-plan h3,.cl-header,.cl-pricing h2,.cl-section-title
+){color:var(--clt-ink)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap button,.wrap .back,.wrap .buttons a,
+ .cl-tabs button,.cl-plan-select,.cl-back,.cl-method,.cl-admin button
+):not(.active):not(.primary):not([aria-pressed=true]){
+ background:var(--clt-panel-alt)!important;color:var(--clt-ink)!important;border-color:var(--clt-stroke)!important
+}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap .buttons a.primary,.wrap .lang button.active,.wrap .lang button[aria-pressed=true],
+ .cl-tabs button.active,.cl-continue,.cl-plan-select.selected
+){background:var(--clt-primary)!important;color:var(--clt-primaryText)!important;border-color:var(--clt-primary)!important}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .cl-pricing,.cl-hero-copy,.cl-plan,.cl-tabs,.cl-methods,.cl-account
+){--c-bg:var(--clt-base);--c-panel:var(--clt-panel);--c-text:var(--clt-ink);--c-soft:var(--clt-muted);--c-border:var(--clt-stroke);--c-mint:var(--clt-primary)}
+html:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ .wrap a,.cl-pricing a,.cl-brand,.cl-back
+){color:var(--clt-primary)!important}
+html[data-classora-theme="embroidery"] :is(.wrap .card,.cl-hero,.cl-pricing){background-image:var(--cl-embroidered-pattern)!important;background-size:110px 110px!important}
