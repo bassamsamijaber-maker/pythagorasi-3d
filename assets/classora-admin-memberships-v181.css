@@ -1,0 +1,24 @@
+#adminViewGrants{padding:16px;max-width:100%;overflow:auto}
+#adminViewGrants[hidden],#adminViewGrants.hidden{display:none!important}
+.cl-admin-grants-head{padding:20px;background:linear-gradient(125deg,#164836,#132e36);border:1px solid #78c99e60;border-radius:18px}
+.cl-admin-grants-head h3{margin:8px 0;color:#e6fff0;font-size:clamp(19px,2.5vw,25px)}
+.cl-admin-grants-head p{margin:0;line-height:1.85;font-size:13px;color:#c3e7d8}
+.cl-admin-grants-kicker{font-size:10px;letter-spacing:1.1px;color:#a1e9c7}
+.cl-admin-grants-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.cl-admin-grants-form label{display:grid;gap:7px;align-content:start;font-size:13px;font-weight:700;color:#c9ead9;min-width:0}
+.cl-admin-grants-form input,.cl-admin-grants-form select{width:100%;max-width:100%;min-width:0;border:1px solid #5a947763;border-radius:12px;color:#fff;padding:11px;background:#172e32;min-height:46px}
+.cl-admin-grants-form option{color:#101a1d;background:#fff}
+.cl-admin-grants-form button{min-height:46px;border:0;border-radius:12px;background:linear-gradient(120deg,#b9ffde,#7bd5af);color:#123827;font-weight:900;align-self:end;cursor:pointer}
+.cl-admin-grants-form button:disabled{opacity:.55;cursor:not-allowed}
+.cl-admin-grant-resolved{font-size:12px;color:#94e9bb;align-self:center;overflow-wrap:anywhere}
+.cl-admin-grant-warning{background:#493b284e;border:1px solid #dfc16c5e;border-radius:12px;padding:12px;font-size:12px;line-height:1.9;color:#f6e0aa}
+.cl-admin-grants-listhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 11px;gap:9px;color:#d5f5e8}
+.cl-admin-grants-listhead button,.cl-grant-revoke{cursor:pointer;background:#1b3e37;color:#ebffef;border:1px solid #639e7e75;border-radius:10px;padding:9px 11px}
+.cl-grant-revoke{border-color:#c57977;color:#ffdbd8}
+.cl-admin-grants-list{display:grid;gap:9px;max-height:360px;overflow:auto}
+.cl-grant-record{background:#203933;border:1px solid #658a7a62;border-radius:13px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:13px;overflow-wrap:anywhere}
+.cl-grant-record>div{display:grid;gap:6px}
+.cl-grant-record small{display:block;font-size:11px;color:#c8dcd1}
+.cl-admin-grants-status{font-size:12px;color:#ffcb9a;min-height:16px;margin:9px 0}
+.cl-admin-grants-status[data-ok="1"]{color:#97ecc3}
+@media(max-width:720px){#adminViewGrants{padding:7px}.cl-admin-grants-head{padding:14px}.cl-admin-grants-form{grid-template-columns:1fr;gap:9px}.cl-grant-record{flex-wrap:wrap;padding:10px;align-items:flex-start}.cl-admin-grants-form input,.cl-admin-grants-form select{min-height:42px}}
