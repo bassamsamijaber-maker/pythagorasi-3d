@@ -1,0 +1,55 @@
+/* Classora Appearance v196 - opt-in styles. No layout redesign. */
+#classoraAppearanceSettings{position:relative;z-index:1;display:block;margin:16px 20px 4px;padding:17px;border:1px solid rgba(125,221,188,.24);border-radius:20px;background:linear-gradient(140deg,#142f3c,#112735);color:#eafcf4;box-shadow:0 10px 32px #001d291c;font:inherit}
+#classoraAppearanceSettings .cl-appearance-head{display:flex;align-items:center;gap:9px;margin-bottom:5px;color:inherit}
+#classoraAppearanceSettings .cl-appearance-head svg{width:20px;height:20px;flex:none}
+#classoraAppearanceSettings h3{margin:0;font-size:17px;line-height:1.4;font-weight:900;color:inherit}
+#classoraAppearanceSettings .cl-appearance-desc{margin:0 0 12px;color:#bdd4ce;font-size:12px;line-height:1.5}
+#classoraAppearanceSettings .cl-appearance-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#classoraAppearanceSettings .cl-appearance-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:107px;padding:10px 7px;border:1px solid #78938778;border-radius:14px;background:#1a3741;color:#eef9f4;font:800 12px/1.4 inherit;cursor:pointer;transition:border-color .16s,transform .16s,box-shadow .16s}
+#classoraAppearanceSettings .cl-appearance-choice svg{width:44px;height:40px;flex:none}
+#classoraAppearanceSettings .cl-appearance-choice span{text-align:center;overflow-wrap:anywhere}
+#classoraAppearanceSettings .cl-appearance-choice[aria-pressed=true]{border-color:#e8ba69;box-shadow:0 0 0 2px #e8ba69aa;background:#23483e}
+#classoraAppearanceSettings .cl-appearance-choice:hover{transform:translateY(-2px)}
+#classoraAppearanceSettings .cl-appearance-choice:focus-visible{outline:3px solid #f6cd81;outline-offset:3px}
+#classoraAppearanceSettings .cl-appearance-choice:disabled{opacity:.48;cursor:not-allowed}
+#classoraAppearanceSettings .cl-appearance-note{margin:11px 0 0!important;font-size:11px!important;line-height:1.6!important;color:#b8d1ca!important}
+.cl-drawn-symbol{display:inline-flex;align-items:center;justify-content:center;inline-size:1.18em;block-size:1.18em;vertical-align:-.18em;flex-shrink:0;line-height:1;white-space:nowrap}
+.cl-drawn-symbol svg{width:100%;height:100%;display:block}
+/* Morning: existing layout/spacing, original green and blue accents, white instead of dark surfaces. */
+body[data-classora-theme="morning"]{background:#fff!important;color-scheme:light;--bg:#fff!important;--surface:#fff!important;--txt:#172e39!important;--muted:#647b86!important}
+body[data-classora-theme="morning"] :is(#platformLobby,.learning-hub,.learning-hub-page,.lobby-main,#authGate){background-color:#fff!important;color:#1b343b!important}
+body[data-classora-theme="morning"] #platformLobby{background-image:radial-gradient(circle at 85% 0%,#c6fff036,transparent 36%),linear-gradient(#fff,#fff)!important}
+body[data-classora-theme="morning"] #platformLobby :is(.lobby-topbar,.pythag-action-card,.lobby-action,.subject-card,.lobby-ai-card,.pythag-lobby-hero,.classora-mix-hero,.lobby-section,.learning-card){background:#fff!important;border-color:#d9e8e3!important;box-shadow:0 9px 24px #153b3612!important;color:#203a41!important}
+body[data-classora-theme="morning"] #platformLobby :is(.lobby-topbar,.lobby-topbar *, .pythag-action-card,.pythag-action-card *, .lobby-action,.lobby-action *, .subject-card,.subject-card *, .classora-mix-hero,.classora-mix-hero *, .pythag-lobby-hero,.pythag-lobby-hero *){--mix-white:#203a41;color:#203a41}
+body[data-classora-theme="morning"] #platformLobby :is(.lobby-top-actions .lobby-icon-btn,.lobby-profile-btn,.mix-btn-secondary,.lobby-logout-btn){background:#f5faf8!important;color:#1b3a3b!important;border-color:#d5e6dd!important}
+body[data-classora-theme="morning"] #platformLobby .pythag-enter-lab,body[data-classora-theme="morning"] #platformLobby .mix-btn-primary{background:linear-gradient(115deg,#39dca0,#35bddd)!important;color:#082e24!important}
+body[data-classora-theme="morning"] :is(.modalbox,.side,.card,.settings-card){background-color:#fff!important;color:#1b3440!important}
+body[data-classora-theme="morning"] #settingsModal .settings-modalbox,body[data-classora-theme="morning"] #settingsModal .settings-card,body[data-classora-theme="morning"] #settingsModal .settings-profile-row{background:#fff!important;border-color:#dfece7!important;color:#1b3440!important}
+body[data-classora-theme="morning"] #settingsModal :is(.settings-card h3,#settingsCurrentName,.settings-note,.settings-profile-info span){color:#23444b!important}
+body[data-classora-theme="morning"] #settingsModal .modalhead{background:#f5faf8!important;color:#1b3440!important}
+body[data-classora-theme="morning"] #classoraAppearanceSettings{background:#f5fbf8!important;color:#173b34!important;border-color:#c9e4d7!important}
+body[data-classora-theme="morning"] #classoraAppearanceSettings .cl-appearance-desc,body[data-classora-theme="morning"] #classoraAppearanceSettings .cl-appearance-note{color:#476a61!important}
+body[data-classora-theme="morning"] #classoraAppearanceSettings .cl-appearance-choice{background:white;color:#28413a;border-color:#cdded4}
+body[data-classora-theme="morning"] #classoraAppearanceSettings .cl-appearance-choice[aria-pressed=true]{background:#e6f8f0;box-shadow:0 0 0 2px #2a9b72;border-color:#2a9b72}
+/* Palestinian embroidery: ivory textile, geometric cross-stitch, wine-red, charcoal, olive, brass. */
+body[data-classora-theme="embroidery"]{--primary:#923647!important;--accent:#c79a54!important;--bg:#fff7ef!important;--surface:#fffaf4!important;background:#fff7ef!important;color-scheme:light}
+body[data-classora-theme="embroidery"] #platformLobby{color:#42282d!important;background-color:#fff7ef!important;background-image:var(--cl-embroidered-pattern),linear-gradient(145deg,#fff9ef,#f9ede5)!important;background-size:110px 110px,cover!important;background-repeat:repeat, no-repeat!important}
+body[data-classora-theme="embroidery"] :is(.learning-hub,.lobby-section,.learning-hub-page){background-color:#fff9f2!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-topbar,.pythag-lobby-hero,.classora-mix-hero){background:linear-gradient(130deg,#722b3c 0%,#2a252b 100%)!important;border-color:#cd9c68!important;color:#fff1df!important;box-shadow:0 12px 31px #58273423!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-topbar,.lobby-topbar *,.pythag-lobby-hero,.pythag-lobby-hero *,.classora-mix-hero,.classora-mix-hero *){--mix-white:#fff1df;color:#fff1df}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-section .pythag-action-card,.lobby-action,.subject-card){background:#fff9f1!important;color:#552a36!important;border-color:#e7cbb0!important;box-shadow:0 9px 22px #5e303317!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-section .pythag-action-card,.lobby-section .pythag-action-card *,.lobby-action,.lobby-action *,.subject-card,.subject-card *){--mix-white:#552a36;color:#552a36}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-section .pythag-action-card,.lobby-action,.subject-card)::before{background:repeating-linear-gradient(90deg,#9e3543 0 7px,#fff9f1 7px 12px,#c59b61 12px 16px,#fff9f1 16px 22px)!important;height:4px!important;opacity:1}
+body[data-classora-theme="embroidery"] #platformLobby :is(.lobby-top-actions .lobby-icon-btn,.lobby-profile-btn,.mix-btn-secondary,.lobby-logout-btn){background:#fff1df14!important;color:#fff1df!important;border-color:#e6bca677!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.mix-btn-primary,.pythag-enter-lab),body[data-classora-theme="embroidery"] .btn-primary{background:linear-gradient(120deg,#c75c60,#963947)!important;color:#fffaf4!important;border-color:#eab99b!important}
+body[data-classora-theme="embroidery"] #settingsModal .settings-modalbox,body[data-classora-theme="embroidery"] #settingsModal .settings-card,body[data-classora-theme="embroidery"] #settingsModal .settings-profile-row{background:#fffaf4!important;color:#512b36!important;border-color:#ead5c0!important}
+body[data-classora-theme="embroidery"] #settingsModal :is(.settings-card h3,#settingsCurrentName,.settings-note,.settings-profile-info span){color:#6d3341!important}
+body[data-classora-theme="embroidery"] #settingsModal .modalhead{background:#722e3c!important;color:#fff2e2!important}
+body[data-classora-theme="embroidery"] #classoraAppearanceSettings{background:linear-gradient(135deg,#fff8ef,#f7e9de)!important;border-color:#c88e83!important;color:#5b2e38!important}
+body[data-classora-theme="embroidery"] #classoraAppearanceSettings :is(.cl-appearance-desc,.cl-appearance-note){color:#704b4d!important}
+body[data-classora-theme="embroidery"] #classoraAppearanceSettings .cl-appearance-choice{background:#fffdf8;color:#673844;border-color:#e2c4ae}
+body[data-classora-theme="embroidery"] #classoraAppearanceSettings .cl-appearance-choice[aria-pressed=true]{background:#f8e5dc;border-color:#a33748;box-shadow:0 0 0 2px #a33748}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-section-head h3::before{background:linear-gradient(#ad3c4c,#b68a48)!important}
+body[data-classora-theme="embroidery"] #classoraMobilePageNav{border-top:3px solid #a33748!important}
+@media(max-width:600px){#classoraAppearanceSettings{margin:12px 11px 3px;padding:12px}#classoraAppearanceSettings .cl-appearance-options{gap:6px}#classoraAppearanceSettings .cl-appearance-choice{min-height:104px;padding:8px 4px;font-size:11px}#classoraAppearanceSettings .cl-appearance-choice svg{height:34px;width:38px}}
+@media(prefers-reduced-motion:reduce){#classoraAppearanceSettings .cl-appearance-choice{transition:none}}
