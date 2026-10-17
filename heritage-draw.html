@@ -19,6 +19,32 @@ body[data-theme="embroidery"] :is(.panel,.settings,.art,.example){background:#ff
 body[data-theme="embroidery"] :is(.example.selected,.btn.primary,.tabs .active){background:#963649!important;color:#fff!important;border-color:#963649!important}
 body[data-theme="embroidery"] .canvas-wrap{border-color:#b65c66;background:#fff}
 body[data-theme="embroidery"] .panel:before{content:"";display:block;width:100%;height:5px;margin:-8px 0 13px;background:repeating-linear-gradient(90deg,#ae4050 0 9px,#fff6ef 9px 13px,#d5a770 13px 18px,#fff6ef 18px 23px)}
+
+/* Classora heritage palette v200 — align this standalone art challenge with the main UI. */
+body[data-theme="embroidery"]{--green:#872d43;--gold:#c49b6b;--ink:#382b31;--paper:#fbf6ee;background:#fbf6ee}
+body[data-theme="embroidery"] :is(.hero,.panel,.settings,.art,.example,.btn,.tabs button,.notice,.stat,.lang){
+ border-color:#ddc7b9!important
+}
+body[data-theme="embroidery"] .hero{
+ background:linear-gradient(125deg,#782c43,#30292e)!important;
+ color:#fff9f0!important
+}
+body[data-theme="embroidery"] .hero :is(h1,p){color:#fff9f0!important}
+body[data-theme="embroidery"] :is(.panel,.settings,.art,.example,.tabs button:not(.active),.btn:not(.primary),.notice){
+ background:#fffbf5!important;color:#382b31!important
+}
+body[data-theme="embroidery"] :is(.panel h2,.panel h3,.example small,.art h3,.stat,.settings label,.tools label){
+ color:#382b31!important
+}
+body[data-theme="embroidery"] :is(.meta,.art .meta){color:#67565c!important;opacity:1!important}
+body[data-theme="embroidery"] :is(.example.selected,.tabs button.active,.btn.primary){
+ background:#872d43!important;color:#fff9f0!important;border-color:#872d43!important
+}
+body[data-theme="embroidery"] .canvas-wrap{border-color:#cc9c9c!important;background:#fff!important}
+body[data-theme="embroidery"] :is(input,select){background:#fffefa!important;color:#382b31!important;border-color:#cfb5a7!important}
+body[data-theme="embroidery"] .swatch.selected{outline-color:#872d43}
+body[data-theme="embroidery"] .stat{background:#f5ece2!important}
+
 </style><script src="./assets/classora-western-digits-v199.js?v=199" defer></script></head><body><main class="shell"><header><div class="brand"><svg viewBox="0 0 72 72" role="img" aria-label="Palestinian embroidered shirt"><path d="M25 8 12 14 3 35l15 8 8-12v33h40V31l8 12 15-8-9-21L67 8 59 15H33z" transform="translate(-10 0)" fill="#fff8ed" stroke="#154d3c" stroke-width="3"/><path d="M28 14 36 25 44 14M36 25v33M22 41h28M22 51h28" stroke="#b13f3d" stroke-width="3" fill="none"/><g fill="#b13f3d"><path d="m36 29 5 5-5 5-5-5z"/><path d="m26 42 4 4-4 4-4-4zM46 42l4 4-4 4-4-4z"/></g></svg><span>Classora</span></div><select id="lang" class="lang" aria-label="Language"><option value="ar">العربية</option><option value="en">English</option><option value="es">Español</option><option value="ko">한국어</option><option value="de">Deutsch</option><option value="it">Italiano</option><option value="hi">हिन्दी</option><option value="tr">Türkçe</option></select></header>
 <section class="hero"><div class="kicker" data-i="week">17–24 October • Heritage Week</div><h1 data-i="title">تحدي الرسم والتطريز الفلسطيني</h1><p data-i="intro">ارسم خلال دقيقتين، احفظ لوحتك على جهازك، وشارك بتصويت محلي لأجمل رسمة!</p></section>
 <div class="settings panel"><label id="themeLabel" for="themeMode">مظهر الموقع</label><select id="themeMode"><option value="original">الأصلي</option><option value="morning">الصباحي</option><option value="embroidery">التطريز الفلسطيني (أسبوع)</option></select><span id="themeExpiry" class="meta"></span></div><nav class="tabs" aria-label="Sections"><button type="button" class="active" data-tab="draw" data-i="drawTab">الرسم</button><button type="button" data-tab="gallery" data-i="galleryTab">معرض الرسومات</button><button type="button" data-tab="ranks" data-i="ranksTab">النتائج</button></nav>
