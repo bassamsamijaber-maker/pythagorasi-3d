@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v188-persist-native-lesson-dialogs";
+const CACHE_NAME="classora-v189-periodic-restore-parent";
 const APP_SHELL=[
   "./index.html",
   "./chemistry/periodic-table.html?v=167",

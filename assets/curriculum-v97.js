@@ -525,8 +525,26 @@ export function mountCurriculum(api){
  modal.innerHTML='<div class="classora-curriculum-shell" role="dialog" aria-modal="true"><div class="classora-curriculum-top"><button class="classora-curriculum-back" type="button"></button><div class="classora-curriculum-brand">'+svg("school")+'<div><b>Classora</b><small id="cv97TopSub"></small></div></div><button class="classora-curriculum-close" type="button" aria-label="Close">×</button></div><div class="classora-curriculum-body" id="cv97Body"></div></div>';
  document.body.appendChild(modal);
  const body=modal.querySelector("#cv97Body"),back=modal.querySelector(".classora-curriculum-back"),close=modal.querySelector(".classora-curriculum-close"),topSub=modal.querySelector("#cv97TopSub");
- function open(){state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
+ // Keep the exact subject lesson DOM alive while its 3D/periodic child is open.
+ let suspendedForPeriodic=false;
+ function suspendForPeriodic(){
+  if(!modal.classList.contains("open"))return false;
+  suspendedForPeriodic=true;
+  modal.style.setProperty("display","none","important");
+  modal.setAttribute("aria-hidden","true");
+  return true;
+ }
+ function restoreFromPeriodic(){
+  if(!suspendedForPeriodic)return false;
+  suspendedForPeriodic=false;
+  modal.style.removeProperty("display");
+  modal.removeAttribute("aria-hidden");
+  modal.classList.add("open");
+  return true;
+ }
+ function open(){suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
  function openAt(grade,subject,topicRef=""){
+  suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");
   const g=Number(grade);state.grade=G[g]?g:7;rememberGrade(state.grade);state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
   if(state.subject&&topicRef){
    const candidates=["math","geometry"].includes(state.subject)?[...topicsFor(state.grade,"math"),...topicsFor(state.grade,"geometry")]:topicsFor(state.grade,state.subject);
@@ -536,7 +554,7 @@ export function mountCurriculum(api){
   }else state.view=state.subject?"topics":"subjects";
   if(state.subject==="science")try{sessionStorage.setItem("classora_subject_origin","science")}catch{};modal.classList.add("open");render();
  }
- function shut(){disposeGlobe?.();disposeGlobe=null;disposeLesson?.();disposeLesson=null;modal.classList.remove("open");document.dispatchEvent(new window.Event("classora:math-context"))}
+ function shut(){suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");disposeGlobe?.();disposeGlobe=null;disposeLesson?.();disposeLesson=null;modal.classList.remove("open");document.dispatchEvent(new window.Event("classora:math-context"))}
  close.onclick=shut;modal.addEventListener("click",function(e){if(e.target===modal)shut()});
  back.onclick=function(){
   if(state.view==="lesson"){state.view="topics";state.topic=null}
@@ -1401,7 +1419,16 @@ export function mountCurriculum(api){
   body.querySelectorAll(".cv-simple-input").forEach(el=>{el.addEventListener("input",applySimpleControls);el.addEventListener("change",applySimpleControls)});
   applySimpleControls();
 
-  if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{shut();api.action?.(flagship.key)};
+  if(flagship&&body.querySelector("#cv97Flagship"))body.querySelector("#cv97Flagship").onclick=()=>{
+   if(flagship.key==="periodic"){
+    // Suspend the existing Science lesson instead of destroying its state.
+    if(suspendForPeriodic()){
+     try{api.action?.("periodic")}catch(error){restoreFromPeriodic();throw error}
+    }
+    return;
+   }
+   shut();api.action?.(flagship.key);
+  };
   body.querySelector("#cv97StartExam").onclick=async function(){
    const diff=body.querySelector("#cv97ExamDifficulty").value,count=Number(body.querySelector("#cv97ExamCount").value),qs=makeQuestions(api,t,count,diff,false);
    if(!qs.length){api.toast?.(T("هذا الموضوع يحتاج أسئلة مراجَعة قبل بدء الامتحان.","This topic needs reviewed questions before the exam can start."));return}
@@ -1439,5 +1466,5 @@ export function mountCurriculum(api){
   if(t)completeTopic(api,t,pct)
  }
  if(!document.querySelector(".learning-hub"))buildEntry(api,open);
- return {open:open,openAt:openAt,close:shut,recordExam:recordExam,refresh:function(){if(modal.classList.contains("open"))render()},curriculum:G,subjects:S};
+ return {open:open,openAt:openAt,close:shut,restoreFromPeriodic:restoreFromPeriodic,isSuspendedForPeriodic:()=>suspendedForPeriodic,recordExam:recordExam,refresh:function(){if(modal.classList.contains("open")&&!suspendedForPeriodic)render()},curriculum:G,subjects:S};
 }

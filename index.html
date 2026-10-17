@@ -2503,7 +2503,7 @@ import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/clas
 import {installClassoraLegal} from './assets/classora-legal-v124.js?v=166';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=161';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=159";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=189";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=166";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -17659,27 +17659,28 @@ function classoraGoLobby(){
   return false;
 }
 function classoraReturnFromPeriodic(){
-  // A stale iframe/hash event must not disrupt another open screen.
-  const page=document.getElementById("periodic-table");
-  if(location.hash!=="#periodic-table"&&page?.style.getPropertyValue("display")==="none")return;
-  page?.style.setProperty("display","none","important");
-  document.body.classList.remove("classora-periodic-active");
-  document.documentElement.classList.remove("classora-periodic-active");
-  // Explicit X/back from the table returns to the Science topic chooser,
-  // rather than uncovering a hidden 3D page or a black iframe backdrop.
-  classoraGoLobby();
-  classoraPreviousHash="#platformLobby";
-  const lobby=document.getElementById("platformLobby");
-  if(lobby){
-    lobby.classList.remove("hidden");
-    lobby.style.removeProperty("display");
-    lobby.style.removeProperty("visibility");
-  }
-  requestAnimationFrame(()=>{
-    if(!window.PythagorasiUser?.uid||document.getElementById("authGate")?.classList.contains("show"))return;
-    page?.style.setProperty("display","none","important");
-    try{void openSubject("science")}catch(error){console.warn("Restore Science after periodic table",error)}
-  });
+ const page=document.getElementById("periodic-table");
+ if(location.hash!=="#periodic-table"&&page?.style.getPropertyValue("display")==="none")return;
+ const suspended=!!window.classoraCurriculum?.isSuspendedForPeriodic?.();
+ // Clear :target and body state before unveiling the original subject screen;
+ // this also prevents the dark/empty periodic-table background.
+ const url=location.pathname+location.search+"#platformLobby";
+ try{history.replaceState(history.state,"",url)}
+ catch(error){console.warn("Clear periodic navigation",error);location.hash="platformLobby"}
+ classoraPreviousHash="#platformLobby";
+ page?.style.setProperty("display","none","important");
+ document.body.classList.remove("classora-periodic-active");
+ document.documentElement.classList.remove("classora-periodic-active");
+ const revealed=showPlatformLobby();
+ if(revealed===false)return;
+ const lobby=document.getElementById("platformLobby");
+ lobby?.classList.remove("hidden");
+ lobby?.style.removeProperty("display");
+ lobby?.style.removeProperty("visibility");
+ // Open exactly the same curriculum lesson, grade and scroll position,
+ // with its original input values. Do NOT create a fresh Science screen.
+ if(!suspended||!window.classoraCurriculum?.restoreFromPeriodic?.())classoraRestoreLobbyPosition();
+ try{sessionStorage.removeItem("classora_subject_origin")}catch{}
 }
 window.classoraReturnFromPeriodic=classoraReturnFromPeriodic;
 function mobileGoLobby(){return classoraGoLobby()}
