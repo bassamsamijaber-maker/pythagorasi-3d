@@ -299,7 +299,7 @@ function exitPeriodicTable(){
  if(window.parent&&window.parent!==window){
   try{
    if(window.parent.location.origin===location.origin&&
-      window.parent.__classoraReturnToLobbyV204?.()===true)return;
+      window.parent.__classoraReturnToLobbyV205?.()===true)return;
   }catch(error){console.warn("Periodic direct Lobby exit unavailable",error)}
   // If the host is running an older cached version, a top-level navigation
   // is safer than leaving an iframe over a hidden black/white Lobby.
