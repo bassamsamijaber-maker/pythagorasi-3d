@@ -96,7 +96,7 @@ export function geographyQuestions(topic,language='ar'){
    const correct=title(a)+' → '+title(b);
    const sequences=[correct,title(b)+' → '+title(a),title(a)+' → '+title(c),title(c)+' → '+title(b)];
    questions.push({
-    prompt:ix?`Match the two descriptions to concepts in the correct order: 1) ${detail(a)} 2) ${detail(b)}`:`طابق الوصفين مع المفهومين بالترتيب: ١) ${detail(a)} ٢) ${detail(b)}`,
+    prompt:ix?`Match the two descriptions to concepts in the correct order: 1) ${detail(a)} 2) ${detail(b)}`:`طابق الوصفين مع المفهومين بالترتيب: 1) ${detail(a)} 2) ${detail(b)}`,
     options:[...new Set(sequences)],answer:correct,explanation:d.rule[ix],difficulty:'hard'
    });
    const expertAnswer=detail(a)+' | '+detail(b);
