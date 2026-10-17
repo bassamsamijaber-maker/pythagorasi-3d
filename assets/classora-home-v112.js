@@ -66,8 +66,8 @@ export function mountClassoraHomeV112(api){
   return true;
  }
  function allRows(){return stored===null?defaultPromos:stored;}
- function localTitle(p){return t(p.titleAr||p.titleEn||'Classora',p.titleEn||p.titleAr||'Classora');}
- function localBody(p){return t(p.bodyAr||p.bodyEn||'',p.bodyEn||p.bodyAr||'');}
+ function localTitle(p){const ar=p.titleAr||p.titleEn||'Classora',en=p.titleEn||p.titleAr||'Classora';return p.kind==='heritage'&&window.classoraHeritage?.translate?window.classoraHeritage.translate(ar,en):t(ar,en);}
+ function localBody(p){const ar=p.bodyAr||p.bodyEn||'',en=p.bodyEn||p.bodyAr||'';return p.kind==='heritage'&&window.classoraHeritage?.translate?window.classoraHeritage.translate(ar,en):t(ar,en);}
  const newNode=(tag,cls,text)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(text!=null)x.textContent=text;return x};
  function goTo(p){
   if(p.kind==="heritage"){window.classoraHeritage?.open();return}
