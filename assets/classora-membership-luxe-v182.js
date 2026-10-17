@@ -53,7 +53,7 @@ const compare=make("clLuxeCompare","section","cl-luxe-compare",'<div class="cl-l
 const tip=make("clLuxeTip","aside","cl-luxe-tip",'<div class="cl-luxe-round">'+svg("spark")+'</div><div><h3 id="clLuxeTipHead"></h3><p id="clLuxeTipBody"></p></div>');
 const trust=make("clLuxeTrust","section","cl-luxe-trust",'<h2 id="clLuxeTrustHead"></h2><div class="cl-luxe-trust-grid" id="clLuxeTrustItems"></div>');
 const trial=make("clLuxeTrial","aside","cl-luxe-trial",'<div class="cl-luxe-round">'+svg("calendar")+'</div><p id="clLuxeTrialBody"></p>');
-if(hero){hero.querySelector(".cl-eyebrow")?.classList.add("cl-luxe-kicker");hero.appendChild(make("clLuxeHeroAccent","div","cl-luxe-accent",svg("crown")+svg("book")+svg("arrow"));}
+if(hero){hero.querySelector(".cl-eyebrow")?.classList.add("cl-luxe-kicker");hero.appendChild(make("clLuxeHeroAccent","div","cl-luxe-accent",svg("crown")+svg("book")+svg("arrow")));}
 if(pricing&&pricing.parentElement){pricing.after(compare,tip,trust);pricing.appendChild(trial);}
 const headline=$("cl-title"),subtitle=$("cl-subtitle");
 const visual=document.querySelector(".cl-hero-art");if(visual)visual.classList.add("cl-luxe-orbit");
