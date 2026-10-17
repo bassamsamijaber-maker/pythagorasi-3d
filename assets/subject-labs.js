@@ -35,7 +35,7 @@ export function mountSubjectLabs(api){
    if(closed)return;closed=true;cleanup();window.removeEventListener('popstate',onPop);
    if(historyEntry&&history.state?.classoraSubject===kind){historyEntry=false;try{history.back()}catch{}}
    page.remove();active=null;
-   requestAnimationFrame(()=>{if(lobby)lobby.scrollTop=scroll;window.scrollTo(0,windowY);if(source?.isConnected)source.focus({preventScroll:true})});
+   requestAnimationFrame(()=>{if(lobby)lobby.scrollTop=scroll;window.scrollTo(0,windowY);if(source?.isConnected)source.focus({preventScroll:true});if(kind==='acids')document.dispatchEvent(new CustomEvent('classora:science-exit',{detail:{subject:kind}}))});
   },{once:true});
   active={close:leave,page};
   const grid=node('div','sl-grid'),visual=node('section','sl-visual'),info=node('section','sl-info');grid.append(visual,info);main.append(grid);
