@@ -1,5 +1,6 @@
 /* A dated cultural event. All illustrations are original SVG drawings. */
 import {saveHeritagePng,showSharedHeritageGallery} from './classora-heritage-gallery-v194.js?v=194';
+import {heritageT} from './classora-heritage-i18n-v194.js?v=194';
 export const START=Date.parse('2026-10-17T00:00:00+03:00');
 export const END=Date.parse('2026-10-25T00:00:00+03:00');
 export const activeAt=(now=Date.now())=>now>=START&&now<END;
@@ -345,7 +346,7 @@ export function heritageArt(kind='thobe'){
  return `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false">${defs}${body}</svg>`;
 }
 export function mountHeritage(api){
- const t=(ar,en)=>document.documentElement.lang==='ar'?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang,en)||en);
+ const t=(ar,en)=>heritageT(document.documentElement.lang,ar,en);
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n};
  const button=(label,fn,cls='hw-btn')=>{const b=el('button',cls,label);b.type='button';b.onclick=fn;return b};
  const art=(kind)=>{const n=el('div','hw-art');n.innerHTML=heritageArt(kind);return n};
@@ -365,8 +366,8 @@ export function mountHeritage(api){
   const actions=el('div','hw-actions');actions.append(button(t('اكتشف الحكاية','Explore the story'),open),button(t('ابدأ التحدّي','Play the challenge'),()=>{open();setup()},'hw-btn hw-secondary'));copy.append(actions);section.append(copy,art());
  }
  function stop(){clearInterval(tick);clearTimeout(transition);tick=null;transition=null}
- function close(){dialog?.dispatchEvent(new Event('heritage:close'));stop();if(freeStrokes){strokes=freeStrokes;freeStrokes=null}dialog?.close();dialog?.remove();dialog=null;round=null;document.body.style.overflow=oldOverflow;opener?.focus()}
- function header(){body.classList.toggle('hw-arena',page==='quiz'||page==='result'||page==='draw-round');body.classList.toggle('hw-selection',page==='setup');body.replaceChildren();body.append(el('span','hw-eyebrow',t('خيط وحكاية • CLASSORA','THREAD & STORY • CLASSORA')))}
+ function close(){body?.dispatchEvent(new Event('heritage:close'));stop();if(freeStrokes){strokes=freeStrokes;freeStrokes=null}dialog?.close();dialog?.remove();dialog=null;round=null;document.body.style.overflow=oldOverflow;opener?.focus()}
+ function header(){body?.dispatchEvent(new Event('heritage:close'));body.classList.toggle('hw-arena',page==='quiz'||page==='result'||page==='draw-round');body.classList.toggle('hw-selection',page==='setup');body.replaceChildren();body.append(el('span','hw-eyebrow',t('خيط وحكاية • CLASSORA','THREAD & STORY • CLASSORA')))}
  function open(){if(dialog){dialog.focus();return}if(!activeAt())return;opener=document.activeElement;oldOverflow=document.body.style.overflow;dialog=el('dialog','hw-dialog');dialog.setAttribute('data-no-translate','');dialog.setAttribute('aria-label',t('أسبوع التراث الفلسطيني','Palestinian Heritage Week'));const top=el('div','hw-top');top.append(el('span','',t('أسبوع التراث الفلسطيني','Palestinian Heritage Week')),button('×',close,'hw-close'));top.lastChild.setAttribute('aria-label',t('إغلاق','Close'));body=el('div','hw-body');dialog.append(top,body);document.body.append(dialog);dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.showModal();document.body.style.overflow='hidden';learn();}
  function learn(){stop();round=null;page='learn';header();const hero=el('div','hw-intro');const words=el('div');words.append(el('h1','',t('تراثٌ نلبسه، وحكايةٌ نكملها.','Heritage we wear. Stories we carry.')),el('p','hw-muted',t('رحلة قصيرة بين الخيط والثوب والكوفية والدبكة. اقرأ، جرّب، ثم اختبر معرفتك.','A short journey through tatreez, thobes, keffiyehs and dabkeh. Read, create, then test your knowledge.')));hero.append(words,art());body.append(hero);
  activityLinks();const cards=el('div','hw-lessons');pairs.forEach((p,i)=>{const d=el('details','hw-lesson');d.open=i===0;const summary=el('summary','',String(i+1).padStart(2,'0')+' / '+t(p[0],p[1]));d.append(summary,el('p','',t(p[2],p[3])));d.ontoggle=()=>{if(d.open)read.add(i)};cards.append(d)});body.append(cards);
