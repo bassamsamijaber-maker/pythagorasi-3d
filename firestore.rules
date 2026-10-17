@@ -1077,5 +1077,48 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // A one-week, opt-in heritage gallery. Each account can publish one image
+    // and cast one changeable vote. No public real names or email addresses.
+    function heritageWeekOpen() {
+      return request.time >= timestamp.date(2026,10,17)
+        && request.time < timestamp.date(2026,10,25);
+    }
+    function validHeritageImage(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.image is string
+        && request.resource.data.image.size() <= 215000
+        && request.resource.data.image.matches('^data:image/png;base64,[A-Za-z0-9+/=]+$')
+        && request.resource.data.prompt in ['flag','olive','stitch','scarf','thobe']
+        && request.resource.data.elapsedSeconds is int
+        && request.resource.data.elapsedSeconds >= 1
+        && request.resource.data.elapsedSeconds <= 120
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageArts2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageImage(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+    function validHeritageVote(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','artUid','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','artUid','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.artUid is string
+        && request.resource.data.artUid != uid
+        && exists(/databases/$(database)/documents/heritageArts2026/$(request.resource.data.artUid))
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageVotes2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageVote(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+
   }
 }
