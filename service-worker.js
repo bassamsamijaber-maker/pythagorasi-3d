@@ -1,7 +1,8 @@
-const CACHE_NAME="classora-v192-heritage-art-festival";
+const CACHE_NAME="classora-v193-heritage-drawing-challenge";
 const APP_SHELL=[
-  "./assets/classora-heritage-v191.js?v=192",
-  "./assets/classora-heritage-v191.css?v=192",
+  "./assets/heritage-needle-background.svg?v=193",
+  "./assets/classora-heritage-v191.js?v=193",
+  "./assets/classora-heritage-v191.css?v=193",
   "./index.html",
   "./chemistry/periodic-table.html?v=167",
   "./chemistry/periodic-table.js?v=167",
