@@ -1,7 +1,7 @@
 /* A dated cultural event. All illustrations are original SVG drawings. */
 import {saveHeritagePng,showSharedHeritageGallery} from './classora-heritage-gallery-v194.js?v=194';
 export const START=Date.parse('2026-10-17T00:00:00+03:00');
-export const END=Date.parse('2026-10-24T00:00:00+03:00');
+export const END=Date.parse('2026-10-25T00:00:00+03:00');
 export const activeAt=(now=Date.now())=>now>=START&&now<END;
 const pairs=[
  ['التطريز: ذاكرة بالخيط','Tatreez: memory in thread','التطريز الفلسطيني فنّ تزيين القماش بالإبرة والخيط. تتناقل الأجيال مهاراته وتفاصيله؛ وهو جزء من الهوية والذاكرة الثقافية. أُدرج فن التطريز في فلسطين على قائمة اليونسكو للتراث الثقافي غير المادي عام 2021.','Palestinian tatreez decorates fabric with needle and thread. Its skills pass between generations and carry cultural memory. UNESCO inscribed the art of embroidery in Palestine in 2021.'],
