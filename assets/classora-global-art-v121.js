@@ -1,6 +1,6 @@
 /* Classora contextual art across real, existing views. No new navigation/buttons. */
 import {classoraTopicArt} from './classora-topic-art-v120.js?v=121';
-import './classora-appearance-v206.js?v=206';
+import './classora-appearance-v207.js?v=207';
 const $=id=>document.getElementById(id);
 let frame=0;
 function refresh(){
