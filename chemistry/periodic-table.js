@@ -298,12 +298,12 @@ function exitPeriodicTable(){
   try{
    // Send a single, explicit return request to the host. Avoid reopening
    // another science modal while the current iframe is being dismissed.
-   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"science"},location.origin);
+   window.parent.postMessage({type:"classora-close-subject",subject:"periodic-table",returnTo:"lobby"},location.origin);
    return;
   }catch(error){console.warn("Periodic table parent navigation unavailable",error)}
  }
  // Direct browser-tab / installed PWA fallback (never navigate to a bare fragment).
- try{sessionStorage.setItem("classora_subject_origin","science")}catch{}
+ try{sessionStorage.setItem("classora_subject_origin","lobby")}catch{}
  location.assign(new URL("../index.html#platformLobby",window.location.href).href);
 }
 
