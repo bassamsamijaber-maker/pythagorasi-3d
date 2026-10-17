@@ -1,0 +1,232 @@
+@import url("./classora-appearance-v201.css?v=202");
+/* Classora Morning V202: original geometry, one coherent white / mint palette.
+   Color only; keep all route, input, feedback, and lesson behavior untouched. */
+body[data-classora-theme="morning"]{
+ --v198-page:#ffffff;--v198-surface:#ffffff;--v198-raised:#f2f8f8;
+ --v198-ink:#193442;--v198-sub:#496575;--v198-line:#d0e2e6;
+ --v198-main:#167d67;--v198-main-deep:#115d50;
+ --v198-selected:#dff5eb;--v198-selected-ink:#115d50;
+ --clt-base:#ffffff;--clt-panel:#ffffff;--clt-panel-alt:#f2f8f8;
+ --clt-ink:#193442;--clt-muted:#496575;--clt-stroke:#d0e2e6;
+ --clt-primary:#167d67;--clt-primaryText:#ffffff;--clt-primaryWash:#dff5eb;
+ --hub-text:#193442;--hub-muted:#496575;--mix-white:#193442;--mix-muted:#496575;
+ --c6-text:#193442;--c6-muted:#496575;
+ background-color:#ffffff!important;color:#193442!important;color-scheme:light;
+}
+body[data-classora-theme="morning"] #platformLobby{
+ background-color:#ffffff!important;background-image:radial-gradient(circle at 80% 2%,#c9f4e438,transparent 40%),linear-gradient(#fff,#fff)!important;
+ color:#193442!important;
+}
+/* Keep brand header consistent with Classora, not a transplanted dark theme. */
+body[data-classora-theme="morning"] #platformLobby .lobby-topbar{
+ background:#ffffff!important;background-image:none!important;
+ border:1px solid #d0e2e6!important;box-shadow:0 8px 32px #153a4810!important;
+ color:#193442!important;
+}
+body[data-classora-theme="morning"] #platformLobby .lobby-topbar :is(
+ .lobby-brand,.lobby-sub,.lobby-user-name,.lobby-welcome,.lobby-topbar-title,.lobby-topbar-subtitle,
+ h1,h2,h3,strong,b,p,small,span
+):not(.badge):not(.badge *){
+ color:#193442!important;text-shadow:none!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #platformLobby .lobby-topbar :is(
+ .lobby-icon-btn,.lobby-profile-btn,.lobby-logout-btn
+){background:#f2f8f8!important;color:#193442!important;border-color:#d0e2e6!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .classora-welcome,.student-dash-hero,.student-dash-stat,.student-dash-action,
+ .tw-hero,.tw-metric,.tw-action,.tw-class-item,
+ .classora-promo-center,.cp-slide,.classora-student-tasks,.ct-task,
+ .hub-hero,.hub-topic-card,.hub-card,.hub-curriculum-subject,.hub-curriculum-shelf,
+ .lobby-section,.pythag-action-card,.lobby-action,.subject-card,.lobby-card
+){background:#ffffff!important;background-image:none!important;
+ border-color:#d0e2e6!important;color:#193442!important;box-shadow:0 8px 26px #153a4810!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .classora-welcome h2,.student-dash-hero h1,.student-dash-hero h2,
+ .student-dash-stat-number,.student-dash-action h3,.tw-heading,.tw-metric-value,
+ .tw-action h3,.cp-title,.cp-titlebar h2,.classora-student-tasks h2,
+ .ct-task-copy b,.hub-hero h1,.hub-topic-card h3,.hub-curriculum-copy b,
+ .lobby-section-head h3,.pythag-action-card h3
+){color:#193442!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .classora-welcome p,.student-dash-description,.student-dash-hero p,
+ .student-dash-stat-label,.student-dash-action small,.tw-intro,.tw-metric-label,
+ .cp-description,.cp-titlebar p,.cp-slide p,.ct-task-copy small,
+ .hub-hero p,.hub-topic-card p,.hub-curriculum-copy em,
+ .lobby-section-head p,.pythag-action-card p
+){color:#496575!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .cp-illustration,.hub-card-icon,.hub-curriculum-icon,
+ .student-dash-action-icon,.student-dash-stat-icon,.tw-action-icon
+){background:#eaf7f1!important;border-color:#d0e2e6!important;color:#167d67!important}
+body[data-classora-theme="morning"] #platformLobby :is(
+ .cp-illustration svg,.hub-card-icon svg,.hub-curriculum-icon svg,
+ .student-dash-action-icon svg,.student-dash-stat-icon svg
+){opacity:1!important;filter:none!important;stroke:currentColor}
+/* Settings is a full-screen overlay with its own old dark stylesheet: override every
+   text color + interactive tile explicitly rather than relying on inheritance. */
+body[data-classora-theme="morning"] #settingsModal{
+ --c6-panel:#ffffff;--c6-panel-deep:#f2f8f8;--c6-panel-hi:#ffffff;
+ --c6-border:#d0e2e6;--c6-text:#193442;--c6-muted:#496575;
+ --c6-mint:#167d67;color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal .settings-modalbox{
+ background:#ffffff!important;background-image:none!important;
+ border-color:#d0e2e6!important;color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal .modalhead{
+ background:#eaf6f3!important;background-image:none!important;
+ border-bottom-color:#d0e2e6!important;color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal .modalhead :is(
+ h1,h2,h3,.subject-assistant-line,.close,.back
+){color:#193442!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #settingsModal .modalhead :is(button,.close){
+ background:#ffffff!important;color:#193442!important;border-color:#c6dce1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-profile-row,.settings-card,.classora-settings-shortcuts,
+ .settings-quick-access,.settings-shortcuts,.settings-quick-links
+){background:#ffffff!important;background-image:none!important;
+ color:#193442!important;border:1px solid #d0e2e6!important;
+ box-shadow:0 6px 18px #153a4810!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ #settingsCurrentName,.settings-profile-info b,.settings-card h3,
+ .settings-card h4,.settings-danger-zone h3
+){color:#193442!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-profile-info span,.settings-note,.settings-account-meta span,
+ .settings-card p,.settings-card small,.settings-card label,
+ .settings-danger-zone p,#settingsStatus
+){color:#496575!important;text-shadow:none!important;opacity:1!important}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-toggle,.settings-choice-row,.settings-account-meta
+){color:#193442!important}
+body[data-classora-theme="morning"] #settingsModal .settings-toggle{
+ background:#f2f8f8!important;color:#193442!important;border-color:#d0e2e6!important
+}
+body[data-classora-theme="morning"] #settingsModal .settings-card :is(
+ input:not([type="radio"]):not([type="checkbox"]),select,textarea
+){background:#ffffff!important;color:#193442!important;
+ border-color:#bdd5dc!important;opacity:1!important}
+body[data-classora-theme="morning"] #settingsModal .settings-card :is(input,textarea)::placeholder{
+ color:#59727d!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal .settings-card input[readonly]{
+ background:#f2f8f8!important;color:#496575!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card .exam-secondary,.settings-card .settings-link-button,
+ .settings-photo-btn,.mini-copy-btn,.settings-choice-row button,
+ #settingsLogoutBtn
+){background:#f2f8f8!important;color:#193442!important;
+ border:1px solid #bdd5dc!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card .apply,.settings-choice-row button[aria-pressed="true"]
+){background:#167d67!important;color:#ffffff!important;border-color:#167d67!important}
+body[data-classora-theme="morning"] #settingsModal #deleteAccountBtn{
+ background:#fff2f1!important;color:#9a3038!important;border-color:#e4a8a8!important
+}
+/* Quick access: old mint-on-ivory icons and nearly-white labels are invisible. */
+body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-settings-shortcuts,.settings-quick-access,.settings-shortcuts,
+ .quick-access,.settings-quick-links
+) :is(h1,h2,h3,h4,b,strong,.title,.heading){
+ color:#193442!important;text-shadow:none!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-settings-shortcuts,.settings-quick-access,.settings-shortcuts,
+ .quick-access,.settings-quick-links
+) :is(p,small,.subtitle,.description){
+ color:#496575!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-settings-shortcuts,.settings-quick-access,.settings-shortcuts,
+ .quick-access,.settings-quick-links
+) :is(button,a){
+ background:#f5fbf9!important;color:#193442!important;
+ border-color:#d0e2e6!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-settings-shortcuts,.settings-quick-access,.settings-shortcuts,
+ .quick-access,.settings-quick-links
+) :is(button,a) :is(span,small,b,strong,.label,.title){
+ color:#193442!important;opacity:1!important
+}
+body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-settings-shortcuts,.settings-quick-access,.settings-shortcuts,
+ .quick-access,.settings-quick-links
+) :is(button,a) :is(svg,.cl-drawn-symbol,.classora-icon){
+ color:#167d67!important;stroke:currentColor;opacity:1!important;filter:none!important
+}
+/* The appearance selector and its drawing previews need visible text and stroke. */
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings{
+ background:#f5fbf9!important;color:#193442!important;border-color:#c7dedd!important
+}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings :is(h3,.cl-appearance-head){
+ color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings :is(
+ .cl-appearance-desc,.cl-appearance-note
+){color:#496575!important;opacity:1!important}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings .cl-appearance-choice{
+ background:#ffffff!important;border-color:#c6dce1!important;color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings .cl-appearance-choice span{
+ color:#193442!important
+}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings .cl-appearance-choice[aria-pressed="true"]{
+ background:#dff5eb!important;border:2px solid #167d67!important;box-shadow:0 0 0 2px #b9e2d4!important
+}
+body[data-classora-theme="morning"] #settingsModal #classoraAppearanceSettings .cl-appearance-choice svg{
+ opacity:1!important;filter:none!important
+}
+/* Topic pages and exams: white paper, dark explanatory text, same geometry. */
+body[data-classora-theme="morning"] :is(
+ .classora-curriculum-shell,.curriculum-topic-sidebar,.curriculum-topic-stage,
+ .curriculum-topic-card,.curriculum-lesson-copy,.curriculum-panel,
+ .subject-lab-page,.cm-studio,.cm-lab,.cl130-tools,.cl130-home,.plus-panel,
+ #examModal .modalbox,#competitionModal .modalbox,#chatModal .modalbox
+){color:#193442!important}
+body[data-classora-theme="morning"] :is(
+ .curriculum-lesson-copy h1,.curriculum-lesson-copy h2,.curriculum-panel h3,
+ .curriculum-topic-card b,.curriculum-topic-sidebar h2,.curriculum-topic-sidebar h3,
+ .cm-studio h1,.cm-studio h2,.cm-studio h3,.sl-info h2,
+ #examModal .modalhead h2,#competitionModal .modalhead h2,#chatModal #chatThreadName
+){color:#193442!important;opacity:1!important}
+body[data-classora-theme="morning"] :is(
+ .curriculum-lesson-copy p,.curriculum-panel p,.curriculum-topic-card small,
+ .cm-studio p,.cl130-tools p,.cl130-home p,
+ #examModal .exam-choice p,#competitionModal .live-card p,#chatModal .chat-receipt
+){color:#496575!important;opacity:1!important}
+body[data-classora-theme="morning"] :is(
+ #examModal .exam-choice,#competitionModal .live-card,
+ .curriculum-panel,.curriculum-topic-card,.curriculum-lesson-copy,
+ .cm-lab,.plus-panel
+){background:#ffffff!important;border-color:#d0e2e6!important}
+body[data-classora-theme="morning"] :is(
+ #examModal .modalhead,#competitionModal .modalhead,.classora-curriculum-top,
+ #chatModal .modalhead,.subject-lab-page .sl-header
+){background:#edf8f5!important;color:#193442!important;border-color:#d0e2e6!important}
+body[data-classora-theme="morning"] :is(
+ #examModal,#competitionModal,.classora-curriculum-modal,.subject-lab-page
+) :is(input:not([type="radio"]):not([type="checkbox"]),select,textarea){
+ background:#fff!important;color:#193442!important;border-color:#bdd5dc!important
+}
+body[data-classora-theme="morning"] #classoraMobilePageNav{
+ background:#fffffff0!important;border-color:#c5dce0!important
+}
+body[data-classora-theme="morning"] #classoraMobilePageNav button{
+ color:#496575!important
+}
+body[data-classora-theme="morning"] #classoraMobilePageNav button:is(.active,.is-active,[aria-current="page"]){
+ background:#dff5eb!important;color:#115d50!important
+}
+/* Avoid overriding success/failure colors and the culturally featured event card. */
+body[data-classora-theme="morning"] #platformLobby .hw-card{
+ background:linear-gradient(120deg,#e8f7ee,#fff)!important
+}
+body[data-classora-theme="morning"] #platformLobby .hw-card :is(h1,h2,h3,p,.hw-eyebrow){
+ color:#245340!important
+}
