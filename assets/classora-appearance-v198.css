@@ -1,0 +1,278 @@
+@import url("./classora-appearance-v197.css?v=198");
+/* Classora v198 / cohesive, original-layout palette. Visual-only overrides.
+   All colors derive from the same named tokens; no routes, sizing, or JS state is changed. */
+body[data-classora-theme="morning"]{
+ --v198-page:#ffffff;--v198-surface:#ffffff;--v198-raised:#f7fbfd;
+ --v198-ink:#203746;--v198-sub:#597582;--v198-line:#dce8ec;
+ --v198-main:#208c78;--v198-main-deep:#176e5d;--v198-alt:#3289ae;
+ --v198-selected:#e7f7f1;--v198-selected-ink:#186f60;--v198-decor:none;
+ --v198-shadow:0 14px 38px #14394711;--v198-onhero:#ffffff;
+ --v198-hero:linear-gradient(125deg,#f4fcfa,#ffffff);
+ --v198-hero-ink:#203746;--v198-hero-sub:#527382;
+ --v198-hero-rule:#d8ebe4;--v198-section:#ffffff;--v198-section-ink:#203746;
+ color-scheme:light
+}
+body[data-classora-theme="embroidery"]{
+ --v198-page:#fbf5eb;--v198-surface:#fffaf2;--v198-raised:#f7ece0;
+ --v198-ink:#49343a;--v198-sub:#785f63;--v198-line:#e4cfc0;
+ --v198-main:#8c3045;--v198-main-deep:#632b3c;--v198-alt:#36745e;
+ --v198-selected:#f6e4dd;--v198-selected-ink:#7c2a40;
+ --v198-decor:var(--cl-embroidered-pattern);
+ --v198-shadow:0 14px 38px #61394117;--v198-onhero:#fff5e7;
+ --v198-hero:linear-gradient(125deg,#6a2739,#322b2e);
+ --v198-hero-ink:#fff3e4;--v198-hero-sub:#f0d5ba;
+ --v198-hero-rule:#ad7a65;--v198-section:#fffaf2;--v198-section-ink:#49343a;
+ color-scheme:light
+}
+/* Lobby foundation: previous mixed dark skins are deliberately neutralized. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby{
+ background:var(--v198-page)!important;
+ background-image:var(--v198-decor)!important;
+ background-size:112px 112px!important;
+ color:var(--v198-ink)!important;
+ --mix-white:var(--v198-ink);--mix-muted:var(--v198-sub);
+ --hub-text:var(--v198-ink);--hub-muted:var(--v198-sub);
+ --hub-panel:var(--v198-surface);
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .lobby-shell,.lobby-main,.learning-hub,.student-dash,
+ .teacher-workspace,.student-dash-action-grid,.student-dash-insights,.ct-list
+){background:transparent!important;color:var(--v198-ink)!important}
+/* The Classora header and central information cards all share one design system. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .classora-welcome,.student-dash-hero,.student-dash-stat,.student-dash-action,.student-dash-progress,
+ .student-dash-insights>.student-dash-stat,.tw-hero,.tw-subpanel,.tw-metric,.tw-action,.tw-class-item,
+ .classora-promo-center,.classora-student-tasks,.ct-task,.ct-task-copy,.hub-curriculum-shelf,
+ .hub-topic-card,.hub-curriculum-subject,.hub-curriculum-subject.math,
+ .hub-curriculum-subject.science,.hub-curriculum-subject.arabic,
+ .hub-curriculum-subject.english,.hub-curriculum-subject.history,
+ .hub-curriculum-subject.geography,.lobby-section,.lobby-card,
+ .pythag-action-card,.subject-card,.lobby-action,.hub-card,.hub-search,.hub-hero
+){
+ background:var(--v198-surface)!important;
+ background-image:none!important;
+ color:var(--v198-ink)!important;
+ border-color:var(--v198-line)!important;
+ box-shadow:var(--v198-shadow)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-stat-icon,.student-dash-action-icon,.hub-card-icon,.hub-curriculum-icon,
+ .hub-topic-chip,.student-dash-progress-icon,.tw-metric-icon,.tw-action-icon
+){background:var(--v198-raised)!important;color:var(--v198-main)!important;border-color:var(--v198-line)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-hero h1,.student-dash-hero h2,.student-dash-hero h3,
+ .student-dash-heading,.student-dash-stat-number,.student-dash-section-head,
+ .student-dash-action h3,.tw-heading,.tw-title-row,.tw-hero h1,.tw-hero h2,
+ .tw-metric-value,.tw-action h3,.hub-topic-card h3,.hub-hero h1,.hub-curriculum-head h2,
+ .hub-curriculum-copy b,.lobby-section-head h3,.classora-student-tasks h2,
+ .ct-task-copy b,.cp-titlebar h2
+){color:var(--v198-ink)!important;text-shadow:none!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-hero p,.student-dash-description,.student-dash-stat-label,
+ .student-dash-action p,.student-dash-eyebrow,.tw-intro,.tw-metric-label,
+ .hub-topic-card p,.hub-curriculum-copy em,.hub-hero p,.lobby-section-head p,
+ .classora-welcome .subtitle,.classora-student-tasks small,.ct-task-copy small,
+ .cp-titlebar p
+){color:var(--v198-sub)!important;text-shadow:none!important}
+/* Branded top bar: original dimensions, palette-aware. */
+body[data-classora-theme="morning"] #platformLobby .lobby-topbar{
+ background:#ffffff!important;border-color:#d6e7e2!important;color:#203746!important;box-shadow:var(--v198-shadow)!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-topbar{
+ background:var(--v198-hero)!important;border-color:#b98b73!important;color:#fff3e5!important;box-shadow:var(--v198-shadow)!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-topbar :is(
+ .lobby-brand,.lobby-sub,.lobby-user-name,.lobby-welcome,.lobby-top-actions
+){color:#fff3e5!important}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-topbar :is(.lobby-profile-btn,.lobby-icon-btn,.lobby-logout-btn){
+ background:#fff3e518!important;color:#fff5e8!important;border-color:#e3bfa65b!important
+}
+/* New features and announcement carousel: remove the unmatched navy field. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .classora-promo-center{
+ background:var(--v198-surface)!important;color:var(--v198-ink)!important;
+ border-color:var(--v198-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-slide,.cp-slide-content,.cp-description,.cp-title,.cp-eyebrow,.cp-controls,
+ .cp-titlebar,.cp-timing,.cp-slide p,.cp-slide h3
+){color:var(--v198-ink)!important;text-shadow:none!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-titlebar p,.cp-description,.cp-slide p,.cp-timing
+){color:var(--v198-sub)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-slide,.cp-illustration,.cp-controls button
+){background:var(--v198-raised)!important;border-color:var(--v198-line)!important;color:var(--v198-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cp-slide{
+ background:var(--v198-surface)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cp-illustration svg{
+ stroke:var(--v198-main)!important;filter:none!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cp-slide :is(.cp-enter,.cp-action,.cp-btn,.btn-primary){
+ background:var(--v198-main)!important;color:#fff!important;border-color:var(--v198-main)!important
+}
+/* Dedicated heritage event banner: green as intentional accent, crimson thread details. */
+body[data-classora-theme="embroidery"] #platformLobby .hw-card,
+body[data-classora-theme="embroidery"] .hw-card{
+ background:radial-gradient(circle at 85% 4%,#e0b46a24,transparent 40%),linear-gradient(125deg,#22513f,#17372d)!important;
+ border-color:#c59a65!important;color:#fff4e1!important;box-shadow:var(--v198-shadow)!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .hw-card :is(h1,h2,h3,p,.hw-eyebrow,.hw-countdown,.hw-clock span){
+ color:#fff1db!important;text-shadow:none!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .hw-card .hw-secondary{
+ color:#fff4e1!important;border-color:#c5b99f!important;background:transparent!important
+}
+body[data-classora-theme="morning"] #platformLobby .hw-card{
+ background:linear-gradient(125deg,#e7f7ed,#ffffff)!important;border-color:#bad7cc!important;color:#265641!important
+}
+body[data-classora-theme="morning"] #platformLobby .hw-card :is(h1,h2,h3,p,.hw-eyebrow,.hw-countdown,.hw-clock span){color:#245340!important}
+body[data-classora-theme="morning"] #platformLobby .hw-card .hw-secondary{background:#fff!important;color:#245340!important;border-color:#abcabc!important}
+/* Navigational controls, search, settings, AI sidebar and cards. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .lobby-ai-card,.lobby-ai-input,.lobby-ai-input input,.mix-art-pill,
+ .lobby-top-actions .lobby-icon-btn,.hub-subject-tabs button,
+ .hub-grade-button,.hub-topic-chip,.hub-button,.mix-btn-secondary,
+ .student-dash-outline,.tw-secondary,.ct-resume,.ct-target-assignment
+){
+ background:var(--v198-raised)!important;border-color:var(--v198-line)!important;color:var(--v198-ink)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .mix-btn-primary,.pythag-enter-lab,.student-dash-primary,.tw-primary,.ct-enter,
+ .hub-grade-button.active,.hub-subject-tabs button.active,.lobby-ai-input button
+){background:var(--v198-main)!important;color:#fff!important;border-color:var(--v198-main)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .student-dash-action:before{
+ background:linear-gradient(90deg,var(--v198-main),var(--v198-alt))!important
+}
+/* Section heading and small readable controls */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-titlebar h2,.classora-student-tasks h2,.lobby-section-head h3,.hub-curriculum-head h2
+){color:var(--v198-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-controls button,.cp-controls .cp-dot,.cp-dot
+){border-color:var(--v198-line)!important;color:var(--v198-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cp-dot.active{
+ background:var(--v198-main)!important
+}
+/* Main content floating navigation on phone/iPad/desktop: same glass shape and animations. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #classoraMobilePageNav,.classora-mobile-page-nav,#classoraUniversalDock,.classora-universal-dock
+){
+ background:color-mix(in srgb,var(--v198-surface) 90%,transparent)!important;
+ -webkit-backdrop-filter:blur(18px)!important;backdrop-filter:blur(18px)!important;
+ color:var(--v198-ink)!important;border:1px solid var(--v198-line)!important;
+ box-shadow:0 10px 30px #3c31321a!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #classoraMobilePageNav,.classora-mobile-page-nav,#classoraUniversalDock,.classora-universal-dock
+) button{
+ background:transparent!important;color:var(--v198-sub)!important;border-color:transparent!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #classoraMobilePageNav,.classora-mobile-page-nav,#classoraUniversalDock,.classora-universal-dock
+) button:is(.active,[aria-selected=true],[aria-current=page]){
+ background:var(--v198-selected)!important;color:var(--v198-selected-ink)!important;border-color:var(--v198-line)!important
+}
+/* Exams, selection screens, lessons, topic stage and glass math/science pages. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal .modalbox,#competitionModal .modalbox,
+ .classora-curriculum-shell,.curriculum-topic-stage,.curriculum-topic-sidebar,
+ .subject-lab-page,.plus-panel,.cm-studio,.classora-case-dialog
+){color:var(--v198-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal .modalbox,#competitionModal .modalbox,
+ .classora-curriculum-shell,.curriculum-topic-sidebar,.curriculum-topic-stage,.subject-lab-page
+){
+ background:var(--v198-page)!important;
+ background-image:none!important;
+ border-color:var(--v198-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal .exam-choice,#examModal .builder-card,#examModal .exam-q,
+ #competitionModal .live-card,#competitionModal .saved-comp-card,
+ .curriculum-topic-card,.curriculum-grade-card,.curriculum-subject-card,
+ .curriculum-unit-section,.curriculum-panel,.curriculum-lesson-copy,.curriculum-3d-card,
+ .subject-lab-page .sl-info,.cm-lab,.cm-calc-panel,.plus-panel
+){
+ background:var(--v198-surface)!important;color:var(--v198-ink)!important;
+ border-color:var(--v198-line)!important;box-shadow:var(--v198-shadow)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal .modalhead,#competitionModal .modalhead,
+ .classora-curriculum-top,.curriculum-hero,.subject-lab-page .sl-header,
+ #settingsModal .modalhead,#chatModal .modalhead
+){
+ background:var(--v198-raised)!important;
+ color:var(--v198-ink)!important;border-color:var(--v198-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal button:not(.correct):not(.wrong),#competitionModal button:not(.correct):not(.wrong),
+ .classora-curriculum-modal button,.subject-lab-page button
+):not(.primary):not(.apply):not(.active):not(.hw-btn){
+ background:var(--v198-raised)!important;color:var(--v198-ink)!important;border-color:var(--v198-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #examModal button.primary,#competitionModal button.primary,
+ #examModal .apply,#competitionModal .apply,.classora-curriculum-modal button.active
+){background:var(--v198-main)!important;color:#fff!important;border-color:var(--v198-main)!important}
+/* Admin, chat, settings typography, account tiles and input controls. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #settingsModal .settings-modalbox,#settingsModal .settings-card,#settingsModal .settings-profile-row,
+ #adminPanelModal .admin-panel-box,#adminPanel .admin-panel-box,
+ #chatModal .modalbox,#chatModal .chat-thread-pane,#chatModal .chat-contacts-pane
+){
+ background:var(--v198-surface)!important;color:var(--v198-ink)!important;border-color:var(--v198-line)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #settingsModal .settings-card h3,#settingsModal #settingsCurrentName,
+ #chatModal #chatThreadName,#chatModal .chat-contact-name
+){color:var(--v198-ink)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #settingsModal .settings-note,#chatModal .chat-receipt,#chatModal .chat-message time
+){color:var(--v198-sub)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #settingsModal .settings-photo-btn,#settingsModal .mini-copy-btn,
+ #settingsModal .settings-link-button,#chatModal .chat-compose button,
+ .admin-tabs button,.admin-toolbar button
+){background:var(--v198-raised)!important;color:var(--v198-ink)!important;border-color:var(--v198-line)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(
+ #platformLobby,#settingsModal,#chatModal,#examModal,#competitionModal,.classora-curriculum-modal,
+ .subject-lab-page
+) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea){
+ background:var(--v198-surface)!important;color:var(--v198-ink)!important;border-color:var(--v198-line)!important
+}
+/* Palestinian accent stitch across section headings and cards, never across content or SVG illustrations. */
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .classora-promo-center,.student-dash-hero,.hub-curriculum-shelf,.classora-student-tasks
+){border-top:3px solid #aa4656!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .classora-promo-center,.student-dash-hero,.hub-curriculum-shelf
+)::after{background-image:none}
+body[data-classora-theme="embroidery"] #platformLobby :is(
+ .student-dash-hero,.classora-promo-center
+){background-image:linear-gradient(90deg,#fffaf2,#fff6eb)!important}
+body[data-classora-theme="embroidery"] #platformLobby .lobby-topbar{
+ background-image:var(--v198-decor),var(--v198-hero)!important;
+ background-size:112px 112px,cover!important;background-repeat:repeat,no-repeat!important
+}
+/* Restore coherent text contrast on all cards, including descriptions overridden by old dark theme. */
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-title,.cp-titlebar h2,.classora-welcome h2,.student-dash h2,
+ .student-dash-hero h1,.student-dash-hero h2,.student-dash-stat-number,
+ .hub-curriculum-copy b,.hub-topic-card h3,.tw-action h3,.ct-task-copy b
+){color:var(--v198-ink)!important;text-shadow:none!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-description,.cp-titlebar p,.student-dash-hero p,.hub-topic-card p,
+ .student-dash-description,.tw-intro,.ct-task-copy small
+){color:var(--v198-sub)!important}
+@media (max-width:700px){
+ body[data-classora-theme="embroidery"] #platformLobby{background-size:82px 82px!important}
+ body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .student-dash-hero,.classora-promo-center,.classora-welcome,.hub-topic-card
+ ){box-shadow:0 5px 18px #50342b12!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(
+ .cp-slide,.student-dash-action
+ ){animation-duration:.01ms!important}
+}
