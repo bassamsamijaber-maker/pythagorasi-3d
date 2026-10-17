@@ -80,3 +80,20 @@ html:has(body[data-classora-theme="embroidery"]),html body[data-classora-theme="
   overflow-y:auto!important;-webkit-overflow-scrolling:touch;
  }
 }
+
+/* V210: explicitly size the app, avoiding percentage-height resolution on iOS. */
+@media(max-width:760px){
+ html:has(body.classora-authenticated){height:var(--classora-viewport-height,100dvh)!important;min-height:0!important;overflow:hidden!important}
+ html body.classora-authenticated{height:var(--classora-viewport-height,100dvh)!important;min-height:0!important;overflow:hidden!important;overscroll-behavior:none!important}
+ html body.classora-dock-enabled.classora-authenticated #platformLobby.platform-lobby:not(.hidden){
+  height:var(--classora-viewport-height,100dvh)!important;min-height:0!important;max-height:none!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  inset-block:auto 6px!important;bottom:6px!important;
+ }
+}
+/* The old Lobby rule has TWO IDs, so ordinary button theme rules cannot win. */
+html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn,
+html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn :is(span,svg){color:var(--classora-dock-label,#b9d2df)!important}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="embroidery"] #classoraMobilePageNav{--classora-dock-label:#67565c}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav{--classora-dock-label:#496575}
