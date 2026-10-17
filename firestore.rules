@@ -1017,6 +1017,28 @@ service cloud.firestore {
       allow delete: if isSuperAdmin();
     }
 
+    // Minimal activity metadata; actions/country are client-reported estimates,
+    // not proof for disciplinary or security decisions.
+    match /userActivity/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly(['lastAction','lastActionAt','countryCode'])
+        && request.resource.data.keys().hasAll(['lastAction','lastActionAt'])
+        && request.resource.data.lastAction in [
+          'visit','lobby','classes','lessons','lesson','lab','exams','competitions',
+          'competition_start','assistant','chat','questions','profile','settings',
+          'notifications','support','subscriptions'
+        ]
+        && request.resource.data.lastActionAt == request.time
+        && (!('countryCode' in request.resource.data)
+          || (request.resource.data.countryCode is string
+            && request.resource.data.countryCode.matches('^[A-Z]{2}$')));
+      allow delete: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+    }
+
     match /siteControls/{docId} {
       allow read: if signedIn();
       allow create, update, delete: if isSuperAdmin();

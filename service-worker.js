@@ -1,10 +1,11 @@
-const CACHE_NAME="classora-v183-memberships-luxe-grants";
+const CACHE_NAME="classora-v184-admin-user-activity";
 const APP_SHELL=[
   "./index.html",
   "./subscriptions.html",
   "./assets/classora-membership-luxe-v182.js?v=182",
   "./assets/classora-membership-luxe-v182.css?v=182",
   "./assets/classora-admin-memberships-v181.js?v=181",
+  "./assets/classora-admin-activity-v184.js?v=184",
   "./assets/classora-admin-memberships-v181.css?v=181",
   "./status.html",
   "./assets/classora-dock-stable-v140.css?v=140",

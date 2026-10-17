@@ -11012,6 +11012,7 @@ document.getElementById("teacherCompetitionsLobbyBtn").addEventListener("click",
 /* -------------------- V17 SUPER ADMIN -------------------- */
 const adminPanelModal=document.getElementById("adminPanelModal");
 let adminUsersCache=[];
+let adminActivityCache=new Map();
 let adminClassesCache=[];
 let adminBlocksCache=new Map();
 let adminActiveTab="polls";
@@ -11257,6 +11258,28 @@ let adminAssignmentHistoryLoaded=false;
 function adminUserByUid(uid){return adminUsersCache.find(x=>x.uid===uid)||null}
 function adminClassById(id){return adminClassesCache.find(x=>x.id===id)||null}
 function adminUserDisplay(u){return u?.displayName||u?.loginName||adminLang("مستخدم","User")}
+function adminLastActivityLabel(code){
+ const labels={
+  visit:["دخل للموقع","Visited the site"],lobby:["فتح اللوبي","Opened lobby"],
+  classes:["فتح الصفوف","Opened classes"],lessons:["استكشف الدروس","Explored lessons"],
+  lesson:["فتح موضوعًا","Opened a lesson"],lab:["فتح مختبر 3D","Opened a 3D lab"],
+  exams:["فتح الامتحانات","Opened exams"],competitions:["فتح المسابقات","Opened competitions"],
+  competition_start:["بدأ مسابقة","Started a competition"],assistant:["استعمل المساعد","Used assistant"],
+  chat:["فتح الشات","Opened chat"],questions:["فتح الأسئلة","Opened questions"],
+  profile:["فتح الملف الشخصي","Opened profile"],settings:["فتح الإعدادات","Opened settings"],
+  notifications:["فتح الإشعارات","Opened notifications"],support:["فتح الدعم","Opened support"],
+  subscriptions:["فتح الاشتراكات","Opened memberships"]
+ };
+ return labels[code]?adminLang(...labels[code]):adminLang("لا يوجد نشاط مسجّل","No recorded activity");
+}
+function adminConnectionCountry(code){
+ if(!/^[A-Z]{2}$/.test(code||"")||["XX","ZZ","T1","A1","A2"].includes(code))return escapeHtml(adminLang("غير متوفرة","Unavailable"));
+ try{
+  const locale=currentUILanguage==="ar"?"ar":"en";
+  const label=new Intl.DisplayNames([locale],{type:"region"}).of(code);
+  return escapeHtml((label||code)+" ("+code+")");
+ }catch{return escapeHtml(code)}
+}
 function adminAvatarHTML(u){
   const name=adminUserDisplay(u),photo=u?.photoData||u?.photoURL||"";
   return `<div class="admin-person-avatar" ${photo?`style="background-image:url('${escapeHtml(photo)}')"`:""}>${photo?"":escapeHtml((name[0]||"?").toUpperCase())}</div>`;
@@ -11270,6 +11293,13 @@ async function adminLoadAllData(){
       getDocs(collection(db,"users")),getDocs(collection(db,"classes")),getDocs(collection(db,"blockedUsers"))
     ]);
     adminUsersCache=usersSnap.docs.map(d=>({uid:d.id,...d.data()}));
+    try{
+      const a=await getDocs(collection(db,"userActivity"));
+      adminActivityCache=new Map(a.docs.map(d=>[d.id,d.data()]));
+    }catch(e){
+      adminActivityCache=new Map();
+      console.warn("Activity not readable. Publish Firestore rules.",e);
+    }
     adminBlocksCache=new Map(blocksSnap.docs.map(d=>[d.id,d.data()]));
     for(const u of adminUsersCache.filter(x=>x.role==="student")){
       const original=u.originalLoginName||u.loginName||u.displayName||"";
@@ -12326,6 +12356,9 @@ function adminRenderPeople(){
     const memberships=adminClassesCache.filter(c=>c.ownerId===u.uid||c.teachers?.some(t=>t.uid===u.uid)||c.members?.some(m=>m.uid===u.uid));const owned=adminClassesCache.filter(c=>c.ownerId===u.uid);
     const provider=teacher?adminLang("تسجيل خارجي","External sign-in"):adminLang("كلمة سر","Password sign-in"),loginName=u.loginName||u.originalLoginName||u.displayName||"—";
     const passwordText=teacher?adminLang("مُدار عبر تسجيل خارجي — غير قابل للعرض","Managed by external sign-in — not viewable"):adminLang("محمي — غير قابل للعرض","Protected — not viewable");
+    const activity=adminActivityCache.get(u.uid)||{};
+    const lastActionAt=activity.lastActionAt?adminHistoryTimestamp(activity.lastActionAt):"—";
+    const lastVisitAt=u.lastLoginAt?adminHistoryTimestamp(u.lastLoginAt):"—";
     const card=document.createElement("div");card.className="admin-person-card";card.dataset.uid=u.uid;
     card.innerHTML=`<div class="admin-person-top"><div class="admin-person-main">${adminAvatarHTML(u)}<div style="min-width:0"><b>${escapeHtml(adminUserDisplay(u))} ${admin?"🛡️":""}</b><div class="admin-meta">${teacher?adminLang("معلم","Teacher"):adminLang("طالب","Student")}${blocked?` • <span class="admin-disabled-badge">${adminLang("موقوف","Disabled")}</span>`:""}</div></div></div><span class="admin-id">#${escapeHtml(u.profileId||"—")}</span></div>
       <div class="admin-detail-grid">
@@ -12338,6 +12371,9 @@ function adminRenderPeople(){
         <div class="admin-detail-item"><small>${adminLang("كلمة الأمان","SECURITY PHRASE")}</small><span>${u.securityPhraseHash?"✅ "+adminLang("مفعّلة ومشفّرة","Configured + hashed"):"—"}</span></div>
         <div class="admin-detail-item"><small>${adminLang("الصفوف","CLASSES")}</small><span>${memberships.length}</span></div>
         <div class="admin-detail-item"><small>${adminLang("صفوف يملكها","OWNED CLASSES")}</small><span>${owned.length}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("آخر نشاط مسجّل","LAST RECORDED ACTION")}</small><span>${escapeHtml(adminLastActivityLabel(activity.lastAction))}<small style="display:block;opacity:.7">${escapeHtml(lastActionAt)}</small></span></div>
+        <div class="admin-detail-item"><small>${adminLang("آخر دخول / فتح الموقع","LAST SITE VISIT")}</small><span>${escapeHtml(lastVisitAt)}</span></div>
+        <div class="admin-detail-item"><small>${adminLang("الدولة التقريبية حسب الاتصال","APPROXIMATE CONNECTION COUNTRY")}</small><span>${adminConnectionCountry(activity.countryCode)}</span></div>
       </div>
       <div class="admin-account-classes">${memberships.length?`${adminLang("الصفوف","Classes")}: ${memberships.map(c=>escapeHtml(c.name||"Class")).join(" • ")}`:adminLang("مش مربوط بأي صف.","Not linked to a class.")}</div>
       <div class="admin-actions"><button class="admin-rename-user admin-action-primary">✏️ ${adminLang("تغيير الاسم","Rename")}</button><button class="admin-reset-name-clock admin-action-primary">${adminLang("فتح تغيير الاسم","Reset name timer")}</button><label class="admin-action-primary">📷 ${adminLang("تغيير الصورة","Change photo")}<input type="file" class="admin-user-photo" accept="image/*" hidden></label><button class="admin-remove-user-photo">🖼️ ${adminLang("حذف الصورة","Remove photo")}</button>${!teacher&&!admin?`<button class="admin-reset-access">🔐 ${adminLang("طلب تغيير كلمة السر","Require password change")}</button>`:""}${admin?"":`<button class="admin-toggle-block">${blocked?"✅ "+adminLang("تفعيل الحساب","Enable account"):"⛔ "+adminLang("إيقاف الحساب","Disable account")}</button><button class="danger admin-delete-user">🗑 ${adminLang("حذف بيانات الحساب","Delete account data")}</button>`}</div>`;
@@ -18332,6 +18368,7 @@ onAuthStateChanged(auth,user=>{
 
 </script>
 <script type="module" src="./assets/classora-admin-memberships-v181.js?v=181"></script>
+<script type="module" src="./assets/classora-admin-activity-v184.js?v=184"></script>
 </body>
 </html>
 
