@@ -196,6 +196,7 @@ function render(){
  $("cl-catalog-status").dataset.status=catalogLoadError?"error":liveCatalog?"linked":"loading";
  put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?t("adminFree"):"");
  $("cl-continue").disabled=!state.tier||!!state.account?.admin;
+ window.ClassoraMembershipLuxe?.update(state);
 }
 async function identify(user){
  state.checking=false;
