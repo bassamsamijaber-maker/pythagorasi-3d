@@ -234,9 +234,13 @@ body[data-classora-theme="embroidery"] .hw-card{
 body[data-classora-theme="embroidery"] #platformLobby .hw-card :is(
  h1,h2,h3,h4,p,small,span,.hw-eyebrow,.hw-countdown,.hw-clock
 ){color:var(--classora-text-inverse)!important}
-body[data-classora-theme="embroidery"] #platformLobby .hw-card :is(
- .hw-secondary,.hw-primary
-){color:var(--classora-text-inverse)!important}
+body[data-classora-theme="embroidery"] #platformLobby .hw-card .hw-secondary{
+ color:var(--classora-text-inverse)!important
+}
+body[data-classora-theme="embroidery"] #platformLobby .hw-card .hw-btn:not(.hw-secondary),
+body[data-classora-theme="embroidery"] #platformLobby .hw-card .hw-btn:not(.hw-secondary) span{
+ color:#29352f!important
+}
 /* Settings burgundy header is inverse; its body remains dark-on-paper. */
 body[data-classora-theme="embroidery"] #settingsModal .modalhead,
 body[data-classora-theme="embroidery"] #settingsModal .modalhead :is(
