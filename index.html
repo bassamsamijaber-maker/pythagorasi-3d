@@ -17474,7 +17474,8 @@ let classoraOverlaySyncing=false;
 let classoraWakeTimer=null;
 
 function classoraOpenOverlays(){
-  return [...document.querySelectorAll(".modal.open")];
+  // Include native dialog lesson/3D windows, not just classic .modal screens.
+  return [...document.querySelectorAll(".modal.open,dialog[open]")];
 }
 function classoraLockBackground(){
   const lobby=document.querySelector(".platform-lobby");
@@ -17508,7 +17509,11 @@ function classoraSyncOverlayState(preferred=null){
     // A genuine sign-out is the only automatic teardown: don't expose one
     // person's protected screens when another person logs into this browser.
     if(authVisible&&!auth?.currentUser&&!isGuestSession()){
-      for(const modal of open)if(modal.id!=="supportModal")modal.classList.remove("open");
+      for(const modal of open){
+        if(modal.id==="supportModal")continue;
+        if(modal.matches("dialog[open]")){try{modal.close()}catch{}}
+        else modal.classList.remove("open");
+      }
     }
     if(authVisible||classoraOpenOverlays().length)classoraLockBackground();
     else classoraUnlockBackground();
@@ -17528,6 +17533,9 @@ const classoraOverlayObserver=new MutationObserver(records=>{
 document.querySelectorAll(".modal,#authGate").forEach(el=>{
   classoraOverlayObserver.observe(el,{attributes:true,attributeFilter:["class"]});
 });
+document.querySelectorAll("dialog").forEach(el=>{
+  classoraOverlayObserver.observe(el,{attributes:true,attributeFilter:["open"]});
+});
 classoraSyncOverlayState();
 document.addEventListener("click",event=>{
   const close=event.target?.closest?.(".modal .close");
@@ -17536,7 +17544,7 @@ document.addEventListener("click",event=>{
   classoraSyncOverlayState();
 });
 document.addEventListener("click",event=>{
-  if(event.target instanceof Element&&event.target.matches(".modal.open")){
+  if(event.target instanceof Element&&event.target.matches(".modal.open,dialog[open]")){
     event.preventDefault();
     event.stopImmediatePropagation();
   }
