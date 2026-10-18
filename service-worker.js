@@ -1,5 +1,8 @@
-const CACHE_NAME="classora-v214-assessments-heritage";
+const CACHE_NAME="classora-v215-learning-studio";
 const APP_SHELL=[
+  "./assets/classora-studio-v215.js?v=215",
+  "./assets/classora-studio-visuals-v215.js?v=215",
+  "./assets/classora-studio-v215.css?v=215",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
