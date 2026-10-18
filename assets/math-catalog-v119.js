@@ -1,3 +1,4 @@
+import {worksheetQuestion} from './math-worksheet-v213.js?v=213';
 /* Classora Math Studio. Original lessons and activities; no publisher assets copied. */
 export const mathFormat = x => Math.abs(x)<1e-10 ? '0' : Number(Number(x).toFixed(4)).toString();
 const F=mathFormat;
@@ -157,11 +158,5 @@ export function mathQuestion(topic,difficulty,n=0,language='ar'){
   r=calculateLesson(d.key,v,language);if(r.valid&&Number.isFinite(Number(r.answer))||r.valid&&r.choices)break;
  }
  if(!r?.valid)throw Error('Cannot generate valid question '+d.key);
- const labels=d.controls.map(c=>`${en?c.en:c.ar} (${c.id}) = ${F(v[c.id])}`).join(en?', ':'، ');
- const target=targets[d.key]?.[en?1:0]||(d.section==='algebra'&&['linear','multi','both','brackets','fractions','word'].includes(d.key)?(en?'x':'x'):(en?'the result using the rule':'الناتج حسب القاعدة'));
- const answer=typeof r.answer==='number'?F(r.answer):r.answer;
- let options=r.choices?[...r.choices]:[answer];
- if(!r.choices){const value=Number(answer),step=Math.max(1,Math.abs(value)*.15);for(const offset of [1,-1,2,-2,3]){const wrong=F(value+offset*step);if(!options.includes(wrong))options.push(wrong);if(options.length===4)break}}
- for(let i=options.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[options[i],options[j]]=[options[j],options[i]]}
- return{prompt:(en?`${difficulty==='expert'?'Expert challenge. ':''}Rule: ${d.rule}. Given ${labels}. Find ${target}; round decimal results to 4 places when needed.`:`${difficulty==='expert'?'تحدّي خبير. ':''}القاعدة: ${d.rule}. إذا كان ${labels}، جد ${target}، وقرّب الناتج العشري إلى 4 منازل عند الحاجة.`),options,answer,explanation:r.steps.join(' · ')+(r.note?' '+r.note:''),sample:v};
+ return worksheetQuestion(d,v,r,difficulty,n,language,random);
 }

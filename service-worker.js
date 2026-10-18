@@ -1,5 +1,6 @@
-const CACHE_NAME="classora-v212-universal-lobby";
+const CACHE_NAME="classora-v213-math-worksheets";
 const APP_SHELL=[
+  "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
   "./assets/classora-heritage-i18n-v194.js?v=194",
@@ -53,14 +54,14 @@ const APP_SHELL=[
   "./assets/humanities-practice-v127.js?v=130",
   "./assets/humanities-studio-v127.css?v=127",
 
-  "./assets/math-catalog-v119.js?v=119",
+  "./assets/math-catalog-v119.js?v=213",
   "./assets/math-scenes-v119.js?v=119",
-  "./assets/math-studio-v119.js?v=130",
+  "./assets/math-studio-v119.js?v=213",
   "./assets/math-calculator-v119.js?v=119",
   "./assets/classora-calculator-v120.js?v=131",
   "./assets/classora-topic-art-v120.js?v=121",
   "./assets/classora-visuals-v120.css?v=120",
-  "./assets/classora-assessment-v121.js?v=161",
+  "./assets/classora-assessment-v121.js?v=213",
   "./assets/classora-assessment-levels-v152.js?v=152",
   "./assets/classora-science-bank-v152.js?v=152",
   "./assets/classora-assessment-v121.css?v=121",
@@ -112,7 +113,7 @@ const APP_SHELL=[
   "./assets/ph-lab.js?v=92",
   "./assets/learning-hub.js?v=190",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=159",
+  "./assets/curriculum-v97.js?v=213",
   "./assets/curriculum-v97.css?v=110",
   "./offline.html",
 
