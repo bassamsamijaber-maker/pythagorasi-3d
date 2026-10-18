@@ -344,7 +344,16 @@ export function heritageArt(kind='thobe'){
  olive:'<path d="M70 205Q155 130 168 32" fill="none" stroke="#b38a4c" stroke-width="7"/><g fill="#43836a"><ellipse cx="115" cy="150" rx="14" ry="35" transform="rotate(-45 115 150)"/><ellipse cx="151" cy="144" rx="14" ry="35" transform="rotate(43 151 144)"/><ellipse cx="137" cy="99" rx="12" ry="30" transform="rotate(-45 137 99)"/><ellipse cx="176" cy="92" rx="12" ry="30" transform="rotate(43 176 92)"/></g><g fill="#313f38"><ellipse cx="151" cy="170" rx="10" ry="14"/><ellipse cx="117" cy="120" rx="10" ry="14"/></g>'
  };
  const body=extra[kind]||(kind==='scarf'?`<g class="hw-fabric"><path d="M25 35Q120 2 218 37L199 177Q112 149 38 186Z" fill="#f7f1df"/><path d="M25 35Q120 2 218 37L199 177Q112 149 38 186Z" fill="url(#${id})"/><path d="M33 61Q121 28 213 62M39 151Q123 123 201 151" fill="none" stroke="#253c37" stroke-width="9"/>${Array.from({length:12},(_,i)=>`<path d="M${39+i*14} ${184-Math.sin(i/4)*20}l-2 15" stroke="#f7f1df" stroke-width="3"/>`).join('')}</g>`:`<circle cx="120" cy="119" r="102" fill="#e8b75c" opacity=".12"/><path d="M91 27l-49 26-25 61 34 14 21-38-13 120h122L168 90l21 38 34-14-25-61-49-26q-29 30-58 0Z" fill="#263e37" stroke="#efc577" stroke-width="2"/><path d="M94 37v62h52V37M75 146h91v55H75zM47 60l-20 49 16 7 23-48M174 68l23 48 16-7-20-49" fill="url(#${id})" stroke="#be5251" stroke-width="6"/><path d="M105 40q15 18 30 0" fill="none" stroke="#f9e6bd" stroke-width="3"/>`);
- return `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false">${defs}${body}</svg>`;
+ const details={
+  flag:'<path d="M39 68h175M39 106h175" stroke="#ffffff" stroke-opacity=".22" stroke-width="1.5"/><path d="M40 30Q78 35 113 30T214 30" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="3"/>',
+  needle:'<ellipse cx="185" cy="45" rx="7" ry="3.5" transform="rotate(-42 185 45)" stroke="#637a77" fill="#415a56"/><path d="M73 166L180 51" stroke="#ffffff" stroke-opacity=".75" stroke-width="2" stroke-linecap="round"/>',
+  thobe:'<g fill="none" stroke="#e5b46a" stroke-width="2.5"><path d="M74 172h92M73 215h94M54 96l-10 18m151-18 10 18"/></g><g stroke="#ac3450" stroke-width="3" stroke-linecap="round"><path d="M82 164l8 8m0-8-8 8m66-8 8 8m0-8-8 8M91 206l7 7m0-7-7 7m44-7 7 7m0-7-7 7"/></g>',
+  stitch:'<circle cx="120" cy="120" r="68" fill="none" stroke="#daaa67" stroke-width="2" stroke-dasharray="3 6"/><path d="M73 120h94M120 73v94" stroke="#355d4b" stroke-width="2" stroke-dasharray="3 4" opacity=".6"/>',
+  thread:'<path d="M89 61l-5 114M145 61l5 114" stroke="#ffe2b6" stroke-width="3" opacity=".55"/><path d="M174 177q25 29 47-4" fill="none" stroke="#ce4d62" stroke-width="3"/>',
+  olive:'<path d="M98 174q42-19 71-69" fill="none" stroke="#cf9e62" stroke-width="2.5"/><g fill="#93b993" opacity=".65"><ellipse cx="108" cy="141" rx="4" ry="13" transform="rotate(-45 108 141)"/><ellipse cx="161" cy="81" rx="3.5" ry="11" transform="rotate(43 161 81)"/></g>'
+ };
+ if(kind==='scarf')details.scarf='<path d="M45 53Q125 35 204 59M47 164Q117 144 194 162" stroke="#ad354c" stroke-opacity=".5" stroke-width="3" fill="none"/>';
+ return `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">${defs}${body}${details[kind]||''}</svg>`;
 }
 export function mountHeritage(api){
  const t=(ar,en)=>heritageT(document.documentElement.lang,ar,en);
