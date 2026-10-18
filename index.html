@@ -2176,7 +2176,7 @@ body.classora-intro-active{overflow:auto!important}
         <span class="exam-pill" id="examCountPill">10 أسئلة</span>
         <span class="exam-pill exam-timer" id="examTimer">00:00</span>
         <div class="exam-progress"><span id="examProgress"></span></div>
-        <button class="exam-secondary" id="changeExamBtn">🔄 غيّر الامتحان</button>
+        <button type="button" class="exam-secondary" id="changeExamBtn">🔄 غيّر الامتحان</button>
       </div>
       <div class="exam-questions" id="examQuestions"></div>
       <button class="exam-submit" id="submitExam">سلّم الامتحان وشوف العلامة</button>
@@ -6165,16 +6165,43 @@ document.getElementById("startSurpriseExam").addEventListener("click",()=>{
   }
   startGeneratedExam();
 });
+// Curriculum exams launched inside a lesson must regenerate that very topic.
+function regenerateCurriculumExam(){
+  if(!activeExam?.topicExam||activeExam?.cloud)return false;
+  const current=activeExam;
+  const topic=classoraAssessment.topics.find(t=>
+    t.grade===Number(current.curriculumGrade)&&t.subject===current.subject&&
+    t.title===current.curriculumTopicTitle);
+  if(!topic)return false;
+  try{
+    const generated=classoraAssessment.generate(topic.value,current.questions.length,
+      current.curriculumDifficulty||"medium",currentUILanguage,false);
+    if(!generated.questions.length)throw Error(chatText("ما في أسئلة جديدة لهذا الدرس.","No questions available for this lesson."));
+    clearSavedAttempt();
+    startExam({...current,questions:generated.questions,total:generated.total,generatedAt:Date.now()});
+    return true;
+  }catch(error){
+    showToast(error?.message||chatText("تعذّر تغيير الامتحان.","Could not change the exam."));
+    return false;
+  }
+}
 document.getElementById("changeExamBtn").addEventListener("click",()=>{
   if(activeExam?.cloud){
     stopExamTimer();
     showExamView("examHome");
-    document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات";
-  }else if(activeExam?.surprise)startGeneratedExam();
-  else showExamView("examBuilder");
+    document.getElementById("examModalTitle").textContent=chatText("🎓 مركز الامتحانات","🎓 Exam Center");
+  }else if(activeExam?.topicExam&&!activeExam?.surprise){
+    regenerateCurriculumExam();
+  }else if(activeExam?.surprise){
+    startGeneratedExam();
+  }else{
+    showExamView("examBuilder");
+  }
 });
 document.getElementById("retryExam").addEventListener("click",()=>{
-  if(activeExam?.surprise)startGeneratedExam();else startExam(activeExam);
+  if(activeExam?.topicExam&&!activeExam?.surprise)regenerateCurriculumExam();
+  else if(activeExam?.surprise)startGeneratedExam();
+  else if(activeExam)startExam(activeExam);
 });
 document.getElementById("backExamHome").addEventListener("click",()=>{stopExamTimer();showExamView("examHome");document.getElementById("examModalTitle").textContent="🎓 مركز الامتحانات"});
 
