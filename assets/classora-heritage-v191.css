@@ -67,3 +67,31 @@
  .hw-draw-timerbar .hw-btn{min-width:0}
  .hw-drawing-board{aspect-ratio:4/3;touch-action:none}
 }
+
+/* Heritage illustration and mobile drawing pass. Preserve the 4:3 SVG drawing coordinate grid. */
+#classoraHeritageWeek .hw-art,
+.hw-dialog .hw-art{min-width:0;max-width:100%;justify-self:center;align-self:center}
+#classoraHeritageWeek .hw-art svg,
+.hw-dialog .hw-art svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible;filter:drop-shadow(0 8px 10px rgba(42,43,25,.17))}
+.hw-dialog .hw-drawing-workspace{box-sizing:border-box;width:100%;max-width:100%;min-width:0}
+.hw-dialog .hw-drawing-board{display:block;box-sizing:border-box;width:100%;max-width:100%;aspect-ratio:4/3;height:auto;touch-action:none;border:2px solid #bca88b;border-radius:15px;background:#fffaf0;cursor:crosshair;user-select:none;-webkit-user-select:none;box-shadow:0 8px 20px rgba(72,60,42,.12)}
+.hw-dialog .hw-drawing-tools{min-width:0;max-width:100%}
+.hw-dialog .hw-color-dot{box-shadow:inset 0 0 0 1px #0002,0 2px 5px #0002}
+.hw-dialog .hw-color-dot[aria-pressed=true]{outline:3px solid #263f35;outline-offset:3px}
+.hw-dialog .hw-choices .hw-choice:focus-visible,
+.hw-dialog .hw-btn:focus-visible,
+.hw-dialog .hw-color-dot:focus-visible{outline:3px solid #ae3452;outline-offset:3px}
+@media(max-width:600px){
+ #classoraHeritageWeek .hw-art{width:min(155px,38vw);margin-inline:auto}
+ .hw-dialog .hw-drawing-workspace{padding-inline:0}
+ .hw-dialog .hw-drawing-board{border-width:1.5px;border-radius:10px}
+ .hw-dialog .hw-drawing-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+ .hw-dialog .hw-drawing-tools label{min-width:0;max-width:100%}
+ .hw-dialog .hw-quick-colors{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+ .hw-dialog .hw-drawing-gallery{min-width:0}
+ .hw-dialog .hw-drawing-gallery svg{display:block;max-width:100%;height:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ .hw-fabric{animation:none!important}
+ .hw-dialog .hw-btn:hover{transform:none}
+}
