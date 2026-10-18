@@ -1,3 +1,4 @@
+import {formatMathPrompt} from './math-worksheet-v213.js?v=213';
 import {configureLearningMemory,recordLearningAttempt,learnerId} from './learning-memory-v130.js?v=130';
 import {smartTopicMatch} from './learning-search-v130.js?v=130';
 import {downloadUnit} from './learning-offline-v130.js?v=131';
@@ -12,8 +13,8 @@ import {mountEnglishLesson} from './english-studio-v127.js?v=130';
 import {mountHistoryLesson} from './history-studio-v127.js?v=130';
 import {arabicLesson,arabicQuestion} from './arabic-catalog-v119.js?v=119';
 import {mountArabicLesson} from './arabic-studio-v119.js?v=130';
-import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=148';
-import {mountMathLesson} from './math-studio-v119.js?v=148';
+import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed} from './math-catalog-v119.js?v=213';
+import {mountMathLesson} from './math-studio-v119.js?v=213';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
  geometry:{ar:"هندسة",en:"Geometry",icon:"math"},
@@ -1455,7 +1456,7 @@ export function mountCurriculum(api){
  function renderPractice(){
   const host=body.querySelector("#cv97Practice");if(!host)return;const t=state.topic,q=makeQuestions(api,t,1,"easy",false)[0];
   if(!q){host.textContent=txt(api,"هذا الدرس يحتاج بنك أسئلة إضافي قبل تفعيل التدريب.","This lesson needs a reviewed question bank before practice is available.");return}
-  host.innerHTML='<div class="curriculum-mini-q"><b>'+esc(q.prompt)+'</b><div class="curriculum-mini-options"></div><div class="curriculum-feedback"></div></div>';
+  host.innerHTML='<div class="curriculum-mini-q"><b>'+formatMathPrompt(q.prompt)+'</b><div class="curriculum-mini-options"></div><div class="curriculum-feedback"></div></div>';
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=answerFeedback(q,opt,lang(api));recordLearningAttempt(t,ok,{question:q,selected:opt})};opts.appendChild(b)})
  }

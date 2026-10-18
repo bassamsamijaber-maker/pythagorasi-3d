@@ -1,6 +1,6 @@
 import {acidsTopic,phSamples,phColor,phClass,acidQuestions,levelFromXP,nextDifficulty} from './learning-content.js?v=89';
 import {mountPHScene} from './ph-lab.js?v=89';
-import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName,curriculumTopicGuide} from './curriculum-v97.js?v=159';
+import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName,curriculumTopicGuide} from './curriculum-v97.js?v=213';
 export function mountLearningPlus(api){
  const selectedLanguage=()=>document.documentElement.lang||api.language();
  const L=(a,e)=>selectedLanguage()==='ar'?a:(window.ClassoraLocale?.tFor?.(selectedLanguage(),e)||e),txt=p=>L(p[0],p[1]),N=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n},B=(text,fn)=>{const b=N('button','hub-button',text);b.type='button';b.onclick=fn;return b};

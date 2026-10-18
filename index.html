@@ -74,6 +74,7 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/humanities-studio-v127.css?v=127">
 <link rel="stylesheet" href="./assets/classora-visuals-v120.css?v=120">
 <link rel="stylesheet" href="./assets/classora-assessment-v121.css?v=121">
+<style>.cm-feedback,.question-feedback{white-space:pre-line}.exam-q-title:has(.ca-math-figure){min-width:0;flex:1;max-width:100%;white-space:normal}#compQuestionText:has(.ca-math-figure){display:block;max-width:100%;font-size:clamp(15px,3.6vw,20px)}.ca-math-figure{box-sizing:border-box} .exam-options:has(+.ca-math-figure){min-width:0}</style>
 <link rel="stylesheet" href="./assets/classora-refinement-v122.css?v=122.2">
 <link rel="stylesheet" href="./assets/classora-navigation-fix-v123.css?v=128">
 <link rel="stylesheet" href="./assets/classora-legal-v124.css?v=166">
@@ -2500,13 +2501,14 @@ import {mountReturnNavigation} from "./assets/return-navigation.js?v=92";
 import {mountLearningPlus} from "./assets/learning-plus.js?v=159";
 import {createLearningStore} from "./assets/learning-store.js?v=92";
 import {mountMathCalculator} from './assets/classora-calculator-v120.js?v=131';
-import {classoraAssessment} from './assets/classora-assessment-v121.js?v=161';
+import {formatMathPrompt} from './assets/math-worksheet-v213.js?v=213';
+import {classoraAssessment} from './assets/classora-assessment-v121.js?v=213';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
-import {installClassoraLegal} from './assets/classora-legal-v124.js?v=208';
+import {installClassoraLegal} from './assets/classora-legal-v124.js?v=213';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=161';
 import './assets/classora-global-art-v121.js?v=121';
-import {mountCurriculum} from "./assets/curriculum-v97.js?v=189";
+import {mountCurriculum} from "./assets/curriculum-v97.js?v=213";
 import {mountClassoraHomeV112} from "./assets/classora-home-v112.js?v=191";
 import {mountHeritage} from "./assets/classora-heritage-v191.js?v=193";
 import * as THREE from "three";
@@ -6000,6 +6002,7 @@ function renderStatisticsChart(type,block){
  return '<div class="ca-stats-chart-wrap" role="region" tabindex="0" aria-label="'+safe(title)+'"><svg class="ca-stats-chart" viewBox="0 0 650 310" role="img" aria-label="'+safe(desc)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg></div>';
 }
 function formatStatisticsPrompt(value){
+ if(String(value??" ").includes("[[MATH_FIGURE]]"))return formatMathPrompt(value);
  const source=String(value??"");
  const pattern=/\[\[STAT_TABLE\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_TABLE\]\]|\[\[STAT_CHART:(bar|line|pie|histogram)\]\]\r?\n([\s\S]*?)\r?\n\[\[\/STAT_CHART\]\]/g;
  let cursor=0,result='',match,found=false;
@@ -6136,7 +6139,7 @@ function submitCurrentExam(){
   review.forEach((r,i)=>{
     const d=document.createElement("div");d.className=`review-item ${r.g.ok?"ok":"no"}`;
     const correct=r.q.type==="open"?(r.q.answerText||r.q.explanation):(r.q.answer);
-    d.innerHTML=`<b>${i+1}. ${escapeHtml(r.q.prompt)}</b><br>
+    d.innerHTML=`<b>${i+1}. ${formatStatisticsPrompt(r.q.prompt)}</b><br>
       إجابتك: ${escapeHtml(r.ans||"—")} • العلامة: ${r.g.score}/${r.q.points}<br>
       <span style="color:#9fb3c8">الإجابة/الشرح: ${escapeHtml(String(correct))}. ${escapeHtml(r.q.explanation||"")}</span>`;
     host.appendChild(d);
@@ -6640,7 +6643,7 @@ async function loadQuestionBank(){
       const row=document.createElement("div");row.className="qb-row";
       row.style.display="block";
       row.innerHTML=`
-        <b>${escapeHtml(q.prompt||"")}</b>
+        <b>${formatStatisticsPrompt(q.prompt||"")}</b>
         <div style="font-size:11px;color:#89a0b3;margin:4px 0">${escapeHtml(subjectDisplayName(q.subject||"mixed"))} • الصحيح: ${escapeHtml(q.answer||"")}</div>
         <div class="saved-comp-actions">
           <button class="exam-secondary qb-to-exam">للإمتحان</button>
@@ -7033,7 +7036,7 @@ function renderStudentAssignmentQuestions(card,a){
     }else{
       input='<textarea class="assignment-answer-input" placeholder="اكتب إجابتك المفتوحة..."></textarea><div class="assignment-open-note">هذا السؤال يراجعه المعلم يدويًا.</div>';
     }
-    wrap.innerHTML=`<b>${i+1}. ${escapeHtml(q.prompt||"")}</b><div class="exam-points">${q.points||0} علامات</div>${input}`;
+    wrap.innerHTML=`<b>${i+1}. ${formatStatisticsPrompt(q.prompt||"")}</b><div class="exam-points">${q.points||0} علامات</div>${input}`;
     host.appendChild(wrap);
   });
 }
@@ -7487,7 +7490,7 @@ async function renderTeacherClassCard(host,c){
         const saved=Number(sub.manualByQuestion?.[q.id]??0);
         const guide=keyMap.get(q.id)?.guide||"";
         return `<div class="assignment-grade-row">
-          <b>${escapeHtml(q.prompt)}</b>
+          <b>${formatStatisticsPrompt(q.prompt)}</b>
           <div class="cloud-note">إجابة الطالب: ${escapeHtml(ans)}</div>
           ${guide?`<div class="cloud-note">ملاحظة المعلم: ${escapeHtml(guide)}</div>`:""}
           <label>علامة السؤال من ${q.points}
@@ -16053,7 +16056,7 @@ function renderLiveRoom(){
   const localizedScience=localizeScienceQuestion(r.currentQuestion,currentUILanguage);
   const livePrompt=localizedScience.prompt||adminLang("جاري تحميل السؤال...","Loading question...");
   const liveQuestionElement=document.getElementById("compQuestionText");
-  if(String(livePrompt).includes("[[STAT_"))liveQuestionElement.innerHTML=formatStatisticsPrompt(livePrompt);
+  if(/\[\[(?:STAT_|MATH_FIGURE)/.test(String(livePrompt)))liveQuestionElement.innerHTML=formatStatisticsPrompt(livePrompt);
   else liveQuestionElement.textContent=livePrompt;
   document.getElementById("compHostControls").classList.toggle("hidden",liveCompetitionRole!=="host");
   document.getElementById("compRevealBtn").classList.toggle("hidden",!["question","grading"].includes(r.status));

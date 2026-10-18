@@ -1,4 +1,4 @@
-import {mathFormat as F,quadraticKeys} from './math-catalog-v119.js?v=119';
+import {mathFormat as F,quadraticKeys} from './math-catalog-v119.js?v=213';
 export const escapeMath=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const E=escapeMath;
 const C={mint:'#62e6bc',blue:'#71baff',gold:'#ffd18c',rose:'#fa9cb9',ink:'#d8e9f4',muted:'#8ea9bb'};

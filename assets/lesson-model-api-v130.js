@@ -1,4 +1,4 @@
-import {mathTopic,defaultValues,calculateLesson} from './math-catalog-v119.js?v=119';
+import {mathTopic,defaultValues,calculateLesson} from './math-catalog-v119.js?v=213';
 import {renderMathScene,escapeMath as E} from './math-scenes-v119.js?v=119';
 import {SCIENCE_MODELS,scienceScene,scienceInputScale} from './science-scenes-v128.js?v=130';
 import {geographyLesson} from './geography-catalog-v128.js?v=128';

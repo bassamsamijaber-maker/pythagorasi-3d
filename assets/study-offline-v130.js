@@ -1,4 +1,4 @@
-import {mountCurriculum,curriculumTopicDisplayName} from './curriculum-v97.js?v=131';
+import {mountCurriculum,curriculumTopicDisplayName} from './curriculum-v97.js?v=213';
 import {downloadedUnits,removeUnit} from './learning-offline-v130.js?v=131';
 import {recordLearningAttempt} from './learning-memory-v130.js?v=130';
 let language=localStorage.getItem('pythagorasi_language')||localStorage.getItem('classora_offline_language')||'ar';
