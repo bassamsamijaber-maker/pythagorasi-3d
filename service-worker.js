@@ -1,13 +1,10 @@
-const CACHE_NAME="classora-v216-learning-studio";
+const CACHE_NAME="classora-v217-heritage-open-two";
 const APP_SHELL=[
-  "./assets/classora-studio-v215.js?v=216",
-  "./assets/classora-studio-visuals-v215.js?v=215",
-  "./assets/classora-studio-v215.css?v=215",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
   "./assets/classora-heritage-i18n-v194.js?v=194",
-  "./assets/classora-heritage-v191.js?v=214",
+  "./assets/classora-heritage-v191.js?v=217",
   "./assets/classora-heritage-v191.css?v=214",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
