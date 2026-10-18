@@ -98,12 +98,12 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  const add=(q,level)=>{
   if(result.length>=n||!validate(q,language))return;
   const prompt=norm(q.prompt);if(seen.has(prompt))return;seen.add(prompt);
-  const numeric=/^-?(?:\\d+\\.?\\d*|\\.\\d+)$/.test(String(q.answer).trim());
+  const numeric=/^-?(?:\d+\.?\d*|\.\d+)$/.test(String(q.answer).trim());
   const maths=topic.subject==='math'||topic.subject==='geometry';
   // Only self-marking solo exams may include number and short-answer input.
   const type=!live&&maths&&numeric&&result.length%3!==0?'number'
     :!live&&!numeric&&['hard','expert'].includes(level)&&result.length%5===3&&
-     String(q.answer).length<=35&&!/[|\\n]/.test(String(q.answer))?'open':'mcq';
+     String(q.answer).length<=35&&!/[|\n]/.test(String(q.answer))?'open':'mcq';
   const localizedName=language==='ar'?topic.title:t(topic.en,topic.en,language);
   const promptText=type==='number'?q.prompt.replace('اختر قيمة x:','اكتب قيمة x:').replace('choose x:','enter x:'):q.prompt;
   result.push({...q,prompt:promptText,options:shuffle(q.options.map(String)),type,
