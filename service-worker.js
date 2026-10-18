@@ -1,11 +1,11 @@
-const CACHE_NAME="classora-v213-math-worksheets";
+const CACHE_NAME="classora-v214-assessments-heritage";
 const APP_SHELL=[
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
   "./assets/classora-heritage-i18n-v194.js?v=194",
-  "./assets/classora-heritage-v191.js?v=194",
-  "./assets/classora-heritage-v191.css?v=194",
+  "./assets/classora-heritage-v191.js?v=214",
+  "./assets/classora-heritage-v191.css?v=214",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",
@@ -61,7 +61,7 @@ const APP_SHELL=[
   "./assets/classora-calculator-v120.js?v=131",
   "./assets/classora-topic-art-v120.js?v=121",
   "./assets/classora-visuals-v120.css?v=120",
-  "./assets/classora-assessment-v121.js?v=213",
+  "./assets/classora-assessment-v121.js?v=214",
   "./assets/classora-assessment-levels-v152.js?v=152",
   "./assets/classora-science-bank-v152.js?v=152",
   "./assets/classora-assessment-v121.css?v=121",
