@@ -11,6 +11,9 @@ import {combineTopicQuestions} from './classora-assessment-levels-v152.js?v=152'
 import {scienceTopicQuestions} from './classora-science-bank-v152.js?v=152';
 const t=(ar,en,lang)=>lang==='ar'?ar:lang==='en'?en:(window.ClassoraLocale?.tFor?.(lang,en)||en);
 const norm=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/[\u064b-\u065f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+const shuffle=items=>{const list=[...items];for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}return list};
+const recentTopicPrompts=new Map(); // The previous paper, not any student answers.
+let assessmentSequence=0;
 const subjectLabel=(subject,lang)=>{
  if(subject==='arabic')return t('قواعد اللغة العربية','Arabic Grammar',lang);
  if(subject==='english')return t('قواعد الإنجليزي','English Grammar',lang);
@@ -86,20 +89,33 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  const topic=TOPIC_MAP.get(value);
  if(!topic)throw Error(t('الموضوع غير معروف.','Unknown topic.',language));
  const n=Math.max(1,Math.min(30,Math.floor(Number(count)||10)));
- const result=[],seen=new Set();let trials=0;
+ const result=[],seen=new Set();const paperSerial=++assessmentSequence;
  const levels=difficulty==='mixed'?['easy','medium','hard','expert']:[['easy','medium','hard','expert'].includes(difficulty)?difficulty:'medium'];
  const sourceLanguage=language==='ar'?'ar':'en';
+ const historyKey=value+'|'+difficulty+'|'+sourceLanguage;
+ const previous=recentTopicPrompts.get(historyKey)||new Set();
+ const preferNew=bank=>shuffle(bank).sort((a,b)=>Number(previous.has(norm(a.prompt)))-Number(previous.has(norm(b.prompt))));
  const add=(q,level)=>{
   if(result.length>=n||!validate(q,language))return;
   const prompt=norm(q.prompt);if(seen.has(prompt))return;seen.add(prompt);
-  result.push({...q,type:'mcq',id:'assessment-'+topic.value+'-'+Date.now()+'-'+result.length,
+  const numeric=/^-?(?:\\d+\\.?\\d*|\\.\\d+)$/.test(String(q.answer).trim());
+  const maths=topic.subject==='math'||topic.subject==='geometry';
+  // Only self-marking solo exams may include number and short-answer input.
+  const type=!live&&maths&&numeric&&result.length%3!==0?'number'
+    :!live&&!numeric&&['hard','expert'].includes(level)&&result.length%5===3&&
+     String(q.answer).length<=35&&!/[|\\n]/.test(String(q.answer))?'open':'mcq';
+  const localizedName=language==='ar'?topic.title:t(topic.en,topic.en,language);
+  const promptText=type==='number'?q.prompt.replace('اختر قيمة x:','اكتب قيمة x:').replace('choose x:','enter x:'):q.prompt;
+  result.push({...q,prompt:promptText,options:shuffle(q.options.map(String)),type,
+   ...(type==='open'?{answerText:String(q.answer),keywords:[String(q.answer)]}:{}),
+   id:'assessment-'+topic.value+'-'+paperSerial+'-'+result.length,
    points:live?1000:10,topicKey:topic.value,subjectKey:topic.subject,curriculumTopicId:topic.value,
    curriculumTopicTitle:topic.title,curriculumGrade:topic.grade,questionKind:level,level:({easy:1,medium:2,hard:3,expert:4}[level]||2),
-   typeLabel:subjectLabel(topic.subject,language)+' • '+(language==='ar'?topic.title:t(topic.en,topic.en,language))});
+   typeLabel:subjectLabel(topic.subject,language)+' • '+localizedName});
  };
  const addGraded=base=>{
   const choices=difficulty==='mixed'?['easy','medium','hard','expert']:levels;
-  const groups=choices.map(level=>({level,bank:combineTopicQuestions(base,level,sourceLanguage,n),cursor:0}));
+  const groups=choices.map(level=>({level,bank:preferNew(combineTopicQuestions(base,level,sourceLanguage,30)),cursor:0}));
   let active=true;
   while(result.length<n&&active){
    active=false;
@@ -115,12 +131,12 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  if(topic.subject==='math'&&/إحصاء/.test(topic.title)){
   for(let i=0;i<Math.max(n*8,60)&&result.length<n;i++){
    const level=difficulty==='expert'?'expert':(levels[i%levels.length]||'medium');
-   try{add(statisticsCompleteQuestion(topic,level,i,sourceLanguage),level)}catch(error){console.warn('Statistics question generation:',error)}
+   try{add(statisticsCompleteQuestion(topic,level,Math.floor(Math.random()*10000)+i*23,sourceLanguage),level)}catch(error){console.warn('Statistics question generation:',error)}
   }
  }else if((topic.subject==='math'||topic.subject==='geometry')&&mathTopic(topic.title)){
   for(let i=0;i<Math.max(n*9,45)&&result.length<n;i++){
    const level=levels[i%levels.length]||'medium';
-   try{add(mathQuestion(topic,level,Math.floor(Math.random()*100000)+i*31,sourceLanguage),level)}catch{}
+   try{add(mathQuestion(topic,level,Math.floor(Math.random()*100000)+i*31+paperSerial*71,sourceLanguage),level)}catch{}
   }
  }else if(topic.subject==='arabic'&&arabicLesson(topic.title)){
   const lesson=arabicLesson(topic.title),langIndex=sourceLanguage==='en'?1:0;
@@ -151,10 +167,10 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
     :'حلّل الدور النحوي للكلمات '+chosen.map(t=>'«'+t.word+'»').join('، ')+' في «'+sentence+'» بالترتيب.';
    add({prompt,options,answer,explanation},level);
   };
-  for(const example of lesson.examples){
+  for(const example of shuffle(lesson.examples)){
    if(result.length>=n)break;
    const sentence=example.tokens.map(token=>token.word).join(' ');
-   for(const token of example.tokens){
+   for(const token of shuffle(example.tokens)){
     if(result.length>=n)break;
     const role=AR_ROLES[token.role]?.[langIndex],marker=token.marker&&AR_MARKERS[token.marker]?.[langIndex];
     if(!role)continue;
@@ -192,7 +208,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
  }else if(topic.subject==='geography'&&geographyLesson(topic.title)){
   const available=geographyQuestions(topic,sourceLanguage);
    if(difficulty==='mixed'){
-    const groups=['easy','medium','hard','expert'].map(level=>({level,bank:available.filter(q=>q.difficulty===level),cursor:0}));
+    const groups=['easy','medium','hard','expert'].map(level=>({level,bank:preferNew(available.filter(q=>q.difficulty===level)),cursor:0}));
     let active=true;
     while(result.length<n&&active){
      active=false;
@@ -204,7 +220,7 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
      }
     }
    }else{
-    for(const q of available.filter(q=>q.difficulty===difficulty)){add(q,q.difficulty||'medium');if(result.length>=n)break}
+    for(const q of preferNew(available.filter(q=>q.difficulty===difficulty))){add(q,q.difficulty||'medium');if(result.length>=n)break}
    }
  }else if(topic.subject==='history'&&historyLesson(topic.title)){
   addGraded(historyQuestions(topic,sourceLanguage));
@@ -236,7 +252,10 @@ function pickQuestions(value,count,difficulty='medium',language='ar',live=false)
   throw Error(t('الموضوع موجود بالمنهاج، لكن ما فيه '+n+' أسئلة متنوعة ومراجَعة لهذا المستوى حتى الآن. اختَر عددًا أقل أو موضوعًا ثانيًا. ما رح نعطيك أسئلة عامة مالها علاقة بالدرس.',
    'This topic is listed in the curriculum, but does not yet have '+n+' distinct, reviewed questions at this level. Choose a smaller count or another topic. Unrelated filler questions will not be used.',language));
  }
- return {topic,questions:result,total:result.reduce((s,q)=>s+q.points,0),difficulty,requestedCount:n,availableCount:result.length};
+ const questions=shuffle(result);
+ recentTopicPrompts.set(historyKey,new Set(questions.map(q=>norm(q.prompt))));
+ if(recentTopicPrompts.size>60)recentTopicPrompts.delete(recentTopicPrompts.keys().next().value);
+ return {topic,questions,total:questions.reduce((s,q)=>s+q.points,0),difficulty,requestedCount:n,availableCount:questions.length};
 }
 function installPicker(id,language=()=>document.documentElement.lang){
  const select=document.getElementById(id);if(!select||select.dataset.classoraCurriculumPicker)return;
