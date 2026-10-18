@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v215-learning-studio";
+const CACHE_NAME="classora-v216-learning-studio";
 const APP_SHELL=[
-  "./assets/classora-studio-v215.js?v=215",
+  "./assets/classora-studio-v215.js?v=216",
   "./assets/classora-studio-visuals-v215.js?v=215",
   "./assets/classora-studio-v215.css?v=215",
   "./assets/math-worksheet-v213.js?v=213",
