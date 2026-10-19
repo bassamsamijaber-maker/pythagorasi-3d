@@ -1,9 +1,9 @@
-const CACHE_NAME="classora-v220-learning-cards-persist";
+const CACHE_NAME="classora-v221-universal-education-home";
 const APP_SHELL=[
-  "./assets/classora-learning-boost-v215.css?v=216",
-  "./assets/classora-learning-boost-v215.js?v=216",
+  "./assets/classora-learning-boost-v215.css?v=221",
+  "./assets/classora-learning-boost-v215.js?v=221",
   "./assets/classora-learning-front-v214.css?v=214",
-  "./assets/classora-learning-front-v214.js?v=214",
+  "./assets/classora-learning-front-v214.js?v=221",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
