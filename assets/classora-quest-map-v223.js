@@ -290,8 +290,10 @@ function mission(side,t,group){
      return
     }
     const nextRound=data.round+1;
+    const correctSoFar=data.correct;
     challenge=null;
     question(t,missionNum,nextRound);
+    if(challenge)challenge.correct=correctSoFar;
     draw()
    }else{
     const msg=byId('cl223AnswerFeedback');if(msg)msg.textContent=L('قريب! جرّب إجابة ثانية، ما في عقوبة.','Almost! Try another answer, no penalty.');
