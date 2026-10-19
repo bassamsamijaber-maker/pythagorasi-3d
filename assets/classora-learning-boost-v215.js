@@ -121,6 +121,7 @@ function openPath(){
  });
 }
 function openMap(){
+ if(window.classoraQuestMap?.open){window.classoraQuestMap.open();return}
  if(!student())return;
  const main=beginPanel('خريطة المعرفة','Knowledge map');if(!main)return;
  const s=learningState(),topics=(window.classoraAssessment?.topics||[]).filter(x=>x.grade===grade());
