@@ -266,7 +266,7 @@ function refreshSummary(){
 }
 function init(){
  const front=$('classoraLearningFront');
- if(!front)return;
+ if(!front){document.addEventListener('classora:learning-front-ready',init,{once:true});return;}
  if($('classoraLearningBoost'))return;
  const section=node('section','cl215-insights');section.id='classoraLearningBoost';
  section.innerHTML=
