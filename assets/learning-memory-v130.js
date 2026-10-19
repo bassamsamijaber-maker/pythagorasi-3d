@@ -37,6 +37,14 @@ export function completeQuestStep(topicId,nextStep){
  const at=stamp();data.quests={...(data.quests||{}),[topicId]:{step:n,at}};
  data.at=at;return write(mergeLearning(data),id);
 }
+export function markQuestRewardClaimed(topicId){
+ const id=learnerId(),entry=learningState(id).quests?.[topicId];
+ if(id==='guest'||entry?.step!==3)return false;
+ if(entry.claimed)return true;
+ const data=learningState(id),at=stamp();
+ data.quests={...(data.quests||{}),[topicId]:{...entry,claimed:true,at}};
+ data.at=at;return write(mergeLearning(data),id);
+}
 export function equipQuestCosmetic(cosmeticId){
  const allowed=['none','bronze','neon','sparkle','galaxy','legend'];
  if(!allowed.includes(cosmeticId))return false;
