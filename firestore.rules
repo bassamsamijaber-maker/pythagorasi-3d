@@ -1089,7 +1089,7 @@ service cloud.firestore {
       allow list: if false;
       allow create: if signedIn() && code.matches('^[A-HJ-NP-Z2-9]{6}$')
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student'
+        && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student' || isSuperAdmin())
         && request.resource.data.keys().hasOnly([
           'hostUid','guestUid','hostName','guestName','grade','status',
           'questions','createdAt','updatedAt','startedAt','expiresAt'
@@ -1115,7 +1115,7 @@ service cloud.firestore {
       allow update: if signedIn() && resource.data.status == 'waiting'
         && resource.data.guestUid == ''
         && request.auth.uid != resource.data.hostUid
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student'
+        && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student' || isSuperAdmin())
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
           'guestUid','guestName','status','startedAt','updatedAt'
         ])
