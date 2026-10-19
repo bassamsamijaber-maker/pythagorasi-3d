@@ -18624,8 +18624,27 @@ async function classoraArenaAnswer(code,chosen){
  });
  return index;
 }
+function classoraShopAuth(){
+ const p=window.PythagorasiUser;
+ if(!auth.currentUser||!p||auth.currentUser.uid!==p.uid||
+    (p.role!=="student"&&!isSuperAdminProfile()))throw Error("student-login-required");
+ return p;
+}
+window.classoraIsSuperAdmin=()=>isSuperAdminProfile();
+async function classoraArenaUnlockAdmin(){
+ const p=classoraShopAuth();
+ if(!isSuperAdminProfile())throw Error("admin-required");
+ const items=Object.keys(arenaShopCatalog),ref=doc(db,"users",auth.currentUser.uid);
+ const current=p.questShop||{};
+ const next={spent:0,owned:items,equipped:items.includes(current.equipped)?current.equipped:"none"};
+ await setDoc(ref,{questShop:next,updatedAt:serverTimestamp()},{merge:true});
+ window.PythagorasiUser={...window.PythagorasiUser,questShop:next};
+ document.dispatchEvent(new Event("classora:arena-shop-updated"));
+ return next;
+}
 async function classoraArenaBuy(itemId){
- const p=classoraArenaAuth(),item=arenaShopCatalog[itemId];
+ const p=classoraShopAuth(),item=arenaShopCatalog[itemId];
+ if(isSuperAdminProfile())return classoraArenaUnlockAdmin();
  if(!item)throw Error("invalid-item");
  const ref=doc(db,"users",auth.currentUser.uid);
  const next=await runTransaction(db,async tx=>{
@@ -18642,7 +18661,7 @@ async function classoraArenaBuy(itemId){
  document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
 }
 async function classoraArenaEquip(itemId){
- const p=classoraArenaAuth();
+ const p=classoraShopAuth();
  const ref=doc(db,"users",auth.currentUser.uid);
  const next=await runTransaction(db,async tx=>{
   const snap=await tx.get(ref),profile=snap.data(),shop=profile?.questShop||{};
@@ -18694,6 +18713,7 @@ window.classoraProfileVideo={
 window.classoraArena={
  create:classoraArenaCreate,join:classoraArenaJoin,watch:classoraArenaWatch,
  answer:classoraArenaAnswer,buy:classoraArenaBuy,equip:classoraArenaEquip,
+ unlockAdmin:classoraArenaUnlockAdmin, isAdmin:()=>isSuperAdminProfile(),
  catalog:arenaShopCatalog
 };
 
