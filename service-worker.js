@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v217-heritage-open-two";
+const CACHE_NAME="classora-v218-learning-front";
 const APP_SHELL=[
+  "./assets/classora-learning-front-v214.css?v=214",
+  "./assets/classora-learning-front-v214.js?v=214",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/heritage-needle-background.svg?v=193",
   "./assets/classora-heritage-gallery-v194.js?v=194",
