@@ -242,7 +242,17 @@ function profileAdditions(){
   if(hero)hero.after(node);else modal.querySelector('.modalbox')?.append(node);
   const title=el('h3','',tr('شخصية البروفايل','Profile style'));
   const badge=el('div','cl227-profile-rank');badge.id='cl227ProfileRank';
-  const clip=el('p','',tr('ممكن ترفع GIF صغير من زر الصورة العادي، أو تحط رابط فيديو MP4/WebM مباشر يظهر متحركًا.','Upload a small GIF using the photo button or paste a direct HTTPS MP4/WebM video URL.'));
+  const clip=el('p','',tr('ارفع GIF صغير من زر الصورة، أو فيديو قصير MP4 / WebM / MOV حتى 8MB. وممكن كمان تحط رابط فيديو مباشر.','Upload a small GIF as your photo, or a short MP4 / WebM / MOV clip up to 8MB. Direct links also work.'));
+  const upload=el('input','cl227-video-file');upload.type='file';upload.accept='video/mp4,video/webm,video/quicktime';upload.id='cl227VideoFile';upload.setAttribute('aria-label',tr('ارفع فيديو بروفايل','Upload profile video'));
+  const uploadBtn=btn(tr('رفع فيديو من الجهاز','Upload a video'),'cl227-upload');
+  uploadBtn.addEventListener('click',()=>upload.click());
+  upload.addEventListener('change',async()=>{
+   const file=upload.files?.[0];if(!file)return;uploadBtn.disabled=true;
+   status.textContent=tr('جاري رفع الفيديو…','Uploading video…');
+   try{await window.classoraProfileVideo.upload(file);status.textContent=tr('انحفظ الفيديو المتحرك!','Your video avatar is saved!');syncMedia()}
+   catch(e){status.textContent=e?.code==='storage/unauthorized'?tr('قواعد Firebase Storage لازم تتفعّل أولًا.','Firebase Storage rules must be deployed first.'):tr('ما زبط الرفع. تأكد أن الفيديو أقل من 8MB وبصيغة MP4 أو WebM أو MOV.','Upload failed. Try an MP4, WebM or MOV clip under 8MB.')}
+   finally{uploadBtn.disabled=false;upload.value=''}
+  });
   const field=el('input','cl227-video-url');field.id='cl227VideoUrl';field.type='url';field.placeholder='https://example.com/clip.mp4';field.autocomplete='off';field.maxLength=720;field.setAttribute('aria-label',tr('رابط فيديو البروفايل','Profile video URL'));
   const controls=el('div','cl227-media-controls');
   const save=btn(tr('حفظ الفيديو','Save clip'),'cl227-outline');
@@ -251,9 +261,12 @@ function profileAdditions(){
   const clear=btn(tr('حذف الفيديو','Remove clip'),'cl227-outline');
   clear.addEventListener('click',async()=>{try{await window.classoraProfileVideo.save('');field.value='';status.textContent=tr('انحذف الفيديو','Video removed')}catch(e){status.textContent=errorText(e)}});
   controls.append(save,clear);
-  const status=el('p','cl227-media-status');node.append(title,badge,clip,field,controls,status)
+  const status=el('p','cl227-media-status');node.append(title,badge,clip,uploadBtn,upload,field,controls,status)
  }
- const field=$('cl227VideoUrl');if(field&&document.activeElement!==field)field.value=String(user()?.photoVideoUrl||'');
+ const field=$('cl227VideoUrl'),url=String(user()?.photoVideoUrl||'');
+ if(field&&document.activeElement!==field)field.value=url.includes('firebasestorage.googleapis.com/')?'':url;
+ const status=node.querySelector('.cl227-media-status');
+ if(status&&url.includes('firebasestorage.googleapis.com/')&&!status.textContent)status.textContent=tr('الفيديو المرفوع مفعّل بالبروفايل.','Uploaded video is active on your profile.');
 }
 function sync(){
  const p=user();if(!p){detach();$('cl227Home')?.setAttribute('hidden','');$('cl227Pane')?.setAttribute('hidden','');document.body.removeAttribute('data-cl227-effect');return}
