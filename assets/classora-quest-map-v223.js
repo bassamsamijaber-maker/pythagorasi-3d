@@ -56,15 +56,23 @@ const progress=t=>Math.max(0,Math.min(3,Number(state().quests?.[t.value]?.step)|
 const rewardClaimed=t=>Boolean(state().quests?.[t.value]?.claimed);
 const display=t=>language()==='ar'?t.title:(t.en||t.title);
 const hashString=str=>{let h=2166136261;for(const char of String(str)){h^=char.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
-const groupsFor=(g)=>Object.keys(subjects).map(key=>{
- const rows=bank().filter(t=>t.grade===g&&t.subject===key);
- // Stable random order per account + grade; never reshuffle a path mid-progress.
- const random=[...rows].sort((a,b)=>hashString(owned()+'|'+g+'|'+key+'|'+a.value)-hashString(owned()+'|'+g+'|'+key+'|'+b.value));
- return {key,...subjects[key],topics:random.slice(0,Math.min(8,random.length))};
-}).filter(g=>g.topics.length);
-let currentSubject='math',selected=null,opened=new Set(),challenge=null,rendering=false,sessionAccount='';
+const groupsFor=(g)=>{
+ const shuffle=(items,key)=>[...items].sort((a,b)=>hashString(owned()+'|'+g+'|'+key+'|'+a.value)-hashString(owned()+'|'+g+'|'+key+'|'+b.value));
+ const grouped=Object.keys(subjects).map(key=>{
+  const rows=bank().filter(t=>t.grade===g&&t.subject===key);
+  return {key,...subjects[key],topics:shuffle(rows,key).slice(0,Math.min(8,rows.length))};
+ }).filter(group=>group.topics.length);
+ // Give each subject a chance in the mixed world, then scatter the remaining
+ // lessons with a stable per-learner seed: no reshuffling after an unlock.
+ const priority=shuffle(grouped.flatMap(group=>group.topics.slice(0,3)),'mix-one');
+ const extra=shuffle(grouped.flatMap(group=>group.topics.slice(3)),'mix-extra');
+ const mixed=[...priority,...extra].slice(0,24);
+ return mixed.length?[{key:'mixed',ar:'مغامرة المواد',en:'Mixed adventure',color:'#ffb975',topics:mixed},...grouped]:grouped;
+};
+let currentSubject='mixed',selected=null,opened=new Set(),challenge=null,rendering=false,sessionAccount='';
 function gainTopic(t){
- const group=groupsFor(grade()).find(g=>g.key===t.subject);const idx=group?.topics.findIndex(x=>x.value===t.value)??-1;
+ const group=groupsFor(grade()).find(g=>g.key===currentSubject&&g.topics.some(x=>x.value===t.value));
+ const idx=group?.topics.findIndex(x=>x.value===t.value)??-1;
  return idx===0||idx>0&&progress(group.topics[idx-1])===3;
 }
 function isReady(){return !!account()&&!!byId('classoraLearningFront')}
@@ -156,10 +164,10 @@ function draw(){
   const currentGrade=grade();
   const groups=groupsFor(currentGrade);
   const top=el('header','cl223-map-header');
-  const head=el('div','');head.append(el('span','cl223-kicker','CLASSORA · ADVENTURE'),el('h2','',L('خريطة المهمات','Mission map')),el('p','',L('امشِ على الطريق، وكل موضوع يفتح اللي بعده.','Follow the path to unlock the next topic.')));
+  const head=el('div','');head.append(el('span','cl223-kicker','CLASSORA · ADVENTURE'),el('h2','',L('مغامرة المهمات','Quest adventure')),el('p','',L('امشِ على الطريق، وكل موضوع يفتح اللي بعده.','Follow the path to unlock the next topic.')));
   const close=button('×','cl223-close');close.setAttribute('aria-label',L('إغلاق الخريطة','Close map'));close.addEventListener('click',closeMap);top.append(head,close);
   const filters=el('div','cl223-filters');
-  const badge=el('span','cl223-assigned-grade',L('صفك: '+currentGrade,'Your grade: '+currentGrade));
+  const badge=el('span','cl223-assigned-grade',L('مهمات صفك '+currentGrade,'Grade '+currentGrade+' quests'));
   const subs=el('div','cl223-subject-picker');
   groups.forEach(g=>{
    const b=button(L(g.ar,g.en),'cl223-subject '+(currentSubject===g.key?'active':''));
@@ -188,7 +196,7 @@ function draw(){
    caption.append(el('span','cl223-node-index',L('المرحلة ','Stage ')+(i+1)),el('strong','',display(topic)),el('small','',step===3?L('مكتملة · +20 XP','Completed · XP reward'):unlocked?L(''+step+'/3 مهمات',''+step+'/3 missions'):L('أكمل اللي قبلها','Complete previous mission')));
    b.append(marker,caption);
    if(i===found.topics.length-1){const boss=el('span','cl223-final',L('نهاية المسار','Final stop'));b.append(boss)}
-   b.addEventListener('click',()=>{selected=topic.value;challenge=null;draw()});
+   b.addEventListener('click',()=>{selected=topic.value;challenge=null;draw();const target=byId('cl223MapPanel')?.querySelector('.cl223-mission-area');target?.scrollIntoView({block:'nearest',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});});
    path.append(b)
   });
   route.append(path);
@@ -207,7 +215,7 @@ function question(t,index,round){
  const api=window.classoraAssessment;
  let q=null;
  try{
-  const level='easy'; // Both quiz missions stay beginner-friendly.
+  const level='easy'; // All three missions stay beginner-friendly.
   const quiz=api?.generate?.(t.value,6,level,language()==='ar'?'ar':'en',true);
   q=quiz?.questions?.find(z=>z.type==='mcq'&&Array.isArray(z.options)&&z.options.length>=2&&z.options.includes(String(z.answer)))||null;
  }catch(e){console.warn('Quest bank',e)}
@@ -222,27 +230,18 @@ function mission(side,t,group){
  titleText.append(el('small','',L('موضوع مهم','Important topic')),el('h3','',display(t)));
  title.append(titleText);side.append(title);
  const bar=el('div','cl223-mission-track');
- ['اقرأ','جاوب','تحدّى'].forEach((x,i)=>{
-  const e=el('span','cl223-step '+(i<step?'done':i===step?'now':''));e.append(el('i','',i<step?'✓':String(i+1)),document.createTextNode(L(x,['Read','Answer','Challenge'][i])));bar.append(e)
+ ['ابدأ','جاوب','تحدّى'].forEach((x,i)=>{
+  const e=el('span','cl223-step '+(i<step?'done':i===step?'now':''));e.append(el('i','',i<step?'✓':String(i+1)),document.createTextNode(L(x,['Start','Answer','Challenge'][i])));bar.append(e)
  });
  side.append(bar);
  const hint=el('p','cl223-description',
-  step===0?L('المهمة 1: افتح شرح الموضوع، وبعدين أكّد إنك قرأته.','Quest 1: open the lesson, then confirm you read it.'):
+  step===0?L('المهمة 1: سؤال سهل عن الموضوع بيبدأ فورًا!','Quest 1 starts immediately with one easy question!'):
   step===1?L('المهمة 2: سؤال واحد سهل، جرّب لحد ما تزبط!','Quest 2: one easy question. Try until you get it!'):
   step===2?L('المهمة 3: جاوب سؤالين قصار، ويفتح الموضوع القادم.','Quest 3: answer two short questions to unlock the next topic.'):
   L('أبدعت! خلصت المهمات الثلاث وفتحت اللي بعدها.','Amazing! All three quests are complete, and the next topic is unlocked.'));
  side.append(hint);
  if(!isOpen){side.append(el('p','cl223-lock-note',L('كمّل المرحلة اللي قبلها عشان تفتح هاي.','Finish the previous topic to unlock this.')));return}
  if(readOnly){const go=button(L('معاينة الشرح','Preview lesson'),'cl223-primary');go.addEventListener('click',()=>window.classoraCurriculum?.openAt?.(t.grade,t.subject,t.title));side.append(go,el('p','cl223-fine',L('هذا الحساب يقدر يشوف الخريطة. التقدّم والمكافآت لحساب الطالب.','This account can preview the map. Progress and rewards belong to students.')));return}
- if(step===0){
-  const visit=button(L('افتح شرح الموضوع','Open lesson'),'cl223-primary');
-  visit.addEventListener('click',()=>{opened.add(t.value);window.classoraCurriculum?.openAt?.(t.grade,t.subject,t.title);});
-  const mark=button(L('قرأت الشرح، المهمة تمت','I read the lesson'),'cl223-outline');
-  mark.disabled=!opened.has(t.value);mark.title=!opened.has(t.value)?L('افتح الشرح أولًا','Open the lesson first'):'';
-  mark.addEventListener('click',()=>finish(t,1));
-  side.append(visit,mark,el('small','cl223-fine',L('إذا خرجت من الشرح، ارجع للخريطة واضغط تم.','After visiting the lesson, return here and tap complete.')));
-  return
- }
  if(step===3){
   const badge=el('div','cl223-victory');
   badge.innerHTML='<span>'+svg('crown')+'</span>';
@@ -260,8 +259,8 @@ function mission(side,t,group){
   }
   return
  }
- const missionNum=step===1?1:2;
- const goal=step===1?1:2;
+ const missionNum=step;
+ const goal=step===2?2:1;
  if(!challenge||!challenge.key.startsWith(owned()+'|'+t.value+'|'+missionNum+'|'))challenge=null;
  if(!challenge){question(t,missionNum,0)}
  const data=challenge;
