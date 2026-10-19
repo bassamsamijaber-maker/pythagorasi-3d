@@ -18670,6 +18670,12 @@ window.classoraProfileVideo={
    if(parsed.protocol!=="https:"||parsed.username||parsed.password||
       !/\.(mp4|webm)$/i.test(parsed.pathname))throw Error("direct-https-video-required");
   }
+  const old=String(window.PythagorasiUser?.photoVideoUrl||"");
+  // Removing a Firebase-hosted clip should remove its bytes as well as the link.
+  if(!value&&old.includes("firebasestorage.googleapis.com/")){
+   try{await deleteObject(storageRef(getStorage(firebaseApp),"profileVideos/"+auth.currentUser.uid+"/avatar"))}
+   catch(e){if(e.code!=="storage/object-not-found")throw e}
+  }
   await setDoc(doc(db,"users",auth.currentUser.uid),{photoVideoUrl:value,updatedAt:serverTimestamp()},{merge:true});
   window.PythagorasiUser={...window.PythagorasiUser,photoVideoUrl:value};
   document.dispatchEvent(new Event("classora:profile-video-changed"));
