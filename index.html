@@ -18483,6 +18483,22 @@ const classoraLearningStore=createLearningStore({
  managedClasses:async()=>{const p=window.PythagorasiUser;if(!p)return[];const ids=Array.isArray(p.classIds)?p.classIds:[];return Promise.all(ids.map(async id=>{try{const s=await getDoc(doc(db,"classes",id));return s.exists()?{id,...s.data()}:{id}}catch{return{id}}}))},
  isAdmin:()=>isSuperAdminProfile()
 });
+/* Account-validated quest XP bridge. Uses the existing anti-duplicate
+ * server transaction. No XP is ever granted by local-only CSS/UI state. */
+window.classoraClaimQuestXP=async function(value){
+ const match=/^curr:(7|8|9|10):([a-z]+):(\d+)$/.exec(String(value||""));
+ if(!match||!auth.currentUser||window.PythagorasiUser?.role!=="student")throw Error("student-login-required");
+ const topic=classoraAssessment.get(value);
+ if(!topic||topic.grade!==Number(match[1])||topic.subject!==match[2]||topic.index!==Number(match[3]))throw Error("invalid-quest-topic");
+ const profile=window.PythagorasiUser||{};
+ // The third mission must have been saved to the authenticated profile.
+ const quest=profile.accountState?.learningTools130?.quests?.[value];
+ if(!quest||quest.step!==3)throw Error("finish-missions-first");
+ const key="quest-"+match[1]+"-"+match[2]+"-"+match[3];
+ const result=await classoraLearningStore.record({sessionId:"classora-v223-"+key,topic:key,subject:match[2],correct:3,total:3});
+ window.classoraStudentDashboard?.refresh?.();
+ return result;
+};
 window.classoraCurriculum=mountCurriculum({
  isGuest:()=>isGuestSession()||!auth.currentUser,requireLogin:()=>showGuestLoginReminder("protected"),
  language:()=>currentUILanguage,
