@@ -1,6 +1,7 @@
 /* Classora Arena 227 — social learning duels and XP-only cosmetic garage.
  * Existing Classora account auth & Firestore bridge own every write.
  */
+import {learningState} from './learning-memory-v130.js?v=130';
 const $=id=>document.getElementById(id);
 const lang=()=>document.documentElement.lang||'ar';
 const tr=(ar,en)=>lang()==='ar'?ar:(lang()==='en'?en:(window.ClassoraLocale?.tFor?.(lang(),en)||en));
@@ -25,7 +26,7 @@ const ranks=[
  {min:15,ar:'ماسي',en:'Diamond',cls:'diamond'},
  {min:25,ar:'أسطورة كلاسورا',en:'Classora Legend',cls:'legend'}
 ];
-const questTotal=()=>Object.values(user()?.accountState?.learningTools130?.quests||{}).filter(x=>Number(x?.step)===3).length;
+const questTotal=()=>Object.values(learningState().quests||{}).filter(x=>Number(x?.step)===3).length;
 const currentRank=()=>[...ranks].reverse().find(r=>questTotal()>=r.min)||ranks[0];
 const symbols={flame:'✦',lightning:'ϟ',ice:'❄',plasma:'✧',rocket:'➤',comet:'☄',champion:'★',starlight:'✳',aura:'◈'};
 let liveCode='',stopLive=null,matchSnapshot=null,working=false,lastUid='',activeTab='duel';
