@@ -46,20 +46,21 @@ const cosmetics=[
 const account=()=>{const p=window.PythagorasiUser;return p&&document.body.classList.contains('classora-authenticated')&&(p.uid||p.profileId)?p:null};
 const student=()=>account()?.role==='student';
 const owned=()=>String(account()?.uid||account()?.profileId||'guest');
-const grade=()=>{const p=account();let chosen=0,fallback=8;try{chosen=Number(localStorage.getItem('classora_quest_grade_'+owned())||0);fallback=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const x=[7,8,9,10].includes(chosen)?chosen:Number(p?.grade)||fallback;return [7,8,9,10].includes(x)?x:8};
+// The assigned grade is authoritative. A grade switch in the quest map must
+// never let the player access a different grade's progression.
+const grade=()=>{const p=account();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const n=Number(p?.grade)||saved;return [7,8,9,10].includes(n)?n:8};
 const bank=()=>window.classoraAssessment?.topics||[];
 const state=()=>learningState();
 const completed=()=>Object.values(state().quests||{}).filter(x=>x?.step===3).length;
 const progress=t=>Math.max(0,Math.min(3,Number(state().quests?.[t.value]?.step)||0));
 const rewardClaimed=t=>Boolean(state().quests?.[t.value]?.claimed);
 const display=t=>language()==='ar'?t.title:(t.en||t.title);
+const hashString=str=>{let h=2166136261;for(const char of String(str)){h^=char.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 const groupsFor=(g)=>Object.keys(subjects).map(key=>{
  const rows=bank().filter(t=>t.grade===g&&t.subject===key);
- const high=rows.filter(t=>subjects[key].terms.test(t.title)||subjects[key].terms.test(t.en||''));
- const selected=[...high,...rows.filter(t=>!high.includes(t))].slice(0,Math.min(8,rows.length));
- // Re-sequence the chosen important topics in curriculum order.
- selected.sort((a,b)=>a.index-b.index);
- return {key,...subjects[key],topics:selected};
+ // Stable random order per account + grade; never reshuffle a path mid-progress.
+ const random=[...rows].sort((a,b)=>hashString(owned()+'|'+g+'|'+key+'|'+a.value)-hashString(owned()+'|'+g+'|'+key+'|'+b.value));
+ return {key,...subjects[key],topics:random.slice(0,Math.min(8,random.length))};
 }).filter(g=>g.topics.length);
 let currentSubject='math',selected=null,opened=new Set(),challenge=null,rendering=false,sessionAccount='';
 function gainTopic(t){
@@ -138,10 +139,6 @@ function makePreview(){
  preview.hidden=true;
  return preview;
 }
-function setGrade(g){
- try{localStorage.setItem('classora_quest_grade_'+owned(),String(g))}catch{}
- currentSubject=groupsFor(g)[0]?.key||'math';selected=null;challenge=null;draw();
-}
 function openMap(){
  if(!account())return;
  const panel=byId('cl223MapPanel');if(!panel)return;
@@ -162,14 +159,13 @@ function draw(){
   const head=el('div','');head.append(el('span','cl223-kicker','CLASSORA · ADVENTURE'),el('h2','',L('خريطة المهمات','Mission map')),el('p','',L('امشِ على الطريق، وكل موضوع يفتح اللي بعده.','Follow the path to unlock the next topic.')));
   const close=button('×','cl223-close');close.setAttribute('aria-label',L('إغلاق الخريطة','Close map'));close.addEventListener('click',closeMap);top.append(head,close);
   const filters=el('div','cl223-filters');
-  const gr=el('div','cl223-grade-picker');
-  [7,8,9,10].forEach(n=>{const b=button(L('صف '+n,'Grade '+n),'cl223-grade '+(currentGrade===n?'active':''));b.addEventListener('click',()=>setGrade(n));gr.append(b)});
+  const badge=el('span','cl223-assigned-grade',L('صفك: '+currentGrade,'Your grade: '+currentGrade));
   const subs=el('div','cl223-subject-picker');
   groups.forEach(g=>{
    const b=button(L(g.ar,g.en),'cl223-subject '+(currentSubject===g.key?'active':''));
    b.style.setProperty('--quest-color',g.color);b.addEventListener('click',()=>{currentSubject=g.key;selected=null;challenge=null;draw()});subs.append(b)
   });
-  filters.append(gr,subs);
+  filters.append(badge,subs);
   const found=groups.find(g=>g.key===currentSubject)||groups[0];
   if(!found){panel.append(top,filters,el('p','',L('ما في مواضيع لهذا الصف بعد.','No lessons for this grade yet.')));return}
   currentSubject=found.key;
