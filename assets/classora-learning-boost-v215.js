@@ -16,11 +16,12 @@ const icon=(kind)=>{
 };
 const node=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=String(txt);return e};
 const btn=(title,cls='cl215-action')=>{const b=node('button',cls,title);b.type='button';return b};
-const student=()=>{const p=window.PythagorasiUser;return p&&p.role==='student'&&p.uid&&document.body.classList.contains('classora-student-mode')&&!$('authGate')?.classList.contains('show')?p:null};
+const student=()=>{const p=window.PythagorasiUser;return p&&p.role==='student'&&document.body.classList.contains('classora-authenticated')&&document.body.dataset.userRole==='student'&&!$('authGate')?.classList.contains('show')?p:null};
+const accountId=p=>String(p?.uid||p?.profileId||'');
 const grade=()=>{const p=student();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const n=Number(p?.grade||saved);return [7,8,9,10].includes(n)?n:8};
 const asTopic=a=>a?.topic||a||{};
 const langDate=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
-const dailyKey=p=>'classora_daily_v215_'+p.uid+'_'+langDate();
+const dailyKey=p=>'classora_daily_v215_'+accountId(p)+'_'+langDate();
 const hash=value=>{let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 const formatTitle=t=>locale()==='ar'?String(t.title||''):(window.classoraAssessment?.topics?.find(x=>x.grade===Number(t.grade)&&x.subject===t.subject&&x.title===t.title)?.en||String(t.title||''));
 function openTopic(t){
@@ -30,7 +31,7 @@ function openTopic(t){
  else $('classoraLearningFront')?.querySelector('[data-cl-action="subjects"]')?.click();
 }
 function attempts(){
- const s=learningState(),id=String(student()?.uid||'');
+ const s=learningState(),id=accountId(student());
  if(!id)return [];
  return Object.values(s.attempts||{}).filter(a=>a&&a.topic&&[7,8,9,10].includes(Number(a.topic.grade))).sort((a,b)=>Number(b.at||0)-Number(a.at||0));
 }
@@ -142,7 +143,7 @@ function openMap(){
 function readDaily(p){
  try{
   const data=JSON.parse(localStorage.getItem(dailyKey(p))||'null');
-  if(data&&data.date===langDate()&&data.uid===p.uid&&data.grade===grade()&&Array.isArray(data.questions)&&data.questions.length===5&&Array.isArray(data.answers))return data;
+  if(data&&data.date===langDate()&&data.uid===accountId(p)&&data.grade===grade()&&Array.isArray(data.questions)&&data.questions.length===5&&Array.isArray(data.answers))return data;
  }catch{}
  return null;
 }
@@ -150,8 +151,8 @@ let dailyVolatile=null;
 function writeDaily(data){dailyVolatile=data;try{localStorage.setItem(dailyKey(student()),JSON.stringify(data))}catch{}}
 function createDaily(){
  const p=student(),bank=window.classoraAssessment;
- if(!p||!bank?.generate||!Array.isArray(bank.topics))return null;
- const g=grade(),date=langDate(),source=locale()==='ar'?'ar':'en',seed=hash(date+'|'+g+'|'+p.uid);
+ if(!p||!accountId(p)||!bank?.generate||!Array.isArray(bank.topics))return null;
+ const g=grade(),date=langDate(),source=locale()==='ar'?'ar':'en',seed=hash(date+'|'+g+'|'+accountId(p));
  const pool=bank.topics.filter(t=>t.grade===g&&subjectNames[t.subject]);
  // Rotate the subject order by day, then sample varied topics from real curriculum.
  const subjects=Object.keys(subjectNames).filter(sub=>pool.some(t=>t.subject===sub));
@@ -175,14 +176,14 @@ function createDaily(){
  }
  }
  if(out.length<5)return null;
- const data={version:215,uid:p.uid,date,grade:g,language:source,questions:out,answers:[],completed:false};
+ const data={version:215,uid:accountId(p),date,grade:g,language:source,questions:out,answers:[],completed:false};
  writeDaily(data);return data;
 }
 function dailyState(){
  const p=student();if(!p)return null;
  const saved=readDaily(p);
  if(saved)return saved;
- if(dailyVolatile?.uid===p.uid&&dailyVolatile?.date===langDate()&&dailyVolatile.grade===grade())return dailyVolatile;
+ if(dailyVolatile?.uid===accountId(p)&&dailyVolatile?.date===langDate()&&dailyVolatile.grade===grade())return dailyVolatile;
  return createDaily();
 }
 function openChallenge(){
@@ -253,7 +254,7 @@ function refreshSummary(){
  const topic=$('cl215WeakTopic');if(topic)topic.textContent=weak[0]?formatTitle(weak[0].topic):tr('ابدأ تدريبك اليوم','Start practicing today');
  const note=$('cl215WeakNote');if(note)note.textContent=weak[0]?tr('من ','From ')+String(weak[0].wrong)+' / '+String(weak[0].wrong+weak[0].right)+tr(' محاولات فيها خطأ',' attempts with mistakes'):tr('بعد التدريب بنعرف شو تراجع','We’ll suggest topics after practice');
  const daily=readDaily(p)||dailyVolatile;
- const d=$('cl215DailyCount');if(d)d.textContent=daily?.date===langDate()&&daily?.uid===p.uid?daily.answers.length+' / 5':'0 / 5';
+ const d=$('cl215DailyCount');if(d)d.textContent=daily?.date===langDate()&&daily?.uid===accountId(p)?daily.answers.length+' / 5':'0 / 5';
  const sessions=learningState().sessions||{};
  const started=$('cl215StartedCount');if(started)started.textContent=String(Object.keys(sessions).length);
  section.hidden=false;
@@ -281,7 +282,27 @@ function init(){
   if(action==='path')openPath();
   if(action==='map')openMap();
  });
- const rerender=()=>{section.hidden=!student();if(student()){localize(section);refreshSummary()}else clearPanel()};
+ let lastAccountId='';
+ const rerender=()=>{
+  const p=student();
+  if(p){
+   const id=accountId(p);
+   // Returning to lobby, changing device appearance or refreshing progress
+   // must never remove the learning cards or the open review panel.
+   if(lastAccountId&&id&&id!==lastAccountId)clearPanel();
+   if(id)lastAccountId=id;
+   if(section.hidden)section.hidden=false;
+   localize(section);
+   refreshSummary();
+  }else{
+   // Hide account-specific learning information only for logout or another role.
+   section.hidden=true;
+   if(!document.body.classList.contains('classora-authenticated')||
+      document.body.dataset.userRole!=='student'){
+    clearPanel();lastAccountId='';dailyVolatile=null;
+   }
+  }
+ };
  document.addEventListener('classora:learning-update',()=>{if(student())refreshSummary()});
  new MutationObserver(rerender).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
  new MutationObserver(rerender).observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
