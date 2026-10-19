@@ -16,6 +16,17 @@ const names={
  champion:['لقب البطل','Champion title'],starlight:['نجوم متطايرة','Falling stars'],
  aura:['هالة خارقة','Super aura']
 };
+const ranks=[
+ {min:0,ar:'مبتدئ',en:'Rookie',cls:'rookie'},
+ {min:1,ar:'برونزي',en:'Bronze',cls:'bronze'},
+ {min:3,ar:'فضي',en:'Silver',cls:'silver'},
+ {min:6,ar:'ذهبي',en:'Gold',cls:'gold'},
+ {min:10,ar:'بلاتيني',en:'Platinum',cls:'platinum'},
+ {min:15,ar:'ماسي',en:'Diamond',cls:'diamond'},
+ {min:25,ar:'أسطورة كلاسورا',en:'Classora Legend',cls:'legend'}
+];
+const questTotal=()=>Object.values(user()?.accountState?.learningTools130?.quests||{}).filter(x=>Number(x?.step)===3).length;
+const currentRank=()=>[...ranks].reverse().find(r=>questTotal()>=r.min)||ranks[0];
 const symbols={flame:'✦',lightning:'ϟ',ice:'❄',plasma:'✧',rocket:'➤',comet:'☄',champion:'★',starlight:'✳',aura:'◈'};
 let liveCode='',stopLive=null,matchSnapshot=null,working=false,lastUid='',activeTab='duel';
 function message(text,bad=false){
@@ -43,6 +54,7 @@ function init(){
  if($('cl227Home'))return;
  const home=el('section','cl227-home');home.id='cl227Home';
  const heading=el('header','cl227-heading');heading.append(el('span','cl227-brow','CLASSORA · ARENA & GARAGE'),el('h2','',tr('الساحة والكراج','Arena & garage')),el('p','',tr('تحدّى صاحبك، واجمع XP وافتح مؤثرات متحركة لبروفايلك.','Challenge a friend, earn XP from study and unlock profile cosmetics.')));
+ const rank=el('div','cl227-rank');rank.id='cl227Rank';heading.append(rank);
  const entries=el('div','cl227-entry-grid');
  const duel=card(tr('1v1 ضد صاحبك','1v1 vs a friend'),tr('نفس الأسئلة، نتيجة مباشرة وكود دعوة.','Same questions, live scores and a room code.'),'duel');
  const join=btn(tr('ادخل التحدي','Open duel'),'cl227-entry-cta');join.addEventListener('click',()=>show('duel'));duel.append(join);
@@ -54,6 +66,7 @@ function init(){
  const anchor=$('cl223Preview')||front.querySelector('#cl214-catalog');
  if(anchor)anchor.after(home);else front.append(home);
  document.addEventListener('classora-auth-settled',sync);
+ document.addEventListener('classora:learning-update',sync);
  document.addEventListener('classora:arena-shop-updated',sync);
  document.addEventListener('classora:profile-video-changed',syncMedia);
  new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
@@ -227,6 +240,7 @@ function profileAdditions(){
   const hero=modal.querySelector('.profile-hero');
   if(hero)hero.after(node);else modal.querySelector('.modalbox')?.append(node);
   const title=el('h3','',tr('شخصية البروفايل','Profile style'));
+  const badge=el('div','cl227-profile-rank');badge.id='cl227ProfileRank';
   const clip=el('p','',tr('ممكن ترفع GIF صغير من زر الصورة العادي، أو تحط رابط فيديو MP4/WebM مباشر يظهر متحركًا.','Upload a small GIF using the photo button or paste a direct HTTPS MP4/WebM video URL.'));
   const field=el('input','cl227-video-url');field.id='cl227VideoUrl';field.type='url';field.placeholder='https://example.com/clip.mp4';field.autocomplete='off';field.maxLength=720;field.setAttribute('aria-label',tr('رابط فيديو البروفايل','Profile video URL'));
   const controls=el('div','cl227-media-controls');
@@ -236,7 +250,7 @@ function profileAdditions(){
   const clear=btn(tr('حذف الفيديو','Remove clip'),'cl227-outline');
   clear.addEventListener('click',async()=>{try{await window.classoraProfileVideo.save('');field.value='';status.textContent=tr('انحذف الفيديو','Video removed')}catch(e){status.textContent=errorText(e)}});
   controls.append(save,clear);
-  const status=el('p','cl227-media-status');node.append(title,clip,field,controls,status)
+  const status=el('p','cl227-media-status');node.append(title,badge,clip,field,controls,status)
  }
  const field=$('cl227VideoUrl');if(field&&document.activeElement!==field)field.value=String(user()?.photoVideoUrl||'');
 }
@@ -244,10 +258,21 @@ function sync(){
  const p=user();if(!p){detach();$('cl227Home')?.setAttribute('hidden','');$('cl227Pane')?.setAttribute('hidden','');document.body.removeAttribute('data-cl227-effect');return}
  if(lastUid&&lastUid!==p.uid){detach();$('cl227Pane')?.setAttribute('hidden','')}lastUid=p.uid||'';
  $('cl227Home')?.removeAttribute('hidden');
+ const rank=currentRank(),rankEl=$('cl227Rank');
+ if(rankEl){
+  const index=ranks.indexOf(rank),next=ranks[index+1];
+  rankEl.textContent=tr('رتبتك: ','Your rank: ')+tr(rank.ar,rank.en)+' · '+questTotal()+tr(' مواضيع',' topics')+(next?' · '+tr('القادم: ','Next: ')+tr(next.ar,next.en)+' ('+next.min+')':'');
+  rankEl.dataset.rank=rank.cls;
+ }
  const effect=p.questShop?.equipped||'none';
  document.body.dataset.cl227Effect=names[effect]?effect:'none';
  if($('cl227Pane')&&!$('cl227Pane').hidden&&activeTab==='shop')drawShop();
- if($('profileModal')?.classList.contains('open'))profileAdditions();
+ if($('profileModal')?.classList.contains('open')){
+  profileAdditions();
+  const rank=$('cl227Rank');
+  const status=$('cl227ProfileRank');
+  if(status&&rank)status.textContent=rank.textContent;
+ }
  syncMedia();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
