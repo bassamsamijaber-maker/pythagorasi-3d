@@ -131,6 +131,7 @@ function init(){
    if(saved&&window.classoraCurriculum?.openAt){window.classoraCurriculum.openAt(saved.grade,saved.subject,saved.topic);return}
    jumpSubjects();return;
   }
+  if(action==='challenge'&&window.classoraLearningBoost?.openChallenge){window.classoraLearningBoost.openChallenge();return}
   if(action==='assistant'){const input=get('lobbyAIInput');input?.scrollIntoView({block:'center',behavior:'smooth'});input?.focus({preventScroll:true});return}
   if(action==='progress'){if(typeof window.classoraLearningPlus?.progress==='function'){window.classoraLearningPlus.progress();return}jumpSubjects();return}
   if(action==='flashcards'){if(typeof window.classoraLearningPlus?.flashcards==='function'){window.classoraLearningPlus.flashcards();return}jumpSubjects();return}
