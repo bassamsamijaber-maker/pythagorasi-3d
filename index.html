@@ -2539,6 +2539,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
 
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
+import {getStorage,ref as storageRef,uploadBytes,getDownloadURL,deleteObject}
+  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 /* -------------------- FIREBASE / LOGIN -------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyAj97oo6iQ9mK0Va6gYivsvnicN14LUYN0",
@@ -18646,6 +18648,20 @@ async function classoraArenaEquip(itemId){
 }
 
 window.classoraProfileVideo={
+ upload:async function(file){
+  if(!auth.currentUser||window.PythagorasiUser?.uid!==auth.currentUser.uid)throw Error("login-required");
+  if(!file||!["video/mp4","video/webm"].includes(file.type)||
+     file.size<1||file.size>3*1024*1024)throw Error("video-limit");
+  const path="profileVideos/"+auth.currentUser.uid+"/avatar";
+  const storage=getStorage(firebaseApp);
+  const videoRef=storageRef(storage,path);
+  await uploadBytes(videoRef,file,{contentType:file.type,cacheControl:"public,max-age=1800"});
+  const value=await getDownloadURL(videoRef);
+  await setDoc(doc(db,"users",auth.currentUser.uid),{photoVideoUrl:value,updatedAt:serverTimestamp()},{merge:true});
+  window.PythagorasiUser={...window.PythagorasiUser,photoVideoUrl:value};
+  document.dispatchEvent(new Event("classora:profile-video-changed"));
+  return value;
+ },
  save:async function(raw){
   if(!auth.currentUser||window.PythagorasiUser?.uid!==auth.currentUser.uid)throw Error("login-required");
   const value=String(raw||"").trim().slice(0,720);
