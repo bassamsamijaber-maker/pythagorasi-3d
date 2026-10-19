@@ -18535,7 +18535,7 @@ const arenaShopCatalog={
 };
 function classoraArenaAuth(){
  if(!auth.currentUser||!window.PythagorasiUser||auth.currentUser.uid!==window.PythagorasiUser.uid
- ||window.PythagorasiUser.role!=="student")throw Error("student-login-required");
+ ||(window.PythagorasiUser.role!=="student"&&!isSuperAdminProfile()))throw Error("student-login-required");
  return window.PythagorasiUser;
 }
 function classoraArenaGrade(){
