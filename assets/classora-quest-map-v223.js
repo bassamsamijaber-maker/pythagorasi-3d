@@ -95,7 +95,7 @@ function wardrobe(){
   if(hero)hero.insertAdjacentElement('afterend',box);else modal.querySelector('.modalbox')?.append(box);
   box.addEventListener('click',e=>{
    const target=e.target.closest('[data-cl223-equip]');
-   if(!target||!student())return;
+   if(!target||(!student()&&!window.classoraIsSuperAdmin?.()))return;
    const id=target.dataset.cl223Equip;
    if(equipQuestCosmetic(id)){updateBeauty();wardrobe()}
   });
@@ -108,16 +108,16 @@ function wardrobe(){
  box.append(top);
  const panel=el('div','cl223-wardrobe-grid');
  for(const cosmetic of cosmetics){
-  const unlocked=avail>=cosmetic.need;
+  const unlocked=avail>=cosmetic.need||Boolean(window.classoraIsSuperAdmin?.());
   const b=button('','cl223-cosmetic '+(unlocked?'unlocked':'locked')+' '+(equipped===cosmetic.id?'equipped':''));
-  b.dataset.cl223Equip=cosmetic.id;b.disabled=!unlocked||!student();
+  b.dataset.cl223Equip=cosmetic.id;b.disabled=!unlocked||(!student()&&!window.classoraIsSuperAdmin?.());
   const icon=el('span','cl223-cosmetic-orbit '+cosmetic.id);
   icon.innerHTML=svg(unlocked?'spark':'lock');
   const details=el('span','');details.append(el('b','',L(cosmetic.ar,cosmetic.en)),el('small','',unlocked?(equipped===cosmetic.id?L('مجهّز الآن','Equipped'):L('اضغط للتجهيز','Tap to equip')):L('أكمل '+cosmetic.need+' مواضيع','Finish '+cosmetic.need+' topics')));
   b.append(icon,details);panel.append(b);
  }
  box.append(panel);
- const note=el('small','cl223-wardrobe-note',student()?L('التأثيرات للتزيين فقط، بدون مزايا مدفوعة أو نقاط وهمية.','Decorations only. No pay-to-win boosts or fake XP.'):L('معاينة المكافآت — طالبك يفتحها بالتعلّم.','Preview rewards — students unlock them by learning.'));
+ const note=el('small','cl223-wardrobe-note',(student()||window.classoraIsSuperAdmin?.())?L('التأثيرات للتزيين فقط، بدون مزايا مدفوعة أو نقاط وهمية.','Decorations only. No pay-to-win boosts or fake XP.'):L('معاينة المكافآت — طالبك يفتحها بالتعلّم.','Preview rewards — students unlock them by learning.'));
  box.append(note);
 }
 function sync(){
