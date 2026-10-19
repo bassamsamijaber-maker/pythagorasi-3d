@@ -16,7 +16,12 @@ const icon=(kind)=>{
 };
 const node=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=String(txt);return e};
 const btn=(title,cls='cl215-action')=>{const b=node('button',cls,title);b.type='button';return b};
-const student=()=>{const p=window.PythagorasiUser;return p&&p.role==='student'&&document.body.classList.contains('classora-authenticated')&&document.body.dataset.userRole==='student'&&!$('authGate')?.classList.contains('show')?p:null};
+// All authenticated account roles may access the educational tools.
+ // Personal learning history is always scoped to the active profile ID.
+ const student=()=>{const p=window.PythagorasiUser;return p&&(p.uid||p.profileId)&&
+   document.body.classList.contains('classora-authenticated')&&
+   !['guest','anonymous'].includes(p.role)&&
+   !$('authGate')?.classList.contains('show')?p:null};
 const accountId=p=>String(p?.uid||p?.profileId||'');
 const grade=()=>{const p=student();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const n=Number(p?.grade||saved);return [7,8,9,10].includes(n)?n:8};
 const asTopic=a=>a?.topic||a||{};
@@ -260,8 +265,8 @@ function refreshSummary(){
  section.hidden=false;
 }
 function init(){
- const board=$('classoraStudentDashboard'),front=$('classoraLearningFront');
- if(!board||!front){window.addEventListener('load',init,{once:true});return}
+ const front=$('classoraLearningFront');
+ if(!front)return;
  if($('classoraLearningBoost'))return;
  const section=node('section','cl215-insights');section.id='classoraLearningBoost';
  section.innerHTML=
@@ -298,7 +303,7 @@ function init(){
    // Hide account-specific learning information only for logout or another role.
    section.hidden=true;
    if(!document.body.classList.contains('classora-authenticated')||
-      document.body.dataset.userRole!=='student'){
+      $('authGate')?.classList.contains('show')){
     clearPanel();lastAccountId='';dailyVolatile=null;
    }
   }
@@ -307,6 +312,8 @@ function init(){
  new MutationObserver(rerender).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
  new MutationObserver(rerender).observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
  window.addEventListener('pageshow',rerender);
+ document.addEventListener('classora-auth-settled',rerender);
+ if($('authGate'))new MutationObserver(rerender).observe($('authGate'),{attributes:true,attributeFilter:['class']});
  window.classoraLearningBoost={openChallenge,openMistakes,openPath,openMap,refresh:rerender};
  rerender();
 }
