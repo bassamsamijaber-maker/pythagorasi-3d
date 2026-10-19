@@ -17,7 +17,7 @@ const icon=(kind)=>{
 const node=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=String(txt);return e};
 const btn=(title,cls='cl215-action')=>{const b=node('button',cls,title);b.type='button';return b};
 const student=()=>{const p=window.PythagorasiUser;return p&&p.role==='student'&&p.uid&&document.body.classList.contains('classora-student-mode')&&!$('authGate')?.classList.contains('show')?p:null};
-const grade=()=>{const p=student(),n=Number(p?.grade||localStorage.getItem('classora_curriculum_grade')||8);return [7,8,9,10].includes(n)?n:8};
+const grade=()=>{const p=student();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const n=Number(p?.grade||saved);return [7,8,9,10].includes(n)?n:8};
 const asTopic=a=>a?.topic||a||{};
 const langDate=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
 const dailyKey=p=>'classora_daily_v215_'+p.uid+'_'+langDate();
@@ -158,9 +158,11 @@ function createDaily(){
  subjects.sort((a,b)=>hash(a+seed)-hash(b+seed));
  const sorted=[...pool].sort((a,b)=>hash(a.value+seed)-hash(b.value+seed));
  const out=[],used=new Set(),usedSubjects=new Set();
- for(const t of [...subjects.map(sub=>sorted.find(x=>x.subject===sub)).filter(Boolean),...sorted]){
+ const candidates=[...subjects.map(sub=>sorted.find(x=>x.subject===sub)).filter(Boolean),...sorted];
+ for(let pass=0;pass<2&&out.length<5;pass++){
+ for(const t of candidates){
   if(out.length===5)break;
-  if(used.has(t.value)||usedSubjects.has(t.subject))continue;
+  if(used.has(t.value)||(pass===0&&usedSubjects.has(t.subject)))continue;
   used.add(t.value);
   try{
    const level=['easy','medium','hard','expert'][out.length%4];
@@ -170,6 +172,7 @@ function createDaily(){
    out.push({prompt:String(q.prompt).slice(0,1200),options:q.options.map(x=>String(x).slice(0,180)),answer:String(q.answer),explanation:String(q.explanation||'').slice(0,1000),title:t.title,subject:t.subject,grade:t.grade,id:t.value,index:t.index,level});
    usedSubjects.add(t.subject);
   }catch(e){console.warn('Classora daily challenge skip',t.value,e?.message)}
+ }
  }
  if(out.length<5)return null;
  const data={version:215,uid:p.uid,date,grade:g,language:source,questions:out,answers:[],completed:false};
