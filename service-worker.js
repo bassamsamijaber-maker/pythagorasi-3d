@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v226-quest-adventure";;
+const CACHE_NAME="classora-v227-arena-xp-garage";
 const APP_SHELL=[
+  "./assets/classora-arena-shop-v227.js?v=227",
+  "./assets/classora-arena-shop-v227.css?v=227",
   "./assets/classora-quest-map-v223.css?v=223",
   "./assets/classora-quest-map-v223.js?v=226",
   "./assets/classora-learning-boost-v215.css?v=221",
