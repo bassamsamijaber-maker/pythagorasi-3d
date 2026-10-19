@@ -18501,6 +18501,142 @@ window.classoraClaimQuestXP=async function(value){
  window.classoraStudentDashboard?.refresh?.();
  return result;
 };
+
+/* Classora Arena 1v1 and XP cosmetic shop — V227.
+ * Server rules for duels2026 must be deployed with Firebase before live matches
+ * are bookable. No match grants XP; shop updates use atomic transactions. */
+const arenaShopCatalog={
+ flame:{cost:70},lightning:{cost:110},ice:{cost:135},
+ plasma:{cost:175},rocket:{cost:230},comet:{cost:300},
+ champion:{cost:180},starlight:{cost:95},aura:{cost:260}
+};
+function classoraArenaAuth(){
+ if(!auth.currentUser||!window.PythagorasiUser||auth.currentUser.uid!==window.PythagorasiUser.uid
+ ||window.PythagorasiUser.role!=="student")throw Error("student-login-required");
+ return window.PythagorasiUser;
+}
+function classoraArenaGrade(){
+ const p=classoraArenaAuth();let saved=8;
+ try{saved=Number(localStorage.getItem("classora_curriculum_grade")||8)}catch{}
+ const grade=Number(p.grade)||saved;return [7,8,9,10].includes(grade)?grade:8;
+}
+async function classoraArenaCreate(){
+ const p=classoraArenaAuth(),grade=classoraArenaGrade();
+ const topics=classoraAssessment.topics.filter(t=>t.grade===grade);
+ const mixed=[...topics].sort(()=>Math.random()-.5).slice(0,12);
+ const questions=[];
+ for(const t of mixed){
+  if(questions.length>=5)break;
+  try{
+   const result=classoraAssessment.generate(t.value,3,"easy",currentUILanguage==="ar"?"ar":"en",true);
+   const q=result.questions.find(x=>x.type==="mcq"&&Array.isArray(x.options)&&x.options.length>=2&&x.options.includes(String(x.answer)));
+   if(q)questions.push({prompt:String(q.prompt).slice(0,450),options:q.options.slice(0,4).map(x=>String(x).slice(0,150)),answer:q.options.indexOf(String(q.answer)),topic:String(t.value),subject:t.subject});
+  }catch{}
+ }
+ if(questions.length!==5)throw Error("not-enough-questions");
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ for(let n=0;n<7;n++){
+  const rand=new Uint8Array(6);crypto.getRandomValues(rand);
+  const code=Array.from(rand,v=>chars[v%chars.length]).join("");
+  const room=doc(db,"duels2026",code);
+  try{
+   await runTransaction(db,async tx=>{
+    const existing=await tx.get(room);if(existing.exists())throw Error("code-taken");
+    tx.set(room,{hostUid:auth.currentUser.uid,guestUid:"",hostName:String(p.displayName||"Player 1").slice(0,40),
+     guestName:"",grade,status:"waiting",questions,
+     createdAt:serverTimestamp(),updatedAt:serverTimestamp(),startedAt:null,expiresAt:Date.now()+7200000});
+   });
+   return code;
+  }catch(e){if(String(e?.message).includes("code-taken"))continue;throw e}
+ }
+ throw Error("room-code-unavailable");
+}
+async function classoraArenaJoin(raw){
+ const p=classoraArenaAuth(),code=String(raw||"").trim().toUpperCase();
+ if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))throw Error("invalid-code");
+ const room=doc(db,"duels2026",code);
+ await runTransaction(db,async tx=>{
+  const snap=await tx.get(room);if(!snap.exists())throw Error("room-not-found");
+  const x=snap.data();if(x.hostUid===auth.currentUser.uid||x.guestUid===auth.currentUser.uid)return;
+  if(x.status!=="waiting"||x.guestUid||Date.now()>x.expiresAt)throw Error("room-full");
+  if(x.grade!==classoraArenaGrade())throw Error("different-grade");
+  tx.update(room,{guestUid:auth.currentUser.uid,guestName:String(p.displayName||"Player 2").slice(0,40),
+    status:"playing",startedAt:serverTimestamp(),updatedAt:serverTimestamp()});
+ });
+ return code;
+}
+function classoraArenaWatch(raw,onChange,onError){
+ const uid=classoraArenaAuth().uid,code=String(raw||"").toUpperCase();
+ if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))throw Error("invalid-code");
+ const room=doc(db,"duels2026",code);
+ let roomData=null,host=null,guest=null,subs=[],currentGuest="",currentHost="",closed=false;
+ const emit=()=>{if(!closed)onChange({room:roomData,host:host||[],guest:guest||[],uid,code})};
+ const watchAnswers=(h,g)=>{
+  if(h===currentHost&&g===currentGuest)return;
+  subs.forEach(fn=>fn());subs=[];host=null;guest=null;currentHost=h;currentGuest=g;
+  if(h)subs.push(onSnapshot(doc(db,"duels2026",code,"answers",h),snapshot=>{host=snapshot.data()?.answers||[];emit()},onError));
+  if(g)subs.push(onSnapshot(doc(db,"duels2026",code,"answers",g),snapshot=>{guest=snapshot.data()?.answers||[];emit()},onError));
+ };
+ const unsub=onSnapshot(room,snap=>{
+  roomData=snap.exists()?snap.data():null;
+  if(!roomData){onError(Error("room-not-found"));return}
+  if(uid!==roomData.hostUid&&uid!==roomData.guestUid){onError(Error("not-your-match"));return}
+  watchAnswers(roomData.hostUid,roomData.guestUid);
+  emit();
+ },onError);
+ return()=>{closed=true;unsub();subs.forEach(fn=>fn())};
+}
+async function classoraArenaAnswer(code,chosen){
+ classoraArenaAuth();const room=doc(db,"duels2026",code),mine=doc(db,"duels2026",code,"answers",auth.currentUser.uid);
+ const index=await runTransaction(db,async tx=>{
+  const [r,a]=await Promise.all([tx.get(room),tx.get(mine)]);
+  const data=r.data();if(!data||data.status!=="playing"||
+   ![data.hostUid,data.guestUid].includes(auth.currentUser.uid))throw Error("no-active-match");
+  const current=Array.isArray(a.data()?.answers)?a.data().answers:[];
+  if(current.length>=data.questions.length)throw Error("already-complete");
+  if(!Number.isInteger(chosen)||chosen<0||chosen>=data.questions[current.length].options.length)throw Error("invalid-answer");
+  const record={uid:auth.currentUser.uid,answers:[...current,chosen],updatedAt:serverTimestamp()};
+  if(a.exists())tx.update(mine,record);else tx.set(mine,record);
+  return current.length;
+ });
+ return index;
+}
+async function classoraArenaBuy(itemId){
+ const p=classoraArenaAuth(),item=arenaShopCatalog[itemId];
+ if(!item)throw Error("invalid-item");
+ const ref=doc(db,"users",auth.currentUser.uid);
+ const next=await runTransaction(db,async tx=>{
+  const snap=await tx.get(ref);if(!snap.exists())throw Error("profile-missing");
+  const profile=snap.data(),shop=profile.questShop||{},owned=Array.isArray(shop.owned)?shop.owned:[];
+  const total=Number(profile.xp)||0,spent=Math.max(0,Number(shop.spent)||0);
+  if(owned.includes(itemId))return {duplicate:true,xp:total,questShop:shop};
+  if(total-spent<item.cost)throw Error("insufficient-xp");
+  const update={spent:spent+item.cost,owned:[...owned,itemId],equipped:shop.equipped||"none"};
+  tx.update(ref,{questShop:update,updatedAt:serverTimestamp()});
+  return {xp:total,questShop:update};
+ });
+ if(window.PythagorasiUser?.uid===p.uid)window.PythagorasiUser={...window.PythagorasiUser,...next};
+ document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
+}
+async function classoraArenaEquip(itemId){
+ const p=classoraArenaAuth();
+ const ref=doc(db,"users",auth.currentUser.uid);
+ const next=await runTransaction(db,async tx=>{
+  const snap=await tx.get(ref),profile=snap.data(),shop=profile?.questShop||{};
+  if(itemId!=="none"&&(!arenaShopCatalog[itemId]||!shop.owned?.includes(itemId)))throw Error("not-owned");
+  const update={...shop,equipped:itemId};
+  tx.update(ref,{questShop:update,updatedAt:serverTimestamp()});
+  return update;
+ });
+ if(window.PythagorasiUser?.uid===p.uid)window.PythagorasiUser={...window.PythagorasiUser,questShop:next};
+ document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
+}
+window.classoraArena={
+ create:classoraArenaCreate,join:classoraArenaJoin,watch:classoraArenaWatch,
+ answer:classoraArenaAnswer,buy:classoraArenaBuy,equip:classoraArenaEquip,
+ catalog:arenaShopCatalog
+};
+
 window.classoraCurriculum=mountCurriculum({
  isGuest:()=>isGuestSession()||!auth.currentUser,requireLogin:()=>showGuestLoginReminder("protected"),
  language:()=>currentUILanguage,
