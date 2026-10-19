@@ -365,6 +365,35 @@ service cloud.firestore {
       );
     }
 
+    // XP shop inventory is derived from a fixed price list. Purchases never
+    // subtract total XP used to calculate the student's profile level.
+    function shopCost(owned) {
+      return (owned.hasAny(['flame']) ? 70 : 0)
+        + (owned.hasAny(['lightning']) ? 110 : 0)
+        + (owned.hasAny(['ice']) ? 135 : 0)
+        + (owned.hasAny(['plasma']) ? 175 : 0)
+        + (owned.hasAny(['rocket']) ? 230 : 0)
+        + (owned.hasAny(['comet']) ? 300 : 0)
+        + (owned.hasAny(['champion']) ? 180 : 0)
+        + (owned.hasAny(['starlight']) ? 95 : 0)
+        + (owned.hasAny(['aura']) ? 260 : 0);
+    }
+    function validShopChange() {
+      let before = resource.data.get('questShop', {});
+      let after = request.resource.data.get('questShop', {});
+      return after is map && after.keys().hasOnly(['spent','owned','equipped'])
+        && after.keys().hasAll(['spent','owned','equipped'])
+        && after.owned is list && after.owned.size() <= 9
+        && after.owned.hasOnly(['flame','lightning','ice','plasma','rocket','comet','champion','starlight','aura'])
+        && after.owned.hasAll(before.get('owned',[]))
+        && after.spent is int
+        && after.spent == shopCost(after.owned)
+        && after.spent >= before.get('spent',0)
+        && after.spent <= request.resource.data.get('xp',0)
+        && after.equipped is string
+        && (after.equipped == 'none' || after.owned.hasAny([after.equipped]));
+    }
+
     match /users/{uid} {
       allow create: if signedIn()
         && request.resource.data.role in ["student", "teacher"]
@@ -390,6 +419,8 @@ service cloud.firestore {
           signedIn()
           && request.auth.uid == uid
           && selfDisplayNameCooldown()
+          && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['questShop'])
+            || validShopChange())
           && !request.resource.data.diff(resource.data).affectedKeys().hasAny(["classoraOnboardingEligible", "createdAt"])
           && (
             !request.resource.data.diff(resource.data).affectedKeys().hasAny(["classoraOnboardingCompletedAt"])
