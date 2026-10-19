@@ -27,7 +27,8 @@ const tag=(ar,en)=>'<span'+bi(ar,en)+'>'+ar+'</span>';
 const btn=(kind,ar,en,action,detailAr,detailEn,classes='')=>'<button type="button" class="cl214-card cl214-'+kind+' '+classes+'" data-cl-action="'+action+'"><span class="cl214-card-graphic">'+art(kind)+'</span><span class="cl214-card-copy"><strong>'+tag(ar,en)+'</strong><small>'+tag(detailAr,detailEn)+'</small></span><span class="cl214-arrow" aria-hidden="true">↗</span></button>';
 function init(){
  const board=get('classoraStudentDashboard');
- if(!board||get('classoraLearningFront'))return;
+ const lobby=get('platformLobby');
+ if(!lobby||get('classoraLearningFront'))return;
  const shell=document.createElement('div');shell.id='classoraLearningFront';shell.className='cl214';
  shell.innerHTML=[
  '<nav class="cl214-tabs" aria-label="Classora learning navigation">',
@@ -83,10 +84,15 @@ function init(){
  '<div class="cl214-exam-side">'+btn('flag','امتحان بكود','Exam with a code','joinexam','ادخل امتحان من معلمك','Join a teacher-assigned exam')+btn('chart','راجع النتيجة','Review your results','progress','تابع تقدمك التعليمي','Track your learning progress')+'</div></div></section>',
  '<footer class="cl214-footer"><span>CLASSORA ✦ '+tag('التعلّم يبدأ بالفضول','LEARNING BEGINS WITH CURIOSITY')+'</span><button type="button" data-cl-action="subjects">'+tag('استكشف المواد','Explore subjects')+' ↗</button></footer>'
  ].join('');
- board.prepend(shell);
- const progress=board.querySelector('.student-dash-progress');
+ // Mount outside role-restricted dashboards. Admin, teacher and student can all
+ // see the education portal. This element is never moved into a hidden role panel.
+ const anchor=lobby.querySelector('#classoraTeacherDashboard')||
+   lobby.querySelector('#classoraStudentDashboard')||
+   lobby.querySelector('#classoraMixHero');
+ if(anchor)anchor.before(shell);else lobby.append(shell);
+ const progress=board?.querySelector('.student-dash-progress');
  if(progress)get('cl214XpHost')?.append(progress);
- const stats=board.querySelector('.student-dash-insights');
+ const stats=board?.querySelector('.student-dash-insights');
  if(stats)get('cl214StatHost')?.append(stats);
  const jumpSubjects=()=>{
   const lobby=get('platformLobby');
@@ -119,7 +125,7 @@ function init(){
   const last=lastLesson(),hint=get('cl214LastLesson');
   if(hint)hint.textContent=last?(isAr?'آخر درس: ':'Last lesson: ')+last.topic:(isAr?'اختار أي مادة وابدأ رحلتك اليوم.':'Choose any subject to start your learning journey.');
  }
- board.addEventListener('click',event=>{
+ shell.addEventListener('click',event=>{
   const scroll=event.target.closest('[data-cl-section]');
   if(scroll&&shell.contains(scroll)){get(scroll.dataset.clSection)?.scrollIntoView({block:'start',behavior:'smooth'});return}
   const b=event.target.closest('[data-cl-action]');if(!b||!shell.contains(b))return;
@@ -142,9 +148,26 @@ function init(){
   }
  });
  new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
- new MutationObserver(localize).observe(get('lobbyProfileName')||board,{childList:true,characterData:true,subtree:true});
+ const profileLabel=get('lobbyProfileName');
+ if(profileLabel)new MutationObserver(localize).observe(profileLabel,{childList:true,characterData:true,subtree:true});
  window.addEventListener('pageshow',localize);
- localize();
+ // Login/role restoration may finish well after DOMContentLoaded.
+ const sync=()=>{
+   const profile=window.PythagorasiUser;
+   const active=Boolean(profile&&document.body.classList.contains('classora-authenticated')&&
+      !get('authGate')?.classList.contains('show'));
+   shell.hidden=!active;
+   const personal=active&&profile.role==='student';
+   const xp=get('cl214XpHost'),statsHost=get('cl214StatHost');
+   if(xp)xp.hidden=!personal;
+   if(statsHost)statsHost.hidden=!personal;
+   if(active)localize();
+ };
+ new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
+ if(get('authGate'))new MutationObserver(sync).observe(get('authGate'),{attributes:true,attributeFilter:['class']});
+ document.addEventListener('classora-auth-settled',sync);
+ window.addEventListener('pageshow',sync);
+ sync();
  // Teacher already has its own authenticated workspace. Put live/exams at its top.
  const teacher=get('classoraTeacherDashboard');
  if(teacher&&!get('cl214TeacherTools')){
