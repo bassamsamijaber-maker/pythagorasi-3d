@@ -102,3 +102,9 @@ body[data-classora-theme="embroidery"] #platformLobby .cl215-action{background:#
 }
 @media(max-width:340px){#platformLobby .cl215-insight-grid{grid-template-columns:1fr}#platformLobby .cl215-insight{min-height:118px}}
 @media(prefers-reduced-motion:reduce){#platformLobby .cl215-insights *{transition:none!important}}
+
+/* V216: role-safe permanent cards. The core dashboard controls the hidden
+   attribute, not a temporary cosmetic student-mode class. */
+body.classora-authenticated[data-user-role="student"] #platformLobby #classoraStudentDashboard:not([hidden]){display:block!important}
+body.classora-authenticated[data-user-role="student"] #platformLobby #classoraLearningBoost:not([hidden]){display:block!important}
+body.classora-authenticated[data-user-role="student"] #platformLobby #classoraLearningBoost:not([hidden]) .cl215-insight-grid{display:grid!important;opacity:1!important;visibility:visible!important}
