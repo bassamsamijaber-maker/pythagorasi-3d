@@ -1039,6 +1039,230 @@ service cloud.firestore {
       allow delete: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
     }
 
+    // Students can run peer-to-peer practice duels. No XP is rewarded from
+    // user-supplied responses, and only the two invited participants may answer.
+    match /duels2026/{code} {
+      allow get: if signedIn() && code.matches('^[A-HJ-NP-Z2-9]{6}
+      allow read: if signedIn();
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    match /adminAudit/{logId} {
+      allow read, create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+
+    // Server-only Classora support/recovery data.
+    // Browser clients never read or write these collections directly.
+    // Callable Cloud Functions use the Admin SDK and bypass Firestore rules.
+    match /supportTickets/{ticketId} {
+      allow read, write: if false;
+    }
+
+    match /supportAudit/{eventId} {
+      allow read: if isSuperAdmin() || (isSupportAgent() && resource.data.actor == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /recoveryKeyLookup/{keyHash} {
+      allow read, write: if false;
+    }
+
+    match /recoverySecrets/{uid} {
+      allow read, write: if false;
+    }
+
+    match /_recoveryRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    match /_supportRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    // A one-week, opt-in heritage gallery. Each account can publish one image
+    // and cast one changeable vote. No public real names or email addresses.
+    function heritageWeekOpen() {
+      return request.time >= timestamp.date(2026,10,17)
+        && request.time < timestamp.date(2026,10,25);
+    }
+    function validHeritageImage(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.image is string
+        && request.resource.data.image.size() <= 215000
+        && request.resource.data.image.matches('^data:image/png;base64,[A-Za-z0-9+/=]+$')
+        && request.resource.data.prompt in ['flag','olive','stitch','scarf','thobe']
+        && request.resource.data.elapsedSeconds is int
+        && request.resource.data.elapsedSeconds >= 1
+        && request.resource.data.elapsedSeconds <= 120
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageArts2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageImage(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+    function validHeritageVote(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','artUid','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','artUid','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.artUid is string
+        && request.resource.data.artUid != uid
+        && exists(/databases/$(database)/documents/heritageArts2026/$(request.resource.data.artUid))
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageVotes2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageVote(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+
+  }
+});
+      allow list: if false;
+      allow create: if signedIn()
+        && code.matches('^[A-HJ-NP-Z2-9]{6}
+      allow read: if signedIn();
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    match /adminAudit/{logId} {
+      allow read, create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+
+    // Server-only Classora support/recovery data.
+    // Browser clients never read or write these collections directly.
+    // Callable Cloud Functions use the Admin SDK and bypass Firestore rules.
+    match /supportTickets/{ticketId} {
+      allow read, write: if false;
+    }
+
+    match /supportAudit/{eventId} {
+      allow read: if isSuperAdmin() || (isSupportAgent() && resource.data.actor == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /recoveryKeyLookup/{keyHash} {
+      allow read, write: if false;
+    }
+
+    match /recoverySecrets/{uid} {
+      allow read, write: if false;
+    }
+
+    match /_recoveryRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    match /_supportRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    // A one-week, opt-in heritage gallery. Each account can publish one image
+    // and cast one changeable vote. No public real names or email addresses.
+    function heritageWeekOpen() {
+      return request.time >= timestamp.date(2026,10,17)
+        && request.time < timestamp.date(2026,10,25);
+    }
+    function validHeritageImage(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.image is string
+        && request.resource.data.image.size() <= 215000
+        && request.resource.data.image.matches('^data:image/png;base64,[A-Za-z0-9+/=]+$')
+        && request.resource.data.prompt in ['flag','olive','stitch','scarf','thobe']
+        && request.resource.data.elapsedSeconds is int
+        && request.resource.data.elapsedSeconds >= 1
+        && request.resource.data.elapsedSeconds <= 120
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageArts2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageImage(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+    function validHeritageVote(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','artUid','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','artUid','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.artUid is string
+        && request.resource.data.artUid != uid
+        && exists(/databases/$(database)/documents/heritageArts2026/$(request.resource.data.artUid))
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageVotes2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageVote(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+
+  }
+})
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student'
+        && request.resource.data.keys().hasOnly(['hostUid','guestUid','hostName','guestName','grade','status','questions','createdAt','updatedAt','startedAt','expiresAt'])
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.guestUid == ''
+        && request.resource.data.guestName == ''
+        && request.resource.data.hostName is string && request.resource.data.hostName.size() <= 40
+        && request.resource.data.grade in [7,8,9,10]
+        && request.resource.data.status == 'waiting'
+        && request.resource.data.questions is list && request.resource.data.questions.size() == 5
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.startedAt == null
+        && request.resource.data.expiresAt is int
+        && request.resource.data.expiresAt > request.time.toMillis()
+        && request.resource.data.expiresAt <= request.time.toMillis() + 7200000;
+      allow update: if signedIn()
+        && resource.data.status == 'waiting'
+        && resource.data.guestUid == ''
+        && request.auth.uid != resource.data.hostUid
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('grade',8) == resource.data.grade
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guestUid','guestName','status','startedAt','updatedAt'])
+        && request.resource.data.guestUid == request.auth.uid
+        && request.resource.data.guestName is string && request.resource.data.guestName.size() <= 40
+        && request.resource.data.status == 'playing'
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.startedAt == request.time
+        && resource.data.expiresAt > request.time.toMillis();
+      allow delete: if false;
+      match /answers/{uid} {
+        allow get: if signedIn()
+          && (request.auth.uid == get(/databases/$(database)/documents/duels2026/$(code)).data.hostUid
+          || request.auth.uid == get(/databases/$(database)/documents/duels2026/$(code)).data.guestUid);
+        allow list: if false;
+        allow create: if signedIn() && request.auth.uid == uid
+          && get(/databases/$(database)/documents/duels2026/$(code)).data.status == 'playing'
+          && request.resource.data.keys().hasOnly(['uid','answers','updatedAt'])
+          && request.resource.data.uid == uid
+          && request.resource.data.answers is list
+          && request.resource.data.answers.size() == 1
+          && request.resource.data.updatedAt == request.time;
+        allow update: if signedIn() && request.auth.uid == uid
+          && get(/databases/$(database)/documents/duels2026/$(code)).data.status == 'playing'
+          && request.resource.data.keys().hasOnly(['uid','answers','updatedAt'])
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.answers is list
+          && request.resource.data.answers.size() == resource.data.answers.size() + 1
+          && request.resource.data.answers.size() <= 5
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if false;
+      }
+    }
+
     match /siteControls/{docId} {
       allow read: if signedIn();
       allow create, update, delete: if isSuperAdmin();
