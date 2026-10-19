@@ -1,0 +1,65 @@
+/* Classora FX customizer v228 — morning, tatreez, garage and fire-avatar badge. */
+#settingsModal .cl228-settings{min-width:0;max-width:100%;border:1px solid #9cc7cf58;border-radius:16px;padding:15px;background:linear-gradient(145deg,#193647,#192c40);color:#f5ffff}
+#settingsModal .cl228-settings h3{font:900 18px/1.5 "Tajawal","Inter",sans-serif!important;color:#f5ffff!important;margin:0 0 5px!important}
+#settingsModal .cl228-intro{margin:0 0 13px!important;font:650 12px/1.8 "Tajawal","Inter",sans-serif!important;color:#bddde3!important}
+#settingsModal .cl228-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:51px;padding:10px 2px;border-bottom:1px solid #c9e2ef1e;color:#f0fbff!important;font:800 13px/1.6 "Tajawal","Inter",sans-serif!important}
+#settingsModal .cl228-setting-row input[type=checkbox]{appearance:auto!important;width:19px!important;height:19px!important;flex:0 0 19px!important;accent-color:#57e7b6;cursor:pointer}
+#settingsModal .cl228-setting-row select{min-width:125px;max-width:50%;padding:9px;border-radius:9px;background:#274b5b;border:1px solid #c4eef756;color:#fff;font:800 12px "Tajawal","Inter",sans-serif}
+#settingsModal .cl228-setting-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+#settingsModal .cl228-setting-links button{min-height:44px;flex:1 1 140px;border:1px solid #a1f1dd61;border-radius:12px;background:#5ae0b92b;color:#dbfff6;padding:9px;font:900 12px "Tajawal","Inter",sans-serif;cursor:pointer;touch-action:manipulation}
+#settingsModal .cl228-admin-note{margin:12px 0 0!important;color:#ffe19e!important;font:750 12px/1.7 "Tajawal","Inter",sans-serif!important}
+#lobbyProfileBtn,#profileModal .profile-photo-wrap{position:relative!important}
+#lobbyProfileBtn .cl228-flame,#profileModal .profile-photo-wrap .cl228-flame{pointer-events:none;position:absolute;z-index:8;inset:-13px -12px auto auto;width:30px;height:35px;border-radius:50%;display:none;place-items:center;filter:drop-shadow(0 3px 8px #f85a28ad)}
+#lobbyProfileBtn .cl228-flame svg,#profileModal .cl228-flame svg{width:28px;height:32px;animation:cl228-flicker 1.2s ease-in-out infinite}
+#profileModal .profile-photo-wrap .cl228-flame{inset:-12px -16px auto auto;width:39px;height:42px}
+#profileModal .profile-photo-wrap .cl228-flame svg{width:37px;height:41px}
+#lobbyProfileBtn .cl228-flame i,#profileModal .cl228-flame i{position:absolute;top:55%;left:45%;width:5px;height:5px;border-radius:50%;background:#ffb44e;box-shadow:0 0 8px #ff813b}
+#lobbyProfileBtn .cl228-flame i:nth-of-type(2),#profileModal .cl228-flame i:nth-of-type(2){background:#fff5b8}
+#lobbyProfileBtn .cl228-flame i:nth-of-type(4),#profileModal .cl228-flame i:nth-of-type(4){background:#ff6b3a}
+body[data-cl227-effect="flame"][data-cl228-fx="on"] #lobbyProfileBtn .cl228-flame,
+body[data-cl227-effect="flame"][data-cl228-fx="on"] #profileModal .profile-photo-wrap .cl228-flame{display:grid}
+body[data-cl228-sparks="on"][data-cl228-motion="on"][data-cl227-effect="flame"] .cl228-flame i{animation:cl228-ember 2s ease-out infinite}
+.cl228-flame i:nth-of-type(1){--angle:-42deg;animation-delay:-.1s!important}
+.cl228-flame i:nth-of-type(2){--angle:35deg;animation-delay:-.8s!important}
+.cl228-flame i:nth-of-type(3){--angle:-86deg;animation-delay:-1.4s!important}
+.cl228-flame i:nth-of-type(4){--angle:70deg;animation-delay:-.4s!important}
+.cl228-flame i:nth-of-type(5){--angle:5deg;animation-delay:-1.15s!important}
+.cl228-flame i:nth-of-type(6){--angle:-110deg;animation-delay:-1.75s!important}
+.cl228-burst .cl228-flame i{animation:cl228-burst 1.05s ease-out 1 both!important}
+.cl228-burst .cl228-flame i:nth-of-type(2){animation-delay:.11s!important}
+.cl228-burst .cl228-flame i:nth-of-type(3){animation-delay:.24s!important}
+.cl228-burst .cl228-flame i:nth-of-type(4){animation-delay:.09s!important}
+@keyframes cl228-ember{0%,100%{opacity:0;transform:translate(0,0) scale(.5)}25%{opacity:1}80%{opacity:0;transform:translate(calc(sin(var(--angle)) * 21px),-21px) scale(.5)}}
+@keyframes cl228-burst{0%{opacity:1;transform:translate(0,0) scale(.9)}100%{opacity:0;transform:translate(19px,-29px) scale(.1)}}
+@keyframes cl228-flicker{0%,100%{transform:rotate(-7deg) scale(1)}50%{transform:rotate(7deg) scale(1.17)}}
+body[data-cl228-density="subtle"] .cl228-flame i:nth-of-type(n+4){display:none!important}
+body[data-cl228-density="subtle"] .cl228-flame{opacity:.75;filter:none!important}
+body[data-cl228-density="intense"] .cl228-flame{filter:drop-shadow(0 0 16px #ff8e32)!important;transform:scale(1.13)}
+body[data-cl228-motion="off"] .cl228-flame *,body[data-cl228-sparks="off"] .cl228-flame i{animation:none!important}
+body[data-cl228-sparks="off"] .cl228-flame i{display:none!important}
+body[data-cl228-fx="off"] .cl228-flame{display:none!important}
+body[data-cl228-fx="off"] #lobbyAvatar,body[data-cl228-fx="off"] #profileModal .profile-photo-wrap{animation:none!important;box-shadow:none!important;filter:none!important}
+body[data-cl228-motion="off"] :is(#lobbyAvatar,.profile-photo-wrap:after){animation:none!important}
+body[data-cl228-rank="off"] :is(#cl227Rank,#cl227ProfileRank){display:none!important}
+/* Contrast-correct themed shop: ivory and blue in morning, cream/burgundy in embroidery. */
+body[data-classora-theme="morning"] #platformLobby :is(.cl227-home,.cl227-pane,.cl227-entry,.cl227-shop-item,.cl227-question-card,.cl227-duel,.cl227-wallet,.cl227-player){background:#f3faff!important;border-color:#aecbd7!important;color:#17344a!important;box-shadow:0 7px 20px #102f4812!important}
+body[data-classora-theme="morning"] #platformLobby :is(.cl227-shop-info b,.cl227-shop-info small,.cl227-heading h2,.cl227-heading p,.cl227-entry h3,.cl227-entry p,.cl227-panel-head h3,.cl227-shop-note,.cl227-wallet span,.cl227-wallet strong,.cl227-q-tag,.cl227-duel-intro,.cl227-foot,.cl227-rank){color:#183a53!important}
+body[data-classora-theme="morning"] #platformLobby :is(.cl227-answer,.cl227-code,.cl227-outline,.cl227-shop-btn,.cl227-entry-cta){background:#e6f6fb!important;border-color:#8bb9cd!important;color:#12405d!important}
+body[data-classora-theme="morning"] #platformLobby .cl227-shop-orbit{background:#e9f7fa!important;border-color:#97c8d4!important;color:#38618b!important}
+body[data-classora-theme="morning"] #platformLobby .cl227-shop-item.equipped{background:#e0f5e9!important;border-color:#34a994!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.cl227-home,.cl227-pane,.cl227-entry,.cl227-shop-item,.cl227-question-card,.cl227-duel,.cl227-wallet,.cl227-player){background:#fff4ef!important;border-color:#b9798c!important;color:#472032!important;box-shadow:0 7px 22px #60243c14!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.cl227-shop-info b,.cl227-shop-info small,.cl227-heading h2,.cl227-heading p,.cl227-entry h3,.cl227-entry p,.cl227-panel-head h3,.cl227-shop-note,.cl227-wallet span,.cl227-wallet strong,.cl227-q-tag,.cl227-duel-intro,.cl227-foot,.cl227-rank){color:#54243b!important}
+body[data-classora-theme="embroidery"] #platformLobby :is(.cl227-answer,.cl227-code,.cl227-outline,.cl227-shop-btn,.cl227-entry-cta){background:#fff0ec!important;border-color:#ba8095!important;color:#60243e!important}
+body[data-classora-theme="embroidery"] #platformLobby .cl227-shop-orbit{background:#ffe7de!important;border-color:#b66c89!important;color:#7b334b!important}
+body[data-classora-theme="embroidery"] #platformLobby .cl227-shop-item.equipped{background:#ffe3e8!important;border-color:#8e3856!important}
+body[data-classora-theme="morning"] #settingsModal .cl228-settings{background:#eaf6ff!important;border-color:#a5c6d6!important}
+body[data-classora-theme="embroidery"] #settingsModal .cl228-settings{background:#fff3f1!important;border-color:#bd92a2!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .cl228-settings :is(h3,p,label){color:#352b3a!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .cl228-setting-row select{background:#fff!important;border-color:#b9b4c2!important;color:#362d3d!important}
+body[data-classora-theme="embroidery"] #settingsModal .cl228-setting-links button{background:#7e2f4d!important;border-color:#a95c7a!important;color:#fff!important}
+body[data-classora-theme="morning"] #settingsModal .cl228-setting-links button{background:#16617c!important;border-color:#368e9d!important;color:#fff!important}
+#platformLobby .cl227-home button,#platformLobby .cl223-map-panel button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;min-height:43px}
+#platformLobby .cl227-answer,#platformLobby .cl223-answer{min-height:52px!important}
+#platformLobby .cl227-shop-btn{min-height:46px!important}
+@media(max-width:620px){#platformLobby .cl227-home .cl227-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#platformLobby .cl227-shop-item{padding:13px 9px!important}#platformLobby .cl223-node{min-height:76px!important}#platformLobby .cl227-joinline{flex-wrap:wrap}#platformLobby .cl227-code{min-width:0;width:100%}}
+@media(prefers-reduced-motion:reduce){.cl228-flame *,.cl228-flame,body[data-cl227-effect] #lobbyAvatar{animation:none!important;transition:none!important}}
