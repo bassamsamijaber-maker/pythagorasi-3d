@@ -211,7 +211,7 @@ function question(t,index,round){
  const api=window.classoraAssessment;
  let q=null;
  try{
-  const level=index===1?'easy':'medium';
+  const level='easy'; // Both quiz missions stay beginner-friendly.
   const quiz=api?.generate?.(t.value,6,level,language()==='ar'?'ar':'en',true);
   q=quiz?.questions?.find(z=>z.type==='mcq'&&Array.isArray(z.options)&&z.options.length>=2&&z.options.includes(String(z.answer)))||null;
  }catch(e){console.warn('Quest bank',e)}
