@@ -90,6 +90,7 @@ function init(){
    lobby.querySelector('#classoraStudentDashboard')||
    lobby.querySelector('#classoraMixHero');
  if(anchor)anchor.before(shell);else lobby.append(shell);
+ document.dispatchEvent(new Event('classora:learning-front-ready'));
  const progress=board?.querySelector('.student-dash-progress');
  if(progress)get('cl214XpHost')?.append(progress);
  const stats=board?.querySelector('.student-dash-insights');
