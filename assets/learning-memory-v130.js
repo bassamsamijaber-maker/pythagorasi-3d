@@ -51,7 +51,7 @@ export function equipQuestCosmetic(cosmeticId){
  const id=learnerId();if(!id||id==='guest')return false;
  const data=learningState(id);const completed=Object.values(data.quests||{}).filter(q=>q.step===3).length;
  const min={none:0,bronze:1,neon:3,sparkle:7,galaxy:12,legend:20};
- if(completed<min[cosmeticId])return false;
+ if(completed<min[cosmeticId]&&!window.classoraIsSuperAdmin?.())return false;
  const at=stamp();data.cosmetics={value:cosmeticId,at};data.at=at;
  return write(mergeLearning(data),id);
 }
