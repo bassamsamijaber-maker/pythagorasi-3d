@@ -1,7 +1,7 @@
-const CACHE_NAME="classora-v219-learning-boost";
+const CACHE_NAME="classora-v220-learning-cards-persist";
 const APP_SHELL=[
-  "./assets/classora-learning-boost-v215.css?v=215",
-  "./assets/classora-learning-boost-v215.js?v=215",
+  "./assets/classora-learning-boost-v215.css?v=216",
+  "./assets/classora-learning-boost-v215.js?v=216",
   "./assets/classora-learning-front-v214.css?v=214",
   "./assets/classora-learning-front-v214.js?v=214",
   "./assets/math-worksheet-v213.js?v=213",
