@@ -7,7 +7,7 @@ const copy=x=>JSON.parse(JSON.stringify(x));
 export function mergeLearning(a={},b={}){
  const newest=(x,y)=>!x?y:!y?x:Number(x.at||0)>Number(y.at||0)?x:y;
  const mergeMap=(x={},y={})=>Object.fromEntries([...new Set([...Object.keys(x),...Object.keys(y)])].map(k=>[k,newest(x[k],y[k])]).sort((a,b)=>(b[1]?.at||0)-(a[1]?.at||0)).slice(0,120));
- return {sessions:mergeMap(a.sessions,b.sessions),attempts:mergeMap(a.attempts,b.attempts),last:newest(a.last,b.last)||null,preferences:newest(a.preferences,b.preferences)||null,at:Math.max(a.at||0,b.at||0)};
+ return {sessions:mergeMap(a.sessions,b.sessions),attempts:mergeMap(a.attempts,b.attempts),quests:mergeMap(a.quests,b.quests),cosmetics:newest(a.cosmetics,b.cosmetics)||null,last:newest(a.last,b.last)||null,preferences:newest(a.preferences,b.preferences)||null,at:Math.max(a.at||0,b.at||0)};
 }
 export function learningState(id=learnerId()){
  let local={};try{local=JSON.parse(localStorage.getItem(key(id))||'{}')}catch{}
@@ -24,6 +24,28 @@ export function recordLearningAttempt(topic,correct,details={}){
  const data=learningState(),at=stamp();const q=details.question;
  const question=q?{prompt:String(q.prompt||'').slice(0,1200),answer:String(q.answer??'').slice(0,350),explanation:String(q.explanation||'').slice(0,1500)}:null;
  data.attempts[String(at)+'-'+Math.random().toString(36).slice(2,8)]={at,topic:{id:topic.id,title:topic.title,subject:topic.subject,grade:topic.grade,index:topic.index??0},correct:!!correct,question,selected:String(details.selected??'').slice(0,350)};data.at=at;write(mergeLearning(data),learnerId());
+}
+/* Three-step curriculum quests; account-scoped and synced by the existing
+ * learning-memory Firestore path. Never overwrites lesson sessions/models. */
+export function completeQuestStep(topicId,nextStep){
+ if(!/^curr:(?:7|8|9|10):[a-z]+:\d+$/.test(String(topicId)))return false;
+ const n=Number(nextStep);if(![1,2,3].includes(n))return false;
+ const id=learnerId();if(!id||id==='guest')return false;
+ const data=learningState(id),old=data.quests?.[topicId];
+ const current=Math.min(3,Math.max(0,Number(old?.step)||0));
+ if(n!==current+1)return false;
+ const at=stamp();data.quests={...(data.quests||{}),[topicId]:{step:n,at}};
+ data.at=at;return write(mergeLearning(data),id);
+}
+export function equipQuestCosmetic(cosmeticId){
+ const allowed=['none','bronze','neon','sparkle','galaxy','legend'];
+ if(!allowed.includes(cosmeticId))return false;
+ const id=learnerId();if(!id||id==='guest')return false;
+ const data=learningState(id);const completed=Object.values(data.quests||{}).filter(q=>q.step===3).length;
+ const min={none:0,bronze:1,neon:3,sparkle:7,galaxy:12,legend:20};
+ if(completed<min[cosmeticId])return false;
+ const at=stamp();data.cosmetics={value:cosmeticId,at};data.at=at;
+ return write(mergeLearning(data),id);
 }
 export function reviewTopics(grade){
  const groups=new Map();for(const a of Object.values(learningState().attempts)){if(grade&&+a.topic.grade!==+grade)continue;const r=groups.get(a.topic.id)||{topic:a.topic,right:0,wrong:0,at:0};r[a.correct?'right':'wrong']++;r.at=Math.max(r.at,a.at);groups.set(a.topic.id,r)}
