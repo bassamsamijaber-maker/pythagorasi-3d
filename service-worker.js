@@ -1,8 +1,8 @@
-const CACHE_NAME="classora-v229-arena-profile-admin";;
+const CACHE_NAME="classora-v230-arena-admin-duels";;
 const APP_SHELL=[
  "./assets/classora-fx-settings-v228.css?v=229",
  "./assets/classora-fx-settings-v228.js?v=229",
-  "./assets/classora-arena-shop-v227.js?v=229",
+  "./assets/classora-arena-shop-v227.js?v=230",
   "./assets/classora-arena-shop-v227.css?v=229",
   "./assets/classora-quest-map-v223.css?v=229",
   "./assets/classora-quest-map-v223.js?v=229",
