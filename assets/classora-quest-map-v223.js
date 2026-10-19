@@ -46,7 +46,7 @@ const cosmetics=[
 const account=()=>{const p=window.PythagorasiUser;return p&&document.body.classList.contains('classora-authenticated')&&(p.uid||p.profileId)?p:null};
 const student=()=>account()?.role==='student';
 const owned=()=>String(account()?.uid||account()?.profileId||'guest');
-const grade=()=>{const p=account();let n=8;try{n=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const x=Number(p?.grade)||n;return [7,8,9,10].includes(x)?x:8};
+const grade=()=>{const p=account();let chosen=0,fallback=8;try{chosen=Number(localStorage.getItem('classora_quest_grade_'+owned())||0);fallback=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const x=[7,8,9,10].includes(chosen)?chosen:Number(p?.grade)||fallback;return [7,8,9,10].includes(x)?x:8};
 const bank=()=>window.classoraAssessment?.topics||[];
 const state=()=>learningState();
 const completed=()=>Object.values(state().quests||{}).filter(x=>x?.step===3).length;
@@ -139,7 +139,7 @@ function makePreview(){
  return preview;
 }
 function setGrade(g){
- try{localStorage.setItem('classora_curriculum_grade',String(g))}catch{}
+ try{localStorage.setItem('classora_quest_grade_'+owned(),String(g))}catch{}
  currentSubject=groupsFor(g)[0]?.key||'math';selected=null;challenge=null;draw();
 }
 function openMap(){
