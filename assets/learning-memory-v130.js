@@ -6,8 +6,8 @@ const key=id=>'classora_learning_v130_'+id;
 const copy=x=>JSON.parse(JSON.stringify(x));
 export function mergeLearning(a={},b={}){
  const newest=(x,y)=>!x?y:!y?x:Number(x.at||0)>Number(y.at||0)?x:y;
- const mergeMap=(x={},y={})=>Object.fromEntries([...new Set([...Object.keys(x),...Object.keys(y)])].map(k=>[k,newest(x[k],y[k])]).sort((a,b)=>(b[1]?.at||0)-(a[1]?.at||0)).slice(0,120));
- return {sessions:mergeMap(a.sessions,b.sessions),attempts:mergeMap(a.attempts,b.attempts),quests:mergeMap(a.quests,b.quests),cosmetics:newest(a.cosmetics,b.cosmetics)||null,last:newest(a.last,b.last)||null,preferences:newest(a.preferences,b.preferences)||null,at:Math.max(a.at||0,b.at||0)};
+ const mergeMap=(x={},y={},limit=120)=>Object.fromEntries([...new Set([...Object.keys(x),...Object.keys(y)])].map(k=>[k,newest(x[k],y[k])]).sort((a,b)=>(b[1]?.at||0)-(a[1]?.at||0)).slice(0,limit));
+ return {sessions:mergeMap(a.sessions,b.sessions),attempts:mergeMap(a.attempts,b.attempts),quests:mergeMap(a.quests,b.quests,400),cosmetics:newest(a.cosmetics,b.cosmetics)||null,last:newest(a.last,b.last)||null,preferences:newest(a.preferences,b.preferences)||null,at:Math.max(a.at||0,b.at||0)};
 }
 export function learningState(id=learnerId()){
  let local={};try{local=JSON.parse(localStorage.getItem(key(id))||'{}')}catch{}
