@@ -1,0 +1,154 @@
+/* Classora V214 — illustrated educational front. Uses existing student & teacher access rules. */
+#platformLobby #classoraStudentDashboard>.student-dash-hero,
+#platformLobby #classoraStudentDashboard>.student-dash-section-head,
+#platformLobby #classoraStudentDashboard>.student-dash-action-grid{display:none!important}
+#platformLobby .cl214{--cl-text:#f6fbff;--cl-muted:#bbcadc;--cl-edge:rgba(205,233,255,.16);--cl-card:linear-gradient(150deg,#172b41,#0c1d2e);--cl-accent:#68ead0;--cl-alt:#8bbaff;color:var(--cl-text);font-family:"Tajawal","Inter",system-ui,sans-serif;max-width:100%;min-width:0;padding:0 0 16px;isolation:isolate}
+#platformLobby .cl214 *{box-sizing:border-box}
+#platformLobby .cl214 button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#platformLobby .cl214 button:focus-visible,#platformLobby .cl214-teacher-tools button:focus-visible{outline:3px solid #76ebd0!important;outline-offset:4px}
+#platformLobby .cl214 svg,#platformLobby .cl214-teacher-tools svg{width:23px;height:23px;flex:0 0 auto}
+#platformLobby .cl214 [hidden]{display:none!important}
+#platformLobby .cl214-tabs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 13px;min-width:0}
+#platformLobby .cl214-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(160,215,244,.18);background:rgba(20,42,62,.72);color:#d6e9f5;padding:9px 15px;border-radius:999px;font-weight:800;font-size:12px;min-height:38px;transition:background .2s,transform .2s}
+#platformLobby .cl214-tabs button svg{width:16px;height:16px;color:#77e5cb}
+#platformLobby .cl214-tabs button:hover{transform:translateY(-2px);background:rgba(38,74,105,.9)}
+#platformLobby .cl214-hero{min-height:350px;position:relative;overflow:hidden;border-radius:30px;padding:clamp(21px,3.7vw,45px);border:1px solid rgba(129,228,209,.27);background:radial-gradient(ellipse at 84% 0%,rgba(91,192,234,.24),transparent 50%),radial-gradient(ellipse at 10% 100%,rgba(43,215,153,.17),transparent 53%),linear-gradient(120deg,#152e48 0%,#101f36 65%,#132c3d 100%);display:grid;grid-template-columns:minmax(0,1.12fr) minmax(270px,.88fr);gap:14px;align-items:center;box-shadow:0 22px 65px rgba(1,12,28,.2)}
+#platformLobby .cl214-hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(194,236,245,.16) 1px,transparent 1px);background-size:25px 25px;mask-image:linear-gradient(90deg,transparent 30%,#000);pointer-events:none}
+#platformLobby .cl214-hero-copy,#platformLobby .cl214-hero-visual{position:relative;z-index:1;min-width:0}
+#platformLobby .cl214-kicker{display:inline-flex;align-items:center;gap:8px;letter-spacing:.08em;color:#a0ffe3;font-size:11px;font-weight:900}
+#platformLobby .cl214-kicker i{width:8px;height:8px;background:#7affd6;border-radius:100%;box-shadow:0 0 0 5px #6ce7c522}
+#platformLobby .cl214-hero h1{font:900 clamp(32px,4.2vw,60px)/1.12 "Tajawal","Inter",sans-serif!important;max-width:570px;letter-spacing:-.035em;color:#fff!important;margin:17px 0 14px!important}
+#platformLobby .cl214-hero h1 em{font-style:normal;color:#89eed4;text-shadow:0 0 34px rgba(102,231,192,.16)}
+#platformLobby .cl214-hero-lead{color:#c7d8e6!important;font-size:clamp(13px,1.4vw,16px)!important;line-height:1.82!important;max-width:485px;margin:0 0 14px!important}
+#platformLobby .cl214-personal{color:#c6e3e8!important;font-size:13px!important;margin:0 0 19px!important}
+#platformLobby .cl214-personal strong{color:#fff;font-weight:900;unicode-bidi:plaintext}
+#platformLobby .cl214-wave{color:#fcd782}
+#platformLobby .cl214-hero-buttons{display:flex;flex-wrap:wrap;gap:10px}
+#platformLobby .cl214-primary,#platformLobby .cl214-secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:14px;min-height:46px;padding:11px 17px;border:1px solid transparent;font-size:13px;font-weight:900;transition:transform .18s,box-shadow .18s}
+#platformLobby .cl214-primary{color:#082c2b!important;background:linear-gradient(125deg,#83f6da,#4dc9de)!important;border-color:#a2fff0!important;box-shadow:0 9px 24px rgba(44,213,183,.18)}
+#platformLobby .cl214-secondary{color:#f0fbff!important;background:rgba(238,251,255,.09)!important;border-color:rgba(218,255,249,.27)!important}
+#platformLobby .cl214-primary:hover,#platformLobby .cl214-secondary:hover{transform:translateY(-2px)}
+#platformLobby .cl214-last-lesson{display:block;min-height:18px;margin-top:13px;color:#aecbcf;font-size:11px;line-height:1.6}
+#platformLobby .cl214-hero-visual{display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:295px}
+#platformLobby .cl214-orbit-art{position:relative;width:min(100%,260px);height:178px;display:grid;place-items:center}
+#platformLobby .cl214-orbit-ring{position:absolute;border:1px dashed rgba(157,232,228,.34);border-radius:50%;inset:14px 9px;transform:rotate(-18deg)}
+#platformLobby .cl214-ring-two{inset:34px 35px;transform:rotate(28deg);border-color:rgba(148,182,252,.35)}
+#platformLobby .cl214-orbit-center{display:grid;place-items:center;width:87px;height:87px;background:linear-gradient(135deg,#89fff0,#69acdc);border-radius:29px;transform:rotate(-12deg);color:#123c50;box-shadow:0 18px 42px #65c5ce30}
+#platformLobby .cl214-orbit-center svg{width:51px;height:51px;transform:rotate(12deg)}
+#platformLobby .cl214-orbit-item{position:absolute;display:grid;place-items:center;width:52px;height:52px;border-radius:17px;border:1px solid rgba(185,240,255,.5);background:#214360;color:#d4fffb;box-shadow:0 12px 25px #0004}
+#platformLobby .cl214-o1{top:4px;left:25px;transform:rotate(-12deg)}#platformLobby .cl214-o2{right:18px;top:14px;transform:rotate(11deg)}#platformLobby .cl214-o3{bottom:5px;left:40%;transform:rotate(16deg)}
+#platformLobby .cl214-xp-host{width:min(100%,340px);margin:-4px auto 0}
+#platformLobby .cl214-xp-host .student-dash-progress{border-radius:19px;padding:15px 17px;background:rgba(10,31,47,.82);backdrop-filter:blur(11px);box-shadow:0 14px 30px #00162736}
+#platformLobby .cl214-xp-host .student-dash-level{font-size:23px;margin:8px 0 2px}
+#platformLobby .cl214-quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:16px 0}
+#platformLobby .cl214-card{display:flex;flex-direction:column;position:relative;align-items:flex-start;text-align:start;min-width:0;gap:10px;border:1px solid var(--cl-edge);border-radius:21px;color:var(--cl-text);background:var(--cl-card);padding:21px 17px;min-height:171px;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+#platformLobby .cl214-card:after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;inset:auto -60px -90px auto;background:radial-gradient(circle,#79f4d72b,transparent 70%);pointer-events:none}
+#platformLobby .cl214-card:hover{transform:translateY(-3px);border-color:rgba(117,234,218,.48);box-shadow:0 15px 32px rgba(2,14,30,.17)}
+#platformLobby .cl214-card-graphic{display:grid;place-items:center;width:47px;height:47px;flex-shrink:0;border-radius:16px;background:rgba(87,220,188,.14);color:#7af6d6}
+#platformLobby .cl214-trophy .cl214-card-graphic,#platformLobby .cl214-flag .cl214-card-graphic{color:#ffcf88;background:rgba(255,199,116,.11)}
+#platformLobby .cl214-chart .cl214-card-graphic,#platformLobby .cl214-atom .cl214-card-graphic{color:#9ecfff;background:rgba(97,162,241,.13)}
+#platformLobby .cl214-check .cl214-card-graphic,#platformLobby .cl214-spark .cl214-card-graphic{color:#e0b4ff;background:rgba(185,133,245,.12)}
+#platformLobby .cl214-card-copy{display:flex;flex-direction:column;gap:5px}
+#platformLobby .cl214-card-copy strong{font-weight:900;font-size:clamp(14px,1.6vw,17px);line-height:1.4;color:#f4fbff!important}
+#platformLobby .cl214-card-copy small{font-weight:550;font-size:12px;line-height:1.6;color:#b3c9d7!important}
+#platformLobby .cl214-arrow{position:absolute;inset:16px auto auto 16px;opacity:.55;font-size:16px}
+#platformLobby .cl214[dir=ltr] .cl214-arrow{inset:16px 16px auto auto}
+#platformLobby .cl214-stats .student-dash-insights{margin:0 0 26px}
+#platformLobby .cl214-block{margin:19px 0 0;padding:clamp(17px,2.3vw,26px);background:linear-gradient(140deg,rgba(13,31,48,.79),rgba(17,32,48,.92));border:1px solid var(--cl-edge);border-radius:26px;scroll-margin-top:20px}
+#platformLobby .cl214-section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:17px}
+#platformLobby .cl214-section-index{font-weight:900;font-size:10px;letter-spacing:.12em;color:#78e8c5}
+#platformLobby .cl214-section-heading h2{margin:7px 0 5px!important;color:#f8fcff!important;font:900 clamp(20px,2.4vw,30px)/1.25 "Tajawal","Inter",sans-serif!important}
+#platformLobby .cl214-section-heading p{margin:0!important;color:#aabfd1!important;font-size:13px!important;line-height:1.65}
+#platformLobby .cl214-section-deco{display:grid;place-items:center;flex-shrink:0;width:64px;height:64px;border-radius:18px;background:rgba(94,226,191,.1);color:#83ecd3;transform:rotate(-10deg)}
+#platformLobby .cl214-section-deco svg{width:35px;height:35px}
+#platformLobby .cl214-tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+#platformLobby .cl214-tool-grid .cl214-card{min-height:174px}
+#platformLobby .cl214-tool-grid .cl214-featured{background:radial-gradient(circle at 88% 12%,rgba(88,230,202,.29),transparent 48%),linear-gradient(140deg,#244d57,#153446);border-color:rgba(101,230,199,.45)}
+#platformLobby .cl214-live-area{background:radial-gradient(ellipse at 5% 30%,rgba(108,81,188,.19),transparent 60%),linear-gradient(135deg,#1b243f,#101f36)}
+#platformLobby .cl214-live-mark{border:1px solid rgba(220,202,255,.32);color:#dccbff;background:rgba(132,109,213,.13);padding:8px 12px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}
+#platformLobby .cl214-live-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:15px}
+#platformLobby .cl214-live-panel{padding:22px;border-radius:19px;border:1px solid rgba(178,145,255,.26);background:linear-gradient(125deg,rgba(75,62,132,.42),rgba(24,45,68,.65));min-width:0}
+#platformLobby .cl214-live-art{display:grid;place-items:center;width:58px;height:58px;border-radius:19px;color:#ffca8d;background:rgba(242,178,113,.12);margin-bottom:14px}
+#platformLobby .cl214-live-art svg{width:34px;height:34px}
+#platformLobby .cl214-live-panel h3,#platformLobby .cl214-exam-main h3{font:900 clamp(18px,2vw,23px)/1.3 "Tajawal","Inter",sans-serif!important;margin:0 0 8px!important;color:#fff!important}
+#platformLobby .cl214-live-panel p{font-size:13px!important;color:#c7d0eb!important;line-height:1.8!important;margin:0 0 17px!important}
+#platformLobby .cl214-live-steps{display:grid;align-content:center;gap:10px}
+#platformLobby .cl214-step{display:flex;align-items:center;gap:9px;padding:12px;border-radius:14px;border:1px solid rgba(206,207,255,.16);background:rgba(197,192,255,.06);font-size:12px;font-weight:750;line-height:1.5;color:#e4e6ff}
+#platformLobby .cl214-step svg{width:18px;height:18px;color:#b4a0ff}
+#platformLobby .cl214-text-button{border:0;background:transparent;color:#c5f3ed;text-align:start;padding:9px 3px;font-weight:900;font-size:13px}
+#platformLobby .cl214-exams-area{background:radial-gradient(ellipse at 90% 20%,rgba(63,140,220,.17),transparent 50%),linear-gradient(130deg,#152b41,#102234)}
+#platformLobby .cl214-exam-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}
+#platformLobby .cl214-exam-main{background:rgba(46,86,106,.22);border:1px solid rgba(151,219,246,.24);border-radius:20px;padding:21px;min-width:0}
+#platformLobby .cl214-exam-illustration{display:flex;align-items:center;gap:14px;margin-bottom:15px;color:#a0f9de}
+#platformLobby .cl214-exam-illustration svg{width:51px;height:51px}
+#platformLobby .cl214-exam-illustration span{font:900 39px "Inter",sans-serif;color:#dcf9ee;letter-spacing:-.06em}
+#platformLobby .cl214-levels{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 17px}
+#platformLobby .cl214-levels span{padding:8px 12px;border-radius:999px;border:1px solid rgba(149,223,239,.26);background:rgba(118,200,218,.09);color:#ccebf2;font-size:12px;font-weight:800}
+#platformLobby .cl214-exam-side{display:grid;grid-template-rows:repeat(2,1fr);gap:11px}
+#platformLobby .cl214-exam-side .cl214-card{min-height:130px;padding:16px}
+#platformLobby .cl214-footer{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:24px 8px 12px;color:#95bdd1;font-size:11px;font-weight:800;letter-spacing:.03em}
+#platformLobby .cl214-footer button{background:none;border:0;color:#77e7d3;font-weight:900}
+#platformLobby .cl214-teacher-tools{margin:18px 0 24px}
+#platformLobby .cl214-teacher-tools h2{font:900 22px "Tajawal","Inter",sans-serif!important;color:#e9fcff!important;margin:0 0 12px!important}
+#platformLobby .cl214-teacher-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#platformLobby .cl214-teacher-tools .cl214-card{background:linear-gradient(145deg,#16354b,#0f2738)}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214{--cl-text:var(--ui-text);--cl-muted:var(--ui-muted);--cl-edge:var(--ui-edge);--cl-card:var(--ui-paper-alt)}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214 :is(.cl214-block,.cl214-tabs button,.cl214-card,.cl214-exam-main,.cl214-live-panel,.cl214-step){background:var(--ui-paper-alt)!important;color:var(--ui-text)!important;border-color:var(--ui-edge)!important;box-shadow:0 7px 22px #202a3110}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214 :is(.cl214-card-copy strong,.cl214-card-copy small,.cl214-section-heading h2,.cl214-section-heading p,.cl214-live-panel h3,.cl214-live-panel p,.cl214-exam-main h3,.cl214-step,.cl214-levels span){color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214 :is(.cl214-card-copy small,.cl214-section-heading p,.cl214-live-panel p){color:var(--ui-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-hero{background:linear-gradient(120deg,var(--ui-paper-alt),var(--ui-paper))!important;border-color:var(--ui-edge);box-shadow:0 12px 35px #16262c13}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-hero :is(h1,.cl214-personal,.cl214-personal strong){color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-hero :is(.cl214-hero-lead,.cl214-last-lesson){color:var(--ui-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-hero h1 em{color:var(--ui-accent)}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-hero .cl214-kicker{color:var(--ui-accent)}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-xp-host .student-dash-progress{background:var(--ui-paper)!important;color:var(--ui-text)!important;border-color:var(--ui-edge)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-xp-host :is(.student-dash-level,.student-dash-progress-label,.student-dash-xp,.student-dash-next){color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl214-footer{color:var(--ui-muted)}
+body[data-classora-theme="embroidery"] #platformLobby .cl214 .cl214-primary{background:#872d43!important;border-color:#872d43!important;color:#fff!important}
+@media(max-width:960px){
+ #platformLobby .cl214-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #platformLobby .cl214-teacher-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ #platformLobby .cl214-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding-bottom:4px}
+ #platformLobby .cl214-tabs::-webkit-scrollbar{display:none}
+ #platformLobby .cl214-tabs button{flex:0 0 auto;padding:8px 11px;font-size:11px;min-height:35px}
+ #platformLobby .cl214-hero{grid-template-columns:1fr;border-radius:23px;gap:9px;padding:23px 18px}
+ #platformLobby .cl214-hero h1{font-size:clamp(33px,9vw,47px)!important;margin:12px 0!important}
+ #platformLobby .cl214-hero-lead{font-size:13px!important}
+ #platformLobby .cl214-hero-visual{min-height:0;display:grid;grid-template-columns:minmax(0,.5fr) minmax(0,1fr);gap:8px}
+ #platformLobby .cl214-orbit-art{width:100%;height:125px}
+ #platformLobby .cl214-orbit-center{width:57px;height:57px;border-radius:19px}
+ #platformLobby .cl214-orbit-center svg{width:32px;height:32px}
+ #platformLobby .cl214-orbit-item{width:33px;height:33px;border-radius:10px}
+ #platformLobby .cl214-orbit-item svg{width:18px;height:18px}
+ #platformLobby .cl214-o1{left:1px}#platformLobby .cl214-o2{right:0}
+ #platformLobby .cl214-xp-host{width:100%;margin:0}
+ #platformLobby .cl214-xp-host .student-dash-progress{padding:12px}
+ #platformLobby .cl214-xp-host .student-dash-level{font-size:20px}
+ #platformLobby .cl214-quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+ #platformLobby .cl214-quick .cl214-card{min-height:126px;border-radius:16px;padding:13px 12px}
+ #platformLobby .cl214-card-graphic{width:38px;height:38px;border-radius:12px}
+ #platformLobby .cl214-card-graphic svg{width:21px;height:21px}
+ #platformLobby .cl214-card-copy strong{font-size:14px}
+ #platformLobby .cl214-card-copy small{font-size:11px}
+ #platformLobby .cl214-block{margin-top:13px;padding:16px 13px;border-radius:19px}
+ #platformLobby .cl214-tool-grid{gap:8px}
+ #platformLobby .cl214-tool-grid .cl214-card{min-height:142px;padding:13px 12px;border-radius:15px}
+ #platformLobby .cl214-section-heading h2{font-size:22px!important}
+ #platformLobby .cl214-section-heading p{font-size:11px!important}
+ #platformLobby .cl214-section-deco{width:44px;height:44px}
+ #platformLobby .cl214-live-layout,#platformLobby .cl214-exam-layout{grid-template-columns:1fr}
+ #platformLobby .cl214-live-panel,.cl214-exam-main{padding:16px}
+ #platformLobby .cl214-live-steps{gap:7px}
+ #platformLobby .cl214-exam-side{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}
+ #platformLobby .cl214-exam-side .cl214-card{min-height:140px}
+ #platformLobby .cl214-footer{flex-wrap:wrap;font-size:10px}
+}
+@media(max-width:360px){
+ #platformLobby .cl214-hero-visual{grid-template-columns:1fr}
+ #platformLobby .cl214-orbit-art{display:none}
+ #platformLobby .cl214-tabs{gap:5px}
+ #platformLobby .cl214-quick .cl214-card,.cl214-tool-grid .cl214-card{min-height:130px}
+}
+@media(prefers-reduced-motion:reduce){#platformLobby .cl214 *{animation:none!important;transition:none!important}}
