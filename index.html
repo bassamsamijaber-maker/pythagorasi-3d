@@ -7941,8 +7941,9 @@ document.getElementById("profilePhotoInput").addEventListener("change",async e=>
   if(file.size>8*1024*1024){showToast("الصورة كبيرة جدًا. اختار صورة أقل من 8MB.");return}
   try{
     const photoData=await imageFileToDataURL(file);
-    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,photoData};
+    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,photoData,photoVideoUrl:""};
+    document.dispatchEvent(new Event("classora:profile-video-changed"));
     activeProfile=window.PythagorasiUser;
     document.getElementById("profilePhotoPreview").src=photoData;
     document.getElementById("profilePhotoPreview").style.display="block";
