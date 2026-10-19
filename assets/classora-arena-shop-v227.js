@@ -10,6 +10,7 @@ const btn=(label,cls)=>{const b=el('button',cls,label);b.type='button';return b}
 const user=()=>document.body.classList.contains('classora-authenticated')?window.PythagorasiUser:null;
 const isStudent=()=>user()?.role==='student';
 const isAdmin=()=>Boolean(window.classoraArena?.isAdmin?.());
+const canDuel=()=>isStudent()||isAdmin();
 const grade=()=>{const p=user();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(Number(p?.grade))?Number(p.grade):saved};
 const names={
  flame:['شرار النار','Fire sparks'],lightning:['برق كهربائي','Electric boost'],
@@ -104,7 +105,7 @@ function draw(){
 }
 function detach(){if(stopLive){stopLive();stopLive=null}liveCode='';matchSnapshot=null;working=false}
 async function create(){
- if(working||!isStudent())return;
+ if(working||!canDuel())return;
  working=true;message(tr('جاري إنشاء غرفة 1v1…','Creating a 1v1 room…'));
  try{
   const code=await window.classoraArena.create();
@@ -112,7 +113,7 @@ async function create(){
  }catch(e){message(errorText(e),true)}finally{working=false}
 }
 async function joinRoom(code){
- if(working||!isStudent())return;
+ if(working||!canDuel())return;
  working=true;message(tr('جاري الدخول…','Joining room…'));
  try{const room=await window.classoraArena.join(code);subscribe(room)}catch(e){message(errorText(e),true)}
  finally{working=false}
@@ -131,7 +132,7 @@ function drawDuel(){
  const pane=frame(tr('مبارزة 1v1','1v1 challenge'));
  const body=el('div','cl227-duel');
  body.append(el('p','cl227-duel-intro',tr('5 أسئلة سهلة وعشوائية من صفك. أول واحد يخلص يشوف نتيجة الطرفين. بدون خصم XP على الخسارة.','Five easy random questions from your grade. See both scores when finished. No XP penalties.')));
- if(!isStudent()){
+ if(!canDuel()){
   body.append(el('p','cl227-empty',tr('مبارزات الطلاب فقط، لكن الأدمن عنده جميع مؤثرات الشوب.','Duels are for student accounts; admins have all shop effects.')));pane.append(body);return
  }
  if(!liveCode){
