@@ -1,9 +1,11 @@
-const CACHE_NAME="classora-v227-arena-xp-garage";
+const CACHE_NAME="classora-v229-arena-profile-admin";;
 const APP_SHELL=[
-  "./assets/classora-arena-shop-v227.js?v=227",
-  "./assets/classora-arena-shop-v227.css?v=227",
-  "./assets/classora-quest-map-v223.css?v=223",
-  "./assets/classora-quest-map-v223.js?v=226",
+ "./assets/classora-fx-settings-v228.css?v=229",
+ "./assets/classora-fx-settings-v228.js?v=229",
+  "./assets/classora-arena-shop-v227.js?v=229",
+  "./assets/classora-arena-shop-v227.css?v=229",
+  "./assets/classora-quest-map-v223.css?v=229",
+  "./assets/classora-quest-map-v223.js?v=229",
   "./assets/classora-learning-boost-v215.css?v=221",
   "./assets/classora-learning-boost-v215.js?v=222",
   "./assets/classora-learning-front-v214.css?v=214",
