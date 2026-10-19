@@ -221,7 +221,7 @@ function question(t,index,round){
 function mission(side,t,group){
  const step=progress(t),readOnly=!student(),isOpen=gainTopic(t);
  const title=el('header','cl223-mission-header');
- title.append(el('span','cl223-mission-icon',svg(step===3?'crown':'star')));
+ const missionSymbol=el('span','cl223-mission-icon');missionSymbol.innerHTML=svg(step===3?'crown':'star');title.append(missionSymbol);
  const titleText=el('div','');
  titleText.append(el('small','',L('موضوع مهم','Important topic')),el('h3','',display(t)));
  title.append(titleText);side.append(title);
