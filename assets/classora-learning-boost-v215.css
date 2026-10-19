@@ -1,0 +1,104 @@
+/* Classora V215 — added working study insights. */
+#platformLobby .cl215-insights{--cl215-paper:#11283c;--cl215-muted:#b9cedc;--cl215-ink:#f6fdff;--cl215-border:rgba(163,228,235,.2);position:relative;margin:17px 0 21px;min-width:0;max-width:100%;font-family:"Tajawal","Inter",system-ui,sans-serif;color:var(--cl215-ink)}
+#platformLobby .cl215-insights *{box-sizing:border-box}
+#platformLobby .cl215-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 14px}
+#platformLobby .cl215-eyebrow{font-size:10px;letter-spacing:.13em;font-weight:900;color:#76ead7}
+#platformLobby .cl215-heading h2{margin:6px 0 5px!important;font:900 clamp(20px,2.4vw,28px)/1.2 "Tajawal","Inter",sans-serif!important;color:var(--cl215-ink)!important}
+#platformLobby .cl215-heading p{font-size:12px!important;color:var(--cl215-muted)!important;margin:0!important}
+#platformLobby .cl215-insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+#platformLobby .cl215-insight{appearance:none;display:flex;flex-direction:column;align-items:flex-start;text-align:start;position:relative;gap:10px;width:100%;min-height:166px;min-width:0;border-radius:20px;padding:18px 16px;border:1px solid var(--cl215-border);background:linear-gradient(135deg,#183548,#112333);color:var(--cl215-ink);cursor:pointer;overflow:hidden;transition:transform .17s ease,border-color .17s ease,box-shadow .17s ease}
+#platformLobby .cl215-insight:after{content:"";position:absolute;inset:auto -65px -90px auto;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(105,243,200,.12),transparent 65%);pointer-events:none}
+#platformLobby .cl215-insight:hover{transform:translateY(-3px);border-color:rgba(129,244,213,.47);box-shadow:0 14px 28px #00121d34}
+#platformLobby .cl215-insight:focus-visible,#platformLobby .cl215-insights button:focus-visible{outline:3px solid #82ebd2;outline-offset:3px}
+#platformLobby .cl215-insight-icon{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(162,236,227,.27);background:rgba(75,232,202,.12);border-radius:15px;color:#79f1d9}
+#platformLobby .cl215-insight-icon svg{width:25px;height:25px}
+#platformLobby .cl215-challenge .cl215-insight-icon{background:rgba(239,188,116,.14);color:#f8cb7e}
+#platformLobby .cl215-route .cl215-insight-icon{background:rgba(169,143,248,.15);color:#c6acff}
+#platformLobby .cl215-map .cl215-insight-icon{background:rgba(114,178,250,.14);color:#a2d6ff}
+#platformLobby .cl215-insight-text{display:flex;flex-direction:column;gap:5px;min-width:0;overflow-wrap:anywhere}
+#platformLobby .cl215-insight-text strong{font-size:clamp(14px,1.3vw,17px);line-height:1.5;font-weight:900;color:var(--cl215-ink)!important}
+#platformLobby .cl215-insight-text small{font-size:11px;color:var(--cl215-muted)!important;line-height:1.55}
+#platformLobby .cl215-count,.cl215-insight-arrow{position:absolute;inset:17px auto auto 15px;border:1px solid rgba(240,249,255,.17);background:rgba(187,233,245,.085);border-radius:999px;padding:5px 8px;font:900 11px "Inter",sans-serif;color:#c7f6e9}
+#platformLobby .cl215-insights[dir=ltr] .cl215-count,#platformLobby .cl215-insights[dir=ltr] .cl215-insight-arrow{inset:17px 15px auto auto}
+#platformLobby .cl215-panel{margin:15px 0 0;padding:clamp(17px,2.5vw,28px);border:1px solid rgba(130,223,202,.35);border-radius:24px;background:radial-gradient(ellipse at 90% 0%,rgba(88,202,172,.09),transparent 40%),linear-gradient(135deg,#132b3f,#0a1d2b);scroll-margin-top:22px;box-shadow:0 18px 45px #00131f26}
+#platformLobby .cl215-panel[hidden],#platformLobby .cl215-correction[hidden]{display:none!important}
+#platformLobby .cl215-panel-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
+#platformLobby .cl215-panel-title{font:900 clamp(21px,2.6vw,29px)/1.3 "Tajawal","Inter",sans-serif!important;color:var(--cl215-ink)!important;margin:0!important}
+#platformLobby .cl215-close{width:35px;height:35px;border-radius:11px;background:rgba(204,224,245,.12);border:1px solid rgba(212,231,242,.18);color:#f6fcff;flex-shrink:0;font-size:26px;line-height:1}
+#platformLobby .cl215-panel-description{color:#b6d3df!important;font-size:13px!important;line-height:1.8!important;margin:0 0 16px!important}
+#platformLobby .cl215-empty{padding:15px;border-radius:13px;background:rgba(139,215,207,.07);border:1px dashed rgba(147,222,210,.27);color:#d9eff1;font-size:13px;line-height:1.75}
+#platformLobby .cl215-panel-body button:not(.cl215-close){font-weight:800;cursor:pointer}
+#platformLobby .cl215-action{background:linear-gradient(135deg,#79f4d9,#59bfe1);border:1px solid #8cf8e5;padding:11px 17px;border-radius:12px;color:#08362e;font:900 13px "Tajawal","Inter",sans-serif;min-height:40px}
+#platformLobby .cl215-outline{color:#d9f2fa;background:rgba(166,208,242,.08);border:1px solid rgba(169,213,234,.23);border-radius:11px;padding:10px 14px;margin-top:10px;min-height:38px}
+#platformLobby .cl215-visit{color:#83eed9;background:transparent;border:0;border-bottom:1px solid rgba(131,233,217,.34);padding:8px 3px;font-size:12px;margin-top:9px}
+#platformLobby .cl215-mistake{padding:16px;border-radius:17px;border:1px solid rgba(179,228,232,.2);background:rgba(163,207,222,.045);margin-bottom:11px;min-width:0}
+#platformLobby .cl215-mistake-heading{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+#platformLobby .cl215-mistake-heading strong{font-weight:900;font-size:15px;color:#f2fcff}
+#platformLobby .cl215-mistake-heading small{font-weight:700;font-size:11px;color:#91ebd3}
+#platformLobby .cl215-question{font-size:14px!important;font-weight:750;color:#ecf8ff!important;line-height:1.7!important;white-space:pre-wrap;overflow-wrap:anywhere;margin:14px 0 7px!important}
+#platformLobby .cl215-selected{font-size:12px;color:#b9cbd8!important;line-height:1.7;overflow-wrap:anywhere}
+#platformLobby .cl215-correction{margin-top:11px;padding:13px;border-radius:13px;border:1px solid rgba(137,239,197,.23);background:rgba(91,215,168,.075);font-size:13px;color:#baffde;overflow-wrap:anywhere}
+#platformLobby .cl215-correction strong{display:block}
+#platformLobby .cl215-correction p{color:#cfede8!important;font-size:12px!important;line-height:1.85!important;margin:8px 0 0!important}
+#platformLobby .cl215-path-card{width:100%;display:flex;align-items:center;gap:13px;text-align:start;padding:14px;margin:0 0 9px;border-radius:14px;border:1px solid rgba(160,231,222,.2);background:rgba(143,208,227,.05);color:#eefaff}
+#platformLobby .cl215-path-number{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border-radius:12px;background:rgba(91,238,200,.15);color:#8bffdf;font-size:15px;font-weight:900}
+#platformLobby .cl215-path-copy{display:flex;flex:1;flex-direction:column;gap:5px;min-width:0}
+#platformLobby .cl215-path-copy strong{font-size:14px;color:#f4fdff;overflow-wrap:anywhere}
+#platformLobby .cl215-path-copy small{font-size:12px;color:#aac9d7;line-height:1.5}
+#platformLobby .cl215-path-arrow{font-size:19px;color:#99f0df}
+#platformLobby .cl215-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#platformLobby .cl215-map-tile{min-width:0;display:flex;align-items:center;gap:13px;text-align:start;border-radius:18px;border:1px solid rgba(149,218,225,.2);padding:15px 12px;background:rgba(132,187,216,.06);color:#f2faff}
+#platformLobby .cl215-map-ring{flex:0 0 74px;width:74px;height:74px;display:grid;place-items:center;border-radius:50%;background:conic-gradient(#73ecca var(--cl215-percent,0%),rgba(149,200,218,.15) 0);position:relative}
+#platformLobby .cl215-map-ring:after{content:"";position:absolute;inset:7px;background:#112a3d;border-radius:50%}
+#platformLobby .cl215-map-ring b{position:relative;z-index:1;color:#e3f9ef;font:800 13px "Inter",sans-serif}
+#platformLobby .cl215-map-label{display:flex;flex-direction:column;gap:5px;min-width:0}
+#platformLobby .cl215-map-label strong{font-size:14px;color:#fff}
+#platformLobby .cl215-map-label small{font-size:11px;color:#b6cfdf;line-height:1.5}
+#platformLobby .cl215-daily-status{color:#bef5dd;font-size:12px;font-weight:800;margin-bottom:9px}
+#platformLobby .cl215-daily-bar{height:7px;border-radius:999px;overflow:hidden;background:rgba(203,232,249,.14);margin-bottom:21px}
+#platformLobby .cl215-daily-bar i{display:block;background:linear-gradient(90deg,#5ad4bb,#9ceaee);height:100%;width:0;transition:width .18s}
+#platformLobby .cl215-quiz{padding:16px 2px}
+#platformLobby .cl215-question-counter{color:#8ce6d0;font-size:12px;font-weight:850}
+#platformLobby .cl215-quiz-title{font:800 clamp(17px,2vw,22px)/1.65 "Tajawal","Inter",sans-serif!important;color:#f5fcff!important;margin:14px 0 20px!important;white-space:pre-wrap;overflow-wrap:anywhere}
+#platformLobby .cl215-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+#platformLobby .cl215-option{border:1px solid rgba(178,226,231,.22);border-radius:13px;padding:15px;min-height:55px;display:flex;align-items:center;justify-content:flex-start;text-align:start;background:rgba(142,188,210,.07);color:#f4fcff;font-size:13px;line-height:1.6;white-space:normal;overflow-wrap:anywhere}
+#platformLobby .cl215-option:not(:disabled):hover{background:rgba(112,232,208,.13);border-color:#72ead0}
+#platformLobby .cl215-option:disabled{opacity:1;cursor:default}
+#platformLobby .cl215-option.correct{border-color:#68d9a9;background:rgba(92,210,141,.17)}
+#platformLobby .cl215-option.wrong{border-color:#efb9a3;background:rgba(235,108,107,.15)}
+#platformLobby .cl215-feedback{border-radius:13px;border:1px solid rgba(150,226,193,.33);padding:13px;margin-bottom:12px;background:rgba(84,198,158,.1);font-size:13px;font-weight:800;line-height:1.6;color:#bff4d6}
+#platformLobby .cl215-feedback.is-wrong{border-color:rgba(255,168,152,.37);background:rgba(225,100,109,.07);color:#ffc6b8}
+#platformLobby .cl215-feedback p{margin:7px 0 0!important;color:#d8eaf0!important;font-size:12px!important;line-height:1.8}
+#platformLobby .cl215-score{font:900 clamp(36px,6vw,62px) "Inter",sans-serif;color:#83f8d7;margin-bottom:10px}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-insights{--cl215-ink:var(--ui-text);--cl215-muted:var(--ui-muted);--cl215-border:var(--ui-edge)}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl215-insight,.cl215-panel,.cl215-mistake,.cl215-path-card,.cl215-map-tile,.cl215-option){background:var(--ui-paper-alt)!important;border-color:var(--ui-edge)!important;box-shadow:0 5px 20px #12314a0e;color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl215-insight-text strong,.cl215-insight-text small,.cl215-heading h2,.cl215-heading p,.cl215-panel-title,.cl215-panel-description,.cl215-map-label strong,.cl215-map-label small,.cl215-path-copy strong,.cl215-path-copy small,.cl215-mistake-heading strong,.cl215-mistake-heading small,.cl215-question,.cl215-quiz-title,.cl215-selected,.cl215-option,.cl215-empty,.cl215-daily-status){color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-map-ring:after{background:var(--ui-paper-alt)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-map-ring b{color:var(--ui-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-outline{color:var(--ui-text)!important;background:var(--ui-paper)!important;border-color:var(--ui-edge)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-correction{background:var(--ui-paper)!important;color:var(--ui-text)!important;border-color:var(--ui-edge)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-correction p{color:var(--ui-muted)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl215-close{background:var(--ui-paper)!important;color:var(--ui-text)!important;border-color:var(--ui-edge)!important}
+body[data-classora-theme="embroidery"] #platformLobby .cl215-action{background:#8a3147!important;border-color:#8a3147!important;color:#fff!important}
+@media(max-width:950px){
+ #platformLobby .cl215-insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #platformLobby .cl215-map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ #platformLobby .cl215-insights{margin:12px 0 15px}
+ #platformLobby .cl215-insight-grid{gap:8px}
+ #platformLobby .cl215-insight{padding:13px 11px;min-height:149px;border-radius:16px}
+ #platformLobby .cl215-insight-icon{width:36px;height:36px;border-radius:12px}
+ #platformLobby .cl215-insight-icon svg{width:21px;height:21px}
+ #platformLobby .cl215-insight-text strong{font-size:13px}
+ #platformLobby .cl215-insight-text small{font-size:10px}
+ #platformLobby .cl215-count,.cl215-insight-arrow{font-size:10px;inset:12px auto auto 10px}
+ #platformLobby .cl215-insights[dir=ltr] .cl215-count,#platformLobby .cl215-insights[dir=ltr] .cl215-insight-arrow{inset:12px 10px auto auto}
+ #platformLobby .cl215-panel{padding:17px 12px;border-radius:17px}
+ #platformLobby .cl215-map-grid{grid-template-columns:1fr}
+ #platformLobby .cl215-options{grid-template-columns:1fr}
+ #platformLobby .cl215-option{padding:12px;min-height:50px}
+ #platformLobby .cl215-quiz-title{font-size:17px!important}
+}
+@media(max-width:340px){#platformLobby .cl215-insight-grid{grid-template-columns:1fr}#platformLobby .cl215-insight{min-height:118px}}
+@media(prefers-reduced-motion:reduce){#platformLobby .cl215-insights *{transition:none!important}}
