@@ -1223,21 +1223,19 @@ service cloud.firestore {
         && request.resource.data.updatedAt == request.time
         && request.resource.data.startedAt == null
         && request.resource.data.expiresAt is int
-        && request.resource.data.expiresAt > request.time.toMillis()
-        && request.resource.data.expiresAt <= request.time.toMillis() + 7200000;
+        && request.resource.data.expiresAt > 0;
       allow update: if signedIn()
         && resource.data.status == 'waiting'
         && resource.data.guestUid == ''
         && request.auth.uid != resource.data.hostUid
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student'
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('grade',8) == resource.data.grade
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guestUid','guestName','status','startedAt','updatedAt'])
+         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guestUid','guestName','status','startedAt','updatedAt'])
         && request.resource.data.guestUid == request.auth.uid
         && request.resource.data.guestName is string && request.resource.data.guestName.size() <= 40
         && request.resource.data.status == 'playing'
         && request.resource.data.updatedAt == request.time
         && request.resource.data.startedAt == request.time
-        && resource.data.expiresAt > request.time.toMillis();
+        && resource.data.expiresAt is int;
       allow delete: if false;
       match /answers/{uid} {
         allow get: if signedIn()
