@@ -1,0 +1,163 @@
+/* Classora Quest Adventure V223
+ * Illustrated curriculum mission map, 3 tasks per topic, mobile-first and
+ * Nitro-inspired earnable cosmetic profile animations (not paid products).
+ */
+#platformLobby .cl223-preview,#platformLobby .cl223-map-panel{box-sizing:border-box;min-width:0;max-width:100%;font-family:"Tajawal","Inter",system-ui,sans-serif;--quest-color:#6fe0cb}
+#platformLobby .cl223-preview * ,#platformLobby .cl223-map-panel *{box-sizing:border-box}
+#platformLobby .cl223-preview[hidden],#platformLobby .cl223-map-panel[hidden],#cl223Toast[hidden]{display:none!important}
+#platformLobby .cl223-preview{position:relative;isolation:isolate;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:14px;min-height:264px;padding:clamp(21px,4vw,37px);border-radius:27px;border:1px solid #8fdce83b;background:radial-gradient(ellipse at 88% 32%,#296b8559,transparent 55%),linear-gradient(125deg,#11263d,#142d49 62%,#102c3b);overflow:hidden;box-shadow:0 14px 38px #041d3130;margin:18px 0}
+#platformLobby .cl223-preview:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#e9ffff35 1px,transparent 1px);background-size:21px 21px;pointer-events:none;mask-image:linear-gradient(90deg,transparent,#000)}
+#platformLobby .cl223-preview-copy{position:relative;z-index:2;min-width:0}
+#platformLobby .cl223-kicker{font:900 11px "Inter",system-ui,sans-serif;letter-spacing:.13em;color:#78f4d2;display:block;margin-bottom:9px}
+#platformLobby .cl223-preview h2{margin:0 0 12px!important;color:#f1ffff!important;font-size:clamp(25px,3vw,36px)!important;line-height:1.3!important;font-weight:900!important}
+#platformLobby .cl223-preview p{color:#c5e1eb!important;font-size:clamp(12px,1.3vw,15px)!important;line-height:1.9!important;margin:0 0 17px!important;max-width:640px}
+#platformLobby .cl223-preview-stats{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:17px}
+#platformLobby .cl223-preview-stats span{display:inline-flex;align-items:center;border:1px solid #a0fbe031;border-radius:999px;background:#c6ffe10c;color:#d7f6ed;font-weight:800;font-size:11px;padding:8px 11px}
+#platformLobby .cl223-open,#platformLobby .cl223-primary{display:inline-flex;align-items:center;justify-content:center;border:1px solid #baf9eb;border-radius:13px;color:#103329;background:linear-gradient(115deg,#9ff4ce,#75d9dd);padding:12px 22px;font:900 14px "Tajawal","Inter",sans-serif;cursor:pointer;min-height:44px;box-shadow:0 8px 20px #3debbb1a}
+#platformLobby .cl223-open:focus-visible,#platformLobby .cl223-map-panel button:focus-visible,#cl223Wardrobe button:focus-visible{outline:3px solid #70f5d3;outline-offset:3px}
+#platformLobby .cl223-preview-progress{color:#b1dcca;font-size:12px;font-weight:800;margin-top:11px}
+#platformLobby .cl223-preview-art{position:relative;min-height:204px}
+#platformLobby .cl223-preview-route{position:absolute;inset:22% 12%;border:3px dashed #9fe6e390;border-radius:50%;transform:rotate(-25deg);box-shadow:0 0 34px #71f6cb25}
+#platformLobby .cl223-preview-stop{position:absolute;display:grid;place-items:center;width:70px;height:70px;border-radius:23px;border:2px solid #a3f8df90;background:linear-gradient(135deg,#245777,#1f4867);color:#b9ffdd;box-shadow:0 12px 29px #07152791,0 0 27px #5cfff11c;animation:cl223-float 5s ease-in-out infinite}
+#platformLobby .cl223-preview-stop svg{width:32px;height:32px}
+#platformLobby .cl223-preview-stop.stop-one{top:21%;inset-inline-start:11%}
+#platformLobby .cl223-preview-stop.stop-two{top:57%;inset-inline-start:43%;animation-delay:-1.4s;background:linear-gradient(135deg,#574881,#375e9b);color:#d7cfff}
+#platformLobby .cl223-preview-stop.stop-three{top:2%;inset-inline-end:8%;animation-delay:-2.4s;background:linear-gradient(135deg,#986144,#9b7957);color:#fff0b5}
+#platformLobby .cl223-preview-star{position:absolute;width:20px;height:20px;color:#ccfff1;animation:cl223-twinkle 3s linear infinite}
+#platformLobby .cl223-preview-star svg{width:100%;height:100%}
+#platformLobby .cl223-preview-star.star-one{top:18%;left:49%}
+#platformLobby .cl223-preview-star.star-two{top:76%;left:82%;animation-delay:1.2s}
+#platformLobby .cl223-map-panel{margin:16px 0 23px;padding:clamp(14px,2.5vw,28px);border:1px solid #94d8e54d;border-radius:27px;background:radial-gradient(ellipse at 50% 0%,#25507035,transparent 65%),linear-gradient(130deg,#0e2539,#0a1b2c);box-shadow:0 20px 55px #0317264d;scroll-margin-top:17px;color:#ecfaff}
+#platformLobby .cl223-map-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}
+#platformLobby .cl223-map-header h2{color:#f1ffff!important;font:900 clamp(24px,4vw,35px)/1.3 "Tajawal","Inter",sans-serif!important;margin:0 0 5px!important}
+#platformLobby .cl223-map-header p{font-size:12px!important;color:#b3d9e7!important;line-height:1.8!important;margin:0!important}
+#platformLobby .cl223-close{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:12px;border:1px solid #c8e9f130;background:#ebf6fa13;color:#fff;font-size:27px;cursor:pointer}
+#platformLobby .cl223-filters{display:grid;gap:10px;margin-bottom:15px}
+#platformLobby :is(.cl223-grade-picker,.cl223-subject-picker){display:flex;flex-wrap:wrap;gap:7px}
+#platformLobby .cl223-filters button{border:1px solid #a6d4dc33;color:#daeff6;background:#effafa0b;padding:9px 13px;border-radius:999px;font:800 12px "Tajawal","Inter",sans-serif;cursor:pointer}
+#platformLobby .cl223-filters button.active{border-color:#7af4d0;background:#69d4b929;color:#bbffe8;box-shadow:0 0 0 1px #7af4d040}
+#platformLobby .cl223-subject-picker button.active{border-color:var(--quest-color);background:color-mix(in srgb,var(--quest-color) 20%,transparent);color:var(--quest-color)}
+#platformLobby .cl223-world{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:13px;align-items:start}
+#platformLobby .cl223-route,#platformLobby .cl223-mission-area{border-radius:22px;border:1px solid #afdae526;background:#bdddee0a;padding:clamp(12px,2vw,19px);min-width:0}
+#platformLobby .cl223-route{min-height:350px;background:radial-gradient(circle at 70% 20%,color-mix(in srgb,var(--quest-color) 13%,transparent),transparent 65%),radial-gradient(circle at 0 80%,#759be618,transparent 50%),#15354c48}
+#platformLobby .cl223-route-header{display:flex;align-items:center;gap:11px;padding:4px 3px 17px}
+#platformLobby .cl223-route-header>span{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:13px;background:color-mix(in srgb,var(--quest-color) 17%,transparent);color:var(--quest-color)}
+#platformLobby .cl223-route-header svg{width:23px;height:23px}
+#platformLobby .cl223-route-header h3{color:#e8ffff!important;font:900 19px/1.4 "Tajawal","Inter",sans-serif!important;margin:0 0 3px!important}
+#platformLobby .cl223-route-header p{color:#accad8!important;font-size:11px!important;margin:0!important}
+#platformLobby .cl223-nodes{position:relative;display:flex;flex-direction:column;gap:12px;padding:13px 0 17px}
+#platformLobby .cl223-nodes:before{content:"";position:absolute;inset:20px 22% 20px auto;width:5px;border-radius:999px;background:repeating-linear-gradient(180deg,#8ee6d775 0 13px,transparent 13px 21px);pointer-events:none}
+#platformLobby .cl223-node{position:relative;z-index:1;display:flex;align-items:center;gap:10px;border:1px solid #b4d3dd2a;border-radius:18px;min-height:79px;width:84%;padding:12px 11px;background:linear-gradient(145deg,#28445c,#193148);color:#e3f7fa;text-align:start;box-shadow:0 6px 17px #05142630;cursor:pointer}
+#platformLobby .cl223-node:nth-child(odd){margin-inline-end:auto;margin-inline-start:0}
+#platformLobby .cl223-node:nth-child(even){margin-inline-end:0;margin-inline-start:auto}
+#platformLobby .cl223-node.available{border-color:color-mix(in srgb,var(--node-color) 50%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--node-color) 10%,transparent),0 8px 22px #0003}
+#platformLobby .cl223-node.selected{outline:2px solid var(--node-color);outline-offset:1px}
+#platformLobby .cl223-node.finished{background:linear-gradient(130deg,#1c514c,#16443f);border-color:#71e6aa65}
+#platformLobby .cl223-node.sealed{opacity:.55;filter:saturate(.45);cursor:not-allowed}
+#platformLobby .cl223-node-marker{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:15px;background:color-mix(in srgb,var(--node-color) 24%,#193047);border:1px solid color-mix(in srgb,var(--node-color) 55%,transparent);color:#e4fff7}
+#platformLobby .cl223-node.sealed .cl223-node-marker{background:#23394a;color:#b1bec5}
+#platformLobby .cl223-node-marker svg{width:23px;height:23px}
+#platformLobby .cl223-node-caption{display:flex;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere}
+#platformLobby .cl223-node-index{font-size:10px;color:#8bd4c8;font-weight:800}
+#platformLobby .cl223-node-caption strong{color:#f3ffff!important;font-size:13px;line-height:1.45;font-weight:850}
+#platformLobby .cl223-node-caption small{color:#bdd7e1!important;font-size:10px}
+#platformLobby .cl223-node.sealed .cl223-node-index{color:#bdc6d0}
+#platformLobby .cl223-final{position:absolute;inset:auto 9px -10px auto;border-radius:999px;border:1px solid #f4d89788;padding:4px 9px;background:#4b3c33;color:#ffdf8d;font-size:9px}
+#platformLobby .cl223-route-footer{margin:8px 3px 0;color:#b4d4e7;font:800 12px "Tajawal","Inter",sans-serif}
+#platformLobby .cl223-mission-area{position:sticky;top:12px}
+#platformLobby .cl223-mission-header{display:flex;gap:11px;align-items:center;margin:0 0 15px}
+#platformLobby .cl223-mission-icon{flex:0 0 50px;width:50px;height:50px;border:1px solid #a5f1d44d;border-radius:16px;display:grid;place-items:center;color:#a5ffdf;background:#80ffe30e}
+#platformLobby .cl223-mission-icon svg{width:26px;height:26px}
+#platformLobby .cl223-mission-header small{color:#8edec9;font:800 11px "Tajawal","Inter",sans-serif}
+#platformLobby .cl223-mission-header h3{font:900 clamp(16px,2vw,21px)/1.35 "Tajawal","Inter",sans-serif!important;color:#fff!important;margin:2px 0!important;overflow-wrap:anywhere}
+#platformLobby .cl223-mission-track{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+#platformLobby .cl223-step{display:flex;gap:5px;align-items:center;color:#acc7d0;font-size:10px;font-weight:800;border:1px solid #b3d6e22e;background:#f2ffff0a;border-radius:999px;padding:6px 8px}
+#platformLobby .cl223-step i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:"Inter",sans-serif;background:#284154}
+#platformLobby .cl223-step.done{color:#87ebc7;border-color:#8beaaf5d}
+#platformLobby .cl223-step.done i{background:#3b995d;color:white}
+#platformLobby .cl223-step.now{color:#defff4;border-color:#88dfd68b;background:#91f5c313}
+#platformLobby .cl223-description{font:650 13px/1.9 "Tajawal","Inter",sans-serif!important;color:#c3dfeb!important;margin:0 0 15px!important}
+#platformLobby .cl223-mission-area button{cursor:pointer}
+#platformLobby .cl223-mission-area button:disabled{opacity:.48;cursor:not-allowed}
+#platformLobby .cl223-mission-area>.cl223-primary,#platformLobby .cl223-mission-area>.cl223-outline{width:100%;display:flex;margin:9px 0;min-height:43px}
+#platformLobby .cl223-outline{align-items:center;justify-content:center;border:1px solid #9ad9e44f;border-radius:12px;background:#a4c5ef14;color:#f0f9fa;padding:11px 16px;font:900 13px "Tajawal","Inter",sans-serif}
+#platformLobby .cl223-fine{display:block;color:#adcad8;font:650 11px/1.8 "Tajawal","Inter",sans-serif;margin-top:10px}
+#platformLobby .cl223-lock-note{color:#ffbfc7;font-size:13px;line-height:1.8}
+#platformLobby .cl223-q-count{font-size:11px!important;color:#8bffdd!important;font-weight:900!important;margin:0 0 10px!important}
+#platformLobby .cl223-question{color:#fbffff!important;font:900 16px/1.65 "Tajawal","Inter",sans-serif!important;margin:0 0 15px!important;overflow-wrap:anywhere;white-space:pre-wrap}
+#platformLobby .cl223-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#platformLobby .cl223-answer{min-height:52px;text-align:start;background:#bfedfc12;border-radius:12px;border:1px solid #b7e3f844;color:#f1ffff;padding:10px 11px;font:800 12px/1.7 "Tajawal","Inter",sans-serif;overflow-wrap:anywhere}
+#platformLobby .cl223-answer:hover{background:#8cffe125;border-color:#83f4d4}
+#platformLobby .cl223-answer.wrong{background:#b9404330;border-color:#ffacbb;color:#ffdce2}
+#platformLobby .cl223-feedback{color:#ffd8b9;font-size:12px;line-height:1.7;margin:10px 0;min-height:10px}
+#platformLobby .cl223-victory{display:flex;align-items:center;gap:8px;padding:15px 12px;border:1px solid #97edca6b;border-radius:14px;background:linear-gradient(120deg,#32675b,#215343);color:#eaffef;margin:11px 0}
+#platformLobby .cl223-victory svg{width:24px;height:24px;color:#ffdb87}
+#platformLobby .cl223-reward-ok{font-size:12px;color:#98f0ca;line-height:1.7;margin:13px 0}
+#cl223Toast{position:fixed;z-index:999999;inset:auto 50% max(18px,env(safe-area-inset-bottom)) auto;transform:translateX(50%);border-radius:13px;padding:14px 20px;background:#193d45;color:#d8ffee;border:1px solid #83e9b987;font:800 13px "Tajawal","Inter",sans-serif;box-shadow:0 12px 30px #0008;max-width:min(440px,90vw);text-align:center}
+#profileModal .cl223-wardrobe{margin:14px 0;border:1px solid #7adfd146;border-radius:17px;background:linear-gradient(135deg,#132a43,#1e364b);padding:17px}
+#profileModal .cl223-wardrobe-top{display:flex;gap:10px;align-items:center;margin-bottom:13px}
+#profileModal .cl223-wardrobe-top>span{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#f6d88a1b;color:#f7dd97}
+#profileModal .cl223-wardrobe-top svg{width:23px;height:23px}
+#profileModal .cl223-wardrobe-top h3{margin:0 0 3px!important;font:900 18px "Tajawal","Inter",sans-serif!important;color:#edfbff!important}
+#profileModal .cl223-wardrobe-top p{font:650 12px/1.7 "Tajawal","Inter",sans-serif!important;color:#b6dce3!important;margin:0!important}
+#profileModal .cl223-wardrobe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#profileModal .cl223-cosmetic{display:flex;align-items:center;gap:10px;padding:11px 10px;text-align:start;border:1px solid #9bdddc36;border-radius:14px;background:#e4ffff0c;color:#f6ffff;min-width:0}
+#profileModal .cl223-cosmetic:disabled{opacity:.65;cursor:not-allowed}
+#profileModal .cl223-cosmetic.equipped{border-color:#74f3c6;box-shadow:0 0 0 1px #59fbd248}
+#profileModal .cl223-cosmetic-orbit{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border:2px solid #b0e5d48a;border-radius:50%;color:#b8fff5;background:#2e5d68}
+#profileModal .cl223-cosmetic-orbit svg{width:21px;height:21px}
+#profileModal .cl223-cosmetic-orbit.neon{border-color:#75f8ec;box-shadow:0 0 9px #76dff75c}
+#profileModal .cl223-cosmetic-orbit.sparkle{border-color:#e1baff;box-shadow:0 0 9px #bb8dfd5b}
+#profileModal .cl223-cosmetic-orbit.galaxy{border-color:#7da8fe;box-shadow:0 0 9px #a792ff8c}
+#profileModal .cl223-cosmetic-orbit.legend{border-color:#ffcc76;box-shadow:0 0 9px #ffd46d84}
+#profileModal .cl223-cosmetic>span:last-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+#profileModal .cl223-cosmetic b{font:800 12px/1.4 "Tajawal","Inter",sans-serif;color:#f1feff;overflow-wrap:anywhere}
+#profileModal .cl223-cosmetic small{font:650 10px/1.6 "Tajawal","Inter",sans-serif;color:#bdd5e4;overflow-wrap:anywhere}
+#profileModal .cl223-wardrobe-note{display:block;margin-top:10px;color:#aed4df;font:650 11px/1.7 "Tajawal","Inter",sans-serif}
+body[data-cl223-cosmetic] #profileModal .profile-photo-wrap{position:relative;isolation:isolate}
+body[data-cl223-cosmetic]:not([data-cl223-cosmetic="none"]) #profileModal .profile-photo-wrap:before{content:"";position:absolute;z-index:3;pointer-events:none;inset:-6px;border-radius:23px;border:4px solid #a6e6dc;box-shadow:0 0 16px #a3efdf6b}
+body[data-cl223-cosmetic="bronze"] #profileModal .profile-photo-wrap:before{border-color:#e8b779;box-shadow:0 0 15px #cc97536c}
+body[data-cl223-cosmetic="neon"] #profileModal .profile-photo-wrap:before{border-color:#7bf5f2;animation:cl223-neon 2.6s ease-in-out infinite;box-shadow:0 0 11px #44f3f6,0 0 24px #887bfb}
+body[data-cl223-cosmetic="sparkle"] #profileModal .profile-photo-wrap:before{border-style:dotted;border-color:#e6b0ff;animation:cl223-spin 11s linear infinite;box-shadow:0 0 13px #d38eff}
+body[data-cl223-cosmetic="galaxy"] #profileModal .profile-photo-wrap:before{border-color:#909cfa;animation:cl223-galaxy 4s ease-in-out infinite;box-shadow:0 0 13px #6d7aff,0 0 27px #a46cff}
+body[data-cl223-cosmetic="legend"] #profileModal .profile-photo-wrap:before{border-color:#ffe6a0;animation:cl223-neon 3s ease-in-out infinite;box-shadow:0 0 18px #ffd77a,0 0 28px #f39b5f}
+body[data-cl223-cosmetic="neon"] #lobbyAvatar{border:3px solid #65f5ea!important;box-shadow:0 0 12px #5aeeeaaa,0 0 18px #ae7ffb77;animation:cl223-neon 2.6s ease-in-out infinite}
+body[data-cl223-cosmetic="bronze"] #lobbyAvatar{border:3px solid #e3b56d!important;box-shadow:0 0 12px #d5a57655}
+body[data-cl223-cosmetic="sparkle"] #lobbyAvatar{border:3px dotted #ddb6ff!important;box-shadow:0 0 15px #bfa1fc88;animation:cl223-neon 3.5s ease-in-out infinite}
+body[data-cl223-cosmetic="galaxy"] #lobbyAvatar{border:3px solid #9b9afa!important;box-shadow:0 0 10px #a495ef,0 0 22px #758eff96;animation:cl223-galaxy 4s ease-in-out infinite}
+body[data-cl223-cosmetic="legend"] #lobbyAvatar{border:3px solid #ffe3a7!important;box-shadow:0 0 13px #ffc370,0 0 20px #ffde9d;animation:cl223-neon 3s ease-in-out infinite}
+@keyframes cl223-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes cl223-twinkle{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes cl223-neon{0%,100%{filter:hue-rotate(0deg) brightness(1)}50%{filter:hue-rotate(90deg) brightness(1.25)}}
+@keyframes cl223-spin{to{transform:rotate(360deg)}}
+@keyframes cl223-galaxy{0%,100%{filter:hue-rotate(0deg);transform:scale(1)}50%{filter:hue-rotate(65deg);transform:scale(1.035)}}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl223-map-panel,.cl223-preview,.cl223-route,.cl223-mission-area){background:var(--ui-paper-alt,#f4f7f9)!important;border-color:var(--ui-edge,#c1ccd6)!important;color:var(--ui-text,#183447)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl223-preview h2,.cl223-preview p,.cl223-map-header h2,.cl223-map-header p,.cl223-route-header h3,.cl223-route-header p,.cl223-mission-header h3,.cl223-description,.cl223-question,.cl223-node-caption strong,.cl223-node-caption small){color:var(--ui-text,#183447)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl223-node,.cl223-answer,.cl223-outline,.cl223-filters button){background:var(--ui-paper,#fff)!important;border-color:var(--ui-edge,#bdccd3)!important;color:var(--ui-text,#193446)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl223-node.selected,.cl223-subject.active){border-color:#529988!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl223-node-caption small{color:var(--ui-muted,#526675)!important}
+@media(max-width:940px){#platformLobby .cl223-world{grid-template-columns:1fr}#platformLobby .cl223-mission-area{position:relative;top:auto}#platformLobby .cl223-preview-art{min-height:170px}}
+@media(max-width:670px){
+ #platformLobby .cl223-preview{grid-template-columns:1fr;padding:22px 17px;border-radius:20px;min-height:0}
+ #platformLobby .cl223-preview-art{min-height:115px;order:-1}
+ #platformLobby .cl223-preview-stop{width:50px;height:50px;border-radius:15px}
+ #platformLobby .cl223-preview-stop svg{width:26px;height:26px}
+ #platformLobby .cl223-preview-route{inset:17% 11%}
+ #platformLobby .cl223-preview-stats{gap:6px}
+ #platformLobby .cl223-preview-stats span{padding:6px 9px}
+ #platformLobby .cl223-open{width:100%}
+ #platformLobby .cl223-map-panel{padding:14px 9px;border-radius:17px}
+ #platformLobby .cl223-world{gap:11px}
+ #platformLobby .cl223-nodes{gap:10px}
+ #platformLobby .cl223-node{width:88%;min-height:73px}
+ #platformLobby .cl223-node-marker{width:37px;height:37px;flex-basis:37px}
+ #platformLobby .cl223-route,#platformLobby .cl223-mission-area{padding:13px 10px}
+ #platformLobby .cl223-options{grid-template-columns:1fr}
+ #profileModal .cl223-wardrobe{padding:12px}
+ #profileModal .cl223-wardrobe-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby .cl223-preview * ,#platformLobby .cl223-map-panel *,
+ body[data-cl223-cosmetic] #profileModal .profile-photo-wrap:before,
+ body[data-cl223-cosmetic] #lobbyAvatar{animation:none!important;transition:none!important}
+}
