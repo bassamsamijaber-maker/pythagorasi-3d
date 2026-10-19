@@ -108,3 +108,29 @@ body[data-classora-theme="embroidery"] #platformLobby .cl215-action{background:#
 body.classora-authenticated[data-user-role="student"] #platformLobby #classoraStudentDashboard:not([hidden]){display:block!important}
 body.classora-authenticated[data-user-role="student"] #platformLobby #classoraLearningBoost:not([hidden]){display:block!important}
 body.classora-authenticated[data-user-role="student"] #platformLobby #classoraLearningBoost:not([hidden]) .cl215-insight-grid{display:grid!important;opacity:1!important;visibility:visible!important}
+
+/* V221: The classroom discovery portal is a lobby section, not a student-only
+ * dashboard. Keep it visible for all authenticated roles; keep private stats
+ * hidden outside the student role. Native [hidden] still wins on sign-out. */
+#platformLobby #classoraLearningFront:not([hidden]){
+  display:block!important;visibility:visible!important;opacity:1!important;
+  position:relative!important;height:auto!important;overflow:visible!important;
+}
+#platformLobby #classoraLearningBoost:not([hidden]){
+  display:block!important;visibility:visible!important;opacity:1!important;
+}
+#platformLobby #classoraLearningBoost:not([hidden]) .cl215-insight-grid{
+  display:grid!important;visibility:visible!important;opacity:1!important;
+}
+#platformLobby #classoraLearningFront [hidden],
+#platformLobby #classoraLearningBoost [hidden]{
+  display:none!important;
+}
+#platformLobby #classoraLearningFront #cl214XpHost[hidden],
+#platformLobby #classoraLearningFront #cl214StatHost[hidden]{
+  display:none!important;
+}
+@media (max-width:760px){
+ #platformLobby #classoraLearningFront:not([hidden]){width:100%!important;min-width:0!important;}
+ #platformLobby #classoraLearningBoost:not([hidden]){width:100%!important;min-width:0!important;}
+}
