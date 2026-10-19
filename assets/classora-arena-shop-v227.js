@@ -9,6 +9,7 @@ const el=(tag,cls,content)=>{const n=document.createElement(tag);if(cls)n.classN
 const btn=(label,cls)=>{const b=el('button',cls,label);b.type='button';return b};
 const user=()=>document.body.classList.contains('classora-authenticated')?window.PythagorasiUser:null;
 const isStudent=()=>user()?.role==='student';
+const isAdmin=()=>Boolean(window.classoraArena?.isAdmin?.());
 const grade=()=>{const p=user();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(Number(p?.grade))?Number(p.grade):saved};
 const names={
  flame:['شرار النار','Fire sparks'],lightning:['برق كهربائي','Electric boost'],
@@ -78,11 +79,15 @@ function init(){
  window.classoraSocialGarage={openDuel:()=>show('duel'),openShop:()=>show('shop'),refresh:sync};
  sync();
 }
-function show(tab){
+async function show(tab){
  if(!user())return;
  const pane=$('cl227Pane');if(!pane)return;
  activeTab=tab;pane.hidden=false;draw();
- pane.scrollIntoView({block:'start',behavior:'smooth'});
+ if(tab==='shop'&&isAdmin()){
+  try{await window.classoraArena.unlockAdmin();drawShop()}
+  catch(e){message(errorText(e),true)}
+ }
+ pane.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});
 }
 function hide(){const pane=$('cl227Pane');if(pane)pane.hidden=true;detach()}
 function frame(header){
@@ -127,7 +132,7 @@ function drawDuel(){
  const body=el('div','cl227-duel');
  body.append(el('p','cl227-duel-intro',tr('5 أسئلة سهلة وعشوائية من صفك. أول واحد يخلص يشوف نتيجة الطرفين. بدون خصم XP على الخسارة.','Five easy random questions from your grade. See both scores when finished. No XP penalties.')));
  if(!isStudent()){
-  body.append(el('p','cl227-empty',tr('المبارزات للطلاب المسجّلين فقط.','Duels are available to signed-in students.')));pane.append(body);return
+  body.append(el('p','cl227-empty',tr('مبارزات الطلاب فقط، لكن الأدمن عنده جميع مؤثرات الشوب.','Duels are for student accounts; admins have all shop effects.')));pane.append(body);return
  }
  if(!liveCode){
   const createButton=btn(tr('إنشاء غرفة خاصة','Create private room'),'cl227-primary');
@@ -191,16 +196,16 @@ function drawShop(){
  const p=user()||{},shop=p.questShop||{},owned=Array.isArray(shop.owned)?shop.owned:[];
  const balance=el('div','cl227-wallet');
  balance.append(el('span','',tr('رصيدك المتاح','Available balance')),el('strong','',shopBalance()+' XP'));
- pane.append(balance,el('p','cl227-shop-note',tr('الشراء بإنجازاتك فقط. XP المستوى ما بننقص؛ المتجر بحسب الرصيد غير المصروف.','Spend available earned XP. Your total level XP is not reduced.')));
+ pane.append(balance,el('p','cl227-shop-note',isAdmin()?tr('جميع العناصر مفتوحة مجانًا للأدمن، بدون صرف XP.','All cosmetics are unlocked for admins, without spending XP.'):tr('الشراء بإنجازاتك فقط. XP المستوى ما بننقص؛ المتجر بحسب الرصيد غير المصروف.','Earn cosmetic effects with XP. Total XP is unchanged; purchases use only the available balance.')));
  const grid=el('div','cl227-shop-grid');
  for(const [id,item] of Object.entries(window.classoraArena?.catalog||{})){
-  const has=owned.includes(id),equipped=shop.equipped===id;
+  const has=owned.includes(id)||isAdmin(),equipped=shop.equipped===id;
   const c=el('article','cl227-shop-item '+id+(equipped?' equipped':''));
   const orb=el('div','cl227-shop-orbit '+id,symbols[id]||'✦');
   const info=el('div','cl227-shop-info');
   info.append(el('b','',tr(...names[id])),el('small','',has?tr('مملوك','Owned'):item.cost+' XP'));
   const action=btn(has?(equipped?tr('مجهّز','Equipped'):tr('تجهيز','Equip')):tr('شراء','Buy'),'cl227-shop-btn');
-  action.disabled=!isStudent()||equipped||(!has&&shopBalance()<item.cost);
+  action.disabled=!(isStudent()||isAdmin())||equipped||(!isAdmin()&&!has&&shopBalance()<item.cost);
   action.addEventListener('click',async()=>{
    if(working)return;working=true;action.disabled=true;
    try{
