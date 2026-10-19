@@ -113,3 +113,12 @@ body[data-cl227-effect="champion"] #profileDisplayName:after{content:"  ✦ CHAM
 body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-home,.cl227-pane,.cl227-entry,.cl227-shop-item){background:var(--ui-paper-alt,#f5f8fa)!important;border-color:var(--ui-edge,#cad5df)!important;color:var(--ui-text,#1a3747)!important}
 body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-heading h2,.cl227-heading p,.cl227-entry h3,.cl227-entry p,.cl227-panel-head h3,.cl227-question-card h4,.cl227-shop-info b){color:var(--ui-text,#1a3747)!important}
 body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-answer,.cl227-outline,.cl227-code){background:var(--ui-paper,#fff)!important;color:var(--ui-text,#18394b)!important}
+
+#platformLobby .cl227-rank{display:inline-flex;align-items:center;gap:7px;margin-top:11px;padding:8px 13px;border-radius:999px;background:#ffe6a718;border:1px solid #ffdfa455;color:#ffe7aa;font:900 11px/1.6 "Tajawal","Inter",sans-serif;overflow-wrap:anywhere;max-width:100%}
+#platformLobby .cl227-rank[data-rank="rookie"]{border-color:#a0c4cf5f;color:#c5e8ed;background:#9bbbc512}
+#platformLobby .cl227-rank[data-rank="bronze"]{border-color:#dba67880;color:#edc29d;background:#ceaa7c24}
+#platformLobby .cl227-rank[data-rank="silver"]{border-color:#c0e4ee91;color:#e8f6ff;background:#bed7ec25}
+#platformLobby .cl227-rank[data-rank="platinum"]{border-color:#83f2e6;color:#aafdf1;background:#91e9d72b}
+#platformLobby .cl227-rank[data-rank="diamond"]{border-color:#85bfff;color:#bedbff;background:#89a2ff25}
+#platformLobby .cl227-rank[data-rank="legend"]{border-color:#ffcd80;color:#ffebc5;background:#ecb56c2d;box-shadow:0 0 15px #e8bc6e47}
+#profileModal .cl227-profile-rank{color:#ffdfa0;font:900 12px "Tajawal","Inter",sans-serif;line-height:1.6;margin:0 0 12px;padding:8px 11px;border-radius:10px;border:1px solid #ffd59951;background:#ecb88114}
