@@ -1,11 +1,11 @@
-const CACHE_NAME="classora-v234-quest-localizations";;
+const CACHE_NAME="classora-v235-polished-avatar-previews";;
 const APP_SHELL=[
-  "./assets/classora-quest-i18n-v233.js?v=233",
+  "./assets/classora-quest-i18n-v233.js?v=235",
   "./assets/classora-profile-studio-v232.js?v=233",
-  "./assets/classora-polish-v232.css?v=233",
+  "./assets/classora-polish-v232.css?v=235",
  "./assets/classora-fx-settings-v228.css?v=229",
  "./assets/classora-fx-settings-v228.js?v=229",
-  "./assets/classora-arena-shop-v227.js?v=233",
+  "./assets/classora-arena-shop-v227.js?v=235",
   "./assets/classora-arena-shop-v227.css?v=229",
   "./assets/classora-quest-map-v223.css?v=231",
   "./assets/classora-quest-map-v223.js?v=233",
