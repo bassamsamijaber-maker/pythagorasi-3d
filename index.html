@@ -18676,6 +18676,33 @@ async function classoraArenaEquip(itemId){
  document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
 }
 
+/* Safe GIF avatar selector, using allowlisted GIF providers and existing
+ * authenticated profile write flow. No external untrusted URL schemes. */
+window.classoraSetProfileGif=async function(raw){
+ if(!auth.currentUser||window.PythagorasiUser?.uid!==auth.currentUser.uid)throw Error("login-required");
+ const url=new URL(String(raw||"").trim());
+ if(url.protocol!=="https:"||url.username||url.password)throw Error("invalid-gif-url");
+ let selected="";
+ if(["giphy.com","www.giphy.com"].includes(url.hostname)){
+  const id=url.pathname.split("/").pop()?.split("-").pop();
+  if(!/^[a-zA-Z0-9]{8,32}$/.test(id||""))throw Error("invalid-giphy-id");
+  selected="https://media.giphy.com/media/"+id+"/giphy.gif";
+ }else if(["media.giphy.com","i.giphy.com","media0.giphy.com","media1.giphy.com","media2.giphy.com","media3.giphy.com","media4.giphy.com"].includes(url.hostname)){
+  if(!/^\/media\/[a-zA-Z0-9]{8,32}\/(?:giphy|200|original)\.gif$/i.test(url.pathname))throw Error("invalid-giphy-media");
+  selected="https://media.giphy.com"+url.pathname;
+ }else if(url.hostname==="media.tenor.com"){
+  if(!/^\/[A-Za-z0-9_-]{10,150}\/[^/?#]{1,90}\.gif$/i.test(url.pathname))throw Error("invalid-tenor-media");
+  selected=url.origin+url.pathname;
+ }else throw Error("provider-not-allowed");
+ await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:selected,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+ window.PythagorasiUser={...window.PythagorasiUser,photoData:selected,photoVideoUrl:""};
+ activeProfile=window.PythagorasiUser;
+ const img=document.getElementById("profilePhotoPreview");
+ if(img){img.src=selected;img.style.display="block"}
+ for(const id of ["lobbyAvatar","authAvatar"])applyAvatar(document.getElementById(id),window.PythagorasiUser,window.PythagorasiUser.displayName);
+ document.dispatchEvent(new Event("classora:profile-video-changed"));
+ return selected;
+};
 window.classoraProfileVideo={
  upload:async function(file){
   if(!auth.currentUser||window.PythagorasiUser?.uid!==auth.currentUser.uid)throw Error("login-required");
