@@ -167,7 +167,11 @@ function drawDuel(){
  if(mine.length>=room.questions.length&&other.length>=room.questions.length){
   const a=score(mine,room.questions),b=score(other,room.questions);
   const result=a===b?tr('تعادل!','Draw!'):a>b?tr('فزت!','You won!'):tr('فاز خصمك','Your opponent won');
-  body.append(el('div','cl227-win',result),el('p','cl227-result-note',tr('مباراة تدريبية للمتعة، من دون مكافآت XP إضافية.','Friendly practice match — no extra XP is awarded.')));
+  const win=el('div','cl232-goal-scene '+(a>b?'winner':a<b?'defeat':'draw'));
+  const kicker=el('span','cl232-goal-kicker',a>b?'GOAL!':a===b?'OVERTIME':'MATCH OVER');
+  const trophy=el('span','cl232-goal-trophy',a>b?'★':a===b?'≡':'✦');
+  win.append(kicker,trophy,el('strong','',result),el('small','',a+' — '+b));
+  body.append(win,el('p','cl227-result-note',tr('مباراة تدريبية للمتعة، من دون مكافآت XP إضافية.','Friendly practice match — no extra XP is awarded.')));
   const restart=btn(tr('العب مباراة جديدة','New duel'),'cl227-primary');restart.addEventListener('click',()=>{detach();drawDuel()});body.append(restart);pane.append(body);return
  }
  if(mine.length>=room.questions.length){
@@ -198,6 +202,10 @@ function drawShop(){
  const balance=el('div','cl227-wallet');
  balance.append(el('span','',tr('رصيدك المتاح','Available balance')),el('strong','',shopBalance()+' XP'));
  pane.append(balance,el('p','cl227-shop-note',isAdmin()?tr('جميع العناصر مفتوحة مجانًا للأدمن، بدون صرف XP.','All cosmetics are unlocked for admins, without spending XP.'):tr('الشراء بإنجازاتك فقط. XP المستوى ما بننقص؛ المتجر بحسب الرصيد غير المصروف.','Earn cosmetic effects with XP. Total XP is unchanged; purchases use only the available balance.')));
+ const showcase=el('div','cl232-showcase');
+ const avatar=el('span','cl232-showcase-avatar');avatar.id='cl232ShopAvatar';avatar.textContent=String(p.displayName||'?').trim()[0]||'?';
+ const caption=el('div','cl232-showcase-copy');caption.append(el('b','',tr('شوف التأثير قبل ما تشتري','Preview effects before buying')),el('small','',tr('اضغط معاينة تحت أي تأثير. المعاينة مجانية.','Tap Preview on any cosmetic. Previews are free.')));
+ showcase.append(avatar,caption);pane.append(showcase);
  const grid=el('div','cl227-shop-grid');
  for(const [id,item] of Object.entries(window.classoraArena?.catalog||{})){
   const has=owned.includes(id)||isAdmin(),equipped=shop.equipped===id;
@@ -216,7 +224,14 @@ function drawShop(){
    }catch(e){message(errorText(e),true);action.disabled=false}
    finally{working=false}
   });
-  c.append(orb,info,action);grid.append(c)
+  const preview=btn(tr('معاينة','Preview'),'cl227-shop-preview');
+  preview.addEventListener('click',()=>{
+   showcase.dataset.preview=id;avatar.className='cl232-showcase-avatar effect-'+id;
+   const name=names[id]||['تأثير','Effect'];
+   caption.replaceChildren(el('b','',tr(...name)),el('small','',tr('معاينة فقط — ما تم الشراء أو التجهيز','Preview only — not purchased or equipped')));
+   showcase.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth',block:'nearest'});
+  });
+  c.append(orb,info,preview,action);grid.append(c)
  }
  pane.append(grid);
  if(shop.equipped&&shop.equipped!=='none'){
