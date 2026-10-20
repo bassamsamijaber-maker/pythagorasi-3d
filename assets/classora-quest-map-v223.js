@@ -41,7 +41,8 @@ const cosmetics=[
  {id:'neon',need:3,ar:'نيون متحرك',en:'Animated neon'},
  {id:'sparkle',need:7,ar:'نجوم متلألئة',en:'Sparkling stars'},
  {id:'galaxy',need:12,ar:'هالة المجرّة',en:'Galaxy aura'},
- {id:'legend',need:20,ar:'إطار الأسطورة',en:'Legend frame'}
+ {id:'legend',need:20,ar:'إطار الأسطورة',en:'Legend frame'},
+ {id:'fire',need:5,ar:'شرار النار',en:'Fire sparks'}
 ];
 const account=()=>{const p=window.PythagorasiUser;return p&&document.body.classList.contains('classora-authenticated')&&(p.uid||p.profileId)?p:null};
 const student=()=>account()?.role==='student';
@@ -118,13 +119,27 @@ function wardrobe(){
  }
  box.append(panel);
  const note=el('small','cl223-wardrobe-note',(student()||window.classoraIsSuperAdmin?.())?L('التأثيرات للتزيين فقط، بدون مزايا مدفوعة أو نقاط وهمية.','Decorations only. No pay-to-win boosts or fake XP.'):L('معاينة المكافآت — طالبك يفتحها بالتعلّم.','Preview rewards — students unlock them by learning.'));
- box.append(note);
+ box.append(note);questSettings();
+}
+function questSettings(){
+ const parent=byId('cl223Wardrobe');if(!parent||parent.querySelector('#cl223EffectSettings'))return;
+ const panel=el('div','cl223-effect-settings');panel.id='cl223EffectSettings';
+ const label=el('label','',L('تأثيرات الصورة المتحركة','Animated profile effects'));
+ const check=document.createElement('input');check.type='checkbox';
+ try{check.checked=localStorage.getItem('classora_quest_motion_'+owned())!=='off'}catch{check.checked=true}
+ const apply=()=>{document.body.classList.toggle('cl223-motion-off',!check.checked);try{localStorage.setItem('classora_quest_motion_'+owned(),check.checked?'on':'off')}catch{}};
+ check.addEventListener('change',apply);label.prepend(check);
+ panel.append(el('h4','',L('إعدادات التأثيرات','Effect settings')),label);
+ const admin=Boolean(window.classoraIsSuperAdmin?.());
+ if(admin)panel.append(el('small','',L('حساب الأدمن: تستطيع تجربة جميع الإطارات بدون فتحها.','Admin preview: all profile effects can be equipped.')));
+ parent.append(panel);apply();
 }
 function sync(){
  const p=account();
  if(!p){document.body.removeAttribute('data-cl223-cosmetic');byId('cl223Preview')?.setAttribute('hidden','');byId('cl223MapPanel')?.setAttribute('hidden','');return}
  if(sessionAccount&&sessionAccount!==owned()){opened.clear();challenge=null;selected=null;byId('cl223MapPanel')?.setAttribute('hidden','')}
  sessionAccount=owned();
+ try{document.body.classList.toggle('cl223-motion-off',localStorage.getItem('classora_quest_motion_'+owned())==='off')}catch{}
  byId('cl223Preview')?.removeAttribute('hidden');
  updateBeauty();
  const progressEl=byId('cl223Progress');
