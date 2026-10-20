@@ -1,11 +1,13 @@
-const CACHE_NAME="classora-v231-fire-profile-quest-settings";;
+const CACHE_NAME="classora-v233-monthly-road-gif-goal";;
 const APP_SHELL=[
+  "./assets/classora-profile-studio-v232.js?v=233",
+  "./assets/classora-polish-v232.css?v=233",
  "./assets/classora-fx-settings-v228.css?v=229",
  "./assets/classora-fx-settings-v228.js?v=229",
-  "./assets/classora-arena-shop-v227.js?v=230",
+  "./assets/classora-arena-shop-v227.js?v=233",
   "./assets/classora-arena-shop-v227.css?v=229",
   "./assets/classora-quest-map-v223.css?v=231",
-  "./assets/classora-quest-map-v223.js?v=231",
+  "./assets/classora-quest-map-v223.js?v=233",
   "./assets/classora-learning-boost-v215.css?v=221",
   "./assets/classora-learning-boost-v215.js?v=222",
   "./assets/classora-learning-front-v214.css?v=214",
