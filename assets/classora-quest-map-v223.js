@@ -3,7 +3,7 @@
  * tiny challenge. Real account-scoped unlocks, secure server-side XP claim,
  * earned cosmetic profile effects and reduced-motion support.
  */
-import {learningState,completeQuestStep,equipQuestCosmetic,markQuestRewardClaimed,flushLearning} from './learning-memory-v130.js?v=130';
+import {learningState,completeQuestStep,skipQuestStep,questSkipsLeft,equipQuestCosmetic,markQuestRewardClaimed,flushLearning} from './learning-memory-v130.js?v=130';
 const byId=id=>document.getElementById(id);
 const language=()=>document.documentElement.lang||'ar';
 const L=(ar,en)=>language()==='ar'?ar:(language()==='en'?en:(window.ClassoraLocale?.tFor?.(language(),en)||en));
@@ -52,25 +52,29 @@ const owned=()=>String(account()?.uid||account()?.profileId||'guest');
 const grade=()=>{const p=account();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}const n=Number(p?.grade)||saved;return [7,8,9,10].includes(n)?n:8};
 const bank=()=>window.classoraAssessment?.topics||[];
 const state=()=>learningState();
-const completed=()=>Object.values(state().quests||{}).filter(x=>x?.step===3).length;
+const completed=()=>Object.values(state().quests||{}).filter(x=>x?.step===3&&!x?.skipped).length;
+const month=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const countDown=()=>{const d=new Date();return Math.ceil((new Date(d.getFullYear(),d.getMonth()+1,1)-d)/86400000)};
 const progress=t=>Math.max(0,Math.min(3,Number(state().quests?.[t.value]?.step)||0));
 const rewardClaimed=t=>Boolean(state().quests?.[t.value]?.claimed);
 const display=t=>language()==='ar'?t.title:(t.en||t.title);
 const hashString=str=>{let h=2166136261;for(const char of String(str)){h^=char.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 const groupsFor=(g)=>{
- const shuffle=(items,key)=>[...items].sort((a,b)=>hashString(owned()+'|'+g+'|'+key+'|'+a.value)-hashString(owned()+'|'+g+'|'+key+'|'+b.value));
- const grouped=Object.keys(subjects).map(key=>{
-  const rows=bank().filter(t=>t.grade===g&&t.subject===key);
-  return {key,...subjects[key],topics:shuffle(rows,key).slice(0,Math.min(8,rows.length))};
- }).filter(group=>group.topics.length);
- // Give each subject a chance in the mixed world, then scatter the remaining
- // lessons with a stable per-learner seed: no reshuffling after an unlock.
- const priority=shuffle(grouped.flatMap(group=>group.topics.slice(0,3)),'mix-one');
- const extra=shuffle(grouped.flatMap(group=>group.topics.slice(3)),'mix-extra');
- const mixed=[...priority,...extra].slice(0,24);
- return mixed.length?[{key:'mixed',ar:'مغامرة المواد',en:'Mixed adventure',color:'#ffb975',topics:mixed},...grouped]:grouped;
+ // A single stable per-grade path, refreshed each calendar month.
+ // The three skip tokens reset every month; earned rewards remain permanent.
+ const random=(rows,salt)=>[...rows].sort((a,b)=>
+   hashString(month()+'|'+g+'|'+salt+'|'+a.value)-hashString(month()+'|'+g+'|'+salt+'|'+b.value));
+ const perSubject=Object.keys(subjects).map(k=>
+  random(bank().filter(t=>Number(t.grade)===g&&t.subject===k),k).slice(0,6));
+ const turns=Math.max(...perSubject.map(x=>x.length),0),mixed=[];
+ for(let n=0;n<turns;n++){
+  const pass=random(perSubject.flatMap(list=>list[n]?[list[n]]:[]),'turn-'+n);
+  mixed.push(...pass);
+ }
+ return mixed.length?[{key:'mixed',ar:'طريق المهمات',en:'Quest road',color:'#84e8d3',
+  topics:mixed.slice(0,Math.min(22,mixed.length))}]:[];
 };
-let currentSubject='mixed',selected=null,opened=new Set(),challenge=null,rendering=false,sessionAccount='';
+let currentSubject='mixed',selected=null,opened=new Set(),started=new Set(),challenge=null,rendering=false,sessionAccount='';
 function gainTopic(t){
  const group=groupsFor(grade()).find(g=>g.key===currentSubject&&g.topics.some(x=>x.value===t.value));
  const idx=group?.topics.findIndex(x=>x.value===t.value)??-1;
@@ -137,7 +141,7 @@ function questSettings(){
 function sync(){
  const p=account();
  if(!p){document.body.removeAttribute('data-cl223-cosmetic');byId('cl223Preview')?.setAttribute('hidden','');byId('cl223MapPanel')?.setAttribute('hidden','');return}
- if(sessionAccount&&sessionAccount!==owned()){opened.clear();challenge=null;selected=null;byId('cl223MapPanel')?.setAttribute('hidden','')}
+ if(sessionAccount&&sessionAccount!==owned()){opened.clear();started.clear();challenge=null;selected=null;byId('cl223MapPanel')?.setAttribute('hidden','')}
  sessionAccount=owned();
  try{document.body.classList.toggle('cl223-motion-off',localStorage.getItem('classora_quest_motion_'+owned())==='off')}catch{}
  byId('cl223Preview')?.removeAttribute('hidden');
@@ -152,7 +156,7 @@ function makePreview(){
  const art=el('div','cl223-preview-art');
  art.innerHTML='<span class="cl223-preview-star star-one">'+svg('star')+'</span><span class="cl223-preview-star star-two">'+svg('star')+'</span><span class="cl223-preview-route"></span><i class="cl223-preview-stop stop-one">'+svg('book')+'</i><i class="cl223-preview-stop stop-two">'+svg('flag')+'</i><i class="cl223-preview-stop stop-three">'+svg('crown')+'</i>';
  const content=el('div','cl223-preview-copy');
- content.append(el('span','cl223-kicker','CLASSORA · QUEST MAP'),el('h2','',L('رحلتك التعليمية','Your learning adventure')),el('p','',L('3 مهمات خفيفة لكل موضوع، طريق يفتح خطوة بخطوة، وجوائز متحركة لبروفايلك.','Three easy quests per topic. Unlock your route and earn animated profile rewards.')));
+ content.append(el('span','cl223-kicker','CLASSORA · QUEST MAP'),el('h2','',L('رحلتك التعليمية','Your learning adventure')),el('p','',L('طريق واحد بيتغير كل شهر، 3 تخطّيات، وجوائز للبروفايل.','One new road each month, three skips, and profile rewards.')));
  const stats=el('div','cl223-preview-stats');
  stats.append(el('span','',L('3 مهمات لكل موضوع','3 missions per topic')),el('span','',L('حتى 20 XP لكل موضوع','Up to 20 XP per topic')));
  const open=button(L('افتح خريطة المغامرة','Open adventure map'),'cl223-open');open.append(document.createTextNode(' ↗'));open.addEventListener('click',()=>openMap());
@@ -179,23 +183,20 @@ function draw(){
   const currentGrade=grade();
   const groups=groupsFor(currentGrade);
   const top=el('header','cl223-map-header');
-  const head=el('div','');head.append(el('span','cl223-kicker','CLASSORA · ADVENTURE'),el('h2','',L('مغامرة المهمات','Quest adventure')),el('p','',L('امشِ على الطريق، وكل موضوع يفتح اللي بعده.','Follow the path to unlock the next topic.')));
+  const head=el('div','');head.append(el('span','cl223-kicker','CLASSORA · ADVENTURE'),el('h2','',L('مغامرة المهمات','Quest adventure')),el('p','',L('طريق واحد، أسئلة سهلة، 3 تخطّيات بالشهر.','One road, easy questions, three monthly skips.')));
   const close=button('×','cl223-close');close.setAttribute('aria-label',L('إغلاق الخريطة','Close map'));close.addEventListener('click',closeMap);top.append(head,close);
-  const filters=el('div','cl223-filters');
-  const badge=el('span','cl223-assigned-grade',L('مهمات صفك '+currentGrade,'Grade '+currentGrade+' quests'));
-  const subs=el('div','cl223-subject-picker');
-  groups.forEach(g=>{
-   const b=button(L(g.ar,g.en),'cl223-subject '+(currentSubject===g.key?'active':''));
-   b.style.setProperty('--quest-color',g.color);b.addEventListener('click',()=>{currentSubject=g.key;selected=null;challenge=null;draw()});subs.append(b)
-  });
-  filters.append(badge,subs);
+  const filters=el('div','cl223-filters cl223-simple-filter');
+  const badge=el('span','cl223-assigned-grade',L('صف '+currentGrade+' · طريق '+month(),'Grade '+currentGrade+' · '+month()+' road'));
+  const skips=el('span','cl223-skips',L('تخطّياتك: ','Skips left: ')+questSkipsLeft(month())+' / 3');
+  const nextMonth=el('span','cl223-next-month',L('يتجدد خلال '+countDown()+' يوم','Refreshes in '+countDown()+' days'));
+  filters.append(badge,skips,nextMonth);
   const found=groups.find(g=>g.key===currentSubject)||groups[0];
   if(!found){panel.append(top,filters,el('p','',L('ما في مواضيع لهذا الصف بعد.','No lessons for this grade yet.')));return}
   currentSubject=found.key;
   const area=el('div','cl223-world');area.style.setProperty('--quest-color',found.color);
   const route=el('section','cl223-route');
   const first=el('header','cl223-route-header');first.innerHTML='<span>'+svg('map')+'</span>';
-  const headline=el('div','');headline.append(el('h3','',L(found.ar,found.en)),el('p','',L('اختار المرحلة المفتوحة، وخلص 3 مهمات بسيطة.','Select an unlocked topic and complete three easy missions.')));
+  const headline=el('div','');headline.append(el('h3','',L(found.ar,found.en)),el('p','',L('اضغط على موضوع مفتوح، وبعدها ابدأ حل.','Tap an unlocked topic, then start solving.')));
   first.append(headline);route.append(first);
   const path=el('div','cl223-nodes');
   let anyOpen=null;let finished=0;
@@ -262,7 +263,9 @@ function mission(side,t,group){
   badge.innerHTML='<span>'+svg('crown')+'</span>';
   badge.append(el('b','',L('3/3 مهمات مكتملة','3/3 missions complete')));
   side.append(badge);
-  if(!rewardClaimed(t)){
+  if(state().quests?.[t.value]?.skipped){
+   side.append(el('p','cl223-reward-ok',L('استعملت تخطّي بهالموضوع: انفتح الطريق، بدون مكافأة XP.','You used a skip here. The road is unlocked, but this topic earns no XP.')));
+  }else if(!rewardClaimed(t)){
    const claim=button(L('استلام مكافأة XP','Claim XP reward'),'cl223-primary');
    claim.addEventListener('click',()=>claimReward(t,claim));
    side.append(claim);
@@ -273,6 +276,24 @@ function mission(side,t,group){
    next.addEventListener('click',()=>{selected=group.topics[i+1].value;challenge=null;draw()});side.append(next)
   }
   return
+ }
+ const activeKey=t.value+'|'+step;
+ if(!started.has(activeKey)){
+  const begin=button(L('ابدأ حل','Start solving'),'cl223-primary cl223-begin');
+  begin.addEventListener('click',()=>{started.add(activeKey);challenge=null;draw()});
+  side.append(begin);
+  const tokens=questSkipsLeft(month());
+  if(tokens>0){
+   const skip=button(L('تخطّي المهمة · '+tokens+' متبقي','Skip this mission · '+tokens+' left'),'cl223-outline cl223-skip');
+   skip.addEventListener('click',()=>{
+    if(!skipQuestStep(t.value,month())){notify(L('ما ضلّ تخطّيات لهالشهر','No skips left this month'));return}
+    started.delete(activeKey);challenge=null;draw();updateBeauty();
+    notify(L('تخطّيت المهمة. ما في XP على الموضوع المتخطّى.','Mission skipped. No XP is earned for this skipped topic.'));
+   });
+   side.append(skip);
+  }
+  side.append(el('p','cl223-fine',L('3 تخطّيات مجانية كل شهر. التخطّي ما بيعطي XP.','Three skips every month. Skipped topics do not earn XP.')));
+  return;
  }
  const missionNum=step;
  const goal=step===2?2:1;
@@ -319,17 +340,17 @@ function finish(t,step){
  if(!student()||progress(t)!==step-1)return;
  const before=completed();
  if(!completeQuestStep(t.value,step))return;
- challenge=null;
+ challenge=null;started.delete(t.value+'|'+(step-1));
  draw();updateBeauty();wardrobe();
  if(step===3){
-  claimReward(t);
+  if(!state().quests?.[t.value]?.skipped)claimReward(t);
   const after=completed(),newReward=cosmetics.find(c=>c.need===after&&after>before);
   if(newReward)notify(L('مبروك! فتحت '+newReward.ar,'Unlocked: '+newReward.en));
   else notify(L('خلصت موضوع! فتحنا اللي بعده.','Topic complete! The next one is unlocked.'));
  }else notify(L('أحسنت! المهمة اكتملت.','Mission completed!'));
 }
 async function claimReward(t,sourceButton){
- if(!student()||!t||progress(t)!==3||rewardClaimed(t))return;
+ if(!student()||!t||progress(t)!==3||rewardClaimed(t)||state().quests?.[t.value]?.skipped)return;
  if(sourceButton){sourceButton.disabled=true;sourceButton.textContent=L('جاري تسجيل XP','Saving XP')}
  try{
   const synced=await flushLearning();
