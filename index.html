@@ -18518,7 +18518,7 @@ window.classoraClaimQuestXP=async function(value){
  const profile=window.PythagorasiUser||{};
  // The third mission must have been saved to the authenticated profile.
  const quest=profile.accountState?.learningTools130?.quests?.[value];
- if(!quest||quest.step!==3)throw Error("finish-missions-first");
+ if(!quest||quest.step!==3||quest.skipped)throw Error("finish-missions-first");
  const key="quest-"+match[1]+"-"+match[2]+"-"+match[3];
  const result=await classoraLearningStore.record({sessionId:"classora-v223-"+key,topic:key,subject:match[2],correct:3,total:3});
  window.classoraStudentDashboard?.refresh?.();
