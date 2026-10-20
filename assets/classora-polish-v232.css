@@ -1,0 +1,150 @@
+/* Classora V232: single monthly quest road, GIF studio, real-time
+ * cosmetics previews, GOAL 1v1 endscreen, touch and theme harmony. */
+#platformLobby .cl223-simple-filter{display:flex!important;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+#platformLobby :is(.cl223-assigned-grade,.cl223-skips,.cl223-next-month){
+ display:inline-flex;align-items:center;min-height:35px;padding:7px 13px;
+ border:1px solid rgba(132,228,212,.4);border-radius:999px;
+ background:rgba(100,210,197,.11);font:800 12px/1.5 "Tajawal","Inter",sans-serif;
+ color:#d7fff3
+}
+#platformLobby .cl223-skips{background:rgba(255,210,120,.12);border-color:rgba(255,209,129,.5);color:#ffe0a5}
+#platformLobby .cl223-next-month{background:rgba(170,171,236,.13);color:#e6ddff;border-color:#c7b8ef75}
+#platformLobby .cl223-begin{
+ background:linear-gradient(110deg,#76ffe0,#92d8ff)!important;
+ color:#092839!important;font:900 15px "Tajawal","Inter",sans-serif!important;
+ box-shadow:0 10px 28px rgba(60,229,199,.2)
+}
+#platformLobby .cl223-skip{border-style:dashed!important;opacity:.92;color:#d4e8ec}
+#platformLobby .cl223-node.available .cl223-node-marker{animation:cl232-softpulse 2.8s ease-in-out infinite}
+#platformLobby :is(.cl223-begin,.cl223-skip,.cl223-node,.cl223-open){touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
+#platformLobby .cl227-shop-preview{
+ margin:4px 0;width:100%;min-height:38px;border:1px solid rgba(152,225,232,.55);
+ border-radius:11px;background:rgba(103,184,218,.12);color:#e8fbff;
+ font:850 12px "Tajawal","Inter",sans-serif;cursor:pointer
+}
+#platformLobby .cl227-shop-preview:focus-visible,#platformLobby .cl223-begin:focus-visible{
+ outline:3px solid #83f9d4;outline-offset:2px
+}
+#platformLobby .cl232-showcase{
+ display:flex;align-items:center;gap:14px;padding:15px;margin:12px 0 15px;
+ border:1px solid #91dce46b;border-radius:18px;background:radial-gradient(circle at 7% 50%,#3e947b35,transparent 55%),linear-gradient(125deg,#183a52,#142c44);
+ min-height:115px;color:#f5fdff
+}
+#platformLobby .cl232-showcase-avatar{
+ width:76px;height:76px;flex:0 0 76px;border-radius:23px;
+ display:grid;place-items:center;font-size:29px;font-weight:900;
+ border:3px solid #9aece9;background:#23425e;color:#f5fbff;
+ box-shadow:0 0 16px #5deacd80;transition:filter .2s,transform .2s
+}
+#platformLobby .cl232-showcase-avatar.effect-flame,
+#platformLobby .cl232-showcase-avatar.effect-rocket{
+ border-color:#ffb477;box-shadow:0 0 20px #ff853a,0 0 36px #ff81254a;
+ animation:cl232-warm 1.8s ease-in-out infinite
+}
+#platformLobby .cl232-showcase-avatar.effect-lightning{
+ border-color:#f9d9ff;box-shadow:0 0 15px #69dfff,0 0 25px #b19eff;
+ animation:cl232-electric 1.2s steps(3) infinite
+}
+#platformLobby .cl232-showcase-avatar.effect-ice{
+ border-color:#9cecff;box-shadow:0 0 19px #69dafa;background:#2e6483
+}
+#platformLobby .cl232-showcase-avatar.effect-plasma,
+#platformLobby .cl232-showcase-avatar.effect-aura{
+ border-color:#dfabff;box-shadow:0 0 18px #c891ff,0 0 31px #a4a6ff;
+ animation:cl232-electric 2.6s ease-in-out infinite
+}
+#platformLobby .cl232-showcase-avatar.effect-comet,
+#platformLobby .cl232-showcase-avatar.effect-starlight{
+ border-color:#ffeeac;box-shadow:0 0 20px #ffdb74,0 0 34px #89adff
+}
+#platformLobby .cl232-showcase-avatar.effect-champion{
+ border-color:#ffd77d;box-shadow:0 0 19px #e7aa3d;
+ animation:cl232-warm 2.1s ease-in-out infinite
+}
+#platformLobby .cl232-showcase-copy{min-width:0;display:flex;flex-direction:column;gap:5px}
+#platformLobby .cl232-showcase-copy b{font:900 15px/1.5 "Tajawal","Inter",sans-serif;color:#e9ffff;overflow-wrap:anywhere}
+#platformLobby .cl232-showcase-copy small{font:700 12px/1.6 "Tajawal","Inter",sans-serif;color:#b8dce2}
+#platformLobby .cl232-goal-scene{
+ position:relative;isolation:isolate;min-height:205px;
+ margin:16px 0;padding:25px 16px;border-radius:19px;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+ text-align:center;overflow:hidden;border:2px solid #a6fcce8a;
+ background:radial-gradient(ellipse at 50% 25%,#1cb8795e,transparent 70%),linear-gradient(125deg,#11394f,#123027);
+ box-shadow:0 13px 35px #0003;color:#f7fffc
+}
+#platformLobby .cl232-goal-scene:before{content:"";position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg,transparent 0deg 17deg,#b6ffe716 19deg 21deg,transparent 22deg 42deg);animation:cl232-goalspin 20s linear infinite;pointer-events:none;z-index:-1}
+#platformLobby .cl232-goal-scene.defeat{border-color:#adbecb6e;background:linear-gradient(145deg,#263c4d,#152b3e)}
+#platformLobby .cl232-goal-scene.draw{border-color:#c8c1fc8a;background:linear-gradient(145deg,#403762,#1c3555)}
+#platformLobby .cl232-goal-kicker{font:1000 clamp(30px,5vw,56px)/1 "Inter",sans-serif;letter-spacing:.17em;color:#98ffde;text-shadow:0 0 24px #6dfac1}
+#platformLobby .cl232-goal-trophy{font-size:38px;line-height:1;color:#ffe4a3}
+#platformLobby .cl232-goal-scene strong{font:900 23px "Tajawal","Inter",sans-serif;color:#fff}
+#platformLobby .cl232-goal-scene small{font:900 16px "Inter",sans-serif;color:#d7ffe8;letter-spacing:.1em}
+#profileModal .cl232-identity{display:flex;flex-direction:column;gap:7px;margin:13px 0;padding:12px;border-radius:13px;border:1px solid rgba(150,217,224,.38);background:#4b9eb012}
+#profileModal .cl232-identity-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#profileModal .cl232-identity-line b{font:800 11px "Tajawal","Inter",sans-serif;color:#b9dbe7}
+#profileModal .cl232-identity-line span{font:900 12px "Tajawal","Inter",sans-serif;color:#8decd1;overflow-wrap:anywhere}
+#profileModal .cl232-gif-studio{
+ margin:13px 0 20px;padding:clamp(13px,3vw,20px);min-width:0;
+ background:linear-gradient(140deg,#18364c,#112a40);
+ border:1px solid #97e6e65d;border-radius:18px;color:#f0fcff;
+ font-family:"Tajawal","Inter",sans-serif
+}
+#profileModal .cl232-gif-studio *{box-sizing:border-box}
+#profileModal .cl232-gif-studio h3{font:900 20px "Tajawal","Inter",sans-serif!important;color:#f3fffd!important;margin:0 0 6px!important}
+#profileModal .cl232-gif-intro{font:650 12px/1.8 "Tajawal","Inter",sans-serif!important;color:#bfdce7!important;margin:0 0 14px!important}
+#profileModal .cl232-gif-preview{display:flex;align-items:center;gap:13px;border:1px solid #afd9dd44;border-radius:13px;padding:12px;background:#e6ffff0b;margin-bottom:13px}
+#profileModal .cl232-gif-large{width:112px;height:112px;flex:0 0 112px;object-fit:cover;border-radius:16px;border:3px solid #8ff8d9;background:#264251;box-shadow:0 0 21px #43f4d133}
+#profileModal .cl232-preview-hint{font:800 12px/1.75 "Tajawal","Inter",sans-serif;color:#dbf7ef}
+#profileModal .cl232-gif-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px}
+#profileModal .cl232-gif-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:9px 4px;border-radius:13px;border:1px solid #c3e8ea3d;background:#d5fdff0b;cursor:pointer;color:#fff;min-width:0;touch-action:manipulation}
+#profileModal .cl232-gif-choice.selected{border-color:#8afaab;box-shadow:0 0 0 2px #7cfbc54b}
+#profileModal .cl232-gif-thumb{width:100%;height:83px;object-fit:cover;border-radius:9px;background:#274455}
+#profileModal .cl232-gif-choice small{font:900 11px "Tajawal","Inter",sans-serif;color:#d9f4fa}
+#profileModal .cl232-gif-inputrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+#profileModal .cl232-gif-input{flex:1 1 160px;min-height:43px;min-width:0;border:1px solid #b4dcdf66;border-radius:11px;background:#ffffff13;color:#f7ffff;padding:9px 12px;font:700 12px "Inter",sans-serif;direction:ltr}
+#profileModal .cl232-gif-try,#profileModal .cl232-gif-upload,#profileModal .cl232-gif-save{border-radius:11px;min-height:43px;padding:9px 14px;font:900 12px "Tajawal","Inter",sans-serif;cursor:pointer;touch-action:manipulation}
+#profileModal .cl232-gif-try,#profileModal .cl232-gif-upload{background:#c2edff13;border:1px solid #a4dbe967;color:#e5faff}
+#profileModal .cl232-gif-save{background:linear-gradient(110deg,#a5f8d7,#74e0dc);color:#09382f;border:1px solid #bafce5}
+#profileModal .cl232-gif-actions{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}
+#profileModal .cl232-gif-links{display:flex;gap:9px;flex-wrap:wrap}
+#profileModal .cl232-gif-link{font:800 12px "Tajawal","Inter",sans-serif;text-decoration:underline;color:#a8dfff}
+#profileModal .cl232-gif-status{min-height:16px;color:#a7f9da;font:800 12px/1.6 "Tajawal","Inter",sans-serif}
+#profileModal .cl232-gif-credit{font:650 10px "Tajawal","Inter",sans-serif;color:#a6cbd2}
+@keyframes cl232-softpulse{0%,100%{box-shadow:0 0 0 0 #5dfad533}50%{box-shadow:0 0 17px 5px #62f5d94a}}
+@keyframes cl232-warm{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+@keyframes cl232-electric{0%,100%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(45deg) brightness(1.2)}}
+@keyframes cl232-goalspin{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+ #platformLobby .cl232-showcase{min-height:96px}
+ #platformLobby .cl232-showcase-avatar{width:62px;height:62px;flex-basis:62px}
+ #profileModal .cl232-gif-large{width:90px;height:90px;flex-basis:90px}
+ #profileModal .cl232-gif-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #profileModal .cl232-gif-thumb{height:96px}
+ #profileModal .cl232-gif-actions>*{flex:1 1 125px}
+ #platformLobby .cl223-simple-filter{gap:5px}
+ #platformLobby :is(.cl223-assigned-grade,.cl223-skips,.cl223-next-month){font-size:11px}
+}
+body[data-classora-theme="morning"]{
+ --cl232-surface:#f1faff;--cl232-border:#a9cbd5;--cl232-text:#15394c;--cl232-muted:#466675;--cl232-action:#197c86;
+}
+body[data-classora-theme="embroidery"]{
+ --cl232-surface:#fff3ee;--cl232-border:#bd899a;--cl232-text:#592b38;--cl232-muted:#875765;--cl232-action:#873751;
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl232-showcase,.cl223-simple-filter .cl223-assigned-grade,.cl223-simple-filter .cl223-skips,.cl223-simple-filter .cl223-next-month,.cl232-goal-scene){
+ background:var(--cl232-surface)!important;border-color:var(--cl232-border)!important;color:var(--cl232-text)!important;
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl232-showcase-copy b,.cl232-showcase-copy small,.cl232-goal-scene strong,.cl232-goal-scene small,.cl223-skips,.cl223-next-month){color:var(--cl232-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-shop-preview,.cl223-skip){
+ background:var(--cl232-surface)!important;border-color:var(--cl232-border)!important;color:var(--cl232-action)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #profileModal :is(.cl232-gif-studio,.cl232-identity,.cl232-gif-preview,.cl232-gif-choice){
+ background:var(--cl232-surface)!important;border-color:var(--cl232-border)!important;color:var(--cl232-text)!important
+}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #profileModal :is(.cl232-gif-studio h3,.cl232-gif-intro,.cl232-gif-choice small,.cl232-identity-line b,.cl232-identity-line span,.cl232-preview-hint,.cl232-gif-status,.cl232-gif-credit,.cl232-gif-link){color:var(--cl232-text)!important}
+body:is([data-classora-theme="morning"],[data-classora-theme="embroidery"]) #profileModal :is(.cl232-gif-input,.cl232-gif-try,.cl232-gif-upload){
+ color:var(--cl232-text)!important;background:#ffffffd9!important;border-color:var(--cl232-border)!important
+}
+@media(prefers-reduced-motion:reduce){
+ #platformLobby :is(.cl232-showcase-avatar,.cl232-goal-scene:before,.cl223-node-marker),
+ #profileModal .cl232-gif-studio *{animation:none!important;transition:none!important}
+}
