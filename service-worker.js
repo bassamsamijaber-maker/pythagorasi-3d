@@ -1,5 +1,6 @@
-const CACHE_NAME="classora-v233-monthly-road-gif-goal";;
+const CACHE_NAME="classora-v234-quest-localizations";;
 const APP_SHELL=[
+  "./assets/classora-quest-i18n-v233.js?v=233",
   "./assets/classora-profile-studio-v232.js?v=233",
   "./assets/classora-polish-v232.css?v=233",
  "./assets/classora-fx-settings-v228.css?v=229",
