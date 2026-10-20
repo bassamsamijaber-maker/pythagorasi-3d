@@ -18698,6 +18698,7 @@ window.classoraSetProfileGif=async function(raw){
   selected=url.origin+url.pathname;
  }else throw Error("provider-not-allowed");
  await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:selected,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+ try{await setDoc(doc(db,"publicProfiles",auth.currentUser.uid),{photoData:selected,updatedAt:serverTimestamp()},{merge:true})}catch(error){console.warn("gif public profile sync",error)}
  window.PythagorasiUser={...window.PythagorasiUser,photoData:selected,photoVideoUrl:""};
  activeProfile=window.PythagorasiUser;
  const img=document.getElementById("profilePhotoPreview");
