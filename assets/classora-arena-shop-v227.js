@@ -203,7 +203,7 @@ function drawShop(){
  balance.append(el('span','',tr('رصيدك المتاح','Available balance')),el('strong','',shopBalance()+' XP'));
  pane.append(balance,el('p','cl227-shop-note',isAdmin()?tr('جميع العناصر مفتوحة مجانًا للأدمن، بدون صرف XP.','All cosmetics are unlocked for admins, without spending XP.'):tr('الشراء بإنجازاتك فقط. XP المستوى ما بننقص؛ المتجر بحسب الرصيد غير المصروف.','Earn cosmetic effects with XP. Total XP is unchanged; purchases use only the available balance.')));
  const showcase=el('div','cl232-showcase');
- const avatar=el('span','cl232-showcase-avatar');avatar.id='cl232ShopAvatar';avatar.textContent=String(p.displayName||'?').trim()[0]||'?';
+ const avatar=el('span','cl232-showcase-avatar');avatar.id='cl232ShopAvatar';if(p.photoData){const photo=el('img','cl232-showcase-photo');photo.src=p.photoData;photo.alt=tr('معاينة صورة البروفايل','Your avatar preview');avatar.append(photo)}else avatar.textContent=String(p.displayName||'?').trim()[0]||'?';
  const caption=el('div','cl232-showcase-copy');caption.append(el('b','',tr('شوف التأثير قبل ما تشتري','Preview effects before buying')),el('small','',tr('اضغط معاينة تحت أي تأثير. المعاينة مجانية.','Tap Preview on any cosmetic. Previews are free.')));
  showcase.append(avatar,caption);pane.append(showcase);
  const grid=el('div','cl227-shop-grid');
