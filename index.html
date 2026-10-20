@@ -125,13 +125,13 @@ body.classora-intro-active{overflow:auto!important}
 <script defer src="./assets/classora-viewport-v210.js?v=211"></script>
 <link rel="stylesheet" href="./assets/classora-learning-boost-v215.css?v=221">
 <link rel="stylesheet" href="./assets/classora-quest-map-v223.css?v=231">
-<script type="module" src="./assets/classora-quest-map-v223.js?v=233"></script>
+<script type="module" src="./assets/classora-quest-map-v223.js?v=236"></script>
 <link rel="stylesheet" href="./assets/classora-arena-shop-v227.css?v=229">
-<script type="module" src="./assets/classora-arena-shop-v227.js?v=235"></script>
+<script type="module" src="./assets/classora-arena-shop-v227.js?v=236"></script>
 <link rel="stylesheet" href="./assets/classora-fx-settings-v228.css?v=229">
-<script defer src="./assets/classora-fx-settings-v228.js?v=229"></script>
-<link rel="stylesheet" href="./assets/classora-polish-v232.css?v=235">
-<script type="module" src="./assets/classora-profile-studio-v232.js?v=233"></script>
+<script defer src="./assets/classora-fx-settings-v228.js?v=236"></script>
+<link rel="stylesheet" href="./assets/classora-polish-v232.css?v=236">
+<script type="module" src="./assets/classora-profile-studio-v232.js?v=236"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2917,6 +2917,7 @@ function applyAvatar(el,profile,name){
     el.classList.remove("has-photo");
     el.textContent=(String(name||"؟").trim()[0]||"؟").toUpperCase();
   }
+  if(profile?.uid&&profile.uid===window.PythagorasiUser?.uid)window.ClassoraProfileEffects?.decorate(el,profile.questShop?.equipped||"none");
 }
 function updateAssistantLabels(){
   const fixedName=currentUILanguage==="en"?"Classora Assistant":"مساعد كلاسورا";
@@ -7949,21 +7950,9 @@ async function imageFileToDataURL(file){
 }
 document.getElementById("profilePhotoInput").addEventListener("change",async e=>{
   const file=e.target.files?.[0];if(!file)return;
-  if(!file.type.startsWith("image/")){showToast("اختار صورة فقط.");return}
-  if(file.type==="image/gif"&&file.size>5*1024*1024){showToast("الـ GIF لازم يكون أقل من 5MB.");return}
-  if(file.size>8*1024*1024){showToast("الصورة كبيرة جدًا. اختار صورة أقل من 8MB.");return}
-  try{
-    const photoData=await imageFileToDataURL(file);
-    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,photoData,photoVideoUrl:""};
-    document.dispatchEvent(new Event("classora:profile-video-changed"));
-    activeProfile=window.PythagorasiUser;
-    document.getElementById("profilePhotoPreview").src=photoData;
-    document.getElementById("profilePhotoPreview").style.display="block";
-    applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
-    applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
-    showToast("تم حفظ صورة البروفايل ✅");
-  }catch(err){console.error(err);showToast("تعذر حفظ الصورة.")}
+  try{await saveOwnProfilePhoto(file);showToast(currentUILanguage==="ar"?"تم حفظ الصورة":"Avatar saved")}
+  catch{showToast(currentUILanguage==="ar"?"تعذر حفظ الصورة. GIF حتى 5MB والصورة حتى 8MB.":"Could not save. GIF up to 5MB; images up to 8MB.")}
+  finally{e.target.value=""}
 });
 
 
@@ -10086,20 +10075,24 @@ document.getElementById("saveAINameSettingsBtn").addEventListener("click",async(
 });
 
 async function saveOwnProfilePhoto(file){
-  if(!file||!auth.currentUser)return;
-  if(!file.type.startsWith("image/"))throw new Error("image-only");
+  const actor=auth.currentUser,uid=actor?.uid;
+  if(!file||!uid||window.PythagorasiUser?.uid!==uid)throw new Error("login-required");
+  if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type))throw new Error("image-only");
   if(file.size>8*1024*1024)throw new Error("image-too-large");
   const photoData=await imageFileToDataURL(file);
-  await setDoc(doc(db,"users",auth.currentUser.uid),{photoData,updatedAt:serverTimestamp()},{merge:true});
-  window.PythagorasiUser={...window.PythagorasiUser,photoData};
+  if(auth.currentUser?.uid!==uid||window.PythagorasiUser?.uid!==uid)throw new Error("account-changed");
+  await setDoc(doc(db,"users",uid),{photoData,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+  if(auth.currentUser?.uid!==uid)return;
+  window.PythagorasiUser={...window.PythagorasiUser,photoData,photoVideoUrl:""};
   activeProfile=window.PythagorasiUser;
-  applyAvatar(document.getElementById("settingsAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
-  applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
-  applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
+  for(const id of ["settingsAvatar","lobbyAvatar","authAvatar"])applyAvatar(document.getElementById(id),activeProfile,activeProfile.displayName);
   const img=document.getElementById("profilePhotoPreview");
   if(img){img.src=photoData;img.style.display="block"}
-  if(isStudentLike())await syncStudentMemberStats();
+  await syncPublicProfile(activeProfile,actor);
+  if(auth.currentUser?.uid===uid&&isStudentLike())await syncStudentMemberStats();
+  document.dispatchEvent(new Event("classora:profile-video-changed"));
 }
+window.classoraSaveProfilePhoto=saveOwnProfilePhoto;
 document.getElementById("settingsPhotoInput").addEventListener("change",async e=>{
   const file=e.target.files?.[0];if(!file)return;
   const status=document.getElementById("settingsStatus");
@@ -10121,13 +10114,15 @@ document.getElementById("settingsRemovePhotoBtn").addEventListener("click",async
   }
   if(!confirm(currentUILanguage==="en"?"Remove your profile photo?":"تحذف صورة البروفايل؟"))return;
   try{
-    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:"",photoURL:"",updatedAt:serverTimestamp()},{merge:true});
-    window.PythagorasiUser={...window.PythagorasiUser,photoData:"",photoURL:""};
+    await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:"",photoURL:"",photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+    window.PythagorasiUser={...window.PythagorasiUser,photoData:"",photoURL:"",photoVideoUrl:""};
     activeProfile=window.PythagorasiUser;
     applyAvatar(document.getElementById("settingsAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
     applyAvatar(document.getElementById("lobbyAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
     applyAvatar(document.getElementById("authAvatar"),window.PythagorasiUser,window.PythagorasiUser.displayName);
     const img=document.getElementById("profilePhotoPreview");if(img){img.removeAttribute("src");img.style.display="none"}
+    await syncPublicProfile();
+    document.dispatchEvent(new Event("classora:profile-video-changed"));
     if(isStudentLike())await syncStudentMemberStats();
     status.textContent=currentUILanguage==="en"?"Profile photo removed ✅":"تم حذف صورة البروفايل ✅";
     soundFx("submit");fxElement(document.getElementById("settingsAvatar"),"pop");
@@ -18683,6 +18678,7 @@ async function classoraArenaEquip(itemId){
  * authenticated profile write flow. No external untrusted URL schemes. */
 window.classoraSetProfileGif=async function(raw){
  if(!auth.currentUser||window.PythagorasiUser?.uid!==auth.currentUser.uid)throw Error("login-required");
+ const actor=auth.currentUser,uid=actor.uid;
  const url=new URL(String(raw||"").trim());
  if(url.protocol!=="https:"||url.username||url.password)throw Error("invalid-gif-url");
  let selected="";
@@ -18697,13 +18693,15 @@ window.classoraSetProfileGif=async function(raw){
   if(!/^\/[A-Za-z0-9_-]{10,150}\/[^/?#]{1,90}\.gif$/i.test(url.pathname))throw Error("invalid-tenor-media");
   selected=url.origin+url.pathname;
  }else throw Error("provider-not-allowed");
- await setDoc(doc(db,"users",auth.currentUser.uid),{photoData:selected,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
- try{await setDoc(doc(db,"publicProfiles",auth.currentUser.uid),{photoData:selected,updatedAt:serverTimestamp()},{merge:true})}catch(error){console.warn("gif public profile sync",error)}
+ await setDoc(doc(db,"users",uid),{photoData:selected,photoVideoUrl:"",updatedAt:serverTimestamp()},{merge:true});
+ if(auth.currentUser?.uid!==uid)throw Error("account-changed");
  window.PythagorasiUser={...window.PythagorasiUser,photoData:selected,photoVideoUrl:""};
  activeProfile=window.PythagorasiUser;
+ await syncPublicProfile(activeProfile,actor);
+ if(auth.currentUser?.uid!==uid)throw Error("account-changed");
  const img=document.getElementById("profilePhotoPreview");
  if(img){img.src=selected;img.style.display="block"}
- for(const id of ["lobbyAvatar","authAvatar"])applyAvatar(document.getElementById(id),window.PythagorasiUser,window.PythagorasiUser.displayName);
+ for(const id of ["lobbyAvatar","authAvatar","settingsAvatar"])applyAvatar(document.getElementById(id),window.PythagorasiUser,window.PythagorasiUser.displayName);
  document.dispatchEvent(new Event("classora:profile-video-changed"));
  return selected;
 };

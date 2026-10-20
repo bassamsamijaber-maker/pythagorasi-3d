@@ -75,7 +75,7 @@ function init(){
  new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  const profile=$('profileModal');
- if(profile)new MutationObserver(()=>{if(profile.classList.contains('open')){profileAdditions();syncMedia()}}).observe(profile,{attributes:true,attributeFilter:['class']});
+ if(profile)new MutationObserver(()=>{if(profile.classList.contains('open')){syncMedia()}}).observe(profile,{attributes:true,attributeFilter:['class']});
  window.addEventListener('pageshow',sync);
  window.classoraSocialGarage={openDuel:()=>show('duel'),openShop:()=>show('shop'),refresh:sync};
  sync();
@@ -205,14 +205,16 @@ function drawShop(){
  const showcase=el('div','cl232-showcase');
  const avatar=el('span','cl232-showcase-avatar');avatar.id='cl232ShopAvatar';if(p.photoData){const photo=el('img','cl232-showcase-photo');photo.src=p.photoData;photo.alt=tr('معاينة صورة البروفايل','Your avatar preview');avatar.append(photo)}else avatar.textContent=String(p.displayName||'?').trim()[0]||'?';
  const caption=el('div','cl232-showcase-copy');caption.append(el('b','',tr('شوف التأثير قبل ما تشتري','Preview effects before buying')),el('small','',tr('اضغط معاينة تحت أي تأثير. المعاينة مجانية.','Tap Preview on any cosmetic. Previews are free.')));
+ window.ClassoraProfileEffects?.decorate(avatar,shop.equipped||'none');
  showcase.append(avatar,caption);pane.append(showcase);
  const grid=el('div','cl227-shop-grid');
  for(const [id,item] of Object.entries(window.classoraArena?.catalog||{})){
   const has=owned.includes(id)||isAdmin(),equipped=shop.equipped===id;
   const c=el('article','cl227-shop-item '+id+(equipped?' equipped':''));
-  const orb=el('div','cl227-shop-orbit '+id,symbols[id]||'✦');
+  const orb=window.ClassoraProfileEffects?.avatar(p,id)||el('div','cl227-shop-orbit '+id,symbols[id]||'✦');
+  orb.classList.add('cl236-shop-art');
   const info=el('div','cl227-shop-info');
-  info.append(el('b','',tr(...names[id])),el('small','',has?tr('مملوك','Owned'):item.cost+' XP'));
+  info.append(el('b','',tr(...(window.ClassoraProfileEffects?.names[id]||names[id]))),el('small','',has?tr('مملوك','Owned'):item.cost+' XP'));
   const action=btn(has?(equipped?tr('مجهّز','Equipped'):tr('تجهيز','Equip')):tr('شراء','Buy'),'cl227-shop-btn');
   action.disabled=!(isStudent()||isAdmin())||equipped||(!isAdmin()&&!has&&shopBalance()<item.cost);
   action.addEventListener('click',async()=>{
@@ -226,8 +228,8 @@ function drawShop(){
   });
   const preview=btn(tr('معاينة','Preview'),'cl227-shop-preview');
   preview.addEventListener('click',()=>{
-   showcase.dataset.preview=id;avatar.className='cl232-showcase-avatar effect-'+id;
-   const name=names[id]||['تأثير','Effect'];
+   showcase.dataset.preview=id;avatar.className='cl232-showcase-avatar';window.ClassoraProfileEffects?.decorate(avatar,id);
+   const name=window.ClassoraProfileEffects?.names[id]||names[id]||['تأثير','Effect'];
    caption.replaceChildren(el('b','',tr(...name)),el('small','',tr('معاينة فقط — ما تم الشراء أو التجهيز','Preview only — not purchased or equipped')));
    showcase.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth',block:'nearest'});
   });
@@ -302,8 +304,9 @@ function sync(){
  const effect=p.questShop?.equipped||'none';
  document.body.dataset.cl227Effect=names[effect]?effect:'none';
  if($('cl227Pane')&&!$('cl227Pane').hidden&&activeTab==='shop')drawShop();
+ window.ClassoraProfileEffects?.refresh();
  if($('profileModal')?.classList.contains('open')){
-  profileAdditions();
+  // Avatar editing lives in the shared GIF picker and settings wardrobe.
   const rank=$('cl227Rank');
   const status=$('cl227ProfileRank');
   if(status&&rank)status.textContent=rank.textContent;

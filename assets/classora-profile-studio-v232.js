@@ -1,93 +1,104 @@
-/* Classora animated profile GIF picker & identity summary v232 */
-import {learningState} from './learning-memory-v130.js?v=130';
+/* Classora GIF picker: searchable selection, explicit preview/save and native modal close. */
 (()=>{
+'use strict';
 const $=id=>document.getElementById(id);
 const T=(a,b)=>document.documentElement.lang==='ar'?a:(window.ClassoraLocale?.tFor?.(document.documentElement.lang||'en',b)||b);
-const node=(tag,cls,txt)=>{const n=document.createElement(tag);n.className=cls||'';if(txt!==undefined)n.textContent=String(txt);return n};
-const button=(name,cls)=>{const n=node('button',cls,name);n.type='button';return n};
 const user=()=>document.body.classList.contains('classora-authenticated')?window.PythagorasiUser:null;
+const e=(tag,cls,txt)=>{const n=document.createElement(tag);n.className=cls||'';if(txt!==undefined)n.textContent=String(txt);return n};
+const button=(txt,cls)=>{const n=e('button',cls,txt);n.type='button';return n};
 const gifs=[
- ['l0HlTy9x8FZo0XO1i','نار','Fire'],['l0HlLP5fowu9vAbUk','برق','Lightning'],
- ['l41lVT8FpdxCtOOsM','نيون','Neon'],['3oKGzndj7T0i1vii40','مجرة','Galaxy'],
- ['Tj4jjaCxXRVSARsUzN','فضاء','Space'],['nqh2NNyuwGMhjUK17h','ألوان','Colors']
+ ['l0HlTy9x8FZo0XO1i','نار','Fire','energy'],
+ ['l0HlLP5fowu9vAbUk','برق','Lightning','energy'],
+ ['l41lVT8FpdxCtOOsM','نيون','Neon','colors'],
+ ['3oKGzndj7T0i1vii40','مجرة','Galaxy','space'],
+ ['Tj4jjaCxXRVSARsUzN','فضاء','Space','space'],
+ ['nqh2NNyuwGMhjUK17h','ألوان','Colors','colors']
 ];
-const url=id=>'https://media.giphy.com/media/'+id+'/giphy.gif';
-const names={flame:['شرار النار','Fire sparks'],lightning:['برق','Lightning'],ice:['جليد','Ice'],plasma:['بلازما','Plasma'],rocket:['صاروخ','Rocket'],comet:['مذنّب','Comet'],champion:['بطل','Champion'],starlight:['نجوم','Starlight'],aura:['هالة','Aura'],none:['بدون تأثير','No effect']};
-const earned={none:['بدون','None'],bronze:['المستكشف','Explorer'],neon:['نيون','Neon'],sparkle:['النجوم','Sparkles'],galaxy:['المجرة','Galaxy'],legend:['الأسطورة','Legend'],fire:['شرار النار','Fire sparks']};
-let selected='',busy=false;
-function identity(){
- const p=user(),id=$('profilePublicId')?.parentElement;if(!p||!id)return;
- let box=$('cl232Identity');
- if(!box){box=node('div','cl232-identity');box.id='cl232Identity';id.after(box)}
- const equipped=names[p.questShop?.equipped]||names.none;
- const reward=earned[learningState().cosmetics?.value]||earned.none;
- const gif=/giphy[.]com|tenor[.]com|^data:image[/]gif/.test(String(p.photoData||''));
- box.replaceChildren();
- for(const pair of [[T('تأثير المتجر','Shop effect'),T(...equipped)],[T('إطار المغامرة','Adventure frame'),T(...reward)],[T('الصورة الحالية','Current avatar'),gif?'GIF':T('صورة عادية','Photo')]]){
- const line=node('div','cl232-identity-line');line.append(node('b','',pair[0]),node('span','',pair[1]));box.append(line)
+const media=id=>'https://media.giphy.com/media/'+id+'/giphy.gif';
+let dialog=null,objectUrl='',busy=false,selection=null,ready=false,owner='',revision=0;
+function normalize(raw){
+ const u=new URL(String(raw).trim());
+ if(u.protocol!=='https:'||u.username||u.password)throw Error('invalid');
+ if(['giphy.com','www.giphy.com'].includes(u.hostname)){
+  const id=u.pathname.split('/').filter(Boolean).pop()?.split('-').pop();
+  if(!/^[A-Za-z0-9]{8,32}$/.test(id||''))throw Error('invalid');return media(id);
  }
+ if(/^(?:media[0-4]?|i)\.giphy\.com$/.test(u.hostname)&&/^\/media\/[A-Za-z0-9]{8,32}\/(?:giphy|200|original)\.gif$/i.test(u.pathname))return 'https://media.giphy.com'+u.pathname;
+ if(u.hostname==='media.tenor.com'&&/^\/[A-Za-z0-9_-]{10,150}\/[^/?#]{1,90}\.gif$/i.test(u.pathname))return u.origin+u.pathname;
+ throw Error('invalid');
 }
-function studio(){
- const p=user(),modal=$('profileModal');if(!p||!modal||$('cl232GifStudio'))return;
- const anchor=$('cl227ProfileExtras')||modal.querySelector('.profile-hero');if(!anchor)return;
- const card=node('section','cl232-gif-studio');card.id='cl232GifStudio';
- card.append(node('h3','',T('اختار GIF لبروفايلك','Choose a GIF avatar')),node('p','cl232-gif-intro',T('GIFات جاهزة منتقاة؛ عاين قبل ما تحفظ. وتقدر تتصفح ترندات GIPHY وTenor.','Curated popular GIFs. Preview before saving, or browse GIPHY and Tenor trends.')));
- const preview=node('div','cl232-gif-preview');
- const pic=node('img','cl232-gif-large');pic.id='cl232GifPreview';pic.src=String(p.photoData||url(gifs[0][0]));pic.alt=T('معاينة GIF','GIF preview');
- const guide=node('span','cl232-preview-hint',T('معاينة فقط · ما تغير حسابك','Preview only · your avatar is unchanged'));
- preview.append(pic,guide);card.append(preview);
- const grid=node('div','cl232-gif-grid');
- for(const [id,ar,en] of gifs){
-  const choice=button('','cl232-gif-choice');
-  const img=node('img','cl232-gif-thumb');img.src=url(id);img.alt=T(ar,en);img.loading='lazy';
-  choice.append(img,node('small','',T(ar,en)));
-  choice.addEventListener('click',()=>{
-   selected=url(id);pic.src=selected;grid.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));choice.classList.add('selected');setMsg(T('تأكد من المعاينة وبعدين اضغط حفظ.','Check the preview, then tap Save.'));
-  });grid.append(choice)
+function cleanup(){revision++;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=''}selection=null;ready=false;dialog?.remove();dialog=null}
+function open(){
+ if(!user()||dialog)return;
+ owner=user().uid;selection=null;ready=false;busy=false;
+ dialog=e('dialog','cl236-gif-dialog');dialog.id='cl236GifDialog';dialog.setAttribute('aria-labelledby','cl236GifTitle');
+ const header=e('header','cl236-dialog-head');
+ const title=e('h2','',T('اختار صورة متحركة','Choose your GIF'));title.id='cl236GifTitle';
+ const close=button('×','cl236-close');close.setAttribute('aria-label',T('إغلاق','Close'));close.onclick=()=>dialog.close();
+ header.append(title,close);dialog.append(header);
+ const preview=e('div','cl236-gif-preview');
+ const photo=e('img','cl236-gif-large');photo.alt=T('معاينة صورة الحساب','Profile photo preview');
+ const copy=e('div');copy.append(e('b','',user().displayName||''),e('p','',T('هيك بتبين صورتك. احفظ لما يعجبك الاختيار.','This is how your avatar looks. Save when you are happy with it.')));
+ preview.append(photo,copy);dialog.append(preview);
+ if(user().photoData)photo.src=user().photoData;else photo.hidden=true;
+ const status=e('p','cl236-status');status.setAttribute('role','status');
+ const save=button(T('حفظ الصورة','Save avatar'),'cl236-action');save.disabled=true;
+ function choose(value){
+  selection=value;ready=false;save.disabled=true;photo.hidden=false;status.textContent=T('جاري تحميل المعاينة…','Loading preview...');
+  const token=++revision;const probe=new Image();
+  probe.onload=()=>{if(token!==revision||!dialog)return;ready=true;photo.src=value.url;save.disabled=false;status.textContent=T('معاينة فقط · اضغط حفظ لتطبيقها','Preview only · Save to apply')};
+  probe.onerror=()=>{if(token!==revision||!dialog)return;ready=false;save.disabled=true;status.textContent=T('الصورة ما تحمّلت. جرّب اختيار ثاني أو ارفع GIF من جهازك.','Image could not load. Try another GIF or upload one.')};
+  probe.src=value.url;
  }
- card.append(grid);
- const input=node('input','cl232-gif-input');input.type='url';input.placeholder='https://giphy.com/gifs/...';input.maxLength=720;
- input.setAttribute('aria-label',T('رابط GIF','GIF link'));
- const check=button(T('عاين الرابط','Preview link'),'cl232-gif-try');
- check.addEventListener('click',()=>{
+ const search=e('input','cl236-search');search.type='search';search.placeholder=T('ابحث ضمن المجموعة…','Search this collection...');search.setAttribute('aria-label',search.placeholder);dialog.append(search);
+ const tabs=e('div','cl236-categories');tabs.setAttribute('role','group');tabs.setAttribute('aria-label',T('فئات GIF','GIF categories'));
+ let category='all';const grid=e('div','cl236-gif-grid');
+ const external=e('a','cl236-external',T('ابحث عن المزيد على GIPHY ↗','Find more on GIPHY ↗'));external.target='_blank';external.rel='noopener noreferrer';
+ const draw=()=>{
+  grid.replaceChildren();const query=search.value.trim().toLowerCase();
+  external.href='https://giphy.com/search/'+encodeURIComponent(query||'animated-avatar');
+  for(const [id,ar,en,cat] of gifs.filter(row=>(category==='all'||row[3]===category)&&(!query||row.slice(1).join(' ').toLowerCase().includes(query)))){
+   const b=button('','cl236-gif-choice'),img=e('img');img.src=media(id);img.alt=T(ar,en);img.loading='lazy';
+   img.onerror=()=>{b.disabled=true;b.title=T('تعذر تحميل الصورة','Image unavailable')};
+   b.append(img,e('span','',T(ar,en)));b.onclick=()=>{grid.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');choose({url:media(id)})};grid.append(b)
+  }
+  if(!grid.children.length)grid.append(e('p','cl236-note',T('ما في نتيجة بالمجموعة. جرّب كلمة ثانية أو ابحث على GIPHY.','No match in this collection. Try another word or search GIPHY.')));
+ };
+ for(const [id,ar,en] of [['all','الكل','All'],['energy','طاقة','Energy'],['space','فضاء','Space'],['colors','ألوان','Colors']]){
+  const tab=button(T(ar,en),'cl236-tab');tab.setAttribute('aria-pressed',String(id===category));
+  tab.onclick=()=>{category=id;tabs.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed','false'));tab.setAttribute('aria-pressed','true');draw()};tabs.append(tab)
+ }
+ search.oninput=draw;dialog.append(tabs,grid,external);
+ const links=e('details','cl236-link-panel');links.append(e('summary','',T('عندي رابط GIF','Use a GIF link')));
+ const input=e('input','cl236-search');input.type='url';input.placeholder='GIPHY / media.tenor.com';input.setAttribute('aria-label',T('رابط GIF','GIF URL'));
+ const check=button(T('معاينة الرابط','Preview link'),'cl236-secondary');
+ check.onclick=()=>{try{choose({url:normalize(input.value)})}catch{status.textContent=T('ألصق رابط GIPHY أو رابط GIF مباشر من media.tenor.com.','Paste a GIPHY link or a direct GIF link from media.tenor.com.')}};
+ links.append(input,check);dialog.append(links);
+ const file=e('input');file.type='file';file.accept='image/gif';file.hidden=true;
+ file.onchange=()=>{const f=file.files?.[0];if(!f)return;if(f.type!=='image/gif'||f.size>5*1024*1024){status.textContent=T('اختار GIF حجمه حتى 5MB.','Choose a GIF up to 5MB.');return}if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(f);choose({url:objectUrl,file:f})};
+ const upload=button(T('رفع GIF من الجهاز','Upload GIF'),'cl236-secondary');upload.onclick=()=>file.click();
+ save.onclick=async()=>{
+  if(!selection||!ready||busy||user()?.uid!==owner)return;
+  busy=true;save.disabled=true;status.textContent=T('جاري الحفظ…','Saving...');
+  const value=selection,activeDialog=dialog,activeOwner=owner;
   try{
-   const parsed=new URL(input.value.trim());
-   if(parsed.protocol!=='https:'||!['giphy.com','www.giphy.com','media.giphy.com','media.tenor.com'].includes(parsed.hostname))throw Error('invalid');
-   selected=parsed.href;const tail=parsed.pathname.split('/').pop().split('-').pop();
-   pic.src=parsed.hostname.includes('giphy.com')&&/^[a-zA-Z0-9]{8,32}$/.test(tail)?url(tail):selected;
-   setMsg(T('المعاينة جاهزة، اضغط حفظ.','Preview ready. Tap Save.'));
-  }catch{setMsg(T('الرابط لازم يكون من GIPHY أو Tenor.','The link must be from GIPHY or Tenor.'))}
- });
- const inputRow=node('div','cl232-gif-inputrow');inputRow.append(input,check);card.append(inputRow);
- const links=node('div','cl232-gif-links');
- for(const [source,text] of [['https://giphy.com/trending',T('ترندات GIPHY','GIPHY trends')],['https://tenor.com/trending',T('ترندات Tenor','Tenor trends')]]){
-  const a=node('a','cl232-gif-link',text);a.href=source;a.target='_blank';a.rel='noopener noreferrer';links.append(a)
- }card.append(links);
- const controls=node('div','cl232-gif-actions');
- const save=button(T('حفظ GIF','Save GIF'),'cl232-gif-save');
- const upload=button(T('رفع GIF من الجهاز','Upload GIF'),'cl232-gif-upload');
- upload.addEventListener('click',()=>$('profilePhotoInput')?.click());
- save.addEventListener('click',async()=>{
-  if(!selected||busy)return;busy=true;save.disabled=true;setMsg(T('جاري الحفظ...','Saving...'));
-  try{await window.classoraSetProfileGif(selected);setMsg(T('تم حفظ GIF في البروفايل!','GIF avatar saved!'));identity()}
-  catch{setMsg(T('ما زبط الحفظ. جرّب رابط GIF مباشر من GIPHY.','Could not save. Try a direct GIPHY GIF link.'))}
-  finally{save.disabled=false;busy=false}
- });
- controls.append(save,upload);card.append(controls);
- const status=node('p','cl232-gif-status','');status.id='cl232GifStatus';status.setAttribute('role','status');card.append(status);
- card.append(node('small','cl232-gif-credit',T('اختيارات من GIPHY · مش بث ترندات لحظي','Selections via GIPHY · not a live trends feed')));
- anchor.after(card);
+   if(value.file)await window.classoraSaveProfilePhoto(value.file);else await window.classoraSetProfileGif(value.url);
+   if(dialog===activeDialog&&user()?.uid===activeOwner){status.textContent=T('تم حفظ الصورة','Avatar saved');dialog.close()}
+  }catch{if(dialog===activeDialog)status.textContent=T('تعذر الحفظ. جرّب مجددًا؛ صورتك الحالية ما تغيّرت بالمعاينة.','Could not save. Please retry. Previewing does not change your avatar.')}
+  finally{if(dialog===activeDialog){busy=false;save.disabled=!ready}}
+ };
+ const controls=e('footer','cl236-actions');controls.append(upload,file,save);dialog.append(status,controls,e('small','cl236-note',T('مجموعة منتقاة من GIPHY · البحث هنا ضمن المجموعة','A curated GIPHY collection · search filters this collection')));
+ dialog.addEventListener('close',cleanup,{once:true});
+ dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});
+ document.body.append(dialog);draw();dialog.showModal();search.focus();
 }
-function setMsg(msg){const n=$('cl232GifStatus');if(n)n.textContent=msg}
-function sync(){if(!$('profileModal')?.classList.contains('open')||!user())return;studio();identity()}
 function init(){
- const modal=$('profileModal');if(modal)new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
- document.addEventListener('classora-auth-settled',sync);
- document.addEventListener('classora:arena-shop-updated',sync);
- document.addEventListener('classora:profile-video-changed',sync);
- document.addEventListener('classora:learning-update',sync);
- new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
- window.addEventListener('pageshow',sync);sync()
+ window.classoraGifStudio={open};
+ const profile=$('profileModal');if(profile)new MutationObserver(()=>{
+  if(!profile.classList.contains('open')||$('cl236ProfileGifButton'))return;
+  const b=button(T('اختيار صورة GIF','Choose a GIF avatar'),'cl236-action');b.id='cl236ProfileGifButton';b.onclick=open;profile.querySelector('.profile-hero')?.after(b);
+ }).observe(profile,{attributes:true,attributeFilter:['class']});
+ document.addEventListener('classora-auth-settled',()=>{if(dialog&&user()?.uid!==owner)dialog.close()});
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
