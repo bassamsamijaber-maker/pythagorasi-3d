@@ -12,7 +12,7 @@ const isStudent=()=>user()?.role==='student';
 const isAdmin=()=>Boolean(window.classoraArena?.isAdmin?.());
 const canDuel=()=>isStudent()||isAdmin();
 const grade=()=>{const p=user();let saved=8;try{saved=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}return [7,8,9,10].includes(Number(p?.grade))?Number(p.grade):saved};
-const names={
+const names={supernova:['انفجار النجوم','Supernova'],vortex:['بوابة المجرّة','Galaxy portal'],tatreez:['تطريز متوهّج','Glowing tatreez'],
  flame:['شرار النار','Fire sparks'],lightning:['برق كهربائي','Electric boost'],
  ice:['جليد متحرك','Ice trail'],plasma:['بلازما بنفسجية','Purple plasma'],
  rocket:['عادم الصاروخ','Rocket exhaust'],comet:['ذيل المذنّب','Comet tail'],
@@ -38,7 +38,8 @@ function message(text,bad=false){
 }
 function errorText(e){
  const code=String(e?.code||''),m=String(e?.message||'');
- if(code.includes('permission-denied'))return tr('لازم تتفعّل صلاحيات المبارزات في Firebase أولًا.','The Firebase duel rules need to be deployed first.');
+ if(m.includes('style-sync-pending'))return tr('هذا التأثير قيد التفعيل. المعاينة متاحة مجانًا.','This effect is coming soon. Preview it for free.');
+ if(code.includes('permission-denied'))return tr('هذه الميزة غير متاحة حاليًا. حاول لاحقًا.','This feature is currently unavailable. Please try later.');
  if(m.includes('different-grade'))return tr('لازم يكون الخصمين بنفس الصف.','Both players must be in the same grade.');
  if(m.includes('room-not-found'))return tr('كود الغرفة غير موجود.','Room code not found.');
  if(m.includes('room-full'))return tr('الغرفة ممتلئة أو انتهى وقتها.','The room is full or expired.');
@@ -56,7 +57,7 @@ function init(){
  const front=$('classoraLearningFront');if(!front){document.addEventListener('classora:learning-front-ready',init,{once:true});return}
  if($('cl227Home'))return;
  const home=el('section','cl227-home');home.id='cl227Home';
- const heading=el('header','cl227-heading');heading.append(el('span','cl227-brow','CLASSORA · ARENA & GARAGE'),el('h2','',tr('الساحة والكراج','Arena & garage')),el('p','',tr('تحدّى صاحبك، واجمع XP وافتح مؤثرات متحركة لبروفايلك.','Challenge a friend, earn XP from study and unlock profile cosmetics.')));
+ const heading=el('header','cl227-heading');heading.append(el('span','cl227-brow',tr('كلاسورا · الساحة والمتجر','CLASSORA · ARENA & SHOP')),el('h2','',tr('الساحة والكراج','Arena & garage')),el('p','',tr('تحدّى صاحبك، واجمع XP وافتح مؤثرات متحركة لبروفايلك.','Challenge a friend, earn XP from study and unlock profile cosmetics.')));
  const rank=el('div','cl227-rank');rank.id='cl227Rank';heading.append(rank);
  const entries=el('div','cl227-entry-grid');
  const duel=card(tr('1v1 ضد صاحبك','1v1 vs a friend'),tr('نفس الأسئلة، نتيجة مباشرة وكود دعوة.','Same questions, live scores and a room code.'),'duel');
@@ -71,6 +72,7 @@ function init(){
  document.addEventListener('classora-auth-settled',sync);
  document.addEventListener('classora:learning-update',sync);
  document.addEventListener('classora:arena-shop-updated',sync);
+ document.addEventListener('classora:public-style-status',sync);
  document.addEventListener('classora:profile-video-changed',syncMedia);
  new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class','data-user-role']});
  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
@@ -158,7 +160,7 @@ function drawDuel(){
  const left=el('div','cl227-scoreboard');
  const host=el('div','cl227-player');host.append(el('b','',room.hostName||tr('اللاعب 1','Player 1')),el('span','',score(hostAnswers,room.questions)+' / 5'));
  const guest=el('div','cl227-player');guest.append(el('b','',room.guestName||tr('بانتظار لاعب…','Waiting for opponent…')),el('span','',score(guestAnswers,room.questions)+' / 5'));
- left.append(host,el('strong','cl227-versus','VS'),guest);body.append(left);
+ left.append(host,el('strong','cl227-versus',tr('ضد','VS')),guest);body.append(left);
  if(room.status==='waiting'){
   body.append(el('p','cl227-wait',tr('ارسل الكود لصاحبك. تبدأ الأسئلة بمجرد دخوله.','Share your code. The match starts when your friend joins.')));pane.append(body);return
  }
@@ -168,7 +170,7 @@ function drawDuel(){
   const a=score(mine,room.questions),b=score(other,room.questions);
   const result=a===b?tr('تعادل!','Draw!'):a>b?tr('فزت!','You won!'):tr('فاز خصمك','Your opponent won');
   const win=el('div','cl232-goal-scene '+(a>b?'winner':a<b?'defeat':'draw'));
-  const kicker=el('span','cl232-goal-kicker',a>b?'GOAL!':a===b?'OVERTIME':'MATCH OVER');
+  const kicker=el('span','cl232-goal-kicker',a>b?tr('انتصار!','VICTORY!'):a===b?tr('تعادل','DRAW'):tr('انتهت المباراة','MATCH OVER'));
   const trophy=el('span','cl232-goal-trophy',a>b?'★':a===b?'≡':'✦');
   win.append(kicker,trophy,el('strong','',result),el('small','',a+' — '+b));
   body.append(win,el('p','cl227-result-note',tr('مباراة تدريبية للمتعة، من دون مكافآت XP إضافية.','Friendly practice match — no extra XP is awarded.')));
@@ -209,26 +211,26 @@ function drawShop(){
  showcase.append(avatar,caption);pane.append(showcase);
  const grid=el('div','cl227-shop-grid');
  for(const [id,item] of Object.entries(window.classoraArena?.catalog||{})){
-  const has=owned.includes(id)||isAdmin(),equipped=shop.equipped===id;
+  const has=owned.includes(id)||isAdmin(),equipped=shop.equipped===id,pending=Boolean(item.requiresStyleSync&&!window.classoraPublicStyleReady);
   const c=el('article','cl227-shop-item '+id+(equipped?' equipped':''));
   const orb=window.ClassoraProfileEffects?.avatar(p,id)||el('div','cl227-shop-orbit '+id,symbols[id]||'✦');
   orb.classList.add('cl236-shop-art');
   const info=el('div','cl227-shop-info');
   info.append(el('b','',tr(...(window.ClassoraProfileEffects?.names[id]||names[id]))),el('small','',has?tr('مملوك','Owned'):item.cost+' XP'));
-  const action=btn(has?(equipped?tr('مجهّز','Equipped'):tr('تجهيز','Equip')):tr('شراء','Buy'),'cl227-shop-btn');
-  action.disabled=!(isStudent()||isAdmin())||equipped||(!isAdmin()&&!has&&shopBalance()<item.cost);
+  const action=btn(pending?tr('قريبًا','Coming soon'):has?(equipped?tr('مجهّز','Equipped'):tr('تجهيز','Equip')):tr('شراء','Buy'),'cl227-shop-btn');
+  action.disabled=pending||!(isStudent()||isAdmin())||equipped||(!isAdmin()&&!has&&shopBalance()<item.cost);
   action.addEventListener('click',async()=>{
    if(working)return;working=true;action.disabled=true;
    try{
     if(has)await window.classoraArena.equip(id);else await window.classoraArena.buy(id);
-    message(has?tr('تم التجهيز!','Effect equipped!'):tr('تم الشراء! افتح العنصر لتجهيزه.','Purchased! Equip it from your garage.'));
     drawShop();
+    message(has?(window.classoraPublicStyleReady?tr('التأثير محفوظ ويظهر للآخرين.','Effect saved and visible to others.'):tr('التأثير محفوظ. المشاركة مع الآخرين قيد التفعيل.','Effect saved. Sharing with others is pending.')):tr('تم الشراء! افتح العنصر لتجهيزه.','Purchased! Equip it from your garage.'));
    }catch(e){message(errorText(e),true);action.disabled=false}
    finally{working=false}
   });
   const preview=btn(tr('معاينة','Preview'),'cl227-shop-preview');
   preview.addEventListener('click',()=>{
-   showcase.dataset.preview=id;avatar.className='cl232-showcase-avatar';window.ClassoraProfileEffects?.decorate(avatar,id);
+   window.ClassoraProfileScenes?.play(showcase,id);showcase.dataset.preview=id;avatar.className='cl232-showcase-avatar';window.ClassoraProfileEffects?.decorate(avatar,id);
    const name=window.ClassoraProfileEffects?.names[id]||names[id]||['تأثير','Effect'];
    caption.replaceChildren(el('b','',tr(...name)),el('small','',tr('معاينة فقط — ما تم الشراء أو التجهيز','Preview only — not purchased or equipped')));
    showcase.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth',block:'nearest'});
@@ -256,41 +258,6 @@ function syncMedia(){
   video.play().catch(()=>{});
  }
 }
-function profileAdditions(){
- const modal=$('profileModal');if(!modal)return;
- let node=$('cl227ProfileExtras');
- if(!node){
-  node=el('section','cl227-profile-extras');node.id='cl227ProfileExtras';
-  const hero=modal.querySelector('.profile-hero');
-  if(hero)hero.after(node);else modal.querySelector('.modalbox')?.append(node);
-  const title=el('h3','',tr('شخصية البروفايل','Profile style'));
-  const badge=el('div','cl227-profile-rank');badge.id='cl227ProfileRank';
-  const clip=el('p','',tr('ارفع GIF صغير من زر الصورة، أو فيديو قصير MP4 / WebM / MOV حتى 8MB. وممكن كمان تحط رابط فيديو مباشر.','Upload a small GIF as your photo, or a short MP4 / WebM / MOV clip up to 8MB. Direct links also work.'));
-  const upload=el('input','cl227-video-file');upload.type='file';upload.accept='video/mp4,video/webm,video/quicktime';upload.id='cl227VideoFile';upload.setAttribute('aria-label',tr('ارفع فيديو بروفايل','Upload profile video'));
-  const uploadBtn=btn(tr('رفع فيديو من الجهاز','Upload a video'),'cl227-upload');
-  uploadBtn.addEventListener('click',()=>upload.click());
-  upload.addEventListener('change',async()=>{
-   const file=upload.files?.[0];if(!file)return;uploadBtn.disabled=true;
-   status.textContent=tr('جاري رفع الفيديو…','Uploading video…');
-   try{await window.classoraProfileVideo.upload(file);status.textContent=tr('انحفظ الفيديو المتحرك!','Your video avatar is saved!');syncMedia()}
-   catch(e){status.textContent=e?.code==='storage/unauthorized'?tr('قواعد Firebase Storage لازم تتفعّل أولًا.','Firebase Storage rules must be deployed first.'):tr('ما زبط الرفع. تأكد أن الفيديو أقل من 8MB وبصيغة MP4 أو WebM أو MOV.','Upload failed. Try an MP4, WebM or MOV clip under 8MB.')}
-   finally{uploadBtn.disabled=false;upload.value=''}
-  });
-  const field=el('input','cl227-video-url');field.id='cl227VideoUrl';field.type='url';field.placeholder='https://example.com/clip.mp4';field.autocomplete='off';field.maxLength=720;field.setAttribute('aria-label',tr('رابط فيديو البروفايل','Profile video URL'));
-  const controls=el('div','cl227-media-controls');
-  const save=btn(tr('حفظ الفيديو','Save clip'),'cl227-outline');
-  save.addEventListener('click',async()=>{save.disabled=true;try{await window.classoraProfileVideo.save(field.value);status.textContent=tr('تم حفظ الفيديو','Video saved')}
-    catch(e){status.textContent=tr('استخدم رابط HTTPS مباشر ينتهي بـ mp4 أو webm.','Use a direct HTTPS URL ending in mp4 or webm.')}finally{save.disabled=false}});
-  const clear=btn(tr('حذف الفيديو','Remove clip'),'cl227-outline');
-  clear.addEventListener('click',async()=>{try{await window.classoraProfileVideo.save('');field.value='';status.textContent=tr('انحذف الفيديو','Video removed')}catch(e){status.textContent=errorText(e)}});
-  controls.append(save,clear);
-  const status=el('p','cl227-media-status');node.append(title,badge,clip,uploadBtn,upload,field,controls,status)
- }
- const field=$('cl227VideoUrl'),url=String(user()?.photoVideoUrl||'');
- if(field&&document.activeElement!==field)field.value=url.includes('firebasestorage.googleapis.com/')?'':url;
- const status=node.querySelector('.cl227-media-status');
- if(status&&url.includes('firebasestorage.googleapis.com/')&&!status.textContent)status.textContent=tr('الفيديو المرفوع مفعّل بالبروفايل.','Uploaded video is active on your profile.');
-}
 function sync(){
  const p=user();if(!p){detach();$('cl227Home')?.setAttribute('hidden','');$('cl227Pane')?.setAttribute('hidden','');document.body.removeAttribute('data-cl227-effect');return}
  if(lastUid&&lastUid!==p.uid){detach();$('cl227Pane')?.setAttribute('hidden','')}lastUid=p.uid||'';
@@ -314,3 +281,4 @@ function sync(){
  syncMedia();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+

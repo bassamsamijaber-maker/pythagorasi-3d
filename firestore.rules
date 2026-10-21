@@ -171,6 +171,15 @@ service cloud.firestore {
       allow delete: if isSuperAdmin();
     }
 
+    function validPublicProfileEffect(uid) {
+      let effect = request.resource.data.get('profileEffect', 'none');
+      let shop = getAfter(/databases/$(database)/documents/users/$(uid)).data.get('questShop', {});
+      return effect is string
+        && effect in ['none','flame','lightning','ice','plasma','rocket','comet','champion','starlight','aura','supernova','vortex','tatreez']
+        && effect == shop.get('equipped', 'none')
+        && (effect == 'none' || shop.get('owned', []).hasAny([effect]));
+    }
+
     match /publicProfiles/{uid} {
       // Searchable chat directory: deliberately contains no email, password or security phrase.
       allow read, list: if signedIn();
@@ -189,6 +198,7 @@ service cloud.firestore {
         && request.resource.data.profileId.size() <= 10
         && request.resource.data.photoData is string
         && request.resource.data.photoData.size() <= 140000
+        && (!request.resource.data.keys().hasAny(["profileEffect"]) || validPublicProfileEffect(uid))
         && request.resource.data.keys().hasOnly([
           "uid",
           "displayName",
@@ -196,6 +206,7 @@ service cloud.firestore {
           "role",
           "profileId",
           "photoData",
+          "profileEffect",
           "updatedAt"
         ]);
 
@@ -281,7 +292,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['topic','subject','correct','total','pct','xp','createdAt'])
         && (request.resource.data.topic in ['pythagoras','equations','acids','matter','motion','atoms','plants','body','energy','periodic']
           || (request.resource.data.topic is string
-            && request.resource.data.topic.matches('^quest-(7|8|9|10)-(math|geometry|science|arabic|english|history|geography)-[0-9]{1,2}
+            && request.resource.data.topic.matches('^quest-(7|8|9|10)-(math|geometry|science|arabic|english|history|geography)-[0-9]{1,2}$')))
         && request.resource.data.total is int && request.resource.data.total > 0 && request.resource.data.total <= 30
         && request.resource.data.correct is int && request.resource.data.correct >= 0 && request.resource.data.correct <= request.resource.data.total
         && request.resource.data.pct is int && request.resource.data.pct >= 0 && request.resource.data.pct <= 100
@@ -376,15 +387,18 @@ service cloud.firestore {
         + (owned.hasAny(['comet']) ? 300 : 0)
         + (owned.hasAny(['champion']) ? 180 : 0)
         + (owned.hasAny(['starlight']) ? 95 : 0)
-        + (owned.hasAny(['aura']) ? 260 : 0);
+        + (owned.hasAny(['aura']) ? 260 : 0)
+        + (owned.hasAny(['supernova']) ? 350 : 0)
+        + (owned.hasAny(['vortex']) ? 420 : 0)
+        + (owned.hasAny(['tatreez']) ? 280 : 0);
     }
     function validShopChange() {
       let before = resource.data.get('questShop', {});
       let after = request.resource.data.get('questShop', {});
       return after is map && after.keys().hasOnly(['spent','owned','equipped'])
         && after.keys().hasAll(['spent','owned','equipped'])
-        && after.owned is list && after.owned.size() <= 9
-        && after.owned.hasOnly(['flame','lightning','ice','plasma','rocket','comet','champion','starlight','aura'])
+        && after.owned is list && after.owned.size() <= 12
+        && after.owned.hasOnly(['flame','lightning','ice','plasma','rocket','comet','champion','starlight','aura','supernova','vortex','tatreez'])
         && after.owned.hasAll(before.get('owned',[]))
         && after.spent is int
         && after.spent == shopCost(after.owned)
@@ -1229,3 +1243,4 @@ service cloud.firestore {
 
   }
 }
+

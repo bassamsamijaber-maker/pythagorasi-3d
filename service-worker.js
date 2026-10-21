@@ -1,11 +1,14 @@
-const CACHE_NAME="classora-v236-profile-wardrobe";;
+const CACHE_NAME="classora-v237-profile-scenes";;
 const APP_SHELL=[
+  "./assets/classora-style-v237.css?v=237",
+  "./assets/classora-style-i18n-v237.js?v=237",
+  "./assets/classora-profile-scenes-v237.js?v=237",
   "./assets/classora-quest-i18n-v233.js?v=235",
-  "./assets/classora-profile-studio-v232.js?v=236",
+  "./assets/classora-profile-studio-v232.js?v=237",
   "./assets/classora-polish-v232.css?v=236",
  "./assets/classora-fx-settings-v228.css?v=229",
- "./assets/classora-fx-settings-v228.js?v=236",
-  "./assets/classora-arena-shop-v227.js?v=236",
+ "./assets/classora-fx-settings-v228.js?v=237",
+  "./assets/classora-arena-shop-v227.js?v=237",
   "./assets/classora-arena-shop-v227.css?v=229",
   "./assets/classora-quest-map-v223.css?v=231",
   "./assets/classora-quest-map-v223.js?v=236",
@@ -314,4 +317,5 @@ classoraMessaging.onBackgroundMessage(payload=>{
 });
 
 } catch(error) { console.warn("Optional push messaging unavailable",error?.message); }
+
 

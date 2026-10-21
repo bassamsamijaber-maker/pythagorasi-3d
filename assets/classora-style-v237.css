@@ -1,0 +1,53 @@
+/* Shared surface tokens for profile, wardrobe, GIF picker and XP shop. */
+:root{--cl237-bg:#0b192b;--cl237-card:#102239;--cl237-soft:#18324c;--cl237-text:#eef5ff;--cl237-muted:#adbed2;--cl237-border:#39536e;--cl237-accent:#8be5cd;--cl237-on:#102739}
+body.light,body[data-classora-theme="morning"]{--cl237-bg:#fff;--cl237-card:#fff;--cl237-soft:#f1f8f8;--cl237-text:#193442;--cl237-muted:#496575;--cl237-border:#d0e2e6;--cl237-accent:#167d67;--cl237-on:#fff}
+body[data-classora-theme="embroidery"]{--cl237-bg:#fbf6ee;--cl237-card:#fffbf5;--cl237-soft:#f5ece2;--cl237-text:#382b31;--cl237-muted:#67565c;--cl237-border:#ddc7b9;--cl237-accent:#872d43;--cl237-on:#fff}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]){--cl236-paper:var(--cl237-card);--cl236-text:var(--cl237-text);--cl236-muted:var(--cl237-muted);--cl236-line:var(--cl237-border);--cl236-accent:var(--cl237-accent)}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) .modalbox{background:var(--cl237-bg)!important;color:var(--cl237-text)!important;border-color:var(--cl237-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(.settings-card,.settings-profile-row,.profile-hero,.profile-stat,.profile-card,.profile-subject-card,.cl236-customizer,.cl236-profile-preview,#classoraAppearanceSettings){background:var(--cl237-card)!important;border-color:var(--cl237-border)!important;color:var(--cl237-text)!important;box-shadow:0 6px 24px #19364d08!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(h2,h3,h4,label,strong,b,.settings-name,.profile-name,.cl236-summary){color:var(--cl237-text)!important;text-shadow:none!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(small,.muted,.settings-help,.settings-note,.cl236-note,.cl236-status,.cl-appearance-desc,.cl-appearance-note){color:var(--cl237-muted)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(input,select,textarea){background:var(--cl237-soft)!important;color:var(--cl237-text)!important;border-color:var(--cl237-border)!important;color-scheme:light}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) input::placeholder{color:var(--cl237-muted)!important;opacity:1}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) button{background:var(--cl237-soft)!important;color:var(--cl237-text)!important;border-color:var(--cl237-border)!important;box-shadow:none!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(.apply,.cl236-action,button[aria-pressed="true"]){background:var(--cl237-accent)!important;color:var(--cl237-on)!important;border-color:var(--cl237-accent)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(#settingsModal,#profileModal) :is(.cl236-owned-item[aria-pressed="true"],.cl-appearance-choice[aria-pressed="true"]){background:var(--cl237-soft)!important;color:var(--cl237-text)!important;box-shadow:inset 0 0 0 1px var(--cl237-accent)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #deleteAccountBtn{background:#fff0f0!important;color:#a21e36!important;border-color:#d6a2ab!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-home,.cl227-pane){background:var(--cl237-bg)!important;border-color:var(--cl237-border)!important;color:var(--cl237-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby :is(.cl227-entry,.cl227-shop-item,.cl227-wallet,.cl232-showcase,.cl227-question-card,.cl227-player,.cl227-joinline,.cl227-share){background:var(--cl237-card)!important;border-color:var(--cl237-border)!important;color:var(--cl237-text)!important;box-shadow:0 6px 24px #19364d08!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #cl227Home :is(h2,h3,h4,b,strong,.cl227-shop-info,.cl232-showcase-copy){color:var(--cl237-text)!important;text-shadow:none!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #cl227Home :is(p,small,.cl227-brow,.cl227-message){color:var(--cl237-muted)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #cl227Home :is(button,input){background:var(--cl237-soft)!important;border-color:var(--cl237-border)!important;color:var(--cl237-text)!important;box-shadow:none!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #cl227Home :is(.cl227-shop-btn,.cl227-entry-cta,.cl227-primary){background:var(--cl237-accent)!important;color:var(--cl237-on)!important;border-color:var(--cl237-accent)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #platformLobby .cl227-shop-item.equipped{border-color:var(--cl237-accent)!important;box-shadow:inset 0 0 0 1px var(--cl237-accent)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) :is(.cl236-gif-dialog,.cl237-public-dialog){background:var(--cl237-card)!important;color:var(--cl237-text)!important;border-color:var(--cl237-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl236-gif-dialog :is(input,.cl236-gif-preview,.cl236-gif-choice,.cl236-tab,.cl236-secondary){background:var(--cl237-soft)!important;color:var(--cl237-text)!important;border-color:var(--cl237-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl236-gif-dialog :is(.cl236-action,.cl236-tab[aria-pressed="true"]){background:var(--cl237-accent)!important;color:var(--cl237-on)!important;border-color:var(--cl237-accent)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl236-gif-choice[aria-pressed="true"]{border-color:var(--cl237-accent)!important}
+.cl236-gif-grid{max-height:370px;overflow:auto;overscroll-behavior:contain;padding:3px}
+.cl236-gif-dialog .cl236-close{color:inherit}
+.cl236-decoration.fx-supernova{color:#ffa34e}.fx-supernova svg{fill:#ffb84a18;animation:cl236-glow 3.4s ease-in-out infinite}
+.cl236-decoration.fx-vortex{color:#cc9fff}.fx-vortex svg{animation:cl236-orbit 16s linear infinite}
+.cl236-decoration.fx-tatreez{color:#f08da5}.fx-tatreez svg{animation:cl236-glow 3.8s ease-in-out infinite;stroke-width:2}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl236-decoration.fx-tatreez{color:#a32c50}
+.cl237-scene-host{position:relative!important;isolation:isolate}
+.cl237-scene{--scene-color:#b599ff;position:absolute;inset:0;z-index:15;border-radius:inherit;overflow:hidden;pointer-events:none;animation:cl237-scene-life 3.5s ease both}
+.scene-flame,.scene-supernova,.scene-rocket{--scene-color:#ff9b4a}.scene-lightning,.scene-ice{--scene-color:#65ddff}.scene-comet,.scene-vortex{--scene-color:#b591ff}.scene-champion,.scene-starlight{--scene-color:#ffcd67}.scene-aura{--scene-color:#64dfb4}.scene-tatreez{--scene-color:#e85e89}
+.cl237-scene-halo{position:absolute;inset:-40%;background:radial-gradient(ellipse at center,transparent 18%,color-mix(in srgb,var(--scene-color) 30%,transparent) 35%,transparent 64%);animation:cl237-halo 3.5s ease-out both}
+.cl237-scene-rays{position:absolute;inset:-80%;opacity:.24;background:repeating-conic-gradient(from 0deg,transparent 0 24deg,var(--scene-color) 25deg 26deg,transparent 28deg 45deg);mask-image:radial-gradient(circle,transparent 10%,#000 25%,transparent 64%);animation:cl237-rays 3.5s ease-out both}
+.cl237-particle{position:absolute;left:var(--x);top:85%;width:6px;height:6px;border-radius:50%;background:var(--scene-color);box-shadow:0 0 12px var(--scene-color);animation:cl237-rise 2.8s calc(var(--n)*.025s) ease-out both}
+.scene-lightning .cl237-particle,.scene-rocket .cl237-particle{height:25px;width:3px;transform:rotate(25deg)}
+.scene-ice .cl237-particle{border-radius:1px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);width:12px;height:12px}
+.scene-tatreez .stitch{width:17px;height:17px;border-radius:0;clip-path:polygon(0 15%,15% 0,50% 35%,85% 0,100% 15%,65% 50%,100% 85%,85% 100%,50% 65%,15% 100%,0 85%,35% 50%)}
+.cl237-crown{position:absolute;width:90px;left:calc(50% - 45px);top:8%;color:var(--scene-color);animation:cl237-crown 3.5s ease both}.cl237-crown svg{width:100%;filter:drop-shadow(0 0 10px #ffcc8880)}
+@keyframes cl237-scene-life{0%{opacity:0}15%,70%{opacity:1}100%{opacity:0}}
+@keyframes cl237-halo{from{transform:scale(.5);opacity:0}25%{opacity:1}to{transform:scale(1.5);opacity:0}}
+@keyframes cl237-rays{from{transform:rotate(-15deg) scale(.5)}to{transform:rotate(65deg) scale(1.5)}}
+@keyframes cl237-rise{0%{transform:translate(0,30px) scale(.2);opacity:0}22%{opacity:1}100%{transform:translate(var(--dx),-200px) scale(.3);opacity:0}}
+@keyframes cl237-crown{from{transform:translateY(40px) scale(.6);opacity:0}30%,70%{transform:translateY(0) scale(1);opacity:1}to{transform:translateY(-20px);opacity:0}}
+.cl237-public-dialog{max-width:470px}.cl237-public-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:50px 24px 26px;border-radius:20px;min-height:320px;background:var(--cl237-soft);margin-top:20px}
+.cl237-public-card>.cl236-avatar{width:108px;height:108px;flex-basis:108px}.cl237-public-card h3{font-size:24px;overflow-wrap:anywhere;margin:14px 0 0}.cl237-public-card p{margin:0}.cl237-public-id{font:600 13px/1.4 system-ui;color:var(--cl237-muted)}.cl237-effect-name{color:var(--cl237-accent);font-size:14px}
+.cl237-public-dialog :focus-visible{outline:3px solid var(--cl237-accent);outline-offset:3px}
+body.reduce-motion :is(.cl236-decoration,.cl236-decoration *, .cl237-scene){animation:none!important}.reduce-motion .cl237-scene{display:none!important}
+@media(prefers-reduced-motion:reduce){.cl237-scene{display:none!important}.cl236-decoration,.cl236-decoration *{animation:none!important}}
+@media(max-width:600px){.cl236-gif-grid{max-height:330px}.cl237-public-card{padding:35px 16px 24px}.cl237-public-card>.cl236-avatar{width:88px;height:88px;flex-basis:88px}}

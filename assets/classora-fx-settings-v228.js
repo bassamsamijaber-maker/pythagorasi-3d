@@ -6,8 +6,11 @@ const T=(a,b)=>document.documentElement.lang==='ar'?a:(window.ClassoraLocale?.tF
 const user=()=>document.body.classList.contains('classora-authenticated')?window.PythagorasiUser:null;
 const e=(tag,cls,txt)=>{const n=document.createElement(tag);n.className=cls||'';if(txt!==undefined)n.textContent=String(txt);return n};
 const button=(txt,cls)=>{const n=e('button',cls,txt);n.type='button';return n};
-const names={flame:['لهب متحرك','Living flame'],lightning:['عاصفة البرق','Lightning storm'],ice:['تاج الجليد','Ice crown'],plasma:['مدار البلازما','Plasma orbit'],rocket:['انطلاق الصاروخ','Rocket launch'],comet:['مذنّب فضائي','Space comet'],champion:['تاج البطل','Champion crown'],starlight:['نجوم متلألئة','Twinkling stars'],aura:['هالة الشفق','Aurora halo'],none:['بدون تأثير','No effect']};
+const names={flame:['لهب متحرك','Living flame'],lightning:['عاصفة البرق','Lightning storm'],ice:['تاج الجليد','Ice crown'],plasma:['مدار البلازما','Plasma orbit'],rocket:['انطلاق الصاروخ','Rocket launch'],comet:['مذنّب فضائي','Space comet'],champion:['تاج البطل','Champion crown'],starlight:['نجوم متلألئة','Twinkling stars'],aura:['هالة الشفق','Aurora halo'],supernova:['انفجار النجوم','Supernova'],vortex:['بوابة المجرّة','Galaxy portal'],tatreez:['تطريز متوهّج','Glowing tatreez'],none:['بدون تأثير','No effect']};
 const paths={
+ supernova:'<path d="m50 1 7 22 18-14-6 23 28 2-22 16 22 16-28 2 6 23-18-14-7 22-7-22-18 14 6-23-28-2 22-16L3 34l28-2-6-23 18 14Z"/>',
+ vortex:'<ellipse cx="50" cy="50" rx="46" ry="31"/><ellipse cx="50" cy="50" rx="46" ry="31" transform="rotate(60 50 50)"/><ellipse cx="50" cy="50" rx="46" ry="31" transform="rotate(120 50 50)"/>',
+ tatreez:'<path d="m50 2 10 10-10 10-10-10Zm0 76 10 10-10 10-10-10ZM2 50l10-10 10 10-10 10Zm76 0 10-10 10 10-10 10ZM17 17l8 8m-8 0 8-8m50 0 8 8m-8 0 8-8M17 75l8 8m-8 0 8-8m50 0 8 8m-8 0 8-8"/>',
  flame:'<path d="M18 83C7 70 15 59 12 48c13 8 5 22 15 29M82 83c11-13 3-24 6-35-13 8-5 22-15 29M31 92c-9-12-2-16-5-24 13 9 4 17 12 23M69 92c9-12 2-16 5-24-13 9-4 17-12 23"/>',
  lightning:'<path d="m18 23-9 27h12L12 78l22-34H21l9-21M80 23 70 48h12L72 77l21-35H81l9-19"/>',
  ice:'<path d="m10 65 6-38 14 13 5-26 15 17 15-17 5 26 14-13 6 38M16 27l14 45M84 27 70 72M35 14l7 16M65 14l-7 16"/><path d="m18 82 12 9m52-9-12 9"/>',
@@ -28,7 +31,7 @@ function decorate(target,id){
 }
 function avatar(p,id){
  const a=e('span','cl236-avatar');
- if(p?.photoData){const img=e('img');img.src=p.photoData;img.alt=T('صورة الحساب','Profile photo');a.append(img)}
+ if(p?.photoData&&/^(https:\/\/|data:image\/(?:gif|png|jpeg|webp);base64,)/i.test(p.photoData)){const img=e('img');img.src=p.photoData;img.alt=T('صورة الحساب','Profile photo');a.append(img)}
  else a.append(e('b','',String(p?.displayName||'?').trim()[0]||'?'));
  decorate(a,id);return a;
 }
@@ -44,8 +47,8 @@ async function equip(id,status){
  if(busy)return;busy=true;status.textContent=T('جاري الحفظ…','Saving...');
  try{
   if(window.classoraArena?.isAdmin?.())await window.classoraArena.unlockAdmin();
-  await window.classoraArena.equip(id);settings();localEffects();
- }catch{status.textContent=T('ما زبط الحفظ. افحص الاتصال وحاول مجددًا.','Could not save. Check your connection and retry.')}
+  await window.classoraArena.equip(id);settings();localEffects();const live=$('cl237EquipStatus');if(live)live.textContent=window.classoraPublicStyleReady?T('التأثير محفوظ ويظهر للآخرين.','Effect saved and visible to others.'):T('التأثير محفوظ. المشاركة مع الآخرين قيد التفعيل.','Effect saved. Sharing with others is pending.');
+ }catch{($('cl237EquipStatus')||status).textContent=T('ما زبط الحفظ. افحص الاتصال وحاول مجددًا.','Could not save. Check your connection and retry.')}
  finally{busy=false}
 }
 function settings(){
@@ -62,21 +65,21 @@ function settings(){
  const preview=e('div','cl236-profile-preview');
  preview.append(avatar(p,current));
  const info=e('div','cl236-preview-info');info.append(e('b','',p.displayName||T('حسابك','Your profile')),e('small','',T(...(names[current]||names.none))));
- preview.append(info);body.append(preview);
+ info.firstElementChild.setAttribute('data-no-translate','');preview.append(info);body.append(preview);
  const note=e('p','cl236-note',T('معاينة فعلية على صورتك. اختر تأثيرًا مملوكًا ثم اضغط تجهيز.','Preview on your photo. Choose an owned effect, then equip it.'));
  body.append(note);
  const grid=e('div','cl236-owned');
  const owned=new Set(p.questShop?.owned||[]);
  const all=Object.keys(names).filter(id=>id!=='none'&&(owned.has(id)||window.classoraArena?.isAdmin?.()));
- const status=e('p','cl236-status');status.setAttribute('role','status');
+ const status=e('p','cl236-status');status.id='cl237EquipStatus';status.setAttribute('role','status');
  for(const id of ['none',...all]){
   const card=button('','cl236-owned-item');card.setAttribute('aria-pressed',String(current===id));
   card.append(avatar(p,id),e('span','',T(...names[id])),e('small','',current===id?T('مجهّز','Equipped'):T('معاينة','Preview')));
   card.addEventListener('click',()=>{
    preview.replaceChildren(avatar(p,id),e('b','',T(...names[id])));
    const apply=button(id==='none'?T('إزالة التأثير','Remove effect'):T('تجهيز التأثير','Equip effect'),'cl236-action');
-   apply.disabled=current===id;
-   apply.onclick=()=>equip(id,status);preview.append(apply);
+   apply.disabled=current===id||Boolean(window.classoraArena?.catalog?.[id]?.requiresStyleSync&&!window.classoraPublicStyleReady);
+   apply.onclick=()=>equip(id,status);preview.append(apply);window.ClassoraProfileScenes?.play(preview,id);
    note.textContent=T('معاينة فقط، التغيير ينحفظ لما تضغط تجهيز.','Preview only. Equip to save this change.');
   });grid.append(card)
  }
@@ -86,13 +89,13 @@ function settings(){
  const shop=button(T('متجر XP','XP shop'),'cl236-action');shop.onclick=()=>{$('closeSettingsModal')?.click();window.classoraSocialGarage?.openShop?.()};
  const gif=button(T('اختيار صورة GIF','Choose a GIF avatar'),'cl236-action');gif.onclick=()=>window.classoraGifStudio?.open?.();
  const close=button(T('تم · إغلاق التخصيص','Done · close'),'cl236-secondary');close.onclick=()=>{section.open=false;summary.focus()};
- actions.append(shop,gif,close);body.append(actions,status);section.append(body);
+ const replay=button(T('معاينة فتح البروفايل','Preview profile opening'),'cl236-secondary');replay.onclick=()=>window.ClassoraProfileScenes?.play(preview,current);actions.append(shop,gif,replay,close);body.append(actions,status);section.append(body);
 }
 function sync(){if(!user()){$('cl228FxSettings')?.remove();localEffects();return}localEffects();if($('settingsModal')?.classList.contains('open'))settings()}
 function init(){
  const modal=$('settingsModal');if(modal)new MutationObserver(()=>{if(modal.classList.contains('open'))sync()}).observe(modal,{attributes:true,attributeFilter:['class']});
  new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
- for(const event of ['classora-auth-settled','classora:arena-shop-updated','classora:profile-video-changed'])document.addEventListener(event,sync);
+ for(const event of ['classora-auth-settled','classora:arena-shop-updated','classora:profile-video-changed','classora:public-style-status'])document.addEventListener(event,sync);
  window.addEventListener('pageshow',sync);sync();
 }
 window.ClassoraProfileEffects={decorate,avatar,names,refresh:sync};

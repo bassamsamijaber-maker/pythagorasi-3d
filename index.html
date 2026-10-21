@@ -91,6 +91,7 @@ body.classora-intro-active{overflow:auto!important}
 <style id="classora-hide-old-upgrade">#lobbyMembershipBtn,#classoraSettingsMembershipLink{display:none!important}</style>
 <link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
 <script src="./assets/classora-locales-v140.js?v=166"></script>
+<script src="./assets/classora-style-i18n-v237.js?v=237"></script>
 <script src="./assets/classora-quest-i18n-v233.js?v=235"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 
@@ -127,11 +128,13 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-quest-map-v223.css?v=231">
 <script type="module" src="./assets/classora-quest-map-v223.js?v=236"></script>
 <link rel="stylesheet" href="./assets/classora-arena-shop-v227.css?v=229">
-<script type="module" src="./assets/classora-arena-shop-v227.js?v=236"></script>
+<script type="module" src="./assets/classora-arena-shop-v227.js?v=237"></script>
 <link rel="stylesheet" href="./assets/classora-fx-settings-v228.css?v=229">
-<script defer src="./assets/classora-fx-settings-v228.js?v=236"></script>
+<script defer src="./assets/classora-fx-settings-v228.js?v=237"></script>
 <link rel="stylesheet" href="./assets/classora-polish-v232.css?v=236">
-<script type="module" src="./assets/classora-profile-studio-v232.js?v=236"></script>
+<script type="module" src="./assets/classora-profile-studio-v232.js?v=237"></script>
+<link rel="stylesheet" href="./assets/classora-style-v237.css?v=237">
+<script defer src="./assets/classora-profile-scenes-v237.js?v=237"></script>
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -1528,7 +1531,7 @@ body.classora-intro-active{overflow:auto!important}
         <b id="settingsCurrentName" data-no-translate>—</b>
         <span id="settingsLoginName">اسم الدخول: —</span>
         <div class="settings-account-meta">
-          <span>Profile ID: <b id="settingsProfileId" class="numeric-latin">----------</b></span>
+          <span><span>معرّف الملف:</span> <b id="settingsProfileId" class="numeric-latin">----------</b></span>
           <button class="mini-copy-btn" id="copyProfileIdBtn" type="button">Copy ID</button>
         </div>
         <span id="settingsRememberedLogin">تسجيل الدخول محفوظ لغاية: —</span>
@@ -1683,7 +1686,7 @@ body.classora-intro-active{overflow:auto!important}
           <div class="chat-thread-head">
             <button id="chatPersonMenuBtn" type="button" aria-expanded="false" aria-controls="chatPersonMenu"><span id="chatPersonPhoto"></span><span><b id="chatThreadName" data-no-translate>—</b><small id="chatThreadRole">—</small><span id="chatStreak" title="UTC"></span></span></button>
             <button class="exam-secondary" id="chatBackContactsBtn" type="button">← الأشخاص</button>
-            <div id="chatPersonMenu" hidden><button id="chatPersonPhotoBtn" type="button">عرض الصورة</button><div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button></div></div>
+            <div id="chatPersonMenu" hidden><button id="chatPersonPhotoBtn" type="button">عرض الملف الشخصي</button><div class="chat-social-tools"><button id="chatFavoriteBtn" class="exam-secondary">☆ أفضل صديق</button><button id="chatNicknameBtn" class="exam-secondary">لقب خاص</button><button id="chatBlockBtn" class="exam-secondary">حظر الخاص</button><button id="chatDeleteBtn" class="exam-secondary">حذف من عندي</button><button id="chatLeaveGroupBtn" class="exam-secondary hidden">مغادرة المجموعة</button><button class="exam-secondary" id="chatReportUserBtn">🚩 إبلاغ</button></div></div>
           </div><div id="chatFollowNotice" class="chat-follow-notice" role="status"></div><button id="chatOlderBtn" class="exam-secondary hidden">رسائل أقدم</button><input id="chatMessageSearch" type="search" placeholder="ابحث في الرسائل المحمّلة…"><div class="chat-messages" id="chatMessages"></div><div id="chatTyping" class="chat-typing hidden"><span>يكتب الآن</span><i></i><i></i><i></i></div><div id="chatDeliveryStatus" class="chat-delivery" role="status"></div><div id="chatMediaDraft" class="chat-delivery"></div><div class="chat-media-tools"><button id="chatPhotoBtn" class="exam-secondary">📷 صورة</button><button id="chatVoiceBtn" class="exam-secondary">🎙️ رسالة صوتية</button><button id="chatDiscardMediaBtn" class="exam-secondary hidden">إلغاء المرفق</button><input id="chatPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
           <div class="chat-compose"><div id="chatRecordingPanel" hidden></div><div id="chatVoicePreview" hidden></div>
             <textarea rows="1" id="chatMessageInput" maxlength="2000" placeholder="اكتب رسالة..."></textarea>
@@ -2866,21 +2869,39 @@ async function saveTeacherLoginAliases(profile,user){
   await saveTeacherLoginAlias(email,user,email);
 }
 
-async function syncPublicProfile(profile=window.PythagorasiUser,user=auth.currentUser){
-  if(!user||!profile)return;
-  const displayName=String(profile.displayName||user.displayName||"مستخدم").trim().slice(0,40);
-  const role=isTeacherLikeProfile(profile)?"teacher":"student";
-  const publicData={
-    uid:user.uid,
-    displayName,
-    searchName:normalizeStudentNameKey(displayName),
-    role,
-    profileId:String(profile.profileId||""),
-    photoData:String(profile.photoData||"").slice(0,140000),
-    updatedAt:serverTimestamp()
-  };
-  try{await setDoc(doc(db,"publicProfiles",user.uid),publicData,{merge:true})}catch(err){console.warn("public profile sync",err)}
+function classoraSetPublicStyleReady(ready){
+ if(window.classoraPublicStyleReady===ready)return;
+ window.classoraPublicStyleReady=ready;
+ window.classoraPublicStyleOwner=auth.currentUser?.uid||"";
+ document.dispatchEvent(new Event('classora:public-style-status'));
 }
+async function syncPublicProfile(profile=window.PythagorasiUser,user=auth.currentUser){
+ if(!user||!profile||user.uid!==profile.uid||user.uid!==auth.currentUser?.uid)return false;
+ const displayName=String(profile.displayName||user.displayName||"مستخدم").trim().slice(0,40);
+ const publicData={uid:user.uid,displayName,searchName:normalizeStudentNameKey(displayName),
+  role:isTeacherLikeProfile(profile)?"teacher":"student",profileId:String(profile.profileId||""),
+  photoData:String(profile.photoData||"").slice(0,140000),updatedAt:serverTimestamp()};
+ try{
+  await setDoc(doc(db,"publicProfiles",user.uid),{...publicData,profileEffect:String(profile.questShop?.equipped||"none")},{merge:true});
+  if(auth.currentUser?.uid===user.uid)classoraSetPublicStyleReady(true);
+  return true;
+ }catch(err){
+  if(auth.currentUser?.uid===user.uid)classoraSetPublicStyleReady(false);
+  // Keep name and GIF updates compatible while the new public style rules are being deployed.
+  try{await setDoc(doc(db,"publicProfiles",user.uid),publicData,{merge:true})}catch(error){console.warn("public profile sync",error)}
+  return false;
+ }
+}
+document.addEventListener('classora-auth-settled',()=>{if(window.classoraPublicStyleOwner!==auth.currentUser?.uid)classoraSetPublicStyleReady(false)});
+window.classoraWatchPublicProfile=(uid,onChange,onError)=>{
+ if(!auth.currentUser||typeof uid!=="string"||!uid||uid.includes('/')){onError?.();return ()=>{}};
+ return onSnapshot(doc(db,'publicProfiles',uid),snap=>{
+  if(!snap.exists()){onChange(null);return}
+  const p=snap.data();onChange({uid,displayName:String(p.displayName||'').slice(0,40),
+   profileId:String(p.profileId||'').slice(0,10),role:p.role==='teacher'?'teacher':'student',
+   photoData:String(p.photoData||'').slice(0,140000),profileEffect:String(p.profileEffect||'none')});
+ },onError);
+};
 
 async function securityPhraseHashV2(uid,phrase){
  const normalized=normalizeSecurityPhrase(phrase);if(!uid||normalized.length<4)return "";
@@ -2917,7 +2938,7 @@ function applyAvatar(el,profile,name){
     el.classList.remove("has-photo");
     el.textContent=(String(name||"؟").trim()[0]||"؟").toUpperCase();
   }
-  if(profile?.uid&&profile.uid===window.PythagorasiUser?.uid)window.ClassoraProfileEffects?.decorate(el,profile.questShop?.equipped||"none");
+  window.ClassoraProfileEffects?.decorate(el,profile?.uid===window.PythagorasiUser?.uid?(profile?.questShop?.equipped||"none"):(profile?.profileEffect||"none"));
 }
 function updateAssistantLabels(){
   const fixedName=currentUILanguage==="en"?"Classora Assistant":"مساعد كلاسورا";
@@ -9484,6 +9505,7 @@ const PYTHAGORAS_ADDITIONAL_UI_PAIRS=[["الوضع النهاري","Day mode"],[
 for(const [ar,en] of PYTHAGORAS_ADDITIONAL_UI_PAIRS){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
 uiExactTranslations.set("حاول مجددًا","Try again");
 uiExactTranslations.set("دخول بحساب Google","Sign in with Google");
+for(const [ar,en] of (window.ClassoraStyleTranslations?.pairs||[])){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
 const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
 function uiDynamicEnglish(text){
   let s=latinDigits(text).replace(/،/g,",");
@@ -9837,8 +9859,8 @@ function classoraRefreshNameCooldown(){
   note.dataset.locked=String(locked);
   const en=currentUILanguage==="en";
   note.textContent=locked?
-    (en?"Name changes are limited to once every 7 days.":"تغيير الاسم متاح مرة كل 7 أيام فقط."):
-    (en?"You can change your display name once every 7 days.":"بتقدر تغيّر اسمك مرة كل 7 أيام.");
+    (en?window.ClassoraLocale.t("Name changes are limited to once every 7 days."):"تغيير الاسم متاح مرة كل 7 أيام فقط."):
+    (en?window.ClassoraLocale.t("You can change your display name once every 7 days."):"بتقدر تغيّر اسمك مرة كل 7 أيام.");
 }
 function refreshSettingsUI(){
   const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
@@ -14658,7 +14680,7 @@ async function runDirectAdminSupportAction(ticket,action,targetUid){
 function setupChatPersonMenu(){
  const menu=document.getElementById('chatPersonMenu'),button=document.getElementById('chatPersonMenuBtn');
  button.onclick=()=>{const open=menu.hidden;menu.hidden=!open;button.setAttribute('aria-expanded',String(open));if(open){const p=activeChatPerson;applyAvatar(document.getElementById('chatPersonPhoto'),p,conversationName(p));document.getElementById('chatPersonPhotoBtn').classList.toggle('hidden',p.kind==='support'||p.kind==='group')}};
- document.getElementById('chatPersonPhotoBtn').onclick=async()=>{const p=activeChatPerson;if(!p)return;const modal=supportDialog(conversationName(p));let profile=p;try{const snap=await getDoc(doc(db,'publicProfiles',p.uid));if(snap.exists())profile={...p,...snap.data()}}catch{}if(!modal.dialog.isConnected)return;const photo=profile.photoData||profile.photoURL;const node=document.createElement(photo?'img':'div');node.className='chat-profile-photo';if(photo&&/^(data:image\/(png|jpeg|webp);base64,|https:\/\/)/i.test(photo)){node.src=photo;node.alt=conversationName(p)}else node.textContent=conversationName(p).slice(0,1);modal.body.append(node)};
+ document.getElementById('chatPersonPhotoBtn').onclick=()=>{const p=activeChatPerson;if(p&&p.kind!=='group'&&p.kind!=='support')window.ClassoraProfileScenes?.openPublic(p.uid)};
  document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target)&&!button.contains(e.target)){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
  menu.addEventListener('click',e=>{if(e.target.closest('button')){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
  button.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.hidden=true;button.setAttribute('aria-expanded','false')}});
@@ -14819,7 +14841,7 @@ function showChatThread(p){
 }
 function updateConversationTools(){
  const p=activeChatPerson;if(!p)return;const group=p.kind==='group',support=p.kind==='support',key=conversationKey(p),pref=chatPrefs[key]||{};
- applyAvatar(document.getElementById('chatPersonPhoto'),p,conversationName(p));document.getElementById('chatPersonPhotoBtn').textContent=chatText('عرض الصورة','View photo');document.getElementById('chatThreadName').textContent=conversationName(p);document.getElementById('chatThreadName').toggleAttribute('data-no-translate',!support);
+ applyAvatar(document.getElementById('chatPersonPhoto'),p,conversationName(p));document.getElementById('chatPersonPhotoBtn').textContent=chatText('عرض الملف الشخصي','View profile');document.getElementById('chatThreadName').textContent=conversationName(p);document.getElementById('chatThreadName').toggleAttribute('data-no-translate',!support);
  document.getElementById('chatThreadRole').textContent=support?supportLanguageNotice():group?chatText('مجموعة • كود الانضمام: ','Group • Join code: ')+p.groupId:chatRoleLabel(p.role);
  const blocked=!group&&!support&&chatBlocks.has(p.uid);
  document.getElementById('chatFavoriteBtn').textContent=pref.favorite?chatText('⭐ من المفضّلين','⭐ Favorite'):chatText('☆ أفضل صديق','☆ Best friend');
@@ -14942,6 +14964,7 @@ function renderChatPeople(host,rows){
     avatar.className="chat-contact-avatar";
     if(p.photoData)avatar.style.backgroundImage='url("'+String(p.photoData).replace(/"/g,"%22")+'")';
     else avatar.textContent=String(p.displayName||"?")[0]||"?";
+    window.ClassoraProfileEffects?.decorate(avatar,p.profileEffect||"none");
     const info=document.createElement("span");
     const name=document.createElement("b");name.textContent=(chatPrefs[conversationKey(p)]?.favorite?"⭐ ":"")+conversationName(p);name.dir="auto";name.setAttribute('data-no-translate','');name.title=name.textContent;
     const meta=document.createElement("small");
@@ -18529,7 +18552,8 @@ window.classoraClaimQuestXP=async function(value){
 const arenaShopCatalog={
  flame:{cost:70},lightning:{cost:110},ice:{cost:135},
  plasma:{cost:175},rocket:{cost:230},comet:{cost:300},
- champion:{cost:180},starlight:{cost:95},aura:{cost:260}
+ champion:{cost:180},starlight:{cost:95},aura:{cost:260},
+ supernova:{cost:350,requiresStyleSync:true},vortex:{cost:420,requiresStyleSync:true},tatreez:{cost:280,requiresStyleSync:true}
 };
 function classoraArenaAuth(){
  if(!auth.currentUser||!window.PythagorasiUser||auth.currentUser.uid!==window.PythagorasiUser.uid
@@ -18634,7 +18658,7 @@ window.classoraIsSuperAdmin=()=>isSuperAdminProfile();
 async function classoraArenaUnlockAdmin(){
  const p=classoraShopAuth();
  if(!isSuperAdminProfile())throw Error("admin-required");
- const items=Object.keys(arenaShopCatalog),ref=doc(db,"users",auth.currentUser.uid);
+ const items=Object.keys(arenaShopCatalog).filter(id=>!arenaShopCatalog[id].requiresStyleSync||window.classoraPublicStyleReady||p.questShop?.owned?.includes(id)),ref=doc(db,"users",auth.currentUser.uid);
  const current=p.questShop||{};
  const next={spent:0,owned:items,equipped:items.includes(current.equipped)?current.equipped:"none"};
  await setDoc(ref,{questShop:next,updatedAt:serverTimestamp()},{merge:true});
@@ -18644,6 +18668,7 @@ async function classoraArenaUnlockAdmin(){
 }
 async function classoraArenaBuy(itemId){
  const p=classoraShopAuth(),item=arenaShopCatalog[itemId];
+ if(item?.requiresStyleSync&&!window.classoraPublicStyleReady)throw Error("style-sync-pending");
  if(isSuperAdminProfile())return classoraArenaUnlockAdmin();
  if(!item)throw Error("invalid-item");
  const ref=doc(db,"users",auth.currentUser.uid);
@@ -18661,7 +18686,8 @@ async function classoraArenaBuy(itemId){
  document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
 }
 async function classoraArenaEquip(itemId){
- const p=classoraShopAuth();
+ const p=classoraShopAuth(),actor=auth.currentUser;
+ if(arenaShopCatalog[itemId]?.requiresStyleSync&&!window.classoraPublicStyleReady)throw Error("style-sync-pending");
  const ref=doc(db,"users",auth.currentUser.uid);
  const next=await runTransaction(db,async tx=>{
   const snap=await tx.get(ref),profile=snap.data(),shop=profile?.questShop||{};
@@ -18670,7 +18696,10 @@ async function classoraArenaEquip(itemId){
   tx.update(ref,{questShop:update,updatedAt:serverTimestamp()});
   return update;
  });
- if(window.PythagorasiUser?.uid===p.uid)window.PythagorasiUser={...window.PythagorasiUser,questShop:next};
+ if(window.PythagorasiUser?.uid===p.uid){
+  window.PythagorasiUser={...window.PythagorasiUser,questShop:next};
+  await syncPublicProfile(window.PythagorasiUser,actor);
+ }
  document.dispatchEvent(new Event("classora:arena-shop-updated"));return next;
 }
 
@@ -18827,4 +18856,5 @@ onAuthStateChanged(auth,user=>{
 <script type="module" src="./assets/classora-admin-activity-v184.js?v=184"></script>
 </body>
 </html>
+
 

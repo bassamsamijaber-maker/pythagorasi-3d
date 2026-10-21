@@ -12,7 +12,15 @@ const gifs=[
  ['l41lVT8FpdxCtOOsM','نيون','Neon','colors'],
  ['3oKGzndj7T0i1vii40','مجرة','Galaxy','space'],
  ['Tj4jjaCxXRVSARsUzN','فضاء','Space','space'],
- ['nqh2NNyuwGMhjUK17h','ألوان','Colors','colors']
+ ['nqh2NNyuwGMhjUK17h','ألوان','Colors','colors'],
+ ['OkjZzv2gYjI4KqTItL','روبوت صغير','Little robot','characters'],
+ ['OBqgopTpxXcnN9dIKm','روبوت ديجي','Digi robot','characters'],
+ ['4NtPqIF3UuN17t6NnB','روبوت مرح','Playful robot','characters'],
+ ['3o7abymIcVVfCbAze0','رائد فضاء يرقص','Dancing astronaut','space'],
+ ['wKncAzOchpYZib3Tz4','طفو في الفضاء','Floating in space','space'],
+ ['3ohzdSNImYTQe2YkE0','تحية من الفضاء','Hello from space','space'],
+ ['GmVrwnj2WWeCB13lGv','قطة لطيفة','Cute cat','characters'],
+ ['gHCyzkMBQv2q07dzUq','قطة هادئة','Calm cat','characters']
 ];
 const media=id=>'https://media.giphy.com/media/'+id+'/giphy.gif';
 let dialog=null,objectUrl='',busy=false,selection=null,ready=false,owner='',revision=0;
@@ -39,7 +47,7 @@ function open(){
  const preview=e('div','cl236-gif-preview');
  const photo=e('img','cl236-gif-large');photo.alt=T('معاينة صورة الحساب','Profile photo preview');
  const copy=e('div');copy.append(e('b','',user().displayName||''),e('p','',T('هيك بتبين صورتك. احفظ لما يعجبك الاختيار.','This is how your avatar looks. Save when you are happy with it.')));
- preview.append(photo,copy);dialog.append(preview);
+ copy.firstElementChild.setAttribute('data-no-translate','');preview.append(photo,copy);dialog.append(preview);
  if(user().photoData)photo.src=user().photoData;else photo.hidden=true;
  const status=e('p','cl236-status');status.setAttribute('role','status');
  const save=button(T('حفظ الصورة','Save avatar'),'cl236-action');save.disabled=true;
@@ -57,14 +65,14 @@ function open(){
  const draw=()=>{
   grid.replaceChildren();const query=search.value.trim().toLowerCase();
   external.href='https://giphy.com/search/'+encodeURIComponent(query||'animated-avatar');
-  for(const [id,ar,en,cat] of gifs.filter(row=>(category==='all'||row[3]===category)&&(!query||row.slice(1).join(' ').toLowerCase().includes(query)))){
+  for(const [id,ar,en,cat] of gifs.filter(row=>(category==='all'||row[3]===category)&&(!query||(row.slice(1).join(' ')+' '+T(row[1],row[2])).toLowerCase().includes(query)))){
    const b=button('','cl236-gif-choice'),img=e('img');img.src=media(id);img.alt=T(ar,en);img.loading='lazy';
    img.onerror=()=>{b.disabled=true;b.title=T('تعذر تحميل الصورة','Image unavailable')};
    b.append(img,e('span','',T(ar,en)));b.onclick=()=>{grid.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');choose({url:media(id)})};grid.append(b)
   }
   if(!grid.children.length)grid.append(e('p','cl236-note',T('ما في نتيجة بالمجموعة. جرّب كلمة ثانية أو ابحث على GIPHY.','No match in this collection. Try another word or search GIPHY.')));
  };
- for(const [id,ar,en] of [['all','الكل','All'],['energy','طاقة','Energy'],['space','فضاء','Space'],['colors','ألوان','Colors']]){
+ for(const [id,ar,en] of [['all','الكل','All'],['energy','طاقة','Energy'],['space','فضاء','Space'],['colors','ألوان','Colors'],['characters','شخصيات','Characters']]){
   const tab=button(T(ar,en),'cl236-tab');tab.setAttribute('aria-pressed',String(id===category));
   tab.onclick=()=>{category=id;tabs.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed','false'));tab.setAttribute('aria-pressed','true');draw()};tabs.append(tab)
  }
