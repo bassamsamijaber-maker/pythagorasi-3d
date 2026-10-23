@@ -280,3 +280,14 @@ exports.startMembershipTrial=onCall({cors:['https://classora.study','https://www
   return {expiresAt:expiresAt.toMillis()};
  });
 });
+
+
+// Account holder can invalidate all Firebase refresh tokens. This must be deployed
+// alongside the Firestore device-session rules; it is not deployed by a web push.
+exports.revokeMySessions=onCall({cors:['https://classora.study','https://www.classora.study']},async request=>{
+ const uid=request.auth?.uid;
+ if(!uid||request.auth.token.firebase?.sign_in_provider==='anonymous')throw new HttpsError('unauthenticated','Sign in first.');
+ const {getAuth}=require('firebase-admin/auth');
+ await getAuth().revokeRefreshTokens(uid);
+ return {revoked:true};
+});
