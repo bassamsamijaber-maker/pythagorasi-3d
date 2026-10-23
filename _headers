@@ -12,3 +12,9 @@
 
 /release.json
   Cache-Control: no-store, no-cache, must-revalidate
+
+/subscriptions.html
+  Cache-Control: no-store, no-cache, must-revalidate
+
+/subscriptions
+  Cache-Control: no-store, no-cache, must-revalidate
