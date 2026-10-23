@@ -1,6 +1,6 @@
-const CACHE_NAME="classora-v243-premium-refresh";;
+const CACHE_NAME="classora-v244-responsive-layout-fixes";;
 const APP_SHELL=[
-  "./assets/classora-premium-v243.css?v=243",
+  "./assets/classora-premium-v243.css?v=244",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
