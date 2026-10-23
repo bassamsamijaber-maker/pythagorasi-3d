@@ -61,6 +61,24 @@
 <section class="cl-admin" id="cl-admin" hidden>
  <span class="cl-gold-star" aria-hidden="true">✦</span>
  <div><small>CLASSORA ADMIN · FULL ACCESS</small><h2 id="cl-admin-title">كل مميزات Premium مفتوحة للأدمن</h2><p id="cl-admin-caption">بدون شراء اشتراك. تقدر تستعرض خطط الطلاب والمعلمين والصفوف والمدارس.</p></div>
+ <div id="cl-admin-simulator" class="cl-admin-simulator" hidden data-no-translate>
+   <div class="cl-admin-sim-header">
+     <h3 id="cl-admin-sim-title">معاينة الحسابات التجريبية</h3>
+     <p id="cl-admin-sim-warning">معاينة فقط: لا يتم إنشاء حساب أو تغيير صلاحياتك أو إجراء دفع.</p>
+   </div>
+   <div class="cl-admin-sim-controls">
+     <div class="cl-admin-sim-group" role="group" aria-label="Preview account role">
+       <button type="button" data-sim-role="student" aria-pressed="true">طالب تجريبي</button>
+       <button type="button" data-sim-role="teacher" aria-pressed="false">معلم تجريبي</button>
+     </div>
+     <div class="cl-admin-sim-group" role="group" aria-label="Preview plan">
+       <button type="button" data-sim-tier="free" aria-pressed="true">Free</button>
+       <button type="button" data-sim-tier="plus" aria-pressed="false">Plus</button>
+       <button type="button" data-sim-tier="premium" aria-pressed="false">Premium</button>
+     </div>
+   </div>
+   <p id="cl-admin-sim-status" class="cl-admin-sim-status" role="status"></p>
+ </div>
 </section>
 <section class="cl-pricing" aria-labelledby="cl-plans-heading">
  <div class="cl-section-title"><div><span class="cl-eyebrow" id="cl-plans-label">اختيار الخطة</span><h2 id="cl-plans-heading">اختر اشتراكك المناسب</h2></div><span class="cl-ready" id="cl-beta">الأسعار الأصلية بالشيكل ₪</span></div>
