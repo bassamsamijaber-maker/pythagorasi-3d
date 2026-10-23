@@ -110,7 +110,7 @@ html body #platformLobby .cl250-side-foot{
  html body #platformLobby .cl250-left .cl250-chat-chip{font-size:11px!important;padding:5px 7px!important}
 }
 /* iPad gets normal readable inline content; phone transitions to scrollable chat after first send. */
-@media(max-width:1499px){
+@media(max-width:1279px){
  html body #platformLobby .cl250-left,html body #platformLobby .cl250-right{display:none!important}
 }
 @media(max-width:760px){
