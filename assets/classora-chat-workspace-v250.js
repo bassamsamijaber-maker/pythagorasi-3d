@@ -59,7 +59,7 @@ function update(){
 }
 function reposition(){
  if(!card||!left||!host)return;
- if(window.innerWidth>=1500){if(card.parentElement!==left)left.append(card)}
+ if(window.innerWidth>=1280){if(card.parentElement!==left)left.append(card)}
  else if(card.parentElement!==host)marker.after(card);
 }
 function addChat(){
