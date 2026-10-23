@@ -58,6 +58,25 @@
  <div><b id="cl-account-title">نتحقق من نوع حسابك…</b><p id="cl-account-subtitle">الباقات رح تظهر تلقائيًا حسب صلاحياتك.</p></div>
  <a href="./index.html" id="cl-login" hidden>تسجيل الدخول</a>
 </section>
+<section id="cl-owner-switch" class="cl-owner-switch" hidden data-no-translate aria-label="Admin view options">
+ <div class="cl-owner-switch-copy">
+  <span class="cl-owner-switch-eyebrow">CLASSORA · VIEW MODES</span>
+  <h2 id="cl-owner-switch-title">صفحة الاشتراكات</h2>
+  <p id="cl-owner-switch-sub">تصفّح كل الباقات كأي مستخدم، أو انتقل لواجهة الأدمن.</p>
+ </div>
+ <div class="cl-owner-switch-actions" role="group" aria-label="Display mode">
+  <button type="button" data-admin-view="customer" aria-pressed="true">واجهة المستخدم</button>
+  <button type="button" data-admin-view="admin" aria-pressed="false">واجهة الأدمن</button>
+  <a class="cl-owner-admin-link" id="cl-open-admin-panel" href="./index.html#platformLobby">لوحة الأدمن الأصلية ↗</a>
+ </div>
+</section>
+<section id="cl-owner-catalog" class="cl-owner-catalog" hidden data-no-translate aria-label="All subscription plans">
+ <div class="cl-owner-catalog-head">
+  <div><span class="cl-eyebrow">CLASSORA · ALL PLANS</span><h2 id="cl-owner-catalog-title">كل الباقات بمكان واحد</h2></div>
+  <p id="cl-owner-catalog-note">اختار أي باقة لمشاهدة المميزات وسعرها وتفاصيلها بدون تغيير حسابك.</p>
+ </div>
+ <div class="cl-owner-catalog-grid" id="cl-owner-catalog-grid"></div>
+</section>
 <section class="cl-admin" id="cl-admin" hidden>
  <span class="cl-gold-star" aria-hidden="true">✦</span>
  <div><small>CLASSORA ADMIN · FULL ACCESS</small><h2 id="cl-admin-title">كل مميزات Premium مفتوحة للأدمن</h2><p id="cl-admin-caption">بدون شراء اشتراك. تقدر تستعرض خطط الطلاب والمعلمين والصفوف والمدارس.</p></div>
