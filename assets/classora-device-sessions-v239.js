@@ -46,14 +46,16 @@ function run(app){
  async function revokeAll(){
   if(!uid||!confirm(tr('confirm')))return;
   try{
-   const others=rows.filter(r=>!r.revoked);
+   // Revoke Firebase refresh tokens while this browser is still authenticated.
+   // If the callable has not been deployed, Firestore device flags still work online.
+   try{await httpsCallable(getFunctions(app),'revokeMySessions')({})}catch{}
+   const others=rows.filter(r=>!r.revoked&&r.id!==device);
    for(let i=0;i<others.length;i+=400){
     const batch=writeBatch(db);
     for(const r of others.slice(i,i+400))batch.update(doc(db,'users',uid,'deviceSessions',r.id),{revoked:true,revokedAt:serverTimestamp()});
     await batch.commit();
    }
-   // Stronger global refresh-token revocation is available only after the callable is deployed.
-   try{await httpsCallable(getFunctions(app),'revokeMySessions')({})}catch{}
+   if(rows.some(r=>r.id===device&&!r.revoked))await updateDoc(currentDoc(),{revoked:true,revokedAt:serverTimestamp()});
    await localLogout();
   }catch{state(tr('error'))}
  }
