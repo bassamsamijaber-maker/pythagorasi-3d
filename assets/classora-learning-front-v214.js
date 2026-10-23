@@ -46,6 +46,7 @@ function init(){
  '<div class="cl214-hero-buttons">',
  '<button type="button" class="cl214-primary" data-cl-action="resume">'+art('play')+tag('كمّل تعلّمك','Continue learning')+'</button>',
  '<button type="button" class="cl214-secondary" data-cl-action="exam">'+art('check')+tag('امتحان سريع','Quick exam')+'</button>',
+ '<button type="button" class="cl214-secondary" data-cl-action="assistant">'+art('chat')+tag('اسأل كلاسورا','Ask Classora')+'</button>',
  '</div>',
  '<small class="cl214-last-lesson" id="cl214LastLesson" aria-live="polite"></small>',
  '</div>',
