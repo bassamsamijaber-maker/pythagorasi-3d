@@ -1,0 +1,78 @@
+/* Classora v241 — readable, compact settings. Keep original settings inputs/actions. */
+#settingsModal{--cs241-bg:#091f2b;--cs241-surface:#14313f;--cs241-card:#183747;--cs241-line:#648c9c;--cs241-text:#f4fcff;--cs241-muted:#cbdfe8;--cs241-accent:#93e9d1;--cs241-on:#0c3941}
+#settingsModal .settings-modalbox{background:linear-gradient(145deg,var(--cs241-bg),#112b39)!important;border:1px solid var(--cs241-line)!important;color:var(--cs241-text)!important}
+#settingsModal .modalhead{position:sticky;top:0;z-index:25;background:linear-gradient(110deg,#193c49,#092331)!important;border-bottom:1px solid var(--cs241-line)!important;backdrop-filter:blur(15px)}
+#settingsModal .modalhead h2{color:#fff!important;letter-spacing:0;font-weight:900!important}
+#settingsModal .modalhead .subject-assistant-line{color:#d2e7ee!important;font-size:13px!important}
+#settingsModal .modalhead .close{min-width:44px;min-height:44px;color:#fff!important;border:1px solid #8ebcc7!important}
+#settingsModal .settings-profile-row{background:linear-gradient(130deg,#204453,#102b3a)!important;border:1px solid #6496a5!important;box-shadow:0 15px 30px #05141c60;align-items:flex-start}
+#settingsModal .settings-profile-info{min-width:0;overflow-wrap:anywhere}
+#settingsModal #settingsCurrentName{color:#fff!important;font-weight:900}
+#settingsModal .settings-profile-info :is(span,b){color:#e3f3f6!important}
+#settingsModal :is(.settings-photo-btn,.mini-copy-btn){min-height:42px!important;background:#265264!important;color:#f4fcff!important;border:1px solid #8baebc!important;border-radius:12px!important}
+#settingsModal .classora-settings-shortcuts{margin:16px 20px 0!important;padding:18px!important;background:linear-gradient(130deg,#123543,#163343)!important;border:1px solid #6392a1!important;border-radius:19px!important;color:#f5fdff!important}
+#settingsModal .classora-settings-shortcuts :is(h3,p){color:#edfaff!important;text-shadow:none!important}
+#settingsModal .classora-settings-shortcuts p{color:#cbdfea!important}
+#settingsModal .classora-quick-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:9px!important}
+#settingsModal .classora-quick-grid button{min-width:0;min-height:61px!important;padding:12px 7px!important;border:1px solid #668e9f!important;background:#214454!important;border-radius:13px!important;color:#f4fcff!important;font-weight:800!important;line-height:1.5;box-shadow:none!important;overflow-wrap:anywhere}
+#settingsModal .classora-quick-grid button svg{stroke:#c5f9e7!important;fill:none}
+#settingsModal .classora-quick-grid button:focus-visible{outline:3px solid #ffc777!important;outline-offset:2px!important}
+#settingsModal .cl241-settings-nav{margin:16px 20px 0;background:linear-gradient(125deg,#123a44,#153240);border:1px solid #6a9baa;border-radius:18px;padding:17px;color:#fff}
+#settingsModal .cl241-settings-nav-header{display:flex;align-items:flex-start;justify-content:space-between;gap:13px;flex-wrap:wrap;margin-bottom:12px}
+#settingsModal .cl241-settings-nav h3{font-size:17px;font-weight:900;color:#fff!important;margin:0 0 4px}
+#settingsModal .cl241-settings-nav p{font-size:12px;line-height:1.7;color:#d1e6ec!important;margin:0}
+#settingsModal .cl241-settings-nav-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#settingsModal .cl241-settings-nav-grid button{font:inherit;font-size:13px;line-height:1.5;font-weight:850;color:#ecfafd!important;background:#235263;border:1px solid #7ba9b6;min-height:45px;padding:8px;border-radius:12px;cursor:pointer;touch-action:manipulation}
+#settingsModal .cl241-settings-nav-grid button:hover{background:#326c74}
+#settingsModal .cl241-settings-nav-grid button:focus-visible{outline:3px solid #ffddab;outline-offset:2px}
+#settingsModal .cl241-settings-nav-grid button.cl241-nav-admin{background:#483e62;color:#fff5de!important;border-color:#cbb5db}
+#settingsModal .settings-grid{align-items:stretch!important;gap:14px!important}
+#settingsModal .settings-card{background:linear-gradient(148deg,var(--cs241-card),var(--cs241-surface))!important;border:1px solid var(--cs241-line)!important;border-radius:18px!important;box-shadow:0 8px 30px #04121c3b!important;gap:11px!important}
+#settingsModal .settings-card h3{font-size:17px!important;color:var(--cs241-text)!important;font-weight:900!important;line-height:1.5!important}
+#settingsModal .settings-card :is(.settings-note,p,small){color:var(--cs241-muted)!important;line-height:1.75!important;text-shadow:none!important}
+#settingsModal .settings-card :is(input:not([type="checkbox"]):not([type="radio"]),textarea,select){color:var(--cs241-text)!important;background:var(--cs241-bg)!important;border:1px solid var(--cs241-line)!important;border-radius:12px!important;min-height:46px!important;font-size:16px!important;opacity:1!important}
+#settingsModal .settings-card :is(input,textarea)::placeholder{color:var(--cs241-muted)!important;opacity:.85!important}
+#settingsModal .settings-card :is(button.exam-secondary,button.apply,a.settings-link-button){color:var(--cs241-text)!important;background:#285264!important;border:1px solid #76a7b6!important;min-height:44px!important;border-radius:12px!important;font-size:13px!important;font-weight:850!important}
+#settingsModal .settings-choice-row{gap:7px!important}
+#settingsModal .settings-choice-row button{flex:1 1 90px!important;min-width:0!important}
+#settingsModal .settings-toggle{background:#1d4250!important;color:var(--cs241-text)!important;border:1px solid var(--cs241-line)!important;font-weight:750!important}
+#settingsModal .settings-card :is(button,a):focus-visible,#settingsModal .settings-card :is(input,select,textarea):focus-visible{outline:3px solid #ffd8a5!important;outline-offset:2px!important}
+#settingsModal .settings-danger-zone{border-color:var(--cs241-line)!important}
+#settingsModal #settingsLogoutBtn{background:#284c5b!important;color:#fff!important;border:1px solid #84b2bf!important}
+#settingsModal #deleteAccountBtn{background:#5d2636!important;border:1px solid #cb8290!important;color:#fff1f1!important}
+#settingsModal .cl239-sessions,#settingsModal .cl240-owner{margin-inline:20px!important;color:var(--cs241-text)!important}
+#settingsModal .cl239-sessions :is(h3,p,strong,small),#settingsModal .cl240-owner :is(h3,p,small){color:inherit!important}
+#settingsModal .settings-card.hidden,#settingsModal [hidden]{display:none}
+body:is(.light,[data-classora-theme="morning"]) #settingsModal{--cs241-bg:#f6fbff;--cs241-surface:#eaf3f8;--cs241-card:#fff;--cs241-line:#a6bcc9;--cs241-text:#193949;--cs241-muted:#385b69;--cs241-accent:#0a6571;--cs241-on:#fff}
+body[data-classora-theme="embroidery"] #settingsModal{--cs241-bg:#fff9f7;--cs241-surface:#fff0ee;--cs241-card:#fffdfb;--cs241-line:#c39eab;--cs241-text:#432739;--cs241-muted:#624757;--cs241-accent:#8e3b59;--cs241-on:#fff}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-modalbox{background:var(--cs241-bg)!important;color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .modalhead{background:var(--cs241-surface)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .modalhead :is(h2,.subject-assistant-line){color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .modalhead .close{color:var(--cs241-text)!important;border-color:var(--cs241-line)!important;background:var(--cs241-card)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-profile-row{background:var(--cs241-surface)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-profile-info :is(span,b),body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal #settingsCurrentName{color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(.settings-photo-btn,.mini-copy-btn){color:var(--cs241-text)!important;background:var(--cs241-card)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(.classora-settings-shortcuts,.cl241-settings-nav){background:var(--cs241-surface)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(.classora-settings-shortcuts,.cl241-settings-nav) :is(h3,p){color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(.classora-quick-grid,.cl241-settings-nav-grid) button{background:var(--cs241-card)!important;color:var(--cs241-text)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card{background:var(--cs241-card)!important;color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card :is(input:not([type="checkbox"]):not([type="radio"]),textarea,select){background:var(--cs241-bg)!important;color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-card :is(button.exam-secondary,button.apply,a.settings-link-button){background:var(--cs241-surface)!important;color:var(--cs241-text)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .settings-toggle{color:var(--cs241-text)!important;background:var(--cs241-surface)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal :is(.cl239-sessions,.cl240-owner){background:var(--cs241-card)!important;color:var(--cs241-text)!important;border-color:var(--cs241-line)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal #settingsLogoutBtn{background:var(--cs241-surface)!important;color:var(--cs241-text)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal #deleteAccountBtn{background:#fbe9e8!important;color:#8d263f!important;border-color:#c78f9a!important}
+@media(max-width:900px){#settingsModal .classora-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:700px){
+ #settingsModal .settings-modalbox{width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important;border-radius:17px!important}
+ #settingsModal .modalhead{padding:12px 14px!important}
+ #settingsModal .settings-profile-row{margin:12px 12px 0!important}
+ #settingsModal .cl241-settings-nav,#settingsModal .classora-settings-shortcuts{margin:13px 12px 0!important;padding:13px!important}
+ #settingsModal .cl241-settings-nav-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #settingsModal .classora-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #settingsModal .settings-grid{margin:13px 12px 0!important;gap:10px!important}
+ #settingsModal .settings-card{padding:15px!important}
+ #settingsModal .cl239-sessions,#settingsModal .cl240-owner{margin-inline:12px!important}
+ #settingsModal .classora-quick-grid button{min-height:53px!important;padding:9px 6px!important}
+}
+@media(max-width:375px){#settingsModal .settings-profile-row{flex-wrap:wrap}.cl241-settings-nav-grid{grid-template-columns:1fr 1fr}}
