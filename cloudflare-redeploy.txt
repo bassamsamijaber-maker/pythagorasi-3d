@@ -1,2 +1,6 @@
 Classora Cloudflare Pages production redeploy trigger — 2026-10-16
 Release V166: fix blank return from periodic table, enable scrolling and exit/navigation for mobile privacy/terms, localize lobby/teacher/student panels in eight languages, and refresh service worker cache.
+
+2026-10-23 — Redeploy trigger after repository visibility was toggled private/public.
+Restore public subscriptions.html route and make subscription-page back/logo/home open the signed-in lobby without the welcome splash.
+Check Pages production branch main and deployment output root if /subscriptions continues to return 404.
