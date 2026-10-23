@@ -1,4 +1,4 @@
-import './classora-settings-polish-v241.js?v=241';
+import './classora-settings-polish-v241.js?v=242';
 import './classora-member-hub-v239.js?v=239';
 import './classora-device-sessions-v239.js?v=239';
 import {getApps} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
