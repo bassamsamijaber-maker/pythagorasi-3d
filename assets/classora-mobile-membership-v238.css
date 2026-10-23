@@ -108,3 +108,30 @@ body:is(.light,[data-classora-theme=morning]) .cl239-launch{background:#146274;c
  .cl239-device-item{align-items:flex-start}.cl239-device-logout{flex:0 0 auto}
 }
 @media(prefers-reduced-motion:reduce){.cl239-overlay,.cl239-panel{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* v239 final pass: actual chat palette overrides (earlier chat layers use !important). */
+body:is(.light,[data-classora-theme="morning"]) #chatModal{--cl239-chat-bg:#f5fbff;--cl239-chat-card:#e6f2f8;--cl239-chat-fg:#19394c;--cl239-chat-border:#a2c3d3;--cl239-chat-mut:#4b6877;--cl239-chat-own:#146b78}
+body[data-classora-theme="embroidery"] #chatModal{--cl239-chat-bg:#fffaf6;--cl239-chat-card:#f8ede7;--cl239-chat-fg:#452d38;--cl239-chat-border:#c7a0ae;--cl239-chat-mut:#72505e;--cl239-chat-own:#8d3454}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal .classora-chat-box,
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(.chat-contacts-pane,.chat-thread-pane,.chat-search-wrap,.chat-thread-head,.chat-compose,.chat-media-tools){background:var(--cl239-chat-bg)!important;color:var(--cl239-chat-fg)!important;border-color:var(--cl239-chat-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(.chat-contact,.chat-bubble.theirs,.chat-person-menu,.chat-group-actions .exam-secondary){background:var(--cl239-chat-card)!important;color:var(--cl239-chat-fg)!important;border-color:var(--cl239-chat-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(.chat-contact b,.chat-thread-head b,.chat-contact-section-title,.chat-bubble.theirs,.chat-bubble.theirs *,#chatThreadName,#chatThreadRole){color:var(--cl239-chat-fg)!important;text-shadow:none!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(.chat-contact small,.chat-thread-head small,.chat-thread-empty){color:var(--cl239-chat-mut)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(#chatPeopleSearch,#chatMessageSearch,#chatMessageInput){background:#fff!important;color:var(--cl239-chat-fg)!important;border:1px solid var(--cl239-chat-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal :is(#chatPeopleSearch,#chatMessageSearch,#chatMessageInput)::placeholder{color:var(--cl239-chat-mut)!important;opacity:1}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal #chatMessages{background:var(--cl239-chat-card)!important;color:var(--cl239-chat-fg)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal .chat-bubble.mine{background:var(--cl239-chat-own)!important;color:#fff!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal .modalhead{background:var(--cl239-chat-card)!important;border-color:var(--cl239-chat-border)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal .modalhead :is(h2,p,small,.subject-assistant-line){color:var(--cl239-chat-fg)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #chatModal .cl239-launch{background:var(--cl239-chat-own)!important;color:#fff!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .cl239-sessions{background:var(--cl239-paper,#f1f8fa)!important;color:var(--cl237-text,#173849)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .cl239-device-item{color:var(--cl237-text,#173849)!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) #settingsModal .cl239-sessions button{background:#fff!important;color:#173849!important;border-color:#99b9c9!important}
+body[data-classora-theme="embroidery"] #settingsModal .cl239-sessions button{background:#fff6f3!important;color:#682943!important;border-color:#bc8fa2!important}
+@media(max-width:700px){
+ #chatModal .classora-chat-box{width:calc(100vw - 12px)!important;max-width:none!important;height:calc(var(--chat-viewport-height,100dvh) - 68px)!important;max-height:calc(var(--chat-viewport-height,100dvh) - 68px)!important;min-height:320px}
+ #chatModal .chat-compose{padding-bottom:max(10px,env(safe-area-inset-bottom))!important}
+ #chatModal .chat-bubble{max-width:min(90%,560px)!important;overflow-wrap:anywhere}
+ #chatModal #chatMessageInput{font-size:16px!important}
+}
