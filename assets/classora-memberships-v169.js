@@ -128,7 +128,7 @@ function price(num){
  return "₪" + new Intl.NumberFormat("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(num)||0);
 }
 function minSeats(){return state.kind==="class"?35:state.kind==="school"?55:0;}
-function extraSeats(){return Math.max(0,state.seats-minSeats());}
+function extraSeats(){const min=minSeats();return min?Math.max(0,state.seats-min):0;}
 function total(){
  if(!state.tier)return 0;
  const fallback=prices[state.kind][state.tier][state.period];
@@ -205,7 +205,7 @@ function render(){
    (state.lang==="ar"?"منحة لغاية ":"Gift until ")+
    new Date(gift.expiresAt.toMillis()).toLocaleDateString(state.lang==="ar"?"ar":"en-US")):"";
  put("cl-account-subtitle",state.account?t("checked")+state.account.name+giftLabel:t("guestMessage"));
- put("cl-account-icon",state.account?.admin?"✦":state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
+ put("cl-account-icon",state.account?.admin&&state.adminView==="admin"?"✦":state.account?.admin?(state.kind==="teacher"?"T":state.kind==="student"?"S":"C"):state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
  const admin=!!state.account?.admin;
  const ownerPreview=admin&&state.adminView==="admin";
