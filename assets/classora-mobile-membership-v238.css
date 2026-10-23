@@ -135,3 +135,32 @@ body[data-classora-theme="embroidery"] #settingsModal .cl239-sessions button{bac
  #chatModal .chat-bubble{max-width:min(90%,560px)!important;overflow-wrap:anywhere}
  #chatModal #chatMessageInput{font-size:16px!important}
 }
+
+
+/* v240: verified owner subscription simulator and cancellation card */
+#cl-admin-simulator[hidden],#cl240OwnerCard[hidden],.cl240-owner-danger[hidden]{display:none!important}
+#cl-admin{flex-wrap:wrap}
+#cl-admin-simulator{flex:1 0 100%;box-sizing:border-box;margin-top:16px;padding:18px;border-radius:17px;border:1px solid #bb9be0;background:linear-gradient(140deg,#241d38,#1b3542);color:#f7faff;text-align:start}
+#cl-admin-simulator :is(h3,p){color:#f7faff!important;text-shadow:none!important;margin:0}
+#cl-admin-simulator h3{font-weight:900;font-size:18px}
+#cl-admin-simulator #cl-admin-sim-warning{font-size:13px;line-height:1.7;color:#e2def9!important;margin:5px 0 13px}
+.cl-admin-sim-controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.cl-admin-sim-group{display:flex;flex-wrap:wrap;gap:7px;min-width:0}
+#cl-admin-simulator button{font:inherit;font-size:14px;font-weight:850;min-height:44px;padding:10px 17px;border:1px solid #a2b1c5;border-radius:12px;background:#324458;color:#fff;cursor:pointer;touch-action:manipulation}
+#cl-admin-simulator button[aria-pressed="true"]{background:#e6daff;color:#261b3b;border-color:#e6daff;box-shadow:0 0 0 2px #a98fdb55}
+#cl-admin-sim-status{margin:13px 0 0!important;padding:11px 13px;background:#d3fff116;border:1px solid #a1e3da6d;border-radius:12px;font-weight:750;font-size:14px}
+.cl240-owner{box-sizing:border-box;margin:16px 0;border:1px solid #81b2c1;background:linear-gradient(125deg,#173345,#213246);color:#f8fcff;padding:17px;border-radius:17px;line-height:1.7}
+.cl240-owner :is(h3,p,small){color:inherit!important;text-shadow:none!important}
+.cl240-owner h3{font-size:18px;font-weight:900;margin:0 0 6px}.cl240-owner p{margin:0 0 10px;font-size:13px}
+.cl240-owner-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cl240-owner-row input{flex:1 1 165px;min-width:0;box-sizing:border-box;border:1px solid #8eb6c7;background:#f9fdff;color:#1a3448;font:inherit;font-size:16px;padding:10px;border-radius:11px}
+.cl240-owner button{font:inherit;min-height:44px;border-radius:11px;padding:10px 13px;border:1px solid #97d3c7;background:#1d7266;color:#fff;cursor:pointer;font-weight:800}
+.cl240-owner .cl240-owner-danger{background:#fff0f0;color:#902139;border-color:#e6a1ae;margin:7px 0 10px}
+.cl240-owner-status{font-weight:750;margin:10px 0!important;overflow-wrap:anywhere}
+.cl240-owner small{display:block;font-size:12px;color:#d6eaf3!important}
+body:is(.light,[data-classora-theme="morning"]) .cl240-owner{background:#edf8fc!important;color:#173649!important;border-color:#a2c2d2!important}
+body[data-classora-theme="embroidery"] .cl240-owner{background:#fff1ee!important;color:#482c3c!important;border-color:#bd91a1!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl240-owner :is(h3,p,small){color:inherit!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl240-owner button{background:#175f66!important;color:#fff!important}
+body:is(.light,[data-classora-theme="morning"],[data-classora-theme="embroidery"]) .cl240-owner .cl240-owner-danger{background:#fff0f1!important;color:#941c39!important}
+@media(max-width:640px){#cl-admin-simulator{padding:13px}.cl-admin-sim-group{width:100%}#cl-admin-simulator button{flex:1 1 auto}.cl240-owner{padding:13px}.cl240-owner-row button{flex:1 1 120px}}
