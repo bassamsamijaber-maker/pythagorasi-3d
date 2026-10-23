@@ -1,6 +1,6 @@
 /* Classora contextual art across real, existing views. No new navigation/buttons. */
 import {classoraTopicArt} from './classora-topic-art-v120.js?v=121';
-import './classora-appearance-v207.js?v=207';
+import './classora-appearance-v207.js?v=243';
 const $=id=>document.getElementById(id);
 let frame=0;
 function refresh(){
@@ -53,3 +53,4 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()
 window.addEventListener('load',schedule);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
 setInterval(()=>{if(!document.hidden)window.classoraHomeV112?.refresh?.()},60*60*1000);
+

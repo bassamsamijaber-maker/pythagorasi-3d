@@ -3,29 +3,26 @@ import './classora-western-digits-v203.js?v=203';
 /* classora appearance v207. Safe, client-side theme and illustrative UI icons. */
 (()=>{
 'use strict';
-const KEY='classora-site-theme', START=Date.parse('2026-10-17T00:00:00+03:00'), END=Date.parse('2026-10-25T00:00:00+03:00');
+const KEY='classora-site-theme';
 const txt={
-ar:['مظهر الموقع','اختار شكل كلاسورا، والتغيير يظهر فورًا بكل الموقع.','الأصلي','الصباحي','التطريز الفلسطيني','وضع التطريز متاح خلال أسبوع التراث حتى نهاية 24 أكتوبر.'],
-en:['Site appearance','Choose a Classora look. Changes appear throughout the site instantly.','Original','Morning','Palestinian embroidery','Embroidery mode is available during heritage week through October 24.'],
-es:['Aspecto del sitio','Elige el diseño de Classora. Los cambios se aplican al instante.','Original','Mañana','Bordado palestino','El modo bordado está disponible hasta el 24 de octubre.'],
-ko:['사이트 테마','클라소라의 테마를 선택하세요. 즉시 전체 사이트에 적용됩니다.','기본','아침','팔레스타인 자수','자수 테마는 10월 24일까지 이용할 수 있습니다.'],
-de:['Website-Darstellung','Wähle einen Classora-Look. Änderungen gelten sofort überall.','Original','Morgen','Palästinensische Stickerei','Der Stickerei-Modus ist bis zum 24. Oktober verfügbar.'],
-it:['Aspetto del sito','Scegli lo stile Classora. Le modifiche si applicano subito.','Originale','Mattina','Ricamo palestinese','Il tema ricamo è disponibile fino al 24 ottobre.'],
-hi:['साइट का रूप','Classora का रूप चुनें। बदलाव पूरी साइट पर तुरंत लागू होंगे।','मूल','सुबह','फ़िलिस्तीनी कढ़ाई','कढ़ाई थीम 24 अक्टूबर तक उपलब्ध है।'],
-tr:['Site görünümü','Classora görünümünü seç. Değişiklik tüm siteye hemen uygulanır.','Orijinal','Sabah','Filistin nakışı','Nakış teması 24 Ekim sonuna kadar kullanılabilir.']
+ar:['مظهر الموقع','اختار شكل كلاسورا، والتغيير يظهر فورًا بكل الموقع.','الأصلي','الصباحي'],
+en:['Site appearance','Choose a Classora look. Changes appear throughout the site instantly.','Original','Morning'],
+es:['Aspecto del sitio','Elige el diseño de Classora. Los cambios se aplican al instante.','Original','Mañana'],
+ko:['사이트 테마','클라소라의 테마를 선택하세요. 즉시 전체 사이트에 적용됩니다.','기본','아침'],
+de:['Website-Darstellung','Wähle einen Classora-Look. Änderungen gelten sofort überall.','Original','Morgen'],
+it:['Aspetto del sito','Scegli lo stile Classora. Le modifiche si applicano subito.','Originale','Mattina'],
+hi:['साइट का रूप','Classora का रूप चुनें। बदलाव पूरी साइट पर तुरंत लागू होंगे।','मूल','सुबह'],
+tr:['Site görünümü','Classora görünümünü seç. Değişiklik tüm siteye hemen uygulanır.','Orijinal','Sabah']
 };
-const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('./classora-appearance-v207.css?v=207',import.meta.url).href;document.head.appendChild(style);
-const motif='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110"><g fill="none" stroke="#a73745" stroke-width="2" opacity=".12"><path d="M15 15l12 12-12 12L3 27zM95 15l12 12-12 12-12-12zM55 55l12 12-12 12-12-12zM15 95l12 12-12 12-12-12z"/><path d="M15 6v42M0 27h39M95 6v42M75 27h35M55 44v46M32 67h46"/></g><g fill="#a73745" opacity=".1"><path d="m55 5 8 8-8 8-8-8zM55 87l8 8-8 8-8-8z"/></g></svg>';
-document.documentElement.style.setProperty('--cl-embroidered-pattern','url("data:image/svg+xml,'+encodeURIComponent(motif)+'")');
+const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('./classora-appearance-v207.css?v=243',import.meta.url).href;document.head.appendChild(style);
 const settingIcon='<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.5"/><path d="M3 12h3m12 0h3M12 3v3m0 12v3M5.7 5.7l2.1 2.1m8.4 8.4 2.1 2.1M18.3 5.7l-2.1 2.1m-8.4 8.4-2.1 2.1"/></svg>';
 const preview={
 original:'<svg viewBox="0 0 64 50" fill="none" aria-hidden="true"><rect x="2" y="3" width="60" height="44" rx="9" fill="#0d2231" stroke="#589c84"/><path d="M10 13h42M10 20h28" stroke="#67deb0" stroke-width="4" stroke-linecap="round"/><rect x="10" y="28" width="19" height="11" rx="3" fill="#173b45"/><rect x="34" y="28" width="19" height="11" rx="3" fill="#173b45"/></svg>',
 morning:'<svg viewBox="0 0 64 50" fill="none" aria-hidden="true"><rect x="2" y="3" width="60" height="44" rx="9" fill="#fff" stroke="#c3d8d2"/><path d="M10 13h42M10 20h28" stroke="#36bd8b" stroke-width="4" stroke-linecap="round"/><rect x="10" y="28" width="19" height="11" rx="3" fill="#e4f4ef"/><rect x="34" y="28" width="19" height="11" rx="3" fill="#e4f4ef"/></svg>',
-embroidery:'<svg viewBox="0 0 64 50" fill="none" aria-hidden="true"><rect x="2" y="3" width="60" height="44" rx="9" fill="#fff7ec" stroke="#b46466"/><path d="M6 12h52" stroke="#a6384a" stroke-width="3" stroke-dasharray="5 3"/><path d="m32 19 10 10-10 10-10-10zM11 27l5 5-5 5-5-5zM53 27l5 5-5 5-5-5z" fill="#b34553"/><path d="M25 22l14 14m0-14L25 36" stroke="#ead1b3" stroke-width="2"/></svg>'
 };
 const lang=()=>{const val=(document.documentElement.lang||'ar').toLowerCase().split('-')[0];return txt[val]||txt.ar};
-const valid=v=>['original','morning','embroidery'].includes(v);
-function getTheme(){let v='original';try{v=localStorage.getItem(KEY)||'original'}catch{}if(!valid(v))v='original';if(v==='embroidery'&&(Date.now()<START||Date.now()>=END)){v='original';try{localStorage.setItem(KEY,v)}catch{}}return v}
+const valid=v=>['original','morning'].includes(v);
+function getTheme(){let v='original';try{v=localStorage.getItem(KEY)||'original'}catch{}if(!valid(v)){v='original';try{localStorage.setItem(KEY,v)}catch{}}return v}
 let ownsLight=false;
 function apply(){const v=getTheme(),body=document.body;if(!body)return;
  if(v==='morning'){if(!body.classList.contains('light')){body.classList.add('light');ownsLight=true}}
@@ -33,7 +30,7 @@ function apply(){const v=getTheme(),body=document.body;if(!body)return;
  if(body.dataset.classoraTheme!==v)body.dataset.classoraTheme=v;
  document.querySelectorAll('#classoraAppearanceSettings [data-cl-theme]').forEach(b=>{const selected=b.dataset.clTheme===v;if(b.getAttribute('aria-pressed')!==String(selected))b.setAttribute('aria-pressed',String(selected))});
 }
-function choose(v){if(!valid(v))return;if(v==='embroidery'&&(Date.now()<START||Date.now()>=END))return;try{localStorage.setItem(KEY,v)}catch{}apply()}
+function choose(v){if(!valid(v))return;try{localStorage.setItem(KEY,v)}catch{}apply()}
 function setText(el,value){if(el&&el.textContent!==value)el.textContent=value}
 function mount(){const root=document.getElementById('settingsModal');if(!root)return;
  const dialog=root.querySelector('.settings-modalbox')||root.querySelector('.modalbox')||root;
@@ -42,7 +39,7 @@ function mount(){const root=document.getElementById('settingsModal');if(!root)re
  const title=document.createElement('div');title.className='cl-appearance-head';title.innerHTML=settingIcon+'<h3 id="classoraAppearanceHeading"></h3>';pane.append(title);
  const desc=document.createElement('p');desc.className='cl-appearance-desc';pane.append(desc);
  const choices=document.createElement('div');choices.className='cl-appearance-options';pane.append(choices);
- for(const name of ['original','morning','embroidery']){const button=document.createElement('button');button.type='button';button.className='cl-appearance-choice';button.dataset.clTheme=name;button.setAttribute('aria-pressed','false');button.innerHTML=preview[name]+'<span></span>';button.addEventListener('click',()=>choose(name));choices.append(button)}
+ for(const name of ['original','morning']){const button=document.createElement('button');button.type='button';button.className='cl-appearance-choice';button.dataset.clTheme=name;button.setAttribute('aria-pressed','false');button.innerHTML=preview[name]+'<span></span>';button.addEventListener('click',()=>choose(name));choices.append(button)}
  const note=document.createElement('p');note.className='cl-appearance-note';pane.append(note);
  }
  const profile=dialog.querySelector('.settings-profile-row')||dialog.querySelector('.settings-grid'),head=dialog.querySelector('.modalhead');
@@ -50,8 +47,8 @@ function mount(){const root=document.getElementById('settingsModal');if(!root)re
  else if(head&&head.parentElement===dialog){if(head.nextElementSibling!==pane)head.after(pane)}
  else if(pane.parentElement!==dialog||dialog.firstElementChild!==pane)dialog.prepend(pane);
  const tr=lang();setText(pane.querySelector('h3'),tr[0]);setText(pane.querySelector('.cl-appearance-desc'),tr[1]);
- pane.querySelectorAll('[data-cl-theme]').forEach((b,i)=>{setText(b.querySelector('span'),tr[i+2]);const expired=b.dataset.clTheme==='embroidery'&&(Date.now()<START||Date.now()>=END);if(b.disabled!==expired)b.disabled=expired});
- setText(pane.querySelector('.cl-appearance-note'),tr[5]);apply();
+ pane.querySelectorAll('[data-cl-theme]').forEach((b,i)=>{setText(b.querySelector('span'),tr[i+2])});
+ pane.querySelector('.cl-appearance-note')?.remove();apply();
 }
 let mountQueued=false;function queueMount(){if(mountQueued)return;mountQueued=true;requestAnimationFrame(()=>{mountQueued=false;mount()})}
 function init(){apply();queueMount();const settings=document.getElementById('settingsModal');if(settings)new MutationObserver(records=>{if(records.some(r=>r.addedNodes.length||r.removedNodes.length))queueMount()}).observe(settings,{childList:true,subtree:true});
@@ -59,7 +56,6 @@ function init(){apply();queueMount();const settings=document.getElementById('set
  document.addEventListener('click',e=>{if(e.target.closest('#settingsModal,[id*="settingsBtn"],[id*="SettingsBtn"]'))queueMount()},{capture:true});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden){apply();queueMount()}});
  window.addEventListener('storage',e=>{if(e.key===KEY)apply()});
- setInterval(()=>{if(Date.now()>=END&&getTheme()==='original'&&document.body?.dataset.classoraTheme==='embroidery')apply()},60000);
  attachIcons();
 }
 /* Replace known decorative emoji icons in navigation and cards with original SVG line art.
@@ -105,3 +101,4 @@ function scan(root){if(root.nodeType!==1)return;if(root.matches?.(targetSelector
 function attachIcons(){for(const sel of ['#platformLobby','#settingsModal','#competitionModal','#examModal','#classoraMobilePageNav']){const root=document.querySelector(sel);if(!root)continue;scan(root);new MutationObserver(records=>{for(const record of records){for(const n of record.addedNodes){if(n.nodeType===1)scan(n)}}}).observe(root,{childList:true,subtree:true})}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+

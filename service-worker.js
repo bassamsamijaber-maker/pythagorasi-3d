@@ -1,5 +1,8 @@
-const CACHE_NAME="classora-v243-account-aware-memberships";;
+const CACHE_NAME="classora-v243-premium-refresh";;
 const APP_SHELL=[
+  "./assets/classora-premium-v243.css?v=243",
+  "./assets/classora-premium-v243.js?v=243",
+  "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
   "./assets/classora-settings-polish-v241.js?v=242",
   "./assets/classora-settings-polish-v241.css?v=242",
@@ -27,13 +30,8 @@ const APP_SHELL=[
   "./assets/classora-learning-boost-v215.css?v=221",
   "./assets/classora-learning-boost-v215.js?v=222",
   "./assets/classora-learning-front-v214.css?v=214",
-  "./assets/classora-learning-front-v214.js?v=222",
+  "./assets/classora-learning-front-v214.js?v=243",
   "./assets/math-worksheet-v213.js?v=213",
-  "./assets/heritage-needle-background.svg?v=193",
-  "./assets/classora-heritage-gallery-v194.js?v=194",
-  "./assets/classora-heritage-i18n-v194.js?v=194",
-  "./assets/classora-heritage-v191.js?v=217",
-  "./assets/classora-heritage-v191.css?v=214",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",
@@ -96,13 +94,13 @@ const APP_SHELL=[
   "./assets/classora-refinement-v122.css?v=122.2",
   "./assets/classora-navigation-fix-v123.css?v=128",
   "./assets/classora-competition-topics-v122.js?v=161",
-  "./assets/classora-global-art-v121.js?v=121",
-  "./assets/classora-appearance-v207.js?v=207",
+  "./assets/classora-global-art-v121.js?v=243",
+  "./assets/classora-appearance-v207.js?v=243",
   "./assets/classora-periodic-lobby-v205.js?v=205",
   "./assets/classora-appearance-v203.css?v=203",
-  "./assets/classora-appearance-v207.css?v=207",
+  "./assets/classora-appearance-v207.css?v=243",
   "./assets/classora-western-digits-v203.js?v=203",
-  "./assets/classora-theme-bridge-v207.js?v=207",
+  "./assets/classora-theme-bridge-v207.js?v=243",
   "./assets/arabic-catalog-v119.js?v=119",
   "./assets/arabic-studio-v119.js?v=130",
   "./assets/math-studio-v119.css?v=119",
@@ -115,7 +113,7 @@ const APP_SHELL=[
   "./assets/classora-universal-dock-v113.css?v=2",
   "./assets/classora-universal-dock-v113.js?v=212",
   "./assets/classora-home-v112.css?v=2",
-  "./assets/classora-home-v112.js?v=191",
+  "./assets/classora-home-v112.js?v=243",
   "./assets/classora-universal-dock-v111.css?v=1",
   "./assets/classora-universal-dock-v111.js?v=1",
   "./assets/classora-polish-v110.css?v=1",
@@ -160,7 +158,6 @@ const APP_SHELL=[
   "./support.html",
   "./privacy.html",
   "./terms.html",
-  "./heritage-draw.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.css?v=124",
   "./chemistry/periodic-table.js?v=205",
@@ -329,5 +326,6 @@ classoraMessaging.onBackgroundMessage(payload=>{
 });
 
 } catch(error) { console.warn("Optional push messaging unavailable",error?.message); }
+
 
 

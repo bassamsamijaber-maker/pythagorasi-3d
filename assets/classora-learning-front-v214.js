@@ -39,8 +39,8 @@ function init(){
  '</nav>',
  '<section class="cl214-hero" aria-label="Classora learning home">',
  '<div class="cl214-hero-copy">',
- '<span class="cl214-kicker"><i></i> CLASSORA · '+tag('مغامرتك التعليمية','YOUR LEARNING JOURNEY')+'</span>',
- '<h1>'+tag('تعلّم بطريقة','Learn in a')+' <em>'+tag('مختلفة.','new way.')+'</em></h1>',
+ '<span class="cl214-kicker"><i></i> CLASSORA · '+tag('مساحتك للتعلّم','YOUR LEARNING SPACE')+'</span>',
+ '<h1>'+tag('فكرة اليوم،','Today’s curiosity,')+' <em>'+tag('إنجاز بكرا.','tomorrow’s possibility.')+'</em></h1>',
  '<p class="cl214-hero-lead">'+tag('كل يوم فرصة تفهم فكرة جديدة. جرّب، اختبر نفسك، ونافس أصحابك.','Every day is a new chance to discover, practice and challenge your friends.')+'</p>',
  '<p class="cl214-personal">'+tag('أهلًا','Hi')+'، <strong id="cl214StudentName">Classora</strong> <span class="cl214-wave" aria-hidden="true">✦</span></p>',
  '<div class="cl214-hero-buttons">',
@@ -61,7 +61,7 @@ function init(){
  '</section>',
  '<div id="cl214StatHost" class="cl214-stats"></div>',
  '<section id="cl214-catalog" class="cl214-block">',
- '<header class="cl214-section-heading"><div><span class="cl214-section-index">01 / LEARN</span><h2>'+tag('كل أدواتك التعليمية','Your learning toolkit')+'</h2><p>'+tag('اختار اللي بيساعدك تتقدم اليوم.','Pick the next step in your learning journey.')+'</p></div><span class="cl214-section-deco" aria-hidden="true">'+art('layers')+'</span></header>',
+ '<header class="cl214-section-heading"><div><span class="cl214-section-index">01 / '+tag('تعلّم','LEARN')+'</span><h2>'+tag('كل أدواتك التعليمية','Your learning toolkit')+'</h2><p>'+tag('اختار اللي بيساعدك تتقدم اليوم.','Pick the next step in your learning journey.')+'</p></div><span class="cl214-section-deco" aria-hidden="true">'+art('layers')+'</span></header>',
  '<div class="cl214-tool-grid">',
  btn('bolt','تدرّب الآن','Practice now','practice','أسئلة جديدة وتصحيح فوري','New questions and instant feedback','cl214-featured'),
  btn('chart','تقدمي ونتائجي','My progress','progress','شوف مستواك وين تطور','See how far you have come'),
@@ -73,13 +73,13 @@ function init(){
  btn('flag','صفوفي وواجباتي','Classes & homework','classes','تابع صفوفك والمهام','Your classes and assignments'),
  '</div></section>',
  '<section id="cl214-live" class="cl214-block cl214-live-area">',
- '<header class="cl214-section-heading"><div><span class="cl214-section-index">02 / LIVE</span><h2>'+tag('المسابقات المباشرة','Live competitions')+'</h2><p>'+tag('نافس الطلاب من أجهزتكم، وكسبوا نقاط مع كل إجابة.','Compete together in real time, from your own devices.')+'</p></div><span class="cl214-live-mark">'+tag('غرف بالكود','Code-based rooms')+'</span></header>',
+ '<header class="cl214-section-heading"><div><span class="cl214-section-index">02 / '+tag('تحدّى','LIVE')+'</span><h2>'+tag('المسابقات المباشرة','Live competitions')+'</h2><p>'+tag('نافس الطلاب من أجهزتكم، وكسبوا نقاط مع كل إجابة.','Compete together in real time, from your own devices.')+'</p></div><span class="cl214-live-mark">'+tag('غرف بالكود','Code-based rooms')+'</span></header>',
  '<div class="cl214-live-layout">',
  '<div class="cl214-live-panel"><span class="cl214-live-art">'+art('trophy')+'</span><h3>'+tag('جاهز تدخل التحدي؟','Ready for the challenge?')+'</h3><p>'+tag('معك كود من المعلم؟ افتح المسابقة واكتب الكود لتنضم لغرفتك.','Have a teacher room code? Open the competition and enter it to join.')+'</p><button type="button" class="cl214-primary" data-cl-action="joinlive">'+art('bolt')+tag('ادخل بكود الغرفة','Join with a room code')+'</button></div>',
  '<div class="cl214-live-steps"><span class="cl214-step">'+art('clock')+tag('غرفة انتظار قبل البداية','Waiting room before the start')+'</span><span class="cl214-step">'+art('check')+tag('أسئلة مباشرة مع مؤقت','Timed live questions')+'</span><span class="cl214-step">'+art('chart')+tag('نتائج وترتيب اللاعبين','Scores and leaderboard')+'</span><button class="cl214-text-button" type="button" data-cl-action="live">'+tag('افتح مركز المسابقات','Open competitions center')+' ↗</button></div>',
  '</div></section>',
  '<section id="cl214-exams" class="cl214-block cl214-exams-area">',
- '<header class="cl214-section-heading"><div><span class="cl214-section-index">03 / EXAMS</span><h2>'+tag('اختبر معلوماتك','Test your knowledge')+'</h2><p>'+tag('اختار موضوعك، المستوى المناسب، وابدأ امتحان جديد.','Choose your subject and level, then start a fresh exam.')+'</p></div></header>',
+ '<header class="cl214-section-heading"><div><span class="cl214-section-index">03 / '+tag('اختبر','EXAMS')+'</span><h2>'+tag('اختبر معلوماتك','Test your knowledge')+'</h2><p>'+tag('اختار موضوعك، المستوى المناسب، وابدأ امتحان جديد.','Choose your subject and level, then start a fresh exam.')+'</p></div></header>',
  '<div class="cl214-exam-layout"><div class="cl214-exam-main"><div class="cl214-exam-illustration" aria-hidden="true">'+art('check')+'<span>100</span></div><h3>'+tag('امتحانات من كل المواد','Exams across all subjects')+'</h3><div class="cl214-levels"><span>'+tag('سهل','Easy')+'</span><span>'+tag('متوسط','Medium')+'</span><span>'+tag('صعب','Hard')+'</span><span>'+tag('خبير','Expert')+'</span></div><button type="button" class="cl214-primary" data-cl-action="exam">'+tag('افتح مركز الامتحانات','Open exam center')+' ↗</button></div>',
  '<div class="cl214-exam-side">'+btn('flag','امتحان بكود','Exam with a code','joinexam','ادخل امتحان من معلمك','Join a teacher-assigned exam')+btn('chart','راجع النتيجة','Review your results','progress','تابع تقدمك التعليمي','Track your learning progress')+'</div></div></section>',
  '<footer class="cl214-footer"><span>CLASSORA ✦ '+tag('التعلّم يبدأ بالفضول','LEARNING BEGINS WITH CURIOSITY')+'</span><button type="button" data-cl-action="subjects">'+tag('استكشف المواد','Explore subjects')+' ↗</button></footer>'
@@ -115,6 +115,7 @@ function init(){
   const lang=document.documentElement.lang||'ar';
   const isAr=lang==='ar';
   shell.lang=lang;shell.dir=isAr?'rtl':'ltr';
+  for(const [selector,ar,en] of [['.cl214-tabs','التنقّل التعليمي في كلاسورا','Classora learning navigation'],['.cl214-hero','واجهة التعلّم في كلاسورا','Classora learning home'],['.cl214-quick','أدوات تعلّم سريعة','Quick learning actions']])shell.querySelector(selector)?.setAttribute('aria-label',isAr?ar:(window.ClassoraLocale?.tFor?.(lang,en)||en));
   shell.querySelectorAll('[data-cl-ar][data-cl-en]').forEach(el=>{
    const en=el.dataset.clEn||'',ar=el.dataset.clAr||'';
    const value=isAr?ar:(lang==='en'?en:(window.ClassoraLocale?.tFor?.(lang,en)||en));
@@ -124,7 +125,7 @@ function init(){
   const name=String(p?.displayName||'').trim().split(/\s+/)[0];
   const nameEl=get('cl214StudentName');if(nameEl)nameEl.textContent=name||'Classora';
   const last=lastLesson(),hint=get('cl214LastLesson');
-  if(hint)hint.textContent=last?(isAr?'آخر درس: ':'Last lesson: ')+last.topic:(isAr?'اختار أي مادة وابدأ رحلتك اليوم.':'Choose any subject to start your learning journey.');
+  if(hint)hint.textContent=last?(isAr?'آخر درس: ':(window.ClassoraLocale?.tFor?.(lang,'Last lesson: ')||'Last lesson: '))+last.topic:(isAr?'اختار أي مادة وابدأ رحلتك اليوم.':(window.ClassoraLocale?.tFor?.(lang,'Choose any subject to start your learning journey.')||'Choose any subject to start your learning journey.'));
  }
  shell.addEventListener('click',event=>{
   const scroll=event.target.closest('[data-cl-section]');

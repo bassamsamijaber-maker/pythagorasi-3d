@@ -41,6 +41,7 @@ console.log('PASS mobile consent, save failure retry, durable account acceptance
 let stored=null,handler;const fakeDb={doc:path=>path,runTransaction:fn=>fn({get:async path=>path.startsWith('users/')?{exists:true,data:()=>({role:'student'})}:{exists:!!stored},create:(_r,v)=>{stored=v}})};
 const functionCtx=vm.createContext({exports:{},db:fakeDb,require:name=>name.endsWith('/https')?{onCall:(_o,fn)=>(handler=fn),HttpsError:class extends Error{constructor(code,msg){super(msg);this.code=code}}}:{Timestamp:{now:()=>stamp(100000),fromMillis:stamp}}});
 const backend=read('functions/index.js');vm.runInContext(backend.slice(backend.indexOf('// One non-renewing')),functionCtx);
+handler=functionCtx.exports.startMembershipTrial;
 await assert.rejects(()=>handler({}),e=>e.code==='unauthenticated');
 await handler({auth:{uid:'a',token:{firebase:{sign_in_provider:'password'}}}});assert.equal(stored.expiresAt.toMillis()-stored.grantedAt.toMillis(),7*86400000);
 await assert.rejects(()=>handler({auth:{uid:'a',token:{}}}),e=>e.code==='already-exists');
@@ -54,3 +55,4 @@ let prevented=false;mobile.classoraStopBackgroundScroll({target:md.querySelector
 mobile.classoraStopBackgroundScroll({target:md.querySelector('nav button'),cancelable:true,preventDefault:()=>prevented=true});assert.equal(prevented,false);
 mobile.classoraStopBackgroundScroll({target:md.body,cancelable:true,preventDefault:()=>prevented=true});assert.equal(prevented,true);
 console.log('PASS top-layer touch/dock interaction, hidden-overlay filtering and background scroll guard');
+
