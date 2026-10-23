@@ -2,14 +2,14 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const lex={
- ar:['مساعد كلاسورا','مركز يومك','المزيد','إخفاء المزيد','تحدي اليوم','كمّل تعلّمك','تقدّمي','راجع أخطائي','دروس بدأت فيها','عم بفكر بسؤالك…','ما زبط الرد. جرّب مرة ثانية.','اشرحلي أبسط','هات مثال','اختبرني','كمّل'],
- en:['Classora Assistant','Your day','More','Hide extras','Daily challenge','Continue learning','My progress','Review mistakes','Lessons started','Thinking…','Unable to answer. Try again.','Explain simply','Give example','Quiz me','Continue'],
- es:['Asistente Classora','Tu día','Más','Ocultar extras','Reto diario','Continuar aprendiendo','Mi progreso','Repasar errores','Lecciones iniciadas','Pensando…','Inténtalo de nuevo','Explica fácil','Dame ejemplo','Ponme a prueba','Continúa'],
- ko:['Classora 도우미','오늘의 학습','더 보기','접기','오늘의 도전','학습 이어하기','내 진도','오답 복습','시작한 수업','생각하는 중…','다시 시도하세요','쉽게 설명','예시 보여 줘','퀴즈','계속'],
- de:['Classora Assistent','Dein Tag','Mehr','Weniger','Tagesaufgabe','Weiterlernen','Mein Fortschritt','Fehler üben','Begonnene Lektionen','Ich überlege…','Versuch es erneut','Einfach erklären','Beispiel','Quiz','Weiter'],
- it:['Assistente Classora','La tua giornata','Altro','Nascondi','Sfida del giorno','Continua a studiare','Progressi','Rivedi errori','Lezioni iniziate','Sto pensando…','Riprova','Spiega facile','Un esempio','Quiz','Continua'],
- hi:['क्लासोरा सहायक','आज का अध्ययन','और','छिपाएँ','आज की चुनौती','पढ़ाई जारी रखें','मेरी प्रगति','गलतियाँ दोहराएँ','शुरू किए पाठ','सोच रहा हूँ…','फिर से कोशिश करें','आसान समझाओ','उदाहरण','मेरा टेस्ट','जारी रखो'],
- tr:['Classora Asistan','Bugünün','Daha fazla','Gizle','Günlük görev','Devam et','İlerlemem','Hatalarımı gözden geçir','Başlanan dersler','Düşünüyorum…','Tekrar dene','Basit anlat','Örnek ver','Beni sına','Devam']
+ ar:['مساعد كلاسورا','مركز يومك','المزيد','إخفاء المزيد','تحدي اليوم','كمّل تعلّمك','تقدّمي','راجع أخطائي','دروس بدأت فيها','عم بفكر بسؤالك…','ما زبط الرد. جرّب مرة ثانية.','اشرحلي أبسط','هات مثال','اختبرني','كمّل','صفوفي وواجباتي'],
+ en:['Classora Assistant','Your day','More','Hide extras','Daily challenge','Continue learning','My progress','Review mistakes','Lessons started','Thinking…','Unable to answer. Try again.','Explain simply','Give example','Quiz me','Continue','Classes & homework'],
+ es:['Asistente Classora','Tu día','Más','Ocultar extras','Reto diario','Continuar aprendiendo','Mi progreso','Repasar errores','Lecciones iniciadas','Pensando…','Inténtalo de nuevo','Explica fácil','Dame ejemplo','Ponme a prueba','Continúa','Clases y tareas'],
+ ko:['Classora 도우미','오늘의 학습','더 보기','접기','오늘의 도전','학습 이어하기','내 진도','오답 복습','시작한 수업','생각하는 중…','다시 시도하세요','쉽게 설명','예시 보여 줘','퀴즈','계속','수업 및 숙제'],
+ de:['Classora Assistent','Dein Tag','Mehr','Weniger','Tagesaufgabe','Weiterlernen','Mein Fortschritt','Fehler üben','Begonnene Lektionen','Ich überlege…','Versuch es erneut','Einfach erklären','Beispiel','Quiz','Weiter','Klassen & Aufgaben'],
+ it:['Assistente Classora','La tua giornata','Altro','Nascondi','Sfida del giorno','Continua a studiare','Progressi','Rivedi errori','Lezioni iniziate','Sto pensando…','Riprova','Spiega facile','Un esempio','Quiz','Continua','Classi e compiti'],
+ hi:['क्लासोरा सहायक','आज का अध्ययन','और','छिपाएँ','आज की चुनौती','पढ़ाई जारी रखें','मेरी प्रगति','गलतियाँ दोहराएँ','शुरू किए पाठ','सोच रहा हूँ…','फिर से कोशिश करें','आसान समझाओ','उदाहरण','मेरा टेस्ट','जारी रखो','कक्षाएँ और होमवर्क'],
+ tr:['Classora Asistan','Bugünün','Daha fazla','Gizle','Günlük görev','Devam et','İlerlemem','Hatalarımı gözden geçir','Başlanan dersler','Düşünüyorum…','Tekrar dene','Basit anlat','Örnek ver','Beni sına','Devam','Sınıflar ve ödevler']
 };
 const t=i=>(lex[document.documentElement.lang]||lex.en)[i];
 const el=(tag,cls,str)=>{const x=document.createElement(tag);x.className=cls||'';if(str!==undefined)x.textContent=str;return x};
@@ -43,6 +43,7 @@ function update(){
   right.querySelectorAll('button[data-cl250-day]').forEach(b=>{const name=b.querySelector('strong');if(name)name.textContent=t(Number(b.dataset.cl250Day))});
   const started=$('cl215StartedCount')?.textContent?.trim()||'—';
   const foot=right.querySelector('.cl250-side-foot');if(foot)foot.textContent=t(8)+': '+started;
+  const xp=$('studentDashXP')?.textContent?.trim();const xpCard=$('cl250XP');if(xpCard)xpCard.textContent=xp||'';
   for(const [i,id] of [[4,'cl215DailyCount'],[7,'cl215MistakeCount']]){
     const item=right.querySelector('[data-cl250-day="'+i+'"] small');
     if(item)item.textContent=$(id)?.textContent?.trim()||'—';
@@ -91,6 +92,11 @@ function addRight(lobby){
   });
   right.append(b);
  }
+ const homework=el('button','cl250-day-button');homework.type='button';homework.dataset.cl250Day='15';
+ homework.append(el('strong','',''),el('small','','↗'));
+ homework.addEventListener('click',()=>document.querySelector('#platformLobby [data-cl-action="classes"]')?.click());
+ right.append(homework);
+ const xp=el('div','cl250-xp');xp.id='cl250XP';right.append(xp);
  right.append(el('div','cl250-side-foot'));
  lobby.append(right);
  const boost=$('classoraLearningBoost');
@@ -113,7 +119,7 @@ function init(){
  if(!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
  left=el('aside','cl250-left');left.id='cl250Left';left.dataset.noTranslate='';
  lobby.append(left);addChat();addRight(lobby);addMore(front);reposition();update();
- window.ClassoraConversation={send,open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
+ window.ClassoraConversation={send,get busy(){return busy},open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
  window.addEventListener('resize',reposition,{passive:true});
  new MutationObserver(update).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 }
