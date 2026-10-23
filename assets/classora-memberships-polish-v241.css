@@ -1,0 +1,70 @@
+/* Classora v241 — membership storefront polish and safe admin customer preview.
+   Additive only: never changes commerce or entitlements. */
+:root{--cl241-bg:#07191f;--cl241-surface:#102934;--cl241-surface2:#173644;--cl241-border:#477484;--cl241-ink:#f5fdff;--cl241-muted:#c3d9e2;--cl241-brand:#78e5c3;--cl241-brandInk:#073b37;--cl241-gold:#f6d9a6;--cl241-accent:#2d7792}
+html{scroll-padding-top:22px}
+body.classora-membership-page{background:radial-gradient(ellipse 72% 450px at 54% -170px,rgba(30,151,134,.25),transparent 73%),radial-gradient(ellipse 36% 680px at 100% 32%,rgba(63,73,153,.16),transparent 80%),#061820!important;color:var(--cl241-ink);line-height:1.7}
+.classora-membership-page .cl-shell{width:min(1240px,calc(100% - 28px))}
+.classora-membership-page .cl-header{border-bottom:1px solid #83aabb38;gap:14px}
+.classora-membership-page .cl-brand b{letter-spacing:.01em}
+.classora-membership-page .cl-hero{background:radial-gradient(circle at 80% 15%,#235e6266,transparent 50%),linear-gradient(145deg,#122e40,#091e2b)!important;border:1px solid #4c9191b0!important;box-shadow:0 24px 65px #05101782!important}
+.classora-membership-page .cl-hero-copy :is(h1,p){text-shadow:none!important}
+.classora-membership-page .cl-hero-copy p{color:#ddf0f1!important}
+.classora-membership-page .cl-account{border:1px solid #568995!important;background:linear-gradient(105deg,#153746,#132b3a)!important;box-shadow:0 10px 34px #010c1240}
+.classora-membership-page .cl-account :is(b,p){color:#f5fcff!important}
+.classora-membership-page .cl-account p{color:#d0e4e9!important}
+.classora-membership-page .cl-owner-switch{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;margin:20px 0 22px;padding:22px 24px;border-radius:23px;border:1px solid #5592a3;background:linear-gradient(130deg,#142f3d,#1b314c);box-shadow:0 15px 45px #04101c50}
+.classora-membership-page .cl-owner-switch[hidden],.classora-membership-page .cl-owner-catalog[hidden]{display:none!important}
+.cl-owner-switch-copy{flex:1 1 270px;min-width:0}.cl-owner-switch-eyebrow{font-size:11px;font-weight:900;letter-spacing:.12em;color:#91efda}.cl-owner-switch-copy h2{font-size:clamp(18px,2.2vw,24px);line-height:1.3;color:#fff!important;margin:3px 0 6px}.cl-owner-switch-copy p{font-size:13px;color:#d0e6ed!important;margin:0}
+.cl-owner-switch-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.cl-owner-switch-actions :is(button,a){display:inline-flex;min-height:46px;align-items:center;justify-content:center;gap:8px;border-radius:13px;padding:10px 17px;font:800 13px/1.5 inherit;cursor:pointer;text-decoration:none;white-space:normal;background:#223e50;color:#f3fcff!important;border:1px solid #789bb0;transition:transform .15s,background .15s}
+.cl-owner-switch-actions button[aria-pressed=true]{color:#10343e!important;background:#a2e9db;border-color:#b9fff0}
+.cl-owner-switch-actions .cl-owner-admin-link{border-color:#ebd4a2;background:#4e3d3b;color:#fff1d8!important}
+.cl-owner-switch-actions :is(button,a):hover{transform:translateY(-1px)}
+.classora-membership-page .cl-owner-catalog{border:1px solid #396875;background:linear-gradient(140deg,#0d2937,#0e2430);border-radius:25px;padding:22px;margin:0 0 23px;box-shadow:0 16px 42px #020b1436}
+.cl-owner-catalog-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 17px}
+.cl-owner-catalog-head h2{font-size:clamp(20px,2.7vw,28px);margin:3px 0;color:#fff!important}
+.cl-owner-catalog-head p{margin:0;max-width:490px;color:#c7e0e9!important;font-weight:600;font-size:13px}
+.cl-owner-catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cl-owner-plan-mini{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px;row-gap:4px;padding:16px;text-align:start;background:linear-gradient(145deg,#193747,#112d3d);color:#f7fdff;border:1px solid #547e90;border-radius:17px;cursor:pointer;font:inherit;transition:transform .15s,border-color .15s,background .15s}
+.cl-owner-plan-mini:hover{transform:translateY(-2px);border-color:#9df3da}.cl-owner-plan-mini.active{border-color:#acf4da;background:linear-gradient(145deg,#22505b,#15424d);box-shadow:0 0 0 2px #92edc55c}
+.cl-owner-plan-name{font-weight:850;font-size:14px;color:#e2f0f5}.cl-owner-plan-mini b{font-size:11px;font-weight:900;color:#102e33;background:#c6f5e4;padding:3px 9px;border-radius:20px}
+.cl-owner-plan-mini strong{font-size:clamp(16px,2.2vw,22px);color:#fff;grid-column:1 / -1;font-weight:900;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.cl-owner-plan-mini small{font-size:12px;color:#c7dfe9;grid-column:1 / -1}
+.classora-membership-page .cl-pricing{scroll-margin-top:20px;background:linear-gradient(145deg,#112b38,#102431)!important;border:1px solid #436e80!important;border-radius:25px!important;padding:clamp(16px,3vw,27px)!important;box-shadow:0 20px 50px #0007!important}
+.classora-membership-page .cl-pricing[hidden],.classora-membership-page .cl-checkout-preview[hidden]{display:none!important}
+.classora-membership-page .cl-pricing :is(.cl-section-title h2,.cl-control-label,.cl-role-note){color:#f7fcff!important}
+.classora-membership-page .cl-tabs{gap:9px;flex-wrap:wrap}
+.classora-membership-page .cl-tabs button{min-height:46px;font-weight:850;border-radius:12px!important;color:#f5fcff!important;background:#1b394a!important;border:1px solid #668e9e!important}
+.classora-membership-page .cl-tabs button.active{color:#102f36!important;background:#9aebd5!important;border-color:#bffdea!important}
+.classora-membership-page .cl-plan{border:1px solid #4d8293!important;background:linear-gradient(155deg,#193645,#0c2433)!important;border-radius:23px!important;box-shadow:0 13px 30px #010c174a;overflow:hidden}
+.classora-membership-page .cl-plan.premium{background:linear-gradient(150deg,#362d42,#1b2940 75%)!important;border-color:#c6a9e0!important}
+.classora-membership-page .cl-plan.selected{border-color:#9cf1d2!important;box-shadow:0 0 0 2px #8df0cf58,0 15px 36px #06131c8a}
+.classora-membership-page .cl-plan :is(p,li,small){color:#d6e8ef!important}
+.classora-membership-page .cl-plan li{line-height:1.75;font-size:13px;overflow-wrap:anywhere}
+.classora-membership-page .cl-plan :is(.cl-plan-top b,.cl-price-line strong){color:#fff!important}
+.classora-membership-page .cl-plan-select{min-height:48px!important;border-radius:13px!important;font-weight:900!important;box-shadow:0 8px 20px #0719236a}
+.classora-membership-page .cl-checkout-preview{margin:24px 0!important;gap:18px}
+.classora-membership-page .cl-checkout-card,.classora-membership-page .cl-summary{background:linear-gradient(140deg,#17313e,#102a37)!important;border-color:#547f90!important;border-radius:23px!important;box-shadow:0 12px 38px #03151b46}
+.classora-membership-page .cl-checkout-preview :is(h2,h3,b,strong){color:#f8fcff!important}
+.classora-membership-page .cl-checkout-preview :is(p,small,span){color:#d2e5ee!important}
+.classora-membership-page #cl-total{color:#aff7dc!important}
+.classora-membership-page .cl-continue{min-height:49px;border-radius:13px!important;font-weight:900}
+.classora-membership-page button:focus-visible,.classora-membership-page a:focus-visible{outline:3px solid #ffe0a3!important;outline-offset:3px!important}
+@media(max-width:1040px){.cl-owner-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:670px){
+ .classora-membership-page .cl-shell{width:calc(100% - 22px)}
+ .classora-membership-page .cl-hero{padding:22px 16px!important;border-radius:20px!important}
+ .classora-membership-page .cl-owner-switch{padding:16px;gap:13px;border-radius:19px}
+ .cl-owner-switch-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .cl-owner-switch-actions .cl-owner-admin-link{grid-column:1 / -1}
+ .classora-membership-page .cl-owner-catalog{padding:14px;border-radius:19px}
+ .cl-owner-catalog-grid{gap:8px}
+ .cl-owner-plan-mini{padding:12px 10px;border-radius:13px}
+ .cl-owner-plan-mini strong{font-size:17px}
+ .classora-membership-page .cl-pricing{border-radius:20px!important}
+ .classora-membership-page .cl-plan{border-radius:17px!important}
+ .classora-membership-page .cl-plan li{font-size:12px}
+ .classora-membership-page .cl-tabs button{flex:1 1 auto;min-width:0;font-size:12px!important}
+}
+@media(max-width:370px){.cl-owner-catalog-grid{grid-template-columns:1fr}.cl-owner-switch-actions{grid-template-columns:1fr}.cl-owner-switch-actions .cl-owner-admin-link{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){.cl-owner-plan-mini,.cl-owner-switch-actions :is(button,a){transition:none!important}}
