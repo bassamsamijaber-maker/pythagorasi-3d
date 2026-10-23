@@ -128,3 +128,34 @@ html body #platformLobby .cl250-side-foot{
 @media(prefers-reduced-motion:reduce){
  html body #platformLobby :is(.cl250-chat-chip,.cl250-more,.cl250-thread){scroll-behavior:auto}
 }
+
+
+/* Replace overly tall empty-feeling insight tiles with a compact readable rhythm. */
+html body #platformLobby .cl215-insights{margin:14px 0 22px!important}
+html body #platformLobby .cl215-insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+html body #platformLobby .cl215-insight{
+ min-height:105px!important;max-width:100%;
+ display:grid!important;grid-template-columns:40px minmax(0,1fr) auto!important;
+ grid-template-rows:auto!important;gap:12px!important;align-items:center!important;
+ padding:14px!important;border-radius:16px!important;
+ background:var(--cl250-card)!important;border:1px solid var(--cl250-border)!important;
+}
+html body #platformLobby .cl215-insight-icon{grid-column:1!important;grid-row:1!important;width:40px!important;height:40px!important}
+html body #platformLobby .cl215-insight-icon svg{max-width:22px!important;max-height:22px!important}
+html body #platformLobby .cl215-insight-text{grid-column:2!important;grid-row:1!important;gap:5px!important;min-width:0}
+html body #platformLobby .cl215-insight-text strong{font-size:14px!important;line-height:1.4!important;color:var(--cl250-text)!important}
+html body #platformLobby .cl215-insight-text small{font-size:12px!important;color:var(--cl250-muted)!important;line-height:1.4!important}
+html body #platformLobby .cl215-insight .cl215-count,html body #platformLobby .cl215-insight .cl215-insight-arrow{
+ position:static!important;inset:auto!important;grid-column:3!important;grid-row:1!important;
+ justify-self:end;min-width:0;
+}
+html body #platformLobby .cl250-xp:not(:empty){border:1px solid var(--cl250-border);border-radius:11px;padding:9px 11px;margin-top:8px;color:var(--cl250-muted);font-size:12px;text-align:center}
+/* Keep the original secondary tools functional, but let More decide when to display them. */
+html body #platformLobby .cl214 :is(#cl214-catalog,#cl214-live,#cl214-exams)[hidden]{display:none!important}
+@media(max-width:760px){
+ html body #platformLobby .cl215-insight-grid{grid-template-columns:minmax(0,1fr)!important}
+ html body #platformLobby .cl215-insight{min-height:92px!important;padding:12px!important;gap:10px!important}
+}
+@media(min-width:761px) and (max-width:1100px){
+ html body #platformLobby .cl215-insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
