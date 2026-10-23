@@ -74,3 +74,16 @@ Official Cloudflare instructions: https://developers.cloudflare.com/tunnel/get-s
 - The operator's computer receives the question and up to six prior conversation turns; users must consent. Do not send sensitive personal information or passwords; comply with consent and privacy requirements for students/minors.
 - The responses can be wrong or slow. Local model quality and Arabic support are limited compared with large cloud models.
 - Never give strangers your Cloudflare Tunnel token, Firebase credentials, or any OpenAI API key.
+
+## Classora conversational AI v250 — activation and limits
+
+The web interface for conversations is deployed by GitHub Pages. Genuine open-ended stories, rewritten text and long explanations require the separate operator-run Ollama gateway to be online. GitHub Pages does not launch Ollama.
+
+- Restart the local Node gateway after pulling the updated repository to load its new multilingual instructions.
+- The site requires fresh consent (v2) before transmitting a question and up to 10 previous messages to the operator computer. Declining preserves only the limited offline curriculum/math assistant.
+- Languages: Arabic, English, Spanish, Korean, German, Italian, Hindi, Turkish. Quality varies across languages and the local 3B model may make errors.
+- Large requests (for example 300 lines) should be completed in successive parts using Continue. A single 300-line response is not guaranteed.
+- Generation budget is set through the CLASSORA_AI_MAX_TOKENS environment variable, default 1000 with 500–1800 bounds. Increasing it can slow down computers with small GPUs.
+- The new chat transcript stays only in the active page memory, and is not separately saved as a Firebase chat record.
+- Keep the HTTPS authentication tunnel enabled; never expose Ollama port 11434, Firebase credentials or API keys.
+- Test consent, offline server, slow model, sign out, device rotation and all language selectors on real phones/tablets.
