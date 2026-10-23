@@ -15,7 +15,7 @@ const form=$("clGrantForm");
 const result=$("clGrantStatus");
 const list=$("clGrantList");
 const allowedKind={student:["student"],teacher:["teacher","class","school"]};
-let authorized=false;
+let authorized=false,ownerAuthorized=false;
 const mode=document.createElement('select');mode.id='clGrantMode';
 const choices=document.createElement('div');choices.className='cl238-feature-options';choices.hidden=true;
 function renderFeatureChoices(){
@@ -32,7 +32,7 @@ function say(message,ok=false){result.textContent=message;result.dataset.ok=ok?"
 const fmt=date=>date instanceof Date?date.toLocaleString(document.documentElement.lang||"ar",{dateStyle:"medium",timeStyle:"short"}):"—";
 async function gate(){
  const user=auth.currentUser;
- authorized=false;
+ authorized=false;ownerAuthorized=false;
  if(!user||user.isAnonymous)return false;
  try{
   const [userSnap,staffSnap,ownerSnap]=await Promise.all([
@@ -42,7 +42,8 @@ async function gate(){
   ]);
   const profile=userSnap.data();
   const staff=staffSnap?.data();
-  authorized=!!profile&&(ownerSnap?.data()?.uid===user.uid||(staff?.role==="admin"&&staff?.active===true));
+  ownerAuthorized=!!profile&&ownerSnap?.data()?.uid===user.uid;
+  authorized=ownerAuthorized||!!profile&&(staff?.role==="admin"&&staff?.active===true);
  }catch(e){console.warn("Grant staff verification unavailable",e);}
  return authorized;
 }
@@ -85,10 +86,10 @@ async function renderList(){
    body.append(title,subtitle);
    if(gift.note){const note=document.createElement("small");note.textContent=gift.note;body.append(note);}
    row.append(body);
-   if(current){
+   if(current&&ownerAuthorized){
      const stop=document.createElement("button");stop.type="button";stop.textContent="إلغاء المنحة";stop.className="cl-grant-revoke";
      stop.addEventListener("click",async()=>{
-       if(!authorized||!confirm("إلغاء هذه المنحة فورًا؟ لا يؤثر ذلك على أي اشتراك مدفوع."))return;
+       if(!ownerAuthorized||!confirm("إلغاء هذه المنحة فورًا؟ لا يؤثر ذلك على أي اشتراك مدفوع."))return;
        stop.disabled=true;
        try{await deleteDoc(doc(db,"membershipGrants",gift.id));say("تم إلغاء المنحة.",true);await renderList();}
        catch(e){say("فشل الإلغاء؛ تأكد من صلاحيات قواعد Firestore.");stop.disabled=false;}
