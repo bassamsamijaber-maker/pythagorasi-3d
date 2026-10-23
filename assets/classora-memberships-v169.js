@@ -84,7 +84,7 @@ function shownPlanPrice(key,period,fallback) {
  return window.ClassoraPriceLocalization?.priceFor(key,period)||price(currentCatalogPrice(key,period,fallback));
 }
 function currentSelection(){
- if(!liveCatalog||!state.tier||state.account?.admin)return null;
+ if(!liveCatalog||!state.tier||!state.account||!state.allowed.includes(state.kind)||state.account.admin)return null;
  const key=state.kind+"_"+state.tier;
  const main=catalogRecord(key,state.period);
  if(!main)return null;
@@ -172,6 +172,30 @@ document.querySelectorAll("[data-admin-view]").forEach(b=>b.addEventListener("cl
  else{state.previewRole=state.kind==="teacher"||state.kind==="class"||state.kind==="school"?"teacher":"student";state.previewTier="free";state.tier=null;state.kind=state.previewRole;}
  render();
 }));
+const roleMessages={
+ ar:{checking:"جاري التحقق من نوع حسابك…",student:"حساب طالب ✓ — باقات Plus وPremium للطلاب فقط",teacher:"حساب معلم ✓ — باقات المعلم والصف والمدرسة",admin:"حساب أدمن ✓ — جميع الباقات متاحة للمعاينة",guest:"سجّل دخولك ليظهر اشتراكك المناسب",error:"تعذّر التأكد من نوع الحساب. أعد تسجيل الدخول أو حدّث الصفحة."},
+ en:{checking:"Checking your account type…",student:"Verified student ✓ — Student Plus and Premium only",teacher:"Verified teacher ✓ — Teacher, Class and School plans",admin:"Verified admin ✓ — All plans available to preview",guest:"Sign in to see plans for your account",error:"Account type could not be verified. Please sign in again or refresh."},
+ es:{checking:"Verificando tu tipo de cuenta…",student:"Estudiante verificado ✓ — Plus y Premium para estudiantes",teacher:"Docente verificado ✓ — planes Docente, Clase y Escuela",admin:"Administrador verificado ✓ — vista de todos los planes",guest:"Inicia sesión para ver tus planes",error:"No se pudo verificar el tipo de cuenta."},
+ ko:{checking:"계정 유형 확인 중…",student:"학생 인증 ✓ — 학생 Plus 및 Premium만 표시",teacher:"교사 인증 ✓ — 교사·학급·학교 요금제",admin:"관리자 인증 ✓ — 모든 요금제 미리보기",guest:"로그인하여 맞춤 요금제를 확인하세요",error:"계정 유형을 확인하지 못했습니다. 다시 로그인하세요."},
+ de:{checking:"Kontotyp wird geprüft…",student:"Schülerkonto bestätigt ✓ — nur Schüler Plus und Premium",teacher:"Lehrerkonto bestätigt ✓ — Lehrer-, Klassen- und Schultarife",admin:"Admin bestätigt ✓ — alle Tarife zur Vorschau",guest:"Anmelden, um passende Tarife zu sehen",error:"Kontotyp nicht überprüfbar. Erneut anmelden."},
+ it:{checking:"Verifica del tipo di account…",student:"Studente verificato ✓ — solo Plus e Premium per studenti",teacher:"Docente verificato ✓ — piani Docente, Classe e Scuola",admin:"Admin verificato ✓ — anteprima di tutti i piani",guest:"Accedi per vedere i piani adatti",error:"Impossibile verificare il tipo di account."},
+ hi:{checking:"खाता प्रकार जाँचा जा रहा है…",student:"छात्र सत्यापित ✓ — केवल छात्र Plus और Premium",teacher:"शिक्षक सत्यापित ✓ — शिक्षक, कक्षा और स्कूल प्लान",admin:"एडमिन सत्यापित ✓ — सभी प्लान का पूर्वावलोकन",guest:"अपने प्लान देखने के लिए लॉग इन करें",error:"खाते का प्रकार सत्यापित नहीं हो सका।"},
+ tr:{checking:"Hesap türü kontrol ediliyor…",student:"Öğrenci doğrulandı ✓ — yalnızca öğrenci Plus ve Premium",teacher:"Öğretmen doğrulandı ✓ — öğretmen, sınıf ve okul paketleri",admin:"Yönetici doğrulandı ✓ — tüm paketleri önizle",guest:"Sana uygun paketleri görmek için giriş yap",error:"Hesap türü doğrulanamadı. Tekrar giriş yap."}
+};
+function allowedForAccount(){
+ const a=state.account;
+ if(a?.admin)return state.adminView==="admin"
+  ?(state.previewRole==="teacher"?["teacher","class","school"]:["student"])
+  :["student","teacher","class","school"];
+ if(a?.role==="teacher")return ["teacher","class","school"];
+ if(a?.role==="student")return ["student"];
+ return state.checking||state.error?[]:["student","teacher"];
+}
+function detectRole(){
+ const key=state.checking?"checking":state.error?"error":state.account?.admin?"admin":state.account?.role==="teacher"?"teacher":state.account?.role==="student"?"student":"guest";
+ const el=$("cl-role-detection");
+ if(el){el.dataset.role=key;put("cl-detected-role",(roleMessages[state.lang]||roleMessages.en)[key]);}
+}
 function render(){
  document.documentElement.lang=state.lang;document.documentElement.dir=state.lang==="ar"?"rtl":"ltr";$("cl-language").value=state.lang;
  const map={back:"cl-back",subtitle:"cl-subtitle",high1:"cl-high1",high2:"cl-high2",high3:"cl-high3",adminTitle:"cl-admin-title",adminCaption:"cl-admin-caption",plansLabel:"cl-plans-label",plansHeading:"cl-plans-heading",beta:"cl-beta",typeLabel:"cl-type-label",student:"cl-kind-student",teacher:"cl-kind-teacher",class:"cl-kind-class",school:"cl-kind-school",cycleLabel:"cl-cycle-label",monthly:"cl-period-monthly",annual:"cl-period-annual",plusTag:"cl-plus-tag",premiumTag:"cl-premium-tag",plusDescription:"cl-plus-description",premiumDescription:"cl-premium-description",choosePlus:"cl-plus-select",choosePremium:"cl-premium-select",seatsLabel:"cl-seats-label",seatsHint:"cl-seats-hint",seat:"cl-seats-unit",paymentTitle:"cl-checkout-title",paymentIntro:"cl-payment-intro",paymentNote:"cl-payment-note",summaryLabel:"cl-summary-label",periodLabel:"cl-summary-period-label",seatsExtra:"cl-summary-seats-label",totalLabel:"cl-total-label",totalNote:"cl-total-note",continue:"cl-continue",security:"cl-security",faqTitle:"cl-faq-title",faq1:"cl-faq1",answer1:"cl-answer1",faq2:"cl-faq2",answer2:"cl-answer2",faq3:"cl-faq3",answer3:"cl-answer3",privacy:"cl-privacy",terms:"cl-terms",home:"cl-home"};
@@ -189,7 +213,8 @@ function render(){
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
  const admin=!!state.account?.admin;
  const ownerPreview=admin&&state.adminView==="admin";
- state.allowed=admin?(ownerPreview?(state.previewRole==="teacher"?["teacher","class","school"]:["student"]):["student","teacher","class","school"]):state.allowed;
+ state.allowed=allowedForAccount();
+ detectRole();
  const mode=$("cl-owner-switch");
  if(mode){
   mode.hidden=!admin;
@@ -221,8 +246,8 @@ function render(){
    put("cl-admin-sim-status",w.status+": "+w[state.previewRole]+" · "+w[state.previewTier]);
   }
  }
- document.querySelector(".cl-pricing").hidden=false;
- document.querySelector(".cl-checkout-preview").hidden=admin&&ownerPreview;
+ document.querySelector(".cl-pricing").hidden=state.checking||state.error;
+ document.querySelector(".cl-checkout-preview").hidden=state.checking||state.error||(admin&&ownerPreview);
  const info=window.ClassoraMemberPlanInfo;
  put("cl-role-note",state.account?(info?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):info?.text(state.lang,"roleGuest")||"");
  put("cl-base-benefits",info?.text(state.lang,"base")||"");
@@ -231,7 +256,9 @@ function render(){
  // Customers see product prices, not internal Live/Sandbox deployment details.
  $("cl-catalog-status").hidden=true;
 
- if(state.allowed.length&&!state.allowed.includes(state.kind))state.kind=state.allowed[0];
+ if(state.allowed.length&&!state.allowed.includes(state.kind)){state.kind=state.allowed[0];state.tier=null;state.seats=minSeats()||1;}
+ const categoryTabs=$("cl-categories");
+ if(categoryTabs?.parentElement)categoryTabs.parentElement.hidden=state.account?.role==="student"&&!admin;
  document.querySelectorAll("[data-kind]").forEach(b=>{b.classList.toggle("allowed",state.allowed.includes(b.dataset.kind));b.classList.toggle("active",state.kind===b.dataset.kind);b.disabled=!state.allowed.includes(b.dataset.kind);b.hidden=!!state.account&&!state.allowed.includes(b.dataset.kind);});
  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",state.period===b.dataset.period));
  document.querySelectorAll(".cl-plan").forEach(card=>card.classList.toggle("selected",card.dataset.tier===state.tier));
@@ -264,16 +291,22 @@ function render(){
  $("cl-continue").disabled=!state.tier||(admin&&ownerPreview);
  window.ClassoraMembershipLuxe?.update(state);
 }
+let verificationRun=0;
 async function identify(user){
- state.checking=false;
- if(!user||user.isAnonymous){state.account=null;state.gift=null;state.allowed=["student","teacher"];resetDraft();state.error=false;render();return;}
+ const check=++verificationRun;
+ state.checking=!!user&&!user.isAnonymous;
+ state.error=false;state.account=null;state.gift=null;state.allowed=[];
+ if(!user||user.isAnonymous){
+  state.checking=false;state.allowed=["student","teacher"];resetDraft();render();return;
+ }
+ resetDraft();render();
  try{
   const profile=await getDoc(doc(db,"users",user.uid));if(!profile.exists())throw Error("Missing profile");
   const p=profile.data();if(!["student","teacher"].includes(p.role))throw Error("Invalid user role");
   let staff=null,owner=null;
   try{const s=await getDoc(doc(db,"staffAccess",user.uid));if(s.exists())staff=s.data();}catch(e){console.warn("Optional staff lookup",e)}
   try{const o=await getDoc(doc(db,"profileIds","3228667330"));if(o.exists())owner=o.data();}catch(e){console.warn("Optional owner lookup",e)}
-  if(auth.currentUser?.uid!==user.uid)return;
+  if(check!==verificationRun||auth.currentUser?.uid!==user.uid)return;
   const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
   state.account={uid:user.uid,role:p.role,admin,owner:owner?.uid===user.uid,name:String(p.displayName||user.displayName||"")};
   state.previewRole=admin?"student":null;state.previewTier="free";state.adminView="customer";
@@ -287,9 +320,13 @@ async function identify(user){
        (grant.kind===p.role||(p.role==="teacher"&&["class","school"].includes(grant.kind)))&&
        grant.expiresAt?.toMillis?.()>Date.now())state.gift=grant;
   }catch(e){console.warn("Courtesy subscription not available",e);}
-  if(auth.currentUser?.uid!==user.uid)return;
-  resetDraft();state.error=false;
- }catch(e){if(auth.currentUser?.uid!==user.uid)return;console.warn("Membership role verification",e);state.account=null;state.gift=null;state.allowed=[];resetDraft();state.error=true;}
+  if(check!==verificationRun||auth.currentUser?.uid!==user.uid)return;
+  state.checking=false;resetDraft();state.error=false;
+ }catch(e){
+  if(check!==verificationRun||auth.currentUser?.uid!==user.uid)return;
+  console.warn("Membership role verification",e);
+  state.account=null;state.gift=null;state.allowed=[];resetDraft();state.error=true;state.checking=false;
+ }
  render();
 }
 $("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
@@ -301,9 +338,10 @@ document.querySelectorAll("[data-sim-tier]").forEach(b=>b.addEventListener("clic
  if(!state.account?.admin)return;
  state.previewTier=b.dataset.simTier;state.tier=state.previewTier==="free"?null:state.previewTier;render();
 }));
-document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;if(state.account?.admin)state.previewTier="free";state.period="monthly";state.seats=minSeats()||1;render();}));
+document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(state.checking||state.error||!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;if(state.account?.admin)state.previewTier="free";state.period="monthly";state.seats=minSeats()||1;render();}));
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render();}));
 document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{
+ if(state.checking||state.error||!state.allowed.includes(state.kind))return;
  if(state.account?.admin&&state.adminView==="admin")return;
  state.tier=b.dataset.choose;if(state.account?.admin)state.previewTier=state.tier;
  render();
@@ -311,7 +349,9 @@ document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click"
 }));
 $("cl-seats").addEventListener("change",()=>{if(!state.tier)return;const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
 $("cl-continue").addEventListener("click",()=>{
+ if(state.checking||state.error)return;
  if(!state.account){window.location.assign("./index.html");return;}
+ if(!state.allowed.includes(state.kind))return;
  if(state.account.admin){put("cl-payment-status",(adminModeLabels[state.lang]||adminModeLabels.en).previewNote);return;}
  if(!state.tier){put("cl-payment-status",emptyDraftLabel());return;}
  const selection=currentSelection();
