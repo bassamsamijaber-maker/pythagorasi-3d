@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v242-simpler-settings-no-all-plans";;
+const CACHE_NAME="classora-v243-account-aware-memberships";;
 const APP_SHELL=[
   "./assets/classora-owner-cancel-v240.js?v=240",
   "./assets/classora-settings-polish-v241.js?v=242",
