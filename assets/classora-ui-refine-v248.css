@@ -115,15 +115,15 @@ html body #classoraMobilePageNav button:focus-visible{
   --classora-dock-clearance:calc(144px + env(safe-area-inset-bottom,0px));
  }
  html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav{
-  width:min(740px,calc(100vw - 54px))!important;
-  max-width:min(740px,calc(100vw - 54px))!important;
+  width:min(880px,calc(100vw - 54px))!important;
+  max-width:min(880px,calc(100vw - 54px))!important;
   height:82px!important;
   min-height:82px!important;
   max-height:82px!important;
   display:grid!important;
   grid-template-columns:repeat(5,minmax(0,1fr))!important;
-  gap:13px!important;
-  padding:9px 15px!important;
+  gap:20px!important;
+  padding:9px 17px!important;
   border-radius:22px!important;
   bottom:calc(14px + env(safe-area-inset-bottom,0px))!important;
  }
