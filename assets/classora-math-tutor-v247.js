@@ -134,5 +134,7 @@ export function classoraMathTopic(raw){
  [/ضرب|قسمه|قسمة|طرح|زائد|ناقص|جمع|plus|minus|multiply|division/,'ترتيب العمليات الحسابية']
  ];
  for(const [re,t] of checks)if(re.test(s))return t;
- return candidate(raw)?'ترتيب العمليات الحسابية':null;
+ const formula=candidate(raw);
+ if(formula.includes('=')&&/[xX]/.test(formula))return /\^2/.test(formula)?'المعادلات التربيعية':'المعادلات';
+ return formula?'ترتيب العمليات الحسابية':null;
 }
