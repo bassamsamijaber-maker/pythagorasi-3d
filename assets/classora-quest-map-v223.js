@@ -227,17 +227,26 @@ function draw(){
  }finally{rendering=false}
 }
 function question(t,index,round){
- const key=owned()+'|'+t.value+'|'+index+'|'+round+'|'+(language()==='ar'?'ar':'en');
- if(challenge?.key===key)return challenge.question;
- const api=window.classoraAssessment;
- let q=null;
- try{
-  const level='easy'; // All three missions stay beginner-friendly.
-  const quiz=api?.generate?.(t.value,6,level,language()==='ar'?'ar':'en',true);
-  q=quiz?.questions?.find(z=>z.type==='mcq'&&Array.isArray(z.options)&&z.options.length>=2&&z.options.includes(String(z.answer)))||null;
- }catch(e){console.warn('Quest bank',e)}
- challenge={key,question:q,round,correct:0,wrong:false};
- return q;
+ const key=owned()+'|'+t.value+'|'+index+'|'+(language()==='ar'?'ar':'en');
+ if(challenge?.missionKey!==key){
+  const pool=[],seen=new Set();
+  try{
+   for(let attempt=0;attempt<12&&pool.length<5;attempt++){
+    const quiz=window.classoraAssessment?.generate?.(t.value,15,'easy',language()==='ar'?'ar':'en',true);
+    for(const q of quiz?.questions||[]){
+     const signature=String(q.prompt||'').trim();
+     if(!signature||seen.has(signature)||q.type!=='mcq'||!Array.isArray(q.options)||q.options.length<2||!q.options.some(x=>String(x)===String(q.answer)))continue;
+     seen.add(signature);pool.push(q);if(pool.length===5)break;
+    }
+   }
+  }catch(e){console.warn('Quest bank',e)}
+  challenge={missionKey:key,pool,round:0,correct:0,answered:false};
+ }
+ challenge.round=round;
+ challenge.question=challenge.pool.length===5?challenge.pool[round]:null;
+ challenge.key=owned()+'|'+t.value+'|'+index+'|'+round;
+ challenge.answered=false;
+ return challenge.question;
 }
 function mission(side,t,group){
  const step=progress(t),isOpen=gainTopic(t);
@@ -252,9 +261,9 @@ function mission(side,t,group){
  });
  side.append(bar);
  const hint=el('p','cl223-description',
-  step===0?L('المهمة 1: سؤال سهل عن الموضوع بيبدأ فورًا!','Quest 1 starts immediately with one easy question!'):
-  step===1?L('المهمة 2: سؤال واحد سهل، جرّب لحد ما تزبط!','Quest 2: one easy question. Try until you get it!'):
-  step===2?L('المهمة 3: جاوب سؤالين قصار، ويفتح الموضوع القادم.','Quest 3: answer two short questions to unlock the next topic.'):
+  step===0?L('المهمة 1: خمسة أسئلة سهلة عن الموضوع.','Quest 1: five easy questions about this topic.'):
+  step===1?L('المهمة 2: خمسة أسئلة، خذ وقتك وجرّب.','Quest 2: five questions. Take your time and try again.'):
+  step===2?L('المهمة 3: جاوب خمسة أسئلة لفتح الموضوع القادم.','Quest 3: answer five questions to unlock the next topic.'):
   L('أبدعت! خلصت المهمات الثلاث وفتحت اللي بعدها.','Amazing! All three quests are complete, and the next topic is unlocked.'));
  side.append(hint);
  if(!isOpen){side.append(el('p','cl223-lock-note',L('كمّل المرحلة اللي قبلها عشان تفتح هاي.','Finish the previous topic to unlock this.')));return}
@@ -297,25 +306,26 @@ function mission(side,t,group){
   return;
  }
  const missionNum=step;
- const goal=step===2?2:1;
- if(!challenge||!challenge.key.startsWith(owned()+'|'+t.value+'|'+missionNum+'|'))challenge=null;
+ const goal=5;
+ if(!challenge||challenge.missionKey!==owned()+'|'+t.value+'|'+missionNum+'|'+(language()==='ar'?'ar':'en'))challenge=null;
  if(!challenge){question(t,missionNum,0)}
  const data=challenge;
  if(!data?.question){
-  side.append(el('p','cl223-fine',L('هذا الموضوع ما عنده أسئلة قصيرة كافية حاليًا. افتح التدريب الأصلي وكمّل المهمة.','This lesson needs more verified short questions. Use its existing practice to complete the mission.')));
+  side.append(el('p','cl223-fine',L('نحتاج خمسة أسئلة مختلفة لهذا الموضوع. افتح التدريب أو أعد المحاولة. تقدّمك محفوظ.','This topic needs five distinct questions. Open practice or retry. Your progress is saved.')));
   const learn=button(L('افتح تدريب الموضوع','Open topic practice'),'cl223-primary');
   learn.addEventListener('click',()=>{opened.add(t.value+'-'+step);window.classoraCurriculum?.openAt?.(t.grade,t.subject,t.title)});
-  const finishFallback=button(L('خلصت التدريب','I finished practicing'),'cl223-outline');
-  finishFallback.disabled=!opened.has(t.value+'-'+step);
-  finishFallback.addEventListener('click',()=>finish(t,step+1));
-  side.append(learn,finishFallback);return
+  const retry=button(L('إعادة المحاولة','Try again'),'cl223-outline');
+  retry.addEventListener('click',()=>{challenge=null;draw()});
+  side.append(learn,retry);return
  }
  const count=el('p','cl223-q-count',L('سؤال ','Question ')+(data.correct+1)+' / '+goal);side.append(count);
  const titleQ=el('h4','cl223-question',data.question.prompt);side.append(titleQ);
  const options=el('div','cl223-options');
  for(const choice of data.question.options){
   const b=button(String(choice),'cl223-answer');b.addEventListener('click',()=>{
+   if(data.answered)return;
    if(String(choice)===String(data.question.answer)){
+    data.answered=true;
     data.correct++;
     if(data.correct>=goal){
      finish(t,step+1);
@@ -323,7 +333,6 @@ function mission(side,t,group){
     }
     const nextRound=data.round+1;
     const correctSoFar=data.correct;
-    challenge=null;
     question(t,missionNum,nextRound);
     if(challenge)challenge.correct=correctSoFar;
     draw()

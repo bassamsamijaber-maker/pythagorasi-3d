@@ -42,6 +42,7 @@ export function installClassoraLegal(){
  const next=modal.querySelector('.classora-legal-next');
  const close=modal.querySelector('.classora-legal-close');
  const status=modal.querySelector('.classora-legal-status');
+ let saving=false;
  let uid='',current='privacy',review=false,previousFocus=null,read={privacy:false,terms:false};
  const lang=()=>['ar','en',...Object.keys(window.ClassoraLegalTranslations?.languages||{})].includes(document.documentElement.lang)?document.documentElement.lang:'en';
  const phrase=(ar,en)=>document.documentElement.lang==='ar'?ar:(window.ClassoraLocale?.tFor?.(document.documentElement.lang,en)||en);
@@ -54,15 +55,13 @@ export function installClassoraLegal(){
    (deviceMode(id)&&(storageGet(DEVICE_KEY)||storageGet(LEGACY+'device'))));
  }
  function updateControls(){
-  const both=read.privacy&&read.terms;
-  checkbox.disabled=review||!both;
+  const both=true;
+  checkbox.disabled=review||saving;
   if(!both)checkbox.checked=false;
-  accept.disabled=review||!both||!checkbox.checked;
+  accept.disabled=review||saving||!checkbox.checked;
   next.disabled=review; // Navigation between documents must work before scrolling to the end.
   next.textContent=current==='privacy'?phrase('التالي: شروط الاستخدام','Next: Terms of Use'):phrase('العودة إلى الخصوصية','Back to Privacy');
-  status.textContent=review?phrase('تقدر تراجع السياسات من الإعدادات بأي وقت.','You can review these policies from Settings at any time.'):
-   read[current]?(both?phrase('خلصت مراجعة السياستين. فعّل التأكيد للمتابعة.','Both policies reviewed. Check the confirmation to continue.'):phrase('تمّت مراجعة هذا القسم. انتقل للقسم الثاني.','This section is reviewed. Continue to the other policy.')):
-   phrase('اقرأ هذا القسم ومرّر لآخر النص حتى تكمل.','Read this section and scroll to the bottom to finish.');
+  status.textContent=review?phrase('تقدر تراجع السياسات من الإعدادات بأي وقت.','You can review these policies from Settings at any time.'):phrase('الموافقة مرة واحدة لحسابك. الروابط أدناه لقراءة التفاصيل.','One agreement for your account. Read the details using the links below.');
   for(const button of modal.querySelectorAll('[data-policy]')){
    const key=button.dataset.policy;
    button.classList.toggle('active',key===current);
@@ -91,7 +90,7 @@ export function installClassoraLegal(){
   byId('classoraLegalTitle').textContent=review?phrase('سياسات Classora','Classora policies'):phrase('الخصوصية وشروط الاستخدام','Privacy and Terms of Use');
   byId('classoraLegalText').textContent=review?
     phrase('راجع المحتوى الكامل وقت ما تحب.','Review the full policies whenever you need.'):
-    phrase('قبل استخدام الموقع، اقرأ سياسة الخصوصية وشروط الاستخدام كاملتين. ما بتقدر تكمل قبل المراجعة والموافقة.','Before using Classora, read the full Privacy Policy and Terms of Use. You cannot continue until you review and confirm both.');
+    phrase('أهلًا في كلاسورا. راجع الخصوصية والشروط، ثم وافق للمتابعة. تحفظ الموافقة بحسابك.','Welcome to Classora. Review our Privacy Policy and Terms, then agree to continue. Your agreement is saved to your account.');
   byId('classoraLegalPrivacy').textContent=phrase('فتح الخصوصية بصفحة منفصلة','Open Privacy Policy in new tab');
   byId('classoraLegalTerms').textContent=phrase('فتح الشروط بصفحة منفصلة','Open Terms in new tab');
   byId('classoraLegalPrivacy').href='./privacy.html?lang='+lang();
@@ -119,15 +118,20 @@ export function installClassoraLegal(){
   localize();
   (review?close:modal.querySelector('[data-policy="privacy"]')).focus({preventScroll:true});
  }
- function maybeShow(options={}){
-  // Phones enter directly. This is not a recorded policy acceptance; Settings still opens review.
-  if(window.matchMedia("(max-width:760px)").matches ||
-     (/iPhone|iPod|Android.*Mobile/i.test(navigator.userAgent)))return;
-  if(!modal.hidden)return;
+ async function maybeShow(options={}){
   const id=String(options.uid||window.PythagorasiUser?.uid||'');
-  if(!id||accepted(id))return;
+  if(!id)return;
+  if(uid&&uid!==id&&!modal.hidden)dismiss();
+  const cloud=options.profile?.legalAcceptance||(window.PythagorasiUser?.uid===id?window.PythagorasiUser.legalAcceptance:null);
+  if(cloud?.accepted===true){storagePut(accountKey(id),'cloud');return}
+  if(accepted(id)){
+   if(!deviceMode(id))try{await window.classoraSaveLegalAcceptance?.(id)}catch(e){console.warn('Consent sync pending',e)}
+   return;
+  }
+  if(!modal.hidden)return;
   begin(id,false);
  }
+
  function open(){
   if(!modal.hidden)return;
   begin(window.PythagorasiUser?.uid||'guest-device',true);
@@ -136,17 +140,26 @@ export function installClassoraLegal(){
  modal.querySelectorAll('[data-policy]').forEach(button=>button.addEventListener('click',()=>{current=button.dataset.policy;showDocument()}));
  next.addEventListener('click',()=>{if(review)return;current=current==='privacy'?'terms':'privacy';showDocument();reader.focus({preventScroll:true})});
  checkbox.addEventListener('change',updateControls);
- accept.addEventListener('click',()=>{
-  if(review||!read.privacy||!read.terms||!checkbox.checked)return;
-  storagePut(accountKey(uid),new Date().toISOString());
-  if(deviceMode(uid))storagePut(DEVICE_KEY,new Date().toISOString());
-  dismiss();
+ accept.addEventListener('click',async()=>{
+  if(review||saving||!checkbox.checked)return;
+  const owner=uid;saving=true;updateControls();
+  try{
+   if(!deviceMode(owner)){
+    if(typeof window.classoraSaveLegalAcceptance!=='function')throw Error('unavailable');
+    await window.classoraSaveLegalAcceptance(owner);
+   }
+   storagePut(accountKey(owner),new Date().toISOString());
+   if(deviceMode(owner))storagePut(DEVICE_KEY,new Date().toISOString());
+   if(uid===owner)dismiss();
+  }catch(e){status.textContent=phrase('تعذر حفظ الموافقة. تحقق من الاتصال وحاول مرة أخرى.','Could not save your agreement. Check your connection and try again.');}
+  finally{saving=false;checkbox.disabled=review;accept.disabled=review||!checkbox.checked;}
  });
  close.addEventListener('click',()=>{
   if(review){dismiss();return}
   // Declining / leaving the first-use dialog never marks the policies accepted.
   // Return to the login gate rather than letting a signed-in lesson continue.
   dismiss();
+  window.classoraLeaveLegal?.();
   const gate=document.getElementById('authGate');
   if(gate){
    gate.classList.add('show');
@@ -171,3 +184,4 @@ export function installClassoraLegal(){
  localize();
  return {maybeShow,open};
 }
+

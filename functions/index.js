@@ -262,3 +262,21 @@ exports.notifyTeacherStudentJoined = onDocumentCreated(
 Object.assign(exports, require('./support-admin'));
 // OpenAI callable left unregistered while Classora uses the local Ollama gateway.
 
+
+
+// One non-renewing, no-card product trial per Firebase account, issued by the server.
+const {onCall,HttpsError}=require('firebase-functions/v2/https');
+const {Timestamp}=require('firebase-admin/firestore');
+exports.startMembershipTrial=onCall({cors:['https://classora.study','https://www.classora.study']},async request=>{
+ const uid=request.auth?.uid;
+ if(!uid||request.auth.token.firebase?.sign_in_provider==='anonymous')throw new HttpsError('unauthenticated','Sign in first.');
+ const ref=db.doc('membershipTrials/'+uid);
+ return db.runTransaction(async tx=>{
+  const [profile,previous]=await Promise.all([tx.get(db.doc('users/'+uid)),tx.get(ref)]);
+  if(!profile.exists||!['student','teacher'].includes(profile.data().role))throw new HttpsError('failed-precondition','Complete your account first.');
+  if(previous.exists)throw new HttpsError('already-exists','This account has already used its trial.');
+  const now=Timestamp.now(),expiresAt=Timestamp.fromMillis(now.toMillis()+7*86400000);
+  tx.create(ref,{uid,kind:profile.data().role,tier:'premium',grantedAt:now,expiresAt,revoked:false,source:'trial'});
+  return {expiresAt:expiresAt.toMillis()};
+ });
+});

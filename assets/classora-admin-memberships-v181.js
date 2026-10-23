@@ -1,3 +1,5 @@
+import {memberText as T} from './classora-member-words-v238.js?v=238';
+import {FEATURES} from './classora-membership-access-v238.js?v=238';
 // Classora staff courtesy memberships. Firestore rules MUST be deployed before use.
 // No card number is collected. A courtesy grant never schedules a Paddle charge.
 import {getApps} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -13,6 +15,17 @@ const result=$("clGrantStatus");
 const list=$("clGrantList");
 const allowedKind={student:["student"],teacher:["teacher","class","school"]};
 let authorized=false;
+const mode=document.createElement('select');mode.id='clGrantMode';
+const choices=document.createElement('div');choices.className='cl238-feature-options';choices.hidden=true;
+function renderFeatureChoices(){
+ const previous=mode.value||'all';mode.replaceChildren();
+ for(const key of ['all','custom']){const o=document.createElement('option');o.value=key;o.textContent=T(key);mode.append(o)}mode.value=previous;mode.setAttribute('aria-label',T('features'));
+ const checked=[...choices.querySelectorAll('input:checked')].map(x=>x.value);choices.replaceChildren();
+ for(const feature of FEATURES){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.value=feature;input.checked=checked.includes(feature);label.append(input,document.createTextNode(T(feature)));choices.append(label)}
+}
+mode.onchange=()=>choices.hidden=mode.value!=='custom';renderFeatureChoices();form?.querySelector('#clGrantSave')?.before(mode,choices);
+new MutationObserver(renderFeatureChoices).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+
 function local(s){return s||"";}
 function say(message,ok=false){result.textContent=message;result.dataset.ok=ok?"1":"0";}
 const fmt=date=>date instanceof Date?date.toLocaleString(document.documentElement.lang||"ar",{dateStyle:"medium",timeStyle:"short"}):"—";
@@ -113,6 +126,8 @@ form?.addEventListener("submit",async(event)=>{
    if(!allowedKind[account.role]?.includes(kind))throw Error("هذا النوع لا يناسب دور الحساب");
    if(!["plus","premium"].includes(tier))throw Error("نوع الباقة غير صحيح");
    if(!Number.isSafeInteger(days)||days<1||days>365)throw Error("المدة من يوم حتى 365 يومًا");
+   const selectedFeatures=[...choices.querySelectorAll('input:checked')].map(x=>x.value);
+   if(mode.value==='custom'&&!selectedFeatures.length)throw Error(T('features'));
    const note=$("clGrantNote").value.trim();
    if(note.length>180)throw Error("سبب المنحة أطول من اللازم");
    const until=new Date(Date.now()+days*86400000);
@@ -120,10 +135,10 @@ form?.addEventListener("submit",async(event)=>{
    await setDoc(doc(db,"membershipGrants",account.uid),{
      uid:account.uid,kind,tier,days,grantedAt:serverTimestamp(),
      expiresAt:Timestamp.fromDate(until),grantedBy:auth.currentUser.uid,
-     note,revoked:false
+     note,revoked:false,...(mode.value==='custom'?{features:selectedFeatures}:{})
    });
    say("تم تسجيل المنحة حتى "+fmt(until)+". لا يوجد خصم أو تجديد تلقائي.",true);
-   form.reset();lastResolved=null;$("clGrantResolved").textContent="";updateKindChoices(null);
+   form.reset();choices.hidden=true;lastResolved=null;$("clGrantResolved").textContent="";updateKindChoices(null);
    await renderList();
  }catch(e){console.error("Membership grant creation failed",e);say(e.code==="permission-denied"?"رفض Firestore الحفظ. لازم نشر قواعد العضوية الآمنة أولًا.":e.message||"تعذر الحفظ");}
  finally{submit.disabled=false;}
@@ -131,3 +146,4 @@ form?.addEventListener("submit",async(event)=>{
 $("clGrantRefresh")?.addEventListener("click",refresh);
 onAuthStateChanged(auth,()=>{authorized=false;if(!auth.currentUser){list?.replaceChildren();}});
 window.classoraAdminGrants={refresh};
+

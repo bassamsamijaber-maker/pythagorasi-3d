@@ -87,11 +87,11 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-responsive-v131.css?v=138">
 <link rel="stylesheet" href="./assets/classora-dock-stable-v140.css?v=140">
 <link rel="stylesheet" href="./assets/classora-chat-memberships-v169.css?v=186">
-<script defer src="./assets/classora-memberships-nav-v169.js?v=186"></script>
-<style id="classora-hide-old-upgrade">#lobbyMembershipBtn,#classoraSettingsMembershipLink{display:none!important}</style>
+<script defer src="./assets/classora-memberships-nav-v169.js?v=238"></script>
+
 <link rel="stylesheet" href="./assets/classora-locales-v140.css?v=140">
 <script src="./assets/classora-locales-v140.js?v=166"></script>
-<script src="./assets/classora-style-i18n-v237.js?v=237"></script>
+<script src="./assets/classora-style-i18n-v237.js?v=238"></script>
 <script src="./assets/classora-quest-i18n-v233.js?v=235"></script>
 <link rel="stylesheet" href="./assets/classora-assistant-motion-v134.css?v=134">
 
@@ -126,15 +126,16 @@ body.classora-intro-active{overflow:auto!important}
 <script defer src="./assets/classora-viewport-v210.js?v=211"></script>
 <link rel="stylesheet" href="./assets/classora-learning-boost-v215.css?v=221">
 <link rel="stylesheet" href="./assets/classora-quest-map-v223.css?v=231">
-<script type="module" src="./assets/classora-quest-map-v223.js?v=236"></script>
+<script type="module" src="./assets/classora-quest-map-v223.js?v=238"></script>
 <link rel="stylesheet" href="./assets/classora-arena-shop-v227.css?v=229">
-<script type="module" src="./assets/classora-arena-shop-v227.js?v=237"></script>
+<script type="module" src="./assets/classora-arena-shop-v227.js?v=238"></script>
 <link rel="stylesheet" href="./assets/classora-fx-settings-v228.css?v=229">
 <script defer src="./assets/classora-fx-settings-v228.js?v=237"></script>
 <link rel="stylesheet" href="./assets/classora-polish-v232.css?v=236">
 <script type="module" src="./assets/classora-profile-studio-v232.js?v=237"></script>
 <link rel="stylesheet" href="./assets/classora-style-v237.css?v=237">
 <script defer src="./assets/classora-profile-scenes-v237.js?v=237"></script>
+<link rel="stylesheet" href="./assets/classora-mobile-membership-v238.css?v=238">
 </head>
 <body class="classora-intro-active">
 <div id="classoraIntro" class="classora-cinematic-intro" aria-label="Classora opening">
@@ -2521,7 +2522,7 @@ import {formatMathPrompt} from './assets/math-worksheet-v213.js?v=213';
 import {classoraAssessment} from './assets/classora-assessment-v121.js?v=214';
 import {classoraStudyAnswer,classoraStudyTopicMatch,classoraStudyClarification} from './assets/classora-study-assistant-v124.js?v=137';
 import {classoraAnimateAssistant,classoraOpenAssistantTopic} from './assets/classora-assistant-motion-v134.js?v=139';
-import {installClassoraLegal} from './assets/classora-legal-v124.js?v=213';
+import {installClassoraLegal} from './assets/classora-legal-v124.js?v=238';
 import {installClassoraCompetitionTopicStep} from './assets/classora-competition-topics-v122.js?v=161';
 import './assets/classora-global-art-v121.js?v=121';
 import {mountCurriculum} from "./assets/curriculum-v97.js?v=213";
@@ -3374,6 +3375,12 @@ function finishAuthIntent(){
   }
 }
 
+window.classoraSaveLegalAcceptance=async uid=>{
+ if(!auth.currentUser||auth.currentUser.uid!==uid||auth.currentUser.isAnonymous)throw Error('account-changed');
+ await setDoc(doc(db,'users',uid),{legalAcceptance:{accepted:true,acceptedAt:serverTimestamp(),version:'2026-10-11'}},{merge:true});
+ if(auth.currentUser?.uid===uid&&window.PythagorasiUser?.uid===uid)window.PythagorasiUser.legalAcceptance={accepted:true};
+};
+window.classoraLeaveLegal=()=>{if(auth.currentUser)signOut(auth).catch(console.warn)};
 function paintUser(user,profile){
   document.getElementById("sessionRecovery").hidden=true;
   sessionStorage.removeItem("classora_guest_session");
@@ -3391,7 +3398,7 @@ function paintUser(user,profile){
   authGate.classList.remove("show");
   document.body.dataset.userRole=profile?.role||"";
   window.PythagorasiUser={uid:user?.uid||"guest-local",...profile};
-   if(user?.uid)window.classoraLegal?.maybeShow({uid:user.uid});
+   if(user?.uid)window.classoraLegal?.maybeShow({uid:user.uid,profile});
   activeProfile=window.PythagorasiUser;
 
   if(!guest){
@@ -17560,7 +17567,7 @@ let classoraWakeTimer=null;
 
 function classoraOpenOverlays(){
   // Include native dialog lesson/3D windows, not just classic .modal screens.
-  return [...document.querySelectorAll(".modal.open,dialog[open]")];
+  return [...document.querySelectorAll(".modal.open,dialog[open]")].filter(el=>!el.hidden&&!el.closest("[hidden],.hidden")&&getComputedStyle(el).display!=="none");
 }
 function classoraLockBackground(){
   const lobby=document.querySelector(".platform-lobby");
@@ -17633,17 +17640,12 @@ document.addEventListener("click",event=>{
     event.preventDefault();
     event.stopImmediatePropagation();
   }
-  // Lobby must remain usable even while a modal or native 3D dialog is open.
-  // Other tabs still respect the deliberate-close rule.
-  const dockTarget=event.target?.closest?.("#classoraMobilePageNav button");
-  if(dockTarget&&dockTarget.id!=="classoraMobileLobbyBtn"&&classoraOpenOverlays().length){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
-  }
+  // Selecting a dock tab is an explicit request to leave the current screen.
+  const dockTarget=event.target?.closest?.('#classoraMobilePageNav button');
+  if(dockTarget&&dockTarget.id!=='classoraMobileLobbyBtn'&&classoraOpenOverlays().length)classoraGoLobby();
 },true);
 document.addEventListener("keydown",event=>{
-  if(event.key==="Escape"&&classoraOpenOverlays().length){
+  if(event.key==="Escape"&&classoraOpenOverlays().length&&!document.querySelector("dialog[open]")){
     event.preventDefault();
     event.stopImmediatePropagation();
   }
@@ -17800,10 +17802,6 @@ function classoraReturnFromPeriodic(){
 window.classoraReturnFromPeriodic=classoraReturnFromPeriodic;
 function mobileGoLobby(){return classoraGoLobby()}
 function mobileGoSettings(){
-  if(classoraOpenOverlays().length){
-    showToast(currentUILanguage==="en"?"Close the open page using X first.":"أغلق الصفحة المفتوحة من زر × أولًا.");
-    return;
-  }
   classoraGoLobby();
   setTimeout(()=>document.getElementById("lobbySettingsBtn")?.click(),60);
 }
@@ -17881,21 +17879,20 @@ syncMobileControlBar();
 
 /* Stop wheel/touch from leaking through an open screen. */
 function classoraAllowScrollableOverlay(event){
-  // Privacy/Terms is a separate topmost overlay. Auth/login or a background
-  // modal may be visible simultaneously; it must not cancel its touch gestures.
-  const legal=document.getElementById("classoraLegalModal");
-  return legal&&!legal.hidden&&legal.contains(event.target);
+ const target=event.target;
+ if(!(target instanceof Element))return false;
+ const legal=document.getElementById('classoraLegalModal');
+ if(legal&&!legal.hidden&&legal.contains(target))return true;
+ // A nested/top-layer dialog must not be blocked by a background modal.
+ return !!target.closest('.modal.open,dialog[open],.auth-gate.show,#classoraMobilePageNav');
 }
-document.addEventListener("wheel",event=>{
-  if(classoraAllowScrollableOverlay(event))return;
-  const active=document.querySelector(".modal.open,.auth-gate.show");
-  if(active&&!active.contains(event.target))event.preventDefault();
-},{capture:true,passive:false});
-document.addEventListener("touchmove",event=>{
-  if(classoraAllowScrollableOverlay(event))return;
-  const active=document.querySelector(".modal.open,.auth-gate.show");
-  if(active&&!active.contains(event.target))event.preventDefault();
-},{capture:true,passive:false});
+function classoraStopBackgroundScroll(event){
+ if(classoraAllowScrollableOverlay(event))return;
+ const gate=document.getElementById('authGate');
+ if((classoraOpenOverlays().length||gate?.classList.contains('show'))&&event.cancelable)event.preventDefault();
+}
+document.addEventListener('wheel',classoraStopBackgroundScroll,{capture:true,passive:false});
+document.addEventListener('touchmove',classoraStopBackgroundScroll,{capture:true,passive:false});
 
 function classoraResizeEquation3D(){
   try{
@@ -18852,8 +18849,9 @@ onAuthStateChanged(auth,user=>{
 });
 
 </script>
-<script type="module" src="./assets/classora-admin-memberships-v181.js?v=181"></script>
+<script type="module" src="./assets/classora-admin-memberships-v181.js?v=238"></script>
 <script type="module" src="./assets/classora-admin-activity-v184.js?v=184"></script>
+<script type="module" src="./assets/classora-member-space-v238.js?v=238"></script>
 </body>
 </html>
 

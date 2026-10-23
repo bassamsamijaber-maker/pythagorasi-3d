@@ -43,7 +43,7 @@ function errorText(e){
  if(m.includes('different-grade'))return tr('لازم يكون الخصمين بنفس الصف.','Both players must be in the same grade.');
  if(m.includes('room-not-found'))return tr('كود الغرفة غير موجود.','Room code not found.');
  if(m.includes('room-full'))return tr('الغرفة ممتلئة أو انتهى وقتها.','The room is full or expired.');
- if(m.includes('insufficient-xp'))return tr('رصيد XP المتاح مش كافي.','Not enough available XP.');
+ if(m.includes('insufficient-xp'))return tr('رصيد كلاسورا كوينز المتاح مش كافي.','Not enough available Classora Coins.');
  if(m.includes('not-enough-questions'))return tr('مش موجود 5 أسئلة مناسبة بهذا الصف.','Not enough questions for this grade.');
  if(code.includes('unavailable')||m.includes('network'))return tr('الاتصال ضعيف. حاول مرة ثانية.','Connection unavailable. Please retry.');
  return tr('تعذر إكمال العملية. حاول مجددًا.','Could not complete the action. Please retry.')
@@ -57,12 +57,12 @@ function init(){
  const front=$('classoraLearningFront');if(!front){document.addEventListener('classora:learning-front-ready',init,{once:true});return}
  if($('cl227Home'))return;
  const home=el('section','cl227-home');home.id='cl227Home';
- const heading=el('header','cl227-heading');heading.append(el('span','cl227-brow',tr('كلاسورا · الساحة والمتجر','CLASSORA · ARENA & SHOP')),el('h2','',tr('الساحة والكراج','Arena & garage')),el('p','',tr('تحدّى صاحبك، واجمع XP وافتح مؤثرات متحركة لبروفايلك.','Challenge a friend, earn XP from study and unlock profile cosmetics.')));
+ const heading=el('header','cl227-heading');heading.append(el('span','cl227-brow',tr('كلاسورا · الساحة والمتجر','CLASSORA · ARENA & SHOP')),el('h2','',tr('الساحة والكراج','Arena & garage')),el('p','',tr('تحدّى صاحبك، واجمع كلاسورا كوينز وافتح مؤثرات متحركة لبروفايلك.','Challenge a friend, earn Classora Coins from study and unlock profile cosmetics.')));
  const rank=el('div','cl227-rank');rank.id='cl227Rank';heading.append(rank);
  const entries=el('div','cl227-entry-grid');
  const duel=card(tr('1v1 ضد صاحبك','1v1 vs a friend'),tr('نفس الأسئلة، نتيجة مباشرة وكود دعوة.','Same questions, live scores and a room code.'),'duel');
  const join=btn(tr('ادخل التحدي','Open duel'),'cl227-entry-cta');join.addEventListener('click',()=>show('duel'));duel.append(join);
- const shop=card(tr('متجر XP','XP shop'),tr('الشرار، البرق، هالة المجرّة وألقاب مميزة.','Sparks, lightning, cosmic effects and titles.'),'shop');
+ const shop=card(tr('متجر كلاسورا كوينز','Classora Coins shop'),tr('الشرار، البرق، هالة المجرّة وألقاب مميزة.','Sparks, lightning, cosmic effects and titles.'),'shop');
  const shopOpen=btn(tr('افتح الشوب','Visit shop'),'cl227-entry-cta');shopOpen.addEventListener('click',()=>show('shop'));shop.append(shopOpen);
  entries.append(duel,shop);home.append(heading,entries);
  const pane=el('section','cl227-pane');pane.id='cl227Pane';pane.hidden=true;
@@ -133,7 +133,7 @@ function score(choices,questions){return choices.reduce((n,v,i)=>n+(Number(v)===
 function drawDuel(){
  const pane=frame(tr('مبارزة 1v1','1v1 challenge'));
  const body=el('div','cl227-duel');
- body.append(el('p','cl227-duel-intro',tr('5 أسئلة سهلة وعشوائية من صفك. أول واحد يخلص يشوف نتيجة الطرفين. بدون خصم XP على الخسارة.','Five easy random questions from your grade. See both scores when finished. No XP penalties.')));
+ body.append(el('p','cl227-duel-intro',tr('5 أسئلة سهلة وعشوائية من صفك. أول واحد يخلص يشوف نتيجة الطرفين. بدون خصم كلاسورا كوينز على الخسارة.','Five easy random questions from your grade. See both scores when finished. No Classora Coins penalties.')));
  if(!canDuel()){
   body.append(el('p','cl227-empty',tr('مبارزات الطلاب فقط، لكن الأدمن عنده جميع مؤثرات الشوب.','Duels are for student accounts; admins have all shop effects.')));pane.append(body);return
  }
@@ -173,7 +173,7 @@ function drawDuel(){
   const kicker=el('span','cl232-goal-kicker',a>b?tr('انتصار!','VICTORY!'):a===b?tr('تعادل','DRAW'):tr('انتهت المباراة','MATCH OVER'));
   const trophy=el('span','cl232-goal-trophy',a>b?'★':a===b?'≡':'✦');
   win.append(kicker,trophy,el('strong','',result),el('small','',a+' — '+b));
-  body.append(win,el('p','cl227-result-note',tr('مباراة تدريبية للمتعة، من دون مكافآت XP إضافية.','Friendly practice match — no extra XP is awarded.')));
+  body.append(win,el('p','cl227-result-note',tr('مباراة تدريبية للمتعة، من دون مكافآت كلاسورا كوينز إضافية.','Friendly practice match — no extra Classora Coins is awarded.')));
   const restart=btn(tr('العب مباراة جديدة','New duel'),'cl227-primary');restart.addEventListener('click',()=>{detach();drawDuel()});body.append(restart);pane.append(body);return
  }
  if(mine.length>=room.questions.length){
@@ -199,11 +199,11 @@ function shopBalance(){
  return Math.max(0,(Number(p.xp)||0)-spent);
 }
 function drawShop(){
- const pane=frame(tr('كراج التأثيرات · متجر XP','Cosmetic garage · XP shop'));
+ const pane=frame(tr('كراج التأثيرات · متجر كلاسورا كوينز','Cosmetic garage · Classora Coins shop'));
  const p=user()||{},shop=p.questShop||{},owned=Array.isArray(shop.owned)?shop.owned:[];
  const balance=el('div','cl227-wallet');
- balance.append(el('span','',tr('رصيدك المتاح','Available balance')),el('strong','',shopBalance()+' XP'));
- pane.append(balance,el('p','cl227-shop-note',isAdmin()?tr('جميع العناصر مفتوحة مجانًا للأدمن، بدون صرف XP.','All cosmetics are unlocked for admins, without spending XP.'):tr('الشراء بإنجازاتك فقط. XP المستوى ما بننقص؛ المتجر بحسب الرصيد غير المصروف.','Earn cosmetic effects with XP. Total XP is unchanged; purchases use only the available balance.')));
+ balance.append(el('span','',tr('رصيدك المتاح','Available balance')),el('strong','',shopBalance()+' '+tr('كلاسورا كوينز','Classora Coins')));
+ pane.append(balance,el('p','cl227-shop-note',isAdmin()?tr('جميع العناصر مفتوحة مجانًا للأدمن، بدون صرف كلاسورا كوينز.','All cosmetics are unlocked for admins, without spending Classora Coins.'):tr('الشراء بإنجازاتك فقط. نقاط المستوى ما بتنقص؛ المتجر بحسب الرصيد غير المصروف.','Earn cosmetic effects with Classora Coins. Your total learning XP is unchanged; purchases use only the available balance.')));
  const showcase=el('div','cl232-showcase');
  const avatar=el('span','cl232-showcase-avatar');avatar.id='cl232ShopAvatar';if(p.photoData){const photo=el('img','cl232-showcase-photo');photo.src=p.photoData;photo.alt=tr('معاينة صورة البروفايل','Your avatar preview');avatar.append(photo)}else avatar.textContent=String(p.displayName||'?').trim()[0]||'?';
  const caption=el('div','cl232-showcase-copy');caption.append(el('b','',tr('شوف التأثير قبل ما تشتري','Preview effects before buying')),el('small','',tr('اضغط معاينة تحت أي تأثير. المعاينة مجانية.','Tap Preview on any cosmetic. Previews are free.')));
@@ -216,7 +216,7 @@ function drawShop(){
   const orb=window.ClassoraProfileEffects?.avatar(p,id)||el('div','cl227-shop-orbit '+id,symbols[id]||'✦');
   orb.classList.add('cl236-shop-art');
   const info=el('div','cl227-shop-info');
-  info.append(el('b','',tr(...(window.ClassoraProfileEffects?.names[id]||names[id]))),el('small','',has?tr('مملوك','Owned'):item.cost+' XP'));
+  info.append(el('b','',tr(...(window.ClassoraProfileEffects?.names[id]||names[id]))),el('small','',has?tr('مملوك','Owned'):item.cost+' '+tr('كلاسورا كوينز','Classora Coins')));
   const action=btn(pending?tr('قريبًا','Coming soon'):has?(equipped?tr('مجهّز','Equipped'):tr('تجهيز','Equip')):tr('شراء','Buy'),'cl227-shop-btn');
   action.disabled=pending||!(isStudent()||isAdmin())||equipped||(!isAdmin()&&!has&&shopBalance()<item.cost);
   action.addEventListener('click',async()=>{

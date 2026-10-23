@@ -1029,6 +1029,13 @@ service cloud.firestore {
       }
     }
 
+    // Trial creation is callable-only, once per UID. Clients cannot restart or extend it.
+    match /membershipTrials/{uid} {
+      allow get: if rawSignedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow write: if false;
+    }
+
     // Staff-assigned courtesy memberships (never charge, never create a Paddle subscription).
     // One grant per account. Access is checked with request.time; expired grants
     // automatically stop qualifying even when their document still exists.
@@ -1038,11 +1045,14 @@ service cloud.firestore {
       allow create, update: if isSuperAdmin()
         && exists(/databases/$(database)/documents/users/$(uid))
         && request.resource.data.keys().hasOnly([
-          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked'
+          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked','features'
         ])
         && request.resource.data.keys().hasAll([
           'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked'
         ])
+        && (!('features' in request.resource.data) || (request.resource.data.features is list
+          && request.resource.data.features.size() > 0 && request.resource.data.features.size() <= 5
+          && request.resource.data.features.hasOnly(['focus','notes','planner','library','chatStyle'])))
         && request.resource.data.uid == uid
         && request.resource.data.kind in ['student','teacher','class','school']
         && request.resource.data.tier in ['plus','premium']

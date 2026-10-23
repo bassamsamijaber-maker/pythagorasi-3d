@@ -1,25 +1,17 @@
-(()=>{"use strict";
-const names={
-ar:{title:"Plus وPremium",settings:"الاشتراكات والمميزات"},
-en:{title:"Plus & Premium",settings:"Memberships & benefits"},
-es:{title:"Plus y Premium",settings:"Suscripciones y ventajas"},
-ko:{title:"Plus 및 Premium",settings:"구독 및 혜택"},
-de:{title:"Plus und Premium",settings:"Tarife und Vorteile"},
-it:{title:"Plus e Premium",settings:"Abbonamenti e vantaggi"},
-hi:{title:"Plus और Premium",settings:"सदस्यता और फायदे"},
-tr:{title:"Plus ve Premium",settings:"Üyelikler ve avantajlar"}};
-function removeUpgrade(){document.getElementById("lobbyMembershipBtn")?.remove();document.getElementById("classoraSettingsMembershipLink")?.remove()}
+/* Membership entry points use the existing verified subscription page. */
+(()=>{'use strict';
+const labels={ar:['ترقية','الاشتراكات والمميزات','خلّي كلاسورا على ذوقك. اكتشف Plus وPremium.','اكتشف اشتراكك'],en:['Upgrade','Memberships & benefits','Make Classora yours. Explore Plus and Premium.','Explore plans'],es:['Mejorar','Suscripciones y ventajas','Haz Classora tuyo. Descubre Plus y Premium.','Ver planes'],ko:['업그레이드','구독 및 혜택','나만의 Classora. Plus와 Premium을 만나보세요.','요금제 보기'],de:['Upgrade','Tarife und Vorteile','Dein Classora. Entdecke Plus und Premium.','Tarife entdecken'],it:['Passa a un piano','Abbonamenti e vantaggi','Classora come vuoi tu. Scopri Plus e Premium.','Scopri i piani'],hi:['अपग्रेड','सदस्यता और फायदे','Classora को अपना बनाएँ। Plus और Premium देखें।','प्लान देखें'],tr:['Yükselt','Üyelikler ve avantajlar','Classora senin olsun. Plus ve Premium’u keşfet.','Paketleri keşfet']};
+let queued=false;
 function update(){
- removeUpgrade();
- const language=window.ClassoraLocale?.language||localStorage.getItem("pythagorasi_language")||"ar";
- const words=names[language]||names.en;
- document.getElementById("classoraSettingsMembershipLink")?.remove();
+ queued=false;const lang=document.documentElement.lang||'ar',w=labels[lang]||labels.en;
+ const sites=[['cl238LobbyUpgrade','.lobby-top-actions',0],['cl238SettingsUpgrade','#settingsModal .settings-profile-row',1],['cl238ChatUpgrade','#chatModal .modalhead > div',0],['cl238SubjectsUpgrade','#classoraLearningFront',2]];
+ for(const[id,selector,key]of sites){const host=document.querySelector(selector);if(!host)continue;let a=document.getElementById(id);if(!a){a=document.createElement('a');a.id=id;a.className='cl238-upgrade'+(key===2?' cl238-upgrade-banner':'');a.dataset.noTranslate='';host.append(a)}
+ const text=w[key]+(key===2?' '+w[3]+' →':'');if(a.textContent!==text)a.textContent=text;
+ const url='./subscriptions.html?lang='+encodeURIComponent(lang);if(a.getAttribute('href')!==url)a.setAttribute('href',url);
+ }
 }
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",update,{once:true});else update();
-const top=document.querySelector(".lobby-top-actions");
-if(top)new MutationObserver(removeUpgrade).observe(top,{childList:true});
-document.addEventListener("click",e=>{if(e.target?.closest?.("[data-classora-language]"))setTimeout(update,80)},true);
-window.addEventListener("storage",e=>{if(e.key==="pythagorasi_language")update()});
-const gate=document.getElementById("authGate");
-if(gate)new MutationObserver(update).observe(gate,{attributes:true,attributeFilter:["lang"]});
+const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(update)}};
+new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+update();
 })();
