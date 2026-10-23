@@ -1,6 +1,7 @@
 /* Classora v239 — account-scoped device list. Remote logout requires online clients. */
 import {getApps} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
 import {getAuth,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
+import {getFunctions,httpsCallable} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js';
 import {getFirestore,collection,doc,getDoc,onSnapshot,setDoc,updateDoc,writeBatch,serverTimestamp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
 const words={
  ar:{title:'الأجهزة المسجّل دخول منها',info:'شوف أجهزتك وسجّل خروج من جهاز معيّن أو من الكل. الجهاز البعيد بخرج لما يتصل بالإنترنت.',current:'هذا الجهاز',last:'آخر نشاط',unknown:'غير معروف',one:'تسجيل خروج',all:'تسجيل خروج من كل الأجهزة',confirm:'متأكد بدك تسجّل خروج من كل الأجهزة؟',loading:'جاري تحميل الأجهزة…',unavailable:'تتبّع الأجهزة يحتاج تفعيل قواعد Firebase. الخروج من هذا الجهاز متاح.',empty:'ما في أجهزة أخرى مسجّلة.',error:'ما زبط الطلب. جرّب مرة ثانية.',signed:'تم إرسال طلب تسجيل الخروج للأجهزة المتصلة.',thisDevice:'تسجيل خروج من هذا الجهاز'},
@@ -38,18 +39,21 @@ function run(app){
  async function localLogout(){const key=deviceKey(uid);try{localStorage.removeItem(key)}catch{}await signOut(auth)}
  async function revokeOne(id){
   if(!uid||!id)return;
-  if(id===device){await localLogout();return;}
+  if(id===device){try{await updateDoc(currentDoc(),{revoked:true,revokedAt:serverTimestamp()})}catch{}await localLogout();return;}
   try{await updateDoc(doc(db,'users',uid,'deviceSessions',id),{revoked:true,revokedAt:serverTimestamp()});state(tr('signed'))}
   catch{state(tr('error'))}
  }
  async function revokeAll(){
   if(!uid||!confirm(tr('confirm')))return;
   try{
-   const batch=writeBatch(db);let count=0;
-   for(const r of rows.filter(r=>!r.revoked).slice(0,400)){
-    batch.update(doc(db,'users',uid,'deviceSessions',r.id),{revoked:true,revokedAt:serverTimestamp()});count++;
+   const others=rows.filter(r=>!r.revoked);
+   for(let i=0;i<others.length;i+=400){
+    const batch=writeBatch(db);
+    for(const r of others.slice(i,i+400))batch.update(doc(db,'users',uid,'deviceSessions',r.id),{revoked:true,revokedAt:serverTimestamp()});
+    await batch.commit();
    }
-   if(count)await batch.commit();
+   // Stronger global refresh-token revocation is available only after the callable is deployed.
+   try{await httpsCallable(getFunctions(app),'revokeMySessions')({})}catch{}
    await localLogout();
   }catch{state(tr('error'))}
  }
