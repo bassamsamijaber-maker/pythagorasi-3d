@@ -206,3 +206,29 @@ html body #platformLobby .cl250-chat-active .cl252-creative-actions{flex:0 0 aut
  html body #platformLobby .cl250-chat-card.cl250-chat-active .lobby-ai-input{flex:0 0 auto;margin-top:auto!important;position:sticky;bottom:0}
  html body #platformLobby .cl250-chat-active .cl252-creative-actions{display:none}
 }
+
+/* v253: consistent docking and full-height conversational workspace. */
+html body #platformLobby .cl214-quick{margin-top:26px!important}
+html body #platformLobby .cl253-new{align-self:flex-end;border:0;background:transparent;color:var(--cl250-accent);font:inherit;font-size:12px;padding:7px;cursor:pointer}
+html body #platformLobby :is(.cl253-focus,.cl253-note){border:1px solid var(--cl250-border);border-radius:16px;padding:13px;margin-top:14px;background:color-mix(in srgb,var(--cl250-accent) 5%,var(--cl250-card))}
+html body #platformLobby .cl253-focus h4{margin:0;font-size:13px}
+html body #platformLobby .cl253-clock{display:block;direction:ltr;font-size:32px;font-variant-numeric:tabular-nums;letter-spacing:2px;text-align:center;padding:12px 0;color:var(--cl250-accent)}
+html body #platformLobby .cl253-controls{display:flex;gap:7px}
+html body #platformLobby .cl253-controls button{flex:1;min-height:38px;border:1px solid var(--cl250-border);border-radius:10px;background:var(--cl250-card);color:var(--cl250-text);font:inherit;font-size:12px;cursor:pointer}
+html body #platformLobby .cl253-note label{display:block;font-size:13px;margin-bottom:9px}
+html body #platformLobby .cl253-note textarea{box-sizing:border-box;width:100%;resize:vertical;min-height:80px;max-height:180px;border:0;border-radius:9px;padding:9px;background:var(--cl250-card);color:var(--cl250-text);font:inherit;font-size:13px}
+html body #platformLobby .cl253-note textarea::placeholder{color:var(--cl250-muted)}
+@media(min-width:1000px){
+ html body #platformLobby .cl250-left .cl250-chat-card{flex:1 1 auto!important;min-height:0!important;width:100%!important;box-sizing:border-box!important;visibility:visible!important}
+ html body #platformLobby .cl250-left .cl250-thread{display:flex!important;flex:1 1 0!important;min-height:0!important;max-height:none!important}
+ html body #platformLobby .cl250-left .cl250-chat-active :is(.cl252-creative-actions,.lobby-ai-reply){display:none!important}
+ html body #platformLobby .cl250-left .cl250-chat-actions{flex:0 0 auto;max-height:100px;overflow-y:auto}
+ html body #platformLobby .cl250-left .lobby-ai-input{flex:0 0 auto!important}
+ html body #platformLobby .cl250-right{background:linear-gradient(160deg,color-mix(in srgb,var(--cl250-accent) 7%,var(--cl250-card)),var(--cl250-card));}
+}
+@media(min-width:1440px){
+ html body #platformLobby{--cl253-left:clamp(290px,22vw,410px);--cl253-right:clamp(230px,17vw,290px)}
+ html body #platformLobby .cl250-left{width:var(--cl253-left)!important}
+ html body #platformLobby .cl250-right{width:var(--cl253-right)!important}
+ html body #platformLobby .lobby-shell{width:calc(100% - var(--cl253-left) - var(--cl253-right) - 80px)!important;max-width:none!important;margin-left:calc(var(--cl253-left) + 40px)!important;margin-right:calc(var(--cl253-right) + 40px)!important}
+}

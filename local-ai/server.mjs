@@ -13,14 +13,14 @@ const PROJECT_ID = "pythagorasi-school";
 const HOST = "127.0.0.1";
 const PORT = 8765;
 const OLLAMA_URL = "http://127.0.0.1:11434/api/chat";
-const MODEL = "qwen2.5:3b";
+const MODEL = process.env.CLASSORA_AI_MODEL || "qwen2.5:3b";
 const ALLOWED_ORIGINS = new Set([
   "https://classora.study",
   "https://www.classora.study",
   "https://classora.pages.dev"
 ]);
 const TOKEN_CERTS_URL = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
-const MAX_REQUEST_BYTES = 28_000;
+const MAX_REQUEST_BYTES = 120_000;
 const DAILY_PER_USER = 25;
 const DAILY_GLOBAL = 150;
 const MIN_GAP_MS = 5_000;
@@ -41,6 +41,8 @@ const prompt = [
   "For an instruction such as write a story about X, write a genuine original story fitting X; for edit, revise the text given; for explain, explain the actual topic in age-appropriate language.",
   "Follow the conversation context, resolve references such as 'explain that', 'change the ending', 'continue', and 'give another example' using previous turns.",
   "For creative writing, generate original sentences based on intent, setting, style and constraints. Do not depend on a finite phrasebook or list of predefined keywords.",
+  "Short follow-ups are instructions about your most recent answer. For طوّل / هات أطول / longer expand that answer with useful detail; for قصّر / هات أقصر / shorter rewrite it concisely; for زبط / حسّن / improve produce a better complete revision. Do not switch topics or merely say you can help.",
+  "For what is history, what is mathematics, and similar broad definitions, answer directly with a simple accurate definition and a concrete example. For this/that with no identifiable referent, ask one brief clarification.",
   "For revisions, preserve the user's supplied characters, facts, chronology and requested edits. Do not pretend an edit was applied unless the revised text appears in your answer.",
   "Follow requests in Arabic, English, Spanish, Korean, German, Italian, Hindi and Turkish. Match the user's current message language or explicit language preference, and retain character names and proper nouns.",
   "For very long requested output (for example 300 lines), produce a useful numbered installment within the response limit, clearly note the current line range, and continue from the last line when the user asks to continue. Never claim to have delivered 300 lines unless 300 actual lines were produced.",
@@ -115,10 +117,10 @@ async function readBody(req) {
 }
 function validateHistory(input) {
   if (!Array.isArray(input)) return [];
-  return input.slice(-14).filter(m => m &&
+  return input.slice(-10).filter(m => m &&
     (m.role === "assistant" || m.role === "user") &&
     typeof m.content === "string" && m.content.trim()
-  ).map(m => ({role:m.role, content:m.content.slice(0,1800)}));
+  ).map(m => ({role:m.role, content:m.content.slice(0,m.role === "assistant" ? 6000 : 1800)}));
 }
 function trackUsage(uid) {
   const current = new Date().toISOString().slice(0,10);
