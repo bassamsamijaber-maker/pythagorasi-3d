@@ -20,7 +20,7 @@ function line(role,msg){
  thread.scrollTop=thread.scrollHeight;
  return p;
 }
-async function send(raw,compute){
+async function send(raw,compute,topic){
  if(!card||busy||!String(raw||'').trim())return;
  busy=true;card.classList.add('cl250-chat-active');
  line('user',String(raw).trim());
@@ -29,7 +29,13 @@ async function send(raw,compute){
  try{
   const result=await compute();
   const answer=typeof result==='string'&&result.trim()?result:t(10);
-  progress.remove();line('bot',answer);
+  progress.remove();
+  const reply=line('bot',answer);
+  if(topic?.title&&window.ClassoraConversation?.openTopic){
+    const button=el('button','cl250-lesson-button',document.documentElement.lang==='ar'?'افتح درس '+topic.title:'Open lesson: '+(topic.en||topic.title));
+    button.type='button';button.addEventListener('click',()=>window.ClassoraConversation.openTopic(topic));
+    reply.after(button);
+  }
   const fallback=$('lobbyAIReply');if(fallback)fallback.textContent=answer;
  }catch(e){progress.remove();line('bot',t(10));console.warn('Classora chat reply',e?.message)}
  finally{busy=false;if(button)button.disabled=false;thread.scrollTop=thread.scrollHeight}
