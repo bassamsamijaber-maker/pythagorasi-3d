@@ -51,7 +51,7 @@ function makePlan(type){
 }
 function draw(){
  if(!pane)return;
- const a=account();
+ const a=account();lastAccessSignature=JSON.stringify(a);
  pane.replaceChildren();
  const top=N('header','cl239-head');
  const heading=N('div','');
@@ -71,10 +71,10 @@ function draw(){
  sec.append(toolnav);
  const slot=N('div','');slot.id='classoraMemberHubContent';sec.append(slot);pane.append(sec);
  // Existing workspace is re-attached by its owner, never copied into Settings.
- document.dispatchEvent(new Event('classora:benefits-drawn'));
  pane.append(makePlan('plus'),makePlan('premium'));
  const foot=N('footer','cl239-foot');foot.append(N('p','',t('trial')));
  const link=N('a','cl239-plans',t('more'));link.href='./subscriptions.html?lang='+encodeURIComponent(lang());foot.append(link);pane.append(foot);
+ document.dispatchEvent(new Event('classora:benefits-drawn'));
 }
 function installButtons(){
  const chat=$('chatModal'),ch=chat?.querySelector('.modalhead > div')||chat?.querySelector('.modalhead');
