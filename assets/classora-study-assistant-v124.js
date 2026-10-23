@@ -192,6 +192,14 @@ function scienceQuickAnswer(raw,en){
 /* Keep lightweight topic context per chat surface to answer "explain again".
    This is in-memory lesson metadata, never account data or user messages. */
 const lastTopicByContext=new Map();
+const lastInquiryByContext=new Map();
+const followupIntent=raw=>{
+ const q=norm(raw);if(q.length>95)return null;
+ if(/^(?:هات|اعطني|اعطيني|بدي|ورجيني|show|give)\s*(?:مثال|examples?|another example|تطبيق)|^(?:مثال|مثال ثاني|example|another example|one more example)/i.test(q))return 'example';
+ if(/^(?:اشرحلي الخطوات|اشرح الخطوات|كيف حليناها|كيف انحل|الخطوات|فهمني الحل|step by step|show steps|how did you solve it)/i.test(q))return 'steps';
+ if(/^(?:مش فاهم|مش فاهمه|ما فهمت|مو فاهم|مش واضح|وضحلي|وضح لي|اشرحلي ابسط|فسرلي|explain again|i dont understand|simpler|make it simple|not clear)/i.test(q))return 'simple';
+ return null;
+};
 const simplifiedRequest=raw=>/(?:مش فاهم|مش فاهمه|ما فهمت|مو فاهم|مش واضح|مش واضحه|وضحلي|وضح لي|فهمني|اعد الشرح|اعيد الشرح|مره ثانيه|مرة ثانية|explain again|explain more|i dont understand|i don t understand|i do not understand|didnt understand|didn t understand|i dont get it|i don t get it|not clear|clarify|say it again|explain it again)/i.test(norm(raw));
 export function classoraStudyClarification(raw,language='ar'){
  const en=language==='en',q=norm(raw);
@@ -204,12 +212,13 @@ function currentLesson(context){
 }
 function rememberLesson(context,topic){
  lastTopicByContext.set(String(context||'main'),topic);
+ lastInquiryByContext.set(String(context||'main'),{kind:'lesson',topic});
 }
 
 export function classoraStudyTopicMatch(raw,grade=8,context='main'){
  const selected=matchTopic(raw,[7,8,9,10].includes(Number(grade))?Number(grade):8);
  if(selected)return {grade:selected.grade,subject:selected.subject,title:selected.title,en:selected.en};
- if(simplifiedRequest(raw)){
+ if(simplifiedRequest(raw)||followupIntent(raw)){
   const recent=currentLesson(context);
   if(recent)return {grade:recent.grade,subject:recent.subject,title:recent.title,en:recent.en};
  }
@@ -232,7 +241,28 @@ export function classoraStudyAnswer(raw,language='ar',grade=8,context='main'){
  const word=wordLookup(q,en);
  if(word)return word;
  const calculation=classoraMathAnswer(q,language);
- if(calculation)return calculation;
+ if(calculation){
+  lastInquiryByContext.set(String(context||'main'),{kind:'math',question:q});
+  return calculation;
+ }
+ const followup=followupIntent(q);
+ if(followup){
+  const last=lastInquiryByContext.get(String(context||'main'));
+  if(last?.kind==='math'){
+   const answer=classoraMathAnswer(last.question,language);
+   if(answer)return (en?'Let’s review your last math question:\n':'خلّينا نراجع سؤالك الرياضي السابق:\n')+answer;
+  }
+  if(last?.kind==='lesson'){
+   const item=last.topic,mode=followup==='example'?'example':'explain';
+   const base=curriculumTopicGuide(item.title,item.subject,language,mode);
+   if(followup==='simple'){
+    const ex=curriculumTopicGuide(item.title,item.subject,language,'example');
+    return (en?'A simpler explanation of ':'شرح أبسط لـ «')+(en?item.en:item.title)+(en?':\n':'»:\n')+base+(ex&&ex!==base?'\n'+(en?'Example: ':'مثال: ')+ex:'');
+   }
+   return (en?item.en+' — ':'درس '+item.title+' — ')+base;
+  }
+  return en?'Which lesson or equation do you want to continue?':'عن أي درس أو معادلة بدك نكمل؟';
+ }
  const g=[7,8,9,10].includes(Number(grade))?Number(grade):8;
  const specificScience=/^(?:لماذا|ليش|why|how fast|ما الفرق|difference)|سرعة الضوء|speed of light|boiling point of water/i.test(norm(q));
  if(specificScience){
