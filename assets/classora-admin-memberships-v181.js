@@ -1,3 +1,4 @@
+import './classora-owner-cancel-v240.js?v=240';
 import {memberText as T} from './classora-member-words-v238.js?v=238';
 import {FEATURES} from './classora-membership-access-v238.js?v=238';
 // Classora staff courtesy memberships. Firestore rules MUST be deployed before use.
