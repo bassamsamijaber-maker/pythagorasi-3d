@@ -1,6 +1,8 @@
-const CACHE_NAME="classora-v246-spaced-ipad-navigation";;
+const CACHE_NAME="classora-v247-tutor-ipad-dock";;
 const APP_SHELL=[
-  "./assets/classora-premium-v243.css?v=246",
+  "./assets/classora-premium-v243.css?v=247",
+  "./assets/classora-math-tutor-v247.js?v=247",
+  "./assets/classora-study-assistant-v124.js?v=247",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
