@@ -251,3 +251,121 @@ html body.classora-membership-page :is(input,select,button){max-width:100%;box-s
  html body.classora-membership-page .cl-owner-switch-actions .cl-owner-admin-link{grid-column:auto}
 }
 @media(prefers-reduced-motion:reduce){html body #platformLobby :is(.cl214-quick .cl214-card,.cl214-tool-grid .cl214-card){transition:none!important}}
+
+
+/* v245 — consistent touch-friendly buttons.
+   Scoped to primary UI so chemistry, calculators, games and tiny carousel dots keep their controls. */
+html body #platformLobby :is(.lobby-top-actions,.cl214-hero-buttons,.cl214-tool-grid,.cl214-quick,.cl223-filters,.cl223-mission-area,.cl223-preview,.cl223-subject-picker) :is(button,a),
+html body #settingsModal :is(.classora-quick-grid,.settings-grid,.settings-danger-zone,.settings-profile-row,.settings-choice-row,.cl239-device-actions,.cl240-owner-row) :is(button,a),
+html body #chatModal :is(.modalhead,.chat-thread-head,.chat-media-tools,.chat-compose,.chat-contacts-pane) button,
+html body #adminPanelModal :is(.admin-v34-quick-actions,.admin-toolbar,.admin-tab-row,.admin-tabs,.admin-quick-add-grid) button,
+html body.classora-membership-page :is(.cl-header,.cl-owner-switch-actions,.cl-controls,.cl-plan,.cl-checkout-preview,.cl-admin-sim-controls) :is(button,a) {
+ box-sizing:border-box;min-width:0;max-width:100%;min-height:44px;
+ display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ padding:9px 12px;line-height:1.4;
+ white-space:normal;overflow-wrap:anywhere;text-align:center;
+ touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+ border-radius:12px;cursor:pointer;
+}
+html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) :is(button,a):focus-visible,
+html body.classora-membership-page :is(button,a):focus-visible{
+ outline:3px solid #f4d7a5!important;outline-offset:2px!important;
+}
+html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) button:disabled,
+html body.classora-membership-page button:disabled{
+ opacity:.55;cursor:not-allowed;filter:saturate(.65);
+}
+html body #platformLobby :is(.cl214-hero-buttons,.cl214-tool-grid,.cl223-filters,.cl223-subject-picker) :is(button,a):active:not(:disabled),
+html body #settingsModal .classora-quick-grid button:active:not(:disabled),
+html body #adminPanelModal .admin-v34-quick-actions button:active:not(:disabled),
+html body.classora-membership-page :is(.cl-plan-select,.cl-tabs button,.cl-owner-switch-actions button):active:not(:disabled){
+ filter:brightness(1.08);transform:scale(.985);
+}
+html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) :is(button[aria-pressed="true"],button[aria-selected="true"],button.is-active,button.active):not(:disabled){
+ border-color:var(--cl243-accent)!important;
+}
+html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) :is(button,a) > :is(svg,.icon),
+html body #classoraMobilePageNav button > :is(svg,span),
+html body.classora-membership-page :is(button,a)>svg{
+ pointer-events:none;
+}
+html body #platformLobby :is(.cl243-hero-scene,.cl243-art-orbits,.cl243-art-float,.cl243-art-book,.cl214-hero-visual) svg,
+html body #platformLobby :is(.cl243-hero-scene,.cl243-art-orbits)::before,
+html body #platformLobby :is(.cl243-hero-scene,.cl243-art-orbits)::after{
+ pointer-events:none;
+}
+html body #settingsModal .classora-quick-grid button{
+ justify-content:center;align-items:center;gap:8px;min-height:60px!important;
+ flex-direction:column;line-height:1.3!important;overflow:hidden;
+}
+html body #settingsModal .classora-quick-grid button :is(svg,span){min-width:0;max-width:100%;pointer-events:none}
+html body #settingsModal .classora-quick-grid button span{white-space:normal;line-height:1.35;text-align:center}
+html body #settingsModal .settings-choice-row{display:flex;flex-wrap:wrap;gap:8px}
+html body #settingsModal .settings-choice-row button{flex:1 1 120px!important}
+html body #adminPanelModal .admin-v34-quick-actions{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+}
+html body #adminPanelModal .admin-v34-quick-actions button{
+ min-width:0;width:100%;min-height:54px;text-align:center;
+ justify-content:center;flex-wrap:wrap;white-space:normal!important;
+}
+html body #adminPanelModal .admin-v34-quick-actions button span{min-width:0;max-width:100%;overflow-wrap:anywhere}
+html body #chatModal :is(.chat-media-tools,.chat-compose){isolation:isolate}
+html body #chatModal .chat-media-tools button{min-height:44px!important;min-width:0}
+html body #chatModal .chat-compose{align-items:end}
+html body #chatModal #chatSendBtn{min-width:55px!important;max-width:100%;min-height:46px!important}
+html body #chatModal .chat-thread-head button{flex:0 1 auto;max-width:100%}
+html body.classora-membership-page .cl-plan-select,
+html body.classora-membership-page .cl-continue{
+ width:100%;min-height:48px!important;font-weight:850!important;
+}
+html body.classora-membership-page .cl-tabs{display:flex;flex-wrap:wrap;gap:8px}
+html body.classora-membership-page .cl-tabs button{
+ min-height:44px!important;min-width:0;flex:1 1 auto;white-space:normal!important;
+}
+html body.classora-membership-page .cl-owner-switch-actions button{min-width:0}
+@media(max-width:760px){
+ html body #platformLobby .cl214-hero-buttons :is(button,a){flex:1 1 140px;min-height:46px!important}
+ html body #platformLobby :is(.cl214-tool-grid,.cl214-quick) :is(button,a){min-height:44px;min-width:0}
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:stretch;gap:2px!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn{
+  display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+  min-height:50px!important;max-height:52px!important;
+  padding:3px 1px!important;gap:2px!important;
+  touch-action:manipulation;cursor:pointer;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button span{
+  font-size:clamp(9px,2.4vw,11px)!important;
+  line-height:1.2!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ }
+ html body #settingsModal .classora-quick-grid{gap:9px!important}
+ html body #settingsModal .classora-quick-grid button{min-height:66px!important;max-width:100%;padding:10px 6px!important}
+ html body #adminPanelModal .admin-v34-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ html body #adminPanelModal .admin-v34-quick-actions button{min-height:57px;padding:10px 7px}
+ html body #chatModal .chat-media-tools{gap:6px}
+ html body #chatModal .chat-media-tools button{flex:1 1 70px;max-width:100%;padding:8px 6px;font-size:12px!important}
+ html body #chatModal .chat-compose{grid-template-columns:minmax(0,1fr) minmax(55px,64px)!important}
+ html body.classora-membership-page .cl-owner-switch-actions button{width:100%;min-height:45px}
+ html body.classora-membership-page .cl-controls>div{min-width:0}
+ html body.classora-membership-page .cl-plan-select{padding-inline:10px}
+}
+@media(max-width:375px){
+ html body #settingsModal .classora-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html body #adminPanelModal .admin-v34-quick-actions{grid-template-columns:minmax(0,1fr)}
+ html body #chatModal .chat-media-tools button{flex-basis:58px}
+ html body.classora-membership-page .cl-tabs button{flex:1 1 88px}
+}
+@media(hover:hover){
+ html body #settingsModal .classora-quick-grid button:hover:not(:disabled),
+ html body #adminPanelModal .admin-v34-quick-actions button:hover:not(:disabled){
+  border-color:var(--cl243-accent)!important;filter:brightness(1.06);
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) button,
+ html body.classora-membership-page button{transition:none!important}
+}
