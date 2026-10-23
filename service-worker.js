@@ -1,8 +1,10 @@
-const CACHE_NAME="classora-v247-tutor-ipad-dock";;
+const CACHE_NAME="classora-v248-simple-home-smarter-assistant";;
 const APP_SHELL=[
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=247",
-  "./assets/classora-study-assistant-v124.js?v=247",
+  "./assets/classora-study-assistant-v124.js?v=248",
+  "./assets/classora-ui-refine-v248.css?v=248",
+  "./assets/classora-ai-prompts-v248.js?v=248",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
