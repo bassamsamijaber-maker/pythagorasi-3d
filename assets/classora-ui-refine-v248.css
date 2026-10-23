@@ -1,0 +1,274 @@
+/* Classora v248 — minimal, calm, accessible spacing and AI assistant layout.
+   Kept separate from legacy styles to avoid adding another conflicting dock rule. */
+html body #platformLobby{
+ --cl248-gap:clamp(18px,2.1vw,28px);
+ --cl248-panel:var(--cl243-paper,#181d2d);
+ --cl248-line:color-mix(in srgb,var(--cl243-ink,#fff) 14%,transparent);
+ --cl248-quiet:var(--cl243-muted,#bdc4d7);
+ --cl248-strong:var(--cl243-ink,#f9f8ff);
+ --cl248-primary:var(--cl243-accent,#c2a9ff);
+}
+html body #platformLobby .lobby-shell{
+ max-width:1280px!important;
+ width:min(100%,1280px)!important;
+ padding-inline:clamp(16px,3vw,35px)!important;
+ padding-bottom:calc(var(--classora-dock-clearance,125px) + 80px)!important;
+ box-sizing:border-box!important;
+ scroll-padding-bottom:calc(var(--classora-dock-clearance,125px) + 45px);
+}
+html body #platformLobby .cl214{
+ gap:var(--cl248-gap)!important;
+ align-content:start!important;
+}
+html body #platformLobby .cl214>*,html body #platformLobby .lobby-shell>section{
+ min-width:0;
+ scroll-margin-block:var(--cl248-gap) calc(var(--classora-dock-clearance,125px) + 18px);
+}
+html body #platformLobby .lobby-topbar{
+ margin-bottom:var(--cl248-gap)!important;
+ padding-block:12px 19px!important;
+}
+html body #platformLobby .cl214-hero{
+ min-height:300px!important;
+ grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr)!important;
+ gap:clamp(24px,3vw,45px)!important;
+ padding:clamp(24px,3vw,36px)!important;
+ border-radius:24px!important;
+ background:radial-gradient(circle at 22% 65%,color-mix(in srgb,var(--cl248-primary) 13%,transparent),transparent 55%),var(--cl248-panel)!important;
+ border:1px solid var(--cl248-line)!important;
+}
+html body #platformLobby .cl214-hero h1{
+ font-size:clamp(32px,3.7vw,50px)!important;
+ margin:10px 0 13px!important;
+}
+html body #platformLobby .cl214-hero-lead{
+ line-height:1.7!important;
+ max-width:560px!important;
+}
+html body #platformLobby .cl214-hero-visual{
+ min-height:220px!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+}
+html body #platformLobby .cl243-hero-scene{
+ width:min(100%,360px)!important;
+ max-width:360px!important;
+ min-width:175px!important;
+ margin:0 auto!important;
+ display:block!important;
+}
+html body #platformLobby .cl214-hero-visual svg.cl243-learning-art{
+ display:block!important;
+ width:100%!important;height:auto!important;max-width:100%!important;
+ min-width:175px!important;flex:0 0 auto!important;overflow:visible!important;
+}
+/* If the illustration is absent while upgrades load, do not leave an oversized empty column. */
+html body #platformLobby .cl214-hero-visual:not(:has(.cl243-learning-art)){
+ min-height:185px!important;
+}
+html body #platformLobby .cl214-quick,
+html body #platformLobby .cl214-tool-grid{
+ gap:clamp(12px,1.45vw,20px)!important;
+ margin:0!important;
+}
+html body #platformLobby .cl214-quick .cl214-card,
+html body #platformLobby .cl214-tool-grid .cl214-card{
+ padding:17px 16px!important;
+ border:1px solid var(--cl248-line)!important;
+ border-radius:19px!important;
+ min-height:116px!important;
+ gap:13px!important;
+ background:var(--cl248-panel)!important;
+}
+html body #platformLobby .cl214-quick .cl214-card{align-items:center!important;flex-wrap:nowrap!important}
+html body #platformLobby .cl214-card-copy{min-width:0!important}
+html body #platformLobby .cl214-card-copy strong{font-size:14px!important;line-height:1.45!important;color:var(--cl248-strong)!important}
+html body #platformLobby .cl214-card-copy small{font-size:12px!important;line-height:1.55!important;color:var(--cl248-quiet)!important}
+html body #platformLobby .cl214-block{
+ padding:clamp(18px,2.1vw,28px)!important;
+ border-radius:22px!important;
+ background:var(--cl248-panel)!important;
+ border:1px solid var(--cl248-line)!important;
+ margin:0!important;
+}
+html body #platformLobby :is(.cl214-live-layout,.cl214-exam-layout){
+ gap:clamp(12px,1.65vw,20px)!important;
+ align-items:stretch!important;
+}
+html body #platformLobby .cl214-footer{
+ padding:14px 0!important;
+ min-height:58px!important;
+ border-top:1px solid var(--cl248-line)!important;
+}
+html body #platformLobby .cl238-upgrade-banner{
+ padding:17px 22px!important;
+ margin-block:0!important;
+ border-radius:17px!important;
+}
+html body #platformLobby .cl214 :is(button,a):focus-visible,
+html body #classoraMobilePageNav button:focus-visible{
+ outline:3px solid var(--cl248-primary,#c2a9ff)!important;
+ outline-offset:3px!important;
+}
+/* Floating dock: each button owns its own clear touch area with an actual visible gutter. */
+@media(min-width:761px){
+ html body.classora-authenticated.classora-dock-enabled{
+  --classora-dock-clearance:calc(144px + env(safe-area-inset-bottom,0px));
+ }
+ html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav{
+  width:min(740px,calc(100vw - 54px))!important;
+  max-width:min(740px,calc(100vw - 54px))!important;
+  height:82px!important;
+  min-height:82px!important;
+  max-height:82px!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:13px!important;
+  padding:9px 15px!important;
+  border-radius:22px!important;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px))!important;
+ }
+ html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav>button{
+  min-width:0!important;width:100%!important;
+  height:62px!important;min-height:62px!important;max-height:62px!important;
+  padding:7px 5px!important;
+  margin:0!important;gap:5px!important;
+  border-radius:14px!important;
+  box-sizing:border-box!important;
+ }
+ html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav>button span{
+  line-height:1.35!important;font-size:12px!important;
+ }
+}
+@media(max-width:1000px){
+ html body #platformLobby .cl214-hero{grid-template-columns:minmax(0,1.1fr) minmax(210px,.9fr)!important}
+ html body #platformLobby .cl214-quick{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html body #platformLobby .cl214-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ html body.classora-authenticated.classora-dock-enabled{
+  --classora-dock-clearance:calc(108px + env(safe-area-inset-bottom,0px));
+ }
+ html body #platformLobby .lobby-shell{padding:14px 15px calc(var(--classora-dock-clearance) + 65px)!important}
+ html body #platformLobby .cl214{gap:18px!important}
+ html body #platformLobby .cl214-hero{
+  grid-template-columns:minmax(0,1fr)!important;min-height:0!important;
+  padding:21px 17px!important;gap:12px!important;
+ }
+ html body #platformLobby .cl214-hero h1{font-size:clamp(30px,8vw,43px)!important}
+ html body #platformLobby .cl214-hero-visual{min-height:0!important}
+ html body #platformLobby .cl243-hero-scene{width:min(100%,245px)!important}
+ html body #platformLobby .cl214-hero-visual svg.cl243-learning-art{min-width:0!important}
+ html body #platformLobby .cl214-quick,.cl214-tool-grid{gap:12px!important}
+ html body #platformLobby .cl214-quick .cl214-card{min-height:106px!important;padding:13px!important}
+ html body #platformLobby .cl214-block{padding:15px!important;border-radius:18px!important}
+ html body #platformLobby .cl214-section-heading{gap:10px!important}
+ html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav{
+  gap:6px!important;padding:7px 9px!important;
+ }
+ html body.classora-authenticated.classora-dock-enabled #classoraMobilePageNav>button{
+  min-width:0!important;padding-inline:1px!important;
+  border-radius:11px!important;
+ }
+}
+@media(max-width:430px){
+ html body #platformLobby .cl214-quick,.cl214-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html body #platformLobby .cl214-quick .cl214-card{
+  flex-direction:column!important;align-items:flex-start!important;
+  min-height:142px!important;
+ }
+ html body #platformLobby .cl214-quick .cl214-card-graphic{width:36px!important;height:36px!important}
+ html body #platformLobby .cl214-card-copy strong{font-size:12px!important}
+ html body #platformLobby .cl214-card-copy small{font-size:11px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html body #platformLobby .cl214-card{transition:none!important}
+}
+/* AI card: unified quiet surfaces, legible controls, simple low-clutter suggestions. */
+html body #platformLobby .lobby-ai-card{
+ background:var(--cl248-panel)!important;
+ border:1px solid var(--cl248-line)!important;
+ border-radius:20px!important;
+ padding:clamp(16px,2vw,24px)!important;
+ margin-block:var(--cl248-gap)!important;
+ box-shadow:none!important;
+ max-width:100%!important;
+ min-width:0!important;
+}
+html body #platformLobby .lobby-ai-head{display:flex;align-items:center;gap:12px!important;margin-bottom:13px!important}
+html body #platformLobby .lobby-ai-head b{font-size:17px!important;color:var(--cl248-strong)!important}
+html body #platformLobby .lobby-ai-head span{color:var(--cl248-quiet)!important;font-size:12px!important}
+html body #platformLobby .lobby-ai-orb{
+ background:var(--cl243-soft,#24283c)!important;
+ color:var(--cl248-primary)!important;
+ border-radius:13px!important;
+ width:44px!important;height:44px!important;
+ display:grid!important;place-items:center!important;
+}
+html body #platformLobby #lobbyAIReply{
+ line-height:1.85!important;
+ color:var(--cl248-strong)!important;
+ background:var(--cl243-soft,#202639)!important;
+ border:1px solid var(--cl248-line)!important;
+ border-radius:15px!important;
+ padding:16px!important;
+ min-height:56px!important;
+ white-space:pre-wrap;
+ overflow-wrap:anywhere;
+}
+html body #platformLobby .lobby-ai-input{
+ display:grid!important;grid-template-columns:minmax(0,1fr) 52px!important;
+ align-items:stretch!important;
+ gap:10px!important;
+ margin-top:14px!important;
+}
+html body #platformLobby #lobbyAIInput{
+ width:100%!important;max-width:100%!important;
+ min-width:0!important;min-height:50px!important;
+ box-sizing:border-box!important;
+ color:var(--cl248-strong)!important;
+ background:var(--cl243-soft,#22283a)!important;
+ border:1px solid var(--cl248-line)!important;
+ border-radius:13px!important;
+ padding-inline:15px!important;font-size:15px!important;
+}
+html body #platformLobby #lobbyAIInput::placeholder{color:var(--cl248-quiet)!important;opacity:1}
+html body #platformLobby #lobbyAISend{
+ min-width:52px!important;width:52px!important;
+ min-height:50px!important;height:auto!important;
+ border:0!important;border-radius:13px!important;
+ background:var(--cl248-primary)!important;
+ color:var(--cl243-accent-ink,#19152a)!important;
+ font-size:20px!important;
+}
+html body #platformLobby .cl248-ai-prompts{
+ margin-top:12px!important;
+ display:flex;flex-wrap:wrap;gap:9px!important;
+ align-items:center;justify-content:flex-start;
+}
+html body #platformLobby .cl248-ai-prompt{
+ display:inline-flex!important;align-items:center;justify-content:center;
+ padding:9px 14px!important;
+ min-height:43px!important;
+ min-width:0!important;
+ max-width:100%!important;
+ border-radius:12px!important;
+ background:var(--cl243-soft,#22283a)!important;
+ border:1px solid var(--cl248-line)!important;
+ color:var(--cl248-strong)!important;
+ font:inherit;font-size:12px!important;font-weight:750!important;
+ line-height:1.45!important;text-align:center!important;
+ cursor:pointer;touch-action:manipulation;
+}
+html body #platformLobby .cl248-ai-prompt:hover{border-color:var(--cl248-primary)!important}
+html body #platformLobby .cl248-ai-prompt:focus-visible{
+ outline:3px solid var(--cl248-primary)!important;outline-offset:2px;
+}
+html body #platformLobby .cl248-ai-prompt-label{
+ width:100%;font-size:11px;font-weight:750;color:var(--cl248-quiet);margin-bottom:0;
+}
+@media(max-width:700px){
+ html body #platformLobby .lobby-ai-card{margin-block:16px!important}
+ html body #platformLobby .cl248-ai-prompts{gap:8px!important}
+ html body #platformLobby .cl248-ai-prompt{flex:1 1 115px!important;padding:9px!important}
+ html body #platformLobby .lobby-ai-input{gap:7px!important}
+}
