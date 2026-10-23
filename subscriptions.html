@@ -21,7 +21,7 @@
 <body class="classora-membership-page">
 <div class="cl-shell">
 <header class="cl-header">
- <a class="cl-brand" href="./index.html" aria-label="Classora home">
+ <a class="cl-brand" href="./index.html#platformLobby" aria-label="Classora home">
   <span class="cl-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M30 10a15 15 0 1 0 0 20M28 11l-8 9 8 9" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <span><b>Classora</b><small>PLUS & PREMIUM</small></span>
  </a>
@@ -32,7 +32,7 @@
    <option value="de">Deutsch</option><option value="it">Italiano</option>
    <option value="hi">हिन्दी</option><option value="tr">Türkçe</option>
   </select>
-  <a class="cl-back" href="./index.html" id="cl-back">العودة للموقع</a>
+  <a class="cl-back" href="./index.html#platformLobby" id="cl-back">العودة للموقع</a>
  </div>
 </header>
 <main>
@@ -116,8 +116,20 @@
 </section>
 <section class="cl-faq"><h2 id="cl-faq-title">أسئلة سريعة</h2><details><summary id="cl-faq1">هل الطلاب المجانيين بقدروا يحلوا الامتحانات؟</summary><p id="cl-answer1">نعم، الوظائف والامتحانات والمسابقات اللي يرسلها المعلم تظل متاحة للجميع.</p></details><details><summary id="cl-faq2">شو بيفتح اشتراك الصف؟</summary><p id="cl-answer2">بشمل لغاية 35 طالب يحددهم المعلم، مع خيار إضافة مقاعد عند الحاجة.</p></details><details><summary id="cl-faq3">هل المدرسة بتشمل الطلاب؟</summary><p id="cl-answer3">لا، اشتراك المدرسة مخصص لحسابات المعلمين المختارين فقط.</p></details></section>
 </main>
-<footer><span>© 2026 Classora</span><div><a href="./privacy.html" id="cl-privacy">الخصوصية</a><a href="./terms.html" id="cl-terms">الشروط</a><a href="./index.html" id="cl-home">الموقع الرئيسي</a></div></footer>
+<footer><span>© 2026 Classora</span><div><a href="./privacy.html" id="cl-privacy">الخصوصية</a><a href="./terms.html" id="cl-terms">الشروط</a><a href="./index.html#platformLobby" id="cl-home">الموقع الرئيسي</a></div></footer>
 </div>
+<script id="classora-direct-lobby-return">
+/* The app already recognizes this same-tab return flag to skip the opening splash.
+   Keep it limited to explicit navigation from Memberships, not normal site visits. */
+(function(){
+  function goDirectlyToLobby(){
+    try { sessionStorage.setItem("classora_returning_from_subject","1"); } catch (_) {}
+  }
+  for (const a of document.querySelectorAll('#cl-back,#cl-home,a.cl-brand')){
+    a.addEventListener('click', goDirectlyToLobby, {capture:true});
+  }
+})();
+</script>
 <script type="module" src="./assets/classora-member-space-v238.js?v=238"></script>
 </body>
 </html>
