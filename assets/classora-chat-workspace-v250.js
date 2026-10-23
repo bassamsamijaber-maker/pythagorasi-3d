@@ -11,6 +11,16 @@ const lex={
  hi:['क्लासोरा सहायक','आज का अध्ययन','और','छिपाएँ','आज की चुनौती','पढ़ाई जारी रखें','मेरी प्रगति','गलतियाँ दोहराएँ','शुरू किए पाठ','सोच रहा हूँ…','फिर से कोशिश करें','आसान समझाओ','उदाहरण','मेरा टेस्ट','जारी रखो','कक्षाएँ और होमवर्क'],
  tr:['Classora Asistan','Bugünün','Daha fazla','Gizle','Günlük görev','Devam et','İlerlemem','Hatalarımı gözden geçir','Başlanan dersler','Düşünüyorum…','Tekrar dene','Basit anlat','Örnek ver','Beni sına','Devam','Sınıflar ve ödevler']
 };
+const creative={
+ ar:[['اكتب قصة','اكتب قصة قصيرة مشوقة عن مغامرة تعليمية، مع شخصيات وحوار ونهاية جميلة.'],['عدّل نص','ساعدني أعدل النص التالي وأحسن أسلوبه مع الحفاظ على المعنى: '],['شرح مفصل','اشرح هذا الموضوع بالتفصيل وبخطوات وأمثلة: ']],
+ en:[['Write a story','Write an original imaginative story with characters, dialogue and an ending about: '],['Rewrite text','Rewrite and improve this text, preserving the meaning: '],['Detailed explanation','Explain step by step with examples: ']],
+ es:[['Crear historia','Escribe una historia original con personajes y diálogos sobre: '],['Editar texto','Mejora este texto conservando su sentido: '],['Explicar','Explica paso a paso con ejemplos: ']],
+ ko:[['이야기 쓰기','다음 주제로 등장인물과 대화가 있는 이야기를 써 줘: '],['글 수정','뜻을 유지하면서 이 글을 다듬어 줘: '],['자세한 설명','다음을 단계별로 예시와 함께 설명해 줘: ']],
+ de:[['Geschichte','Schreibe eine eigene Geschichte mit Dialog über: '],['Text überarbeiten','Überarbeite diesen Text, ohne den Sinn zu ändern: '],['Ausführlich erklären','Erkläre mit Schritten und Beispielen: ']],
+ it:[['Crea storia','Scrivi una storia originale con dialoghi su: '],['Modifica testo','Migliora questo testo mantenendone il significato: '],['Spiega','Spiega con passaggi ed esempi: ']],
+ hi:[['कहानी लिखो','इस विषय पर संवाद के साथ एक मौलिक कहानी लिखो: '],['पाठ सुधारो','अर्थ बदले बिना यह पाठ सुधारो: '],['विस्तार से समझाओ','उदाहरणों के साथ चरणबद्ध समझाओ: ']],
+ tr:[['Hikâye yaz','Şu konuda diyaloglu özgün bir hikâye yaz: '],['Metni düzenle','Anlamı koruyarak şu metni düzenle: '],['Ayrıntılı anlat','Adımlarla ve örneklerle açıkla: ']]
+};
 const t=i=>(lex[document.documentElement.lang]||lex.en)[i];
 const el=(tag,cls,str)=>{const x=document.createElement(tag);x.className=cls||'';if(str!==undefined)x.textContent=str;return x};
 let card,left,right,host,marker,thread,more,expanded=false,busy=false;
@@ -41,6 +51,10 @@ async function send(raw,compute,topic){
  finally{busy=false;if(button)button.disabled=false;thread.scrollTop=thread.scrollHeight}
 }
 function update(){
+ if(card?.querySelector('.cl252-creative-actions')){
+  const entries=creative[document.documentElement.lang]||creative.en;
+  card.querySelectorAll('.cl252-creative-button').forEach((b,i)=>{b.textContent=entries[i][0];b.title=entries[i][1]});
+ }
  if(card){const name=$('lobbyAIName');if(name)name.textContent=t(0);
    card.querySelectorAll('[data-cl250-chat]').forEach(b=>b.textContent=t(Number(b.dataset.cl250Chat)));
  }
@@ -78,6 +92,22 @@ function addChat(){
    $('lobbyAISend')?.click();
   });actions.append(b);
  });
+ const creativeButtons=el('div','cl252-creative-actions');
+ creativeButtons.setAttribute('aria-label','Creative writing tools');
+ creativeButtons.dataset.noTranslate='';
+ for(let i=0;i<3;i++){
+  const b=el('button','cl252-creative-button');
+  b.type='button';b.dataset.creative=String(i);
+  b.addEventListener('click',()=>{
+   const input=$('lobbyAIInput');
+   if(!input)return;
+   const value=(creative[document.documentElement.lang]||creative.en)[i][1];
+   input.value=value;input.dispatchEvent(new Event('input',{bubbles:true}));
+   input.focus({preventScroll:true});
+  });
+  creativeButtons.append(b);
+ }
+ actions.after(creativeButtons);
  card.querySelector('.lobby-ai-input')?.before(actions);
  card.querySelector('.lobby-ai-input input')?.setAttribute('aria-label',t(0));
 }
