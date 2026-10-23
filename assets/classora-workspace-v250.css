@@ -232,3 +232,37 @@ html body #platformLobby .cl253-note textarea::placeholder{color:var(--cl250-mut
  html body #platformLobby .cl250-right{width:var(--cl253-right)!important}
  html body #platformLobby .lobby-shell{width:calc(100% - var(--cl253-left) - var(--cl253-right) - 80px)!important;max-width:none!important;margin-left:calc(var(--cl253-left) + 40px)!important;margin-right:calc(var(--cl253-right) + 40px)!important}
 }
+
+/* v254: spacious composer, retained question shortcuts and actual request feedback. */
+html body #platformLobby .cl250-chat-card .lobby-ai-input{display:grid!important;grid-template-columns:minmax(0,1fr) 46px!important;gap:14px!important;padding:10px 0 0!important;background:transparent!important;align-items:end!important;border-top:1px solid var(--cl250-border);border-radius:0!important}
+html body #platformLobby .cl250-chat-card #lobbyAIInput{display:block!important;box-sizing:border-box!important;resize:vertical;min-height:60px!important;max-height:150px!important;padding:12px 14px!important;line-height:1.6!important;font:inherit;font-size:14px!important;border:1px solid var(--cl250-border)!important;border-radius:16px!important;background:var(--cl250-card)!important;color:var(--cl250-text)!important;transition:border-color .2s,box-shadow .2s}
+html body #platformLobby .cl250-chat-card #lobbyAIInput:focus{outline:none;border-color:var(--cl250-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--cl250-accent) 15%,transparent)}
+html body #platformLobby .cl250-chat-card #lobbyAISend{width:46px!important;min-width:46px!important;min-height:46px!important;height:46px!important;border-radius:15px!important;margin:0 0 6px!important;transition:transform .2s,opacity .2s}
+html body #platformLobby .cl250-chat-card #lobbyAISend:hover:not(:disabled){transform:translateY(-2px)}
+html body #platformLobby .cl250-chat-card #lobbyAISend:disabled{opacity:.5;cursor:wait}
+html body #platformLobby .cl254-state{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;line-height:1.5;color:var(--cl250-muted);padding:6px 0;flex:0 0 auto}
+html body #platformLobby #cl254ModelState[data-state="connected"]{color:var(--cl250-accent)}
+html body #platformLobby .cl254-retry{border:1px solid var(--cl250-border);border-radius:8px;padding:5px;background:transparent;color:var(--cl250-text);font:inherit;cursor:pointer}
+html body #platformLobby .cl254-retry[hidden]{display:none!important}
+html body #platformLobby .cl254-dots{display:inline-flex;gap:4px;margin-inline-start:9px;align-items:center}
+html body #platformLobby .cl254-dots i{width:5px;height:5px;border-radius:50%;background:var(--cl250-accent);animation:cl254-dot 1.1s ease-in-out infinite}
+html body #platformLobby .cl254-dots i:nth-child(2){animation-delay:.15s}
+html body #platformLobby .cl254-dots i:nth-child(3){animation-delay:.3s}
+html body #platformLobby .cl254-thinking #lobbyAIInput,html body #platformLobby .cl254-writing #lobbyAIInput{animation:cl254-composer 1.8s ease-in-out infinite}
+html body #platformLobby .cl250-chat-card.cl250-chat-active .cl248-ai-prompts{display:flex!important;gap:5px!important;margin:6px 0!important;flex:0 0 auto}
+html body #platformLobby .cl250-chat-card.cl250-chat-active .cl248-ai-prompt{flex:1 1 80px!important;min-height:30px!important;padding:5px!important;font-size:11px!important}
+html body #platformLobby .cl250-chat-card.cl250-chat-active .cl252-creative-actions{display:flex!important;gap:5px;margin:5px 0}
+html body #platformLobby .cl250-chat-card .cl252-creative-button{flex:1 1 80px!important;min-height:30px!important;padding:5px!important;font-size:11px!important}
+html body #platformLobby .cl250-chat-card .cl250-chat-actions{margin:7px 0;max-height:88px!important;scrollbar-width:thin}
+html body #platformLobby .cl250-chat-card .cl250-line{font-size:13px!important;line-height:1.75!important}
+@keyframes cl254-dot{0%,70%,100%{transform:translateY(0);opacity:.4}35%{transform:translateY(-4px);opacity:1}}
+@keyframes cl254-composer{0%,100%{border-color:var(--cl250-border)}50%{border-color:var(--cl250-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--cl250-accent) 9%,transparent)}}
+@media(prefers-reduced-motion:reduce){html body #platformLobby .cl254-dots i,html body #platformLobby .cl254-thinking #lobbyAIInput,html body #platformLobby .cl254-writing #lobbyAIInput{animation:none}}
+@media(min-width:1000px){
+ html body #platformLobby{--cl254-left:clamp(250px,23vw,410px);--cl254-right:clamp(180px,16vw,290px)}
+ html body #platformLobby .cl250-left{width:var(--cl254-left)!important}
+ html body #platformLobby .cl250-right{width:var(--cl254-right)!important}
+ html body #platformLobby .lobby-shell{width:calc(100% - var(--cl254-left) - var(--cl254-right) - 70px)!important;max-width:none!important;margin-left:calc(var(--cl254-left) + 35px)!important;margin-right:calc(var(--cl254-right) + 35px)!important}
+ html body #platformLobby .cl250-chat-card .cl250-chat-chip{flex:1 1 75px!important;font-size:11px!important;min-height:30px!important;padding:5px!important}
+ html body #platformLobby .cl250-chat-card .cl250-chat-actions{max-height:108px!important}
+}

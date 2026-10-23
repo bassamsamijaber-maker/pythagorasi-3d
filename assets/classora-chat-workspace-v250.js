@@ -24,6 +24,24 @@ const creative={
 const t=i=>(lex[document.documentElement.lang]||lex.en)[i];
 const el=(tag,cls,str)=>{const x=document.createElement(tag);x.className=cls||'';if(str!==undefined)x.textContent=str;return x};
 let card,left,right,host,marker,thread,more,expanded=false,busy=false,conversationGeneration=0;
+const modelText={
+ ar:['اسأل كلاسورا','جاري الاتصال بالنموذج…','النموذج التوليدي متصل','المساعد الأساسي · النموذج غير متصل','المساعد الأساسي · سجّل الدخول للتوليد','المساعد الأساسي · التوليد يحتاج موافقتك من الإعدادات','النموذج مشغول · إجابة أساسية','حل رياضي محسوب','إعادة الاتصال'],
+ en:['Ask Classora','Connecting to model…','Generative model connected','Basic assistant · model unavailable','Basic assistant · sign in for generation','Basic assistant · enable AI consent in Settings','Model busy · basic answer','Calculated math answer','Reconnect'],
+ es:['Pregunta a Classora','Conectando…','Modelo generativo conectado','Asistente básico · modelo no disponible','Asistente básico · inicia sesión','Asistente básico · autoriza IA en Ajustes','Modelo ocupado · respuesta básica','Respuesta matemática calculada','Reconectar'],
+ ko:['Classora에 질문','모델 연결 중…','생성형 모델 연결됨','기본 도우미 · 모델 연결 안 됨','기본 도우미 · 로그인 필요','기본 도우미 · 설정에서 AI 동의 필요','모델 사용 중 · 기본 답변','계산된 수학 답변','다시 연결'],
+ de:['Frag Classora','Verbindung wird hergestellt…','Sprachmodell verbunden','Basisassistent · Modell nicht verfügbar','Basisassistent · bitte anmelden','Basisassistent · KI-Zustimmung in Einstellungen','Modell ausgelastet · Basisantwort','Berechnete Mathematikantwort','Neu verbinden'],
+ it:['Chiedi a Classora','Connessione al modello…','Modello generativo connesso','Assistente base · modello non disponibile','Assistente base · accedi','Assistente base · autorizza IA nelle impostazioni','Modello occupato · risposta base','Risposta matematica calcolata','Riconnetti'],
+ hi:['Classora से पूछें','मॉडल से जुड़ रहा है…','जनरेटिव मॉडल जुड़ा है','बुनियादी सहायक · मॉडल उपलब्ध नहीं','बुनियादी सहायक · साइन इन करें','बुनियादी सहायक · सेटिंग में AI की सहमति दें','मॉडल व्यस्त · बुनियादी उत्तर','गणना किया गया उत्तर','फिर जोड़ें'],
+ tr:['Classora’ya sor','Modele bağlanıyor…','Üretken model bağlı','Temel asistan · model kullanılamıyor','Temel asistan · giriş yap','Temel asistan · Ayarlar’da AI izni ver','Model meşgul · temel yanıt','Hesaplanan matematik yanıtı','Yeniden bağlan']
+};
+let modelState='idle';
+function renderModelState(){
+ const labels=modelText[document.documentElement.lang]||modelText.en;
+ const status=$('cl254ModelState');if(status){status.textContent=labels[({idle:0,connecting:1,connected:2,offline:3,signin:4,consent:5,busy:6,basic:7})[modelState]??0];status.dataset.state=modelState}
+ const retry=$('cl254Reconnect');if(retry){retry.textContent=labels[8];retry.hidden=!['offline','busy'].includes(modelState)}
+}
+window.addEventListener('classora:ai-state',event=>{modelState=event.detail;renderModelState()});
+window.addEventListener('classora:ai-reset',()=>{modelState='idle';renderModelState()});
 function line(role,msg){
  const p=el('div','cl250-line cl250-'+role,String(msg));p.dir='auto';thread.append(p);
  while(thread.children.length>70)thread.firstElementChild.remove();
@@ -33,10 +51,11 @@ function line(role,msg){
 async function send(raw,compute,topic){
  if(!card||busy||!String(raw||'').trim())return;
  const generation=conversationGeneration;
- busy=true;card.classList.add('cl250-chat-active');
+ busy=true;card.classList.add('cl250-chat-active','cl254-thinking');card.setAttribute('aria-busy','true');
  line('user',String(raw).trim());
  const button=$('lobbyAISend');if(button)button.disabled=true;
  const progress=line('pending',t(9));
+ const dots=el('span','cl254-dots');dots.setAttribute('aria-hidden','true');for(let i=0;i<3;i++)dots.append(el('i'));progress.append(dots);
  try{
   const result=await compute();
   if(generation!==conversationGeneration)return;
@@ -49,10 +68,11 @@ async function send(raw,compute,topic){
     reply.after(button);
   }
   const fallback=$('lobbyAIReply');if(fallback)fallback.textContent=answer;
- }catch(e){progress.remove();line('bot',t(10));console.warn('Classora chat reply',e?.message)}
- finally{busy=false;if(button)button.disabled=false;thread.scrollTop=thread.scrollHeight}
+ }catch(e){progress.remove();if(generation===conversationGeneration)line('bot',t(10));console.warn('Classora chat reply',e?.message)}
+ finally{busy=false;card.classList.remove('cl254-thinking');card.setAttribute('aria-busy','false');if(button)button.disabled=false;thread.scrollTop=thread.scrollHeight}
 }
 function update(){
+ renderModelState();
  if(card?.querySelector('.cl252-creative-actions')){
   const entries=creative[document.documentElement.lang]||creative.en;
   card.querySelectorAll('.cl252-creative-button').forEach((b,i)=>{b.textContent=entries[i][0];b.title=entries[i][1]});
@@ -110,7 +130,9 @@ function addChat(){
   creativeButtons.append(b);
  }
  card.querySelector('.lobby-ai-input')?.before(actions,creativeButtons);
- card.querySelector('.lobby-ai-input input')?.setAttribute('aria-label',t(0));
+ $('lobbyAIInput')?.setAttribute('aria-label',t(0));
+ const input=$('lobbyAIInput');let typingTimer;input?.addEventListener('input',()=>{card.classList.toggle('cl254-writing',!!input.value);clearTimeout(typingTimer);typingTimer=setTimeout(()=>card.classList.remove('cl254-writing'),900)});
+ const state=el('div','cl254-state');state.setAttribute('role','status');const status=el('span');status.id='cl254ModelState';const retry=el('button','cl254-retry');retry.id='cl254Reconnect';retry.type='button';retry.addEventListener('click',()=>{window.dispatchEvent(new Event('classora:ai-reconnect'));input?.focus()});state.append(status,retry);card.querySelector('.lobby-ai-head')?.after(state);renderModelState();
 }
 function addRight(lobby){
  right=el('aside','cl250-right');

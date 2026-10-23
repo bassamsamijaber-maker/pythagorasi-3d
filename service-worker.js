@@ -1,12 +1,13 @@
-const CACHE_NAME="classora-v253-full-workspace";;
+const CACHE_NAME="classora-v254-assistant-status-and-composer";;
 const APP_SHELL=[
+  "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=249",
   "./assets/classora-study-assistant-v124.js?v=249",
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
-  "./assets/classora-chat-workspace-v250.js?v=253",
-  "./assets/classora-workspace-v250.css?v=253",
+  "./assets/classora-chat-workspace-v250.js?v=254",
+  "./assets/classora-workspace-v250.css?v=254",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",

@@ -138,8 +138,8 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-mobile-membership-v238.css?v=238">
 <link rel="stylesheet" href="./assets/classora-premium-v243.css?v=247">
 <link rel="stylesheet" href="./assets/classora-ui-refine-v248.css?v=249">
-<link rel="stylesheet" href="./assets/classora-workspace-v250.css?v=253">
-<script defer src="./assets/classora-chat-workspace-v250.js?v=253"></script>
+<link rel="stylesheet" href="./assets/classora-workspace-v250.css?v=254">
+<script defer src="./assets/classora-chat-workspace-v250.js?v=254"></script>
 <script defer src="./assets/classora-ai-prompts-v248.js?v=249"></script>
 <script defer src="./assets/classora-premium-v243.js?v=243"></script>
 </head>
@@ -541,7 +541,7 @@ body.classora-intro-active{overflow:auto!important}
         </div>
         <div class="lobby-ai-reply" id="lobbyAIReply">اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.</div>
         <div class="lobby-ai-input">
-          <input id="lobbyAIInput" placeholder="مثال: اشرح الماضي البسيط أو الأحماض والقواعد…">
+          <textarea id="lobbyAIInput" rows="2" maxlength="3500" placeholder="مثال: اشرح الماضي البسيط أو الأحماض والقواعد…"></textarea>
           <button id="lobbyAISend">➤</button>
         </div>
       </div>
@@ -2574,11 +2574,15 @@ const auth = getAuth(firebaseApp);
 let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"en";
  window.classoraLegal=installClassoraLegal();
 
+import {basicConversation} from "./assets/classora-basic-conversation-v254.js?v=254";
+
 /* Classora Local AI: Ollama running on the school operator's computer.
    Only an authenticated Firebase ID token is sent to the Classora AI gateway.
    The gateway validates the token and forwards the question to loopback Ollama.
    Never access or expose the raw Ollama 11434 API from this web page. */
 const classoraLocalAiEndpoint="https://ai.classora.study";
+function classoraModelState(state){window.dispatchEvent(new CustomEvent('classora:ai-state',{detail:state}))}
+window.addEventListener('classora:ai-reconnect',()=>{classoraCloudUnavailableUntil=0;classoraCloudHealthyUntil=0;classoraModelState('idle')});
 const classoraCloudHistory=new Map();
 let classoraConversationGeneration=0;
 window.addEventListener("classora:ai-reset",()=>{classoraCloudHistory.clear();classoraConversationGeneration++});
@@ -2655,8 +2659,10 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
 async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
   const isCreative=/(?:اكتب|قص[ةه]|قصه|قصة|اكتبلي|عدّل|عدل|احذف|غيّر|غير|[0-9٠-٩]+\s*(?:سطر|سطور)|story|write|rewrite|revise|edit|poem|essay|cuento|geschichte|storia|hikaye|कहानी|이야기)/iu.test(raw);
   const verifiedMath=isCreative?null:classoraMathAnswer(raw,currentUILanguage);
-  if(verifiedMath)return verifiedMath;
+  if(verifiedMath){classoraModelState("basic");return verifiedMath;}
   const fallback=()=>{
+    const basic=basicConversation(raw,currentUILanguage,classoraCloudHistory.get(String(channel||"main"))||[]);
+    if(basic)return basic;
     if(isCreative){
       const messages={
         ar:"عشان أكتب قصة أو أعدّل نص بحرية، لازم يكون نموذج Classora AI المحلي شغّال ومتصل. المساعد التعليمي الأساسي ما بقدر يولّد نص مفتوح بهالدقة. جرّب بعد تشغيل خدمة الذكاء الاصطناعي.",
@@ -2672,9 +2678,10 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
     }
     return typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
   };
-  if(!auth.currentUser||auth.currentUser.isAnonymous||isGuestSession())return fallback();
-  if(!(await classoraLocalAiAvailable()))return fallback();
-  if(!classoraCloudConsent(auth.currentUser.uid))return fallback();
+  if(!auth.currentUser||auth.currentUser.isAnonymous||isGuestSession()){classoraModelState('signin');return fallback()}
+  classoraModelState('connecting');
+  if(!(await classoraLocalAiAvailable())){classoraModelState('offline');return fallback()}
+  if(!classoraCloudConsent(auth.currentUser.uid)){classoraModelState('consent');return fallback()}
   const en=currentUILanguage==="en",id=String(channel||"main");
   const turns=classoraCloudHistory.get(id)||[];
   try{
@@ -2696,6 +2703,7 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
       });
     }finally{clearTimeout(timer)}
     if(response.status===429){
+      classoraModelState("busy");
       return en
         ?"Classora AI is at its daily limit. Here is the offline explanation:\n"+fallback()
         :"وصل مساعد كلاسورا للحد اليومي. هاي إجابة المساعد التعليمي المحلي:\n"+fallback();
@@ -2704,8 +2712,10 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
     const result=await response.json();
     const answer=String(result?.answer||"").trim();
     if(!answer)throw Error("empty-local-ai");
+    classoraModelState("connected");
     return answer;
   }catch(error){
+    classoraModelState("offline");
     classoraCloudUnavailableUntil=Date.now()+15000;
     classoraCloudHealthyUntil=0;
     console.warn("Classora Local AI temporarily unavailable",error?.message||"network");
@@ -11126,7 +11136,7 @@ function sendLobbyAI(){
   });
 }
 document.getElementById("lobbyAISend").addEventListener("click",sendLobbyAI);
-document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendLobbyAI()});
+document.getElementById("lobbyAIInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();sendLobbyAI()}});
 
 document.getElementById("lobbyExamBtn").addEventListener("click",openExamWithIdentity);
 document.getElementById("lobbyProfileBtn").addEventListener("click",openProfileModal);
