@@ -1,5 +1,8 @@
-const CACHE_NAME="classora-v238-mobile-memberships";;
+const CACHE_NAME="classora-v239-chat-benefits-devices";;
 const APP_SHELL=[
+  "./assets/classora-member-hub-v239.js?v=239",
+  "./assets/classora-device-sessions-v239.js?v=239",
+  "./assets/classora-memberships-features-v174.js?v=239",
   "./assets/classora-mobile-membership-v238.css?v=238",
   "./assets/classora-member-space-v238.js?v=238",
   "./assets/classora-membership-access-v238.js?v=238",
