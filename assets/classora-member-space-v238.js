@@ -1,3 +1,5 @@
+import './classora-member-hub-v239.js?v=239';
+import './classora-device-sessions-v239.js?v=239';
 import {getApps} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
 import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
 import {getFirestore,doc,getDoc,onSnapshot,setDoc} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
@@ -49,8 +51,9 @@ function install(app){
  }
  function refresh(){
   if(!has('focus'))stopTimer();applyStyle();
-  const host=document.querySelector('#settingsModal .settings-profile-row');
-  if(host&&!space){space=N('section','cl238-workspace');space.id='classoraMemberSpace';space.dataset.noTranslate='';host.after(space)}
+  const host=document.querySelector('#classoraMemberHubContent');
+  if(space&&!space.isConnected)space=null;
+  if(host&&!space){space=N('section','cl238-workspace');space.id='classoraMemberSpace';space.dataset.noTranslate='';host.append(space)}
   if(space){space.hidden=!owner;if(owner){space.replaceChildren(N('h3','',T('title')));const tabs=N('div','cl238-tools');for(const f of FEATURES){const b=button(f,()=>{if(active!==f){stopTimer();active=f;drawTool()}});b.setAttribute('aria-pressed',String(active===f));tabs.append(b)}body=N('div');space.append(tabs,body);drawTool()}}
   refreshTrial();document.dispatchEvent(new CustomEvent('classora:membership-updated',{detail:access()}));
  }
@@ -77,6 +80,9 @@ function install(app){
    refresh();
   }catch{if(gen===generation)refresh()}
  });
+ window.ClassoraMembership={get:()=>({...access(),role:profile?.role||null,admin}),openTool:(f)=>{if(FEATURES.includes(f)){stopTimer();active=f;refresh()}}};
+ document.addEventListener('classora:benefits-drawn',refresh);
+ document.addEventListener('classora:open-member-tool',e=>{if(FEATURES.includes(e.detail?.feature)){stopTimer();active=e.detail.feature;refresh()}});
  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});
  let lastSignature='';setInterval(()=>{const signature=JSON.stringify(access());if(signature!==lastSignature){lastSignature=signature;refresh()}},15000);
