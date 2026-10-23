@@ -32,7 +32,7 @@ teacher:{plus:{monthly:24.9,annual:239},premium:{monthly:44.9,annual:431}},
 class:{plus:{monthly:129,annual:1238},premium:{monthly:199,annual:1910}},
 school:{plus:{monthly:449,annual:4310},premium:{monthly:799,annual:7670}}
 };
-const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false,gift:null,previewRole:null,previewTier:"free"};
+const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false,gift:null,previewRole:null,previewTier:"free",adminView:"customer"};
 const previewLabels={
  ar:{title:"فحص الباقات بحساب تجريبي",warning:"هذه معاينة آمنة. حساب الأدمن وامتيازاته كما هي، ولا يوجد دفع أو إنشاء حساب حقيقي.",student:"طالب تجريبي",teacher:"معلم تجريبي",status:"الواجهة المعروضة",free:"مجاني",plus:"بلس",premium:"بريميوم"},
  en:{title:"Test membership views",warning:"Preview only. Your admin account stays unchanged. No real account or payment is created.",student:"Demo student",teacher:"Demo teacher",status:"Viewing",free:"Free",plus:"Plus",premium:"Premium"},
@@ -63,7 +63,7 @@ function resetDraft(){
  state.tier=null;
  state.period="monthly";
  state.previewTier="free";
- state.kind=state.account?.owner?"student":state.account?.admin?(state.account.role||"student"):state.allowed[0]||(state.account?.role||"student");
+ state.kind=state.account?.admin?"student":state.allowed[0]||(state.account?.role||"student");
  state.seats=state.kind==="class"?35:state.kind==="school"?55:1;
  put("cl-payment-status","");
 }
@@ -134,7 +134,7 @@ function total(){
  const fallback=prices[state.kind][state.tier][state.period];
  const base=currentCatalogPrice(state.kind+"_"+state.tier,state.period,fallback);
  const extraCost=currentCatalogPrice(state.kind==="class"?"extra_student":"extra_teacher",state.period,state.kind==="class"?(state.period==="monthly"?5:48):(state.period==="monthly"?10:96));
- return state.account?.admin?0:base+extraSeats()*extraCost;
+ return state.account?.admin&&state.adminView==="admin"?0:base+extraSeats()*extraCost;
 }
 function logos(){
  const entries=[
@@ -153,13 +153,52 @@ function logos(){
   badge.append(mark,caption);host.appendChild(badge);
  }
 }
+const adminModeLabels={
+ ar:{heading:"كيف بدك تشوف الاشتراكات؟",description:"استعرض الأسعار والدفع وكل باقات الطلاب والمعلمين والصفوف والمدارس، أو افتح لوحة الإدارة.",customer:"واجهة المستخدم",admin:"واجهة الأدمن",goAdmin:"فتح لوحة الأدمن الأصلية",catalog:"جميع الباقات",catalogNote:"اضغط أي باقة لتشوف الأسعار والمميزات وملخص الطلب بشكل طبيعي، بدون تغيير اشتراكك.",previewNote:"هذه معاينة الأدمن لواجهة الدفع؛ ما راح يتم خصم مبلغ أو إنشاء اشتراك."},
+ en:{heading:"Choose your membership view",description:"Browse every student, teacher, class and school plan or open your admin controls.",customer:"Customer view",admin:"Admin view",goAdmin:"Open admin panel",catalog:"All plans",catalogNote:"Select any plan to see pricing, benefits and checkout preview without changing your account.",previewNote:"Admin checkout preview only. No payment or subscription is created."},
+ es:{heading:"Elige tu vista de planes",description:"Consulta todas las tarifas o accede a tu panel de administración.",customer:"Vista usuario",admin:"Vista admin",goAdmin:"Abrir panel admin",catalog:"Todos los planes",catalogNote:"Elige un plan para ver el precio y los beneficios sin cambiar tu cuenta.",previewNote:"Vista de pago, sin cobro ni suscripción."},
+ ko:{heading:"멤버십 보기 선택",description:"모든 요금제와 관리자 화면을 확인하세요.",customer:"사용자 화면",admin:"관리자 화면",goAdmin:"관리자 패널 열기",catalog:"모든 요금제",catalogNote:"선택해 가격과 혜택을 미리 보세요. 계정은 변경되지 않습니다.",previewNote:"결제 미리보기만 가능합니다. 실제 결제는 없습니다."},
+ de:{heading:"Ansicht auswählen",description:"Alle Schüler-, Lehrer-, Klassen- und Schultarife ansehen.",customer:"Kundenansicht",admin:"Adminansicht",goAdmin:"Adminbereich öffnen",catalog:"Alle Tarife",catalogNote:"Tarif antippen: Preise, Vorteile und Bestellübersicht ohne Kontowechsel.",previewNote:"Nur Checkout-Vorschau, keine Zahlung oder Buchung."},
+ it:{heading:"Scegli la visualizzazione",description:"Esplora tutti i piani o apri il pannello admin.",customer:"Vista utente",admin:"Vista admin",goAdmin:"Apri pannello admin",catalog:"Tutti i piani",catalogNote:"Scegli un piano per vedere prezzo e vantaggi senza modificare il tuo account.",previewNote:"Solo anteprima del pagamento, senza addebito."},
+ hi:{heading:"सदस्यता दृश्य चुनें",description:"सभी प्लान देखें या एडमिन पैनल खोलें।",customer:"यूज़र दृश्य",admin:"एडमिन दृश्य",goAdmin:"एडमिन पैनल खोलें",catalog:"सभी प्लान",catalogNote:"मूल्य और सुविधाएँ देखने के लिए प्लान चुनें। आपका खाता नहीं बदलेगा।",previewNote:"सिर्फ भुगतान पूर्वावलोकन है; कोई पैसा नहीं कटेगा।"},
+ tr:{heading:"Üyelik görünümünü seç",description:"Tüm paketleri gör veya yönetici paneline geç.",customer:"Kullanıcı görünümü",admin:"Yönetici görünümü",goAdmin:"Yönetici panelini aç",catalog:"Tüm paketler",catalogNote:"Fiyatları ve avantajları hesap değiştirmeden incelemek için paket seç.",previewNote:"Yalnızca ödeme önizlemesi; ücret alınmaz."}
+};
+function renderAdminCatalog(){
+ const host=$("cl-owner-catalog-grid");if(!host)return;
+ const w=adminModeLabels[state.lang]||adminModeLabels.en;
+ put("cl-owner-catalog-title",w.catalog);put("cl-owner-catalog-note",w.catalogNote);
+ host.replaceChildren();
+ for(const kind of ["student","teacher","class","school"]){
+  for(const tier of ["plus","premium"]){
+   const b=document.createElement("button");b.type="button";b.className="cl-owner-plan-mini";
+   b.classList.toggle("active",state.kind===kind&&state.tier===tier);
+   b.setAttribute("aria-pressed",String(state.kind===kind&&state.tier===tier));
+   const name=document.createElement("span");name.className="cl-owner-plan-name";name.textContent=t(kind);
+   const tierEl=document.createElement("b");tierEl.textContent=tier.toUpperCase();
+   const cost=document.createElement("strong");cost.dir="ltr";cost.textContent=shownPlanPrice(kind+"_"+tier,state.period,prices[kind][tier][state.period]);
+   const sub=document.createElement("small");sub.textContent=t(state.period==="annual"?"termYear":"termMonth");
+   b.append(name,tierEl,cost,sub);
+   b.onclick=()=>{if(!state.account?.admin||state.adminView!=="customer")return;state.kind=kind;state.tier=tier;state.previewTier=tier;state.seats=kind==="class"?35:kind==="school"?55:1;render();$("cl-plans")?.scrollIntoView({behavior:"smooth",block:"start"});};
+   host.append(b);
+  }
+ }
+}
+document.querySelectorAll("[data-admin-view]").forEach(b=>b.addEventListener("click",()=>{
+ if(!state.account?.admin)return;
+ const next=b.dataset.adminView;
+ if(next!=="customer"&&next!=="admin")return;
+ state.adminView=next;
+ if(next==="customer"){state.allowed=["student","teacher","class","school"];state.kind=state.allowed.includes(state.kind)?state.kind:"student";}
+ else{state.previewRole=state.kind==="teacher"||state.kind==="class"||state.kind==="school"?"teacher":"student";state.previewTier="free";state.tier=null;state.kind=state.previewRole;}
+ render();
+}));
 function render(){
  document.documentElement.lang=state.lang;document.documentElement.dir=state.lang==="ar"?"rtl":"ltr";$("cl-language").value=state.lang;
  const map={back:"cl-back",subtitle:"cl-subtitle",high1:"cl-high1",high2:"cl-high2",high3:"cl-high3",adminTitle:"cl-admin-title",adminCaption:"cl-admin-caption",plansLabel:"cl-plans-label",plansHeading:"cl-plans-heading",beta:"cl-beta",typeLabel:"cl-type-label",student:"cl-kind-student",teacher:"cl-kind-teacher",class:"cl-kind-class",school:"cl-kind-school",cycleLabel:"cl-cycle-label",monthly:"cl-period-monthly",annual:"cl-period-annual",plusTag:"cl-plus-tag",premiumTag:"cl-premium-tag",plusDescription:"cl-plus-description",premiumDescription:"cl-premium-description",choosePlus:"cl-plus-select",choosePremium:"cl-premium-select",seatsLabel:"cl-seats-label",seatsHint:"cl-seats-hint",seat:"cl-seats-unit",paymentTitle:"cl-checkout-title",paymentIntro:"cl-payment-intro",paymentNote:"cl-payment-note",summaryLabel:"cl-summary-label",periodLabel:"cl-summary-period-label",seatsExtra:"cl-summary-seats-label",totalLabel:"cl-total-label",totalNote:"cl-total-note",continue:"cl-continue",security:"cl-security",faqTitle:"cl-faq-title",faq1:"cl-faq1",answer1:"cl-answer1",faq2:"cl-faq2",answer2:"cl-answer2",faq3:"cl-faq3",answer3:"cl-answer3",privacy:"cl-privacy",terms:"cl-terms",home:"cl-home"};
  Object.keys(map).forEach(k=>put(map[k],t(k)));
  $("cl-title").replaceChildren(document.createTextNode(t("title1")),document.createElement("br"),Object.assign(document.createElement("em"),{textContent:t("title2")}));
  $("cl-account").dataset.state=state.account?"success":"warning";
- const title=state.account?(state.account.admin?t("adminAccountTitle"):t(state.account.role==="teacher"?"teacherTitle":"studentTitle")):state.error?t("unavailable"):state.checking?t("guestMessage"):t("guestTitle");
+ const title=state.account?(state.account.admin&&state.adminView==="admin"?t("adminAccountTitle"):t(state.account.admin&&state.kind==="teacher"?"teacherTitle":state.account.admin?"studentTitle":state.account.role==="teacher"?"teacherTitle":"studentTitle")):state.error?t("unavailable"):state.checking?t("guestMessage"):t("guestTitle");
  put("cl-account-title",title);
  const gift=state.gift;
  const giftLabel=gift?(" · "+gift.kind.toUpperCase()+" "+gift.tier.toUpperCase()+" · "+
@@ -168,8 +207,26 @@ function render(){
  put("cl-account-subtitle",state.account?t("checked")+state.account.name+giftLabel:t("guestMessage"));
  put("cl-account-icon",state.account?.admin?"✦":state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
- const admin=!!state.account?.admin,ownerPreview=admin&&state.account?.owner===true;
- $("cl-admin").hidden=!admin;
+ const admin=!!state.account?.admin;
+ const ownerPreview=admin&&state.adminView==="admin";
+ state.allowed=admin?(ownerPreview?(state.previewRole==="teacher"?["teacher","class","school"]:["student"]):["student","teacher","class","school"]):state.allowed;
+ const mode=$("cl-owner-switch"),catalog=$("cl-owner-catalog");
+ if(mode){
+  mode.hidden=!admin;
+  if(admin){
+   const w=adminModeLabels[state.lang]||adminModeLabels.en;
+   put("cl-owner-switch-title",w.heading);put("cl-owner-switch-sub",w.description);
+   mode.querySelectorAll("[data-admin-view]").forEach(button=>{button.textContent=w[button.dataset.adminView];button.setAttribute("aria-pressed",String(state.adminView===button.dataset.adminView));});
+   put("cl-open-admin-panel",w.goAdmin);
+   const back=$("cl-open-admin-panel");
+   if(back)back.onclick=()=>{try{sessionStorage.setItem("classora_returning_from_subject","1")}catch(_){}};
+  }
+ }
+ if(catalog){
+  catalog.hidden=!admin||ownerPreview;
+  if(admin&&!ownerPreview)renderAdminCatalog();
+ }
+ $("cl-admin").hidden=!ownerPreview;
  const simulator=$("cl-admin-simulator");
  if(simulator){
   simulator.hidden=!ownerPreview;
@@ -188,8 +245,8 @@ function render(){
    put("cl-admin-sim-status",w.status+": "+w[state.previewRole]+" · "+w[state.previewTier]);
   }
  }
- document.querySelector(".cl-pricing").hidden=admin&&!ownerPreview;
- document.querySelector(".cl-checkout-preview").hidden=admin;
+ document.querySelector(".cl-pricing").hidden=false;
+ document.querySelector(".cl-checkout-preview").hidden=admin&&ownerPreview;
  const info=window.ClassoraMemberPlanInfo;
  put("cl-role-note",state.account?(info?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):info?.text(state.lang,"roleGuest")||"");
  put("cl-base-benefits",info?.text(state.lang,"base")||"");
@@ -220,15 +277,15 @@ function render(){
  put("cl-summary-seats",String(state.tier?extraSeats():0));
  const localizedTotal=state.tier?window.ClassoraPriceLocalization?.totalFor(state.kind,state.tier,state.period,state.seats):null;
  const localizedReady=!!window.ClassoraPriceLocalization?.getInfo()?.localized;
- put("cl-total",!state.tier||state.account?.admin?zeroPrice():(localizedTotal||(localizedReady&&extraSeats()>0?"…":price(total()))));
+ put("cl-total",!state.tier||(admin&&ownerPreview)?zeroPrice():(localizedTotal||(localizedReady&&extraSeats()>0?"…":price(total()))));
  if(state.tier)window.ClassoraPriceLocalization?.updateSelection(state.kind,state.tier,state.period,state.seats);
  $("cl-total").dir="ltr";
  const status=(catalogStatusMessages[state.lang]||catalogStatusMessages.en);
  // Technical catalog diagnostics remain hidden from regular buyers.
  put("cl-catalog-status",status[catalogLoadError?2:liveCatalog?1:0]);
  $("cl-catalog-status").dataset.status=catalogLoadError?"error":liveCatalog?"linked":"loading";
- put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?t("adminFree"):"");
- $("cl-continue").disabled=!state.tier||!!state.account?.admin;
+ put("cl-payment-status",!state.account?t("mustLogin"):state.account.admin?(ownerPreview?t("adminFree"):(adminModeLabels[state.lang]||adminModeLabels.en).previewNote):"");
+ $("cl-continue").disabled=!state.tier||(admin&&ownerPreview);
  window.ClassoraMembershipLuxe?.update(state);
 }
 async function identify(user){
@@ -243,8 +300,8 @@ async function identify(user){
   if(auth.currentUser?.uid!==user.uid)return;
   const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
   state.account={uid:user.uid,role:p.role,admin,owner:owner?.uid===user.uid,name:String(p.displayName||user.displayName||"")};
-  state.previewRole=state.account.owner?"student":null;state.previewTier="free";
-  state.allowed=admin?[]:p.role==="teacher"?["teacher","class","school"]:["student"];
+  state.previewRole=admin?"student":null;state.previewTier="free";state.adminView="customer";
+  state.allowed=admin?["student","teacher","class","school"]:p.role==="teacher"?["teacher","class","school"]:["student"];
   state.gift=null;
   try {
     const grantSnap=await getDoc(doc(db,"membershipGrants",user.uid));
@@ -261,25 +318,25 @@ async function identify(user){
 }
 $("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
 document.querySelectorAll("[data-sim-role]").forEach(b=>b.addEventListener("click",()=>{
- if(!state.account?.owner)return;
+ if(!state.account?.admin)return;
  state.previewRole=b.dataset.simRole;state.kind=state.previewRole;state.previewTier="free";state.tier=null;state.period="monthly";state.seats=1;render();
 }));
 document.querySelectorAll("[data-sim-tier]").forEach(b=>b.addEventListener("click",()=>{
- if(!state.account?.owner)return;
+ if(!state.account?.admin)return;
  state.previewTier=b.dataset.simTier;state.tier=state.previewTier==="free"?null:state.previewTier;render();
 }));
-document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;if(state.account?.owner)state.previewTier="free";state.period="monthly";state.seats=minSeats()||1;render();}));
+document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;if(state.account?.admin)state.previewTier="free";state.period="monthly";state.seats=minSeats()||1;render();}));
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render();}));
 document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{
- if(state.account?.admin&&!state.account?.owner)return;
- state.tier=b.dataset.choose;if(state.account?.owner)state.previewTier=state.tier;
+ if(state.account?.admin&&state.adminView==="admin")return;
+ state.tier=b.dataset.choose;if(state.account?.admin)state.previewTier=state.tier;
  render();
  if(!state.account?.admin)$("cl-checkout-title").scrollIntoView({block:"center",behavior:"smooth"});
 }));
 $("cl-seats").addEventListener("change",()=>{if(!state.tier)return;const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
 $("cl-continue").addEventListener("click",()=>{
  if(!state.account){window.location.assign("./index.html");return;}
- if(state.account.admin){put("cl-payment-status",t("adminFree"));return;}
+ if(state.account.admin){put("cl-payment-status",(adminModeLabels[state.lang]||adminModeLabels.en).previewNote);return;}
  if(!state.tier){put("cl-payment-status",emptyDraftLabel());return;}
  const selection=currentSelection();
  if(!selection){put("cl-payment-status",catalogStatusMessages[state.lang][catalogLoadError?2:0]);return;}
