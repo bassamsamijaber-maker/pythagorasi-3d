@@ -89,6 +89,6 @@ function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queu
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay&&!overlay.hidden){e.stopPropagation();close()}});
 document.addEventListener('classora:membership-updated',()=>{const sig=JSON.stringify(account());if(sig===lastAccessSignature)return;lastAccessSignature=sig;if(overlay&&!overlay.hidden)draw()});
 document.documentElement.addEventListener('classora:open-benefits',open);
-const start=()=>{ensure();installButtons();new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true});new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})};
+const start=()=>{ensure();installButtons();new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true});new MutationObserver(()=>{schedule();if(overlay&&!overlay.hidden)draw()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 window.ClassoraBenefits={open,close};
