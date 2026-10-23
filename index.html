@@ -11105,6 +11105,7 @@ function sendLobbyAI(){
   if(window.ClassoraConversation?.busy)return;
   input.value="";
   if(window.ClassoraConversation?.send){
+    window.ClassoraConversation.openTopic=classoraOpenAssistantTopic;
     const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
     const match=classoraStudyTopicMatch(raw,grade,"lobby");
     window.ClassoraConversation.send(raw,()=>classoraSmartAnswer(raw,"lobby",()=>classoraLearningAnswer(raw),match?.title||""),match);
