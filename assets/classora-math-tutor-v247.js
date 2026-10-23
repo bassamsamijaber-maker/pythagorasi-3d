@@ -80,13 +80,13 @@ function parse(src){
   if(t&&/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(t))return number(finite(Number(t)));
   throw Error('syntax');
  }
- function unary(){if(next()==='+'){take();return unary()}if(next()==='-'){take();return times(number(-1),unary())}return primary()}
+ function unary(){if(next()==='+'){take();return unary()}if(next()==='-'){take();return times(number(-1),unary())}return exponent()}
  function exponent(){
-  let a=unary();if(next()==='^'){take();a=pow(a,exponent())}
+  let a=primary();if(next()==='^'){take();a=pow(a,unary())}
   while(next()==='%'){take();a=over(a,number(100))}
   return a;
  }
- function product(){let a=exponent();while(next()==='*'||next()==='/'){const op=take(),b=exponent();a=op==='*'?times(a,b):over(a,b)}return a}
+ function product(){let a=unary();while(next()==='*'||next()==='/'){const op=take(),b=unary();a=op==='*'?times(a,b):over(a,b)}return a}
  function sum(){let a=product();while(next()==='+'||next()==='-'){let op=take();a=plus(a,product(),op==='+'?1:-1)}return a}
  const result=sum();if(next()!==undefined)throw Error('syntax');return result;
 }
