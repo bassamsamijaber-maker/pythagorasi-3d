@@ -68,7 +68,7 @@ html body #platformLobby .cl250-side-foot{
  color:var(--cl250-muted);font-size:12px;
 }
 /* Desktop: keep actual model chat at left, real progress / shortcuts at right. */
-@media(min-width:1500px) {
+@media(min-width:1280px) {
  html body #platformLobby{--cl250-rail:clamp(218px,14.8vw,248px)}
  html body #platformLobby .lobby-shell{
   box-sizing:border-box!important;
