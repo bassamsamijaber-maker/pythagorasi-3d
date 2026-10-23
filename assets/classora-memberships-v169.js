@@ -163,26 +163,6 @@ const adminModeLabels={
  hi:{heading:"सदस्यता दृश्य चुनें",description:"सभी प्लान देखें या एडमिन पैनल खोलें।",customer:"यूज़र दृश्य",admin:"एडमिन दृश्य",goAdmin:"एडमिन पैनल खोलें",catalog:"सभी प्लान",catalogNote:"मूल्य और सुविधाएँ देखने के लिए प्लान चुनें। आपका खाता नहीं बदलेगा।",previewNote:"सिर्फ भुगतान पूर्वावलोकन है; कोई पैसा नहीं कटेगा।"},
  tr:{heading:"Üyelik görünümünü seç",description:"Tüm paketleri gör veya yönetici paneline geç.",customer:"Kullanıcı görünümü",admin:"Yönetici görünümü",goAdmin:"Yönetici panelini aç",catalog:"Tüm paketler",catalogNote:"Fiyatları ve avantajları hesap değiştirmeden incelemek için paket seç.",previewNote:"Yalnızca ödeme önizlemesi; ücret alınmaz."}
 };
-function renderAdminCatalog(){
- const host=$("cl-owner-catalog-grid");if(!host)return;
- const w=adminModeLabels[state.lang]||adminModeLabels.en;
- put("cl-owner-catalog-title",w.catalog);put("cl-owner-catalog-note",w.catalogNote);
- host.replaceChildren();
- for(const kind of ["student","teacher","class","school"]){
-  for(const tier of ["plus","premium"]){
-   const b=document.createElement("button");b.type="button";b.className="cl-owner-plan-mini";
-   b.classList.toggle("active",state.kind===kind&&state.tier===tier);
-   b.setAttribute("aria-pressed",String(state.kind===kind&&state.tier===tier));
-   const name=document.createElement("span");name.className="cl-owner-plan-name";name.textContent=t(kind);
-   const tierEl=document.createElement("b");tierEl.textContent=tier.toUpperCase();
-   const cost=document.createElement("strong");cost.dir="ltr";cost.textContent=shownPlanPrice(kind+"_"+tier,state.period,prices[kind][tier][state.period]);
-   const sub=document.createElement("small");sub.textContent=t(state.period==="annual"?"termYear":"termMonth");
-   b.append(name,tierEl,cost,sub);
-   b.onclick=()=>{if(!state.account?.admin||state.adminView!=="customer")return;state.kind=kind;state.tier=tier;state.previewTier=tier;state.seats=kind==="class"?35:kind==="school"?55:1;render();$("cl-plans")?.scrollIntoView({behavior:"smooth",block:"start"});};
-   host.append(b);
-  }
- }
-}
 document.querySelectorAll("[data-admin-view]").forEach(b=>b.addEventListener("click",()=>{
  if(!state.account?.admin)return;
  const next=b.dataset.adminView;
@@ -210,7 +190,7 @@ function render(){
  const admin=!!state.account?.admin;
  const ownerPreview=admin&&state.adminView==="admin";
  state.allowed=admin?(ownerPreview?(state.previewRole==="teacher"?["teacher","class","school"]:["student"]):["student","teacher","class","school"]):state.allowed;
- const mode=$("cl-owner-switch"),catalog=$("cl-owner-catalog");
+ const mode=$("cl-owner-switch");
  if(mode){
   mode.hidden=!admin;
   if(admin){
@@ -221,10 +201,6 @@ function render(){
    const back=$("cl-open-admin-panel");
    if(back)back.onclick=()=>{try{sessionStorage.setItem("classora_returning_from_subject","1");sessionStorage.setItem("classora_open_admin_from_memberships",JSON.stringify({uid:state.account.uid,at:Date.now()}))}catch(_){}};
   }
- }
- if(catalog){
-  catalog.hidden=!admin||ownerPreview;
-  if(admin&&!ownerPreview)renderAdminCatalog();
  }
  $("cl-admin").hidden=!ownerPreview;
  const simulator=$("cl-admin-simulator");
