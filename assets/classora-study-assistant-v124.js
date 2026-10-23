@@ -1,5 +1,6 @@
 /* Classora bilingual curriculum assistant: curated offline resources, not a general cloud AI. */
 import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName,curriculumTopicGuide} from './curriculum-v97.js?v=213';
+import {classoraMathAnswer,classoraMathTopic} from './classora-math-tutor-v247.js?v=247';
 const WORDS=[
  ['كتاب','book'],['قلم','pen'],['مدرسة','school'],['طالب','student'],['معلم','teacher'],['معلمة','teacher'],['دفتر','notebook'],['صف','class'],['درس','lesson'],['واجب','homework'],['سؤال','question'],['جواب','answer'],['امتحان','exam'],['مسابقة','competition'],
  ['بيت','house'],['باب','door'],['ماء','water'],['سماء','sky'],['شمس','sun'],['قمر','moon'],['نجمة','star'],['شجرة','tree'],['زهرة','flower'],['مدينة','city'],['شارع','street'],['سيارة','car'],['عائلة','family'],['أم','mother'],['أب','father'],['أخ','brother'],['أخت','sister'],['صديق','friend'],['طفل','child'],['أطفال','children'],
@@ -30,6 +31,78 @@ for(const [grade,subjects] of Object.entries(CURRICULUM_DATA)){
   }
  }
 }
+
+/* Grade-sensitive keyword routing into existing Classora lessons, no invented topics. */
+const topicHints=[
+ ['math','فيثاغورس|pythagoras','فيثاغورس'],
+ ['math','احتمال|probability','الاحتمال'],
+ ['math','احصاء|متوسط|وسيط|منوال|statistics','الإحصاء'],
+ ['math','نسبه مئويه|نسب مئويه|percent','النسب المئوية'],
+ ['math','تربيعي|quadratic','التربيعية'],
+ ['math','نظام معادلتين|مجهولين','نظام معادلتين'],
+ ['math','معادله|equation|المجهول','المعادلات'],
+ ['math','ميل المستقيم|slope','الميل'],
+ ['math','المساحه|محيط|perimeter|area','المساحة'],
+ ['math','كسر|كسور|fraction','الكسور'],
+ ['science','الغازات الخامل|الغازات النبيله|noble gases|الجدول الدوري','الجدول الدوري'],
+ ['science','الذره|الذرات|atom','بنية الذرة'],
+ ['science','حمض|حامض|قاعدي|acids|alkali|ph','الأحماض والقواعد'],
+ ['science','الكثافه|density','الكثافة'],
+ ['science','الوراثه|genetic','الوراثة'],
+ ['science','الخليه|الخلية|cell','الخلية'],
+ ['science','البناء الضوئي|photosynthesis','البناء الضوئي'],
+ ['science','سرعه|التسارع|velocity|acceleration','السرعة'],
+ ['arabic','نائب الفاعل','نائب الفاعل'],
+ ['arabic','مفعول به','المفعول به'],
+ ['arabic','المضاف|مضاف اليه','المضاف'],
+ ['arabic','الاعراب|اعراب','الإعراب'],
+ ['arabic','كان واخواتها','كان وأخواتها'],
+ ['arabic','الفعل المضارع|مضارع منصوب','الفعل المضارع'],
+ ['english','present simple|المضارع البسيط','Present Simple'],
+ ['english','present continuous|المضارع المستمر','Present Continuous'],
+ ['english','past simple|الماضي البسيط','Past Simple'],
+ ['english','present perfect|المضارع التام','Present Perfect'],
+ ['english','passive voice','Passive Voice'],
+ ['english','conditional','Conditional'],
+ ['history','مارتن لوثر|martin luther|الاصلاح الديني','الإصلاح الديني'],
+ ['history','النهضه|renaissance','عصر النهضة'],
+ ['history','الثوره الفرنسيه|french revolution','الثورة الفرنسية'],
+ ['history','الثوره الصناعيه|industrial revolution','الثورة الصناعية'],
+ ['history','الحرب العالميه الاولي|world war','الحرب العالمية الأولى'],
+ ['geography','الزلازل|earthquake','الزلازل'],
+ ['geography','البراكين|volcano','البراكين'],
+ ['geography','المناخ|climate','المناخ'],
+ ['geography','الطقس|weather','الطقس'],
+ ['geography','دوره المياه|water cycle','دورة المياه'],
+ ['geography','الخرائط|longitude|latitude','الخرائط']
+];
+function keywordTopic(raw,grade){
+ const text=norm(raw),mathName=classoraMathTopic(raw);
+ let candidates=[];
+ for(const [subject,keys,title] of topicHints){
+  if(!new RegExp(keys,'iu').test(text))continue;
+  for(const row of topics){
+   if(row.subject!==subject)continue;
+   if(norm(row.title).includes(norm(title)))candidates.push({row,score:100+(row.grade===grade?45:0)});
+  }
+ }
+ if(mathName){
+  for(const row of topics){
+   if(!['math','geometry'].includes(row.subject))continue;
+   const name=norm(row.title),target=norm(mathName);
+   if(name.includes(target))candidates.push({row,score:155+(row.grade===grade?55:0)});
+  }
+ }
+ const ignore=new Set(['موضوع','شرح','الدرس','ممكن','سؤال','عندي','العلوم','المواد','الصف','بدي','what','about','explain']);
+ const words=new Set(text.split(' ').filter(w=>w.length>=4&&!ignore.has(w)));
+ for(const row of topics){
+  const hits=norm(row.title).split(' ').filter(w=>w.length>=4&&!ignore.has(w)&&words.has(w)).length;
+  if(hits>=2)candidates.push({row,score:70+hits*10+(row.grade===grade?20:0)});
+ }
+ candidates.sort((a,b)=>b.score-a.score||Math.abs(a.row.grade-grade)-Math.abs(b.row.grade-grade));
+ return candidates[0]?.row||null;
+}
+
 function wordLookup(raw,en){
  const text=String(raw||'').trim();
  if(!/(معنى|يعني|ترجم|ترجمة|بالإنجليزي|بالانجليزي|بالعربي|meaning|translate|what does|past of|past tense|ماضي|تصريف|plural of|جمع)/i.test(text))return null;
@@ -70,7 +143,7 @@ function matchTopic(raw,grade){
   }
  }
  matches.sort((a,b)=>b.score-a.score);
- return matches[0]?.row||null;
+ return matches[0]?.row||keywordTopic(raw,grade)||null;
 }
 
 /* Friendly bilingual greetings and reviewed science quick answers.
@@ -158,6 +231,8 @@ export function classoraStudyAnswer(raw,language='ar',grade=8,context='main'){
  if(greeting)return greeting;
  const word=wordLookup(q,en);
  if(word)return word;
+ const calculation=classoraMathAnswer(q,language);
+ if(calculation)return calculation;
  const g=[7,8,9,10].includes(Number(grade))?Number(grade):8;
  const specificScience=/^(?:لماذا|ليش|why|how fast|ما الفرق|difference)|سرعة الضوء|speed of light|boiling point of water/i.test(norm(q));
  if(specificScience){
