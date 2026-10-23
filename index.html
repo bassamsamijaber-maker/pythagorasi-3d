@@ -138,8 +138,8 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-mobile-membership-v238.css?v=238">
 <link rel="stylesheet" href="./assets/classora-premium-v243.css?v=247">
 <link rel="stylesheet" href="./assets/classora-ui-refine-v248.css?v=249">
-<link rel="stylesheet" href="./assets/classora-workspace-v250.css?v=252">
-<script defer src="./assets/classora-chat-workspace-v250.js?v=252"></script>
+<link rel="stylesheet" href="./assets/classora-workspace-v250.css?v=253">
+<script defer src="./assets/classora-chat-workspace-v250.js?v=253"></script>
 <script defer src="./assets/classora-ai-prompts-v248.js?v=249"></script>
 <script defer src="./assets/classora-premium-v243.js?v=243"></script>
 </head>
@@ -2580,6 +2580,8 @@ let currentUILanguage=localStorage.getItem("pythagorasi_language")==="ar"?"ar":"
    Never access or expose the raw Ollama 11434 API from this web page. */
 const classoraLocalAiEndpoint="https://ai.classora.study";
 const classoraCloudHistory=new Map();
+let classoraConversationGeneration=0;
+window.addEventListener("classora:ai-reset",()=>{classoraCloudHistory.clear();classoraConversationGeneration++});
 let classoraCloudUnavailableUntil=0;
 let classoraCloudHealthyUntil=0;
 const classoraAIConsentKey=uid=>"classora_local_ai_consent_v2_"+uid;
@@ -2643,6 +2645,14 @@ async function classoraLocalAiAvailable(){
   }
 }
 async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
+  const generation=classoraConversationGeneration,id=String(channel||"main");
+  const answer=await classoraSmartAnswerInternal(raw,channel,localAnswer,topic);
+  if(generation!==classoraConversationGeneration)return "";
+  const turns=classoraCloudHistory.get(id)||[];
+  classoraCloudHistory.set(id,[...turns,{role:"user",content:String(raw).slice(0,1800)},{role:"assistant",content:String(answer).slice(0,6000)}].slice(-10));
+  return answer;
+}
+async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
   const isCreative=/(?:اكتب|قص[ةه]|قصه|قصة|اكتبلي|عدّل|عدل|احذف|غيّر|غير|[0-9٠-٩]+\s*(?:سطر|سطور)|story|write|rewrite|revise|edit|poem|essay|cuento|geschichte|storia|hikaye|कहानी|이야기)/iu.test(raw);
   const verifiedMath=isCreative?null:classoraMathAnswer(raw,currentUILanguage);
   if(verifiedMath)return verifiedMath;
@@ -2681,7 +2691,7 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
           language:["ar","en","es","ko","de","it","hi","tr"].includes(currentUILanguage)?currentUILanguage:"ar",
           grade:Number(localStorage.getItem("classora_curriculum_grade")||8),
           topic:String(topic||"").slice(0,100),
-          history:turns.slice(-14)
+          history:turns.slice(-10)
         })
       });
     }finally{clearTimeout(timer)}
@@ -2694,10 +2704,6 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
     const result=await response.json();
     const answer=String(result?.answer||"").trim();
     if(!answer)throw Error("empty-local-ai");
-    classoraCloudHistory.set(id,[
-      ...turns,{role:"user",content:String(raw).slice(0,1800)},
-      {role:"assistant",content:answer.slice(0,1800)}
-    ].slice(-10));
     return answer;
   }catch(error){
     classoraCloudUnavailableUntil=Date.now()+15000;
@@ -4144,6 +4150,7 @@ authPersistenceReady.then(()=>getRedirectResult(auth)).catch(error=>{
 });
 
 onAuthStateChanged(auth,async user=>{
+  window.dispatchEvent(new Event("classora:ai-reset"));
   // Always settle the visual boot state, including a slow/offline Firestore.
   document.body.classList.toggle("classora-session-restoring",!!user);
   authResolved=true;

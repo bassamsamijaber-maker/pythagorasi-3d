@@ -23,7 +23,7 @@ const creative={
 };
 const t=i=>(lex[document.documentElement.lang]||lex.en)[i];
 const el=(tag,cls,str)=>{const x=document.createElement(tag);x.className=cls||'';if(str!==undefined)x.textContent=str;return x};
-let card,left,right,host,marker,thread,more,expanded=false,busy=false;
+let card,left,right,host,marker,thread,more,expanded=false,busy=false,conversationGeneration=0;
 function line(role,msg){
  const p=el('div','cl250-line cl250-'+role,String(msg));p.dir='auto';thread.append(p);
  while(thread.children.length>70)thread.firstElementChild.remove();
@@ -32,12 +32,14 @@ function line(role,msg){
 }
 async function send(raw,compute,topic){
  if(!card||busy||!String(raw||'').trim())return;
+ const generation=conversationGeneration;
  busy=true;card.classList.add('cl250-chat-active');
  line('user',String(raw).trim());
  const button=$('lobbyAISend');if(button)button.disabled=true;
  const progress=line('pending',t(9));
  try{
   const result=await compute();
+  if(generation!==conversationGeneration)return;
   const answer=typeof result==='string'&&result.trim()?result:t(10);
   progress.remove();
   const reply=line('bot',answer);
@@ -73,7 +75,7 @@ function update(){
 }
 function reposition(){
  if(!card||!left||!host)return;
- if(window.innerWidth>=1280){if(card.parentElement!==left)left.append(card)}
+ if(window.innerWidth>=1000){if(card.parentElement!==left)left.append(card)}
  else if(card.parentElement!==host)marker.after(card);
 }
 function addChat(){
@@ -107,8 +109,7 @@ function addChat(){
   });
   creativeButtons.append(b);
  }
- actions.after(creativeButtons);
- card.querySelector('.lobby-ai-input')?.before(actions);
+ card.querySelector('.lobby-ai-input')?.before(actions,creativeButtons);
  card.querySelector('.lobby-ai-input input')?.setAttribute('aria-label',t(0));
 }
 function addRight(lobby){
@@ -138,6 +139,45 @@ function addRight(lobby){
  const boost=$('classoraLearningBoost');
  if(boost)new MutationObserver(update).observe(boost,{subtree:true,childList:true,characterData:true});
 }
+const extraText={
+ ar:['تركيز 25 دقيقة','ابدأ','إيقاف مؤقت','إعادة','ملاحظة سريعة','اكتب هدفك للجلسة…','محادثة جديدة','طوّل الجواب','قصّر الجواب','حسّن آخر جواب','انتهت جلسة التركيز'],
+ en:['25-minute focus','Start','Pause','Reset','Quick note','Your goal for this session…','New chat','Make it longer','Make it shorter','Improve your last answer','Focus session complete'],
+ es:['Concentración: 25 minutos','Iniciar','Pausar','Reiniciar','Nota rápida','Tu objetivo…','Nuevo chat','Más largo','Más corto','Mejora tu respuesta anterior','Sesión terminada'],
+ ko:['25분 집중','시작','일시 정지','초기화','빠른 메모','이번 학습 목표…','새 대화','더 길게','더 짧게','이전 답변을 개선해 줘','집중 시간 완료'],
+ de:['25 Minuten Fokus','Start','Pause','Zurücksetzen','Notiz','Dein Lernziel…','Neuer Chat','Ausführlicher','Kürzer','Verbessere deine letzte Antwort','Fokuszeit beendet'],
+ it:['Concentrazione: 25 minuti','Avvia','Pausa','Reimposta','Nota rapida','Il tuo obiettivo…','Nuova chat','Più lungo','Più breve','Migliora la tua ultima risposta','Sessione completata'],
+ hi:['25 मिनट एकाग्रता','शुरू','रोकें','रीसेट','त्वरित नोट','इस सत्र का लक्ष्य…','नई बातचीत','लंबा करो','छोटा करो','पिछला उत्तर सुधारो','सत्र पूरा हुआ'],
+ tr:['25 dakika odaklan','Başlat','Duraklat','Sıfırla','Hızlı not','Bu oturumdaki hedefin…','Yeni sohbet','Daha uzun','Daha kısa','Son yanıtını iyileştir','Odaklanma tamamlandı']
+};
+const et=i=>(extraText[document.documentElement.lang]||extraText.en)[i];
+let remaining=1500,deadline=0,tick;
+function updateExtras(){
+ document.querySelectorAll('[data-cl253-text]').forEach(n=>n.textContent=et(Number(n.dataset.cl253Text)));
+ const note=$('cl253Note');if(note)note.placeholder=et(5);
+ const toggle=$('cl253FocusToggle');if(toggle)toggle.textContent=et(deadline?2:1);
+}
+function paintClock(){
+ if(deadline)remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+ const clock=$('cl253Clock');if(clock)clock.textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');
+ if(deadline&&!remaining){deadline=0;clearInterval(tick);$('cl253FocusStatus').textContent=et(10);updateExtras()}
+}
+function addExtras(){
+ const label=(tag,i)=>{const n=el(tag,'',et(i));n.dataset.cl253Text=i;return n};
+ const reset=label('button',6);reset.type='button';reset.className='cl253-new';
+ reset.addEventListener('click',()=>{if(!busy)window.dispatchEvent(new Event('classora:ai-reset'))});
+ card.querySelector('.lobby-ai-head')?.after(reset);
+ for(const i of [7,8,9]){const b=label('button',i);b.type='button';b.className='cl250-chat-chip';b.addEventListener('click',()=>{const input=$('lobbyAIInput');input.value=et(i);$('lobbyAISend')?.click()});card.querySelector('.cl250-chat-actions')?.append(b)}
+ const focus=el('section','cl253-focus');focus.append(label('h4',0));
+ const clock=el('output','cl253-clock','25:00');clock.id='cl253Clock';focus.append(clock);
+ const row=el('div','cl253-controls');const toggle=el('button','',et(1));toggle.type='button';toggle.id='cl253FocusToggle';
+ toggle.onclick=()=>{if(deadline){paintClock();deadline=0;clearInterval(tick)}else{if(!remaining)remaining=1500;deadline=Date.now()+remaining*1000;tick=setInterval(paintClock,500);$('cl253FocusStatus').textContent=''}updateExtras()};
+ const restart=label('button',3);restart.type='button';restart.onclick=()=>{deadline=0;clearInterval(tick);remaining=1500;paintClock();updateExtras();$('cl253FocusStatus').textContent=''};
+ row.append(toggle,restart);focus.append(row);
+ const status=el('div');status.id='cl253FocusStatus';status.setAttribute('role','status');focus.append(status);right.append(focus);
+ const noteWrap=el('section','cl253-note');const title=label('label',4);title.htmlFor='cl253Note';const note=el('textarea');note.id='cl253Note';note.maxLength=1000;note.rows=3;note.placeholder=et(5);noteWrap.append(title,note);right.append(noteWrap);
+ window.addEventListener('classora:ai-reset',()=>{note.value='';deadline=0;clearInterval(tick);remaining=1500;paintClock();updateExtras()});
+ updateExtras();
+}
 function addMore(front){
  const quick=front.querySelector('.cl214-quick');if(!quick||front.querySelector('#cl250More'))return;
  more=el('button','cl250-more');more.id='cl250More';more.type='button';quick.after(more);
@@ -152,12 +192,15 @@ function addMore(front){
 }
 function init(){
  const lobby=$('platformLobby'),front=$('classoraLearningFront');
- if(!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
+ if(left||!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
  left=el('aside','cl250-left');left.id='cl250Left';left.dataset.noTranslate='';
  lobby.append(left);addChat();addRight(lobby);addMore(front);reposition();update();
  window.ClassoraConversation={send,get busy(){return busy},open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
  window.addEventListener('resize',reposition,{passive:true});
- new MutationObserver(update).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ new MutationObserver(reposition).observe(lobby,{childList:true,subtree:true});
+ addExtras();
+ window.addEventListener('classora:ai-reset',()=>{conversationGeneration++;thread.replaceChildren();card.classList.remove('cl250-chat-active');const reply=$('lobbyAIReply');if(reply)reply.textContent='';});
+ new MutationObserver(()=>{update();updateExtras()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 }
 function boot(){
  if($('classoraLearningFront')){init();return}
