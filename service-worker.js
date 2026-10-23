@@ -1,11 +1,14 @@
-const CACHE_NAME="classora-v240-owner-membership-testing";;
+const CACHE_NAME="classora-v241-storefront-settings";;
 const APP_SHELL=[
   "./assets/classora-owner-cancel-v240.js?v=240",
+  "./assets/classora-settings-polish-v241.js?v=241",
+  "./assets/classora-settings-polish-v241.css?v=241",
+  "./assets/classora-memberships-polish-v241.css?v=241",
   "./assets/classora-member-hub-v239.js?v=239",
   "./assets/classora-device-sessions-v239.js?v=239",
   "./assets/classora-memberships-features-v174.js?v=239",
   "./assets/classora-mobile-membership-v238.css?v=240",
-  "./assets/classora-member-space-v238.js?v=238",
+  "./assets/classora-member-space-v238.js?v=241",
   "./assets/classora-membership-access-v238.js?v=238",
   "./assets/classora-member-words-v238.js?v=238",
 
