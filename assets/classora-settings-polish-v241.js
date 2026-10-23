@@ -91,12 +91,12 @@ function schedule(){
  requestAnimationFrame(()=>{queued=false;ensure();checkReturnToAdmin()});
 }
 function init(){
- style();ensure();checkReturnToAdmin();
+ if(document.getElementById("settingsModal")){style();ensure();}checkReturnToAdmin();
  const modal=document.getElementById("settingsModal");
  if(modal)new MutationObserver(schedule).observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:["hidden","class"]});
  new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  // The site lazily updates profile/authorization on auth events.
- if(document.body)new MutationObserver(()=>{if(sessionStorage.getItem("classora_open_admin_from_memberships"))schedule()}).observe(document.body,{attributes:true,attributeFilter:["class"]});
+ if(document.body)new MutationObserver(()=>{try{if(sessionStorage.getItem("classora_open_admin_from_memberships"))schedule()}catch{}}).observe(document.body,{attributes:true,attributeFilter:["class"]});
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
