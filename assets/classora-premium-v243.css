@@ -255,7 +255,7 @@ html body.classora-membership-page :is(input,select,button){max-width:100%;box-s
 
 /* v245 — consistent touch-friendly buttons.
    Scoped to primary UI so chemistry, calculators, games and tiny carousel dots keep their controls. */
-html body #platformLobby :is(.lobby-top-actions,.cl214-hero-buttons,.cl214-tool-grid,.cl214-quick,.cl223-filters,.cl223-mission-area,.cl223-preview,.cl223-subject-picker) :is(button,a),
+html body #platformLobby :is(.lobby-top-actions,.cl214-hero-buttons,.cl223-filters,.cl223-mission-area,.cl223-preview,.cl223-subject-picker) :is(button:not(.cl223-node),a),
 html body #settingsModal :is(.classora-quick-grid,.settings-grid,.settings-danger-zone,.settings-profile-row,.settings-choice-row,.cl239-device-actions,.cl240-owner-row) :is(button,a),
 html body #chatModal :is(.modalhead,.chat-thread-head,.chat-media-tools,.chat-compose,.chat-contacts-pane) button,
 html body #adminPanelModal :is(.admin-v34-quick-actions,.admin-toolbar,.admin-tab-row,.admin-tabs,.admin-quick-add-grid) button,
