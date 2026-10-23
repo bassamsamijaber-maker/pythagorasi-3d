@@ -13,7 +13,7 @@ const DICT={
  tr:{open:'Avantajlarım',chat:'Sohbet avantajları',title:'Avantaj merkezi',subtitle:'Plus ve Premium araçların',ready:'Kullanılabilir',planned:'Planlandı',locked:'Üyelik gerekir',student:'Öğrenci önizleme',teacher:'Öğretmen önizleme',real:'Gerçek hesabım',admin:'Yöneticiler tüm araçlara erişebilir; önizleme hesabı değiştirmez.',tools:'Araçlarım',plus:'Plus avantajları',premium:'Premium avantajları',more:'Planları gör',close:'Kapat',free:'Temel eğitim ve sohbet ücretsizdir.',trial:'Ödeme ve deneme henüz kullanılamıyor.'}
 };
 const $=id=>document.getElementById(id), N=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=value;return e;};
-let overlay=null,pane=null,preview='real',lastFocus=null,queued=false;
+let overlay=null,pane=null,preview='real',lastFocus=null,queued=false,lastAccessSignature='';
 const lang=()=>DICT[document.documentElement.lang]?document.documentElement.lang:'en';
 const t=k=>DICT[lang()][k]||DICT.en[k]||k;
 const account=()=>window.ClassoraMembership?.get?.()||{tier:'free',features:[],role:'student',admin:false};
@@ -83,12 +83,11 @@ function installButtons(){
   if(!host||$(id))continue;
   const b=N('button','cl239-launch',t(name));b.id=id;b.type='button';b.onclick=open;host.append(b);
  }
- if(overlay&&!overlay.hidden)draw();
  for(const [id,k] of [['cl239ChatBtn','chat'],['cl239LobbyBtn','open'],['cl239SubjectsBtn','open']]){const b=$(id);if(b&&b.textContent!==t(k))b.textContent=t(k)}
 }
 function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;installButtons()})}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay&&!overlay.hidden){e.stopPropagation();close()}});
-document.addEventListener('classora:membership-updated',()=>{if(overlay&&!overlay.hidden)draw()});
+document.addEventListener('classora:membership-updated',()=>{const sig=JSON.stringify(account());if(sig===lastAccessSignature)return;lastAccessSignature=sig;if(overlay&&!overlay.hidden)draw()});
 document.documentElement.addEventListener('classora:open-benefits',open);
 const start=()=>{ensure();installButtons();new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true});new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
