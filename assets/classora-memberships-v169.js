@@ -219,7 +219,7 @@ function render(){
    mode.querySelectorAll("[data-admin-view]").forEach(button=>{button.textContent=w[button.dataset.adminView];button.setAttribute("aria-pressed",String(state.adminView===button.dataset.adminView));});
    put("cl-open-admin-panel",w.goAdmin);
    const back=$("cl-open-admin-panel");
-   if(back)back.onclick=()=>{try{sessionStorage.setItem("classora_returning_from_subject","1")}catch(_){}};
+   if(back)back.onclick=()=>{try{sessionStorage.setItem("classora_returning_from_subject","1");sessionStorage.setItem("classora_open_admin_from_memberships",JSON.stringify({uid:state.account.uid,at:Date.now()}))}catch(_){}};
   }
  }
  if(catalog){
