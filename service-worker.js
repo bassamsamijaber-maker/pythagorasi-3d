@@ -1,12 +1,12 @@
-const CACHE_NAME="classora-v251-conversation-and-three-action-home";;
+const CACHE_NAME="classora-v252-creative-multilingual-chat";;
 const APP_SHELL=[
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=249",
   "./assets/classora-study-assistant-v124.js?v=249",
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
-  "./assets/classora-chat-workspace-v250.js?v=251",
-  "./assets/classora-workspace-v250.css?v=251",
+  "./assets/classora-chat-workspace-v250.js?v=252",
+  "./assets/classora-workspace-v250.css?v=252",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
