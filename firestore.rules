@@ -1029,6 +1029,269 @@ service cloud.firestore {
       }
     }
 
+
+    // Browser-level sign-in registry. Each user sees only their own devices.
+    // Remote sign-out is watched by the online client; auth-wide token revocation
+    // is performed separately by the server callable for the 'all' action.
+    match /users/{uid}/deviceSessions/{deviceId} {
+      allow get, list: if rawSignedIn() && request.auth.uid == uid;
+      allow create: if rawSignedIn() && request.auth.uid == uid
+        && deviceId.matches('^[a-f0-9]{32} Clients cannot restart or extend it.
+    match /membershipTrials/{uid} {
+      allow get: if rawSignedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow write: if false;
+    }
+
+    // Staff-assigned courtesy memberships (never charge, never create a Paddle subscription).
+    // One grant per account. Access is checked with request.time; expired grants
+    // automatically stop qualifying even when their document still exists.
+    match /membershipGrants/{uid} {
+      allow get: if rawSignedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow create, update: if isSuperAdmin()
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly([
+          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked','features'
+        ])
+        && request.resource.data.keys().hasAll([
+          'uid','kind','tier','days','grantedAt','expiresAt','grantedBy','note','revoked'
+        ])
+        && (!('features' in request.resource.data) || (request.resource.data.features is list
+          && request.resource.data.features.size() > 0 && request.resource.data.features.size() <= 5
+          && request.resource.data.features.hasOnly(['focus','notes','planner','library','chatStyle'])))
+        && request.resource.data.uid == uid
+        && request.resource.data.kind in ['student','teacher','class','school']
+        && request.resource.data.tier in ['plus','premium']
+        && request.resource.data.days is int
+        && request.resource.data.days >= 1 && request.resource.data.days <= 365
+        && request.resource.data.grantedAt == request.time
+        && request.resource.data.expiresAt is timestamp
+        && request.resource.data.expiresAt > request.time
+        && request.resource.data.expiresAt <= request.time + duration.value(366, 'd')
+        && request.resource.data.grantedBy == request.auth.uid
+        && request.resource.data.note is string
+        && request.resource.data.note.size() <= 180
+        && request.resource.data.revoked == false
+        && ((get(/databases/$(database)/documents/users/$(uid)).data.role == 'student'
+             && request.resource.data.kind == 'student')
+            || (get(/databases/$(database)/documents/users/$(uid)).data.role == 'teacher'
+             && request.resource.data.kind in ['teacher','class','school']));
+      allow delete: if isSuperAdmin();
+    }
+
+    // Minimal activity metadata; actions/country are client-reported estimates,
+    // not proof for disciplinary or security decisions.
+    match /userActivity/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow list: if isSuperAdmin();
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.keys().hasOnly(['lastAction','lastActionAt','countryCode'])
+        && request.resource.data.keys().hasAll(['lastAction','lastActionAt'])
+        && request.resource.data.lastAction in [
+          'visit','lobby','classes','lessons','lesson','lab','exams','competitions',
+          'competition_start','assistant','chat','questions','profile','settings',
+          'notifications','support','subscriptions'
+        ]
+        && request.resource.data.lastActionAt == request.time
+        && (!('countryCode' in request.resource.data)
+          || (request.resource.data.countryCode is string
+            && request.resource.data.countryCode.matches('^[A-Z]{2}$')));
+      allow delete: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+    }
+
+    // Students can run peer-to-peer practice duels. No XP is rewarded from
+    // user-supplied responses, and only the two invited participants may answer.
+    // Realtime private 1v1 learning matches; practice only, no XP claims.
+    function duelParticipant(code) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/duels2026/$(code))
+        && (get(/databases/$(database)/documents/duels2026/$(code)).data.hostUid == request.auth.uid
+          || get(/databases/$(database)/documents/duels2026/$(code)).data.guestUid == request.auth.uid);
+    }
+    function validDuelAnswers(answers) {
+      return answers is list && answers.size() <= 5 && answers.hasOnly([0,1,2,3]);
+    }
+    match /duels2026/{code} {
+      // Room codes have high entropy; getting a room is necessary to join it.
+      allow get: if signedIn() && code.matches('^[A-HJ-NP-Z2-9]{6}$');
+      allow list: if false;
+      allow create: if signedIn() && code.matches('^[A-HJ-NP-Z2-9]{6}$')
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student' || isSuperAdmin())
+        && request.resource.data.keys().hasOnly([
+          'hostUid','guestUid','hostName','guestName','grade','status',
+          'questions','createdAt','updatedAt','startedAt','expiresAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'hostUid','guestUid','hostName','guestName','grade','status',
+          'questions','createdAt','updatedAt','startedAt','expiresAt'
+        ])
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.guestUid == ''
+        && request.resource.data.hostName is string
+        && request.resource.data.hostName.size() <= 40
+        && request.resource.data.guestName == ''
+        && request.resource.data.grade in [7,8,9,10]
+        && request.resource.data.status == 'waiting'
+        && request.resource.data.questions is list
+        && request.resource.data.questions.size() == 5
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.startedAt == null
+        && request.resource.data.expiresAt is int;
+      // The invited second student can only fill the empty second seat.
+      allow update: if signedIn() && resource.data.status == 'waiting'
+        && resource.data.guestUid == ''
+        && request.auth.uid != resource.data.hostUid
+        && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student' || isSuperAdmin())
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'guestUid','guestName','status','startedAt','updatedAt'
+        ])
+        && request.resource.data.guestUid == request.auth.uid
+        && request.resource.data.guestName is string
+        && request.resource.data.guestName.size() <= 40
+        && request.resource.data.status == 'playing'
+        && request.resource.data.startedAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isSuperAdmin();
+
+      match /answers/{uid} {
+        allow get: if duelParticipant(code);
+        allow list: if false;
+        allow create: if duelParticipant(code) && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['uid','answers','updatedAt'])
+          && request.resource.data.uid == uid
+          && validDuelAnswers(request.resource.data.answers)
+          && request.resource.data.answers.size() == 1
+          && request.resource.data.updatedAt == request.time;
+        allow update: if duelParticipant(code) && request.auth.uid == uid
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['answers','updatedAt'])
+          && validDuelAnswers(request.resource.data.answers)
+          && validDuelAnswers(resource.data.answers)
+          && request.resource.data.answers.size() == resource.data.answers.size() + 1
+          && (resource.data.answers.size() < 1 || request.resource.data.answers[0] == resource.data.answers[0])
+          && (resource.data.answers.size() < 2 || request.resource.data.answers[1] == resource.data.answers[1])
+          && (resource.data.answers.size() < 3 || request.resource.data.answers[2] == resource.data.answers[2])
+          && (resource.data.answers.size() < 4 || request.resource.data.answers[3] == resource.data.answers[3])
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if isSuperAdmin();
+      }
+    }
+
+    match /adminAudit/{logId} {
+      allow read, create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+
+    // Server-only Classora support/recovery data.
+    // Browser clients never read or write these collections directly.
+    // Callable Cloud Functions use the Admin SDK and bypass Firestore rules.
+    match /supportTickets/{ticketId} {
+      allow read, write: if false;
+    }
+
+    match /supportAudit/{eventId} {
+      allow read: if isSuperAdmin() || (isSupportAgent() && resource.data.actor == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /recoveryKeyLookup/{keyHash} {
+      allow read, write: if false;
+    }
+
+    match /recoverySecrets/{uid} {
+      allow read, write: if false;
+    }
+
+    match /_recoveryRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    match /_supportRate/{rateId} {
+      allow read, write: if false;
+    }
+
+    // A one-week, opt-in heritage gallery. Each account can publish one image
+    // and cast one changeable vote. No public real names or email addresses.
+    function heritageWeekOpen() {
+      return request.time >= timestamp.date(2026,10,17)
+        && request.time < timestamp.date(2026,10,25);
+    }
+    function validHeritageImage(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','image','prompt','elapsedSeconds','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.image is string
+        && request.resource.data.image.size() <= 215000
+        && request.resource.data.image.matches('^data:image/png;base64,[A-Za-z0-9+/=]+$')
+        && request.resource.data.prompt in ['flag','olive','stitch','scarf','thobe']
+        && request.resource.data.elapsedSeconds is int
+        && request.resource.data.elapsedSeconds >= 1
+        && request.resource.data.elapsedSeconds <= 120
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageArts2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageImage(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+    function validHeritageVote(uid) {
+      return signedIn() && heritageWeekOpen()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid','artUid','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','artUid','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.artUid is string
+        && request.resource.data.artUid != uid
+        && exists(/databases/$(database)/documents/heritageArts2026/$(request.resource.data.artUid))
+        && request.resource.data.createdAt == request.time;
+    }
+    match /heritageVotes2026/{uid} {
+      allow read: if signedIn();
+      allow create, update: if validHeritageVote(uid);
+      allow delete: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+    }
+
+  }
+}
+
+)
+        && request.resource.data.keys().hasOnly([
+          'uid','deviceId','label','platform','createdAt','lastSeenAt','revoked','revokedAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'uid','deviceId','label','platform','createdAt','lastSeenAt','revoked','revokedAt'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.deviceId == deviceId
+        && request.resource.data.label is string && request.resource.data.label.size() <= 70
+        && request.resource.data.platform is string && request.resource.data.platform.size() <= 30
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.lastSeenAt == request.time
+        && request.resource.data.revoked == false
+        && request.resource.data.revokedAt == null;
+      allow update: if rawSignedIn() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'lastSeenAt','revoked','revokedAt'
+        ])
+        && request.resource.data.lastSeenAt is timestamp
+        && (request.resource.data.lastSeenAt == resource.data.lastSeenAt
+          || request.resource.data.lastSeenAt == request.time)
+        && (request.resource.data.revoked == resource.data.revoked
+          || (resource.data.revoked == false && request.resource.data.revoked == true))
+        && (request.resource.data.revokedAt == resource.data.revokedAt
+          || (resource.data.revoked == false
+            && request.resource.data.revoked == true
+            && request.resource.data.revokedAt == request.time));
+      allow delete: if false;
+    }
+
     // Trial creation is callable-only, once per UID. Clients cannot restart or extend it.
     match /membershipTrials/{uid} {
       allow get: if rawSignedIn() && (request.auth.uid == uid || isSuperAdmin());
