@@ -38,7 +38,7 @@ function makePlan(type){
  const kind=role()==='teacher'?'teacher':'student';
  const catalog=window.ClassoraMemberPlanInfo?.get(lang(),kind,type)||[];
  const list=N('div','cl239-feature-grid');const offset=kind==='student'?2:2;
- const a=account(),live=type==='plus'?new Set([1,2]):new Set([6,12]);
+ const a=account(),live=type==='plus'?new Set([1,2]):new Set(kind==='student'?[6,9]:[6,12]);
  // Plan descriptions include two account-specific notes. Only the independently implemented tools are marked live.
  catalog.slice(offset).forEach((description,i)=>{
   if(type==='premium'&&i===0)return;
