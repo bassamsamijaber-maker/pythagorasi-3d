@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v239-chat-benefits-devices";;
+const CACHE_NAME="classora-v239b-member-sessions-contrast";;
 const APP_SHELL=[
   "./assets/classora-member-hub-v239.js?v=239",
   "./assets/classora-device-sessions-v239.js?v=239",
