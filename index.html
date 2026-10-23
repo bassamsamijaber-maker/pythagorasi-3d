@@ -2582,16 +2582,23 @@ const classoraLocalAiEndpoint="https://ai.classora.study";
 const classoraCloudHistory=new Map();
 let classoraCloudUnavailableUntil=0;
 let classoraCloudHealthyUntil=0;
-const classoraAIConsentKey=uid=>"classora_local_ai_consent_v1_"+uid;
+const classoraAIConsentKey=uid=>"classora_local_ai_consent_v2_"+uid;
 function classoraCloudConsent(uid){
   let choice=null;
   try{choice=localStorage.getItem(classoraAIConsentKey(uid))}catch{return false}
   if(choice==="yes")return true;
   if(choice==="no")return false;
-  const en=currentUILanguage==="en";
-  const agreed=window.confirm(en
-   ?"Enable Classora Local AI? Your question and up to 6 previous messages will be processed on the Classora operator's computer through a protected connection. Do not include passwords or personal information. You can use the offline school assistant if you decline. Ask a parent or guardian where needed.\n\nPrivacy: classora.study/privacy.html"
-   :"تفعيل Classora AI المحلي؟ سيتم إرسال سؤالك وما يصل إلى 6 رسائل سابقة إلى الكمبيوتر الذي يشغّل مساعد كلاسورا عبر اتصال محمي. لا تكتب كلمات مرور أو بيانات شخصية. في حال الرفض، سيبقى المساعد التعليمي المحلي متاحًا. استشر ولي أمرك عند الحاجة.\n\nالخصوصية: classora.study/privacy.html");
+  const consentText={
+    ar:"تفعيل Classora AI التوليدي؟ رح ينرسل سؤالك وحتى 10 رسائل من المحادثة السابقة إلى الكمبيوتر اللي بشغّل النموذج، عبر اتصال محمي. ما تكتب معلومات شخصية أو كلمات مرور. إذا رفضت، بضل المساعد التعليمي الأساسي شغّال. استشر ولي أمرك عند الحاجة.",
+    en:"Enable generative Classora AI? Your question and up to 10 earlier messages will be processed on the operator's computer over a protected connection. Do not share personal details or passwords. The basic school assistant still works if you decline. Ask a parent or guardian when needed.",
+    es:"¿Activar Classora AI generativo? Tu pregunta y hasta 10 mensajes anteriores se enviarán al ordenador que ejecuta el modelo mediante una conexión protegida. No compartas contraseñas ni datos privados. Si rechazas, sigue disponible el asistente escolar básico.",
+    ko:"Classora 생성형 AI를 사용할까요? 질문과 이전 메시지 최대 10개가 보호된 연결을 통해 모델 운영자의 컴퓨터로 전송됩니다. 비밀번호나 개인정보를 공유하지 마세요. 거부하면 기본 학습 도우미를 사용할 수 있습니다.",
+    de:"Generative Classora-KI aktivieren? Deine Frage und bis zu 10 frühere Nachrichten werden über eine geschützte Verbindung auf dem Betreiber-PC verarbeitet. Teile keine Passwörter oder privaten Daten. Der Basis-Lernassistent bleibt ohne Zustimmung verfügbar.",
+    it:"Attivare Classora AI generativa? La tua domanda e fino a 10 messaggi precedenti saranno elaborati dal computer dell'operatore tramite connessione protetta. Non inviare password o dati privati. Il tutor di base resta disponibile.",
+    hi:"क्या जनरेटिव Classora AI चालू करें? आपका प्रश्न और पिछले अधिकतम 10 संदेश सुरक्षित कनेक्शन से मॉडल संचालक के कंप्यूटर पर भेजे जाएँगे। पासवर्ड या निजी जानकारी न भेजें। मना करने पर बुनियादी अध्ययन सहायक उपलब्ध रहेगा।",
+    tr:"Üretken Classora AI açılsın mı? Sorun ve en fazla 10 önceki mesaj, güvenli bağlantıyla modeli çalıştıran bilgisayarda işlenecek. Parola veya özel bilgi paylaşma. Reddedersen temel eğitim asistanı kullanılabilir."
+  };
+  const agreed=window.confirm((consentText[currentUILanguage]||consentText.en)+"\n\nPrivacy / الخصوصية: classora.study/privacy.html");
   try{localStorage.setItem(classoraAIConsentKey(uid),agreed?"yes":"no")}catch{return false}
   return agreed;
 }
