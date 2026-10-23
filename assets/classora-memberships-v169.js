@@ -32,7 +32,17 @@ teacher:{plus:{monthly:24.9,annual:239},premium:{monthly:44.9,annual:431}},
 class:{plus:{monthly:129,annual:1238},premium:{monthly:199,annual:1910}},
 school:{plus:{monthly:449,annual:4310},premium:{monthly:799,annual:7670}}
 };
-const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false,gift:null};
+const state={lang:langs.includes(localStorage.getItem("pythagorasi_language"))?localStorage.getItem("pythagorasi_language"):"ar",account:null,allowed:[],kind:"student",tier:null,period:"monthly",seats:1,checking:true,error:false,gift:null,previewRole:null,previewTier:"free"};
+const previewLabels={
+ ar:{title:"فحص الباقات بحساب تجريبي",warning:"هذه معاينة آمنة. حساب الأدمن وامتيازاته كما هي، ولا يوجد دفع أو إنشاء حساب حقيقي.",student:"طالب تجريبي",teacher:"معلم تجريبي",status:"الواجهة المعروضة",free:"مجاني",plus:"بلس",premium:"بريميوم"},
+ en:{title:"Test membership views",warning:"Preview only. Your admin account stays unchanged. No real account or payment is created.",student:"Demo student",teacher:"Demo teacher",status:"Viewing",free:"Free",plus:"Plus",premium:"Premium"},
+ es:{title:"Vista de prueba de planes",warning:"Solo demostración. Tu cuenta de administrador no cambia. No se crea cuenta ni pago.",student:"Alumno de prueba",teacher:"Docente de prueba",status:"Vista",free:"Gratis",plus:"Plus",premium:"Premium"},
+ ko:{title:"요금제 테스트 미리보기",warning:"미리보기 전용. 관리자 계정은 변경되지 않으며 결제나 계정 생성은 없습니다.",student:"학생 테스트",teacher:"교사 테스트",status:"미리보기",free:"무료",plus:"Plus",premium:"Premium"},
+ de:{title:"Tarifvorschau testen",warning:"Nur Vorschau. Admin-Konto bleibt unverändert. Kein Kauf und kein neues Konto.",student:"Test-Schüler",teacher:"Test-Lehrkraft",status:"Vorschau",free:"Gratis",plus:"Plus",premium:"Premium"},
+ it:{title:"Anteprima piani di prova",warning:"Solo anteprima. Il tuo account admin non cambia. Nessun acquisto o account nuovo.",student:"Studente demo",teacher:"Docente demo",status:"Anteprima",free:"Gratis",plus:"Plus",premium:"Premium"},
+ hi:{title:"सदस्यता का परीक्षण",warning:"सिर्फ पूर्वावलोकन। एडमिन खाता नहीं बदलेगा; कोई भुगतान या नया खाता नहीं।",student:"छात्र डेमो",teacher:"शिक्षक डेमो",status:"पूर्वावलोकन",free:"मुफ़्त",plus:"Plus",premium:"Premium"},
+ tr:{title:"Üyelik önizlemesini dene",warning:"Yalnızca önizleme. Admin hesabı değişmez, ödeme veya yeni hesap oluşturulmaz.",student:"Deneme öğrencisi",teacher:"Deneme öğretmeni",status:"Önizleme",free:"Ücretsiz",plus:"Plus",premium:"Premium"}
+};
 let liveCatalog=null,catalogLoadError=false;
 // Draft checkout choices only live in memory. Never store these in
 // localStorage, sessionStorage, Firebase, or Paddle before verified purchase.
@@ -52,7 +62,8 @@ function zeroPrice(){
 function resetDraft(){
  state.tier=null;
  state.period="monthly";
- state.kind=state.account?.admin?(state.account.role||"student"):state.allowed[0]||(state.account?.role||"student");
+ state.previewTier="free";
+ state.kind=state.account?.owner?"student":state.account?.admin?(state.account.role||"student"):state.allowed[0]||(state.account?.role||"student");
  state.seats=state.kind==="class"?35:state.kind==="school"?55:1;
  put("cl-payment-status","");
 }
@@ -157,9 +168,27 @@ function render(){
  put("cl-account-subtitle",state.account?t("checked")+state.account.name+giftLabel:t("guestMessage"));
  put("cl-account-icon",state.account?.admin?"✦":state.account?.role==="teacher"?"T":state.account?.role==="student"?"S":"C");
  $("cl-login").hidden=!!state.account;put("cl-login",t("login"));
- const admin=!!state.account?.admin;
+ const admin=!!state.account?.admin,ownerPreview=admin&&state.account?.owner===true;
  $("cl-admin").hidden=!admin;
- document.querySelector(".cl-pricing").hidden=admin;
+ const simulator=$("cl-admin-simulator");
+ if(simulator){
+  simulator.hidden=!ownerPreview;
+  if(ownerPreview){
+   if(!["student","teacher"].includes(state.previewRole))state.previewRole="student";
+   state.allowed=state.previewRole==="student"?["student"]:["teacher","class","school"];
+   if(!state.allowed.includes(state.kind))state.kind=state.allowed[0];
+   const w=previewLabels[state.lang]||previewLabels.en;
+   put("cl-admin-sim-title",w.title);put("cl-admin-sim-warning",w.warning);
+   simulator.querySelectorAll("[data-sim-role]").forEach(b=>{
+    const role=b.dataset.simRole;b.textContent=w[role];b.setAttribute("aria-pressed",String(state.previewRole===role));
+   });
+   simulator.querySelectorAll("[data-sim-tier]").forEach(b=>{
+    const tier=b.dataset.simTier;b.textContent=w[tier];b.setAttribute("aria-pressed",String(state.previewTier===tier));
+   });
+   put("cl-admin-sim-status",w.status+": "+w[state.previewRole]+" · "+w[state.previewTier]);
+  }
+ }
+ document.querySelector(".cl-pricing").hidden=admin&&!ownerPreview;
  document.querySelector(".cl-checkout-preview").hidden=admin;
  const info=window.ClassoraMemberPlanInfo;
  put("cl-role-note",state.account?(info?.text(state.lang,"role"+state.kind.charAt(0).toUpperCase()+state.kind.slice(1))||""):info?.text(state.lang,"roleGuest")||"");
@@ -213,7 +242,8 @@ async function identify(user){
   try{const o=await getDoc(doc(db,"profileIds","3228667330"));if(o.exists())owner=o.data();}catch(e){console.warn("Optional owner lookup",e)}
   if(auth.currentUser?.uid!==user.uid)return;
   const admin=owner?.uid===user.uid||(staff?.active===true&&staff?.role==="admin");
-  state.account={uid:user.uid,role:p.role,admin,name:String(p.displayName||user.displayName||"")};
+  state.account={uid:user.uid,role:p.role,admin,owner:owner?.uid===user.uid,name:String(p.displayName||user.displayName||"")};
+  state.previewRole=state.account.owner?"student":null;state.previewTier="free";
   state.allowed=admin?[]:p.role==="teacher"?["teacher","class","school"]:["student"];
   state.gift=null;
   try {
@@ -230,9 +260,22 @@ async function identify(user){
  render();
 }
 $("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
-document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;state.period="monthly";state.seats=minSeats()||1;render();}));
+document.querySelectorAll("[data-sim-role]").forEach(b=>b.addEventListener("click",()=>{
+ if(!state.account?.owner)return;
+ state.previewRole=b.dataset.simRole;state.kind=state.previewRole;state.previewTier="free";state.tier=null;state.period="monthly";state.seats=1;render();
+}));
+document.querySelectorAll("[data-sim-tier]").forEach(b=>b.addEventListener("click",()=>{
+ if(!state.account?.owner)return;
+ state.previewTier=b.dataset.simTier;state.tier=state.previewTier==="free"?null:state.previewTier;render();
+}));
+document.querySelectorAll("[data-kind]").forEach(b=>b.addEventListener("click",()=>{if(!state.allowed.includes(b.dataset.kind))return;state.kind=b.dataset.kind;state.tier=null;if(state.account?.owner)state.previewTier="free";state.period="monthly";state.seats=minSeats()||1;render();}));
 document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render();}));
-document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{state.tier=b.dataset.choose;render();$("cl-checkout-title").scrollIntoView({block:"center",behavior:"smooth"});}));
+document.querySelectorAll("[data-choose]").forEach(b=>b.addEventListener("click",()=>{
+ if(state.account?.admin&&!state.account?.owner)return;
+ state.tier=b.dataset.choose;if(state.account?.owner)state.previewTier=state.tier;
+ render();
+ if(!state.account?.admin)$("cl-checkout-title").scrollIntoView({block:"center",behavior:"smooth"});
+}));
 $("cl-seats").addEventListener("change",()=>{if(!state.tier)return;const min=minSeats(),num=Math.trunc(Number($("cl-seats").value));state.seats=Number.isFinite(num)?Math.min(1000,Math.max(min,num)):min;render();});
 $("cl-continue").addEventListener("click",()=>{
  if(!state.account){window.location.assign("./index.html");return;}
