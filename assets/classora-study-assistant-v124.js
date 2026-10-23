@@ -1,6 +1,6 @@
 /* Classora bilingual curriculum assistant: curated offline resources, not a general cloud AI. */
 import {CURRICULUM_DATA,CURRICULUM_SUBJECTS,curriculumTopicDisplayName,curriculumTopicGuide} from './curriculum-v97.js?v=213';
-import {classoraMathAnswer,classoraMathTopic} from './classora-math-tutor-v247.js?v=247';
+import {classoraMathAnswer,classoraMathTopic} from './classora-math-tutor-v247.js?v=249';
 const WORDS=[
  ['كتاب','book'],['قلم','pen'],['مدرسة','school'],['طالب','student'],['معلم','teacher'],['معلمة','teacher'],['دفتر','notebook'],['صف','class'],['درس','lesson'],['واجب','homework'],['سؤال','question'],['جواب','answer'],['امتحان','exam'],['مسابقة','competition'],
  ['بيت','house'],['باب','door'],['ماء','water'],['سماء','sky'],['شمس','sun'],['قمر','moon'],['نجمة','star'],['شجرة','tree'],['زهرة','flower'],['مدينة','city'],['شارع','street'],['سيارة','car'],['عائلة','family'],['أم','mother'],['أب','father'],['أخ','brother'],['أخت','sister'],['صديق','friend'],['طفل','child'],['أطفال','children'],
