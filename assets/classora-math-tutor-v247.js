@@ -106,7 +106,33 @@ function equation(expr,en){
  return head+'\nx₁ = '+fmt(x1)+'\nx₂ = '+fmt(finite((-b-Math.sqrt(d))/(2*a)));
 }
 export function classoraMathAnswer(raw,language='ar'){
- const en=language==='en',s=candidate(raw);
+ const en=language==='en',plain=clean(raw),word=norm(plain);
+ // Calculate a percentage of a quantity, rather than mistaking '20% of 150' for just 0.2.
+ const percent=plain.match(/(-?\d+(?:\.\d+)?)\s*%\s*(?:من|of)\s*(-?\d+(?:\.\d+)?)/i)
+   ||plain.match(/(-?\d+(?:\.\d+)?)\s*(?:بالمئه|بالمئة|في الميه)\s*(?:من|of)\s*(-?\d+(?:\.\d+)?)/i);
+ if(percent){
+  const rate=Number(percent[1]),whole=Number(percent[2]),answer=rate*whole/100;
+  if(Number.isFinite(answer))return (en?'Percentage of a number:':'النسبة المئوية من عدد:')+'\n'+fmt(rate)+'% × '+fmt(whole)+' = '+fmt(answer);
+ }
+ const half=plain.match(/(?:نصف|half of)\s+(-?\d+(?:\.\d+)?)/i);
+ if(half)return (en?'Half: ':'نصف العدد: ')+fmt(Number(half[1]))+' ÷ 2 = '+fmt(Number(half[1])/2);
+ // Explicit dimensions only. Never infer unspecified measurements.
+ const values=(plain.match(/(?:^|[^\p{L}\d])\d+(?:\.\d+)?/gu)||[]).map(x=>Number(x.trim())).filter(Number.isFinite);
+ if(values.length>=2&&/مستطيل|rectangle/i.test(word)&&/مساحه|area|محيط|perimeter/i.test(word)){
+  const [a,b]=values;
+  if(a>0&&b>0){
+   const perimeter=/محيط|perimeter/i.test(word),v=perimeter?2*(a+b):a*b;
+   return (en?(perimeter?'Rectangle perimeter':'Rectangle area'):(perimeter?'محيط المستطيل':'مساحة المستطيل'))+'\n'+(perimeter?'2 × ('+fmt(a)+' + '+fmt(b)+')':fmt(a)+' × '+fmt(b))+' = '+fmt(v);
+  }
+ }
+ if(values.length>=1&&/مربع|square/i.test(word)&&/مساحه|area|محيط|perimeter/i.test(word)){
+  const a=values[0];
+  if(a>0){
+   const perimeter=/محيط|perimeter/i.test(word);
+   return (en?(perimeter?'Square perimeter':'Square area'):(perimeter?'محيط المربع':'مساحة المربع'))+'\n'+(perimeter?'4 × '+fmt(a):fmt(a)+' × '+fmt(a))+' = '+fmt(perimeter?4*a:a*a);
+  }
+ }
+ const s=candidate(raw);
  if(!s)return null;
  try{
   if(s.includes('='))return equation(s,en);
