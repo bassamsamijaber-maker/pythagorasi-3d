@@ -170,3 +170,39 @@ html body #platformLobby .cl250-lesson-button{
 }
 html body #platformLobby .cl250-lesson-button:hover{border-color:var(--cl250-accent)}
 html body #platformLobby .cl250-lesson-button:focus-visible{outline:3px solid var(--cl250-accent);outline-offset:2px}
+
+
+/* v252 — usable creative modes and a compact three-column workspace on tablets. */
+html body #platformLobby .cl252-creative-actions{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 6px}
+html body #platformLobby .cl252-creative-button{min-height:41px;flex:1 1 75px;min-width:0;border:1px solid var(--cl250-border);border-radius:11px;color:var(--cl250-text);background:color-mix(in srgb,var(--cl250-accent) 9%,var(--cl250-card));padding:8px;font:inherit;font-size:12px;font-weight:750;line-height:1.4;cursor:pointer}
+html body #platformLobby .cl252-creative-button:focus-visible{outline:3px solid var(--cl250-accent);outline-offset:2px}
+html body #platformLobby .cl250-chat-active .cl252-creative-actions{flex:0 0 auto}
+@media(min-width:1000px) and (max-width:1279px){
+ html body #platformLobby{--cl252-rail:clamp(173px,18vw,205px)}
+ html body #platformLobby .lobby-shell{width:calc(100% - 2*var(--cl252-rail) - 65px)!important;max-width:none!important;margin-inline:auto!important;padding-inline:12px!important}
+ html body #platformLobby .cl250-left,html body #platformLobby .cl250-right{display:flex!important;flex-direction:column;position:fixed;top:67px;bottom:110px;width:var(--cl252-rail);max-height:calc(100dvh - 177px);z-index:7;overflow:hidden}
+ html body #platformLobby .cl250-left{left:10px;background:var(--cl250-card);border:1px solid var(--cl250-border);border-radius:19px}
+ html body #platformLobby .cl250-right{right:10px;overflow-y:auto;scrollbar-width:thin}
+ html body #platformLobby .cl250-left .cl250-chat-card{display:flex!important;flex-direction:column;height:100%!important;max-height:100%;min-height:0;padding:12px!important;margin:0!important;border:0!important;overflow:hidden!important}
+ html body #platformLobby .cl250-left .cl250-thread{flex:1 1 auto;max-height:none!important;min-height:0;overflow-y:auto}
+ html body #platformLobby .cl250-left .lobby-ai-input{grid-template-columns:minmax(0,1fr) 39px!important;gap:4px!important;margin-top:auto!important}
+ html body #platformLobby .cl250-left #lobbyAISend{min-width:39px!important;width:39px!important}
+ html body #platformLobby .cl250-left #lobbyAIInput{min-width:0!important;padding-inline:7px!important;font-size:12px!important}
+ html body #platformLobby .cl250-left .cl252-creative-button{flex:1 1 100%;min-height:34px;padding:5px;font-size:11px}
+ html body #platformLobby .cl250-left .cl250-chat-chip{flex:1 1 80px}
+ html body #platformLobby .cl250-left :is(.cl250-line,#lobbyAIReply){font-size:12px!important;line-height:1.6!important}
+ html body #platformLobby .cl250-right{padding:12px}
+ html body #platformLobby .cl250-day-button{padding:9px;min-height:53px}
+}
+@media(min-width:1280px){
+ html body #platformLobby .cl250-left .cl252-creative-button{flex:1 1 100%;min-height:34px;padding:6px}
+}
+@media(max-width:999px){
+ html body #platformLobby .cl250-left,html body #platformLobby .cl250-right{display:none!important}
+}
+@media(max-width:760px){
+ html body #platformLobby .cl250-chat-card.cl250-chat-active{height:min(79dvh,720px);min-height:390px;display:flex;flex-direction:column;overflow:hidden!important}
+ html body #platformLobby .cl250-chat-card.cl250-chat-active .cl250-thread{min-height:0!important;flex:1 1 auto;max-height:none!important;overflow-y:auto;overscroll-behavior:contain}
+ html body #platformLobby .cl250-chat-card.cl250-chat-active .lobby-ai-input{flex:0 0 auto;margin-top:auto!important;position:sticky;bottom:0}
+ html body #platformLobby .cl250-chat-active .cl252-creative-actions{display:none}
+}
