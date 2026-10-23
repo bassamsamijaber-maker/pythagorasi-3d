@@ -68,3 +68,18 @@ body.classora-membership-page{background:radial-gradient(ellipse 72% 450px at 54
 }
 @media(max-width:370px){.cl-owner-catalog-grid{grid-template-columns:1fr}.cl-owner-switch-actions{grid-template-columns:1fr}.cl-owner-switch-actions .cl-owner-admin-link{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){.cl-owner-plan-mini,.cl-owner-switch-actions :is(button,a){transition:none!important}}
+
+
+/* v243 — verified membership account badge. Do not reveal other roles to signed-in users. */
+.classora-membership-page .cl-role-detection{display:flex;align-items:center;gap:10px;min-height:44px;margin:0 0 17px;padding:11px 15px;border:1px solid #619b9b;border-radius:14px;background:linear-gradient(115deg,#153e45,#163746);color:#eafff9;font-size:14px;line-height:1.6;font-weight:850}
+.cl-role-detection .cl-role-indicator{display:block;flex:0 0 9px;width:9px;height:9px;background:#9af5ce;border-radius:50%;box-shadow:0 0 0 4px #9af5ce24}
+.classora-membership-page .cl-role-detection[data-role="student"]{border-color:#70b9a8;background:#133d40}
+.classora-membership-page .cl-role-detection[data-role="teacher"]{border-color:#9eb7e8;background:#23354c}
+.classora-membership-page .cl-role-detection[data-role="teacher"] .cl-role-indicator{background:#a8c8ff;box-shadow:0 0 0 4px #a8c8ff24}
+.classora-membership-page .cl-role-detection[data-role="admin"]{border-color:#e1c49c;background:#443b3e;color:#fff3d9}
+.classora-membership-page .cl-role-detection[data-role="admin"] .cl-role-indicator{background:#fbe1a4;box-shadow:0 0 0 4px #fbe1a424}
+.classora-membership-page .cl-role-detection[data-role="checking"],.classora-membership-page .cl-role-detection[data-role="guest"]{border-color:#7795a7;background:#17313f;color:#edf7ff}
+.classora-membership-page .cl-role-detection[data-role="error"]{border-color:#d88a96;background:#4a2a35;color:#ffedf2}
+.classora-membership-page .cl-pricing #cl-categories>button[hidden]{display:none!important}
+.classora-membership-page .cl-pricing .cl-controls>div[hidden]{display:none!important}
+@media(max-width:640px){.classora-membership-page .cl-role-detection{padding:10px 12px;margin-bottom:12px;font-size:13px;min-height:42px}}
