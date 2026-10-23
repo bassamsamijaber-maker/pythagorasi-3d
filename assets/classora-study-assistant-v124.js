@@ -69,7 +69,7 @@ const topicHints=[
  ['history','الثوره الفرنسيه|french revolution','الثورة الفرنسية'],
  ['history','الثوره الصناعيه|industrial revolution','الثورة الصناعية'],
  ['history','الحرب العالميه الاولي|world war','الحرب العالمية الأولى'],
- ['geography','الزلازل|earthquake','الزلازل'],
+ ['geography','الزلازل|زلزال|earthquake','الزلازل'],
  ['geography','البراكين|volcano','البراكين'],
  ['geography','المناخ|climate','المناخ'],
  ['geography','الطقس|weather','الطقس'],
