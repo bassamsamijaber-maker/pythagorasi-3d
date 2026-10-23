@@ -1,12 +1,12 @@
-const CACHE_NAME="classora-v250-conversational-workspace";;
+const CACHE_NAME="classora-v251-conversation-and-three-action-home";;
 const APP_SHELL=[
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=249",
   "./assets/classora-study-assistant-v124.js?v=249",
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
-  "./assets/classora-chat-workspace-v250.js?v=250",
-  "./assets/classora-workspace-v250.css?v=250",
+  "./assets/classora-chat-workspace-v250.js?v=251",
+  "./assets/classora-workspace-v250.css?v=251",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
@@ -36,7 +36,7 @@ const APP_SHELL=[
   "./assets/classora-learning-boost-v215.css?v=221",
   "./assets/classora-learning-boost-v215.js?v=222",
   "./assets/classora-learning-front-v214.css?v=214",
-  "./assets/classora-learning-front-v214.js?v=243",
+  "./assets/classora-learning-front-v214.js?v=251",
   "./assets/math-worksheet-v213.js?v=213",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
