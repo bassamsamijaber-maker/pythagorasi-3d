@@ -138,6 +138,8 @@ body.classora-intro-active{overflow:auto!important}
 <link rel="stylesheet" href="./assets/classora-mobile-membership-v238.css?v=238">
 <link rel="stylesheet" href="./assets/classora-premium-v243.css?v=247">
 <link rel="stylesheet" href="./assets/classora-ui-refine-v248.css?v=249">
+<link rel="stylesheet" href="./assets/classora-workspace-v250.css?v=250">
+<script defer src="./assets/classora-chat-workspace-v250.js?v=250"></script>
 <script defer src="./assets/classora-ai-prompts-v248.js?v=249"></script>
 <script defer src="./assets/classora-premium-v243.js?v=243"></script>
 </head>
@@ -2653,10 +2655,10 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
         headers:{"Content-Type":"application/json","Authorization":"Bearer "+idToken},
         body:JSON.stringify({
           question:String(raw).slice(0,1700),
-          language:currentUILanguage==="en"?"en":"ar",
+          language:["ar","en","es","ko","de","it","hi","tr"].includes(currentUILanguage)?currentUILanguage:"ar",
           grade:Number(localStorage.getItem("classora_curriculum_grade")||8),
           topic:String(topic||"").slice(0,100),
-          history:turns.slice(-6)
+          history:turns.slice(-10)
         })
       });
     }finally{clearTimeout(timer)}
@@ -2672,7 +2674,7 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
     classoraCloudHistory.set(id,[
       ...turns,{role:"user",content:String(raw).slice(0,800)},
       {role:"assistant",content:answer.slice(0,800)}
-    ].slice(-6));
+    ].slice(-10));
     return answer;
   }catch(error){
     classoraCloudUnavailableUntil=Date.now()+15000;
@@ -11078,6 +11080,12 @@ function classoraLearningAnswer(raw){
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
   input.value="";
+  if(window.ClassoraConversation?.send){
+    const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
+    const match=classoraStudyTopicMatch(raw,grade,"lobby");
+    window.ClassoraConversation.send(raw,()=>classoraSmartAnswer(raw,"lobby",()=>classoraLearningAnswer(raw),match?.title||""),match);
+    return;
+  }
   const reply=document.getElementById("lobbyAIReply");reply.setAttribute("data-no-translate","");
   const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
   const match=classoraStudyTopicMatch(raw,grade,"lobby");
