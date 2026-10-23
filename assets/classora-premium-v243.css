@@ -369,3 +369,110 @@ html body.classora-membership-page .cl-owner-switch-actions button{min-width:0}
  html body :is(#platformLobby,#settingsModal,#chatModal,#adminPanelModal) button,
  html body.classora-membership-page button{transition:none!important}
 }
+
+
+/* v246 — spaced five-tab navigation on iPad & phone.
+   iPad screenshots showed a 480px bar crowding five controls and covering last cards. */
+@media (min-width:761px) and (max-width:1600px) {
+ html body.classora-dock-enabled {
+  --classora-dock-height:82px;
+  --classora-dock-clearance:calc(134px + env(safe-area-inset-bottom,0px));
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav {
+  width:min(680px,calc(100vw - 72px))!important;
+  max-width:min(680px,calc(100vw - 72px))!important;
+  min-height:82px!important;
+  height:82px!important;
+  max-height:82px!important;
+  padding:9px 13px!important;
+  gap:13px!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  align-items:stretch!important;
+  border-radius:24px!important;
+  bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;
+  inset-block-end:calc(18px + env(safe-area-inset-bottom,0px))!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn {
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  width:100%!important;
+  height:62px!important;
+  min-height:62px!important;
+  max-height:62px!important;
+  padding:6px 8px!important;
+  gap:5px!important;
+  border-radius:15px!important;
+  box-sizing:border-box!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button span {
+  font-size:12px!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button svg {
+  height:23px!important;
+  width:23px!important;
+ }
+ html body.classora-dock-enabled #platformLobby.platform-lobby:not(.hidden) {
+  padding-bottom:var(--classora-dock-clearance)!important;
+  scroll-padding-bottom:var(--classora-dock-clearance)!important;
+ }
+ html body.classora-dock-enabled #platformLobby .lobby-shell {
+  padding-bottom:calc(var(--classora-dock-clearance) + 24px)!important;
+ }
+}
+@media (max-width:760px) {
+ html body.classora-dock-enabled {
+  --classora-dock-clearance:calc(100px + env(safe-area-inset-bottom,0px));
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav {
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  gap:7px!important;
+  padding-inline:9px!important;
+  box-sizing:border-box!important;
+  width:min(480px,calc(100% - 12px))!important;
+  max-width:calc(100% - 12px)!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn {
+  min-width:0!important;
+  width:100%!important;
+  padding-inline:3px!important;
+  border-radius:12px!important;
+ }
+ html body.classora-dock-enabled #platformLobby .lobby-shell {
+  padding-bottom:calc(var(--classora-dock-clearance) + 16px)!important;
+ }
+ html body.classora-dock-enabled #platformLobby.platform-lobby:not(.hidden){
+  scroll-padding-bottom:var(--classora-dock-clearance)!important;
+ }
+}
+@media (max-width:380px) {
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav {
+  gap:3px!important;
+  padding-inline:5px!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav #classoraMobileLobbyBtn {
+  padding-inline:1px!important;
+ }
+}
+@media (max-width:1600px) {
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button {
+  position:relative;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button:not(.is-active) {
+  background:color-mix(in srgb,var(--cl243-soft,#203044) 52%,transparent)!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button:is(.is-active,[aria-current="page"]){
+  background:var(--cl243-soft,#284359)!important;
+  outline:1px solid color-mix(in srgb,var(--cl243-accent,#9ce7cf) 45%,transparent);
+  outline-offset:-1px;
+ }
+}
