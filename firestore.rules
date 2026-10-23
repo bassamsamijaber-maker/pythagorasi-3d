@@ -1097,7 +1097,8 @@ service cloud.firestore {
              && request.resource.data.kind == 'student')
             || (get(/databases/$(database)/documents/users/$(uid)).data.role == 'teacher'
              && request.resource.data.kind in ['teacher','class','school']));
-      allow delete: if isSuperAdmin();
+      // Only the original account owner may revoke a granted membership.
+      allow delete: if isOwnerAdmin();
     }
 
     // Minimal activity metadata; actions/country are client-reported estimates,
