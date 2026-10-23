@@ -11,7 +11,7 @@ html body #platformLobby .cl250-more{
  display:flex;justify-content:center;align-items:center;gap:9px;
  width:fit-content;margin:16px auto 18px;padding:11px 25px;
  background:var(--cl250-card);border:1px solid var(--cl250-border);
- border-radius:13px;font:800 14px/1.4 inherit;color:var(--cl250-text);
+ border-radius:13px;font-family:inherit;font-size:14px;font-weight:800;line-height:1.4;color:var(--cl250-text);
  cursor:pointer;min-height:46px;touch-action:manipulation;
 }
 html body #platformLobby .cl250-more:hover,
@@ -38,7 +38,7 @@ html body #platformLobby .cl250-chat-chip{
  min-width:0;min-height:37px;display:inline-flex;justify-content:center;align-items:center;
  flex:1 1 80px;white-space:normal;padding:7px 10px;
  background:var(--cl250-card);border:1px solid var(--cl250-border);color:var(--cl250-text);
- font:750 12px/1.4 inherit;border-radius:12px;cursor:pointer;touch-action:manipulation;
+ font-family:inherit;font-size:12px;font-weight:750;line-height:1.4;border-radius:12px;cursor:pointer;touch-action:manipulation;
 }
 html body #platformLobby .cl250-chat-active .lobby-ai-input{
  margin-top:auto!important;position:sticky;bottom:0;z-index:3;
@@ -72,7 +72,7 @@ html body #platformLobby .cl250-side-foot{
  html body #platformLobby{--cl250-rail:clamp(218px,14.8vw,248px)}
  html body #platformLobby .lobby-shell{
   box-sizing:border-box!important;
-  width:calc(100% - 2 * var(--cl250-rail) - 54px)!important;
+  width:calc(100% - 560px)!important;
   max-width:1140px!important;
   margin-inline:auto!important;padding-inline:clamp(10px,1.5vw,24px)!important;
  }
