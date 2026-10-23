@@ -2636,9 +2636,25 @@ async function classoraLocalAiAvailable(){
   }
 }
 async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
-  const verifiedMath=classoraMathAnswer(raw,currentUILanguage);
+  const isCreative=/(?:اكتب|قص[ةه]|قصه|قصة|اكتبلي|عدّل|عدل|احذف|غيّر|غير|[0-9٠-٩]+\s*(?:سطر|سطور)|story|write|rewrite|revise|edit|poem|essay|cuento|geschichte|storia|hikaye|कहानी|이야기)/iu.test(raw);
+  const verifiedMath=isCreative?null:classoraMathAnswer(raw,currentUILanguage);
   if(verifiedMath)return verifiedMath;
-  const fallback=()=>typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
+  const fallback=()=>{
+    if(isCreative){
+      const messages={
+        ar:"عشان أكتب قصة أو أعدّل نص بحرية، لازم يكون نموذج Classora AI المحلي شغّال ومتصل. المساعد التعليمي الأساسي ما بقدر يولّد نص مفتوح بهالدقة. جرّب بعد تشغيل خدمة الذكاء الاصطناعي.",
+        en:"Creative writing and open-ended editing require the Classora AI model to be running. The offline lesson assistant cannot generate arbitrary long-form text.",
+        es:"Para escribir cuentos o editar libremente debe estar activo el modelo de Classora AI. El asistente sin conexión tiene funciones limitadas.",
+        ko:"자유로운 이야기 작성과 수정에는 Classora AI 모델 연결이 필요합니다. 오프라인 학습 도우미에는 한계가 있습니다.",
+        de:"Für freie Geschichten und Textüberarbeitung muss das Classora-KI-Modell laufen. Der Offline-Assistent ist begrenzt.",
+        it:"Per creare storie o modificare liberamente un testo, il modello Classora AI deve essere attivo. L'assistente offline è limitato.",
+        hi:"कहानी लिखने और मनचाहा पाठ संपादित करने के लिए Classora AI मॉडल चालू होना चाहिए। ऑफ़लाइन सहायक सीमित है।",
+        tr:"Özgün hikâye ve serbest metin düzenleme için Classora AI modeli etkin olmalı. Çevrimdışı asistan sınırlıdır."
+      };
+      return messages[currentUILanguage]||messages.en;
+    }
+    return typeof localAnswer==="function"?localAnswer():String(localAnswer||"");
+  };
   if(!auth.currentUser||auth.currentUser.isAnonymous||isGuestSession())return fallback();
   if(!(await classoraLocalAiAvailable()))return fallback();
   if(!classoraCloudConsent(auth.currentUser.uid))return fallback();
@@ -2647,7 +2663,7 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
   try{
     const idToken=await auth.currentUser.getIdToken();
     const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),89000);
+    const timer=setTimeout(()=>controller.abort(),112000);
     let response;
     try{
       response=await fetch(classoraLocalAiEndpoint+"/api/chat",{
@@ -2673,7 +2689,7 @@ async function classoraSmartAnswer(raw,channel,localAnswer,topic=""){
     if(!answer)throw Error("empty-local-ai");
     classoraCloudHistory.set(id,[
       ...turns,{role:"user",content:String(raw).slice(0,800)},
-      {role:"assistant",content:answer.slice(0,800)}
+      {role:"assistant",content:answer.slice(0,1400)}
     ].slice(-10));
     return answer;
   }catch(error){
@@ -11079,6 +11095,7 @@ function classoraLearningAnswer(raw){
 }
 function sendLobbyAI(){
   const input=document.getElementById("lobbyAIInput"),raw=input.value.trim();if(!raw)return;
+  if(window.ClassoraConversation?.busy)return;
   input.value="";
   if(window.ClassoraConversation?.send){
     const grade=Number(localStorage.getItem("classora_curriculum_grade")||8);
