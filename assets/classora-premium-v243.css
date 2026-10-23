@@ -476,3 +476,48 @@ html body.classora-membership-page .cl-owner-switch-actions button{min-width:0}
   outline-offset:-1px;
  }
 }
+
+/* v247 — iPad controls finally separated with a genuinely wider rail.
+   5 independent grid cells + visible gutters; phone retains usable hit targets. */
+@media (min-width:761px) and (max-width:1600px){
+ html body.classora-dock-enabled{--classora-dock-clearance:calc(155px + env(safe-area-inset-bottom,0px))}
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  width:min(900px,calc(100vw - 52px))!important;
+  max-width:min(900px,calc(100vw - 52px))!important;
+  height:90px!important;min-height:90px!important;max-height:90px!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:22px!important;padding:10px 20px!important;
+  border-radius:25px!important;
+  bottom:calc(20px + env(safe-area-inset-bottom,0px))!important;
+  inset-block-end:calc(20px + env(safe-area-inset-bottom,0px))!important;
+  align-items:center!important;justify-items:stretch!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>#classoraMobileLobbyBtn{
+  min-width:0!important;min-height:65px!important;height:65px!important;max-height:65px!important;
+  padding:8px 10px!important;
+  margin:0!important;flex:none!important;gap:6px!important;
+  background:color-mix(in srgb,var(--cl243-soft,#203044) 42%,transparent)!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button span{font-size:13px!important}
+ html body.classora-dock-enabled #platformLobby.platform-lobby:not(.hidden){
+  scroll-padding-bottom:var(--classora-dock-clearance)!important;
+  padding-bottom:var(--classora-dock-clearance)!important;
+ }
+ html body.classora-dock-enabled #platformLobby .lobby-shell{
+  padding-bottom:calc(var(--classora-dock-clearance) + 28px)!important;
+ }
+}
+@media (max-width:760px){
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  gap:9px!important;padding-inline:10px!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button{
+  min-width:0!important;flex:none!important;padding:4px 2px!important;
+ }
+}
+@media (max-width:370px){
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  gap:4px!important;padding-inline:6px!important;
+ }
+}
