@@ -2580,7 +2580,7 @@ import {basicConversation} from "./assets/classora-basic-conversation-v254.js?v=
    Only an authenticated Firebase ID token is sent to the Classora AI gateway.
    The gateway validates the token and forwards the question to loopback Ollama.
    Never access or expose the raw Ollama 11434 API from this web page. */
-const classoraLocalAiEndpoint="https://ai.classora.study";
+const classoraLocalAiEndpoint="https://classora-ai.bassamsamijaber.workers.dev";
 function classoraModelState(state){window.dispatchEvent(new CustomEvent('classora:ai-state',{detail:state}))}
 let classoraReconnectInProgress=false;
 window.addEventListener('classora:ai-reconnect',async()=>{
@@ -2596,22 +2596,13 @@ let classoraConversationGeneration=0;
 window.addEventListener("classora:ai-reset",()=>{classoraCloudHistory.clear();classoraConversationGeneration++});
 let classoraCloudUnavailableUntil=0;
 let classoraCloudHealthyUntil=0;
-const classoraAIConsentKey=uid=>"classora_local_ai_consent_v2_"+uid;
+const classoraAIConsentKey=uid=>"classora_openai_consent_v1_"+uid;
 function classoraCloudConsent(uid){
   let choice=null;
   try{choice=localStorage.getItem(classoraAIConsentKey(uid))}catch{return false}
   if(choice==="yes")return true;
   if(choice==="no")return false;
-  const consentText={
-    ar:"تفعيل Classora AI التوليدي؟ رح ينرسل سؤالك وحتى 10 رسائل من المحادثة السابقة إلى الكمبيوتر اللي بشغّل النموذج، عبر اتصال محمي. ما تكتب معلومات شخصية أو كلمات مرور. إذا رفضت، بضل المساعد التعليمي الأساسي شغّال. استشر ولي أمرك عند الحاجة.",
-    en:"Enable generative Classora AI? Your question and up to 10 earlier messages will be processed on the operator's computer over a protected connection. Do not share personal details or passwords. The basic school assistant still works if you decline. Ask a parent or guardian when needed.",
-    es:"¿Activar Classora AI generativo? Tu pregunta y hasta 10 mensajes anteriores se enviarán al ordenador que ejecuta el modelo mediante una conexión protegida. No compartas contraseñas ni datos privados. Si rechazas, sigue disponible el asistente escolar básico.",
-    ko:"Classora 생성형 AI를 사용할까요? 질문과 이전 메시지 최대 10개가 보호된 연결을 통해 모델 운영자의 컴퓨터로 전송됩니다. 비밀번호나 개인정보를 공유하지 마세요. 거부하면 기본 학습 도우미를 사용할 수 있습니다.",
-    de:"Generative Classora-KI aktivieren? Deine Frage und bis zu 10 frühere Nachrichten werden über eine geschützte Verbindung auf dem Betreiber-PC verarbeitet. Teile keine Passwörter oder privaten Daten. Der Basis-Lernassistent bleibt ohne Zustimmung verfügbar.",
-    it:"Attivare Classora AI generativa? La tua domanda e fino a 10 messaggi precedenti saranno elaborati dal computer dell'operatore tramite connessione protetta. Non inviare password o dati privati. Il tutor di base resta disponibile.",
-    hi:"क्या जनरेटिव Classora AI चालू करें? आपका प्रश्न और पिछले अधिकतम 10 संदेश सुरक्षित कनेक्शन से मॉडल संचालक के कंप्यूटर पर भेजे जाएँगे। पासवर्ड या निजी जानकारी न भेजें। मना करने पर बुनियादी अध्ययन सहायक उपलब्ध रहेगा।",
-    tr:"Üretken Classora AI açılsın mı? Sorun ve en fazla 10 önceki mesaj, güvenli bağlantıyla modeli çalıştıran bilgisayarda işlenecek. Parola veya özel bilgi paylaşma. Reddedersen temel eğitim asistanı kullanılabilir."
-  };
+  const consentText={"ar":"تفعيل Classora AI عبر OpenAI؟ يُرسل سؤالك وحتى 10 رسائل سابقة واللغة والصف والدرس عبر Cloudflare إلى OpenAI لتوليد الرد. يُستخدم Firebase للتحقق من حسابك، وتُحفظ عدادات الاستخدام بمعرّف حساب مجزّأ في Cloudflare D1. لا يحفظ التطبيق نص المحادثة في قاعدة البيانات، وقد يعالج مزوّدو الخدمة البيانات وفق سياساتهم. قد يخطئ المساعد؛ لا ترسل كلمات مرور أو معلومات حساسة. يمكنك الرفض أو تغيير موافقتك من الإعدادات واستخدام المساعد الأساسي. استشر ولي أمرك عند الحاجة.","en":"Enable Classora AI through OpenAI? Your question, up to 10 previous messages, language, grade and lesson are sent through Cloudflare to OpenAI to generate a reply. Firebase verifies your account; usage counters with a hashed account ID are stored in Cloudflare D1. The app does not save chat text in its database; providers may process data under their policies. AI can make mistakes. Do not send passwords or sensitive information. You can decline or change consent in Settings and use the basic assistant. Ask a parent or guardian when needed.","es":"¿Activar Classora AI mediante OpenAI? Tu pregunta, hasta 10 mensajes anteriores, idioma, curso y lección se envían por Cloudflare a OpenAI. Firebase verifica tu cuenta; Cloudflare D1 guarda contadores de uso con un identificador de cuenta cifrado mediante hash. La aplicación no guarda el texto del chat en su base de datos; los proveedores pueden procesar datos según sus políticas. La IA puede equivocarse. No envíes contraseñas ni información sensible. Puedes rechazar o cambiar tu consentimiento en Ajustes y usar el asistente básico. Consulta a tu tutor si es necesario.","ko":"OpenAI를 통한 Classora AI를 활성화할까요? 질문, 이전 메시지 최대 10개, 언어, 학년 및 수업 정보가 Cloudflare를 통해 OpenAI로 전송됩니다. Firebase는 계정을 확인하고 Cloudflare D1에는 해시된 계정 ID와 사용량이 저장됩니다. 앱은 데이터베이스에 대화 내용을 저장하지 않지만 제공업체는 각 정책에 따라 데이터를 처리할 수 있습니다. AI는 틀릴 수 있습니다. 비밀번호나 민감한 정보를 보내지 마세요. 거부하거나 설정에서 동의를 변경하고 기본 도우미를 사용할 수 있습니다. 필요하면 보호자에게 물어보세요.","de":"Classora AI über OpenAI aktivieren? Deine Frage, bis zu 10 vorherige Nachrichten, Sprache, Klassenstufe und Lektion werden über Cloudflare an OpenAI gesendet. Firebase prüft dein Konto; Cloudflare D1 speichert Nutzungszähler mit einer gehashten Konto-ID. Die App speichert keine Chattexte in ihrer Datenbank; Anbieter können Daten gemäß ihren Richtlinien verarbeiten. KI kann Fehler machen. Sende keine Passwörter oder sensiblen Daten. Du kannst ablehnen oder deine Zustimmung in den Einstellungen ändern und den Basisassistenten nutzen. Frage bei Bedarf deine Eltern.","it":"Attivare Classora AI tramite OpenAI? Domanda, fino a 10 messaggi precedenti, lingua, classe e lezione vengono inviati tramite Cloudflare a OpenAI. Firebase verifica l'account; Cloudflare D1 conserva contatori di utilizzo con un ID account sottoposto a hash. L'app non salva il testo della chat nel database; i fornitori possono trattare i dati secondo le proprie politiche. L'IA può sbagliare. Non inviare password o dati sensibili. Puoi rifiutare o cambiare il consenso nelle Impostazioni e usare l'assistente di base. Consulta un genitore se necessario.","hi":"क्या OpenAI के माध्यम से Classora AI चालू करें? आपका प्रश्न, पिछले अधिकतम 10 संदेश, भाषा, कक्षा और पाठ Cloudflare के माध्यम से OpenAI को भेजे जाते हैं। Firebase खाते की पुष्टि करता है; Cloudflare D1 में हैश किए गए खाता ID के साथ उपयोग गणना रखी जाती है। ऐप अपने डेटाबेस में चैट का पाठ नहीं रखता; सेवा प्रदाता अपनी नीतियों के अनुसार डेटा संसाधित कर सकते हैं। AI गलत हो सकता है। पासवर्ड या संवेदनशील जानकारी न भेजें। आप मना कर सकते हैं या सेटिंग में सहमति बदलकर बुनियादी सहायक उपयोग कर सकते हैं। जरूरत पर अभिभावक से पूछें।","tr":"OpenAI üzerinden Classora AI etkinleştirilsin mi? Sorun, önceki en fazla 10 mesaj, dil, sınıf ve ders Cloudflare üzerinden OpenAI'ye gönderilir. Firebase hesabını doğrular; Cloudflare D1, hesap kimliğinin özetiyle kullanım sayaçlarını saklar. Uygulama sohbet metnini veritabanına kaydetmez; sağlayıcılar verileri kendi politikalarına göre işleyebilir. Yapay zekâ hata yapabilir. Parola veya hassas bilgi gönderme. Reddedebilir veya Ayarlar'dan onayını değiştirip temel asistanı kullanabilirsin. Gerektiğinde veline danış."};
   const agreed=window.confirm((consentText[currentUILanguage]||consentText.en)+"\n\nPrivacy / الخصوصية: classora.study/privacy.html");
   try{localStorage.setItem(classoraAIConsentKey(uid),agreed?"yes":"no")}catch{return false}
   return agreed;
@@ -2623,13 +2614,13 @@ function classoraAISettingsControl(){
   button.className="classora-ai-consent-settings";
   button.type="button";
   button.style.cssText="display:block;width:calc(100% - 28px);max-width:520px;margin:14px auto;padding:12px;border:1px solid #4d978b;border-radius:13px;color:#baf8dd;background:#133d49;font:800 13px system-ui;cursor:pointer";
-  button.textContent=currentUILanguage==="en"?"Local AI privacy / consent":"خصوصية وموافقة Classora AI المحلي";
+  button.textContent=currentUILanguage==="en"?"OpenAI privacy / consent":"خصوصية وموافقة Classora AI / OpenAI";
   button.addEventListener("click",()=>{
     const uid=auth.currentUser?.uid;
     if(!uid)return;
     try{localStorage.removeItem(classoraAIConsentKey(uid))}catch{}
     const enabled=classoraCloudConsent(uid);
-    showToast(currentUILanguage==="en"?(enabled?"Local AI enabled.":"School assistant only."):(enabled?"تم السماح بمساعد كلاسورا المحلي.":"تم اختيار المساعد التعليمي فقط."));
+    showToast(currentUILanguage==="en"?(enabled?"OpenAI enabled.":"School assistant only."):(enabled?"تم السماح بمساعد كلاسورا عبر OpenAI.":"تم اختيار المساعد التعليمي فقط."));
   });
   card.append(button);
 }
@@ -2647,8 +2638,8 @@ async function classoraLocalAiAvailable(){
       });
       if(!response.ok)throw Error("offline");
       const status=await response.json();
-      if(!status?.ok||status.service!=="Classora Local AI")throw Error("wrong-service");
-      if(status.modelAvailable===false)throw Error("model-unavailable");
+      if(!status?.ok||status.service!=="Classora Cloud AI")throw Error("wrong-service");
+      if(status.provider!=="openai"||status.protocol<257||!status.configured)throw Error("cloud-not-configured");
     } finally {clearTimeout(timer)}
     classoraCloudHealthyUntil=Date.now()+60000;
     return true;
@@ -2674,7 +2665,7 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
     if(basic)return basic;
     if(isCreative){
       const messages={
-        ar:"عشان أكتب قصة أو أعدّل نص بحرية، لازم يكون نموذج Classora AI المحلي شغّال ومتصل. المساعد التعليمي الأساسي ما بقدر يولّد نص مفتوح بهالدقة. جرّب بعد تشغيل خدمة الذكاء الاصطناعي.",
+        ar:"عشان أكتب قصة أو أعدّل نص بحرية، لازم يكون نموذج Classora AI شغّال ومتصل. المساعد التعليمي الأساسي ما بقدر يولّد نص مفتوح بهالدقة. جرّب بعد تشغيل خدمة الذكاء الاصطناعي.",
         en:"Creative writing and open-ended editing require the Classora AI model to be running. The offline lesson assistant cannot generate arbitrary long-form text.",
         es:"Para escribir cuentos o editar libremente debe estar activo el modelo de Classora AI. El asistente sin conexión tiene funciones limitadas.",
         ko:"자유로운 이야기 작성과 수정에는 Classora AI 모델 연결이 필요합니다. 오프라인 학습 도우미에는 한계가 있습니다.",
@@ -2714,8 +2705,8 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
     if(response.status===429){
       classoraModelState("busy");
       return en
-        ?"Classora AI is at its daily limit. Here is the offline explanation:\n"+fallback()
-        :"وصل مساعد كلاسورا للحد اليومي. هاي إجابة المساعد التعليمي المحلي:\n"+fallback();
+        ?"Classora AI is busy or has reached its usage limit. Here is the offline explanation:\n"+fallback()
+        :"مساعد كلاسورا مشغول أو وصل لحد الاستخدام. هاي إجابة المساعد التعليمي المحلي:\n"+fallback();
     }
     if(!response.ok)throw Error("local-ai-http-"+response.status);
     const result=await response.json();
@@ -2727,9 +2718,9 @@ async function classoraSmartAnswerInternal(raw,channel,localAnswer,topic=""){
     classoraModelState("offline");
     classoraCloudUnavailableUntil=Date.now()+15000;
     classoraCloudHealthyUntil=0;
-    console.warn("Classora Local AI temporarily unavailable",error?.message||"network");
-    return (en?"Local AI is busy or offline. Here is the school assistant's answer:\n"
-      :"الذكاء الاصطناعي المحلي مشغول أو غير متصل حاليًا. هاي إجابة المساعد التعليمي:\n")+fallback();
+    console.warn("Classora Cloud AI temporarily unavailable",error?.message||"network");
+    return (en?"Classora AI is busy or unavailable. Here is the school assistant's answer:\n"
+      :"خدمة Classora AI مشغولة أو غير متاحة حاليًا. هاي إجابة المساعد التعليمي:\n")+fallback();
   }
 }
 
