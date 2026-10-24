@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v258-floating-island";
+const CACHE_NAME="classora-v259-bottom-island";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -7,7 +7,7 @@ const APP_SHELL=[
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
   "./assets/classora-chat-workspace-v250.js?v=258",
-  "./assets/classora-workspace-v250.css?v=258",
+  "./assets/classora-workspace-v250.css?v=259",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",

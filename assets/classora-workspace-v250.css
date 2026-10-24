@@ -307,55 +307,58 @@ html body #platformLobby .cl250-chat-card :is(.cl250-chat-actions,.cl252-creativ
 }
 
 
-/* v258 — floating unified workspace island (25% AI / 75% learning site).
-   The original scroll and DOM hierarchy remain intact; one shared skin sits behind both.
-   CSS properties are scoped to the lobby and desktop/tablet desktop layout only. */
+/* v259 — One scrollable 25/75 Classora island, grounded topics, bottom liquid-glass dock.
+   Desktop and landscape tablets only. Mobile keeps its existing stable experience. */
 html body #platformLobby .cl258-island-surface{display:none}
 @media(min-width:1000px){
  html body #platformLobby{
-  --cl258-gutter:clamp(16px,2vw,34px);
-  --cl258-radius:clamp(22px,2vw,30px);
-  --cl258-inner:calc(100vw - var(--cl258-gutter) - var(--cl258-gutter));
-  --cl258-ai:calc(var(--cl258-inner) / 4);
-  --cl258-site:calc(var(--cl258-inner) - var(--cl258-ai));
-  --cl258-site-x:calc(var(--cl258-gutter) + var(--cl258-ai));
-  background:
-   radial-gradient(circle at 8% 12%,color-mix(in srgb,var(--cl243-accent) 10%,transparent),transparent 38%),
-   radial-gradient(circle at 94% 95%,color-mix(in srgb,var(--cl243-accent) 5%,transparent),transparent 37%),
-   var(--cl243-bg)!important;
+  --cl259-gutter:clamp(14px,1.9vw,32px);
+  --cl259-radius:clamp(22px,2vw,30px);
+  --cl259-inner:calc(100vw - var(--cl259-gutter) * 2);
+  --cl259-ai:calc(var(--cl259-inner) * .25);
+  --cl259-site:calc(var(--cl259-inner) * .75);
+  --cl259-site-left:calc(var(--cl259-gutter) + var(--cl259-ai));
+  padding:0!important;
+  overflow:hidden!important;
+  background:radial-gradient(circle at 8% 10%,color-mix(in srgb,var(--cl243-accent) 8%,transparent),transparent 39%),
+             radial-gradient(circle at 92% 90%,color-mix(in srgb,var(--cl243-accent) 4%,transparent),transparent 36%),
+             var(--cl243-bg)!important;
  }
+ /* One continuous rounded island underneath BOTH working regions. */
  html body #platformLobby .cl258-island-surface{
   display:block!important;
+  position:fixed!important;
+  inset:var(--cl259-gutter)!important;
+  z-index:0!important;
   box-sizing:border-box;
-  position:fixed;top:var(--cl258-gutter);bottom:var(--cl258-gutter);
-  left:var(--cl258-gutter);right:var(--cl258-gutter);
-  border-radius:var(--cl258-radius);
-  border:1px solid color-mix(in srgb,var(--cl243-ink) 11%,transparent);
-  background:linear-gradient(135deg,
-   color-mix(in srgb,var(--cl243-paper) 48%,var(--cl243-bg)),
-   color-mix(in srgb,var(--cl243-paper) 22%,var(--cl243-bg)));
-  box-shadow:0 30px 85px #00000035,0 0 0 1px color-mix(in srgb,var(--cl243-accent) 3%,transparent);
-  z-index:0;pointer-events:none;
+  pointer-events:none!important;
+  border-radius:var(--cl259-radius)!important;
+  border:1px solid color-mix(in srgb,var(--cl243-ink) 13%,transparent)!important;
+  background:linear-gradient(140deg,
+     color-mix(in srgb,var(--cl243-paper) 46%,var(--cl243-bg)),
+     color-mix(in srgb,var(--cl243-paper) 24%,var(--cl243-bg)))!important;
+  box-shadow:0 26px 85px rgba(0,0,0,.26),inset 0 1px color-mix(in srgb,var(--cl243-ink) 6%,transparent)!important;
  }
+ /* 25% panel, clipped cleanly to the shared island. */
  html body #platformLobby .cl250-left{
   display:flex!important;flex-direction:column!important;
   position:fixed!important;
-  inset:var(--cl258-gutter) auto var(--cl258-gutter) var(--cl258-gutter)!important;
+  inset:var(--cl259-gutter) auto var(--cl259-gutter) var(--cl259-gutter)!important;
   box-sizing:border-box!important;
-  width:var(--cl258-ai)!important;min-width:0!important;max-width:var(--cl258-ai)!important;
-  height:calc(100dvh - var(--cl258-gutter) - var(--cl258-gutter))!important;
-  max-height:none!important;
-  margin:0!important;padding:clamp(12px,1.1vw,20px)!important;
+  width:var(--cl259-ai)!important;min-width:0!important;max-width:var(--cl259-ai)!important;
+  height:calc(100dvh - var(--cl259-gutter) * 2)!important;max-height:none!important;
+  margin:0!important;padding:clamp(10px,1.15vw,19px)!important;
   border:0!important;border-right:1px solid var(--cl243-edge)!important;
-  border-radius:var(--cl258-radius) 0 0 var(--cl258-radius)!important;
-  background:color-mix(in srgb,var(--cl243-paper) 16%,transparent)!important;
-  overflow:hidden!important;box-shadow:none!important;
+  border-radius:var(--cl259-radius) 0 0 var(--cl259-radius)!important;
+  background:color-mix(in srgb,var(--cl243-paper) 13%,transparent)!important;
+  box-shadow:none!important;overflow:hidden!important;
+  z-index:2!important;
  }
  html body #platformLobby .cl250-left .cl250-chat-card{
   display:flex!important;flex-direction:column!important;
   box-sizing:border-box!important;flex:1 1 auto!important;
-  width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
-  margin:0!important;padding:clamp(7px,.8vw,14px)!important;
+  width:100%!important;height:100%!important;max-height:none!important;min-height:0!important;
+  margin:0!important;padding:clamp(8px,.8vw,14px)!important;
   border:0!important;border-radius:0!important;box-shadow:none!important;
   background:transparent!important;overflow:hidden!important;
  }
@@ -365,23 +368,102 @@ html body #platformLobby .cl258-island-surface{display:none}
   overscroll-behavior:contain;
  }
  html body #platformLobby .cl250-left .lobby-ai-input{margin-top:auto!important}
+ html body #platformLobby .cl250-right{display:none!important}
+ html body #platformLobby .cl250-chat-card :is(.cl250-chat-actions,.cl252-creative-actions){display:none!important}
+ /* 75% learning section: only this section scrolls; all subjects, cards and topics stay INSIDE the island. */
  html body #platformLobby .lobby-shell{
   position:relative!important;z-index:1!important;
   box-sizing:border-box!important;
-  width:var(--cl258-site)!important;min-width:0!important;max-width:var(--cl258-site)!important;
-  margin-left:var(--cl258-site-x)!important;margin-right:0!important;
-  min-height:calc(100dvh - var(--cl258-gutter) - var(--cl258-gutter));
-  padding:clamp(16px,1.65vw,28px) clamp(16px,2vw,35px) calc(var(--classora-dock-clearance,110px) + 60px)!important;
-  background:transparent!important;border:0!important;
-  border-radius:0 var(--cl258-radius) var(--cl258-radius) 0!important;
-  box-shadow:none!important;overflow:visible!important;
+  display:block;
+  width:var(--cl259-site)!important;min-width:0!important;max-width:var(--cl259-site)!important;
+  height:calc(100dvh - var(--cl259-gutter) * 2)!important;
+  max-height:calc(100dvh - var(--cl259-gutter) * 2)!important;
+  min-height:0!important;
+  margin:var(--cl259-gutter) 0 var(--cl259-gutter) var(--cl259-site-left)!important;
+  padding:clamp(14px,1.6vw,28px) clamp(14px,1.8vw,32px)
+          calc(var(--classora-dock-clearance,110px) + 58px)!important;
+  border:0!important;
+  border-radius:0 var(--cl259-radius) var(--cl259-radius) 0!important;
+  background:transparent!important;box-shadow:none!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior-y:contain;scrollbar-width:thin;
+  scrollbar-color:color-mix(in srgb,var(--cl243-accent) 45%,transparent) transparent;
+  scroll-padding-bottom:calc(var(--classora-dock-clearance,110px) + 44px);
  }
- /* Center the existing glass navigation under the larger website section. */
+ html body #platformLobby .lobby-shell :is(.cl214,.cl214>*,
+   .cl214-quick,.cl214-tool-grid,.cl214-block,.cl214-hero,.cl215-insights,
+   .cl214-card,.cl215-insight-grid,.cl214-footer){
+  max-width:100%!important;min-width:0!important;
+ }
+ html body #platformLobby .lobby-shell :is(.cl214-quick,.cl214-tool-grid){
+  display:grid;gap:clamp(10px,1vw,16px)!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ }
+ html body #platformLobby .lobby-shell :is(.cl214-card,.cl215-insight,.cl214-block,.cl214-hero){
+  border-radius:clamp(16px,1.5vw,24px)!important;
+ }
+ /* Keep the same original navigation DOM & click actions. Pin it to the lower side of the learning pane. */
  html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
-  inset:auto auto calc(var(--cl258-gutter) + 12px) auto!important;
-  left:calc(var(--cl258-site-x) + var(--cl258-site) / 2)!important;
-  right:auto!important;bottom:calc(var(--cl258-gutter) + 12px)!important;
+  position:fixed!important;
+  inset:auto!important;
+  inset-block:auto!important;inset-inline:auto!important;
+  top:auto!important;right:auto!important;
+  bottom:calc(var(--cl259-gutter) + 12px)!important;
+  left:calc(var(--cl259-site-left) + var(--cl259-site) / 2)!important;
   transform:translateX(-50%)!important;translate:none!important;
-  margin:0!important;max-width:calc(var(--cl258-site) - 30px)!important;
+  display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  width:min(790px,calc(var(--cl259-site) - 44px))!important;
+  max-width:calc(var(--cl259-site) - 44px)!important;
+  height:76px!important;min-height:76px!important;max-height:76px!important;
+  margin:0!important;padding:8px 10px!important;gap:6px!important;
+  border-radius:24px!important;
+  border:1px solid color-mix(in srgb,var(--cl243-ink) 17%,transparent)!important;
+  background:linear-gradient(165deg,
+    color-mix(in srgb,var(--cl243-paper) 80%,transparent),
+    color-mix(in srgb,var(--cl243-soft) 65%,transparent))!important;
+  backdrop-filter:blur(24px) saturate(160%)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(160%)!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.26),
+             inset 0 1px color-mix(in srgb,var(--cl243-ink) 14%,transparent)!important;
+  z-index:2147483646!important;
+  overflow:hidden!important;
  }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > #classoraMobileLobbyBtn{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;width:100%!important;
+  height:58px!important;min-height:58px!important;max-height:58px!important;
+  padding:5px 6px!important;margin:0!important;gap:4px!important;
+  border-radius:16px!important;border:1px solid transparent!important;
+  background:transparent!important;box-shadow:none!important;
+  color:var(--cl243-muted)!important;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > button:is(.is-active,[aria-current="page"]),
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > #classoraMobileLobbyBtn:is(.is-active,[aria-current="page"]){
+  color:var(--cl243-ink)!important;
+  background:color-mix(in srgb,var(--cl243-accent) 19%,transparent)!important;
+  border-color:color-mix(in srgb,var(--cl243-accent) 38%,transparent)!important;
+  box-shadow:inset 0 1px color-mix(in srgb,var(--cl243-ink) 8%,transparent)!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > button:hover{
+  background:color-mix(in srgb,var(--cl243-accent) 11%,transparent)!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav > button :is(span,svg){
+  color:inherit!important;
+ }
+}
+@media(min-width:1000px) and (max-width:1320px){
+ html body #platformLobby .lobby-shell :is(.cl214-quick,.cl214-tool-grid){
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ }
+ html body #platformLobby .cl214-hero{
+  grid-template-columns:minmax(0,1fr)!important;
+ }
+ html body #platformLobby .cl214-hero-visual{
+  max-height:230px;min-height:160px!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body.classora-dock-enabled #classoraMobilePageNav > button{transition:none!important}
 }
