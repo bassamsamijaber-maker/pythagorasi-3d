@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v262-visual-refresh";
+const CACHE_NAME="classora-v263-emerald-experience";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -14,11 +14,11 @@ const APP_SHELL=[
   "./assets/classora-settings-polish-v241.js?v=242",
   "./assets/classora-settings-polish-v241.css?v=242",
   "./assets/classora-memberships-polish-v241.css?v=241",
-  "./assets/classora-member-hub-v239.js?v=239",
+  "./assets/classora-member-hub-v239.js?v=263",
   "./assets/classora-device-sessions-v239.js?v=239",
   "./assets/classora-memberships-features-v174.js?v=239",
   "./assets/classora-mobile-membership-v238.css?v=240",
-  "./assets/classora-member-space-v238.js?v=242",
+  "./assets/classora-member-space-v238.js?v=263",
   "./assets/classora-membership-access-v238.js?v=238",
   "./assets/classora-member-words-v238.js?v=238",
 
@@ -44,11 +44,13 @@ const APP_SHELL=[
   "./assets/classora-lobby-v262.css?v=262",
   "./assets/classora-membership-ultra-v262.css?v=262",
   "./assets/classora-memberships-v169.js?v=262",
+  "./assets/classora-emerald-luxury-v263.css?v=263",
+  "./assets/classora-membership-emerald-v263.css?v=263",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",
   "./assets/classora-chat-memberships-v169.css?v=186",
-  "./assets/classora-memberships-nav-v169.js?v=238",
+  "./assets/classora-memberships-nav-v169.js?v=263",
   "./subscriptions.html",
   "./assets/classora-membership-luxe-v182.js?v=238",
   "./assets/classora-membership-luxe-v182.css?v=182",

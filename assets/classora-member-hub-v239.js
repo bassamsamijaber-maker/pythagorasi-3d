@@ -79,11 +79,16 @@ function draw(){
 function installButtons(){
  const chat=$('chatModal'),ch=chat?.querySelector('.modalhead > div')||chat?.querySelector('.modalhead');
  const lobby=document.querySelector('.lobby-top-actions'),subjects=$('classoraLearningFront');
- for(const [host,id,name] of [[ch,'cl239ChatBtn','chat'],[lobby,'cl239LobbyBtn','open'],[subjects,'cl239SubjectsBtn','open']]){
+ const settings=document.querySelector('#settingsModal .classora-quick-grid')||document.querySelector('#settingsModal .settings-profile-row');
+ // Chat header remains reserved for chat controls; benefits now live in Settings.
+ $('cl239ChatBtn')?.remove();
+ for(const [host,id,name] of [[settings,'cl239SettingsChatFeatures','chat'],[lobby,'cl239LobbyBtn','open'],[subjects,'cl239SubjectsBtn','open']]){
   if(!host||$(id))continue;
   const b=N('button','cl239-launch',t(name));b.id=id;b.type='button';b.onclick=open;host.append(b);
  }
- for(const [id,k] of [['cl239ChatBtn','chat'],['cl239LobbyBtn','open'],['cl239SubjectsBtn','open']]){const b=$(id);if(b&&b.textContent!==t(k))b.textContent=t(k)}
+ for(const [id,k] of [['cl239SettingsChatFeatures','chat'],['cl239LobbyBtn','open'],['cl239SubjectsBtn','open']]){
+  const b=$(id);if(b&&b.textContent!==t(k))b.textContent=t(k);
+ }
 }
 function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;installButtons()})}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay&&!overlay.hidden){e.stopPropagation();close()}});

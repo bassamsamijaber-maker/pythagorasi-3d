@@ -4,7 +4,8 @@ const labels={ar:['ترقية','الاشتراكات والمميزات','خلّ
 let queued=false;
 function update(){
  queued=false;const lang=document.documentElement.lang||'ar',w=labels[lang]||labels.en;
- const sites=[['cl238LobbyUpgrade','.lobby-top-actions',0],['cl238SettingsUpgrade','#settingsModal .settings-profile-row',1],['cl238ChatUpgrade','#chatModal .modalhead > div',0],['cl238SubjectsUpgrade','#classoraLearningFront',2]];
+ document.getElementById('cl238ChatUpgrade')?.remove();
+ const sites=[['cl238LobbyUpgrade','.lobby-top-actions',0],['cl238SettingsUpgrade','#settingsModal .settings-profile-row',1],['cl238SubjectsUpgrade','#classoraLearningFront',2]];
  for(const[id,selector,key]of sites){const host=document.querySelector(selector);if(!host)continue;let a=document.getElementById(id);if(!a){a=document.createElement('a');a.id=id;a.className='cl238-upgrade'+(key===2?' cl238-upgrade-banner':'');a.dataset.noTranslate='';host.append(a)}
  const text=w[key]+(key===2?' '+w[3]+' →':'');if(a.textContent!==text)a.textContent=text;
  const url='./subscriptions.html?lang='+encodeURIComponent(lang);if(a.getAttribute('href')!==url)a.setAttribute('href',url);

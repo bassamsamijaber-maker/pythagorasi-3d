@@ -1,0 +1,137 @@
+/* Classora v263 — Emerald membership storefront, same familiar brand as Classora. */
+html body.classora-membership-page{
+ --cl262-panel:#17353c;--cl262-raised:#1c444b;--cl262-line:rgba(127,221,194,.22);
+ --cl262-muted:#c3e1d8;--cl262-ink:#f4fffb;--cl262-violet:#88e6c8;--cl262-teal:#88e6c8;
+ background:
+ radial-gradient(ellipse 60% 460px at 8% -6%,rgba(63,165,133,.22),transparent 72%),
+ radial-gradient(ellipse 55% 580px at 100% 30%,rgba(27,122,119,.13),transparent 80%),
+ #081c22!important;
+ color:#f1fbf7!important;
+}
+html body.classora-membership-page .cl-header{
+ border-color:rgba(131,224,194,.20)!important;
+}
+html body.classora-membership-page .cl-brand :is(b,small){color:#edfff8!important}
+html body.classora-membership-page .cl-back{
+ background:#1d4144!important;color:#eafff5!important;
+ border:1px solid rgba(147,235,210,.33)!important;
+}
+html body.classora-membership-page .cl-hero{
+ background:
+ radial-gradient(ellipse at 86% 16%,rgba(70,187,142,.24),transparent 50%),
+ radial-gradient(ellipse at 6% 100%,rgba(72,197,173,.10),transparent 48%),
+ linear-gradient(140deg,#143c3a,#122b34 78%,#112b2c)!important;
+ border:1px solid rgba(118,230,187,.32)!important;
+ box-shadow:0 24px 77px #02141f83,inset 0 1px #ffffff0e!important;
+}
+html body.classora-membership-page .cl-hero h1{color:#f5fff9!important}
+html body.classora-membership-page .cl-hero h1 em{
+ color:transparent!important;
+ background:linear-gradient(113deg,#b8f7da,#68ddb0 60%,#a2e9e0)!important;
+ background-clip:text!important;-webkit-background-clip:text!important;
+}
+html body.classora-membership-page .cl-hero-copy p{color:#cde9e2!important}
+html body.classora-membership-page .cl-hero-art{
+ background:radial-gradient(circle at 40% 36%,rgba(111,239,199,.18),transparent 65%),#122e33a8!important;
+ border-color:rgba(139,232,200,.22)!important;
+}
+html body.classora-membership-page .cl-eyebrow{color:#90edc8!important}
+html body.classora-membership-page .cl-highlights span{
+ color:#d8faeb!important;background:#7de7c31a!important;
+ border:1px solid #94edc547!important;
+}
+html body.classora-membership-page :is(.cl-account,.cl-owner-switch){
+ background:linear-gradient(130deg,#1b3d42,#153139)!important;
+ border:1px solid rgba(125,221,190,.26)!important;
+ box-shadow:0 12px 34px #020e162f!important;
+}
+html body.classora-membership-page :is(.cl-account,.cl-owner-switch) :is(h2,b,p){color:#f1fff8!important}
+html body.classora-membership-page .cl-pricing{
+ background:linear-gradient(141deg,#153139,#102931)!important;
+ border:1px solid rgba(121,219,184,.28)!important;
+ box-shadow:0 18px 61px #020e195e!important;
+}
+html body.classora-membership-page .cl-role-detection{
+ background:#204946!important;color:#eafef3!important;border-color:#78c9ad!important;
+}
+html body.classora-membership-page .cl-role-indicator{background:#8be5c0!important;box-shadow:0 0 0 4px #8be5c025!important}
+html body.classora-membership-page .cl-tabs button{
+ background:#21434a!important;border:1px solid rgba(147,212,194,.34)!important;
+ color:#e0f9ed!important;border-radius:13px!important;
+}
+html body.classora-membership-page .cl-tabs button.active,
+html body.classora-membership-page .cl-tabs button[aria-selected="true"]{
+ background:linear-gradient(115deg,#95efd0,#70dabc)!important;
+ color:#07362a!important;border-color:#adf6db!important;
+ box-shadow:0 7px 22px rgba(53,201,146,.16)!important;
+}
+html body.classora-membership-page .cl-plan{
+ background:linear-gradient(154deg,#1c3e43,#142e36)!important;
+ border:1px solid rgba(130,215,190,.33)!important;
+ box-shadow:0 14px 36px #02141f4c!important;
+}
+html body.classora-membership-page .cl-plan.premium{
+ background:radial-gradient(ellipse at 90% 0%,rgba(126,223,174,.15),transparent 65%),
+ linear-gradient(155deg,#1d4542,#173238)!important;
+ border-color:rgba(162,239,195,.59)!important;
+}
+html body.classora-membership-page .cl-plan.selected,
+html body.classora-membership-page .cl-plan.premium.selected{
+ border-color:#a6f5d2!important;
+ box-shadow:0 0 0 2px rgba(123,232,182,.19),0 17px 45px #02141e49!important;
+}
+html body.classora-membership-page .cl-plan .cl-plan-top b{color:#f6fff9!important}
+html body.classora-membership-page .cl-plan .cl-plan-top span{
+ color:#c2f6df!important;background:#66cfa623!important;
+ border:1px solid #a3edca60!important;
+}
+html body.classora-membership-page .cl-plan :is(p,li,small){color:#d7ede5!important}
+html body.classora-membership-page .cl-plan .cl-price-line strong{color:#f8fff9!important}
+html body.classora-membership-page .cl-plan .cl-plan-select,
+html body.classora-membership-page .cl-continue{
+ background:linear-gradient(115deg,#a1f1cf,#74ddba)!important;color:#0b3c30!important;
+ border:1px solid #c1ffdf!important;border-radius:14px!important;
+ box-shadow:0 9px 28px rgba(52,185,134,.16)!important;
+}
+html body.classora-membership-page .cl-plan.premium .cl-plan-select{
+ background:linear-gradient(115deg,#b9f4d2,#87e3bd)!important;
+ color:#09382d!important;
+}
+html body.classora-membership-page :is(.cl-checkout-card,.cl-summary,.cl-faq details,.cl-luxe-compare){
+ background:linear-gradient(140deg,#1a3940,#112c36)!important;
+ border:1px solid rgba(133,220,191,.26)!important;
+ box-shadow:0 13px 41px #03131f3f!important;
+}
+html body.classora-membership-page #cl-total{color:#a5f5d4!important}
+html body.classora-membership-page :is(.cl-method,.cl-role-detection,.cl-luxe-trust-item){
+ border-color:rgba(124,218,185,.32)!important;
+}
+html body.classora-membership-page :is(button,.cl-plan-select,a.cl-back){
+ overflow-wrap:normal!important;word-break:keep-all!important;hyphens:none!important;
+ text-wrap:pretty;line-height:1.5!important;
+}
+html body.classora-membership-page :is(button,.cl-plan-select,a.cl-back) :is(span,b,strong,small){
+ overflow-wrap:normal!important;word-break:keep-all!important;hyphens:none!important;
+}
+html body.classora-membership-page .cl-tabs button{min-height:46px!important;padding:8px 13px!important}
+html body.classora-membership-page .cl-plan-select{min-height:49px!important}
+html body.classora-membership-page .cl-owner-switch-actions :is(button,a){
+ border:1px solid #9de4c078!important;background:#21514d!important;color:#eefcf5!important;
+}
+html body.classora-membership-page .cl-owner-switch-actions button[aria-pressed="true"]{
+ background:#9aebc9!important;color:#063d2f!important;
+}
+html body.classora-membership-page :is(button,a):focus-visible{outline:3px solid #99eacc!important;outline-offset:3px!important}
+@media(hover:hover){
+ html body.classora-membership-page .cl-plan:hover{
+  border-color:#99e6c8!important;
+  box-shadow:0 20px 57px #020f195b!important;
+ }
+}
+@media(max-width:650px){
+ html body.classora-membership-page .cl-plan{padding:17px!important}
+ html body.classora-membership-page .cl-tabs button{
+  white-space:normal!important;min-width:0!important;min-height:46px!important;
+ }
+ html body.classora-membership-page .cl-header-actions a{white-space:nowrap!important}
+}
