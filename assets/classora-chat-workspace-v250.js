@@ -23,7 +23,7 @@ const creative={
 };
 const t=i=>(lex[document.documentElement.lang]||lex.en)[i];
 const el=(tag,cls,str)=>{const x=document.createElement(tag);x.className=cls||'';if(str!==undefined)x.textContent=str;return x};
-let card,left,right,host,marker,thread,more,expanded=false,busy=false,conversationGeneration=0;
+let card,left,right,host,marker,thread,busy=false,conversationGeneration=0;
 const modelText={
  ar:['اسأل كلاسورا','جاري الاتصال بالنموذج…','النموذج التوليدي متصل','المساعد الأساسي · النموذج غير متصل','المساعد الأساسي · سجّل الدخول للتوليد','المساعد الأساسي · التوليد يحتاج موافقتك من الإعدادات','النموذج مشغول · إجابة أساسية','حل رياضي محسوب','إعادة الاتصال'],
  en:['Ask Classora','Connecting to model…','Generative model connected','Basic assistant · model unavailable','Basic assistant · sign in for generation','Basic assistant · enable AI consent in Settings','Model busy · basic answer','Calculated math answer','Reconnect'],
@@ -92,7 +92,6 @@ function update(){
     if(item)item.textContent=$(id)?.textContent?.trim()||'—';
   }
  }
- if(more){more.textContent=t(expanded?3:2);more.setAttribute('aria-expanded',String(expanded))}
 }
 function reposition(){
  if(!card||!left||!host)return;
@@ -168,18 +167,15 @@ function addExtras(){
  card.querySelector('.lobby-ai-head')?.after(reset);
 }
 
-function addMore(front){
- const quick=front.querySelector('.cl214-quick');if(!quick||front.querySelector('#cl250More'))return;
- more=el('button','cl250-more');more.id='cl250More';more.type='button';quick.after(more);
- const ids=['cl214-catalog','cl214-live','cl214-exams'];
- const reveal=state=>{expanded=state;for(const id of ids){const node=$(id);if(node)node.hidden=!state}update()};
- more.addEventListener('click',()=>reveal(!expanded));
- front.addEventListener('click',event=>{
-  const button=event.target.closest('[data-cl-section]');
-  if(button&&ids.includes(button.dataset.clSection))reveal(true);
- },true);
- reveal(false);
+function showLearningSections(front){
+ // No redundant More button: keep the learning catalog, competitions and exams visible.
+ front.querySelector('#cl250More')?.remove();
+ for(const id of ['cl214-catalog','cl214-live','cl214-exams']){
+  const section=document.getElementById(id);
+  if(section){section.hidden=false;section.removeAttribute('aria-hidden')}
+ }
 }
+
 function init(){
  const lobby=$('platformLobby'),front=$('classoraLearningFront');
  if(left||!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
@@ -189,7 +185,7 @@ function init(){
  const island=el('div','cl258-island-surface');
  island.setAttribute('aria-hidden','true');
  lobby.prepend(island);
- addChat();addMore(front);reposition();update();
+ addChat();showLearningSections(front);reposition();update();
  window.ClassoraConversation={send,get busy(){return busy},open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
  window.addEventListener('resize',reposition,{passive:true});
  new MutationObserver(reposition).observe(lobby,{childList:true,subtree:true});

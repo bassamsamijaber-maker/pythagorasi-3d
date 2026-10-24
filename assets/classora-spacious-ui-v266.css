@@ -1,0 +1,232 @@
+/* Classora v266: calm spacing system and permanent removal of redundant More control.
+   Preserve the 25/75 island, subscriptions, responsive layout, colors and navigation.
+   Component-level rules: no global universal selectors or unwanted layout resets. */
+html body #platformLobby{--cl266-section-gap:clamp(22px,2.4vw,34px);--cl266-card-gap:clamp(14px,1.5vw,22px);--cl266-inner-gap:clamp(14px,1.6vw,24px)}
+html body #platformLobby :is(#cl250More,.cl250-more){display:none!important}
+/* The entire learning front stays in its own padded content column. */
+html body #platformLobby .cl214{
+ column-gap:var(--cl266-card-gap)!important;
+ row-gap:var(--cl266-section-gap)!important;
+ align-content:start!important;
+ min-width:0!important;
+}
+html body #platformLobby .cl214>*{
+ min-width:0!important;
+ max-width:100%!important;
+ margin-block:0!important;
+ box-sizing:border-box!important;
+}
+html body #platformLobby .lobby-topbar{
+ margin-bottom:clamp(18px,2vw,28px)!important;
+ padding-block:clamp(12px,1.5vw,20px)!important;
+}
+html body #platformLobby .lobby-top-actions{
+ display:flex!important;align-items:center!important;
+ flex-wrap:wrap!important;gap:10px!important;
+}
+html body #platformLobby .lobby-top-actions>*{
+ min-width:0!important;max-width:100%!important;
+}
+/* Hero: internal illustration, content and actions must never touch each other. */
+html body #platformLobby .cl214-hero{
+ gap:clamp(23px,2.6vw,42px)!important;
+ padding:clamp(22px,2.7vw,38px)!important;
+}
+html body #platformLobby .cl214-hero-copy{
+ display:flex!important;flex-direction:column!important;
+ align-items:flex-start!important;min-width:0!important;
+}
+html body #platformLobby .cl214-hero-buttons{
+ display:flex!important;align-items:center!important;
+ gap:12px!important;flex-wrap:wrap!important;
+ margin-block:8px 10px!important;
+}
+html body #platformLobby .cl214-hero-buttons>*{
+ min-height:44px!important;margin:0!important;
+ white-space:normal!important;word-break:keep-all!important;
+}
+/* Quick actions and learning-tool tiles: separate cards and give labels breathing room. */
+html body #platformLobby :is(.cl214-quick,.cl214-tool-grid){
+ gap:var(--cl266-card-gap)!important;margin:0!important;
+ align-items:stretch!important;
+}
+html body #platformLobby :is(.cl214-quick,.cl214-tool-grid) .cl214-card{
+ min-width:0!important;
+ padding:clamp(16px,1.5vw,22px)!important;
+ gap:clamp(11px,1.2vw,18px)!important;
+ border-radius:20px!important;
+}
+html body #platformLobby .cl214-card-copy{
+ display:flex!important;flex-direction:column!important;
+ min-width:0!important;gap:6px!important;
+}
+html body #platformLobby .cl214-card-copy :is(strong,small,span){
+ line-height:1.6!important;overflow-wrap:normal!important;
+ word-break:keep-all!important;hyphens:none!important;
+}
+/* Every section is visibly separate and its own contents are padded. */
+html body #platformLobby .cl214-block{
+ margin:0!important;
+ padding:clamp(20px,2.1vw,32px)!important;
+ border-radius:clamp(18px,1.7vw,25px)!important;
+}
+html body #platformLobby .cl214-section-heading{
+ display:flex!important;align-items:flex-start!important;
+ gap:clamp(12px,1.6vw,24px)!important;
+ margin:0 0 clamp(17px,1.9vw,25px)!important;
+ padding-bottom:clamp(12px,1.3vw,19px)!important;
+ border-bottom:1px solid var(--cl243-edge,rgba(120,155,145,.21))!important;
+}
+html body #platformLobby .cl214-section-heading>div{min-width:0!important}
+html body #platformLobby .cl214-section-heading :is(h2,p){
+ margin-inline:0!important;word-break:normal!important;
+}
+html body #platformLobby :is(.cl214-live-layout,.cl214-exam-layout){
+ gap:var(--cl266-inner-gap)!important;
+ align-items:stretch!important;
+}
+html body #platformLobby :is(.cl214-live-panel,.cl214-exam-main,.cl214-exam-side .cl214-card){
+ padding:clamp(17px,1.7vw,26px)!important;
+ border-radius:19px!important;min-width:0!important;
+}
+html body #platformLobby :is(.cl214-live-steps,.cl214-exam-side){
+ gap:clamp(10px,1.25vw,16px)!important;
+ min-width:0!important;
+}
+html body #platformLobby .cl214-steps>*,html body #platformLobby .cl214-live-steps>*{
+ min-width:0!important;
+}
+html body #platformLobby .cl214-tabs{
+ gap:clamp(7px,1vw,13px)!important;
+ padding-block:9px 12px!important;
+}
+html body #platformLobby .cl214-tabs button{
+ padding-inline:clamp(10px,1.3vw,18px)!important;
+ min-height:43px!important;
+}
+/* Existing upgrade banner is a standalone element, not stuck to adjacent panels. */
+html body #platformLobby .cl238-upgrade-banner{
+ padding:clamp(18px,1.9vw,26px)!important;
+ border-radius:19px!important;
+ box-sizing:border-box!important;
+}
+html body #platformLobby :is(#classoraPromoCenter,#classoraLearningBoost,#cl223Preview){
+ padding:clamp(18px,2vw,29px)!important;
+ border-radius:21px!important;min-width:0!important;
+}
+html body #platformLobby :is(.cl215-insight-grid,.cl215-grid){
+ gap:clamp(11px,1.2vw,18px)!important;
+}
+html body #platformLobby .cl214-footer{
+ margin-top:0!important;padding-block:22px 12px!important;
+ gap:16px!important;
+}
+/* Assistant remains separate from the main panel; chat actions have visible gutters. */
+html body #platformLobby .cl250-left .lobby-ai-head{
+ margin-bottom:clamp(12px,1.4vw,19px)!important;
+ padding-bottom:clamp(10px,1.25vw,18px)!important;
+}
+html body #platformLobby .cl250-left .cl250-thread{
+ gap:13px!important;padding-inline:6px!important;
+}
+html body #platformLobby .cl250-left :is(.cl248-ai-prompts,.cl250-chat-actions){
+ gap:10px!important;
+ margin-block:12px!important;
+}
+html body #platformLobby .cl250-left .lobby-ai-input{
+ gap:10px!important;
+ margin-top:auto!important;
+ padding-top:12px!important;
+}
+html body #platformLobby .cl250-left .cl250-chat-card{
+ min-width:0!important;
+}
+/* Liquid Glass has room between tabs without moving it above the island. */
+html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+ gap:clamp(5px,.65vw,11px)!important;
+ padding:8px clamp(9px,1vw,15px)!important;
+}
+html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button{
+ min-width:0!important;margin:0!important;
+ padding-inline:6px!important;box-sizing:border-box!important;
+}
+/* Chat and settings: refine clusters but do not restructure their modals. */
+html body #chatModal .modalhead{
+ gap:clamp(10px,1.35vw,18px)!important;
+}
+html body #chatModal .classora-chat-layout{
+ gap:clamp(10px,1.2vw,18px)!important;
+}
+html body #chatModal .chat-group-actions{gap:10px!important}
+html body #chatModal .chat-contact + .chat-contact{
+ margin-top:6px!important;
+}
+html body #chatModal .chat-compose{gap:10px!important}
+html body #chatModal :is(.chat-media-tools,.chat-thread-head){
+ gap:10px!important;
+}
+html body #settingsModal .settings-grid{
+ gap:clamp(13px,1.5vw,22px)!important;
+}
+html body #settingsModal :is(.classora-quick-grid,.cl241-settings-nav-grid){
+ gap:clamp(9px,1vw,14px)!important;
+}
+html body #settingsModal .settings-card{
+ padding:clamp(14px,1.5vw,23px)!important;
+ gap:12px!important;
+}
+html body #settingsModal :is(.classora-settings-shortcuts,.cl241-settings-nav){
+ margin-block:clamp(13px,1.5vw,21px)!important;
+}
+html body .cl239-feature-grid{
+ gap:clamp(11px,1.25vw,18px)!important;
+}
+/* Smaller screens need separation without squeezing buttons or stealing height. */
+@media(max-width:999px){
+ html body #platformLobby{
+  --cl266-section-gap:clamp(16px,3vw,23px);
+  --cl266-card-gap:clamp(11px,2vw,16px);
+  --cl266-inner-gap:clamp(12px,2vw,18px);
+ }
+ html body #platformLobby .cl214-hero{padding:clamp(18px,3.2vw,26px)!important;gap:18px!important}
+ html body #platformLobby .cl214-block{padding:clamp(16px,2.7vw,22px)!important}
+}
+@media(max-width:600px){
+ html body #platformLobby{--cl266-section-gap:18px;--cl266-card-gap:12px;--cl266-inner-gap:14px}
+ html body #platformLobby .cl214-quick .cl214-card,
+ html body #platformLobby .cl214-tool-grid .cl214-card{padding:14px 12px!important;gap:11px!important}
+ html body #platformLobby .cl214-section-heading{margin-bottom:16px!important;padding-bottom:12px!important;gap:9px!important}
+ html body #platformLobby .cl214-hero-buttons{gap:9px!important}
+ html body #chatModal .classora-chat-layout{gap:7px!important}
+ html body #settingsModal .settings-grid{gap:13px!important}
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{gap:3px!important;padding:6px!important}
+}
+
+/* Subscription tiles keep the same rhythm without modifying pricing data. */
+html body.classora-membership-page .cl-hero{
+ margin-block:clamp(18px,2.2vw,32px)!important;
+}
+html body.classora-membership-page .cl-plans{
+ gap:clamp(15px,1.9vw,26px)!important;
+}
+html body.classora-membership-page .cl-plan{
+ padding:clamp(18px,2vw,28px)!important;
+}
+html body.classora-membership-page .cl-controls{
+ gap:clamp(12px,1.35vw,19px)!important;
+ margin-block:clamp(18px,2vw,30px)!important;
+}
+html body.classora-membership-page .cl-owner-switch{
+ margin-block:clamp(15px,1.6vw,24px)!important;
+}
+html body.classora-membership-page .cl-faq details+details{
+ margin-top:12px!important;
+}
+html body.classora-membership-page :is(.cl-plan-select,.cl-continue,.cl-tabs button){
+ min-height:45px!important;
+ word-break:keep-all!important;overflow-wrap:normal!important;hyphens:none!important;
+}
+@media(max-width:650px){
+ html body.classora-membership-page .cl-plans{gap:13px!important}
+ html body.classora-membership-page .cl-plan{padding:17px!important}
+}

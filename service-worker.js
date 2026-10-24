@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v265-premium-contrast";
+const CACHE_NAME="classora-v266-spacious-panels";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -6,7 +6,7 @@ const APP_SHELL=[
   "./assets/classora-study-assistant-v124.js?v=249",
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
-  "./assets/classora-chat-workspace-v250.js?v=258",
+  "./assets/classora-chat-workspace-v250.js?v=266",
   "./assets/classora-workspace-v250.css?v=260",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
@@ -49,6 +49,7 @@ const APP_SHELL=[
   "./assets/classora-morning-v264.css?v=264",
   "./assets/classora-morning-panels-v264.css?v=264",
   "./assets/classora-contrast-finish-v265.css?v=265",
+  "./assets/classora-spacious-ui-v266.css?v=266",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",
