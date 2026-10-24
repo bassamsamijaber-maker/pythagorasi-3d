@@ -305,3 +305,83 @@ html body #platformLobby .cl250-chat-card :is(.cl250-chat-actions,.cl252-creativ
   padding-inline:clamp(14px,1.6vw,28px)!important;
  }
 }
+
+
+/* v258 — floating unified workspace island (25% AI / 75% learning site).
+   The original scroll and DOM hierarchy remain intact; one shared skin sits behind both.
+   CSS properties are scoped to the lobby and desktop/tablet desktop layout only. */
+html body #platformLobby .cl258-island-surface{display:none}
+@media(min-width:1000px){
+ html body #platformLobby{
+  --cl258-gutter:clamp(16px,2vw,34px);
+  --cl258-radius:clamp(22px,2vw,30px);
+  --cl258-inner:calc(100vw - var(--cl258-gutter) - var(--cl258-gutter));
+  --cl258-ai:calc(var(--cl258-inner) / 4);
+  --cl258-site:calc(var(--cl258-inner) - var(--cl258-ai));
+  --cl258-site-x:calc(var(--cl258-gutter) + var(--cl258-ai));
+  background:
+   radial-gradient(circle at 8% 12%,color-mix(in srgb,var(--cl243-accent) 10%,transparent),transparent 38%),
+   radial-gradient(circle at 94% 95%,color-mix(in srgb,var(--cl243-accent) 5%,transparent),transparent 37%),
+   var(--cl243-bg)!important;
+ }
+ html body #platformLobby .cl258-island-surface{
+  display:block!important;
+  box-sizing:border-box;
+  position:fixed;top:var(--cl258-gutter);bottom:var(--cl258-gutter);
+  left:var(--cl258-gutter);right:var(--cl258-gutter);
+  border-radius:var(--cl258-radius);
+  border:1px solid color-mix(in srgb,var(--cl243-ink) 11%,transparent);
+  background:linear-gradient(135deg,
+   color-mix(in srgb,var(--cl243-paper) 48%,var(--cl243-bg)),
+   color-mix(in srgb,var(--cl243-paper) 22%,var(--cl243-bg)));
+  box-shadow:0 30px 85px #00000035,0 0 0 1px color-mix(in srgb,var(--cl243-accent) 3%,transparent);
+  z-index:0;pointer-events:none;
+ }
+ html body #platformLobby .cl250-left{
+  display:flex!important;flex-direction:column!important;
+  position:fixed!important;
+  inset:var(--cl258-gutter) auto var(--cl258-gutter) var(--cl258-gutter)!important;
+  box-sizing:border-box!important;
+  width:var(--cl258-ai)!important;min-width:0!important;max-width:var(--cl258-ai)!important;
+  height:calc(100dvh - var(--cl258-gutter) - var(--cl258-gutter))!important;
+  max-height:none!important;
+  margin:0!important;padding:clamp(12px,1.1vw,20px)!important;
+  border:0!important;border-right:1px solid var(--cl243-edge)!important;
+  border-radius:var(--cl258-radius) 0 0 var(--cl258-radius)!important;
+  background:color-mix(in srgb,var(--cl243-paper) 16%,transparent)!important;
+  overflow:hidden!important;box-shadow:none!important;
+ }
+ html body #platformLobby .cl250-left .cl250-chat-card{
+  display:flex!important;flex-direction:column!important;
+  box-sizing:border-box!important;flex:1 1 auto!important;
+  width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+  margin:0!important;padding:clamp(7px,.8vw,14px)!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:transparent!important;overflow:hidden!important;
+ }
+ html body #platformLobby .cl250-left .cl250-thread{
+  display:flex!important;flex:1 1 0!important;
+  min-height:0!important;max-height:none!important;overflow-y:auto!important;
+  overscroll-behavior:contain;
+ }
+ html body #platformLobby .cl250-left .lobby-ai-input{margin-top:auto!important}
+ html body #platformLobby .lobby-shell{
+  position:relative!important;z-index:1!important;
+  box-sizing:border-box!important;
+  width:var(--cl258-site)!important;min-width:0!important;max-width:var(--cl258-site)!important;
+  margin-left:var(--cl258-site-x)!important;margin-right:0!important;
+  min-height:calc(100dvh - var(--cl258-gutter) - var(--cl258-gutter));
+  padding:clamp(16px,1.65vw,28px) clamp(16px,2vw,35px) calc(var(--classora-dock-clearance,110px) + 60px)!important;
+  background:transparent!important;border:0!important;
+  border-radius:0 var(--cl258-radius) var(--cl258-radius) 0!important;
+  box-shadow:none!important;overflow:visible!important;
+ }
+ /* Center the existing glass navigation under the larger website section. */
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  inset:auto auto calc(var(--cl258-gutter) + 12px) auto!important;
+  left:calc(var(--cl258-site-x) + var(--cl258-site) / 2)!important;
+  right:auto!important;bottom:calc(var(--cl258-gutter) + 12px)!important;
+  transform:translateX(-50%)!important;translate:none!important;
+  margin:0!important;max-width:calc(var(--cl258-site) - 30px)!important;
+ }
+}

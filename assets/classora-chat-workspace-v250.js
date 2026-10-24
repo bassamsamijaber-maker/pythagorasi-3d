@@ -184,7 +184,12 @@ function init(){
  const lobby=$('platformLobby'),front=$('classoraLearningFront');
  if(left||!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
  left=el('aside','cl250-left');left.id='cl250Left';left.dataset.noTranslate='';
- lobby.append(left);addChat();addMore(front);reposition();update();
+ lobby.append(left);
+ // Shared island surface connects the assistant and learning site without moving functional DOM nodes.
+ const island=el('div','cl258-island-surface');
+ island.setAttribute('aria-hidden','true');
+ lobby.prepend(island);
+ addChat();addMore(front);reposition();update();
  window.ClassoraConversation={send,get busy(){return busy},open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
  window.addEventListener('resize',reposition,{passive:true});
  new MutationObserver(reposition).observe(lobby,{childList:true,subtree:true});
