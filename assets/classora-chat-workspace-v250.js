@@ -37,7 +37,8 @@ const modelText={
 let modelState='idle';
 function renderModelState(){
  const labels=modelText[document.documentElement.lang]||modelText.en;
- const status=$('cl254ModelState');if(status){status.textContent=labels[({idle:0,connecting:1,connected:2,offline:3,signin:4,consent:5,busy:6,basic:7})[modelState]??0];status.dataset.state=modelState}
+ const reachable={ar:'الخدمة متاحة · أرسل سؤالًا للتجربة',en:'Service reachable · send a question to test',es:'Servicio disponible · envía una pregunta',ko:'서비스 연결 가능 · 질문을 보내 보세요',de:'Dienst erreichbar · sende eine Frage',it:'Servizio raggiungibile · invia una domanda',hi:'सेवा उपलब्ध · जाँचने के लिए प्रश्न भेजें',tr:'Hizmete erişiliyor · denemek için soru gönder'};
+ const status=$('cl254ModelState');if(status){status.textContent=modelState==='reachable'?(reachable[document.documentElement.lang]||reachable.en):labels[({idle:0,connecting:1,connected:2,offline:3,signin:4,consent:5,busy:6,basic:7})[modelState]??0];status.dataset.state=modelState}
  const retry=$('cl254Reconnect');if(retry){retry.textContent=labels[8];retry.hidden=!['offline','busy'].includes(modelState)}
 }
 window.addEventListener('classora:ai-state',event=>{modelState=event.detail;renderModelState()});

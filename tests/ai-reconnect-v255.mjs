@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const reconnect=html.slice(html.indexOf('let classoraReconnectInProgress=false;'),html.indexOf('const classoraCloudHistory=new Map();'));
+const available=html.slice(html.indexOf('async function classoraLocalAiAvailable(){'),html.indexOf('async function classoraSmartAnswer('));
+let handler,calls=0,modelAvailable=false;const states=[];
+const context=vm.createContext({window:{addEventListener:(name,fn)=>{handler=fn}},classoraModelState:s=>states.push(s),fetch:async()=>{calls++;return {ok:true,json:async()=>({ok:true,service:'Classora Local AI',modelAvailable})}},AbortController,setTimeout,clearTimeout,Date});
+vm.runInContext('let classoraConversationGeneration=0,classoraCloudUnavailableUntil=Date.now()+60000,classoraCloudHealthyUntil=0;const classoraLocalAiEndpoint="https://ai.classora.study";'+reconnect+available,context);
+await handler();assert.equal(calls,1);assert.equal(states.at(-1),'offline');
+modelAvailable=true;await handler();assert.equal(calls,2);assert.equal(states.at(-1),'reachable');
+await Promise.all([handler(),handler(),handler()]);assert.equal(calls,3);
+assert.ok(!states.includes('connected'),'Health must not claim successful generation');
+console.log('PASS: reconnect makes a request, detects missing model, clears negative cache and coalesces clicks');

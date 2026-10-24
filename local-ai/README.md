@@ -87,3 +87,12 @@ The web interface for conversations is deployed by GitHub Pages. Genuine open-en
 - The new chat transcript stays only in the active page memory, and is not separately saved as a Firebase chat record.
 - Keep the HTTPS authentication tunnel enabled; never expose Ollama port 11434, Firebase credentials or API keys.
 - Test consent, offline server, slow model, sign out, device rotation and all language selectors on real phones/tablets.
+
+
+## Connection diagnosis (v255)
+
+Update the **entire local-ai folder**, including `server.mjs` and `health.mjs`, then restart the existing gateway. Double-click `check-classora-ai.cmd` on the PC hosting Ollama. It checks the installed model, local gateway, public tunnel, and an actual short model response. It does not change firewall settings, install models, create tunnels or read credentials. Generation can take up to 90 seconds. The report contains no chat history or authentication tokens.
+
+`GET /health` now reports gateway reachability separately from `modelAvailable`. An installed model still needs to complete a real chat request before generation is verified. The website reconnect button now performs the health check; it does not merely clear its cached state.
+
+A passing diagnostic does not verify the Firebase-authenticated browser request or answer quality. Keep Ollama, the gateway and the existing Cloudflare Tunnel running while using generative chat.

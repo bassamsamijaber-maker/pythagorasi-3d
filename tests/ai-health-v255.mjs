@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {inspectModel,cachedModelInspector} from '../local-ai/health.mjs';
+const response=data=>async()=>({ok:true,json:async()=>data});
+assert.deepEqual(await inspectModel('qwen2.5:3b',response({models:[{name:'qwen2.5:3b'}]})),{modelAvailable:true,modelState:'available'});
+assert.equal((await inspectModel('qwen2.5:3b',response({models:[{name:'qwen2.5:7b'}]}))).modelState,'model-missing');
+assert.equal((await inspectModel('example',response({models:[{model:'example:latest'}]}))).modelAvailable,true);
+assert.equal((await inspectModel('qwen2.5:3b',response({}))).modelState,'ollama-offline');
+assert.equal((await inspectModel('qwen2.5:3b',async()=>{throw Error('offline')})).modelAvailable,false);
+let calls=0,now=0;
+const read=cachedModelInspector('test',async()=>{calls++;return {ok:true,json:async()=>({models:[{name:'test:latest'}]})}},()=>now);
+await Promise.all([read(),read(),read()]);assert.equal(calls,1);
+await read();assert.equal(calls,1);
+now=10001;await read();assert.equal(calls,2);
+console.log('PASS: model detection, missing model, offline/malformed response, concurrent checks and cache expiry');

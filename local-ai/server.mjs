@@ -7,6 +7,7 @@
  * Secure Token public certificates. No private Firebase service key needed.
  */
 import http from "node:http";
+import {cachedModelInspector} from "./health.mjs";
 import { verify as verifySignature, X509Certificate } from "node:crypto";
 
 const PROJECT_ID = "pythagorasi-school";
@@ -14,6 +15,7 @@ const HOST = "127.0.0.1";
 const PORT = 8765;
 const OLLAMA_URL = "http://127.0.0.1:11434/api/chat";
 const MODEL = process.env.CLASSORA_AI_MODEL || "qwen2.5:3b";
+const inspectModel=cachedModelInspector(MODEL);
 const ALLOWED_ORIGINS = new Set([
   "https://classora.study",
   "https://www.classora.study",
@@ -194,7 +196,8 @@ const server = http.createServer(async(req,res)=>{
     res.end();return;
   }
   if(req.method==="GET" && req.url==="/health") {
-    json(res,200,{ok:true,service:"Classora Local AI"},origin);return;
+    const model=await inspectModel();
+    json(res,200,{ok:true,service:"Classora Local AI",protocol:255,...model},origin);return;
   }
   if(req.method!=="POST"||req.url!=="/api/chat") {
     json(res,404,{error:"not-found"},origin);return;
