@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v259-bottom-island";
+const CACHE_NAME="classora-v260-restored-layout";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -7,7 +7,7 @@ const APP_SHELL=[
   "./assets/classora-ui-refine-v248.css?v=249",
   "./assets/classora-ai-prompts-v248.js?v=249",
   "./assets/classora-chat-workspace-v250.js?v=258",
-  "./assets/classora-workspace-v250.css?v=259",
+  "./assets/classora-workspace-v250.css?v=260",
   "./assets/classora-premium-v243.js?v=243",
   "./assets/classora-premium-i18n-v243.js?v=243",
   "./assets/classora-owner-cancel-v240.js?v=240",
@@ -39,6 +39,7 @@ const APP_SHELL=[
   "./assets/classora-learning-front-v214.css?v=214",
   "./assets/classora-learning-front-v214.js?v=251",
   "./assets/math-worksheet-v213.js?v=213",
+  "./assets/classora-layout-restore-v260.css?v=260",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",

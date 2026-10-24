@@ -1,0 +1,87 @@
+/* Classora v260 - original scrolling lobby restored, 25/75 assistant preserved, rounded island, bottom glass dock. */
+html body #platformLobby .cl250-right{display:none!important}
+html body #platformLobby .cl250-chat-card :is(.cl250-chat-actions,.cl252-creative-actions){display:none!important}
+html body #platformLobby .cl258-island-surface{display:none}
+@media(min-width:1000px){
+ html body #platformLobby{
+  --cl260-g:clamp(14px,1.75vw,28px);
+  --cl260-r:clamp(22px,2vw,30px);
+  --cl260-inner:calc(100vw - 2 * var(--cl260-g));
+  --cl260-ai:calc(var(--cl260-inner) * .25);
+  --cl260-main:calc(var(--cl260-inner) * .75);
+  --cl260-main-x:calc(var(--cl260-g) + var(--cl260-ai));
+  padding:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  background:radial-gradient(circle at 8% 9%,color-mix(in srgb,var(--cl243-accent) 8%,transparent),transparent 42%),var(--cl243-bg)!important;
+ }
+ html body #platformLobby .cl258-island-surface{
+  display:block!important;position:fixed!important;inset:var(--cl260-g)!important;
+  border:1px solid color-mix(in srgb,var(--cl243-ink) 12%,transparent)!important;
+  border-radius:var(--cl260-r)!important;
+  background:linear-gradient(130deg,color-mix(in srgb,var(--cl243-paper) 44%,var(--cl243-bg)),color-mix(in srgb,var(--cl243-paper) 18%,var(--cl243-bg)))!important;
+  box-shadow:0 20px 64px #00000030!important;
+  pointer-events:none!important;z-index:0!important;
+ }
+ html body #platformLobby .cl250-left{
+  display:flex!important;flex-direction:column!important;
+  position:fixed!important;inset:var(--cl260-g) auto var(--cl260-g) var(--cl260-g)!important;
+  box-sizing:border-box!important;width:var(--cl260-ai)!important;min-width:0!important;max-width:var(--cl260-ai)!important;
+  height:calc(100dvh - 2 * var(--cl260-g))!important;max-height:none!important;
+  margin:0!important;padding:clamp(12px,1.1vw,18px)!important;
+  border:0!important;border-right:1px solid var(--cl243-edge)!important;
+  border-radius:var(--cl260-r) 0 0 var(--cl260-r)!important;
+  background:color-mix(in srgb,var(--cl243-paper) 12%,transparent)!important;
+  box-shadow:none!important;overflow:hidden!important;z-index:2!important;
+ }
+ html body #platformLobby .cl250-left .cl250-chat-card{
+  display:flex!important;flex-direction:column!important;flex:1 1 auto!important;
+  width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+  box-sizing:border-box!important;margin:0!important;padding:clamp(8px,.8vw,14px)!important;
+  background:transparent!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;overflow:hidden!important;
+ }
+ html body #platformLobby .cl250-left .cl250-thread{
+  display:flex!important;flex:1 1 0!important;min-height:0!important;max-height:none!important;
+  overflow-y:auto!important;overscroll-behavior:contain;
+ }
+ html body #platformLobby .cl250-left .lobby-ai-input{margin-top:auto!important}
+ /* All lessons/topics scroll naturally with the original main page, not within a clipped sub-panel. */
+ html body #platformLobby .lobby-shell{
+  position:relative!important;z-index:1!important;display:block!important;box-sizing:border-box!important;
+  width:var(--cl260-main)!important;max-width:var(--cl260-main)!important;min-width:0!important;
+  height:auto!important;max-height:none!important;min-height:calc(100dvh - 2 * var(--cl260-g))!important;
+  margin:var(--cl260-g) var(--cl260-g) var(--cl260-g) var(--cl260-main-x)!important;
+  padding:clamp(16px,1.8vw,29px) clamp(16px,2vw,34px) calc(var(--classora-dock-clearance,105px) + 36px)!important;
+  border:0!important;border-radius:0 var(--cl260-r) var(--cl260-r) 0!important;
+  background:transparent!important;box-shadow:none!important;
+  overflow:visible!important;
+ }
+ html body #platformLobby .lobby-shell :is(.cl214,.cl214>*,.cl214-quick,.cl214-tool-grid,.cl214-hero,.cl214-block,.cl215-insights){
+  min-width:0!important;max-width:100%!important;
+ }
+ /* Explicitly reset logical and physical top offsets from older docks. */
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+  position:fixed!important;
+  inset:auto!important;inset-block:auto!important;inset-inline:auto!important;
+  top:auto!important;inset-block-start:auto!important;
+  right:auto!important;inset-inline-end:auto!important;
+  left:50%!important;
+  bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+  inset-block-end:calc(12px + env(safe-area-inset-bottom,0px))!important;
+  transform:translateX(-50%)!important;translate:none!important;margin:0!important;
+  width:min(790px,calc(100vw - 34px))!important;max-width:calc(100vw - 34px)!important;
+  height:auto!important;min-height:72px!important;max-height:88px!important;
+  padding:7px 10px!important;gap:clamp(3px,.5vw,8px)!important;
+  border-radius:24px!important;
+  border:1px solid color-mix(in srgb,var(--cl243-ink) 16%,transparent)!important;
+  background:color-mix(in srgb,var(--cl243-paper) 82%,transparent)!important;
+  backdrop-filter:blur(22px) saturate(145%)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%)!important;
+  box-shadow:0 16px 42px #0000003d,inset 0 1px color-mix(in srgb,var(--cl243-ink) 13%,transparent)!important;
+  z-index:2147483646!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>button,
+ html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav>#classoraMobileLobbyBtn{
+  min-width:0!important;height:55px!important;min-height:55px!important;max-height:55px!important;
+  margin:0!important;border-radius:15px!important;box-sizing:border-box!important;
+ }
+}
