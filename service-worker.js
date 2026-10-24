@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v263-emerald-experience";
+const CACHE_NAME="classora-v264-morning-atelier";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -46,6 +46,8 @@ const APP_SHELL=[
   "./assets/classora-memberships-v169.js?v=262",
   "./assets/classora-emerald-luxury-v263.css?v=263",
   "./assets/classora-membership-emerald-v263.css?v=263",
+  "./assets/classora-morning-v264.css?v=264",
+  "./assets/classora-morning-panels-v264.css?v=264",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",

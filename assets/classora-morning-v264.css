@@ -1,0 +1,226 @@
+/* Classora v264 — Morning Atelier.
+   Scoped exclusively to the saved Morning appearance. Never changes application state.
+   Palette: warm pearl, eucalyptus, muted jade and high-contrast navy. */
+html:has(body[data-classora-theme="morning"]){
+ color-scheme:light!important;
+ background:#f7faf6!important;
+ --cl243-bg:#f7faf6;--cl243-paper:#fffefb;--cl243-soft:#eff7f2;
+ --cl243-raised:#e4f1e9;--cl243-ink:#16382f;--cl243-muted:#56746b;
+ --cl243-edge:#c5ded2;--cl243-accent:#147f65;--cl243-accent-ink:#ffffff;
+ --cl243-gold:#aa8846;--cl243-shadow:0 18px 52px #47796219;
+}
+html body[data-classora-theme="morning"]{
+ color-scheme:light!important;
+ --cl243-bg:#f7faf6;--cl243-paper:#fffefb;--cl243-soft:#eff7f2;
+ --cl243-raised:#e4f1e9;--cl243-ink:#16382f;--cl243-muted:#56746b;
+ --cl243-edge:#c5ded2;--cl243-accent:#147f65;--cl243-accent-ink:#ffffff;
+ --cl243-gold:#aa8846;--cl243-shadow:0 18px 52px #47796219;
+ --ui-paper:#fffefb;--ui-paper-alt:#eef7f1;--ui-text:#16382f;
+ --ui-muted:#55756b;--ui-accent:#147f65;--ui-edge:#c5ded2;--ui-inverse:#ffffff;
+ --cl237-bg:#f7faf6;--cl237-card:#fffefb;--cl237-soft:#eff7f2;
+ --cl237-text:#16382f;--cl237-muted:#56746b;--cl237-border:#c5ded2;
+ --cl237-accent:#147f65;--cl237-on:#fff;
+ --cl248-panel:#fffefb;--cl248-line:#c5ded2;--cl248-quiet:#56746b;
+ --cl248-strong:#16382f;--cl248-primary:#147f65;
+ --panel:#fffefb;--text:#16382f;--muted:#56746b;
+ --ui-text:#16382f;--ui-muted:#55756b;--ui-paper:#fffefb;
+ --ui-paper-alt:#eef7f1;--ui-accent:#147f65;
+ background:
+  radial-gradient(ellipse 70% 450px at 12% 0%,#d7f0dcb0,transparent 75%),
+  radial-gradient(ellipse 55% 500px at 100% 85%,#e3f5ec9c,transparent 80%),
+  #f7faf6!important;
+ color:#16382f!important;
+}
+/* Quiet pearl island, centered, rounded, and always clipped by the existing layout. */
+html body[data-classora-theme="morning"] #platformLobby{
+ color:#16382f!important;
+ background:
+  radial-gradient(circle at 1% 8%,rgba(144,212,171,.15),transparent 34%),
+  radial-gradient(circle at 95% 90%,rgba(174,222,190,.13),transparent 38%),
+  #f7faf6!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl258-island-surface{
+ background:linear-gradient(146deg,#fffefa,#f4faf5 69%,#eff8f3)!important;
+ border:1px solid #c8e2d4!important;
+ border-radius:var(--cl260-r,28px)!important;
+ box-shadow:0 26px 80px #356e5525,inset 0 1px #ffffff!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left{
+ background:linear-gradient(165deg,#f6fcf7,#edf7f1)!important;
+ border-right:1px solid #d0e6d9!important;
+ color:#173c31!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-chat-card,
+html body[data-classora-theme="morning"] #platformLobby .lobby-ai-card{
+ background:transparent!important;border:0!important;
+ color:#173c31!important;box-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .lobby-ai-head{
+ color:#173c31!important;border-bottom:1px solid #cce5d8!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .lobby-ai-head :is(b,strong,h3,span){
+ color:#204a3c!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left .lobby-ai-orb{
+ background:linear-gradient(135deg,#268a72,#49b69a)!important;color:#fff!important;
+ box-shadow:0 8px 22px #127a5540!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left :is(.cl250-line,.cl250-chat-chip,.cl248-ai-prompt){
+ background:#fffefb!important;border:1px solid #cee3d6!important;
+ color:#234a3f!important;border-radius:15px!important;
+ box-shadow:0 3px 9px #5980680e!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left .cl250-line.cl250-user{
+ background:#e0f2e6!important;border-color:#acd9c2!important;color:#1b5640!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left .cl250-line.cl250-bot{
+ background:#fffefb!important;border-color:#d4e7db!important;color:#1d4438!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left :is(.lobby-ai-hint,.cl250-meta,.cl250-chat-helper,small,p){
+ color:#57776a!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left #lobbyAIInput{
+ background:#fff!important;color:#164438!important;border:1px solid #b8d8c8!important;
+ box-shadow:0 4px 16px #51826a18!important;border-radius:17px!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left #lobbyAIInput::placeholder{
+ color:#68877b!important;opacity:1!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left #lobbyAIInput:focus{
+ outline:0!important;border-color:#1e9974!important;box-shadow:0 0 0 3px #39ad8830!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left #lobbyAISend{
+ background:linear-gradient(130deg,#1b9573,#137a61)!important;color:#fff!important;
+ border:1px solid #198e6d!important;
+}
+/* Main lobby typography and premium light cards. */
+html body[data-classora-theme="morning"] #platformLobby .lobby-topbar{
+ border-bottom:1px solid #d5e6dd!important;background:transparent!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.lobby-brand,.lobby-topbar h1,.cl214-section-heading h2,.cl215-heading h2){
+ color:#173c31!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.lobby-sub,.cl214-kicker,.cl214-section-index,.cl215-heading p){
+ color:#55746a!important;opacity:1!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero{
+ background:
+  radial-gradient(ellipse at 15% 75%,#d9eee2,transparent 58%),
+  radial-gradient(ellipse at 94% 0%,#f8f0dc8c,transparent 48%),
+  linear-gradient(145deg,#fffefb,#f3faf5)!important;
+ border:1px solid #c4dfcf!important;
+ box-shadow:0 18px 50px #517e6220,inset 0 1px #fff!important;
+ border-radius:26px!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero h1{
+ color:#17392e!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero h1 em{
+ color:#167f64!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero :is(p,.cl214-hero-lead,.cl214-personal,.cl214-last-lesson,.cl214-kicker){
+ color:#56766a!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero strong{color:#19483a!important}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero-visual{
+ filter:none!important;
+}
+/* Match every major card to soft paper, not dark green. */
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-card,.cl214-quick .cl214-card,.cl214-tool-grid .cl214-card,
+ .cl214-section-card,.cl215-insight,#classoraPromoCenter,
+ #classoraLearningBoost,#cl223Preview,.cl223-quest-card,.cl223-topic-card,
+ .cl227-shop-card,.hub-topic-card,.hub-curriculum-subject,.student-dash-action,
+ .lobby-card,.cp-slide,.hw-card,.cl214-block
+){
+ background:linear-gradient(143deg,#fffefc,#f6fbf7)!important;
+ border:1px solid #d0e6d9!important;
+ color:#1b4538!important;
+ border-radius:20px!important;
+ box-shadow:0 10px 28px #3a765b12!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-card,.cl214-quick .cl214-card,.cl214-tool-grid .cl214-card,.cl215-insight,
+ .cl223-topic-card,.cl223-quest-card,.cl227-shop-card,.hub-topic-card,.hw-card
+) :is(h2,h3,h4,b,strong){
+ color:#183e33!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-card,.cl214-quick .cl214-card,.cl214-tool-grid .cl214-card,.cl215-insight,
+ .cl223-topic-card,.cl223-quest-card,.cl227-shop-card,.hub-topic-card,.hw-card
+) :is(p,small,.description){
+ color:#59776d!important;opacity:1!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-card-graphic,.cl215-insight-icon,.cl215-count,.cl223-preview-icon
+){
+ background:#e3f4e8!important;color:#1a936d!important;
+ box-shadow:none!important;border:1px solid #cee8d5!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-primary,.cl223-primary,.cl227-primary,.cl227-shop-btn,.cl215-action,.cp-enter
+){
+ background:linear-gradient(125deg,#168769,#197d64)!important;
+ color:#fff!important;border:1px solid #14725b!important;
+ box-shadow:0 9px 20px #17795525!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-secondary,.cl223-outline,.cl227-secondary,.cl250-more,.hw-secondary
+){
+ background:#eff8f2!important;color:#1a604a!important;
+ border:1px solid #b9d9c7!important;box-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.cl214-tabs button,.cl214-section-index,.cl214-arrow){
+ color:#4f6f65!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-tabs button:hover,
+html body[data-classora-theme="morning"] #platformLobby .cl214-tabs button[aria-selected="true"]{
+ background:#e8f6ed!important;color:#116848!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .lobby-shell{
+ scrollbar-color:#a2c6b1 transparent;
+}
+/* Morning dock: translucent alabaster glass with clear, readable labels. */
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav{
+ background:linear-gradient(143deg,#fffffff0,#eff8f4e8)!important;
+ border:1px solid #bad9c9!important;
+ box-shadow:0 13px 37px #2e5e4930,inset 0 1px #fff!important;
+ backdrop-filter:blur(23px) saturate(145%)!important;
+ -webkit-backdrop-filter:blur(23px) saturate(145%)!important;
+ border-radius:23px!important;
+}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button{
+ color:#486b5f!important;background:transparent!important;
+ border:1px solid transparent!important;
+}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button:is(.is-active,.active,[aria-current="page"]){
+ background:#dbf1e3!important;color:#0e7052!important;
+ border:1px solid #a6dbc0!important;border-radius:16px!important;
+}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button :is(span,svg){
+ color:inherit!important;opacity:1!important;
+}
+html body.classora-dock-enabled.classora-authenticated[data-classora-theme="morning"] #classoraMobilePageNav button span{
+ white-space:nowrap!important;overflow:visible!important;line-height:1.4!important;
+}
+/* Avoid unstyled dark interruptions in the morning experience. */
+html body[data-classora-theme="morning"] :is(.hub-dialog-body,.plus-dialog,.plus-toolbar,.learning-hub,.classora-quest-map){
+ --hub-text:#1d4437;--hub-muted:#5b796c;--hub-mint:#168869;
+}
+html body[data-classora-theme="morning"] :is(.hub-dialog-body,.plus-dialog,.learning-hub) :is(h2,h3,h4){
+ color:#1b4638!important;
+}
+html body[data-classora-theme="morning"] :is(.hub-dialog-body,.learning-hub) :is(p,small){
+ color:#58766b!important;
+}
+@media(hover:hover){
+ html body[data-classora-theme="morning"] #platformLobby :is(.cl214-card,.cl215-insight,.cl223-topic-card,.hub-topic-card):hover{
+  transform:translateY(-2px);border-color:#7bc5a2!important;box-shadow:0 16px 39px #417c5e24!important;
+ }
+}
+@media(max-width:999px){
+ html body[data-classora-theme="morning"] #platformLobby .lobby-shell{scrollbar-width:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html body[data-classora-theme="morning"] #platformLobby :is(.cl214-card,.cl215-insight){transition:none!important}
+}

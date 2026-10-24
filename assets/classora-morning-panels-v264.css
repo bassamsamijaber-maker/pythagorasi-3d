@@ -1,0 +1,285 @@
+/* Classora v264 — Morning Atelier extended panels.
+   Everything here is intentionally isolated to [data-classora-theme="morning"]. */
+/* Chat messaging room */
+html body[data-classora-theme="morning"] #chatModal{
+ --c6-panel:#fffdf9;--c6-panel-deep:#f0f7f1;--c6-panel-hi:#edf5ed;
+ --c6-border:#c4decf;--c6-text:#183d30;--c6-muted:#58776a;
+ --chat-lux-panel:#fffefb;--chat-lux-soft:#f1f8f2;--chat-lux-line:#c4decf;
+ color:#183d30!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(.classora-chat-box,.modalbox){
+ color:#1d4237!important;
+ background:linear-gradient(135deg,#fffffd,#f1f8f2)!important;
+ border:1px solid #c2dfce!important;border-radius:25px!important;
+ box-shadow:0 24px 72px #294f3b32!important;
+}
+html body[data-classora-theme="morning"] #chatModal .modalhead{
+ background:linear-gradient(130deg,#f1faf3,#e6f3e9)!important;
+ border-bottom:1px solid #c8e1d3!important;
+}
+html body[data-classora-theme="morning"] #chatModal .modalhead h2{color:#194335!important}
+html body[data-classora-theme="morning"] #chatModal .modalhead .subject-assistant-line{color:#5a7a6d!important}
+html body[data-classora-theme="morning"] #chatModal .modalhead .close{
+ background:#fff!important;border:1px solid #b7d8c8!important;
+ color:#205741!important;box-shadow:0 2px 9px #2b775b13!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(.chat-contacts-pane,.chat-thread-pane){
+ background:#f8fbf8!important;border:1px solid #cbded2!important;
+ border-radius:18px!important;color:#20473b!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-search-wrap{
+ background:#f8fbf8!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(#chatPeopleSearch,#chatMessageSearch,#chatMessageInput){
+ background:#fffefc!important;border:1px solid #bcdaca!important;
+ color:#174a39!important;border-radius:13px!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(#chatPeopleSearch,#chatMessageSearch,#chatMessageInput)::placeholder{
+ color:#648374!important;opacity:1!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-contacts-pane :is(
+ .chat-contact-section-title,.chat-contact-name,.chat-contact strong,.chat-contact b
+){color:#245845!important}
+html body[data-classora-theme="morning"] #chatModal :is(.chat-contact,.chat-group-actions button){
+ background:#fffefa!important;color:#23473a!important;
+ border:1px solid #c9e0d2!important;border-radius:14px!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-contact:hover,
+html body[data-classora-theme="morning"] #chatModal .chat-contact.active{
+ background:#e9f5ec!important;border-color:#8fc4a8!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(.chat-contact small,.chat-thread-head small,.chat-typing){
+ color:#587a69!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-thread-head{
+ background:#edf6ef!important;border-bottom:1px solid #c5e0d1!important;
+ color:#1c4437!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-thread-head :is(h2,h3,b,strong){
+ color:#204437!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-messages{
+ background:
+ radial-gradient(ellipse at 90% 97%,#dff2e9,transparent 65%),
+ linear-gradient(140deg,#f9fcf9,#eff8f1)!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-bubble.theirs{
+ background:#fff!important;color:#1c473a!important;border:1px solid #cee2d6!important;
+ box-shadow:0 5px 16px #4b88621b!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-bubble.mine{
+ background:linear-gradient(135deg,#16856a,#0f7259)!important;
+ color:#fff!important;border:1px solid #0f765c!important;
+ box-shadow:0 5px 18px #24856834!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-bubble.mine :is(span,time,small){
+ color:#f1fff9!important;
+}
+html body[data-classora-theme="morning"] #chatModal .chat-compose,
+html body[data-classora-theme="morning"] #chatModal .chat-media-tools{
+ background:#eff8f2!important;border-color:#cae2d5!important;
+}
+html body[data-classora-theme="morning"] #chatModal :is(.chat-media-tools button,.chat-thread-head button){
+ background:#fffefc!important;border:1px solid #bcdaca!important;color:#256044!important;
+ border-radius:12px!important;
+}
+html body[data-classora-theme="morning"] #chatModal #chatSendBtn{
+ background:linear-gradient(120deg,#188d6c,#14765f)!important;
+ color:#fff!important;border:1px solid #16785d!important;
+}
+/* Settings + appearance selector */
+html body[data-classora-theme="morning"] #settingsModal{
+ --cs241-bg:#f6faf6;--cs241-surface:#fffefb;--cs241-card:#fffefc;
+ --cs241-line:#c4ddcf;--cs241-text:#183e31;--cs241-muted:#607d70;
+ --cs241-accent:#177f64;--cs241-on:#ffffff;
+ color:#1b4436!important;
+}
+html body[data-classora-theme="morning"] #settingsModal .settings-modalbox{
+ background:linear-gradient(146deg,#fefefb,#f2f8f3)!important;
+ border:1px solid #c6e2d1!important;color:#1c4235!important;
+ box-shadow:0 23px 67px #386e512b!important;border-radius:24px!important;
+}
+html body[data-classora-theme="morning"] #settingsModal .modalhead{
+ background:linear-gradient(118deg,#eaf7ee,#f7fbf6)!important;
+ border-bottom:1px solid #c4dfd0!important;
+}
+html body[data-classora-theme="morning"] #settingsModal .modalhead h2{color:#184434!important}
+html body[data-classora-theme="morning"] #settingsModal .modalhead .subject-assistant-line{color:#557869!important}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card,.settings-profile-row,.classora-settings-shortcuts,.cl241-settings-nav,
+ #classoraAppearanceSettings
+){
+ background:linear-gradient(143deg,#fffefb,#f4faf5)!important;
+ border:1px solid #d1e5d7!important;
+ border-radius:20px!important;color:#1e4a3a!important;
+ box-shadow:0 8px 26px #4d855c12!important;
+}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card h3,.classora-settings-shortcuts h3,.cl241-settings-nav h3,
+ #classoraAppearanceHeading,#settingsCurrentName,.settings-profile-info b
+){color:#174934!important}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card p,.settings-card small,.settings-note,
+ .classora-settings-shortcuts p,.cl241-settings-nav p,
+ .cl-appearance-desc,.cl-appearance-note,.settings-profile-info span
+){color:#597769!important}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ .classora-quick-grid button,.cl241-settings-nav-grid button,
+ .settings-card button.exam-secondary,.settings-card button.apply,
+ .settings-photo-btn,.mini-copy-btn,.cl238-upgrade,.cl239-launch,
+ .cl-appearance-choice,.cl241-nav-admin
+){
+ background:#f1f8f2!important;color:#1c5b43!important;
+ border:1px solid #badbc8!important;border-radius:13px!important;
+ box-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ #cl238SettingsUpgrade,.settings-card button.apply
+){
+ background:#177f62!important;color:#fff!important;border-color:#11674f!important;
+}
+html body[data-classora-theme="morning"] #settingsModal :is(
+ .settings-card input:not([type="checkbox"]):not([type="radio"]),
+ .settings-card textarea,.settings-card select
+){
+ background:#fff!important;color:#1c4938!important;
+ border:1px solid #bcdaca!important;
+}
+html body[data-classora-theme="morning"] #settingsModal :is(input,textarea)::placeholder{
+ color:#70897a!important;opacity:1!important;
+}
+html body[data-classora-theme="morning"] #settingsModal .cl-appearance-choice[aria-pressed="true"]{
+ border-color:#2f9878!important;background:#e4f5e9!important;
+ box-shadow:0 0 0 2px #50a98823!important;color:#125c41!important;
+}
+/* Other common full-screen panels are softly lit without changing their behavior. */
+html body[data-classora-theme="morning"] :is(#examModal,#competitionModal,#adminPanelModal) .modalbox{
+ background:#fafffb!important;color:#214739!important;border-color:#c6dfcf!important;
+}
+html body[data-classora-theme="morning"] :is(#examModal,#competitionModal,#adminPanelModal) .modalhead{
+ background:#eaf6ec!important;border-bottom:1px solid #c5ded1!important;
+}
+html body[data-classora-theme="morning"] :is(#examModal,#competitionModal,#adminPanelModal) .modalhead :is(h2,h3,b,strong){
+ color:#1c4837!important;
+}
+html body[data-classora-theme="morning"] :is(#examModal,#competitionModal) :is(.exam-secondary,.exam-option):not(.correct):not(.incorrect){
+ background:#f4faf5!important;color:#234c3d!important;border-color:#c8e0d1!important;
+}
+html body[data-classora-theme="morning"] :is(
+ #chatModal,#settingsModal,#examModal,#competitionModal
+) :is(button,a):focus-visible{
+ outline:3px solid #2a9975!important;outline-offset:3px!important;
+}
+html body[data-classora-theme="morning"] :is(
+ #platformLobby,#chatModal,#settingsModal,#examModal,#competitionModal
+) :is(button,a[role="button"]) {
+ word-break:keep-all!important;overflow-wrap:normal!important;hyphens:none!important;
+ line-height:1.55!important;
+}
+@media(max-width:700px){
+ html body[data-classora-theme="morning"] #chatModal .classora-chat-box{border-radius:20px!important}
+ html body[data-classora-theme="morning"] #settingsModal .settings-modalbox{border-radius:19px!important}
+}
+/* Standalone subscription page shares the Morning choice through the theme bridge. */
+html body.classora-membership-page[data-classora-theme="morning"]{
+ --cl262-panel:#fffdfa;--cl262-raised:#eff7f0;--cl262-line:#c2ddcf;
+ --cl262-muted:#58756b;--cl262-ink:#1a4435;--cl262-violet:#16866a;--cl262-teal:#16866a;
+ background:
+ radial-gradient(ellipse 75% 450px at 8% 0%,#d9efdf,transparent 77%),
+ radial-gradient(ellipse 53% 520px at 100% 78%,#ecf6e6,transparent 80%),
+ #f7faf6!important;
+ color:#204438!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-header{
+ border-bottom:1px solid #c6e0d1!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(
+ .cl-brand b,.cl-section-title h2,.cl-pricing .cl-control-label,.cl-faq h2
+){color:#1a4436!important}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-back{
+ background:#fffefa!important;border:1px solid #c0ddce!important;color:#1a6048!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero{
+ background:
+ radial-gradient(ellipse at 90% 8%,#d0eedc,transparent 53%),
+ radial-gradient(ellipse at 4% 98%,#edf4df,transparent 49%),
+ linear-gradient(142deg,#fffefb,#f0f8f2)!important;
+ border:1px solid #badbc9!important;box-shadow:0 22px 66px #41735620!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero h1{
+ color:#183c31!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero h1 em{
+ color:#138263!important;background:none!important;-webkit-text-fill-color:#138263!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero-copy p{
+ color:#56786a!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero-art{
+ background:radial-gradient(circle at 40% 40%,#d5f1e3,transparent 75%),#f5fbf6!important;
+ border-color:#bbdecb!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-hero-art strong{
+ color:#236045!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(.cl-eyebrow,.cl-hero-art span){
+ color:#17775a!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-highlights span{
+ background:#e6f5ea!important;color:#226a4b!important;border:1px solid #b6dec7!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(
+ .cl-account,.cl-owner-switch,.cl-pricing,.cl-plan,.cl-plan.premium,
+ .cl-checkout-card,.cl-summary,.cl-faq details,.cl-luxe-compare,.cl-owner-catalog
+){
+ background:linear-gradient(143deg,#fffefc,#f4faf5)!important;
+ border:1px solid #c6e2d1!important;
+ color:#204737!important;box-shadow:0 12px 40px #4b7b5b18!important;
+ border-radius:22px!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-plan.premium{
+ background:radial-gradient(ellipse at 90% 0%,#e0f3e0,transparent 70%),#fffefa!important;
+ border-color:#9fcead!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(
+ .cl-account,.cl-owner-switch,.cl-plan,.cl-pricing,.cl-checkout-preview,.cl-faq,.cl-owner-catalog
+) :is(h2,h3,h4,b,strong){
+ color:#1c4334!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(
+ .cl-account,.cl-owner-switch,.cl-plan,.cl-pricing,.cl-checkout-preview,.cl-faq,.cl-owner-catalog
+) :is(p,small,li,span):not(.cl-plan-top span){
+ color:#5a786b!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-plan-top span{
+ background:#e4f3e6!important;color:#226345!important;border:1px solid #bbdec7!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-role-detection{
+ background:#e8f6ec!important;border:1px solid #b5d9c5!important;color:#1a503b!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-tabs button{
+ background:#f5faf5!important;color:#265946!important;border:1px solid #badac9!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-tabs button.active{
+ background:#197e62!important;color:#fff!important;border-color:#126c54!important;
+ box-shadow:0 6px 23px #238c602a!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(.cl-plan-select,.cl-continue){
+ background:linear-gradient(125deg,#218d70,#157b60)!important;color:#fff!important;
+ border:1px solid #116b52!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-plan.premium .cl-plan-select{
+ background:linear-gradient(120deg,#116e57,#24896a)!important;color:#fff!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] #cl-total{color:#136d50!important}
+html body.classora-membership-page[data-classora-theme="morning"] :is(.cl-price-line strong,.cl-total strong){color:#1b4936!important}
+html body.classora-membership-page[data-classora-theme="morning"] .cl-method{
+ background:#f2f9f4!important;border-color:#c2dfcf!important;color:#1c4a3b!important;
+}
+html body.classora-membership-page[data-classora-theme="morning"] :is(.cl-plan-select,.cl-tabs button,a.cl-back){
+ word-break:keep-all!important;overflow-wrap:normal!important;hyphens:none!important;
+}
+@media(max-width:650px){
+ html body.classora-membership-page[data-classora-theme="morning"] .cl-pricing{border-radius:19px!important}
+ html body.classora-membership-page[data-classora-theme="morning"] .cl-hero{border-radius:21px!important}
+}
