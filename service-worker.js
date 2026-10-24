@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v264-morning-atelier";
+const CACHE_NAME="classora-v265-premium-contrast";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -14,11 +14,11 @@ const APP_SHELL=[
   "./assets/classora-settings-polish-v241.js?v=242",
   "./assets/classora-settings-polish-v241.css?v=242",
   "./assets/classora-memberships-polish-v241.css?v=241",
-  "./assets/classora-member-hub-v239.js?v=263",
+  "./assets/classora-member-hub-v239.js?v=265",
   "./assets/classora-device-sessions-v239.js?v=239",
   "./assets/classora-memberships-features-v174.js?v=239",
   "./assets/classora-mobile-membership-v238.css?v=240",
-  "./assets/classora-member-space-v238.js?v=263",
+  "./assets/classora-member-space-v238.js?v=265",
   "./assets/classora-membership-access-v238.js?v=238",
   "./assets/classora-member-words-v238.js?v=238",
 
@@ -48,6 +48,7 @@ const APP_SHELL=[
   "./assets/classora-membership-emerald-v263.css?v=263",
   "./assets/classora-morning-v264.css?v=264",
   "./assets/classora-morning-panels-v264.css?v=264",
+  "./assets/classora-contrast-finish-v265.css?v=265",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",

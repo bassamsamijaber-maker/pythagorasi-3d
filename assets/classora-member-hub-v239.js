@@ -17,9 +17,11 @@ let overlay=null,pane=null,preview='real',lastFocus=null,queued=false,lastAccess
 const lang=()=>DICT[document.documentElement.lang]?document.documentElement.lang:'en';
 const t=k=>DICT[lang()][k]||DICT.en[k]||k;
 const account=()=>window.ClassoraMembership?.get?.()||{tier:'free',features:[],role:'student',admin:false};
+// Only active backend-resolved Plus/Premium entitlements (and the admin Premium entitlement).
+const hasBenefits=()=>{const a=account();return (a.tier==='plus'||a.tier==='premium')&&(a.admin===true||a.source==='grant'||a.source==='trial'||String(a.source||'').includes('grant')||String(a.source||'').includes('trial'));};
 const role=()=>preview==='real'?(account().role||'student'):preview;
 function close(){if(!overlay)return;overlay.hidden=true;document.body.classList.remove('cl239-modal-open');if(lastFocus?.isConnected)lastFocus.focus();}
-function open(){ensure();lastFocus=document.activeElement;overlay.hidden=false;document.body.classList.add('cl239-modal-open');draw();overlay.querySelector('.cl239-close')?.focus();}
+function open(){if(!hasBenefits())return;ensure();lastFocus=document.activeElement;overlay.hidden=false;document.body.classList.add('cl239-modal-open');draw();overlay.querySelector('.cl239-close')?.focus();}
 function tab(label,value){const b=N('button','cl239-preview',label);b.type='button';b.setAttribute('aria-pressed',String(preview===value));b.onclick=()=>{preview=value;draw()};return b;}
 function ensure(){
  if(overlay)return;
@@ -77,22 +79,32 @@ function draw(){
  document.dispatchEvent(new Event('classora:benefits-drawn'));
 }
 function installButtons(){
- const chat=$('chatModal'),ch=chat?.querySelector('.modalhead > div')||chat?.querySelector('.modalhead');
- const lobby=document.querySelector('.lobby-top-actions'),subjects=$('classoraLearningFront');
- const settings=document.querySelector('#settingsModal .classora-quick-grid')||document.querySelector('#settingsModal .settings-profile-row');
- // Chat header remains reserved for chat controls; benefits now live in Settings.
- $('cl239ChatBtn')?.remove();
- for(const [host,id,name] of [[settings,'cl239SettingsChatFeatures','chat'],[lobby,'cl239LobbyBtn','open'],[subjects,'cl239SubjectsBtn','open']]){
-  if(!host||$(id))continue;
-  const b=N('button','cl239-launch',t(name));b.id=id;b.type='button';b.onclick=open;host.append(b);
+ // Subscription benefits are only accessible from Settings, never the lobby, subjects or chat.
+ for(const id of ['cl239ChatBtn','cl239LobbyBtn','cl239SubjectsBtn']){
+  $(id)?.remove();
  }
- for(const [id,k] of [['cl239SettingsChatFeatures','chat'],['cl239LobbyBtn','open'],['cl239SubjectsBtn','open']]){
-  const b=$(id);if(b&&b.textContent!==t(k))b.textContent=t(k);
+ const existing=$('cl239SettingsChatFeatures');
+ if(!hasBenefits()){
+  existing?.remove();
+  if(overlay&&!overlay.hidden)close();
+  return;
  }
+ const settings=document.querySelector('#settingsModal .classora-quick-grid')
+  ||document.querySelector('#settingsModal .settings-profile-row')
+  ||document.querySelector('#settingsModal .settings-grid');
+ if(!settings)return;
+ let b=existing;
+ if(!b){b=N('button','cl239-launch cl264-settings-benefits',t('open'));b.id='cl239SettingsChatFeatures';b.type='button';b.onclick=open;}
+ if(b.parentElement!==settings)settings.append(b);
+ if(b.textContent!==t('open'))b.textContent=t('open');
 }
+
 function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;installButtons()})}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay&&!overlay.hidden){e.stopPropagation();close()}});
-document.addEventListener('classora:membership-updated',()=>{const sig=JSON.stringify(account());if(sig===lastAccessSignature)return;lastAccessSignature=sig;if(overlay&&!overlay.hidden)draw()});
+document.addEventListener('classora:membership-updated',()=>{
+ const sig=JSON.stringify(account());if(sig===lastAccessSignature)return;lastAccessSignature=sig;
+ schedule();if(overlay&&!overlay.hidden){if(!hasBenefits())close();else draw()}
+});
 document.documentElement.addEventListener('classora:open-benefits',open);
 const start=()=>{ensure();installButtons();new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true});new MutationObserver(()=>{schedule();if(overlay&&!overlay.hidden)draw()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();

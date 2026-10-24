@@ -1,0 +1,229 @@
+/* Classora v265 — polished surfaces + deliberate text contrast.
+   Theme-scoped only. Preserve layouts, actions, subscriptions, payments, and other themes. */
+html body[data-classora-theme="morning"]{
+ --cl265-paper:#fffefa;
+ --cl265-pale:#edf7f0;
+ --cl265-mint:#def2e5;
+ --cl265-ink:#153b2f;
+ --cl265-secondary:#4b6d5f;
+ --cl265-border:#c5dfcf;
+ --cl265-primary:#127657;
+ --cl265-primary-ink:#fff;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl258-island-surface{
+ background:linear-gradient(145deg,#fefefb 10%,#f5faf4 76%,#eef7f1)!important;
+ border:1px solid #bcdcca!important;
+ box-shadow:0 23px 78px rgba(45,94,65,.13),inset 0 1px rgba(255,255,255,1)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-left{
+ background:linear-gradient(145deg,#f5fcf7,#eef7f1 82%)!important;
+ border-right:1px solid #d1e8d9!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .lobby-shell{
+ color:var(--cl265-ink)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214{
+ row-gap:clamp(13px,1.6vw,23px)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero{
+ background:radial-gradient(ellipse at 6% 75%,#e2f2e5,transparent 60%),
+ linear-gradient(120deg,#ffffff,#f5faf4)!important;
+ border:1px solid var(--cl265-border)!important;
+ border-radius:27px!important;
+ box-shadow:0 18px 48px #3270521e,inset 0 1px #fff!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero :is(h1,h2,h3,strong){
+ color:var(--cl265-ink)!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero h1 em,
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero :is(.cl214-kicker i,.cl214-wave){
+ color:#138163!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl214-hero :is(p,small,.cl214-hero-lead,.cl214-personal,.cl214-last-lesson){
+ color:var(--cl265-secondary)!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.cl214-quick .cl214-card,
+ .cl214-tool-grid .cl214-card,.cl215-insight,#classoraPromoCenter,.cl227-pane,.cl227-home,
+ .cl223-map-panel,.cl214-live-panel,.cl214-exam-main,.cl223-preview-progress,.cl215-panel){
+ background:linear-gradient(143deg,#fffefa,#f6fbf7)!important;
+ border:1px solid var(--cl265-border)!important;
+ border-radius:21px!important;
+ color:var(--cl265-ink)!important;
+ box-shadow:0 10px 30px rgba(39,100,68,.10)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.cl214-tool-grid .cl214-card,
+ .cl214-quick .cl214-card,.cl215-insight,.cl227-pane,.cl227-home,.cl223-map-panel,.cl214-exam-main) :is(h1,h2,h3,h4,strong,b){
+ color:var(--cl265-ink)!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(.cl214-tool-grid .cl214-card,
+ .cl214-quick .cl214-card,.cl215-insight,.cl227-pane,.cl227-home,.cl223-map-panel,.cl214-exam-main) :is(p,small,.description){
+ color:var(--cl265-secondary)!important;opacity:1!important;text-shadow:none!important;
+}
+html body[data-classora-theme="morning"] #platformLobby #classoraPromoCenter :is(.cp-title,.cp-titlebar h2,.cp-titlebar h3){
+ color:var(--cl265-ink)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby #classoraPromoCenter :is(.cp-description,.cp-eyebrow,small,p){
+ color:var(--cl265-secondary)!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl238-upgrade-banner{
+ background:linear-gradient(105deg,#e8f6ed,#fafcf7 90%)!important;
+ border:1px solid #c7e2d2!important;
+ color:#1d4c3b!important;
+ box-shadow:none!important;
+ border-radius:19px!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl238-upgrade-banner :is(span,b,strong,p){
+ color:#1d4c3b!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-card-graphic,.cl215-insight-icon,.cl215-count,.cl223-preview-icon,.cl214-levels span
+){
+ background:var(--cl265-mint)!important;
+ color:#107b5b!important;border-color:#badfc8!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-primary,.cl227-primary,.cl227-shop-btn,.cl223-primary,.cl215-action
+){
+ background:linear-gradient(122deg,#178466,#0e7359)!important;
+ border:1px solid #137354!important;
+ color:#fff!important;
+ border-radius:13px!important;
+ box-shadow:0 8px 20px #20795120!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-primary,.cl227-primary,.cl227-shop-btn,.cl223-primary,.cl215-action
+) :is(span,b,strong,small,svg){color:#fff!important}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .cl214-secondary,.cl227-secondary,.cl223-outline,.cp-enter
+){
+ background:#edf7f1!important;
+ border:1px solid #bfdccc!important;
+ color:#155a42!important;
+ border-radius:13px!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .lobby-top-actions :is(button,a){
+ color:#165740!important;background:#f5faf6!important;border-color:#c8e1d2!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-thread :is(.cl250-line,.cl250-bot,.cl250-user){
+ color:#184638!important;
+}
+html body[data-classora-theme="morning"] #platformLobby .cl250-thread :is(.cl250-line.cl250-user,.cl250-user){
+ background:#dff2e7!important;color:#164936!important;
+}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-sub,.cl214-section-index,.cl214-last-lesson,.cl215-heading p
+){color:var(--cl265-secondary)!important;opacity:1!important}
+html body[data-classora-theme="morning"] #platformLobby :is(
+ .lobby-brand,.cl214-section-heading h2,.cl215-heading h2,.cl223-preview-copy h3
+){color:var(--cl265-ink)!important}
+html body[data-classora-theme="morning"] #platformLobby .cl214-tabs{
+ border-bottom-color:var(--cl265-border)!important;
+}
+/* Premium benefits modal is a coherent full-size page, not a crowded stack of cards. */
+html body[data-classora-theme="morning"] .cl239-panel{
+ --cl239-bg:#fbfefb;--cl239-paper:#eef8f1;--cl239-text:#173c30;
+ --cl239-muted:#567365;--cl239-edge:#c6dfd0;--cl239-accent:#167d5c;
+ --cl239-on-accent:#fff;
+ background:linear-gradient(150deg,#ffffff,#f4faf5)!important;
+ color:#173c30!important;
+ border:1px solid #c0dfce!important;
+ box-shadow:0 32px 95px #183d333f!important;
+ border-radius:27px!important;
+ width:min(960px,100%)!important;padding:clamp(20px,3vw,36px)!important;
+}
+html body[data-classora-theme="morning"] .cl239-head{
+ border-bottom:1px solid #cde3d5!important;
+ padding-bottom:20px!important;
+}
+html body[data-classora-theme="morning"] .cl239-head h2{
+ font-size:clamp(24px,3vw,37px)!important;color:#153f30!important;
+}
+html body[data-classora-theme="morning"] .cl239-head p,
+html body[data-classora-theme="morning"] .cl239-foot p{
+ color:#55756a!important;
+}
+html body[data-classora-theme="morning"] .cl239-kicker{color:#1b7c5d!important}
+html body[data-classora-theme="morning"] .cl239-current{
+ border-radius:17px!important;background:#edf7f0!important;border:1px solid #c9e4d4!important;
+}
+html body[data-classora-theme="morning"] .cl239-current strong{color:#0e7454!important}
+html body[data-classora-theme="morning"] .cl239-feature{
+ background:#fffefb!important;border-color:#d0e7d8!important;
+ border-radius:17px!important;box-shadow:0 5px 22px #3d775412!important;
+}
+html body[data-classora-theme="morning"] .cl239-feature-text{color:#204837!important}
+html body[data-classora-theme="morning"] .cl239-feature small{color:#59776c!important}
+html body[data-classora-theme="morning"] :is(.cl239-tool-button,.cl239-preview,.cl239-close){
+ background:#edf8f1!important;border:1px solid #c1ddce!important;
+ color:#1b5b43!important;border-radius:13px!important;
+}
+html body[data-classora-theme="morning"] :is(.cl239-tool-button.cl239-unlocked,.cl239-preview[aria-pressed="true"],.cl239-plans){
+ background:linear-gradient(130deg,#188565,#126e55)!important;
+ border:1px solid #137254!important;color:#fff!important;border-radius:13px!important;
+}
+html body[data-classora-theme="morning"] .cl239-panel .cl239-tool-section h3,
+html body[data-classora-theme="morning"] .cl239-panel .cl239-benefit-section h3{
+ color:#1e503c!important;
+}
+/* Original/dark mode: text stays light against dark sections, buttons readable. */
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]){
+ --cl265-dark-ink:#effdf8;
+ --cl265-dark-muted:#c5e2d9;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) #platformLobby :is(
+ .cl214-hero,.cl214-card,.cl215-insight,.cl227-pane,.cl223-map-panel,#classoraPromoCenter,.cl214-live-panel
+) :is(h1,h2,h3,h4,b,strong){
+ color:#effdf8!important;text-shadow:none!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) #platformLobby :is(
+ .cl214-hero,.cl214-card,.cl215-insight,.cl227-pane,.cl223-map-panel,#classoraPromoCenter,.cl214-live-panel
+) :is(p,small,.description){
+ color:#c5e2d9!important;opacity:1!important;text-shadow:none!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) #platformLobby .cl238-upgrade-banner{
+ background:linear-gradient(110deg,#1b373c,#173138)!important;
+ color:#e9fff5!important;
+ border-color:#4d807161!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) #platformLobby .cl238-upgrade-banner :is(p,b,strong,span){
+ color:#e9fff5!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) .cl239-panel{
+ --cl239-bg:#0e252c;--cl239-paper:#17383e;--cl239-text:#eefdf6;
+ --cl239-muted:#c8e4db;--cl239-edge:#508e7f;--cl239-accent:#95e9c9;
+ --cl239-on-accent:#0b3529;
+ background:linear-gradient(150deg,#153039,#0d2730)!important;
+ color:#eefdf7!important;border:1px solid #609c8c!important;
+ border-radius:27px!important;box-shadow:0 32px 100px #020c1285!important;
+ padding:clamp(20px,3vw,36px)!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) .cl239-feature{
+ background:#1b3b43!important;border-color:#507d75!important;border-radius:17px!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) .cl239-feature-text{
+ color:#eefdf7!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) .cl239-feature small{
+ color:#c8e4db!important;
+}
+/* Both appearances: protect whole words, avoid mismatched UI and overly tight buttons. */
+html body #settingsModal .cl264-settings-benefits{
+ min-height:46px!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;padding:10px 16px!important;
+ border-radius:13px!important;
+ font-weight:900!important;
+ overflow-wrap:normal!important;word-break:keep-all!important;hyphens:none!important;
+}
+html body :is(#platformLobby,#chatModal,#settingsModal,#classoraMobilePageNav)
+ :is(button,a[role="button"]){
+ word-break:keep-all!important;overflow-wrap:normal!important;
+ hyphens:none!important;line-height:1.55!important;
+}
+@media(max-width:699px){
+ html body[data-classora-theme="morning"] .cl239-panel{padding:18px!important;border-radius:20px!important}
+ html body[data-classora-theme="morning"] #platformLobby .cl214-hero{border-radius:23px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html body[data-classora-theme="morning"] #platformLobby .cl214-card{transition:none!important}
+}

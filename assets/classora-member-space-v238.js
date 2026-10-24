@@ -1,5 +1,5 @@
 import './classora-settings-polish-v241.js?v=242';
-import './classora-member-hub-v239.js?v=263';
+import './classora-member-hub-v239.js?v=265';
 import './classora-device-sessions-v239.js?v=239';
 import {getApps} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
 import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
