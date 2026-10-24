@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v260-restored-layout";
+const CACHE_NAME="classora-v261-dock-contained";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -40,6 +40,7 @@ const APP_SHELL=[
   "./assets/classora-learning-front-v214.js?v=251",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/classora-layout-restore-v260.css?v=260",
+  "./assets/classora-dock-labels-v261.css?v=261",
   "./index.html",
   "./chemistry/periodic-table.html?v=205",
   "./chemistry/periodic-table.js?v=205",
