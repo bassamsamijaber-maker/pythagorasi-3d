@@ -105,32 +105,6 @@ function addChat(){
  card.classList.add('cl250-chat-card');card.dataset.noTranslate='';
  thread=el('div','cl250-thread');thread.setAttribute('role','log');thread.setAttribute('aria-live','polite');
  $('lobbyAIReply')?.after(thread);
- const actions=el('div','cl250-chat-actions');
- const prompts=['مش فاهم، اشرحلي أبسط','هات مثال على آخر موضوع','اختبرني بآخر درس','كمل من آخر جواب'];
- [11,12,13,14].forEach((index,i)=>{
-  const b=el('button','cl250-chat-chip');b.type='button';b.dataset.cl250Chat=index;
-  b.addEventListener('click',()=>{
-   const input=$('lobbyAIInput');if(!input)return;
-   input.value=document.documentElement.lang==='ar'?prompts[i]:t(index);
-   $('lobbyAISend')?.click();
-  });actions.append(b);
- });
- const creativeButtons=el('div','cl252-creative-actions');
- creativeButtons.setAttribute('aria-label','Creative writing tools');
- creativeButtons.dataset.noTranslate='';
- for(let i=0;i<3;i++){
-  const b=el('button','cl252-creative-button');
-  b.type='button';b.dataset.creative=String(i);
-  b.addEventListener('click',()=>{
-   const input=$('lobbyAIInput');
-   if(!input)return;
-   const value=(creative[document.documentElement.lang]||creative.en)[i][1];
-   input.value=value;input.dispatchEvent(new Event('input',{bubbles:true}));
-   input.focus({preventScroll:true});
-  });
-  creativeButtons.append(b);
- }
- card.querySelector('.lobby-ai-input')?.before(actions,creativeButtons);
  $('lobbyAIInput')?.setAttribute('aria-label',t(0));
  const input=$('lobbyAIInput');let typingTimer;input?.addEventListener('input',()=>{card.classList.toggle('cl254-writing',!!input.value);clearTimeout(typingTimer);typingTimer=setTimeout(()=>card.classList.remove('cl254-writing'),900)});
  const state=el('div','cl254-state');state.setAttribute('role','status');const status=el('span');status.id='cl254ModelState';const retry=el('button','cl254-retry');retry.id='cl254Reconnect';retry.type='button';retry.addEventListener('click',()=>{window.dispatchEvent(new Event('classora:ai-reconnect'));input?.focus()});state.append(status,retry);card.querySelector('.lobby-ai-head')?.after(state);renderModelState();
@@ -189,7 +163,6 @@ function addExtras(){
  const reset=label('button',6);reset.type='button';reset.className='cl253-new';
  reset.addEventListener('click',()=>{if(!busy)window.dispatchEvent(new Event('classora:ai-reset'))});
  card.querySelector('.lobby-ai-head')?.after(reset);
- for(const i of [7,8,9]){const b=label('button',i);b.type='button';b.className='cl250-chat-chip';b.addEventListener('click',()=>{const input=$('lobbyAIInput');input.value=et(i);$('lobbyAISend')?.click()});card.querySelector('.cl250-chat-actions')?.append(b)}
  const focus=el('section','cl253-focus');focus.append(label('h4',0));
  const clock=el('output','cl253-clock','25:00');clock.id='cl253Clock';focus.append(clock);
  const row=el('div','cl253-controls');const toggle=el('button','',et(1));toggle.type='button';toggle.id='cl253FocusToggle';
