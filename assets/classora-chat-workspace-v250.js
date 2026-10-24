@@ -103,6 +103,8 @@ function addChat(){
  card=document.querySelector('#platformLobby .lobby-ai-card');if(!card)return;
  host=card.parentElement;marker=document.createComment('AI original mobile location');card.before(marker);
  card.classList.add('cl250-chat-card');card.dataset.noTranslate='';
+ // Remove older instruction chips above “Try a question”; keep its example questions.
+ card.querySelectorAll('.cl250-chat-actions,.cl252-creative-actions').forEach(node=>node.remove());
  thread=el('div','cl250-thread');thread.setAttribute('role','log');thread.setAttribute('aria-live','polite');
  $('lobbyAIReply')?.after(thread);
  $('lobbyAIInput')?.setAttribute('aria-label',t(0));
@@ -159,21 +161,13 @@ function paintClock(){
  if(deadline&&!remaining){deadline=0;clearInterval(tick);$('cl253FocusStatus').textContent=et(10);updateExtras()}
 }
 function addExtras(){
- const label=(tag,i)=>{const n=el(tag,'',et(i));n.dataset.cl253Text=i;return n};
- const reset=label('button',6);reset.type='button';reset.className='cl253-new';
+ // The two-panel desktop keeps only the new conversation control, not the removed daily sidebar.
+ if(!card||card.querySelector('.cl253-new'))return;
+ const reset=el('button','cl253-new',et(6));reset.type='button';reset.dataset.cl253Text='6';
  reset.addEventListener('click',()=>{if(!busy)window.dispatchEvent(new Event('classora:ai-reset'))});
  card.querySelector('.lobby-ai-head')?.after(reset);
- const focus=el('section','cl253-focus');focus.append(label('h4',0));
- const clock=el('output','cl253-clock','25:00');clock.id='cl253Clock';focus.append(clock);
- const row=el('div','cl253-controls');const toggle=el('button','',et(1));toggle.type='button';toggle.id='cl253FocusToggle';
- toggle.onclick=()=>{if(deadline){paintClock();deadline=0;clearInterval(tick)}else{if(!remaining)remaining=1500;deadline=Date.now()+remaining*1000;tick=setInterval(paintClock,500);$('cl253FocusStatus').textContent=''}updateExtras()};
- const restart=label('button',3);restart.type='button';restart.onclick=()=>{deadline=0;clearInterval(tick);remaining=1500;paintClock();updateExtras();$('cl253FocusStatus').textContent=''};
- row.append(toggle,restart);focus.append(row);
- const status=el('div');status.id='cl253FocusStatus';status.setAttribute('role','status');focus.append(status);right.append(focus);
- const noteWrap=el('section','cl253-note');const title=label('label',4);title.htmlFor='cl253Note';const note=el('textarea');note.id='cl253Note';note.maxLength=1000;note.rows=3;note.placeholder=et(5);noteWrap.append(title,note);right.append(noteWrap);
- window.addEventListener('classora:ai-reset',()=>{note.value='';deadline=0;clearInterval(tick);remaining=1500;paintClock();updateExtras()});
- updateExtras();
 }
+
 function addMore(front){
  const quick=front.querySelector('.cl214-quick');if(!quick||front.querySelector('#cl250More'))return;
  more=el('button','cl250-more');more.id='cl250More';more.type='button';quick.after(more);
@@ -190,7 +184,7 @@ function init(){
  const lobby=$('platformLobby'),front=$('classoraLearningFront');
  if(left||!lobby||!front||!lobby.querySelector('.lobby-ai-card'))return;
  left=el('aside','cl250-left');left.id='cl250Left';left.dataset.noTranslate='';
- lobby.append(left);addChat();addRight(lobby);addMore(front);reposition();update();
+ lobby.append(left);addChat();addMore(front);reposition();update();
  window.ClassoraConversation={send,get busy(){return busy},open:()=>{card?.scrollIntoView({block:'nearest',behavior:'smooth'});$('lobbyAIInput')?.focus({preventScroll:true})}};
  window.addEventListener('resize',reposition,{passive:true});
  new MutationObserver(reposition).observe(lobby,{childList:true,subtree:true});

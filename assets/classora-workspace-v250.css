@@ -266,3 +266,42 @@ html body #platformLobby .cl250-chat-card .cl250-line{font-size:13px!important;l
  html body #platformLobby .cl250-chat-card .cl250-chat-chip{flex:1 1 75px!important;font-size:11px!important;min-height:30px!important;padding:5px!important}
  html body #platformLobby .cl250-chat-card .cl250-chat-actions{max-height:108px!important}
 }
+
+
+/* v257 — unified Classora learning workspace: 25% assistant, 75% app. */
+/* Do not show the removed daily rail or the chips above “Try a question”. */
+html body #platformLobby .cl250-right{display:none!important}
+html body #platformLobby .cl250-chat-card :is(.cl250-chat-actions,.cl252-creative-actions){display:none!important}
+@media(min-width:1000px){
+ html body #platformLobby{--cl257-ai-width:25vw}
+ html body #platformLobby .cl250-left{
+  display:flex!important;flex-direction:column!important;
+  position:fixed!important;inset:0 auto 0 0!important;
+  top:0!important;bottom:0!important;left:0!important;right:auto!important;
+  box-sizing:border-box!important;margin:0!important;
+  width:var(--cl257-ai-width)!important;min-width:0!important;max-width:var(--cl257-ai-width)!important;
+  height:100dvh!important;max-height:none!important;
+  padding:clamp(10px,1.15vw,18px)!important;
+  background:var(--cl250-card)!important;border:0!important;
+  border-right:1px solid var(--cl250-border)!important;
+  border-radius:0!important;overflow:hidden!important;
+ }
+ html body #platformLobby .cl250-left .cl250-chat-card{
+  display:flex!important;flex-direction:column!important;flex:1 1 auto!important;
+  box-sizing:border-box!important;width:100%!important;height:100%!important;
+  min-height:0!important;max-height:none!important;
+  margin:0!important;padding:clamp(10px,1.1vw,18px)!important;
+  border:0!important;border-radius:0!important;background:transparent!important;overflow:hidden!important;
+ }
+ html body #platformLobby .cl250-left .cl250-thread{
+  display:flex!important;flex:1 1 0!important;min-height:0!important;max-height:none!important;
+  overflow-y:auto!important;overscroll-behavior:contain;
+ }
+ html body #platformLobby .cl250-left .lobby-ai-input{margin-top:auto!important}
+ html body #platformLobby .lobby-shell{
+  box-sizing:border-box!important;
+  width:75vw!important;max-width:none!important;min-width:0!important;
+  margin-left:var(--cl257-ai-width)!important;margin-right:0!important;
+  padding-inline:clamp(14px,1.6vw,28px)!important;
+ }
+}
