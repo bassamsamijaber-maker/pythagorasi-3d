@@ -1,0 +1,107 @@
+/* Classora v262 · Unified learning island and refined landing page.
+   Surface-only changes: no AI, permissions, checkout, or navigation handlers touched. */
+html body #platformLobby .cl250-left #lobbyAIReply,
+html body #platformLobby .cl250-left .lobby-ai-reply{display:none!important}
+html body #platformLobby .cl250-chat-card .cl250-chat-actions,
+html body #platformLobby .cl250-chat-card .cl252-creative-actions{display:none!important}
+@media(min-width:1000px){
+ html body #platformLobby{
+  overflow:hidden!important;overscroll-behavior:contain;
+ }
+ html body #platformLobby .cl258-island-surface{
+  border-radius:var(--cl260-r,28px)!important;
+  background:linear-gradient(133deg,
+      color-mix(in srgb,var(--cl243-paper) 61%,var(--cl243-bg)),
+      color-mix(in srgb,var(--cl243-paper) 25%,var(--cl243-bg)))!important;
+  box-shadow:0 28px 80px #00000038,inset 0 1px #ffffff0d!important;
+ }
+ /* The 75% site is a viewport-height scroll region, clipped INSIDE the island. */
+ html body #platformLobby .lobby-shell{
+  position:fixed!important;
+  top:var(--cl260-g,26px)!important;
+  right:var(--cl260-g,26px)!important;
+  bottom:var(--cl260-g,26px)!important;
+  left:var(--cl260-main-x)!important;
+  box-sizing:border-box!important;
+  width:var(--cl260-main)!important;max-width:var(--cl260-main)!important;
+  min-width:0!important;
+  height:calc(100dvh - 2 * var(--cl260-g,26px))!important;
+  max-height:calc(100dvh - 2 * var(--cl260-g,26px))!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:clamp(18px,1.8vw,29px) clamp(17px,2vw,34px)
+   calc(var(--classora-dock-clearance,105px) + 104px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  border-radius:0 var(--cl260-r,28px) var(--cl260-r,28px) 0!important;
+  scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--cl243-accent) 45%,transparent) transparent;
+  scroll-padding-bottom:calc(var(--classora-dock-clearance,105px) + 55px);
+ }
+ html body #platformLobby .lobby-shell :is(.cl214,.cl214>*,.cl214-quick,
+  .cl214-tool-grid,.cl214-hero,.cl214-block,.cl215-insights,.cl214-footer){
+  min-width:0!important;max-width:100%!important;
+ }
+ html body #platformLobby .cl250-left{
+  border-radius:var(--cl260-r,28px) 0 0 var(--cl260-r,28px)!important;
+  background:color-mix(in srgb,var(--cl243-soft) 15%,transparent)!important;
+ }
+ html body #platformLobby .cl250-left .lobby-ai-head{
+  padding-bottom:14px;border-bottom:1px solid var(--cl243-edge);
+ }
+ html body #platformLobby .cl250-left .cl250-thread{scrollbar-width:thin}
+ html body #platformLobby .cl250-left #lobbyAIInput{
+  border-radius:17px!important;
+  background:color-mix(in srgb,var(--cl243-raised) 72%,var(--cl243-paper))!important;
+ }
+}
+/* The actual site has its own premium visual language; polish existing semantic cards. */
+html body #platformLobby .lobby-topbar{
+ border-bottom:1px solid color-mix(in srgb,var(--cl243-accent) 18%,var(--cl243-edge))!important;
+}
+html body #platformLobby .lobby-brand{
+ letter-spacing:-.055em!important;
+}
+html body #platformLobby .cl214-hero{
+ position:relative;isolation:isolate;
+ border-radius:clamp(21px,1.8vw,29px)!important;
+ background:
+  radial-gradient(ellipse at 12% 70%,color-mix(in srgb,var(--cl243-accent) 17%,transparent),transparent 64%),
+  radial-gradient(ellipse at 90% 0%,color-mix(in srgb,var(--cl243-gold) 5%,transparent),transparent 50%),
+  var(--cl243-paper)!important;
+ border:1px solid color-mix(in srgb,var(--cl243-accent) 18%,var(--cl243-edge))!important;
+ box-shadow:0 20px 65px #0000001f,inset 0 1px #ffffff0d!important;
+}
+html body #platformLobby .cl214-hero :is(h1,p){overflow-wrap:break-word}
+html body #platformLobby .cl214-quick .cl214-card,
+html body #platformLobby .cl214-tool-grid .cl214-card,
+html body #platformLobby .cl215-insight{
+ border-radius:19px!important;
+ border:1px solid color-mix(in srgb,var(--cl243-ink) 12%,transparent)!important;
+ background:linear-gradient(145deg,
+  color-mix(in srgb,var(--cl243-paper) 92%,var(--cl243-accent)),
+  var(--cl243-paper))!important;
+ box-shadow:0 10px 26px #00000013!important;
+ transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+}
+@media(hover:hover){
+ html body #platformLobby .cl214-quick .cl214-card:hover,
+ html body #platformLobby .cl214-tool-grid .cl214-card:hover,
+ html body #platformLobby .cl215-insight:hover{
+  transform:translateY(-3px)!important;
+  border-color:color-mix(in srgb,var(--cl243-accent) 47%,transparent)!important;
+  box-shadow:0 14px 32px #00000026!important;
+ }
+}
+html body #platformLobby :is(.cl214-primary,.cl214-secondary,.cl250-more){
+ border-radius:14px!important;
+}
+html body #platformLobby :is(.cl214-block,.cl214-section,.cl214-last-lesson){
+ scroll-margin-block:20px calc(var(--classora-dock-clearance,105px) + 30px);
+}
+@media(max-width:999px){
+ html body #platformLobby .lobby-shell{overflow:visible!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html body #platformLobby :is(.cl214-card,.cl215-insight){transition:none!important}
+}

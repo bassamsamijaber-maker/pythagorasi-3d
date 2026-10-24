@@ -197,7 +197,7 @@ function detectRole(){
  if(el){el.dataset.role=key;put("cl-detected-role",(roleMessages[state.lang]||roleMessages.en)[key]);}
 }
 function render(){
- document.documentElement.lang=state.lang;document.documentElement.dir=state.lang==="ar"?"rtl":"ltr";$("cl-language").value=state.lang;
+ document.documentElement.lang=state.lang;document.documentElement.dir=state.lang==="ar"?"rtl":"ltr";
  const map={back:"cl-back",subtitle:"cl-subtitle",high1:"cl-high1",high2:"cl-high2",high3:"cl-high3",adminTitle:"cl-admin-title",adminCaption:"cl-admin-caption",plansLabel:"cl-plans-label",plansHeading:"cl-plans-heading",beta:"cl-beta",typeLabel:"cl-type-label",student:"cl-kind-student",teacher:"cl-kind-teacher",class:"cl-kind-class",school:"cl-kind-school",cycleLabel:"cl-cycle-label",monthly:"cl-period-monthly",annual:"cl-period-annual",plusTag:"cl-plus-tag",premiumTag:"cl-premium-tag",plusDescription:"cl-plus-description",premiumDescription:"cl-premium-description",choosePlus:"cl-plus-select",choosePremium:"cl-premium-select",seatsLabel:"cl-seats-label",seatsHint:"cl-seats-hint",seat:"cl-seats-unit",paymentTitle:"cl-checkout-title",paymentIntro:"cl-payment-intro",paymentNote:"cl-payment-note",summaryLabel:"cl-summary-label",periodLabel:"cl-summary-period-label",seatsExtra:"cl-summary-seats-label",totalLabel:"cl-total-label",totalNote:"cl-total-note",continue:"cl-continue",security:"cl-security",faqTitle:"cl-faq-title",faq1:"cl-faq1",answer1:"cl-answer1",faq2:"cl-faq2",answer2:"cl-answer2",faq3:"cl-faq3",answer3:"cl-answer3",privacy:"cl-privacy",terms:"cl-terms",home:"cl-home"};
  Object.keys(map).forEach(k=>put(map[k],t(k)));
  $("cl-title").replaceChildren(document.createTextNode(t("title1")),document.createElement("br"),Object.assign(document.createElement("em"),{textContent:t("title2")}));
@@ -329,7 +329,13 @@ async function identify(user){
  }
  render();
 }
-$("cl-language").addEventListener("change",event=>{const lang=event.target.value;if(!langs.includes(lang))return;state.lang=lang;localStorage.setItem("pythagorasi_language",lang);render();});
+// Membership language is always inherited from the main Classora site.
+function syncSiteLanguage(){
+ const stored=localStorage.getItem("pythagorasi_language");
+ const next=langs.includes(stored)?stored:"ar";
+ if(next!==state.lang){state.lang=next;render();}
+}
+window.addEventListener("storage",event=>{if(event.key==="pythagorasi_language")syncSiteLanguage();});
 document.querySelectorAll("[data-sim-role]").forEach(b=>b.addEventListener("click",()=>{
  if(!state.account?.admin)return;
  state.previewRole=b.dataset.simRole;state.kind=state.previewRole;state.previewTier="free";state.tier=null;state.period="monthly";state.seats=1;render();
@@ -364,6 +370,6 @@ $("cl-continue").addEventListener("click",()=>{
 // Browsers may restore the page from back/forward cache. Reset the draft
 // when the user leaves and when an old page instance is restored.
 window.addEventListener("pagehide",()=>{resetDraft();});
-window.addEventListener("pageshow",event=>{if(event.persisted){resetDraft();render();}});
+window.addEventListener("pageshow",event=>{if(event.persisted)resetDraft();syncSiteLanguage();render();});
 logos();render();onAuthStateChanged(auth,identify);loadLiveCatalog();
 
