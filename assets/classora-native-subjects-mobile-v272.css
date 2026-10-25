@@ -1,0 +1,313 @@
+/* Classora v272
+   Desktop: restore the original learning hub at the original Subjects navigation.
+   Phone: small, accessible visual refinements; never replace existing navigation,
+   account, curriculum, lessons, chat, exam, language or payment behavior.
+ */
+@media(min-width:1000px){
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    >.learning-hub{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0 0 30px!important;
+    overflow:visible!important;
+  }
+  /* Keep the floating Liquid Glass toolbar and native materials together. */
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    >.cl270-dashboard{
+    margin-bottom:0!important;
+    padding-bottom:0!important;
+  }
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    >.cl270-dashboard #cl271Subjects{
+    display:none!important;
+  }
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    >:not(.cl270-dashboard):not(.learning-hub):not(#accountActionRequests){
+    display:none!important;
+  }
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    .learning-hub .hub-curriculum-shelf{
+    scroll-margin-top:18px!important;
+  }
+  html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+    :is(.hub-curriculum-subject,.hub-curriculum-subject-main,.hub-grade-button){
+    transition:border-color .17s ease,transform .17s ease,box-shadow .17s ease!important;
+  }
+  @media(hover:hover){
+    html body #platformLobby.cl270-mode .lobby-shell.cl272-native-subjects-visible
+      .hub-curriculum-subject:hover{
+      transform:translateY(-2px)!important;
+    }
+  }
+}
+/* The existing mobile experience is not a smaller copy of the desktop sidebar. */
+@media(max-width:760px){
+  html body #platformLobby{
+    --cl272-mobile-gap:14px;
+    --cl272-mobile-radius:17px;
+    --cl272-mobile-edge:color-mix(in srgb,var(--cl243-ink,#1b3e31) 13%,transparent);
+    --cl272-mobile-text:var(--cl243-ink,#183c2b);
+    --cl272-mobile-muted:var(--cl243-muted,#688373);
+  }
+  html body #platformLobby .lobby-shell{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    padding-inline:clamp(13px,4vw,19px)!important;
+    padding-bottom:calc(var(--classora-dock-clearance,91px) + 24px)!important;
+    overflow-x:clip!important;
+  }
+  html body #platformLobby .lobby-shell > *{
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  /* Airy compact top-right glass capsule; no duplicate brand. */
+  html body #platformLobby .cl268-header{
+    width:max-content!important;
+    max-width:100%!important;
+    min-height:52px!important;
+    height:52px!important;
+    margin:0 0 18px auto!important;
+    padding:5px 10px!important;
+    gap:0!important;
+    border-radius:26px!important;
+    background:color-mix(in srgb,var(--cl243-paper,#fff) 76%,transparent)!important;
+    border:1px solid color-mix(in srgb,var(--cl243-ink,#1a5334) 12%,transparent)!important;
+    box-shadow:0 5px 20px rgba(15,65,42,.08)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+    backdrop-filter:blur(18px) saturate(120%)!important;
+  }
+  html body #platformLobby .cl268-header .cl268-name{
+    font-size:16px!important;
+    font-weight:780!important;
+    letter-spacing:-.45px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-brand{
+    padding-left:8px!important;margin-left:5px!important;
+    gap:7px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-mark{
+    width:29px!important;height:29px!important;
+    min-width:29px!important;flex-basis:29px!important;
+    border-radius:9px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-actions{
+    min-width:0!important;height:38px!important;
+  }
+  html body #platformLobby .cl268-header
+    :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+    height:38px!important;min-height:38px!important;
+    max-height:38px!important;
+    width:43px!important;min-width:43px!important;
+    max-width:43px!important;flex-basis:43px!important;
+  }
+  /* Welcome: clear hierarchy and room for longer translated names. */
+  html body #platformLobby #classoraWelcomeCard{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:10px!important;
+    padding:18px 17px!important;
+    margin:0 0 16px!important;
+    border-radius:var(--cl272-mobile-radius)!important;
+    overflow:hidden!important;
+    border:1px solid var(--cl272-mobile-edge)!important;
+  }
+  html body #platformLobby #classoraWelcomeCard[hidden]{display:none!important}
+  html body #platformLobby #classoraWelcomeCard > div{
+    min-width:0!important;flex:1 1 175px!important;
+  }
+  html body #platformLobby #classoraWelcomeCard .cw-name{
+    font-size:clamp(20px,5vw,25px)!important;
+    line-height:1.28!important;
+    letter-spacing:-.45px!important;
+    max-width:100%!important;
+    overflow-wrap:anywhere!important;
+  }
+  html body #platformLobby #classoraWelcomeCard .cw-grade{
+    font-size:12px!important;
+    line-height:1.6!important;
+  }
+  html body #platformLobby #classoraWelcomeCard .cw-badge{
+    max-width:100%!important;
+    min-width:0!important;
+    font-size:11px!important;
+    flex:0 0 auto!important;
+  }
+  /* Existing hero/learning actions: less visual noise, clean educational layout. */
+  html body #platformLobby .cl214{
+    gap:var(--cl272-mobile-gap)!important;
+  }
+  html body #platformLobby .cl214-hero{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    min-height:0!important;
+    grid-template-columns:none!important;
+    gap:14px!important;
+    padding:clamp(18px,5vw,23px)!important;
+    border-radius:19px!important;
+    margin:0!important;
+    box-shadow:0 8px 22px rgba(20,67,41,.075)!important;
+  }
+  html body #platformLobby .cl214-hero-copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  html body #platformLobby .cl214-hero h1{
+    font-size:clamp(25px,7.1vw,35px)!important;
+    line-height:1.24!important;
+    letter-spacing:-.8px!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    text-wrap:balance!important;
+  }
+  html body #platformLobby .cl214-hero :is(p,.cl214-hero-lead,.cl214-last-lesson){
+    font-size:12px!important;
+    line-height:1.65!important;
+  }
+  html body #platformLobby .cl214-hero-buttons{
+    display:flex!important;flex-wrap:wrap!important;
+    gap:9px!important;margin-block:14px 8px!important;
+    width:100%!important;
+  }
+  html body #platformLobby .cl214-hero-buttons button{
+    display:inline-flex!important;justify-content:center!important;
+    align-items:center!important;
+    flex:1 1 132px!important;
+    min-width:0!important;
+    min-height:43px!important;
+    margin:0!important;
+    padding:10px 12px!important;
+    border-radius:11px!important;
+    font-size:12px!important;
+    font-weight:740!important;
+    line-height:1.4!important;
+    white-space:normal!important;
+    transition:transform .16s ease!important;
+  }
+  html body #platformLobby .cl214-hero-buttons button:active{
+    transform:scale(.985)!important;
+  }
+  /* Preserve XP information, but reduce decorative orbit noise on narrow phones. */
+  html body #platformLobby .cl214-hero-visual{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:9px!important;
+    min-width:0!important;
+  }
+  html body #platformLobby .cl214-orbit-art{display:none!important}
+  html body #platformLobby .cl214-xp-host{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  /* Two comfortable quick-access cards where there is room; one on tiny phones. */
+  html body #platformLobby .cl214-quick{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,153px),1fr))!important;
+    gap:11px!important;
+    margin:0!important;
+  }
+  html body #platformLobby :is(.cl214-quick,.cl214-tool-grid) .cl214-card{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-height:120px!important;
+    min-width:0!important;
+    padding:15px 13px!important;
+    margin:0!important;
+    gap:9px!important;
+    border-radius:15px!important;
+    box-shadow:0 6px 19px rgba(18,68,41,.07)!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+  html body #platformLobby .cl214-card-graphic{
+    width:38px!important;height:38px!important;
+    min-width:38px!important;flex:0 0 38px!important;
+    border-radius:11px!important;
+  }
+  html body #platformLobby .cl214-card-copy strong{
+    font-size:12px!important;
+    font-weight:780!important;
+    line-height:1.4!important;
+    overflow-wrap:anywhere!important;
+  }
+  html body #platformLobby .cl214-card-copy small{
+    font-size:11px!important;
+    line-height:1.5!important;
+    overflow-wrap:anywhere!important;
+  }
+  html body #platformLobby :is(.cl214-block,.hub-curriculum-shelf){
+    max-width:100%!important;
+    padding:clamp(16px,4vw,20px)!important;
+    border-radius:var(--cl272-mobile-radius)!important;
+    scroll-margin-top:18px!important;
+    scroll-margin-bottom:var(--classora-dock-clearance,91px)!important;
+  }
+  html body #platformLobby .hub-curriculum-subjects{
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr))!important;
+    gap:10px!important;
+  }
+  html body #platformLobby .hub-curriculum-subject{
+    min-width:0!important;
+    border-radius:13px!important;
+    overflow:hidden!important;
+  }
+  html body #platformLobby :is(.hub-grade-button,.hub-curriculum-subject-main){
+    min-height:43px!important;
+  }
+  /* Existing five-tab dock remains functional and above page content. */
+  html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav{
+    border-radius:20px!important;
+    border:1px solid color-mix(in srgb,var(--cl243-ink,#133827) 15%,transparent)!important;
+    background:color-mix(in srgb,var(--cl243-paper,#fff) 83%,transparent)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+    backdrop-filter:blur(18px) saturate(120%)!important;
+    box-shadow:0 9px 26px rgba(21,71,45,.13),inset 0 1px rgba(255,255,255,.25)!important;
+  }
+  html body.classora-dock-enabled.classora-authenticated
+    #classoraMobilePageNav button{
+    border-radius:14px!important;
+    gap:4px!important;
+    line-height:1.25!important;
+    transition:background-color .16s ease,transform .16s ease!important;
+  }
+  html body.classora-dock-enabled.classora-authenticated
+    #classoraMobilePageNav button:active{
+    transform:scale(.98)!important;
+  }
+  html body #platformLobby .lobby-shell input,
+  html body #platformLobby .lobby-shell textarea{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+}
+@media(max-width:365px){
+  html body #platformLobby .cl268-header{
+    max-width:calc(100vw - 24px)!important;
+    padding-inline:7px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-name{font-size:15px!important}
+  html body #platformLobby .cl268-header .cl268-brand{gap:6px!important;padding-left:6px!important}
+  html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+    flex-basis:39px!important;min-width:39px!important;max-width:39px!important;
+  }
+  html body #platformLobby .cl214-hero-buttons button{flex-basis:100%!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body #platformLobby .cl214-hero-buttons button,
+  html body.classora-dock-enabled.classora-authenticated #classoraMobilePageNav button,
+  html body #platformLobby .cl214-card{transition:none!important;animation:none!important}
+}
