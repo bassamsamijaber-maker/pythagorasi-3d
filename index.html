@@ -320,17 +320,19 @@ body.classora-intro-active{overflow:auto!important}
 
 <div class="platform-lobby" id="platformLobby">
   <div class="lobby-shell">
-    <div id="accountActionRequests" aria-live="polite"></div><div class="lobby-topbar">
-      <div>
+    <div id="accountActionRequests" aria-live="polite"></div><div class="lobby-topbar cl267-header">
+      <div class="cl267-brand" aria-label="Classora">
+        <span class="cl267-brand-mark" aria-hidden="true"></span>
         <div class="lobby-brand">Classora</div>
         <div class="lobby-sub" id="lobbyGreeting" data-no-translate>Welcome 👋</div>
       </div>
       <div class="lobby-top-actions">
+        <button class="lobby-icon-btn" id="classoraGlassSearchBtn" type="button" aria-label="Search Classora" title="Search Classora"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"></circle><path d="m16 16 4.2 4.2"></path></svg></button>
         <span class="admin-hybrid-badge hidden" id="adminHybridBadge">🛡️ Admin + 👨‍🏫 + 🎒</span>
         <button class="admin-panel-btn hidden" id="adminPanelBtn" title="Admin Panel">🛡️ <span>Admin Panel</span></button>
         <button class="lobby-icon-btn" id="lobbyChatBtn" title="Chat" aria-label="Chat">💬 <span>Chat</span></button>
         <button class="lobby-icon-btn hidden" id="lobbySupportRequestsBtn" type="button">📥 <span>طلبات الدعم</span></button><button class="lobby-icon-btn" id="lobbySupportBtn" title="الدعم" aria-label="الدعم">🛟 <span>الدعم</span></button>
-        <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" aria-label="الإشعارات" title="الإشعارات">🔔<span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
+        <button class="lobby-icon-btn classora-notify-button" id="lobbyNotificationsBtn" aria-label="الإشعارات" title="الإشعارات"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9"></path><path d="M10 21h4"></path></svg><span class="classora-notify-badge hidden" id="classoraNotifyBadge">0</span></button>
         <button class="lobby-icon-btn pwa-install-button hidden" id="installAppBtn" title="تحميل Classora على الهاتف"><span aria-hidden="true">📲</span><span class="pwa-install-text">تحميل على الهاتف</span></button>
         <button class="lobby-icon-btn" id="lobbySettingsBtn" title="الإعدادات" aria-label="الإعدادات"><span aria-hidden="true">⚙️</span> <span>الإعدادات</span></button>
         <button class="lobby-icon-btn" id="lobbyClassBtn" title="صفوفي"><span aria-hidden="true">🏫</span> <span>صفوفي</span></button>
@@ -18905,6 +18907,8 @@ onAuthStateChanged(auth,user=>{
 <link rel="stylesheet" href="./assets/classora-morning-panels-v264.css?v=264">
 <link rel="stylesheet" href="./assets/classora-contrast-finish-v265.css?v=265">
 <link rel="stylesheet" href="./assets/classora-spacious-ui-v266.css?v=266">
+<link rel="stylesheet" href="./assets/classora-header-glass-v267.css?v=267">
+<script defer src="./assets/classora-header-glass-v267.js?v=267"></script>
 </body>
 </html>
 
