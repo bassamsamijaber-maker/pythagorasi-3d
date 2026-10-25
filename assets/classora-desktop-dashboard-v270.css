@@ -495,8 +495,7 @@
  html body #platformLobby .cl270-dashboard,
  html body #platformLobby .cl270-sidebar,
  html body #platformLobby .cl270-assistant-close{display:none!important}
- /* On tablet and phone all existing lobby content and the native five-tab dock stay visible. */
- html body #platformLobby .cl270-collapsed{display:revert!important}
+ /* Original mobile and tablet layout and hidden states are not overridden. */
 }
 @media(prefers-reduced-motion:reduce){
  #platformLobby .cl270-dashboard *,#platformLobby .cl270-sidebar *{transition:none!important;animation:none!important}
