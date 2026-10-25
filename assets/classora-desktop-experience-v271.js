@@ -82,6 +82,8 @@
      dashboard.classList.toggle("cl271-subjects-view",currentView==="subjects");
    }
    updateActive();
+   const pageHeading=dashboard.querySelector(".cl270-head h2");
+   if(pageHeading)pageHeading.textContent=t(currentView==="subjects"?"subjects":"lobby");
    if(currentView==="subjects")renderSubjects();
    const shell=dashboard.closest(".lobby-shell");
    shell?.scrollTo({top:0,behavior:"smooth"});
@@ -213,6 +215,8 @@
    if(!dashboard)return;
    dashboard.querySelectorAll("[data-cl271-i18n]").forEach(n=>n.textContent=t(n.dataset.cl271I18n));
    searchInput.placeholder=t("search");
+   const pageHeading=dashboard.querySelector(".cl270-head h2");
+   if(pageHeading)pageHeading.textContent=t(currentView==="subjects"?"subjects":"lobby");
    if(currentView==="subjects")renderSubjects();
    if(searchPanel&&!searchPanel.hidden)search();
    const close=get("cl271Status");if(close?.dataset.success==="true"&&close.textContent){} 
