@@ -230,3 +230,64 @@ html body.classora-membership-page :is(.cl-plan-select,.cl-continue,.cl-tabs but
  html body.classora-membership-page .cl-plans{gap:13px!important}
  html body.classora-membership-page .cl-plan{padding:17px!important}
 }
+
+
+/* Classora top-right liquid glass header: small, calm, and brand-first.
+   Scope: the upper lobby header only. No changes to the hero, dock, or assistant. */
+html body #platformLobby .lobby-topbar {
+  box-sizing:border-box!important;
+  position:relative!important;
+  isolation:isolate!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:clamp(10px,1.1vw,16px)!important;
+  width:fit-content!important;
+  max-width:min(100%,540px)!important;
+  min-width:0!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+  margin-bottom:clamp(18px,2vw,28px)!important;
+  padding:clamp(13px,1.25vw,18px) clamp(16px,1.5vw,22px)!important;
+  border:1px solid color-mix(in srgb,var(--cl243-ink,#eef9f4) 16%,transparent)!important;
+  border-radius:21px!important;
+  background:linear-gradient(140deg,
+    color-mix(in srgb,var(--cl243-paper,#17383e) 72%,transparent),
+    color-mix(in srgb,var(--cl243-paper,#17383e) 57%,transparent))!important;
+  -webkit-backdrop-filter:blur(17px) saturate(120%)!important;
+  backdrop-filter:blur(17px) saturate(120%)!important;
+  box-shadow:0 9px 25px rgba(9,38,31,.09),inset 0 1px rgba(255,255,255,.16)!important;
+  text-align:right!important;
+  overflow:visible!important;
+}
+html body #platformLobby .lobby-topbar :is(.lobby-brand,.lobby-sub,h1,p,small){
+  text-align:right!important;
+  text-shadow:none!important;
+}
+html body #platformLobby .lobby-topbar > :is(div,section){
+  min-width:0!important;
+}
+html body #platformLobby .lobby-topbar .lobby-top-actions {
+  justify-content:flex-end!important;
+  gap:9px!important;
+}
+/* Light and Morning appearances: milky glass, not an opaque white banner. */
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby .lobby-topbar{
+  border:1px solid rgba(96,150,128,.22)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.73),rgba(242,250,246,.55))!important;
+  box-shadow:0 9px 24px rgba(41,94,71,.085),inset 0 1px rgba(255,255,255,.86)!important;
+}
+/* On smaller devices keep the header inside the available width. */
+@media(max-width:650px){
+  html body #platformLobby .lobby-topbar{
+    width:100%!important;
+    max-width:100%!important;
+    padding:12px 14px!important;
+    border-radius:17px!important;
+    gap:8px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #platformLobby .lobby-topbar{transition:none!important}
+}
