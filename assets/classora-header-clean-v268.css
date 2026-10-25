@@ -1,0 +1,289 @@
+/* Classora v268 — clean isolated floating glass header.
+   The existing legacy topbar stays in the DOM for app integrations but is not shown. */
+html body #platformLobby .lobby-topbar.cl267-header{
+  display:none!important;
+}
+html body #platformLobby .cl268-header{
+  --cl268-text:#253e43;
+  --cl268-divider:rgba(64,121,101,.16);
+  direction:ltr!important;
+  position:relative!important;
+  inset:auto!important;
+  z-index:50!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+  width:max-content!important;
+  max-width:min(100%,355px)!important;
+  min-width:0!important;
+  height:60px!important;
+  min-height:60px!important;
+  padding:8px 14px!important;
+  margin:0 0 clamp(48px,4.2vw,66px) auto!important;
+  isolation:isolate!important;
+  border-radius:999px!important;
+  border:1.5px solid rgba(255,255,255,.85)!important;
+  background:linear-gradient(115deg,rgba(252,255,254,.77),rgba(242,251,246,.63))!important;
+  -webkit-backdrop-filter:blur(22px) saturate(125%)!important;
+  backdrop-filter:blur(22px) saturate(125%)!important;
+  box-shadow:0 8px 24px rgba(19,66,48,.12),inset 0 1px 0 rgba(255,255,255,.92)!important;
+  color:var(--cl268-text)!important;
+  text-align:left!important;
+  overflow:visible!important;
+  animation:none!important;
+  transform:none!important;
+}
+html body #platformLobby .cl268-header .cl268-actions{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  height:40px!important;
+  padding:0!important;
+  margin:0!important;
+  gap:0!important;
+  direction:ltr!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  flex:0 0 52px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  float:none!important;
+  width:52px!important;
+  min-width:52px!important;
+  max-width:52px!important;
+  height:40px!important;
+  min-height:40px!important;
+  max-height:40px!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:12px!important;
+  background:transparent!important;
+  color:var(--cl268-text)!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .16s ease!important;
+}
+html body #platformLobby .cl268-header #classoraGlassSearchBtn{
+  border-radius:12px 0 0 12px!important;
+}
+html body #platformLobby .cl268-header #lobbyNotificationsBtn{
+  border-radius:0 12px 12px 0!important;
+}
+html body #platformLobby .cl268-header .cl268-actions .cl268-divider{
+  flex:0 0 1px!important;
+  display:block!important;
+  width:1px!important;
+  height:27px!important;
+  margin:0!important;
+  padding:0!important;
+  background:var(--cl268-divider)!important;
+}
+html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn):hover{
+  background:rgba(29,133,99,.07)!important;
+}
+html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn):focus-visible{
+  outline:2px solid #238f71!important;
+  outline-offset:0!important;
+}
+html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn) svg{
+  display:block!important;
+  flex:0 0 21px!important;
+  width:21px!important;
+  height:21px!important;
+  min-width:21px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+html body #platformLobby .cl268-header #classoraNotifyBadge:not(.hidden){
+  position:absolute!important;
+  display:inline-block!important;
+  top:-1px!important;
+  right:6px!important;
+  min-width:16px!important;
+  height:16px!important;
+  line-height:15px!important;
+  padding:0 3px!important;
+  border:1px solid #fff!important;
+  border-radius:99px!important;
+  background:#178c70!important;
+  color:#fff!important;
+  font-size:10px!important;
+  text-align:center!important;
+  box-sizing:border-box!important;
+}
+html body #platformLobby .cl268-header .cl268-brand{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:0 0 auto!important;
+  direction:ltr!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  margin:0 0 0 5px!important;
+  padding:0 0 0 15px!important;
+  height:40px!important;
+  min-width:0!important;
+  border-left:1px solid var(--cl268-divider)!important;
+  background:transparent!important;
+  white-space:nowrap!important;
+  color:var(--cl268-text)!important;
+  line-height:1!important;
+}
+html body #platformLobby .cl268-header .cl268-mark{
+  display:block!important;
+  position:relative!important;
+  flex:0 0 36px!important;
+  width:36px!important;
+  height:36px!important;
+  min-width:36px!important;
+  border-radius:12px!important;
+  box-sizing:border-box!important;
+  background:linear-gradient(140deg,#58d5a7 0%,#199b7c 58%,#147d68 100%)!important;
+  border:1px solid rgba(15,119,90,.2)!important;
+  box-shadow:0 3px 9px rgba(20,118,84,.16),inset 0 1px rgba(255,255,255,.28)!important;
+  overflow:hidden!important;
+}
+html body #platformLobby .cl268-header .cl268-mark::before{
+  content:""!important;
+  position:absolute!important;
+  top:4px!important;left:4px!important;
+  width:23px!important;height:23px!important;
+  border-radius:13px 11px 17px 8px!important;
+  background:linear-gradient(140deg,rgba(239,255,248,.48),transparent 70%)!important;
+  transform:rotate(-19deg)!important;
+}
+html body #platformLobby .cl268-header .cl268-name{
+  display:block!important;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  font-size:19px!important;
+  font-weight:800!important;
+  letter-spacing:-.6px!important;
+  line-height:1.15!important;
+  margin:0!important;
+  padding:0!important;
+  background:none!important;
+  text-shadow:none!important;
+  color:var(--cl268-text)!important;
+  white-space:nowrap!important;
+}
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby .cl268-header{
+  --cl268-text:#253e43;
+  --cl268-divider:rgba(64,121,101,.16);
+  background:linear-gradient(115deg,rgba(253,255,254,.78),rgba(242,251,246,.66))!important;
+  border-color:rgba(255,255,255,.92)!important;
+}
+html body:not(.light):not([data-classora-theme="morning"]) #platformLobby .cl268-header{
+  --cl268-text:#eefcf6;
+  --cl268-divider:rgba(171,232,208,.2);
+  background:linear-gradient(115deg,rgba(32,59,61,.74),rgba(22,48,50,.72))!important;
+  border-color:rgba(187,235,216,.24)!important;
+  box-shadow:0 9px 25px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.12)!important;
+}
+/* Dropdown is separate from the capsule; no overlapping branding or buttons. */
+html body #platformLobby .cl268-header .cl267-search-popover[hidden]{display:none!important}
+html body #platformLobby .cl268-header .cl267-search-popover{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  position:absolute!important;
+  top:calc(100% + 12px)!important;
+  right:0!important;
+  width:min(345px,calc(100vw - 28px))!important;
+  padding:15px!important;
+  z-index:100!important;
+  border-radius:18px!important;
+  border:1px solid rgba(143,184,165,.4)!important;
+  background:#f7fdfa!important;
+  box-shadow:0 16px 45px rgba(19,69,49,.18)!important;
+  color:#23473c!important;
+  text-align:start!important;
+}
+html body #platformLobby .cl268-header .cl267-search-popover label{
+  display:block!important;
+  font-size:13px!important;
+  font-weight:750!important;
+  color:#285943!important;
+}
+html body #platformLobby .cl268-header .cl267-search-input{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:44px!important;
+  padding:10px 12px!important;
+  border-radius:12px!important;
+  border:1px solid #c4dfd1!important;
+  background:#fff!important;
+  color:#174a37!important;
+  font-size:14px!important;
+}
+html body #platformLobby .cl268-header .cl267-search-results{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:5px!important;
+  max-height:250px!important;
+  overflow:auto!important;
+}
+html body #platformLobby .cl268-header .cl267-search-results button{
+  display:block!important;
+  width:100%!important;
+  min-height:42px!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  border:1px solid #dbeae0!important;
+  border-radius:10px!important;
+  color:#245442!important;
+  background:#fff!important;
+  font-size:13px!important;
+  text-align:start!important;
+  cursor:pointer!important;
+}
+html body #platformLobby .cl268-header .cl267-search-results button:hover{background:#e8f5ec!important}
+html body #platformLobby .cl268-header .cl267-search-empty{
+  display:block!important;padding:10px!important;color:#697f72!important;font-size:13px!important;
+}
+@media(max-width:680px){
+  html body #platformLobby .cl268-header{
+    width:max-content!important;max-width:100%!important;
+    height:54px!important;min-height:54px!important;
+    padding:6px 10px!important;
+    margin:0 0 22px auto!important;
+    gap:0!important;
+  }
+  html body #platformLobby .cl268-header .cl268-actions{height:38px!important}
+  html body #platformLobby .cl268-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+    width:43px!important;min-width:43px!important;max-width:43px!important;flex-basis:43px!important;
+    height:38px!important;min-height:38px!important;max-height:38px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-brand{
+    padding-left:9px!important;margin-left:4px!important;height:38px!important;gap:7px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-mark{
+    flex-basis:30px!important;width:30px!important;height:30px!important;min-width:30px!important;
+    border-radius:10px!important;
+  }
+  html body #platformLobby .cl268-header .cl268-name{font-size:16px!important;letter-spacing:-.5px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body #platformLobby .cl268-header *{animation:none!important;transition:none!important}
+}
