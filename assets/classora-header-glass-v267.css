@@ -1,0 +1,243 @@
+/* Classora v267 — screenshot-matched floating Liquid Glass header.
+   Header-only overrides. Preserve site navigation, auth, notifications and body layout. */
+html body #platformLobby .lobby-topbar.cl267-header {
+  --cl267-ink:#263f48;
+  --cl267-hairline:rgba(69,116,109,.18);
+  direction:ltr!important;
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  z-index:45!important;
+  isolation:isolate!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:row-reverse!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:fit-content!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:62px!important;
+  min-height:62px!important;
+  margin:0 0 clamp(52px,4vw,70px) auto!important;
+  padding:7px 17px 7px 15px!important;
+  gap:17px!important;
+  border-radius:40px!important;
+  border:1.5px solid rgba(255,255,255,.83)!important;
+  background:linear-gradient(125deg,rgba(249,255,251,.65),rgba(242,251,247,.62))!important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
+  backdrop-filter:blur(22px) saturate(135%)!important;
+  box-shadow:0 8px 22px rgba(30,72,56,.14),inset 0 1px rgba(255,255,255,.93),inset 0 -1px rgba(123,159,143,.09)!important;
+  animation:none!important;
+  overflow:visible!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header .cl267-brand{
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  min-width:0!important;
+  color:var(--cl267-ink)!important;
+  white-space:nowrap!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header .cl267-brand-mark{
+  display:block!important;
+  flex:0 0 36px!important;
+  width:36px!important;
+  height:36px!important;
+  border-radius:12px!important;
+  position:relative!important;
+  overflow:hidden!important;
+  background:linear-gradient(140deg,#54d7a8 0%,#159d7c 58%,#13785f 100%)!important;
+  border:1px solid rgba(6,126,88,.25)!important;
+  box-shadow:0 3px 8px rgba(9,121,87,.18),inset 0 1px rgba(255,255,255,.32)!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header .cl267-brand-mark::before{
+  content:"";position:absolute;inset:4px 8px 12px 4px;
+  border-radius:12px 10px 18px 8px;transform:rotate(-21deg);
+  background:linear-gradient(145deg,rgba(239,255,248,.48),rgba(239,255,248,0))!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header .cl267-brand-mark::after{
+  content:"";position:absolute;right:3px;bottom:3px;width:21px;height:18px;
+  border-radius:13px 9px 10px 9px;background:rgba(0,104,84,.24)!important;
+  filter:blur(3px);
+}
+html body #platformLobby .lobby-topbar.cl267-header .lobby-brand{
+  display:block!important;
+  font-size:20px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+  letter-spacing:-.65px!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+  color:var(--cl267-ink)!important;
+  text-shadow:none!important;
+}
+/* Keep greeting node for auth/localization scripts, not the minimal visual header. */
+html body #platformLobby .lobby-topbar.cl267-header #lobbyGreeting{display:none!important}
+html body #platformLobby .lobby-topbar.cl267-header > .lobby-top-actions{
+  direction:ltr!important;
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  grid-template-columns:none!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:38px!important;
+  gap:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header > .lobby-top-actions > :not(#classoraGlassSearchBtn):not(#lobbyNotificationsBtn){
+  display:none!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+  display:inline-flex!important;
+  flex:0 0 61px!important;
+  justify-content:center!important;
+  align-items:center!important;
+  position:relative!important;
+  width:61px!important;
+  height:36px!important;
+  min-width:61px!important;
+  min-height:36px!important;
+  max-height:36px!important;
+  padding:5px!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-sizing:border-box!important;
+  background:transparent!important;
+  color:var(--cl267-ink)!important;
+  font-size:16px!important;
+  line-height:1!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .18s ease!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header #classoraGlassSearchBtn{
+  flex-basis:56px!important;width:56px!important;min-width:56px!important;
+  border-right:1px solid var(--cl267-hairline)!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header #lobbyNotificationsBtn{
+  border-right:1px solid var(--cl267-hairline)!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn):hover{
+  background:rgba(50,144,108,.065)!important;
+  border-radius:10px!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn):focus-visible{
+  outline:2px solid #178e72!important;
+  outline-offset:2px!important;
+  border-radius:10px!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn) > svg{
+  width:21px!important;height:21px!important;
+  display:block!important;flex:none!important;
+  fill:none!important;stroke:currentColor!important;
+  stroke-width:1.85!important;stroke-linecap:round!important;stroke-linejoin:round!important;
+}
+html body #platformLobby .lobby-topbar.cl267-header #classoraNotifyBadge:not(.hidden){
+  position:absolute!important;right:8px!important;top:0!important;
+  z-index:2!important;font-size:9px!important;line-height:15px!important;
+  min-width:15px!important;height:15px!important;
+  border:1px solid rgba(255,255,255,.9)!important;border-radius:15px!important;
+  background:#148c71!important;color:white!important;
+  padding:0 3px!important;
+}
+/* Same glass effect with restrained contrast in night mode. */
+html body:not(.light):not([data-classora-theme="morning"]) #platformLobby .lobby-topbar.cl267-header{
+  --cl267-ink:#e9faf5;
+  --cl267-hairline:rgba(168,228,208,.2);
+  border-color:rgba(178,226,211,.25)!important;
+  background:linear-gradient(126deg,rgba(29,57,58,.74),rgba(19,44,47,.66))!important;
+  box-shadow:0 9px 26px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.12)!important;
+}
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby .lobby-topbar.cl267-header {
+  --cl267-ink:#263f48;--cl267-hairline:rgba(74,121,112,.2);
+  background:linear-gradient(126deg,rgba(251,255,253,.74),rgba(236,250,244,.62))!important;
+  border-color:rgba(255,255,255,.88)!important;
+}
+/* Lightweight search palette, opened only on explicit button press. */
+html body #platformLobby .cl267-search-popover[hidden]{display:none!important}
+html body #platformLobby .cl267-search-popover{
+  box-sizing:border-box!important;
+  direction:inherit!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  position:absolute!important;
+  top:calc(100% + 12px)!important;right:0!important;
+  width:min(345px,calc(100vw - 32px))!important;
+  z-index:100!important;
+  padding:15px!important;border-radius:19px!important;
+  border:1px solid rgba(137,180,166,.32)!important;
+  background:#f7fdfa!important;
+  color:#1e4238!important;
+  box-shadow:0 14px 44px rgba(17,69,52,.16)!important;
+  text-align:start!important;
+}
+html body #platformLobby .cl267-search-popover label{
+  color:#245949!important;
+  font-size:13px!important;font-weight:700!important;
+}
+html body #platformLobby .cl267-search-input{
+  box-sizing:border-box!important;width:100%!important;
+  min-height:44px!important;
+  padding:10px 12px!important;
+  border-radius:12px!important;
+  border:1px solid #beded0!important;
+  background:#fff!important;
+  color:#1a493c!important;font-size:14px!important;
+  outline-offset:2px!important;
+}
+html body #platformLobby .cl267-search-results{
+  display:flex!important;flex-direction:column!important;
+  gap:5px!important;max-height:250px!important;overflow:auto!important;
+}
+html body #platformLobby .cl267-search-results button{
+  display:flex!important;align-items:center!important;
+  text-align:start!important;width:100%!important;
+  padding:11px 12px!important;
+  min-height:40px!important;
+  color:#255343!important;background:#fff!important;
+  border:1px solid #dfede5!important;border-radius:10px!important;
+  font-size:13px!important;cursor:pointer!important;
+}
+html body #platformLobby .cl267-search-results button:hover{background:#eaf7ef!important}
+html body #platformLobby .cl267-search-empty{font-size:13px!important;color:#607a6a!important;padding:9px}
+@media(max-width:699px){
+  html body #platformLobby .lobby-topbar.cl267-header{
+    height:55px!important;min-height:55px!important;
+    width:fit-content!important;max-width:100%!important;
+    padding:6px 12px 6px 7px!important;
+    gap:9px!important;
+    margin:0 0 22px auto!important;
+    border-radius:35px!important;
+  }
+  html body #platformLobby .lobby-topbar.cl267-header .cl267-brand-mark{
+    width:31px!important;height:31px!important;flex-basis:31px!important;border-radius:10px!important;
+  }
+  html body #platformLobby .lobby-topbar.cl267-header .lobby-brand{font-size:17px!important}
+  html body #platformLobby .lobby-topbar.cl267-header .cl267-brand{gap:8px!important}
+  html body #platformLobby .lobby-topbar.cl267-header :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+    width:45px!important;min-width:45px!important;flex-basis:45px!important;
+  }
+  html body #platformLobby .lobby-topbar.cl267-header #classoraGlassSearchBtn{
+    width:43px!important;min-width:43px!important;flex-basis:43px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #platformLobby .lobby-topbar.cl267-header *{animation:none!important;transition:none!important}
+}
