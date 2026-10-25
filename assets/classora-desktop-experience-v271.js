@@ -1,4 +1,4 @@
-/* Classora v271 — desktop Liquid Glass, material navigation/search, verified requests.
+/* Classora v273 — native materials restored; desktop glass navigation and verified requests retained.
    Hooks existing dashboard and curriculum; only confirms requests after Firestore acknowledges. */
 (() => {
  "use strict";
@@ -72,7 +72,35 @@
    const tabs=dashboard.querySelectorAll(".cl271-tabs button");
    tabs.forEach(b=>{const yes=b.dataset.cl271View===currentView;b.classList.toggle("is-active",yes);b.setAttribute("aria-current",yes?"page":"false")});
  }
+ function originalSubjectHub(){
+   // Existing curriculum component created by assets/learning-hub.js.
+   return dashboard?.closest(".lobby-shell")?.querySelector(".learning-hub")||null;
+ }
+ function revealOriginalSubjects(scroll=true){
+   if(currentView!=="subjects")return false;
+   const hub=originalSubjectHub();
+   if(!hub)return false;
+   // V270 only hides this sibling with cl270-collapsed. Do not replace or
+   // re-parent the hub: its buttons retain their original curriculum handlers.
+   hub.classList.remove("cl270-collapsed");
+   if(scroll){
+     const target=hub.querySelector(".hub-curriculum-shelf")||
+                  hub.querySelector(".hub-subject-tabs")||hub;
+     const shell=dashboard.closest(".lobby-shell");
+     if(target&&shell){
+       const reduced=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+       requestAnimationFrame(()=>requestAnimationFrame(()=>{
+         if(currentView!=="subjects")return;
+         const top=Math.max(0,shell.scrollTop+
+           target.getBoundingClientRect().top-shell.getBoundingClientRect().top-16);
+         shell.scrollTo({top,behavior:reduced?"auto":"smooth"});
+       }));
+     }
+   }
+   return true;
+ }
  function show(view){
+   const shell=dashboard.closest(".lobby-shell");
    if(view==="all"){
      currentView="lobby";
      dashboard.classList.remove("cl271-subjects-view");
@@ -81,12 +109,18 @@
      currentView=view==="subjects"?"subjects":"lobby";
      dashboard.classList.toggle("cl271-subjects-view",currentView==="subjects");
    }
+   if(currentView==="subjects"){
+     revealOriginalSubjects(true);
+   } else {
+     // Restore v270's original collapsed/expanded behavior when going home.
+     const expanded=dashboard.querySelector(".cl270-more-button")?.getAttribute("aria-expanded")==="true";
+     const hub=originalSubjectHub();
+     if(hub&&!expanded)hub.classList.add("cl270-collapsed");
+     shell?.scrollTo({top:0,behavior:"smooth"});
+   }
    updateActive();
    const pageHeading=dashboard.querySelector(".cl270-head h2");
    if(pageHeading)pageHeading.textContent=t(currentView==="subjects"?"subjects":"lobby");
-   if(currentView==="subjects")renderSubjects();
-   const shell=dashboard.closest(".lobby-shell");
-   shell?.scrollTo({top:0,behavior:"smooth"});
  }
  function openItem(key,grade,topic){
    localStorage.setItem("classora_curriculum_grade",String(grade));
@@ -266,7 +300,7 @@
      '<button type="button" data-cl271-view="subjects">'+svg("book")+'<span data-cl271-i18n="subjects"></span></button>'+
      '<button type="button" data-cl271-view="all">'+svg("grid")+'<span data-cl271-i18n="all"></span></button>';
    head.insertAdjacentElement("afterend",tabs);
-   subjectArea();
+   // The original learning-hub curriculum shelf is the only Subjects page.
    const st=document.createElement("p");st.id="cl271Status";st.className="cl271-status";st.hidden=true;st.setAttribute("role","status");st.setAttribute("aria-live","polite");
    head.insertAdjacentElement("afterend",st);
    dashboard.addEventListener("click",event=>{
@@ -296,6 +330,17 @@
        event.preventDefault();const first=get("cl270SearchOptions")?.querySelector("button");first?.click();
      }
    });
+   // The curriculum hub can load after the dashboard (module initialization).
+   // The v270 visibility observer executes before this one for new shell children.
+   const shell=dashboard.closest(".lobby-shell");
+   if(shell)new MutationObserver(records=>{
+     if(currentView!=="subjects")return;
+     const addedHub=records.some(record=>Array.from(record.addedNodes).some(node=>
+       node.nodeType===1 &&
+       (node.classList?.contains("learning-hub") || node.querySelector?.(".learning-hub"))
+     ));
+     if(addedHub)revealOriginalSubjects(true);
+   }).observe(shell,{childList:true});
    new MutationObserver(renderLanguage).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
    renderLanguage();show("lobby");
    import("./curriculum-v97.js?v=213").then(module=>{
