@@ -216,7 +216,10 @@
     if(key!=="assistant")closeAssistant();
     if(key==="more"){
       toggleMore(!more);
-      if(more)board?.nextElementSibling?.scrollIntoView?.({behavior:"smooth",block:"start"});
+      if(more){
+        const destination=extra.find(el=>!el.hidden&&getComputedStyle(el).display!=="none");
+        destination?.scrollIntoView?.({behavior:"smooth",block:"start"});
+      }
       return;
     }
     if(key==="assistant"){activate("assistant");assistant(true);return}
