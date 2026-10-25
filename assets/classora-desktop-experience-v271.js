@@ -1,4 +1,4 @@
-/* Classora v271 — desktop Liquid Glass, material navigation/search, verified requests.
+/* Classora v272 — restore native materials while retaining Glass header, search and verified requests.
    Hooks existing dashboard and curriculum; only confirms requests after Firestore acknowledges. */
 (() => {
  "use strict";
@@ -73,20 +73,52 @@
    tabs.forEach(b=>{const yes=b.dataset.cl271View===currentView;b.classList.toggle("is-active",yes);b.setAttribute("aria-current",yes?"page":"false")});
  }
  function show(view){
+   const shell=dashboard.closest(".lobby-shell");
+   const native=()=>shell?.querySelector(".learning-hub");
    if(view==="all"){
      currentView="lobby";
      dashboard.classList.remove("cl271-subjects-view");
+     shell?.classList.remove("cl272-native-subjects-visible");
      dashboard.querySelector(".cl270-more-button")?.click();
-   } else {
-     currentView=view==="subjects"?"subjects":"lobby";
-     dashboard.classList.toggle("cl271-subjects-view",currentView==="subjects");
+   }else if(view==="subjects"){
+     // Restore the original Grade 7–10 curriculum shelf and lesson cards.
+     // This is the SAME .learning-hub the mobile Subjects button used before v271.
+     currentView="subjects";
+     dashboard.classList.add("cl271-subjects-view");
+     shell?.classList.add("cl272-native-subjects-visible");
+     const reveal=()=>{
+       const root=native();
+       if(!root)return false;
+       root.classList.remove("cl270-collapsed");
+       return true;
+     };
+     const focusShelf=()=>{
+       if(currentView!=="subjects")return;
+       const root=native();
+       if(!root)return;
+       root.classList.remove("cl270-collapsed");
+       const target=root.querySelector(".hub-curriculum-shelf")||
+                    root.querySelector(".hub-subject-tabs")||root;
+       if(!target)return;
+       const y=Math.max(0,shell.scrollTop+target.getBoundingClientRect().top-
+         shell.getBoundingClientRect().top-14);
+       shell.scrollTo({top:y,behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+     };
+     reveal();
+     requestAnimationFrame(()=>requestAnimationFrame(focusShelf));
+   }else{
+     currentView="lobby";
+     dashboard.classList.remove("cl271-subjects-view");
+     shell?.classList.remove("cl272-native-subjects-visible");
+     const root=native();
+     // Respect the existing "All tools" disclosure instead of permanently hiding it.
+     const allExpanded=dashboard.querySelector(".cl270-more-button")?.getAttribute("aria-expanded")==="true";
+     if(root&&!allExpanded)root.classList.add("cl270-collapsed");
    }
    updateActive();
    const pageHeading=dashboard.querySelector(".cl270-head h2");
    if(pageHeading)pageHeading.textContent=t(currentView==="subjects"?"subjects":"lobby");
-   if(currentView==="subjects")renderSubjects();
-   const shell=dashboard.closest(".lobby-shell");
-   shell?.scrollTo({top:0,behavior:"smooth"});
+   if(view!=="subjects")shell?.scrollTo({top:0,behavior:"smooth"});
  }
  function openItem(key,grade,topic){
    localStorage.setItem("classora_curriculum_grade",String(grade));
@@ -266,7 +298,8 @@
      '<button type="button" data-cl271-view="subjects">'+svg("book")+'<span data-cl271-i18n="subjects"></span></button>'+
      '<button type="button" data-cl271-view="all">'+svg("grid")+'<span data-cl271-i18n="all"></span></button>';
    head.insertAdjacentElement("afterend",tabs);
-   subjectArea();
+   // Native subject cards are rendered by the original learning-hub module.
+   // Keep v271 search/request integration but don't mount its replacement subject grid.
    const st=document.createElement("p");st.id="cl271Status";st.className="cl271-status";st.hidden=true;st.setAttribute("role","status");st.setAttribute("aria-live","polite");
    head.insertAdjacentElement("afterend",st);
    dashboard.addEventListener("click",event=>{
@@ -296,6 +329,16 @@
        event.preventDefault();const first=get("cl270SearchOptions")?.querySelector("button");first?.click();
      }
    });
+   // The real curriculum shelf may mount after the dashboard; reveal it when ready.
+   const originalShell=dashboard.closest(".lobby-shell");
+   new MutationObserver(records=>{
+     if(currentView!=="subjects")return;
+     for(const record of records)for(const node of record.addedNodes){
+       if(node.nodeType===1 && (node.classList?.contains("learning-hub") || node.querySelector?.(".learning-hub"))){
+         originalShell.querySelector(".learning-hub")?.classList.remove("cl270-collapsed");
+       }
+     }
+   }).observe(originalShell,{childList:true,subtree:false});
    new MutationObserver(renderLanguage).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
    renderLanguage();show("lobby");
    import("./curriculum-v97.js?v=213").then(module=>{
