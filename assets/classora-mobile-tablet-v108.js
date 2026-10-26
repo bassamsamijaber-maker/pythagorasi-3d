@@ -55,7 +55,12 @@
     select("classoraMobileSubjectsBtn");
     window.setTimeout(()=>{
       const lobby=get("platformLobby");
-      const target=lobby?.querySelector(".hub-curriculum-shelf") ||
+      // Desktop reference layout: search, material filters, grade selector,
+      // then three-column topics. Phone preserves its familiar grade-first jump.
+      const desktop=window.matchMedia("(min-width:1000px)").matches;
+      const target=(desktop&&lobby?.querySelector(".learning-hub .hub-search:not([hidden])")) ||
+        (desktop&&lobby?.querySelector(".learning-hub .hub-subject-tabs")) ||
+        lobby?.querySelector(".hub-curriculum-shelf") ||
         lobby?.querySelector(".learning-hub") ||
         lobby?.querySelector(".pythag-action-grid");
       if(!lobby||!target)return;
