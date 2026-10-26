@@ -1,0 +1,499 @@
+/* CLASSORA v283 / VISUAL SKIN ONLY
+   A cover for the EXISTING application, not a replacement application.
+   Pure CSS. No hidden layouts, duplicated navigations, changed handlers,
+   absolute/fixed positioning, route changes, DOM mutation or display overrides.
+   Preserves the original learning-hub, grades, three-column topic cards,
+   the 25/75 assistant, the Liquid Glass header and responsive native dock.
+   Uses the real Appearance setting: original = navy/mint, morning = light.
+   Leave Palestinian embroidery appearance to its existing custom styling. */
+
+html body:not([data-classora-theme="embroidery"]) #platformLobby{
+  --cl283-page:#091f25;
+  --cl283-surface:#102c35;
+  --cl283-raised:#153844;
+  --cl283-card:#142f3e;
+  --cl283-soft:#1a414b;
+  --cl283-ink:#f2fcf8;
+  --cl283-muted:#c0dbd5;
+  --cl283-faint:#9dbfb8;
+  --cl283-line:rgba(143,220,198,.20);
+  --cl283-accent:#78eac3;
+  --cl283-on-accent:#07352a;
+  --cl283-glass:rgba(13,41,48,.82);
+  --cl283-shadow:0 12px 30px rgba(0,11,22,.15);
+  --hub-panel:var(--cl283-card);
+  --hub-border:var(--cl283-line);
+  --hub-text:var(--cl283-ink);
+  --hub-muted:var(--cl283-muted);
+  --hub-mint:var(--cl283-accent);
+  background:
+    radial-gradient(ellipse at 5% 0%,rgba(36,111,102,.22),transparent 48%),
+    linear-gradient(145deg,#091f25,#092129 70%,#0d2730)!important;
+  color:var(--cl283-ink);
+  font-family:"Tajawal","Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important;
+  -webkit-font-smoothing:antialiased;
+}
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby{
+  --cl283-page:#f5f9f5;
+  --cl283-surface:#fffefa;
+  --cl283-raised:#edf6ef;
+  --cl283-card:#ffffff;
+  --cl283-soft:#e6f3e9;
+  --cl283-ink:#193b2b;
+  --cl283-muted:#436551;
+  --cl283-faint:#567665;
+  --cl283-line:rgba(47,113,76,.19);
+  --cl283-accent:#137652;
+  --cl283-on-accent:#fff;
+  --cl283-glass:rgba(253,255,252,.84);
+  --cl283-shadow:0 10px 25px rgba(24,77,46,.075);
+  --hub-panel:var(--cl283-card);
+  --hub-border:var(--cl283-line);
+  --hub-text:var(--cl283-ink);
+  --hub-muted:var(--cl283-muted);
+  --hub-mint:var(--cl283-accent);
+  background:
+    radial-gradient(ellipse at 9% 2%,rgba(128,211,164,.14),transparent 42%),
+    linear-gradient(150deg,#f6faf6,#edf5ef)!important;
+  color:var(--cl283-ink);
+}
+@media (min-width:1000px){
+  html body:not([data-classora-theme="embroidery"]) #platformLobby .cl258-island-surface{
+    background:linear-gradient(155deg,var(--cl283-surface),var(--cl283-page))!important;
+    border-color:var(--cl283-line)!important;
+    box-shadow:var(--cl283-shadow)!important;
+  }
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl268-header,.lobby-topbar){
+  background:var(--cl283-glass)!important;
+  border-color:var(--cl283-line)!important;
+  color:var(--cl283-ink)!important;
+  box-shadow:0 8px 23px rgba(0,17,22,.12),inset 0 1px rgba(255,255,255,.08)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(125%)!important;
+  backdrop-filter:blur(18px) saturate(125%)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-header{
+  --cl268-text:var(--cl283-ink);
+  --cl268-divider:var(--cl283-line);
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl268-header :is(.cl268-name,.cl268-brand,#classoraGlassSearchBtn,#lobbyNotificationsBtn){
+  color:var(--cl283-ink)!important;
+  text-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-mark{
+  background:linear-gradient(145deg,#7de5bc,#229871)!important;
+  border-color:rgba(21,114,84,.28)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.29),0 4px 13px rgba(13,76,56,.16)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-header
+  :is(#classoraGlassSearchBtn,#lobbyNotificationsBtn):hover{
+  background:var(--cl283-soft)!important;
+}
+
+/* Original assistant, profile, and chat interface: polish the surfaces only. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left{
+  background:linear-gradient(158deg,var(--cl283-surface),var(--cl283-page))!important;
+  border-color:var(--cl283-line)!important;
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left
+  :is(.cl250-chat-card,.lobby-ai-card){
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left .lobby-ai-head{
+  color:var(--cl283-ink)!important;
+  border-bottom-color:var(--cl283-line)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left
+  .lobby-ai-head :is(b,strong,span){
+  color:var(--cl283-ink)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left
+  :is(.lobby-ai-reply,.cl250-thread){
+  color:var(--cl283-ink)!important;
+  scrollbar-color:var(--cl283-line) transparent;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left
+  :is(.cl248-ai-prompt,.cl250-chat-chip,.cl250-line){
+  background:var(--cl283-raised)!important;
+  color:var(--cl283-ink)!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:12px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .lobby-ai-input textarea{
+  border:1px solid var(--cl283-line)!important;
+  border-radius:14px!important;
+  background:var(--cl283-raised)!important;
+  color:var(--cl283-ink)!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .lobby-ai-input textarea::placeholder{
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .lobby-ai-input textarea:focus-visible{
+  outline:2px solid var(--cl283-accent)!important;
+  outline-offset:2px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby #lobbyAISend{
+  background:var(--cl283-accent)!important;
+  color:var(--cl283-on-accent)!important;
+  border-color:var(--cl283-accent)!important;
+  border-radius:12px!important;
+}
+
+/* Hero, welcome, and feature cards — existing buttons keep original listeners. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .classora-welcome{
+  background:linear-gradient(130deg,var(--cl283-raised),var(--cl283-surface))!important;
+  color:var(--cl283-ink)!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:19px!important;
+  box-shadow:var(--cl283-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .classora-welcome :is(.cw-name,.cw-role,.cw-grade){
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214{
+  --cl-text:var(--cl283-ink);
+  --cl-muted:var(--cl283-muted);
+  --cl-edge:var(--cl283-line);
+  --cl-card:var(--cl283-card);
+  --cl-accent:var(--cl283-accent);
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-hero{
+  background:
+    radial-gradient(ellipse at 95% 0%,rgba(77,198,168,.11),transparent 52%),
+    linear-gradient(125deg,var(--cl283-raised),var(--cl283-surface))!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:23px!important;
+  box-shadow:var(--cl283-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero:before{
+  opacity:.2!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-hero :is(h1,h1 em,.cl214-personal,.cl214-personal strong){
+  color:var(--cl283-ink)!important;
+  text-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-hero :is(p,.cl214-hero-lead,.cl214-last-lesson){
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+  line-height:1.7!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-kicker{
+  color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl214-primary,.cl214-hero-buttons .cl214-primary){
+  background:var(--cl283-accent)!important;
+  color:var(--cl283-on-accent)!important;
+  border-color:var(--cl283-accent)!important;
+  border-radius:12px!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl214-secondary,.cl214-hero-buttons .cl214-secondary){
+  background:var(--cl283-soft)!important;
+  color:var(--cl283-ink)!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:12px!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-tabs button{
+  color:var(--cl283-ink)!important;
+  background:var(--cl283-raised)!important;
+  border-color:var(--cl283-line)!important;
+  font-weight:780!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl214-tabs button:hover,.cl214-tabs button[aria-current="page"]){
+  background:var(--cl283-soft)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl214-quick,.cl214-tool-grid) .cl214-card{
+  background:var(--cl283-card)!important;
+  color:var(--cl283-ink)!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:18px!important;
+  box-shadow:var(--cl283-shadow)!important;
+  transition:border-color .17s ease,box-shadow .17s ease,transform .17s ease!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.cl214-quick,.cl214-tool-grid) .cl214-card:hover{
+  border-color:var(--cl283-accent)!important;
+  transform:translateY(-2px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-card-copy strong{
+  color:var(--cl283-ink)!important;
+  font-size:clamp(13px,1.4vw,16px)!important;
+  font-weight:850!important;
+  line-height:1.5!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-card-copy small{
+  color:var(--cl283-muted)!important;
+  font-size:12px!important;
+  font-weight:620!important;
+  line-height:1.65!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-block{
+  background:linear-gradient(145deg,var(--cl283-surface),var(--cl283-card))!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:22px!important;
+  box-shadow:var(--cl283-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-section-heading :is(h2,h3){
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .cl214-section-heading p{
+  color:var(--cl283-muted)!important;
+}
+
+/* The exact ORIGINAL curriculum, lesson ordering, and clickable cards remain.
+   Style backgrounds/borders/text; no grids or grade logic are changed. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .learning-hub{
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-hero{
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-hero h1{
+  color:var(--cl283-ink)!important;
+  text-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-hero p,
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-muted{
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-kicker{
+  color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search{
+  background:var(--cl283-raised)!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:14px!important;
+  box-shadow:0 5px 18px rgba(0,18,27,.06)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search input{
+  background:transparent!important;
+  color:var(--cl283-ink)!important;
+  font-size:14px!important;
+  font-weight:600!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search input::placeholder{
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-subject-tabs button{
+  background:var(--cl283-raised)!important;
+  border:1px solid var(--cl283-line)!important;
+  color:var(--cl283-ink)!important;
+  border-radius:11px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-subject-tabs button.active{
+  background:var(--cl283-accent)!important;
+  border-color:var(--cl283-accent)!important;
+  color:var(--cl283-on-accent)!important;
+  box-shadow:0 5px 16px rgba(18,135,95,.14)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-subject-tabs button.active .classora-icon{
+  color:var(--cl283-on-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-shelf{
+  background:
+    radial-gradient(ellipse at 10% 0%,rgba(84,184,159,.095),transparent 42%),
+    linear-gradient(150deg,var(--cl283-surface),var(--cl283-page))!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:21px!important;
+  box-shadow:var(--cl283-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-head h2{
+  color:var(--cl283-ink)!important;
+  font-weight:850!important;
+  line-height:1.3!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-head p{
+  color:var(--cl283-muted)!important;
+  line-height:1.7!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-grade-button{
+  background:var(--cl283-raised)!important;
+  border:1px solid var(--cl283-line)!important;
+  color:var(--cl283-ink)!important;
+  border-radius:11px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-grade-button.active{
+  background:var(--cl283-accent)!important;
+  color:var(--cl283-on-accent)!important;
+  border-color:var(--cl283-accent)!important;
+  box-shadow:0 6px 18px rgba(18,135,95,.13)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-subject{
+  background:var(--cl283-card)!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:16px!important;
+  box-shadow:0 5px 18px rgba(1,19,25,.09)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-subject:hover{
+  background:var(--cl283-raised)!important;
+  border-color:var(--cl283-accent)!important;
+  transform:translateY(-2px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-subject-main{
+  color:var(--cl283-ink)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-copy b{
+  color:var(--cl283-ink)!important;
+  font-weight:850!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-copy :is(small,em){
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-curriculum-icon{
+  background:var(--cl283-soft)!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:12px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-chip{
+  color:var(--cl283-muted)!important;
+  background:var(--cl283-raised)!important;
+  border-color:var(--cl283-line)!important;
+  border-radius:9px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-chip:hover{
+  color:var(--cl283-ink)!important;
+  border-color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-card{
+  background:var(--cl283-card)!important;
+  border:1px solid var(--cl283-line)!important;
+  border-radius:17px!important;
+  box-shadow:var(--cl283-shadow)!important;
+  color:var(--cl283-ink)!important;
+  transition:transform .17s ease,border-color .17s ease,box-shadow .17s ease!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-card:hover{
+  background:var(--cl283-raised)!important;
+  border-color:var(--cl283-accent)!important;
+  transform:translateY(-2px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-card :is(h2,h3,h4,b,strong){
+  color:var(--cl283-ink)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  .hub-topic-card :is(p,small,.hub-card-description,.hub-card-category){
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+
+/* Existing floating five-tab navigation: same buttons, IDs and position. */
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+  #classoraMobilePageNav{
+  --cl283-dock:#0d2d34;
+  --cl283-dock-border:rgba(128,225,194,.27);
+  --cl283-dock-ink:#cee3de;
+  --cl283-dock-active-bg:#245346;
+  --cl283-dock-active-ink:#9af4cf;
+  background:var(--cl283-dock)!important;
+  border-color:var(--cl283-dock-border)!important;
+  box-shadow:0 13px 31px rgba(0,14,24,.19),inset 0 1px rgba(255,255,255,.10)!important;
+  -webkit-backdrop-filter:blur(17px) saturate(125%)!important;
+  backdrop-filter:blur(17px) saturate(125%)!important;
+}
+html body.classora-dock-enabled.classora-authenticated:is(.light,[data-classora-theme="morning"])
+  #classoraMobilePageNav{
+  --cl283-dock:rgba(253,255,251,.9);
+  --cl283-dock-border:rgba(39,110,76,.22);
+  --cl283-dock-ink:#466953;
+  --cl283-dock-active-bg:#e1f3e7;
+  --cl283-dock-active-ink:#126b49;
+  box-shadow:0 10px 25px rgba(18,61,36,.12),inset 0 1px #fff!important;
+}
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+  #classoraMobilePageNav button{
+  color:var(--cl283-dock-ink)!important;
+  font-weight:740!important;
+  transition:background-color .17s ease,color .17s ease!important;
+}
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+  #classoraMobilePageNav button:is(.is-active,.active,[aria-current="page"]){
+  background:var(--cl283-dock-active-bg)!important;
+  color:var(--cl283-dock-active-ink)!important;
+  border-color:var(--cl283-dock-border)!important;
+}
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+  #classoraMobilePageNav button :is(svg,span){
+  color:inherit!important;
+}
+
+/* Accessibility: keep every native interactive element keyboard-reachable. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby
+  :is(.hub-grade-button,.hub-subject-tabs button,.hub-topic-card,.hub-curriculum-subject-main,.hub-topic-chip,.cl214-card,.cl214-primary,.cl214-secondary):focus-visible{
+  outline:3px solid var(--cl283-accent)!important;
+  outline-offset:3px!important;
+}
+@media (max-width:760px){
+  /* Font and spacing improvements only. Existing grids and dock positions unchanged. */
+  html body:not([data-classora-theme="embroidery"]) #platformLobby
+    :is(.hub-topic-card,.hub-curriculum-subject,.cl214-card){
+    border-radius:15px!important;
+  }
+  html body:not([data-classora-theme="embroidery"]) #platformLobby
+    :is(.cl214-card-copy small,.hub-curriculum-copy em){
+    line-height:1.55!important;
+  }
+  html body:not([data-classora-theme="embroidery"]) #platformLobby
+    :is(.hub-curriculum-head p,.cl214-hero-lead){
+    line-height:1.65!important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  html body:not([data-classora-theme="embroidery"]) #platformLobby
+    :is(.cl214-card,.hub-curriculum-subject,.hub-topic-card,.cl214-primary){
+    transition:none!important;
+  }
+}
