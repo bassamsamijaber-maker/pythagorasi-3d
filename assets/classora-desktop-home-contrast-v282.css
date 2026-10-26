@@ -1,0 +1,398 @@
+/* Classora v282 — readable desktop home typography + original dark/night theme.
+   Scoped only to .cl281-home at >=1000px. The native curriculum, lessons, legacy
+   assistant, mobile dock, billing, and popups retain all their own CSS/behaviour.
+   Existing Appearance: original = night, morning = day. No duplicate switch. */
+@media (min-width:1000px) {
+  /* Readable typography regardless of the saved appearance selection. */
+  html body #platformLobby.cl281-home :is(.cl281-dashboard,.cl281-sidebar){
+    -webkit-font-smoothing:antialiased!important;
+    text-rendering:optimizeLegibility!important;
+  }
+  html body #platformLobby.cl281-home .cl281-sidebar .cl281-nav span{
+    overflow-wrap:break-word!important;
+    word-break:normal!important;
+    white-space:normal!important;
+    line-height:1.48!important;
+    font-size:13px!important;
+    font-weight:700!important;
+  }
+  html body #platformLobby.cl281-home .cl281-intro h1{
+    font-weight:850!important;
+    line-height:1.31!important;
+  }
+  html body #platformLobby.cl281-home .cl281-hero h2{
+    font-weight:850!important;
+    line-height:1.28!important;
+  }
+  html body #platformLobby.cl281-home .cl281-tile b{
+    font-size:13px!important;
+    font-weight:810!important;
+    line-height:1.45!important;
+    letter-spacing:0!important;
+    opacity:1!important;
+    text-shadow:none!important;
+  }
+  html body #platformLobby.cl281-home .cl281-tile small,
+  html body #platformLobby.cl281-home .cl281-panel-text small{
+    font-size:12px!important;
+    font-weight:590!important;
+    line-height:1.6!important;
+    letter-spacing:0!important;
+    opacity:1!important;
+    text-shadow:none!important;
+  }
+  html body #platformLobby.cl281-home .cl281-account b,
+  html body #platformLobby.cl281-home .cl281-panel-text b{
+    font-weight:810!important;
+    opacity:1!important;
+  }
+  /* Day mode: avoid pale-on-pale words in small cards, labels and buttons. */
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home{
+    color-scheme:light!important;
+    background:#eef5f0!important;
+    color:#1c3c2b!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .lobby-shell{
+    background:#f7faf8!important;
+    border-color:#d0e4d6!important;
+    color:#233f2e!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-sidebar{
+    background:#fff!important;
+    border-color:#d9e8de!important;
+    color:#203f2d!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-sidebar .cl281-logo,
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-pagebar > b{
+    color:#1f3c2c!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home :is(.cl281-caption,.cl281-account small){
+    color:#557363!important;
+    opacity:1!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-nav:not(.is-active){
+    color:#3d604b!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-nav.is-active{
+    background:#e0f2e6!important;
+    color:#105e3f!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-account b{
+    color:#1e4530!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-search-prompt{
+    border-color:#cfe2d5!important;
+    background:#fff!important;
+    color:#4b6b58!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-intro .cl281-kicker{
+    color:#146e4c!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-intro h1{
+    color:#173b29!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-intro p{
+    color:#426451!important;
+    font-weight:610!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-hero{
+    background:#e6f3e9!important;
+    border-color:#c7e1d0!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-hero h2{
+    color:#174c31!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-hero p{
+    color:#436c51!important;
+    font-weight:610!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-primary{
+    background:#126f4d!important;
+    border-color:#126f4d!important;
+    color:#fff!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-section-title h3{
+    color:#1c402c!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-section-title button{
+    color:#126845!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home :is(.cl281-tile,.cl281-panel){
+    background:#fff!important;
+    border-color:#d7e5da!important;
+    color:#213d2d!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-tile b,
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-panel :is(h3,.cl281-panel-text b){
+    color:#203e2d!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-tile small,
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-panel-text small{
+    color:#446451!important;
+  }
+  html body:is([data-classora-theme="morning"],.light)
+    #platformLobby.cl281-home .cl281-panel-action{
+    color:#284c37!important;
+  }
+
+  /* Night / Original — inspired by the former Classora navy-teal curriculum.
+     This is the site's existing "Original" appearance, not an extra theme. */
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home{
+    color-scheme:dark!important;
+    --cl281-bg:#071b1f!important;
+    --cl281-paper:#0c2730!important;
+    --cl281-accent:#43d4ad!important;
+    --cl281-deep:#e6f8f3!important;
+    --cl281-border:#274c56!important;
+    --cl281-ink:#f0faf7!important;
+    --cl281-muted:#b5d3ce!important;
+    background:radial-gradient(ellipse at 10% 0%,#0d3532 0%,#071d24 57%,#091b23 100%)!important;
+    color:#f0faf7!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .lobby-shell{
+    background:linear-gradient(150deg,#0e292e,#0b222b 68%,#0c232c)!important;
+    border-color:#2c525a!important;
+    box-shadow:0 16px 50px rgba(0,8,12,.28)!important;
+    color:#f0faf7!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-sidebar{
+    background:linear-gradient(160deg,#102d32,#0d252c 85%)!important;
+    border-color:#2a5156!important;
+    color:#f1fbf9!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-logo{
+    color:#f0fcf6!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-mark{
+    color:#062b21!important;
+    background:linear-gradient(130deg,#83ebc8,#36c39b)!important;
+    border:1px solid #6bd8b8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-caption{
+    color:#bdd7d2!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-nav:not(.is-active){
+    color:#c8e0df!important;
+    background:transparent!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-nav:not(.is-active):hover{
+    color:#effef9!important;
+    background:#193e40!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-nav.is-active{
+    color:#a1ffdb!important;
+    background:#19473f!important;
+    border-color:#245e53!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-account{
+    border-top-color:#315457!important;
+    background:transparent!important;
+    color:#edf8f5!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-account b{
+    color:#effbf7!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-account small{
+    color:#b8d0cc!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-avatar{
+    background:#1a5248!important;
+    color:#b2ffdd!important;
+    border:1px solid #3b8068!important;
+  }
+  /* Existing glass search/bell capsule: dark and readable in Original. */
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl268-header{
+    --cl268-text:#eafaf5;
+    --cl268-divider:rgba(147,221,197,.21);
+    background:linear-gradient(122deg,rgba(16,49,55,.9),rgba(13,44,51,.79))!important;
+    color:#f0fbf8!important;
+    border-color:rgba(126,211,187,.28)!important;
+    box-shadow:0 8px 25px rgba(0,13,23,.30),inset 0 1px rgba(255,255,255,.10)!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl268-header .cl268-name{
+    color:#f0fbf8!important;
+    text-shadow:none!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-pagebar>b{
+    color:#f2fbf8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-search-prompt{
+    background:#16333e!important;
+    border-color:#355a63!important;
+    color:#c3dfda!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-intro .cl281-kicker{
+    color:#7ce5c1!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-intro h1{
+    color:#f4fbfa!important;
+    text-shadow:none!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-intro p{
+    color:#bfdad6!important;
+    font-weight:590!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-hero{
+    background:linear-gradient(122deg,#163949,#123443 78%,#123741)!important;
+    border-color:#305c68!important;
+    box-shadow:0 10px 30px rgba(0,12,20,.15)!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-hero h2{
+    color:#effdf8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-hero p{
+    color:#c8e0de!important;
+    font-weight:590!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-primary{
+    color:#062d25!important;
+    background:#66e0b6!important;
+    border-color:#66e0b6!important;
+    box-shadow:0 4px 13px rgba(0,12,16,.16)!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-primary:hover{
+    color:#06271e!important;
+    background:#8df2cf!important;
+    border-color:#8df2cf!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-disc{
+    background:#1c4a50!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-paper{
+    background:#174052!important;
+    border-color:#3d6874!important;
+    box-shadow:8px 9px #0c2b35!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-icon{
+    background:#245963!important;
+    color:#b4ffe1!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-paper>i{
+    background:#426b75!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-progress{
+    background:#25515a!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-art-progress i{
+    background:#80e5bb!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-section-title h3{
+    color:#f1fbf8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-section-title button{
+    color:#91edc8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home :is(.cl281-tile,.cl281-panel){
+    color:#f2faf7!important;
+    background:linear-gradient(150deg,#153440,#112c39)!important;
+    border-color:#355664!important;
+    box-shadow:0 8px 24px rgba(0,10,18,.1)!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-tile:hover{
+    background:#1b4050!important;
+    border-color:#58958b!important;
+    box-shadow:0 11px 30px rgba(0,8,18,.24)!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-tile-icon{
+    background:#21505b!important;
+    color:#8ce9ca!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-tile-icon.is-gold{
+    background:#4b4232!important;
+    color:#ffdc91!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-tile b{
+    color:#f1faf8!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-tile small{
+    color:#c1dad7!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-panel h3{
+    color:#edf9f6!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-panel-action{
+    color:#eaf6f4!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-mini{
+    color:#92f3cf!important;
+    background:#204d55!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-panel-text b{
+    color:#effbf7!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-panel-text small{
+    color:#c5ddda!important;
+  }
+  html body:not(.light):not([data-classora-theme="morning"]):not([data-classora-theme="embroidery"])
+    #platformLobby.cl281-home .cl281-panel-action>svg:last-child{
+    color:#b4d6d0!important;
+  }
+}
