@@ -5,8 +5,8 @@
  * Original lesson/subject grid stays three columns with same buttons/order.
  * Original Assistant, five-tab dock, Firebase, 3D, chat and exams stay mounted.
  */
-@media(min-width:1000px){
- html body:not([data-classora-theme="embroidery"]) #platformLobby{
+@media(min-width:0px){
+ html body:not([data-classora-theme="embroidery"]){
    --cl284-navy:#091f29;
    --cl284-ink:#f0faf7;
    --cl284-muted:#b8d5cd;
@@ -21,7 +21,7 @@
    --cl284-surface:#102c34;
    font-family:"Tajawal","Inter",system-ui,Arial,sans-serif!important;
  }
- html body:is(.light,[data-classora-theme="morning"]):not([data-classora-theme="embroidery"]) #platformLobby{
+ html body:is(.light,[data-classora-theme="morning"]):not([data-classora-theme="embroidery"]){
    --cl284-navy:#f4f9f5;
    --cl284-ink:#1b3a2b;
    --cl284-muted:#496b57;
@@ -385,4 +385,46 @@
    transition:none!important;
    animation:none!important;
  }
+}
+/* Responsive emerald workspace. Preserve native navigation and event targets. */
+html body #platformLobby .cl268-header{
+ width:100%!important;max-width:100%!important;margin-bottom:24px!important;
+}
+html body #platformLobby .cl214-hero-copy{min-width:0!important;}
+html body #platformLobby .cl214-hero-buttons{display:flex!important;flex-wrap:wrap!important;gap:12px!important;}
+html body #platformLobby .cl214-card{min-width:0!important;overflow-wrap:anywhere;}
+html body #platformLobby .cl214-section-heading{gap:16px!important;margin-bottom:22px!important;}
+html body #platformLobby .cl214-tabs{flex-wrap:wrap!important;}
+html body #platformLobby :is(button,input,textarea,a):focus-visible{
+ outline:3px solid var(--cl284-accent)!important;outline-offset:4px!important;
+}
+html body #platformLobby .hub-search input{color:var(--cl284-ink)!important;}
+html body #platformLobby .hub-search input::placeholder{color:var(--cl284-muted)!important;opacity:1;}
+html body #platformLobby .cl214-last-lesson{color:var(--cl284-muted)!important;line-height:1.7;}
+@media(min-width:1400px){
+ html body #platformLobby .hub-curriculum-subjects{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+}
+@media(max-width:999px){
+ html body #platformLobby .cl214-hero{grid-template-columns:minmax(0,1fr)!important;min-height:0!important;padding:24px!important;}
+ html body #platformLobby .cl214-hero-visual{max-width:260px!important;justify-self:center;}
+ html body #platformLobby .cl214-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+ html body #platformLobby .cl250-left{border-right:0!important;}
+}
+@media(max-width:760px){
+ html body #platformLobby .cl214-hero{padding:20px!important;margin-bottom:20px!important;}
+ html body #platformLobby .cl214-hero h1{font-size:28px!important;line-height:1.4!important;letter-spacing:0!important;}
+ html body #platformLobby .cl214-quick .cl214-card{flex-direction:column!important;align-items:flex-start!important;padding:16px!important;gap:12px!important;}
+ html body #platformLobby .cl214-quick .cl214-card-copy strong{font-size:14px!important;}
+ html body #platformLobby .hub-curriculum-subjects{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
+ html body #platformLobby .cl214-block{padding:18px!important;margin-top:24px!important;}
+ html body #platformLobby .cl214-tabs button{flex:1 1 auto;min-height:44px!important;}
+ html body #platformLobby .cl214-hero-buttons button{min-height:44px!important;flex:1 1 auto;}
+ html body #platformLobby .cl214-tool-grid{gap:12px!important;}
+ html body #platformLobby .cl214-tool-grid .cl214-card{padding:14px!important;}
+ html body #platformLobby .cl268-header{padding:8px 12px!important;min-height:56px!important;height:auto!important;}
+ html body.classora-dock-enabled #platformLobby{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important;}
+}
+@media(prefers-reduced-motion:reduce){
+ html body #platformLobby .cl214-orbit-art *{animation:none!important;}
+ html body #platformLobby .cl214-card:hover{transform:none!important;}
 }

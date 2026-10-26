@@ -1,5 +1,6 @@
-const CACHE_NAME="classora-v267-cloud-ai";
+const CACHE_NAME="classora-v285-emerald-responsive";
 const APP_SHELL=[
+  "./assets/classora-fresh-interface-v284.css?v=285",
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=249",
@@ -37,7 +38,7 @@ const APP_SHELL=[
   "./assets/classora-learning-boost-v215.css?v=221",
   "./assets/classora-learning-boost-v215.js?v=222",
   "./assets/classora-learning-front-v214.css?v=214",
-  "./assets/classora-learning-front-v214.js?v=251",
+  "./assets/classora-learning-front-v214.js?v=285",
   "./assets/math-worksheet-v213.js?v=213",
   "./assets/classora-layout-restore-v260.css?v=260",
   "./assets/classora-dock-labels-v261.css?v=261",
