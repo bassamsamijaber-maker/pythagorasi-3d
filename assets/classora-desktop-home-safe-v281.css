@@ -1,0 +1,474 @@
+/* Classora v281 — the redesigned desktop home, safely isolated.
+   Never applies to native Subjects/Grades/Lessons or phones.
+   Existing dark curriculum screenshot remains identical when Subjects is selected. */
+#platformLobby .cl281-sidebar,
+#platformLobby .cl281-dashboard{display:none}
+@media(min-width:1000px){
+  html body #platformLobby.cl281-home{
+    --cl281-bg:#f5f8f6;
+    --cl281-paper:#fff;
+    --cl281-accent:#16825c;
+    --cl281-deep:#214632;
+    --cl281-border:#e0ebe3;
+    --cl281-ink:#263c30;
+    --cl281-muted:#829588;
+    background:#eef5f0!important;
+    color:var(--cl281-ink)!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    min-width:0!important;
+  }
+  /* The native 25/75 assistant layout is restored automatically on Subjects. */
+  html body #platformLobby.cl281-home .cl250-left,
+  html body #platformLobby.cl281-home .cl258-island-surface{
+    display:none!important;
+  }
+  html body #platformLobby.cl281-home .lobby-shell{
+    position:relative!important;
+    inset:auto!important;
+    z-index:1!important;
+    box-sizing:border-box!important;
+    display:block!important;
+    width:calc(100% - 270px - 40px)!important;
+    max-width:none!important;
+    min-width:0!important;
+    min-height:calc(100dvh - 40px)!important;
+    height:auto!important;
+    max-height:none!important;
+    margin:20px 20px 20px 270px!important;
+    padding:23px clamp(23px,3.2vw,44px) 45px!important;
+    border:1px solid #dce9df!important;
+    border-radius:21px!important;
+    background:#f7faf8!important;
+    box-shadow:0 15px 42px rgba(32,78,45,.08)!important;
+    overflow:visible!important;
+    text-align:start!important;
+    color:var(--cl281-ink)!important;
+  }
+  /* Only hide visual legacy dashboard blocks while this standalone home is active.
+     The original curriculum and controls stay mounted with their listeners intact. */
+  html body #platformLobby.cl281-home .lobby-shell
+    > :not(.cl281-dashboard):not(.cl268-header):not(#accountActionRequests){
+    display:none!important;
+  }
+  html body #platformLobby.cl281-home .lobby-shell > .cl268-header{
+    display:flex!important;
+    margin:0 0 12px auto!important;
+    min-height:54px!important;
+    height:54px!important;
+    padding:6px 11px!important;
+    border-radius:999px!important;
+    max-width:min(100%,355px)!important;
+    background:linear-gradient(110deg,rgba(255,255,255,.86),rgba(232,246,237,.71))!important;
+    box-shadow:0 7px 24px rgba(21,79,48,.1),inset 0 1px #fff!important;
+  }
+  html body #platformLobby.cl281-home .cl281-sidebar{
+    box-sizing:border-box!important;
+    position:fixed!important;
+    display:flex!important;
+    flex-direction:column!important;
+    top:20px!important;
+    bottom:20px!important;
+    left:20px!important;
+    z-index:4!important;
+    width:250px!important;
+    max-width:250px!important;
+    min-width:0!important;
+    height:auto!important;
+    margin:0!important;
+    padding:25px 15px 18px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    border:1px solid var(--cl281-border)!important;
+    border-radius:21px 0 0 21px!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    direction:ltr!important;
+    text-align:left!important;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Tajawal",sans-serif!important;
+    color:var(--cl281-ink)!important;
+  }
+  html body #platformLobby.cl281-home .cl281-sidebar *,
+  html body #platformLobby.cl281-home .cl281-dashboard *{box-sizing:border-box!important}
+  html body #platformLobby.cl281-home .cl281-sidebar svg,
+  html body #platformLobby.cl281-home .cl281-dashboard svg{
+    width:19px!important;
+    height:19px!important;
+    flex:0 0 19px!important;
+    display:block!important;
+    fill:none!important;
+    stroke:currentColor!important;
+    stroke-width:1.8!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+  }
+  html body #platformLobby.cl281-home .cl281-logo{
+    display:flex;align-items:center;gap:11px;
+    padding:0 10px;
+    font-size:20px;font-weight:820;
+    letter-spacing:-.6px;
+  }
+  html body #platformLobby.cl281-home .cl281-mark{
+    display:grid;place-items:center;
+    width:37px;height:37px;border-radius:11px;
+    background:#187d59;color:#fff;
+    font-size:21px;line-height:1;
+    font-weight:850;letter-spacing:0;
+    flex:0 0 37px;
+  }
+  html body #platformLobby.cl281-home .cl281-caption{
+    color:#96a89a;
+    text-transform:uppercase;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.1px;
+    margin:45px 12px 14px;
+  }
+  html body #platformLobby.cl281-home .cl281-nav-list{
+    display:flex;flex-direction:column;
+    gap:6px;min-width:0;
+  }
+  html body #platformLobby.cl281-home .cl281-nav{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:13px!important;
+    width:100%!important;
+    min-height:45px!important;
+    padding:11px 13px!important;
+    margin:0!important;
+    border:1px solid transparent!important;
+    border-radius:11px!important;
+    background:transparent!important;
+    color:#657c6c!important;
+    box-shadow:none!important;
+    font-family:inherit!important;
+    font-size:13px!important;
+    font-weight:660!important;
+    line-height:1.4!important;
+    text-align:start!important;
+    white-space:normal!important;
+    cursor:pointer!important;
+    transition:background-color .18s ease!important;
+  }
+  html body #platformLobby.cl281-home .cl281-nav.is-active{
+    background:#e9f5ec!important;color:#157b53!important;
+    font-weight:800!important;
+  }
+  html body #platformLobby.cl281-home .cl281-nav:not(.is-active):hover{
+    background:#f2f8f4!important;color:#2a6847!important;
+  }
+  html body #platformLobby.cl281-home .cl281-account{
+    display:flex!important;align-items:center!important;gap:12px!important;
+    width:100%!important;
+    padding:17px 5px 3px!important;
+    margin:auto 0 0!important;
+    border:0!important;border-top:1px solid #e9f0ea!important;
+    background:transparent!important;
+    color:#294c37!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    text-align:left!important;
+    cursor:pointer!important;
+  }
+  html body #platformLobby.cl281-home .cl281-avatar{
+    display:grid;place-items:center;
+    width:37px;height:37px;border-radius:50%;
+    background:#e7f2ea;color:#23754e;
+    flex:0 0 37px;
+    font-size:13px;font-weight:820;
+  }
+  html body #platformLobby.cl281-home .cl281-account > span:last-child{
+    display:flex;flex-direction:column;gap:3px;
+    min-width:0;
+  }
+  html body #platformLobby.cl281-home .cl281-account b{
+    display:block;max-width:158px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    font-size:12px;font-weight:800;
+  }
+  html body #platformLobby.cl281-home .cl281-account small{font-size:10px;color:#95a899;font-weight:520}
+  html body #platformLobby.cl281-home .cl281-dashboard{
+    display:block!important;
+    width:100%!important;min-width:0!important;max-width:1180px!important;
+    height:auto!important;margin:0 auto!important;padding:0!important;
+    position:relative!important;z-index:1!important;
+    border:0!important;border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    direction:inherit!important;
+    text-align:start!important;
+    color:var(--cl281-ink)!important;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Tajawal",sans-serif!important;
+    line-height:1.5!important;
+  }
+  html body #platformLobby.cl281-home .cl281-dashboard button{
+    cursor:pointer!important;
+    font-family:inherit!important;
+  }
+  html body #platformLobby.cl281-home .cl281-dashboard :is(button):focus-visible,
+  html body #platformLobby.cl281-home .cl281-sidebar button:focus-visible{
+    outline:3px solid #5cb38a!important;outline-offset:3px!important;
+  }
+  html body #platformLobby.cl281-home .cl281-pagebar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin:0 0 35px;min-height:38px;
+    color:var(--cl281-ink);
+  }
+  html body #platformLobby.cl281-home .cl281-pagebar > b{
+    font-size:16px;font-weight:820;line-height:1.35;
+  }
+  html body #platformLobby.cl281-home .cl281-search-prompt{
+    display:inline-flex!important;align-items:center!important;gap:10px!important;
+    max-width:45%!important;min-height:39px!important;
+    padding:9px 12px!important;margin:0!important;
+    border:1px solid #e0eae2!important;border-radius:10px!important;
+    background:#fff!important;color:#869b8b!important;
+    box-shadow:none!important;font-size:12px!important;
+    font-weight:500!important;text-align:start!important;
+    white-space:normal!important;
+  }
+  html body #platformLobby.cl281-home .cl281-search-prompt svg{
+    width:17px!important;height:17px!important;
+    flex-basis:17px!important;
+  }
+  html body #platformLobby.cl281-home .cl281-intro .cl281-kicker{
+    display:block;
+    font-size:11px;font-weight:820;letter-spacing:.95px;
+    color:#288259;
+    text-transform:uppercase;margin:0 0 11px;
+  }
+  html body #platformLobby.cl281-home .cl281-intro h1{
+    padding:0!important;margin:0 0 9px!important;
+    color:#253d30!important;
+    font-weight:830!important;
+    font-size:clamp(26px,2.5vw,34px)!important;
+    line-height:1.25!important;letter-spacing:-1px!important;
+    text-wrap:balance;
+  }
+  html body #platformLobby.cl281-home .cl281-intro p{
+    color:#809386!important;
+    font-size:13px!important;line-height:1.65!important;
+    margin:0!important;
+  }
+  html body #platformLobby.cl281-home .cl281-hero{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;
+    margin:27px 0 27px;
+    min-height:200px;
+    padding:clamp(22px,2.5vw,34px);
+    border:1px solid #d8e8dd;
+    border-radius:17px;
+    background:#e9f3ec;
+    overflow:hidden;
+    box-shadow:none;
+  }
+  html body #platformLobby.cl281-home .cl281-hero-main{flex:1;min-width:0;max-width:560px}
+  html body #platformLobby.cl281-home .cl281-hero h2{
+    font-size:clamp(22px,2.55vw,31px)!important;
+    line-height:1.2!important;
+    letter-spacing:-.85px!important;
+    color:#204c34!important;
+    font-weight:830!important;
+    margin:0 0 13px!important;
+  }
+  html body #platformLobby.cl281-home .cl281-hero p{
+    color:#6c8976!important;
+    font-size:13px!important;line-height:1.65!important;
+    margin:0 0 20px!important;
+  }
+  html body #platformLobby.cl281-home .cl281-primary{
+    display:inline-flex!important;justify-content:center!important;align-items:center!important;
+    width:auto!important;min-height:44px!important;gap:9px!important;
+    padding:11px 17px!important;margin:0!important;
+    border:1px solid #177e58!important;
+    border-radius:9px!important;
+    background:#177e58!important;color:#fff!important;
+    box-shadow:none!important;
+    font-size:13px!important;font-weight:780!important;
+    line-height:1.3!important;
+    transition:background-color .18s ease,transform .18s ease!important;
+  }
+  html body #platformLobby.cl281-home .cl281-primary:hover{
+    background:#116747!important;transform:translateY(-2px)!important;
+  }
+  html body #platformLobby.cl281-home .cl281-hero-art{
+    display:grid;place-items:center;
+    width:clamp(124px,16vw,205px);
+    flex:0 0 clamp(124px,16vw,205px);
+    min-height:154px;
+  }
+  html body #platformLobby.cl281-home .cl281-art-disc{
+    display:grid;place-items:center;
+    width:156px;height:156px;max-width:100%;aspect-ratio:1;
+    border-radius:50%;background:#d8ebdc;
+  }
+  html body #platformLobby.cl281-home .cl281-art-paper{
+    display:flex;flex-direction:column;gap:10px;
+    width:116px;height:117px;max-width:85%;padding:16px;
+    border-radius:13px;border:1px solid #c8dfd0;
+    background:#fff;
+    transform:rotate(-5deg);box-shadow:8px 9px #b9d9c2;
+  }
+  html body #platformLobby.cl281-home .cl281-art-icon{
+    display:grid;place-items:center;
+    width:30px;height:30px;flex:0 0 30px;
+    border-radius:9px;
+    color:#188257;background:#e4f3e9;
+  }
+  html body #platformLobby.cl281-home .cl281-art-paper > i{
+    display:block;width:100%;height:5px;border-radius:5px;background:#e3ede7;
+  }
+  html body #platformLobby.cl281-home .cl281-art-paper > i:nth-of-type(2){width:64%}
+  html body #platformLobby.cl281-home .cl281-art-progress{
+    display:block;width:100%;height:5px;overflow:hidden;
+    background:#e3eee5;border-radius:5px;
+  }
+  html body #platformLobby.cl281-home .cl281-art-progress i{
+    display:block;width:65%;height:100%;background:#299164;border-radius:5px;
+  }
+  html body #platformLobby.cl281-home .cl281-section-title{
+    display:flex;align-items:center;justify-content:space-between;gap:13px;
+    margin:0 0 15px;
+  }
+  html body #platformLobby.cl281-home .cl281-section-title h3{
+    margin:0!important;color:#2a3e31!important;
+    font-size:18px!important;font-weight:820!important;
+    line-height:1.35!important;
+  }
+  html body #platformLobby.cl281-home .cl281-section-title button{
+    display:inline-flex!important;
+    width:auto!important;min-height:32px!important;
+    margin:0!important;padding:4px 0!important;
+    border:0!important;background:transparent!important;
+    color:#258158!important;font-size:12px!important;font-weight:800!important;
+    box-shadow:none!important;
+  }
+  html body #platformLobby.cl281-home .cl281-quick{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+  }
+  html body #platformLobby.cl281-home .cl281-tile{
+    display:flex!important;flex-direction:column!important;
+    align-items:flex-start!important;justify-content:flex-start!important;gap:11px!important;
+    width:100%!important;min-width:0!important;min-height:145px!important;
+    margin:0!important;padding:18px 15px!important;
+    border:1px solid #e1eae3!important;border-radius:13px!important;
+    background:#fff!important;color:#294032!important;
+    text-align:start!important;box-shadow:none!important;
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+  }
+  html body #platformLobby.cl281-home .cl281-tile:hover{
+    border-color:#b4d2bc!important;
+    transform:translateY(-3px)!important;
+    box-shadow:0 10px 24px rgba(20,73,41,.075)!important;
+  }
+  html body #platformLobby.cl281-home .cl281-tile-icon{
+    display:grid;place-items:center;
+    width:40px;height:40px;flex:0 0 40px;
+    border-radius:11px;
+    background:#e9f5ec;color:#197e57;
+  }
+  html body #platformLobby.cl281-home .cl281-tile-icon.is-gold{
+    background:#fbf2e0;color:#ad812d;
+  }
+  html body #platformLobby.cl281-home .cl281-tile b{
+    font-size:13px;font-weight:800;line-height:1.35;
+  }
+  html body #platformLobby.cl281-home .cl281-tile small{
+    font-size:11px;line-height:1.5;
+    color:#8a9d8d;
+  }
+  html body #platformLobby.cl281-home .cl281-lower{
+    display:grid;grid-template-columns:1.15fr 1fr;
+    gap:15px;margin:25px 0 0;
+  }
+  html body #platformLobby.cl281-home .cl281-panel{
+    border:1px solid #e1eae3;border-radius:13px;
+    padding:18px 20px;background:#fff;min-width:0;
+  }
+  html body #platformLobby.cl281-home .cl281-panel h3{
+    margin:0 0 16px!important;
+    color:#2a4032!important;font-size:14px!important;font-weight:810!important;
+  }
+  html body #platformLobby.cl281-home .cl281-panel-action{
+    display:flex!important;align-items:center!important;
+    width:100%!important;min-width:0!important;
+    gap:11px!important;margin:0!important;padding:0!important;
+    border:0!important;background:transparent!important;
+    box-shadow:none!important;text-align:start!important;
+    color:#2d4d3b!important;
+  }
+  html body #platformLobby.cl281-home .cl281-mini{
+    display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;
+    border-radius:11px;background:#e9f5ec;color:#1a8558;
+  }
+  html body #platformLobby.cl281-home .cl281-panel-text{
+    display:flex;flex-direction:column;gap:5px;min-width:0;flex:1 1 auto;
+  }
+  html body #platformLobby.cl281-home .cl281-panel-text b{font-size:12px;font-weight:800}
+  html body #platformLobby.cl281-home .cl281-panel-text small{
+    font-size:11px;color:#859b8c;line-height:1.45;overflow-wrap:anywhere;
+  }
+  html body #platformLobby.cl281-home .cl281-panel-action>svg:last-child{
+    width:16px!important;height:16px!important;flex:0 0 16px!important;
+    margin-inline-start:auto;
+    color:#9aada0;
+  }
+  /* A desktop navigation sidebar replaces the floating five-tab dock only on home. */
+  html body.classora-authenticated:has(#platformLobby.cl281-home:not(.hidden))
+    #classoraMobilePageNav{
+    display:none!important;
+  }
+  @media(max-width:1350px){
+    html body #platformLobby.cl281-home .cl281-quick{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    html body #platformLobby.cl281-home .cl281-tile{min-height:118px!important}
+    html body #platformLobby.cl281-home .cl281-hero-art{
+      flex-basis:139px;width:139px;
+    }
+  }
+  @media(max-width:1120px){
+    html body #platformLobby.cl281-home .cl281-sidebar{
+      width:210px!important;padding-inline:11px!important;
+    }
+    html body #platformLobby.cl281-home .lobby-shell{
+      margin-left:230px!important;
+      width:calc(100% - 250px)!important;
+      padding-inline:23px!important;
+    }
+    html body #platformLobby.cl281-home .cl281-hero-art{display:none}
+    html body #platformLobby.cl281-home .cl281-lower{grid-template-columns:1fr!important}
+    html body #platformLobby.cl281-home .cl281-search-prompt{max-width:55%!important}
+  }
+  @keyframes cl281-enter{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  html body #platformLobby.cl281-home .cl281-dashboard .cl281-intro,
+  html body #platformLobby.cl281-home .cl281-dashboard .cl281-hero,
+  html body #platformLobby.cl281-home .cl281-dashboard .cl281-quick{
+    animation:cl281-enter .33s ease both!important;
+  }
+  html body #platformLobby.cl281-home .cl281-dashboard .cl281-hero{
+    animation-delay:.055s!important;
+  }
+  html body #platformLobby.cl281-home .cl281-dashboard .cl281-quick{
+    animation-delay:.095s!important;
+  }
+}
+/* At all other sizes the original Classora layout and dock win unchanged. */
+@media(max-width:999px){
+  html body #platformLobby .cl281-dashboard,
+  html body #platformLobby .cl281-sidebar{
+    display:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #platformLobby .cl281-dashboard *,
+  html body #platformLobby .cl281-sidebar *{
+    animation:none!important;transition:none!important;
+  }
+}
