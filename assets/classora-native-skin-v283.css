@@ -1,0 +1,476 @@
+/* Classora v283 — the existing app, wearing a new cover.
+ * CSS-ONLY. No cloned dashboards, route interception, click listeners,
+ * DOM reparenting, visibility toggles, modal overrides, or body scroll rewrites.
+ * All original Subjects, lesson cards, assistant, classes, chat, PWA and dock
+ * remain their existing working components.
+ */
+html body:not([data-classora-theme="embroidery"]){
+  --cl283-page:#081c21;
+  --cl283-main:#10282f;
+  --cl283-paper:#132f38;
+  --cl283-raised:#193a43;
+  --cl283-outline:#31555a;
+  --cl283-heading:#f2fcf8;
+  --cl283-text:#e4f4ef;
+  --cl283-muted:#b7d1ca;
+  --cl283-accent:#83e9c5;
+  --cl283-active:#1c4b41;
+  --cl283-active-text:#bbffe2;
+  --cl283-hero:#173b45;
+  --cl283-tile-shadow:0 10px 28px rgba(1,12,18,.13);
+  --cl283-glass:rgba(17,51,56,.83);
+}
+html body:is([data-classora-theme="morning"],.light):not([data-classora-theme="embroidery"]){
+  --cl283-page:#eff6f1;
+  --cl283-main:#f7faf7;
+  --cl283-paper:#ffffff;
+  --cl283-raised:#e9f4ed;
+  --cl283-outline:#d0e5d6;
+  --cl283-heading:#183d2c;
+  --cl283-text:#294c36;
+  --cl283-muted:#4f7160;
+  --cl283-accent:#176e4d;
+  --cl283-active:#e1f1e5;
+  --cl283-active-text:#115e3d;
+  --cl283-hero:#e6f3e9;
+  --cl283-tile-shadow:0 9px 26px rgba(28,78,49,.065);
+  --cl283-glass:rgba(252,255,252,.87);
+}
+/* Native 25/75 learning island: never replace the assistant panel or main page. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby:not(.hidden){
+  background:radial-gradient(ellipse at 4% 8%,color-mix(in srgb,var(--cl283-accent) 11%,transparent),transparent 36%),
+             var(--cl283-page)!important;
+  color:var(--cl283-text)!important;
+}
+@media(min-width:1000px){
+  html body:not([data-classora-theme="embroidery"]) #platformLobby .cl258-island-surface{
+    background:linear-gradient(125deg,var(--cl283-paper),var(--cl283-main))!important;
+    border-color:var(--cl283-outline)!important;
+    box-shadow:0 20px 54px rgba(0,14,18,.12)!important;
+  }
+  html body:not([data-classora-theme="embroidery"]) #platformLobby .lobby-shell{
+    background:color-mix(in srgb,var(--cl283-main) 73%,transparent)!important;
+    border:0!important;
+    /* Existing v260/v262 positions and scrolling are intentionally unchanged. */
+  }
+  html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left{
+    background:linear-gradient(160deg,
+      color-mix(in srgb,var(--cl283-paper) 91%,transparent),
+      color-mix(in srgb,var(--cl283-main) 83%,transparent))!important;
+    border-right-color:var(--cl283-outline)!important;
+    color:var(--cl283-text)!important;
+  }
+}
+/* Clear language-independent type hierarchy, scoped to the actual native blocks. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214,.learning-hub,.cl250-left,.classora-welcome
+){
+  font-family:"Tajawal","Inter",system-ui,sans-serif!important;
+  color:var(--cl283-text)!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-hero h1,.cl214-section-heading h2,
+  .hub-hero h1,.hub-curriculum-head h2,
+  .lobby-section-head h3
+){
+  color:var(--cl283-heading)!important;
+  font-weight:850!important;
+  line-height:1.23!important;
+  text-shadow:none!important;
+  overflow-wrap:normal!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-hero-lead,.cl214-personal,.cl214-section-heading p,
+  .hub-hero p,.hub-muted,.hub-curriculum-head p
+){
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+  font-weight:550!important;
+  line-height:1.7!important;
+  text-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-kicker,.cl214-section-index,.hub-kicker
+){
+  color:var(--cl283-accent)!important;
+  font-weight:830!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero h1 em{
+  color:var(--cl283-accent)!important;
+  text-shadow:none!important;
+}
+/* New visual skin on ORIGINAL hero: no changes to actions or sections. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero{
+  min-height:clamp(245px,26vw,335px)!important;
+  padding:clamp(21px,2.7vw,36px)!important;
+  border-radius:22px!important;
+  background:radial-gradient(ellipse at 89% 9%,
+    color-mix(in srgb,var(--cl283-accent) 9%,transparent),transparent 54%),
+    var(--cl283-hero)!important;
+  border:1px solid var(--cl283-outline)!important;
+  box-shadow:var(--cl283-tile-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero:before{
+  opacity:.20!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-copy{
+  min-width:0!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons{
+  gap:10px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons :is(.cl214-primary,.cl214-secondary){
+  min-height:45px!important;
+  padding:10px 16px!important;
+  border-radius:11px!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  transition:background-color .16s ease,transform .16s ease,border-color .16s ease!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons .cl214-primary{
+  color:var(--cl283-page)!important;
+  background:var(--cl283-accent)!important;
+  border:1px solid var(--cl283-accent)!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons .cl214-secondary{
+  color:var(--cl283-heading)!important;
+  background:var(--cl283-paper)!important;
+  border:1px solid var(--cl283-outline)!important;
+  box-shadow:none!important;
+}
+/* Morning primary uses light text, for AA-sized button contrast. */
+html body:is([data-classora-theme="morning"],.light):not([data-classora-theme="embroidery"])
+  #platformLobby .cl214-hero-buttons .cl214-primary{
+  color:#fff!important;
+}
+/* Existing top navigation tabs. Don't change what they do. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-tabs{
+  gap:10px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-tabs button{
+  min-height:42px!important;
+  padding:9px 14px!important;
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:11px!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-text)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-tabs button:hover,
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-tabs button[aria-selected="true"]{
+  background:var(--cl283-active)!important;
+  color:var(--cl283-active-text)!important;
+  border-color:var(--cl283-outline)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-tabs button svg{
+  color:var(--cl283-accent)!important;
+}
+/* Actual cards, exam/competition tools and section surfaces. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-quick,.cl214-tool-grid
+){
+  gap:clamp(11px,1.1vw,16px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-quick,.cl214-tool-grid
+) .cl214-card{
+  min-height:135px!important;
+  padding:17px 15px!important;
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:16px!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-text)!important;
+  box-shadow:var(--cl283-tile-shadow)!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-graphic{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  border-radius:11px!important;
+  background:var(--cl283-raised)!important;
+  color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-graphic svg{
+  width:22px!important;
+  height:22px!important;
+  color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-copy strong{
+  font-size:clamp(13px,1.15vw,15px)!important;
+  font-weight:850!important;
+  line-height:1.42!important;
+  color:var(--cl283-heading)!important;
+  text-shadow:none!important;
+  opacity:1!important;
+  overflow-wrap:anywhere!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-copy small{
+  font-size:12px!important;
+  font-weight:560!important;
+  line-height:1.56!important;
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  overflow-wrap:anywhere!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-block,.cl214-live-panel
+){
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:17px!important;
+  background:var(--cl283-paper)!important;
+  box-shadow:var(--cl283-tile-shadow)!important;
+  color:var(--cl283-text)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-section-heading h2{
+  font-size:clamp(19px,2vw,27px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-section-heading p{
+  font-size:13px!important;
+}
+@media(hover:hover){
+  html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+    .cl214-quick,.cl214-tool-grid
+  ) .cl214-card:hover{
+    transform:translateY(-3px)!important;
+    border-color:var(--cl283-accent)!important;
+    box-shadow:0 13px 30px rgba(0,28,24,.13)!important;
+  }
+}
+/* Preserve the same curriculum DOM, subject buttons and cards from the screenshot. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .learning-hub{
+  --hub-text:var(--cl283-heading);
+  --hub-muted:var(--cl283-muted);
+  --hub-panel:var(--cl283-paper);
+  --hub-border:var(--cl283-outline);
+  --hub-mint:var(--cl283-accent);
+  color:var(--cl283-text)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search{
+  min-height:49px!important;
+  padding-inline:15px!important;
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:13px!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-text)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search input{
+  background:transparent!important;
+  color:var(--cl283-heading)!important;
+  font-size:13px!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-search input::placeholder{
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-subject-tabs{
+  gap:9px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-subject-tabs button{
+  min-height:42px!important;
+  padding:9px 13px!important;
+  border-radius:11px!important;
+  border:1px solid var(--cl283-outline)!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-text)!important;
+  font-size:13px!important;
+  font-weight:730!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-subject-tabs button.active{
+  background:var(--cl283-active)!important;
+  color:var(--cl283-active-text)!important;
+  border-color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-shelf{
+  margin-block:19px 25px!important;
+  padding:clamp(17px,2vw,24px)!important;
+  border-radius:19px!important;
+  border:1px solid var(--cl283-outline)!important;
+  background:var(--cl283-main)!important;
+  box-shadow:var(--cl283-tile-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-head h2{
+  font-size:clamp(22px,2.5vw,30px)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-grade-button{
+  width:51px!important;
+  height:45px!important;
+  min-height:45px!important;
+  border-radius:11px!important;
+  border:1px solid var(--cl283-outline)!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-text)!important;
+  font-weight:850!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-grade-button.active{
+  background:var(--cl283-accent)!important;
+  border-color:var(--cl283-accent)!important;
+  color:var(--cl283-page)!important;
+  box-shadow:none!important;
+}
+html body:is([data-classora-theme="morning"],.light):not([data-classora-theme="embroidery"])
+  #platformLobby .hub-grade-button.active{
+  color:#fff!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-subject{
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:15px!important;
+  background:var(--cl283-paper)!important;
+  box-shadow:0 5px 20px rgba(0,16,15,.05)!important;
+  color:var(--cl283-text)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-copy :is(small,b,em){
+  text-shadow:none!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-copy b{
+  color:var(--cl283-heading)!important;
+  font-weight:810!important;
+  font-size:15px!important;
+  line-height:1.4!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-copy :is(small,em){
+  color:var(--cl283-muted)!important;
+  font-size:11px!important;
+  line-height:1.5!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-open{
+  color:var(--cl283-accent)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-topic-chip{
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:9px!important;
+  background:var(--cl283-raised)!important;
+  color:var(--cl283-text)!important;
+  font-size:11px!important;
+  line-height:1.5!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-topic-card{
+  padding:clamp(16px,1.6vw,22px)!important;
+  min-height:195px!important;
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:15px!important;
+  background:var(--cl283-paper)!important;
+  color:var(--cl283-heading)!important;
+  box-shadow:var(--cl283-tile-shadow)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-topic-card h3{
+  color:var(--cl283-heading)!important;
+  font-weight:820!important;
+  font-size:17px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-topic-card p{
+  color:var(--cl283-muted)!important;
+  font-size:12px!important;
+  line-height:1.7!important;
+  opacity:1!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-card-category{
+  color:var(--cl283-accent)!important;
+  font-weight:780!important;
+  font-size:10px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-card-arrow{
+  color:var(--cl283-accent)!important;
+}
+/* Native live AI/assistant: presentation only, input/listeners untouched. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left .cl250-chat-card{
+  background:transparent!important;
+  color:var(--cl283-text)!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left :is(
+ .lobby-ai-head,.cl250-chat-head
+){
+  color:var(--cl283-heading)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left :is(
+ .lobby-ai-input textarea,.lobby-ai-input input
+){
+  background:var(--cl283-paper)!important;
+  border:1px solid var(--cl283-outline)!important;
+  border-radius:12px!important;
+  color:var(--cl283-heading)!important;
+  box-shadow:none!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left :is(
+ .lobby-ai-input textarea,.lobby-ai-input input
+)::placeholder{
+  color:var(--cl283-muted)!important;
+  opacity:1!important;
+}
+/* Native Liquid Glass header, not a newly mounted second top bar. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-header{
+  --cl268-text:var(--cl283-heading);
+  --cl268-divider:var(--cl283-outline);
+  border:1px solid var(--cl283-outline)!important;
+  background:var(--cl283-glass)!important;
+  color:var(--cl283-heading)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(125%)!important;
+  backdrop-filter:blur(18px) saturate(125%)!important;
+  box-shadow:0 7px 25px rgba(0,28,22,.12)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-header .cl268-name{
+  color:var(--cl283-heading)!important;
+  font-weight:790!important;
+}
+/* Only the floating dock's appearance; no positioning, size, visibility, or click-area changes. */
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"]) #classoraMobilePageNav{
+  background:var(--cl283-glass)!important;
+  border:1px solid var(--cl283-outline)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(120%)!important;
+  backdrop-filter:blur(22px) saturate(120%)!important;
+  box-shadow:0 10px 28px rgba(0,20,17,.16)!important;
+}
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+ #classoraMobilePageNav>button{
+  color:var(--cl283-text)!important;
+}
+html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"])
+ #classoraMobilePageNav>button.is-active{
+  background:var(--cl283-active)!important;
+  color:var(--cl283-active-text)!important;
+}
+/* Keep all original functions, scroll paths, and mobile bottom bar unobstructed. */
+@media(max-width:760px){
+ html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-hero,.cl214-block,.hub-curriculum-shelf
+ ){
+  border-radius:17px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero{
+  min-height:0!important;
+  padding:clamp(17px,4.2vw,24px)!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .cl214-quick,.cl214-tool-grid
+ ) .cl214-card{
+  min-height:118px!important;
+  padding:14px 12px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby :is(
+  .hub-curriculum-shelf,.cl214-block
+ ){padding:16px!important}
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-copy :is(strong,small){
+  line-height:1.55!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body #platformLobby :is(
+  .cl214-card,.hub-topic-card,.hub-curriculum-subject,.cl214-hero-buttons button
+ ){
+  transition:none!important;
+  animation:none!important;
+ }
+}
