@@ -98,7 +98,14 @@ function init(){
  if(stats)get('cl214StatHost')?.append(stats);
  const jumpSubjects=()=>{
   const lobby=get('platformLobby');
-  const target=lobby?.querySelector('.hub-curriculum-shelf')||lobby?.querySelector('.learning-hub')||lobby?.querySelector('.pythag-action-grid');
+  // Desktop: show the user's original screenshot order (search → filters →
+  // grade picker → native subjects → three-column lesson cards).
+  const desktop=window.matchMedia?.('(min-width:1000px)')?.matches;
+  const target=(desktop&&lobby?.querySelector('.learning-hub .hub-search:not([hidden])'))||
+    (desktop&&lobby?.querySelector('.learning-hub .hub-subject-tabs'))||
+    lobby?.querySelector('.hub-curriculum-shelf')||
+    lobby?.querySelector('.learning-hub')||
+    lobby?.querySelector('.pythag-action-grid');
   target?.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});
  };
  function lastLesson(){
