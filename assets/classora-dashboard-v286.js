@@ -18,6 +18,7 @@ function positionAI(){
  else if(!active&&marker.parentNode&&card.parentNode!==marker.parentNode)marker.after(card);
 }
 function go(route){
+ if(route==='search'){openSearch();return}
  if(route==='home'){active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();return}
  if(route==='ai'){root.classList.add('cl286-ai-open');positionAI();$('lobbyAIInput')?.focus();return}
  if(route==='closeAI'){closeAI();return}
@@ -28,6 +29,18 @@ function go(route){
  if(route==='progress'){const fn=window.classoraLearningPlus?.progress;if(typeof fn==='function')fn();else go('tools');return}
  const ids={search:'classoraGlassSearchBtn',notifications:'lobbyNotificationsBtn',profile:'lobbyProfileBtn',classes:'lobbyClassBtn',chat:'lobbyChatBtn',settings:'lobbySettingsBtn',exam:'lobbyExamBtn',live:'competitionBtn'};
  if(ids[route])native(ids[route]);
+}
+function openSearch(){
+ const ar=(document.documentElement.lang||'ar').startsWith('ar');
+ const dialog=document.createElement('dialog');dialog.className='cl286-search-dialog';dialog.dir=ar?'rtl':'ltr';
+ const title=document.createElement('h2');title.textContent=ar?'ابحث في كلاسورا':'Search Classora';
+ const input=document.createElement('input');input.type='search';input.placeholder=ar?'مادة، درس، أو أداة…':'Subject, lesson, or tool…';input.setAttribute('aria-label',title.textContent);
+ const close=document.createElement('button');close.type='button';close.textContent=ar?'إغلاق ✕':'Close ✕';close.addEventListener('click',()=>dialog.close());
+ const list=document.createElement('div');
+ const items=[['subject:math','الرياضيات','Mathematics'],['subject:science','العلوم','Science'],['subject:arabic','اللغة العربية','Arabic'],['subjects','كل المواد والدروس','All subjects and lessons'],['exam','الامتحانات','Exams'],['live','المسابقات','Competitions'],['classes','صفوفي','Classes'],['chat','الشات','Chat'],['settings','الإعدادات','Settings'],['ai','مساعد كلاسورا','Classora assistant']];
+ function render(){list.replaceChildren();const q=input.value.trim().toLowerCase();for(const [route,a,e] of items){if(q&&!(`${a} ${e}`.toLowerCase().includes(q)))continue;const b=document.createElement('button');b.type='button';b.textContent=ar?a:e;b.addEventListener('click',()=>{dialog.close();go(route)});list.append(b)}if(!list.childElementCount){const p=document.createElement('p');p.textContent=ar?'ما لقينا نتيجة. جرّب اسم المادة.':'No results. Try a subject name.';list.append(p)}}
+ input.addEventListener('input',render);dialog.addEventListener('close',()=>{dialog.remove();dash.querySelector('[data-d-route="search"]')?.focus()},{once:true});
+ dialog.append(close,title,input,list);document.body.append(dialog);render();dialog.showModal();input.focus();
 }
 function sync(){
  if(!dash)return;
