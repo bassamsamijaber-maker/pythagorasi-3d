@@ -8525,9 +8525,1599 @@ const uiExactTranslations=new Map([
   ["اسم الحساب","Account name"],["🔵 الفريق A","🔵 Team A"],["🔴 الفريق B","🔴 Team B"],["دخول الغرفة","Join Room"],
   ["كل طالب يدخل من جهازه بنفس الكود.","Every student joins from their own device using the same code."],
   ["اعمل مسابقة فيثاغورس سريعة، أو صمّم أسئلة فيثاغورس وإجاباتها بنفسك.","Create a quick Pythagoras competition or design your own Pythagoras questions and answers."],
-  ["⚡ إنشاء مسابقة سر
-... 98206 bytes omitted ...
-ument.getElementById("enableTeacherPasswordBtn").addEventListener("click",async()=>{
+  ["⚡ إنشاء مسابقة سريعة","⚡ Create Quick Competition"],["🛠️ صمّم المسابقة بنفسك","🛠️ Design Competition"],["📚 مسابقاتي المحفوظة","📚 Saved Competitions"],
+  ["إنشاء الغرفة يحتاج دخول المعلم أولًا.","Creating a room requires teacher sign-in."],["📚 مسابقاتي","📚 My Competitions"],
+  ["كل المسابقات اللي أنشأتها محفوظة. افتح غرفة لسه شغالة أو انسخ مسابقة قديمة وشغّلها من جديد بكود جديد.","All competitions you create are saved. Open an active room or duplicate an old competition and restart it with a new code."],
+  ["🛠️ صمّم المسابقة","🛠️ Design Competition"],["اكتب أسئلة فيثاغورس والخيارات وحدد الإجابة الصحيحة. الحد الأقصى 15 سؤال.","Write Pythagoras questions and choices, then select the correct answer. Maximum: 15 questions."],
+  ["🏆 أنشئ الغرفة","🏆 Create Room"],["غرفة الانتظار","Waiting Room"],["شارك هذا الكود مع الصف","Share this code with the class"],
+  ["▶ ابدأ المسابقة","▶ Start Competition"],["خروج","Exit"],["سؤال 1","Question 1"],["مباشر","Live"],
+  ["✓ اقفل السؤال واحسب النقاط","✓ Lock Question & Calculate Points"],["السؤال التالي ➜","Next Question ➜"],["🏅 الترتيب","🏅 Leaderboard"],
+  ["انتهت المسابقة!","Competition Finished!"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[
+  ["Classora Assistant","Classora Assistant"],
+  ["مساعد Classora","Classora Assistant"],
+  ["Classora learning assistant","Classora learning assistant"],
+  ["🔥 اختار النشاط","🔥 Choose an Activity"],
+  ["كل النشاطات هون خاصة بنظرية فيثاغورس.","All activities are available here in one place."],
+  ["🧮 معادلتان بمجهولين","🧮 Two-Variable Equations"],
+  ["حل x و y مع رسم 3D قابل للتعديل","Solve x and y with an editable 3D graph"],
+  ["🧮 معادلتان بمجهولين + رسم 3D","🧮 Two Equations, Two Variables + 3D Graph"],
+  ["عدّل المعادلتين وشوف الحل والتقاطع يتغيّر مباشرة.","Edit both equations and watch the solution and intersection update instantly."],
+  ["المعادلة الأولى","First Equation"],
+  ["المعادلة الثانية","Second Equation"],
+  ["طريقة الشرح","Solution Method"],
+  ["✨ تلقائي","✨ Automatic"],
+  ["➖ الحذف","➖ Elimination"],
+  ["🔁 التعويض","🔁 Substitution"],
+  ["✓ حل وتحديث الرسم","✓ Solve & Update Graph"],
+  ["🎲 مثال جديد","🎲 New Example"],
+  ["⟳ إعادة زاوية الرسم","⟳ Reset Camera"],
+  ["📊 الرسم التفاعلي ثلاثي الأبعاد","📊 Interactive 3D Graph"],
+  ["اسحب لتدوير الرسم • استخدم العجلة للتقريب • غيّر القيم ليتحدث فورًا","Drag to rotate • scroll to zoom • change values for instant updates"],
+  ["تقاطع المستويين يمثل حل x و y.","The planes intersect at the x and y solution."],
+  ["📈 الرسم البياني — 2D و 3D","📈 Graph — 2D & 3D"],
+  ["الوضع الافتراضي 2D مثل الرسم المدرسي، ومعه خيار 3D تفاعلي","The default is a classroom-style 2D graph, with an interactive 3D mode"],
+  ["موضوع المسابقة","Competition Topic"],
+  ["عدد الأسئلة","Question Count"],
+  ["✨ Mixed — فيثاغورس + معادلتين","✨ Mixed — Pythagoras + Two-Variable Equations"],
+  ["📐 فيثاغورس فقط","📐 Pythagoras Only"],
+  ["🧮 معادلتان بمجهولين فقط","🧮 Two-Variable Equations Only"],
+  ["توزيع اللاعبين","Player Assignment"],
+  ["طريقة العرض","Display Mode"],
+  ["🎯 الطالب يختار فريقه","🎯 Student chooses a team"],
+  ["🎲 الموقع يوزع عشوائي","🎲 Site assigns teams randomly"],
+  ["👤 فردي — بدون فرق","👤 Solo — no teams"],
+  ["📺 صف / بروجكتر","📺 Classroom / Projector"],
+  ["🌍 عن بُعد — الدخول بالكود","🌍 Remote — join by code"],
+  ["اختار فريقك","Choose Your Team"],
+  ["🎯 الطالب يختار","🎯 Student chooses"],
+  ["🎲 عشوائي من الموقع","🎲 Random assignment"],
+  ["👤 فردي","👤 Solo"],
+  ["📺 بروجكتر","📺 Projector"],
+  ["🌍 عن بُعد","🌍 Remote"],
+  ["💾 تطبيق","💾 Apply"],
+  ["📺 لوحة التقدّم","📺 Progress Board"],
+  ["بانتظار النتائج…","Waiting for results…"],
+  ["🏅 الترتيب المباشر","🏅 Live Leaderboard"],
+  ["🏆 مسابقات شغّالة هسا","🏆 Live Competitions"],
+  ["اضغط دخول وادخل مباشرة للمسابقة عن بُعد.","Tap Join to enter a remote competition immediately."],
+  ["🤖 Classora Assistant","🤖 Classora Assistant"],
+  ["The assistant name is part of the Classora platform.","The assistant name is part of the Classora platform."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["🌐 اللغة / Language","🌐 Language"],["فيثاغورس","Pythagoras"],["أو","or"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["احكي مع فيثاغورسي","Talk to Classora Assistant"],["الصوت يعمل","Voice is on"],["a = √(c² − b²) &nbsp;&nbsp; أو &nbsp;&nbsp; b = √(c² − a²)","a = √(c² − b²) &nbsp;&nbsp; or &nbsp;&nbsp; b = √(c² − a²)"]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+[["🔒 تسجيل الدخول يبقى محفوظًا على هذا الجهاز لمدة شهرين، إلا إذا عملت تسجيل خروج.","🔒 You stay signed in on this device for 2 months unless you log out."]].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+
+/* V62: full English audit — static UI text that previously escaped the bilingual map. */
+[
+  ["؟","?"],
+  ["إدارة المدرسة من مكان واحد","Manage the school from one place"],
+  ["طلاب، صفوف، وظائف، تصويتات، محتوى وتحكم مباشر بالموقع.","Students, classes, assignments, polls, content and direct site controls."],
+  ["استوديو الموقع","Site Studio"],
+  ["كل الطلاب","All Students"],
+  ["الصفوف","Classes"],
+  ["إرسال وظيفة","Send Assignment"],
+  ["التصويتات","Polls"],
+  ["التحكم","Controls"],
+  ["التنقل","Navigation"],
+  ["إدخال طالب على صف","Add Student to Class"],
+  ["ابحث عن الطالب باسمه أو Profile ID، اختار الصف، واضغط إضافة.","Search by student name or Profile ID, choose a class, then add them."],
+  ["الطالب","Student"],
+  ["الصف","Class"],
+  ["اختار الصف","Choose class"],
+  ["➕ إضافة للصف","➕ Add to Class"],
+  ["الموقع يعمل وظيفة ويرسلها للصفوف","Generate and Send an Assignment"],
+  ["اختار الصف، المستوى وعدد الأسئلة. الموقع يولّد وظيفة فيثاغورس جاهزة بتصحيح تلقائي ويرسلها مباشرة.","Choose the class, level and question count. Classora generates a ready-to-use Pythagoras assignment with automatic grading and sends it directly."],
+  ["كل الصفوف","All Classes"],
+  ["خبير","Expert"],
+  ["تاريخ التسليم","Due Date"],
+  ["اسم الوظيفة","Assignment Name"],
+  ["تعليمات للطلاب — اختياري","Student Instructions — Optional"],
+  ["👀 معاينة الأسئلة","👀 Preview Questions"],
+  ["🚀 ولّد الوظيفة وأرسلها","🚀 Generate & Send Assignment"],
+  ["إرسال يدوي / أدوات إضافية","Manual Send / Extra Tools"],
+  ["✨ استوديو الموقع","✨ Site Studio"],
+  ["أضف أزرار وملاحظات للطلاب، وجّهها للجميع أو لصف محدد، ووقفها أو احذفها بأي وقت.","Add buttons and notices for students, target everyone or a specific class, and hide or delete them anytime."],
+  ["🗑️ إدارة رسائل اللوبي","🗑️ Manage Lobby Messages"],
+  ["🔘 إدارة أزرار اللوبي","🔘 Manage Lobby Buttons"],
+  ["🔘 إضافة زر جديد","🔘 Add New Button"],
+  ["زر يظهر باللوبي ويعمل إجراء محدد وآمن.","A lobby button that performs a predefined safe action."],
+  ["الهدف","Target"],
+  ["الجميع","Everyone"],
+  ["الأيقونة","Icon"],
+  ["اسم الزر","Button Label"],
+  ["الإجراء","Action"],
+  ["🎓 الامتحانات","🎓 Exams"],
+  ["🏆 المسابقات","🏆 Competitions"],
+  ["🔥 التحدي","🔥 Challenge"],
+  ["💬 إظهار رسالة","💬 Show Message"],
+  ["🔗 فتح رابط","🔗 Open Link"],
+  ["رسالة أو رابط — حسب الإجراء","Message or URL — depending on the action"],
+  ["＋ أضف الزر","＋ Add Button"],
+  ["🗒️ إضافة ملاحظة","🗒️ Add Notice"],
+  ["ملاحظة تظهر فوق باللوبي وتقدر تخفيها أو تحذفها.","A notice shown at the top of the lobby that you can hide or delete anytime."],
+  ["العنوان","Title"],
+  ["الملاحظة","Notice"],
+  ["＋ أضف الملاحظة","＋ Add Notice"],
+  ["👁️ إدارة المحتوى","👁️ Content Manager"],
+  ["وقف أي عنصر فيختفي من الطلاب، رجّعه فيظهر، أو احذفه نهائيًا.","Pause any item to hide it from students, restore it to show it again, or delete it permanently."],
+  ["كل المحتوى","All Content"],
+  ["إعلانات","Announcements"],
+  ["تصويتات","Polls"],
+  ["وظائف","Assignments"],
+  ["مسابقات","Competitions"],
+  ["الكل","All"],
+  ["ظاهر","Visible"],
+  ["مخفي","Hidden"],
+  ["⏸ وقف","⏸ Pause"],
+  ["= يختفي من الطلاب ويقدر يرجع. &nbsp;","= hidden from students and can be restored. &nbsp;"],
+  ["🗑 حذف","🗑 Delete"],
+  ["= حذف نهائي.","= permanent deletion."],
+  ["🎒 كل الطلاب","🎒 All Students"],
+  ["آخر دخول، الصفوف، حالة كلمة السر، وكل الوظائف اللي سلّموها.","Last login, classes, password status and every assignment they submitted."],
+  ["طلاب","Students"],
+  ["تسليمات وظائف","Assignment Submissions"],
+  ["أحدث دخول","Latest Login"],
+  ["📝 سجل الوظائف والتسليمات","📝 Assignment & Submission History"],
+  ["يعرض كل الوظائف الموجودة وكل طالب سلّمها بدون حد زمني.","Shows all saved assignments and every student submission with no time limit."],
+  ["↻ تحديث السجل","↻ Refresh History"],
+  ["طلاب سلّموا","Students Submitted"],
+  ["السجل بيعرض كل البيانات المحفوظة مهما كان تاريخها.","The history shows all saved data regardless of date."],
+  ["📡 شو شغّال هسا؟","📡 What's Active Now?"],
+  ["↻ تحديث الحالة","↻ Refresh Status"],
+  ["🎛️ مركز التحكم الكامل","🎛️ Full Control Center"],
+  ["وقف ميزة لحالها، حط وقت انتهاء، أو وقف نشاطات الطلاب كلها مرة وحدة.","Pause one feature, set an end time, or pause all student activities at once."],
+  ["⏸ إيقاف كل شيء الآن","⏸ Pause Everything Now"],
+  ["▶ تشغيل كل شيء","▶ Resume Everything"],
+  ["📅 موعد شي جاي","📅 Schedule an Upcoming Item"],
+  ["اعمل عدّ تنازلي لامتحان، مسابقة أو وظيفة.","Create a countdown for an exam, competition or assignment."],
+  ["النوع","Type"],
+  ["🏆 مسابقة","🏆 Competition"],
+  ["🎓 امتحان","🎓 Exam"],
+  ["📝 وظيفة","📝 Assignment"],
+  ["⏳ شيء آخر","⏳ Other"],
+  ["أيام","Days"],
+  ["ساعات","Hours"],
+  ["دقائق","Minutes"],
+  ["＋ أضف الموعد","＋ Add Schedule"],
+  ["المواعيد الحالية","Current Schedules"],
+  ["⏱ تايمر سريع","⏱ Quick Timer"],
+  ["اختار شو بدك توقف وكم دقيقة.","Choose what to pause and for how many minutes."],
+  ["كل شيء","Everything"],
+  ["المسابقات","Competitions"],
+  ["تسليم الوظائف","Assignment Submission"],
+  ["التصويت","Voting"],
+  ["دخول الصفوف","Class Joining"],
+  ["⏱ ابدأ التايمر","⏱ Start Timer"],
+  ["⏸ إيقاف عام","⏸ Global Pause"],
+  ["يوقف نشاطات الطلاب الرئيسية.","Pauses the main student activities."],
+  ["🟢 شغّال","🟢 Active"],
+  ["إيقاف","Pause"],
+  ["حتى","Until"],
+  ["منع الطلاب من فتح الامتحانات.","Prevent students from opening exams."],
+  ["منع الطلاب من دخول المسابقات.","Prevent students from joining competitions."],
+  ["📝 الوظائف","📝 Assignments"],
+  ["منع تسليم الوظائف مؤقتًا.","Temporarily block assignment submissions."],
+  ["📊 التصويت","📊 Voting"],
+  ["إظهار النتائج بدون السماح بأصوات جديدة.","Show results without allowing new votes."],
+  ["🏫 دخول الصفوف","🏫 Class Joining"],
+  ["منع الانضمام بكود الصف مؤقتًا.","Temporarily block joining classes with a class code."],
+  ["إظهار رسالة صيانة","Show Maintenance Message"],
+  ["💾 حفظ التحكم","💾 Save Controls"],
+  ["الوقت اختياري. إذا تركته فاضي، الإيقاف يستمر لحد ما ترجعه يدويًا.","Time is optional. If left blank, the pause continues until you manually turn it back on."],
+  ["🔎 معاينة حساب الطالب","🔎 Student Account Preview"],
+  ["وضع قراءة فقط — ما في أي إجراء باسم الطالب.","Read-only mode — no action is performed as the student."],
+  ["التسليمات","Submissions"],
+  ["المتوسط","Average"],
+  ["آخر نشاط","Last Activity"],
+  ["🏫 الصفوف","🏫 Classes"],
+  ["📝 الوظائف والتسليمات","📝 Assignments & Submissions"],
+  ["📊 الامتحانات والنشاط","📊 Exams & Activity"],
+  ["🔒 هاي معاينة فقط. بتقدر تتابع آخر نشاطات الطالب وملفه وشو سلّم، بدون ما تغيّر حسابه.","🔒 This is a read-only preview. You can view the student's recent activity, profile and submissions without changing their account."],
+  ["🕘 آخر نشاط","🕘 Recent Activity"],
+  ["↗ فتح الحساب","↗ Open Account"],
+  ["↩ خروج من المعاينة","↩ Exit Preview"],
+  ["🧮 معادلتان بمجهولين + رسم 2D / 3D","🧮 Two-Variable Equations + 2D / 3D Graph"],
+  ["عدّل المعادلتين وشوف الخطين والحل مباشرة مثل الرسم المدرسي، ومعه خيار 3D.","Edit both equations and see the two lines and solution instantly in a classroom-style graph, with an optional 3D view."],
+  ["يظهر تقاطع الخطين في 2D ونقطة الحل نفسها في 3D.","The line intersection appears in 2D and the same solution point appears in 3D."],
+  ["🔐 تغيير كلمة السر","🔐 Change Password"],
+  ["طلبت الإدارة تغيير كلمة السر مرة واحدة لحماية حسابك.","The admin requested a one-time password change to protect your account."],
+  ["كلمة السر الحالية","Current Password"],
+  ["كلمة السر الجديدة","New Password"],
+  ["تأكيد كلمة السر الجديدة","Confirm New Password"],
+  ["تغيير كلمة السر","Change Password"],
+  ["🔔 الإشعارات","🔔 Notifications"],
+  ["فعّل إشعارات Classora للوظائف، الامتحانات، المسابقات ودخول الطلاب للصف.","Enable Classora notifications for assignments, exams, competitions and students joining the class."],
+  ["🔔 تفعيل الإشعارات","🔔 Enable Notifications"],
+  ["📬 مركز الإشعارات","📬 Notification Center"],
+  ["✓ الإشعارات مفعّلة","✓ Notifications Enabled"],
+  ["📲 تطبيق Classora","📲 Classora App"],
+  ["ثبّت Classora على الشاشة الرئيسية وافتحه مثل تطبيق مستقل.","Install Classora on your home screen and open it like a standalone app."],
+  ["📲 تثبيت التطبيق","📲 Install App"],
+  ["✓ مثبت كتطبيق","✓ Installed as App"],
+  ["🔔 إشعارات Classora","🔔 Classora Notifications"],
+  ["آخر الوظائف والامتحانات والمسابقات ونشاط الصف.","Latest assignments, exams, competitions and class activity."],
+  ["🔔 تفعيل إشعارات الجهاز","🔔 Enable Device Notifications"],
+  ["🧹 مسح الإشعارات","🧹 Clear Notifications"],
+  ["📲 ثبّت Classora كتطبيق","📲 Install Classora as an App"],
+  ["بعد التثبيت بيفتح Classora من الأيقونة مثل تطبيق مستقل.","After installation, Classora opens from its icon like a standalone app."],
+  ["افتح Classora من Safari.","Open Classora in Safari."],
+  ["اضغط زر المشاركة Share.","Tap the Share button."],
+  ["اختار Add to Home Screen.","Choose Add to Home Screen."],
+  ["اضغط Add، وبعدها افتحه من أيقونة Classora.","Tap Add, then open it from the Classora icon."],
+  ["شوف صفوفك، زملاءك، وكل الوظائف من مكان واحد.","See your classes, classmates and all assignments in one place."],
+  ["اضغط على صفك وشوف الزملاء والكود.","Open your class to see classmates and the class code."],
+  ["➕ انضم لصف","➕ Join a Class"],
+  ["خذ كود الصف من المعلم.","Get the class code from your teacher."],
+  ["كل وظائف صفوفك موجودة هون. افتح الوظيفة وحلّها من صفوفي.","All assignments from your classes are here. Open an assignment and complete it from My Classes."],
+  [". اسألني عن الدروس، فيثاغورس، المعادلات، الحسابات، الامتحانات أو المسابقات.",". Ask me about lessons, Pythagoras, equations, calculations, exams or competitions."],
+  ["اعمل مسابقة Mixed أو عن فيثاغورس أو المعادلتين بمجهولين، واختار عدد الأسئلة.","Create a Mixed, Pythagoras or Two-Variable Equations competition and choose the number of questions."],
+  ["كل سؤال مخصص رح يظهر فوقه نوع:","Each custom question will show its type above it:"],
+
+  ["▶ متابعة","▶ Resume"],
+  ["تم تسليم الامتحان للمعلم ☁️","Exam submitted to the teacher ☁️"],
+  ["اكتب كود الامتحان أولًا.","Enter the exam code first."],
+  ["الحفظ السحابي مش متصل بحساب الطالب. اخرج من مركز الامتحانات وادخل كطالب مرة ثانية.","Cloud saving is not connected to the student account. Exit the Exam Center and sign in as a student again."],
+  ["⏳ جاري البحث عن الامتحان...","⏳ Looking for the exam..."],
+  ["❌ ما لقينا امتحان منشور بهذا الكود.","❌ No published exam was found with this code."],
+  ["الامتحان موجود لكن ما فيه أسئلة.","The exam exists but has no questions."],
+  ["✅ تم تحميل الامتحان.","✅ Exam loaded."],
+  ["تعذر تحميل الامتحان. حاول مرة ثانية.","Could not load the exam. Try again."],
+  ["📊 نتائج الطلاب","📊 Student Results"],
+  ["⏳ جاري الحفظ...","⏳ Saving..."],
+  ["⏳ تجهيز الامتحان...","⏳ Preparing exam..."],
+  ["اكتب كود الدعوة.","Enter the invitation code."],
+  ["⏳ جاري الانضمام...","⏳ Joining..."],
+  ["كود الدعوة غير صحيح أو انتهى.","The invitation code is invalid or expired."],
+  ["⏳ حفظ...","⏳ Saving..."],
+  ["تم حفظ ظهور المواضيع ✅","Topic visibility saved ✅"],
+  ["تعذر الحفظ.","Could not save."],
+  ["⏳ نشر...","⏳ Publishing..."],
+  ["اكتب اسمًا من حرفين على الأقل.","Enter a name with at least two characters."],
+  ["تحقق","Check"],
+  ["⏳ إنشاء الغرفة...","⏳ Creating room..."],
+  ["تعذر إنشاء المسابقة. حاول مرة ثانية.","Could not create the competition. Try again."],
+  ["＋ إنشاء غرفة جديدة","＋ Create New Room"],
+  ["⏳ تجهيز نسخة...","⏳ Preparing Copy..."],
+  ["نسخ وتشغيل من جديد","Duplicate & Restart"],
+  ["⏳ جاري الدخول...","⏳ Joining..."],
+  ["❌ ما في غرفة مفتوحة بهذا الكود.","❌ No open room was found with this code."],
+  ["⏳ إرسال الإجابة...","⏳ Sending answer..."],
+
+  ["هذا المتصفح لا يدعم القراءة الصوتية.","This browser does not support text-to-speech."],
+  ["⚠️ لازم يكون الحفظ السحابي متصل حتى نحفظ الامتحان عند المعلم.","⚠️ Cloud saving must be connected so the exam can be saved for the teacher."],
+  ["تعذر حفظ التسليم أونلاين. جرّب مرة ثانية.","Could not save the submission online. Try again."],
+  ["تم نسخ كود الامتحان.","Exam code copied."],
+  ["ما في امتحان محفوظ على هذا الجهاز.","There is no saved exam on this device."],
+  ["📂 تم تحميل الامتحان المحفوظ.","📂 Saved exam loaded."],
+  ["تعذر تحميل الامتحان المحفوظ.","Could not load the saved exam."],
+  ["هاي الأداة للمعلم.","This tool is for teachers."],
+  ["اكتب السؤال والخيارات الأربعة.","Enter the question and all four options."],
+  ["في خيارات مكررة.","Some options are duplicated."],
+  ["تم حفظ السؤال ✅","Question saved ✅"],
+  ["تعذر حفظ السؤال.","Could not save the question."],
+  ["اكتب اسم الصف.","Enter the class name."],
+  ["تعذر إنشاء الصف.","Could not create the class."],
+  ["طلعت من الصف.","You left the class."],
+  ["تعذر الخروج من الصف.","Could not leave the class."],
+  ["اكتب اسم الموضوع وشرح واضح.","Enter a topic name and a clear explanation."],
+  ["تعذر إضافة الموضوع.","Could not add the topic."],
+  ["تم حذف الموضوع.","Topic deleted."],
+  ["تعذر حذف الموضوع.","Could not delete the topic."],
+  ["الاسم قصير.","The name is too short."],
+  ["تعذر تعديل الاسم.","Could not update the name."],
+  ["تم نسخ كود الصف.","Class code copied."],
+  ["تعذر إنشاء دعوة المعلم.","Could not create a teacher invitation."],
+  ["اكتب اسم صالح.","Enter a valid name."],
+  ["تعذر نقل الملكية.","Could not transfer ownership."],
+  ["تم حفظ أسماء المساعدين ✅","Assistant names saved ✅"],
+  ["تعذر حفظ الأسماء.","Could not save the names."],
+  ["اختار صورة فقط.","Choose an image file only."],
+  ["الصورة كبيرة جدًا. اختار صورة أقل من 8MB.","The image is too large. Choose an image smaller than 8 MB."],
+  ["تم حفظ صورة البروفايل ✅","Profile picture saved ✅"],
+  ["المسابقة القديمة ما فيها أسئلة محفوظة.","The old competition has no saved questions."],
+  ["تعذر نسخ المسابقة.","Could not duplicate the competition."],
+  ["تعذر إكمال العملية. افحص الاتصال وحاول مرة ثانية.","Could not complete the action. Check your connection and try again."],
+  ["خلي طالب واحد على الأقل يدخل الغرفة.","Have at least one student join the room first."],
+  ["تم نسخ كود المسابقة.","Competition code copied."],
+
+  ["ادخل كمعلم، وبعدها افتح لوحة النتائج.","Sign in as a teacher, then open the results dashboard."],
+  ["سجّل دخول كمعلم حتى تحفظ الامتحان أونلاين.","Sign in as a teacher to save the exam online."],
+  ["سجّل دخولك أولًا.","Sign in first."],
+  ["سجّل دخول كمعلم لإنشاء غرفة المسابقة.","Sign in as a teacher to create a competition room."],
+  ["سجّل دخول كمعلم حتى تشوف مسابقاتك.","Sign in as a teacher to view your competitions."],
+  ["سجّل دخول كمعلم حتى تصمّم المسابقة.","Sign in as a teacher to design the competition."],
+
+  ["🛡️ Super Admin • 👨‍🏫 معلم • 🎒 طالب","🛡️ Super Admin • 👨‍🏫 Teacher • 🎒 Student"],
+  ["👨‍🏫 معلم","👨‍🏫 Teacher"],
+  ["🎒 طالب","🎒 Student"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+
+[
+  ["3D is unavailable on this device. You can still use the lobby and learning sections. / العرض ثلاثي الأبعاد غير متاح على هذا الجهاز. يمكنك استخدام اللوبي والأقسام التعليمية.","3D is unavailable on this device. You can still use the lobby and learning sections."],
+  ["▶ بدأ البرهان الحي: نجمع الرمل من a² و b² داخل c².","▶ Live proof started: combining the sand from a² and b² inside c²."],
+  ["⏳ تم تحريك الرمل من جديد، والحبيبات تسقط وتستقر داخل كل مربع حسب مساحته.","⏳ The sand was reset; particles fall and settle inside each square according to its area."],
+  ["تعذر حفظ التسليم أونلاين. جرّب مرة ثانية.","Could not save the submission online. Try again."],
+  ["اكتب/اختار جواب أولًا.","Enter or choose an answer first."],
+  ["الإجابة الصحيحة","Correct Answer"],
+  ["الإجابة الرقمية الصحيحة","Correct Numeric Answer"],
+  ["هذا السؤال ما بينفحص تلقائيًا؛ المعلم يعطي علامته بعد التسليم.","This question is not graded automatically; the teacher assigns its score after submission."],
+  ["تم حفظ الاسم الظاهر ✅","Display name saved ✅"],
+  ["ركّز على الفكرة والمثال.","Focus on the idea and the example."],
+  ["سؤال أمريكي","Multiple-Choice Question"],
+  ["سؤال رقمي","Numeric Question"],
+  ["سؤال مفتوح","Open Question"],
+  ["حدد الدائرة بجانب الإجابة الصحيحة. تقدر تضيف لحد 8 خيارات.","Select the circle next to the correct answer. You can add up to 8 options."],
+  ["＋ إضافة خيار","＋ Add Option"],
+  ["للإمتحان","For Exam"],
+  ["للمسابقة","For Competition"],
+  ["حذف","Delete"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+const uiPlaceholderTranslations=new Map([
+["ابحث في الرسائل المحمّلة…","Search loaded messages…"],
+["رسائل أقدم","Earlier messages"],
+["يكتب الآن","Typing"],
+["📷 صورة","\ud83d\udcf7 Image"],
+["🎙️ رسالة صوتية","\ud83c\udf99\ufe0f Voice message"],
+["إلغاء المرفق","Remove attachment"],
+["تغيير كلمة السر","Change password"],
+["كلمة السر الحالية","Current password"],
+["كلمة السر الجديدة","New password"],
+["تأكيد كلمة السر الجديدة","Confirm new password"],
+["حفظ كلمة السر","Save password"],
+
+ ["المتابعة بدون كود صف","Continue without a class code"],
+ ["طلبات الدعم","Support requests"],
+ ["إدارة فريق الموقع","Site team management"],
+ ["مالك الموقع فقط يقدر يعيّن الأدمن وفريق الدعم أو يسحب الصلاحية.","Only the site owner can assign or revoke admin and support access."],
+ ["📥 طلبات الدعم","\ud83d\udce5 Support requests"],
+ ["الطلبات المفتوحة","Open requests"],
+ ["الطلبات المحلولة","Resolved requests"],
+ ["كل الطلبات","All requests"],
+ ["تحديث الطلبات","Refresh requests"],
+ ["اختار نوع الطلب، واكتب تفاصيل المشكلة. كلمة الأمان اختيارية وتُستخدم للتحقق من ملكية الحساب.","Choose a request type and describe the problem. The security phrase is optional and helps verify account ownership."],
+ ["ابحث بالاسم أو معرّف الحساب","Search by name or account ID"],
+
+ ["🏫 كود الصف — اختياري", "🏫 Class code — optional"],
+ ["إذا عندك كود صف اكتبه، أو كمّل بدون كود. بتقدر تنضم لصف لاحقًا.", "Enter a class code if you have one, or continue without it. You can join a class later."],
+ ["متابعة ←", "Continue ←"],
+ ["تغيير كود الصف", "Change class code"],
+ ["اسم + كلمة سر", "Name + password"],
+ ["إيميل + كلمة سر", "Email + password"],
+ ["اسم الدخول", "Login name"],
+ ["G&nbsp;&nbsp; دخول بحساب Google", "G&nbsp;&nbsp; Sign in with Google"],
+ ["G دخول بحساب Google", "G Sign in with Google"],
+ ["🛟 تواصل مع الدعم", "🛟 Contact support"],
+ ["الدعم", "Support"],
+ ["🛟 مركز الدعم", "🛟 Support center"],
+ ["طلبات نسيان كلمة السر، مشاكل الحساب، البلاغات والاقتراحات.", "Password recovery, account issues, reports and suggestions."],
+ ["🛡️ كلمة أمان الحساب", "🛡️ Account security phrase"],
+ ["اختار كلمة أو جملة ما بتنساها. بنحفظ بصمتها المشفّرة فقط، وما بتظهر كنص حتى للأدمن.", "Choose a memorable phrase. Only its hash is saved; even the admin cannot see the original phrase."],
+ ["حفظ كلمة الأمان", "Save security phrase"],
+ ["غير مفعّلة بعد.", "Not configured yet."],
+ ["🔐 دخول المعلم بالاسم أو الإيميل", "🔐 Teacher login by name or email"],
+ ["فعّل كلمة سر لحساب المعلم، وبعدها بتقدر تدخل باسمك أو إيميلك بالإضافة إلى Google.", "Set a password for your teacher account to sign in by name or email, alongside Google."],
+ ["تفعيل / تحديث دخول كلمة السر", "Set / update password login"],
+ ["🛟 الدعم والمساعدة", "🛟 Support and help"],
+ ["نسيت كلمة السر؟ مشكلة بالحساب؟ بلّغ عن خطأ أو عن مستخدم من هون.", "Forgot your password? Account problem? Report an issue or a user here."],
+ ["فتح مركز الدعم", "Open support"],
+ ["📳 تفعيل هز الهاتف لفتح الدعم", "📳 Enable shake to open support"],
+ ["طلاب صفك، المعلمين، والبحث عن أشخاص خارج صفك.", "Your classmates, teachers and people outside your class."],
+ ["👥 أشخاص من صفوفك", "👥 People in your classes"],
+ ["🔎 نتائج البحث", "🔎 Search results"],
+ ["اختار شخص وابدأ المحادثة.", "Choose someone to start a conversation."],
+ ["🚩 إبلاغ", "🚩 Report"],
+ ["إرسال", "Send"],
+ ["اختر نوع المشكلة وابعت طلب واضح للإدارة.", "Choose an issue type and describe it for support."],
+ ["الحساب / اسم الدخول", "Account / login name"],
+ ["📳 هز الهاتف للدعم", "📳 Shake for support"],
+ ["مثال: A7K92Q", "Example: A7K92Q"],
+ ["اسم المعلم", "Teacher name"],
+ ["كلمة الأمان", "Security phrase"],
+ ["تأكيد كلمة الأمان", "Confirm security phrase"],
+ ["كلمة سر من 6 خانات أو أكثر", "Password with at least 6 characters"],
+ ["ابحث عن طالب أو معلم...", "Search for a student or teacher…"],
+ ["اكتب رسالة...", "Write a message…"],
+ ["كلمتا الأمان مش نفس بعض.", "Security phrases do not match."],
+ ["تم حفظ كلمة الأمان بشكل مشفّر ✅", "Security phrase saved securely ✅"],
+ ["تعذر حفظ كلمة الأمان.", "Could not save security phrase."],
+ ["اكتب اسم دخول للمعلم.", "Enter a teacher login name."],
+ ["حساب المعلم ما فيه إيميل صالح.", "This teacher account has no valid email."],
+ ["صار دخول المعلم بالاسم أو الإيميل + كلمة السر شغّال ✅", "Teacher login by name or email and password is ready ✅"],
+ ["اكتب شرح للمشكلة.", "Describe the problem."],
+ ["⏳ جاري إرسال الطلب...", "⏳ Sending request…"],
+ ["تعذر إرسال الطلب. تأكد من اتصالك وحاول مرة ثانية.", "Could not send request. Check your connection and retry."],
+ ["👨‍🏫 أهلًا", "👨‍🏫 Welcome"],
+ ["لازم تسمح بحساس الحركة أولًا.", "Allow motion sensor access first."],
+ ["اكتب كود الصف أولًا.", "Enter your class code first."],
+ ["ارجع واكتب كود الصف أولًا.", "Go back and enter your class code first."],
+ ["اكتب اسم الدخول أو الإيميل.", "Enter your login name or email."],
+ ["اكتب كلمة السر.", "Enter your password."],
+ ["كلمة سر الحساب الحالية لتأكيد الحفظ","Current account password to confirm changes"],["اسم الدخول أو الإيميل","Login name or email"],["اكتب شو صار بالتفصيل...","Tell us what happened…"],["بتساعد الإدارة تتأكد إن الحساب إلك","Helps support confirm account ownership"],
+  ["🔎 ابحث عن موضوع داخل المادة...","🔎 Search topics..."],
+  ["اسأل عن هذا الموضوع...","Ask about this topic..."],
+  ["الخيار 1","Option 1"],["الخيار 2","Option 2"],["الخيار 3","Option 3"],["الخيار 4","Option 4"],
+  ["اكتب الجواب","Enter your answer"],
+  ["اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?"],
+  ["مثال: AB12CD","Example: AB12CD"],["اسم الامتحان","Exam name"],["اسم المسابقة","Competition name"],
+  ["اكتب اسمك","Enter your name"],["اكتب جوابك هنا...","Enter your answer..."],["اكتب سؤالك لفيثاغورسي...","Ask Pythagorasi..."],
+  ["مثال: بسام جابر","Example: Bassam Jaber"],["6 خانات أو أكثر","6 characters or more"],
+  ["اكتب كلمة السر مرة ثانية","Enter the password again"],["الكود اللي أعطاك إياه المعلم","Code given by your teacher"],
+  ["الاسم الظاهر","Display name"],["فيثاغورسي","Classora Assistant"],["كود الصف","Class code"],
+  ["مثال: ثامن 6","Example: Grade 8 - Class 6"],["كود دعوة المعلم","Teacher invite code"],
+  ["عنوان الوظيفة","Assignment title"],["تعليمات الوظيفة للطلاب...","Assignment instructions..."],
+  ["اكتب السؤال","Write the question"],["اكتب الرقم","Enter a number"],["اكتب إجابتك المفتوحة...","Write your open answer..."],
+  ["مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?"],["كود الغرفة","Room code"],
+  ["كود الامتحان","Exam code"],["اسم الطالب","Student name"]
+]);
+
+
+uiPlaceholderTranslations.set("مثال: إذا a=5 و b=12 شو c؟","Example: if a=5 and b=12, what is c?");
+uiPlaceholderTranslations.set("اكتب أو اضغط 🎤 واحكي... مثال: إذا a=5 و b=12 شو c؟","Type or tap 🎤 and speak... Example: if a=5 and b=12, what is c?");
+
+[
+  ["اكتب الاسم أو Profile ID...","Type a name or Profile ID..."],
+  ["حل الأسئلة وسلّم قبل الموعد...","Complete the questions and submit before the deadline..."],
+  ["مثال: افتح صفوفي","Example: Open My Classes"],
+  ["اختياري","Optional"],
+  ["مثال: تذكير مهم","Example: Important reminder"],
+  ["اكتب الملاحظة...","Write the notice..."],
+  ["مثال: امتحان فيثاغورس","Example: Pythagoras Exam"],
+  ["رسالة صيانة الموقع","Site maintenance message"],
+  ["اكتب إجابتك...","Enter your answer..."],
+  ["العلامة","Points"],
+  ["اكتب الخيار","Enter an option"],
+  ["كلمات الإجابة الأساسية مفصولة بـ |","Key answer words separated by |"],
+  ["اسم الموضوع الجديد","New topic name"],
+  ["مثال قصير","Short example"],
+  ["اكتب شرح الموضوع اللي رح يظهر للطلاب...","Write the topic explanation that students will see..."],
+  ["ملاحظة/إجابة نموذجية للمعلم فقط — اختياري","Teacher-only note / model answer — optional"],
+  ["ملاحظة للطالب — اختياري","Note to the student — optional"],
+  ["مثال: تدريب المعادلات","Example: Equations practice"],
+  ["اكتب المطلوب من الطلاب بشكل واضح...","Clearly describe what students should do..."],
+  ["اكتب جوابك","Enter your answer"],
+  ["احكي هسا...","Speak now..."]
+].forEach(([ar,en])=>uiPlaceholderTranslations.set(ar,en));
+
+[
+  ["تبديل الوضع","Toggle theme"],
+  ["الإشعارات","Notifications"],
+  ["تثبيت Classora","Install Classora"],
+  ["الصوت","Voice"],
+  ["سرعة الصوت","Voice speed"],
+  ["سرعة القراءة","Reading speed"],
+  ["حذف الخيار","Remove Option"],
+  ["اقرأ الرد بصوت","Read Reply Aloud"]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+
+const stripUIEmoji=text=>String(text).replace(/\p{Extended_Pictographic}(?:[\uFE0F\uFE0E\u200D]|\p{Emoji_Modifier}|\p{Extended_Pictographic})*/gu,'').trim();
+[
+ ["Try again / حاول مجددًا","Try again"],
+ ["📲 تحميل Classora على الهاتف","📲 Download Classora to this phone"],
+ ["تحميل Classora على الهاتف","Download Classora to this phone"],
+ ["تحميل على الهاتف","Download"],
+ ["📲 تحميل على الهاتف","📲 Download to phone"],
+ ["الخصوصية والدعم","Privacy & Support"],
+ ["راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.","Review the privacy policy or open the public support page."],
+ ["سياسة الخصوصية","Privacy Policy"],
+ ["صفحة الدعم","Support Page"],
+ ["📘 عربي — المضاف والمضاف إليه","📘 Arabic — Idafa (Possessive Construction)"],
+ ["توليد أسئلة تلقائيًا","Automatic question generation"],
+ ["✦ ولّد الأسئلة","✦ Generate questions"],
+ ["اعمل مسابقة رياضيات أو علوم أو عربي، واختار الموضوع، وكلاسورا يولّد الأسئلة تلقائيًا.","Create a Math, Science or Arabic Grammar competition, choose the topic, and Classora will generate the questions automatically."]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+[
+  [
+    "أهلًا في كلاسورا",
+    "Welcome to Classora"
+  ],
+  [
+    "تعلّم وجرّب واكتشف",
+    "Learn, experiment and discover"
+  ],
+  [
+    "آخر الإضافات",
+    "Latest additions"
+  ],
+  [
+    "إعلانات كلاسورا التعليمية",
+    "Classora learning announcements"
+  ],
+  [
+    "المطلوب منك",
+    "Your tasks"
+  ],
+  [
+    "جاري التحقق من وظائف صفوفك...",
+    "Checking your class assignments…"
+  ],
+  [
+    "مساحة المعلم • CLASSORA",
+    "TEACHER WORKSPACE • CLASSORA"
+  ],
+  [
+    "أهلًا،",
+    "Welcome,"
+  ],
+  [
+    "صفوفك وامتحاناتك ونتائج طلابك، منظمة بمكان واحد. كل الأدوات اللي بتحتاجها لتدير تعليمك بسهولة.",
+    "Your classes, exams and student results in one place. Everything you need to manage your teaching."
+  ],
+  [
+    "إدارة صفوفي",
+    "Manage my classes"
+  ],
+  [
+    "إنشاء امتحان",
+    "Create exam"
+  ],
+  [
+    "صفوف أديرها",
+    "Classes I manage"
+  ],
+  [
+    "امتحانات منشورة",
+    "Published exams"
+  ],
+  [
+    "مواد دراسية",
+    "School subjects"
+  ],
+  [
+    "أدواتك السريعة",
+    "Quick tools"
+  ],
+  [
+    "اختار الأداة وابدأ مباشرة.",
+    "Choose a tool to get started."
+  ],
+  [
+    "إدارة الصفوف",
+    "Class management"
+  ],
+  [
+    "الطلاب وأكواد الصفوف والإعدادات",
+    "Students, class codes and settings"
+  ],
+  [
+    "الوظائف المدرسية",
+    "School assignments"
+  ],
+  [
+    "إنشاء الوظائف ومتابعة التسليم",
+    "Create assignments and track submissions"
+  ],
+  [
+    "أنشئ امتحانات وشارك الأكواد",
+    "Create exams and share access codes"
+  ],
+  [
+    "نتائج الطلاب",
+    "Student results"
+  ],
+  [
+    "العلامات وأداء الطلاب",
+    "Grades and student performance"
+  ],
+  [
+    "إنشاء غرف وإدارة المسابقات",
+    "Create rooms and manage competitions"
+  ],
+  [
+    "بنك الأسئلة",
+    "Question bank"
+  ],
+  [
+    "حضّر أسئلة واستعملها مجددًا",
+    "Prepare and reuse questions"
+  ],
+  [
+    "صفوفي بنظرة سريعة",
+    "My classes at a glance"
+  ],
+  [
+    "الصفوف الظاهرة بحسابك، بدون عرض بيانات طلابك هون.",
+    "A summary of your classes without displaying student details here."
+  ],
+  [
+    "عرض الكل ↗",
+    "View all ↗"
+  ],
+  [
+    "جاري جلب صفوفك…",
+    "Loading your classes…"
+  ],
+  [
+    "مساحتي التعليمية",
+    "My learning space"
+  ],
+  [
+    "كل اللي بتحتاجه لتتعلم وتتابع صفوفك وتمتحن، مرتب إلك بمكان واحد.",
+    "Everything you need to learn, follow your classes and take exams in one place."
+  ],
+  [
+    "استكشف موادي",
+    "Explore my subjects"
+  ],
+  [
+    "صفوفي وواجباتي",
+    "My classes and assignments"
+  ],
+  [
+    "تقدمك في كلاسورا",
+    "Your Classora progress"
+  ],
+  [
+    "امتحاناتي",
+    "My exams"
+  ],
+  [
+    "مواعيد قادمة",
+    "Upcoming deadlines"
+  ],
+  [
+    "من وين نبدأ؟",
+    "Where shall we start?"
+  ],
+  [
+    "اختار اللي بدك تعمله، والباقي علينا.",
+    "Choose what you want to do and get started."
+  ],
+  [
+    "المواد والدروس",
+    "Subjects and lessons"
+  ],
+  [
+    "رياضيات، علوم، لغات وأكثر",
+    "Math, science, languages and more"
+  ],
+  [
+    "تابع صفك والوظائف المطلوبة",
+    "Follow your class and assignments"
+  ],
+  [
+    "اختبر معلوماتك وشوف النتائج",
+    "Test your knowledge and see your results"
+  ],
+  [
+    "تدرّب الآن",
+    "Practice now"
+  ],
+  [
+    "أسئلة متنوعة وتصحيح فوري",
+    "Varied questions with instant feedback"
+  ],
+  [
+    "CLASSORA • تعلّم بطريقة مختلفة",
+    "CLASSORA • A DIFFERENT WAY TO LEARN"
+  ],
+  [
+    "تعلّم أبعد من الكتاب.",
+    "Learn beyond the textbook."
+  ],
+  [
+    "افهمها بالـ 3D.",
+    "Understand it in 3D."
+  ],
+  [
+    "مواد ودروس تفاعلية، تجارب ثلاثية الأبعاد، أسئلة واختبارات—كلها بمكان واحد، وبطريقة سهلة وممتعة.",
+    "Interactive lessons, 3D experiments, questions and tests, all in one place. Simple and engaging."
+  ],
+  [
+    "استكشف الأنشطة",
+    "Explore activities"
+  ],
+  [
+    "جرّب مختبر 3D",
+    "Try a 3D lab"
+  ],
+  [
+    "تعلّم تفاعلي",
+    "Interactive learning"
+  ],
+  [
+    "دروس ومواد متعددة",
+    "Multiple subjects and lessons"
+  ],
+  [
+    "تمارين وامتحانات",
+    "Practice and exams"
+  ],
+  [
+    "اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.",
+    "Ask me about all Classora subjects: math, science, grammar, history and geography, in Arabic or English."
+  ],
+  [
+    "الإعلانات",
+    "Announcements"
+  ],
+  [
+    "مركز الإعلانات",
+    "Announcement center"
+  ],
+  [
+    "الحد الأقصى 5 إعلانات؛ يتبدل الإعلان كل أربع ثوانٍ. إدارة الإعلانات والصلاحيات مرتبطة بحساب الأدمن.",
+    "Up to 5 announcements, rotating every four seconds. Only authorized admins can manage announcements."
+  ],
+  [
+    "عنوان الإعلان بالعربي",
+    "Arabic announcement title"
+  ],
+  [
+    "الوصف بالعربي",
+    "Arabic description"
+  ],
+  [
+    "الرابط إلى",
+    "Link to"
+  ],
+  [
+    "المفعول به",
+    "Direct object"
+  ],
+  [
+    "عجلة فيثاغورس",
+    "Pythagoras wheel"
+  ],
+  [
+    "درس آخر",
+    "Another lesson"
+  ],
+  [
+    "إعلان فقط",
+    "Announcement only"
+  ],
+  [
+    "الفئة",
+    "Audience"
+  ],
+  [
+    "الطلاب",
+    "Students"
+  ],
+  [
+    "المعلمون",
+    "Teachers"
+  ],
+  [
+    "الأدمن",
+    "Admin"
+  ],
+  [
+    "صف محدد",
+    "Specific class"
+  ],
+  [
+    "معرّف الصف المحدد",
+    "Target class ID"
+  ],
+  [
+    "السابع",
+    "Grade 7"
+  ],
+  [
+    "الثامن",
+    "Grade 8"
+  ],
+  [
+    "التاسع",
+    "Grade 9"
+  ],
+  [
+    "العاشر",
+    "Grade 10"
+  ],
+  [
+    "عربي",
+    "Arabic"
+  ],
+  [
+    "رياضيات",
+    "Math"
+  ],
+  [
+    "هندسة",
+    "Geometry"
+  ],
+  [
+    "تاريخ",
+    "History"
+  ],
+  [
+    "جغرافيا",
+    "Geography"
+  ],
+  [
+    "اسم الدرس",
+    "Lesson name"
+  ],
+  [
+    "أضف إعلانًا",
+    "Add announcement"
+  ],
+  [
+    "اختصارات الموقع",
+    "Site shortcuts"
+  ],
+  [
+    "كل الأزرار اللي كانت فوق، صارت هون بترتيب أسهل.",
+    "Your navigation buttons, organized in one place."
+  ],
+  [
+    "الشات",
+    "Chat"
+  ],
+  [
+    "مركز الدعم",
+    "Support center"
+  ],
+  [
+    "لوحة الأدمن",
+    "Admin panel"
+  ],
+  [
+    "تثبيت التطبيق",
+    "Install app"
+  ],
+  [
+    "تسجيل الخروج",
+    "Sign out"
+  ],
+  [
+    "شروط الاستخدام",
+    "Terms of use"
+  ],
+  [
+    "الصعوبة",
+    "Difficulty"
+  ],
+  [
+    "مختلط",
+    "Mixed"
+  ],
+  [
+    "المواد",
+    "Subjects"
+  ],
+  [
+    "إعلانات كلاسورا",
+    "Classora announcements"
+  ],
+  [
+    "مثال: اشرح الماضي البسيط أو الأحماض والقواعد…",
+    "Example: explain Past Simple or acids and bases…"
+  ],
+  [
+    "التنقّل السريع",
+    "Quick navigation"
+  ],
+  [
+    "عنوان الإعلان بالإنجليزي",
+    "English title"
+  ],
+  [
+    "الوصف بالإنجليزي",
+    "English description"
+  ],
+  [
+    "مساحة العمل",
+    "WORKSPACE"
+  ],
+  [
+    "نقاط الخبرة",
+    "XP"
+  ]
+].forEach(([ar,en])=>{uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)});
+[
+  [
+    "تخطّي",
+    "Skip"
+  ],
+  [
+    "تخطّي المقدمة",
+    "Skip intro"
+  ],
+  [
+    "🛡️ لوحة الأدمن",
+    "🛡️ Admin Panel"
+  ],
+  [
+    "📊 التصويتات",
+    "📊 Polls"
+  ],
+  [
+    "🎒 ملخص الطالب",
+    "🎒 Student Overview"
+  ],
+  [
+    "📝 سجل الوظائف",
+    "📝 Assignment History"
+  ],
+  [
+    "📈 لوحة النتائج",
+    "📈 Dashboard"
+  ],
+  [
+    "👥 الطلاب والمعلمون",
+    "👥 Students & Teachers"
+  ],
+  [
+    "🚀 إرسال / تعيين",
+    "🚀 Send / Assign"
+  ],
+  [
+    "🛡️ الفريق",
+    "🛡️ Team"
+  ],
+  [
+    "🎛️ مركز التحكم",
+    "🎛️ Control Center"
+  ],
+  [
+    "كل الحسابات",
+    "All accounts"
+  ],
+  [
+    "كل الصفوف",
+    "All classes"
+  ],
+  [
+    "إعلان",
+    "Announcement"
+  ],
+  [
+    "امتحان فيثاغورس مولّد كوظيفة",
+    "Generated Pythagoras exam as assignment"
+  ],
+  [
+    "وظيفة علوم",
+    "Science assignment"
+  ],
+  [
+    "رسالة / تعليمات",
+    "Message / instructions"
+  ],
+  [
+    "الأسئلة",
+    "Questions"
+  ],
+  [
+    "🚀 إرسال / نشر",
+    "🚀 Send / Publish"
+  ],
+  [
+    "عنوان التصويت",
+    "Poll title"
+  ],
+  [
+    "الخيار 1",
+    "Option 1"
+  ],
+  [
+    "الخيار 2",
+    "Option 2"
+  ],
+  [
+    "الخيار 3",
+    "Option 3"
+  ],
+  [
+    "الخيار 4",
+    "Option 4"
+  ],
+  [
+    "📊 نشر التصويت",
+    "📊 Publish poll"
+  ],
+  [
+    "📈 رسم ثنائي الأبعاد",
+    "📈 2D Graph"
+  ],
+  [
+    "🧊 رسم ثلاثي الأبعاد",
+    "🧊 3D Graph Pro"
+  ],
+  [
+    "◇ منظور",
+    "◇ Perspective"
+  ],
+  [
+    "⬇ من الأعلى",
+    "⬇ Top"
+  ],
+  [
+    "▣ من الأمام",
+    "▣ Front"
+  ],
+  [
+    "⟳ دوران تلقائي",
+    "⟳ Auto Rotate"
+  ],
+  [
+    "نسخ المعرّف",
+    "Copy ID"
+  ],
+  [
+    "دردشة كلاسورا",
+    "Classora Chat"
+  ],
+  [
+    "📊 التصويتات والتحديثات",
+    "📊 Polls and updates"
+  ],
+  [
+    "التصويتات تظهر أولًا، وبعدها الإعلانات والمسابقات.",
+    "Polls appear first, followed by announcements and competitions."
+  ],
+  [
+    "⚙️ إدارة",
+    "⚙️ Manage"
+  ],
+  [
+    "🗑 حذف الظاهر",
+    "🗑 Delete visible items"
+  ],
+  [
+    "= يختفي من الطلاب ويقدر يرجع.",
+    "= hidden from students and can be restored."
+  ]
+].forEach(([ar,en])=>uiExactTranslations.set(ar,en));
+for(const [ar,en] of [...uiExactTranslations]){const key=stripUIEmoji(ar);if(key&&!uiExactTranslations.has(key))uiExactTranslations.set(key,stripUIEmoji(en));}
+const PYTHAGORAS_ADDITIONAL_UI_PAIRS=[["الوضع النهاري","Day mode"],["🖱 اسحب يمين/يسار أو أعلى/أسفل ضمن زاوية أمامية فقط","Drag left/right or up/down to rotate within the front view"],["🔎 عجلة الماوس للتقريب","Use the mouse wheel to zoom"],["تسجيل خروج","Sign out"],["القيم الحالية: a = 3 ، b = 4 ، لذلك c = 5. الرمل موزّع بنسبة مساحة كل مربع.","Current values: a = 3, b = 4, so c = 5. Sand is proportional to each square's area."],["0 نقاط","0 points"],["الصوت العربي • السرعة","Arabic voice • speed"],["عادي","Normal"],["إذن عندما a = 3 و b = 4 يكون طول الوتر c = 5.","When a = 3 and b = 4, the hypotenuse c = 5."],["مثلًا: إذا c = 13 و a = 5، فإن b = √(169 − 25) = √144 = 12.","Example: if c = 13 and a = 5, then b = √(169 − 25) = √144 = 12."],["في الهندسة، البناء، قياس المسافات، الخرائط، الإحداثيات، التصميم ثلاثي الأبعاد، الرسوم الحاسوبية، والمسائل التي تتضمن مسافة قطرية أو زاوية قائمة.","It is used in geometry, construction, distances, maps, coordinates, 3D design and diagonal measurements."],["لا يجوز تطبيق a² + b² = c² مباشرة على أي مثلث عادي؛ يجب أن يكون المثلث قائم الزاوية. للمثلثات غير القائمة نستخدم قوانين أخرى مثل قانون جيب التمام.","The formula a² + b² = c² works for right triangles only. Other triangles require different formulas, such as the cosine rule."],["، والموقع يحسب الضلع المطلوب ويعيد بناء المجسم والرمل.","The model calculates the missing side and updates the shapes and sand."],["حل x و y مع رسم 3D قابل للتعديل","Solve x and y using an adjustable 3D graph"],["اسألني عن كل مواد Classora: الرياضيات والعلوم والقواعد والتاريخ والجغرافيا، بالعربي والإنجليزي.","Ask about every Classora subject, including math, science, languages, history and geography."]];
+for(const [ar,en] of PYTHAGORAS_ADDITIONAL_UI_PAIRS){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
+uiExactTranslations.set("حاول مجددًا","Try again");
+uiExactTranslations.set("دخول بحساب Google","Sign in with Google");
+for(const [ar,en] of (window.ClassoraStyleTranslations?.pairs||[])){uiExactTranslations.set(ar,en);uiPlaceholderTranslations.set(ar,en)}
+const uiEnglishToArabic=new Map([...uiExactTranslations].map(([ar,en])=>[en,ar]));
+function uiDynamicEnglish(text){
+  let s=latinDigits(text).replace(/،/g,",");
+  s=s.replace(/^أهلًا\s+(.+?)\s*👋$/u,"Welcome $1 👋");
+  s=s.replace(/^👋\s*أهلًا\s+(.+?)!$/u,"👋 Welcome $1!");
+  s=s.replace(/^👨‍🏫\s*أهلًا\s+(.+?)!\s*دخلت كمعلم\.$/u,"👨‍🏫 Welcome $1! You signed in as a teacher.");
+  s=s.replace(/^اسم الدخول:\s*/u,"Login name: ");
+  s=s.replace(/^تسجيل الدخول محفوظ لغاية:\s*/u,"Login saved until: ");
+  s=s.replace(/^سؤال\s+(\d+)\s*\/\s*(\d+)/u,"Question $1 / $2");
+  s=s.replace(/^السؤال\s+(\d+)/u,"Question $1");
+  s=s.replace(/^النقاط\s*/u,"Score ");
+  s=s.replace(/^(\d+)\s*نقاط$/u,"$1 pts");
+  s=s.replace(/^(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة$/u,"$1 questions • $2 points");
+  s=s.replace(/^موعد:\s*/u,"Due: ");
+  s=s.replace(/موعد:\s*/gu,"Due: ");
+  s=s.replace(/\bعلامة\b/gu,"points");
+  s=s.replace(/\bعلامات\b/gu,"points");
+  s=s.replace(/\bامتحانات\b/gu,"exams");
+  s=s.replace(/^آخر نشاط:\s*/gu,"Last activity: ");
+  s=s.replace(/^تم الانضمام إلى\s+(.+)$/u,"Joined $1");
+  s=s.replace(/^انضممت إلى\s+(.+)$/u,"Joined $1");
+  s=s.replace(/^تم إنشاء\s+(.+?)\s*•\s*الكود\s*(.+)$/u,"Created $1 • code $2");
+  s=s.replace(/^كود الصف:\s*/u,"Class code: ");
+  s=s.replace(/^كود الغرفة:\s*/u,"Room code: ");
+  s=s.replace(/^كود الامتحان:\s*/u,"Exam code: ");
+  s=s.replace(/^كود دعوة المعلم:\s*/u,"Teacher invite code: ");
+  s=s.replace(/^تم نشر الوظيفة\s*•\s*(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة\s*✅$/u,"Assignment published • $1 questions • $2 points ✅");
+  s=s.replace(/^تم حفظ التصحيح\s*•\s*(.+)\s*✅$/u,"Grading saved • $1 ✅");
+  s=s.replace(/^تم التسليم\s*•\s*التلقائي\s*(.+)\s*والباقي للمعلم$/u,"Submitted • auto score $1 • remaining points are teacher-graded");
+  s=s.replace(/^تم التسليم\s*•\s*العلامة\s*(.+)$/u,"Submitted • score $1");
+  s=s.replace(/^صحّحها المعلم\s*•\s*(.+)$/u,"Graded by teacher • $1");
+  s=s.replace(/^التلقائي\s*(.+)$/u,"Auto score $1");
+  s=s.replace(/^✅\s*الإجابة الصحيحة:\s*/u,"✅ Correct answer: ");
+  s=s.replace(/^✅\s*صحيح\s*—\s*/u,"✅ Correct — ");
+  s=s.replace(/^❌\s*مش صحيح\s*—\s*/u,"❌ Incorrect — ");
+  s=s.replace(/جرّب مرة ثانية\.?/gu,"Try again.");
+  s=s.replace(/^حسبنا\s+(.+?)\s*=\s*/u,"Calculated $1 = ");
+  s=s.replace(/\(الوتر\)/gu,"(hypotenuse)");
+  s=s.replace(/^القيم الحالية:\s*/u,"Current values: ");
+  s=s.replace(/^الوتر c$/u,"hypotenuse c");
+  s=s.replace(/^الضلع\s+([abc])$/u,"side $1");
+  s=s.replace(/^المرحلة\s+(\d+)\/(\d+):/u,"Step $1/$2:");
+  s=s.replace(/^✅\s*البرهان اكتمل:/u,"✅ Proof complete:");
+  s=s.replace(/^⏳\s*تم تحريك الرمل من جديد/u,"⏳ The sand was reset");
+  s=s.replace(/^(.+?)\s*•\s*(\d+)\s*أسئلة$/u,"$1 • $2 questions");
+  s=s.replace(/^انحفظت\s+(\d+)\s+إجابة\s+من\s+(\d+)\.\s*المعلم يقدر يشوف النتيجة من لوحة النتائج\.$/u,"Saved $1 of $2 answers. The teacher can view the result from the results dashboard.");
+  s=s.replace(/^جاوبت\s+(\d+)\s+من\s+(\d+)\s*•\s*النسبة\s+(\d+)%\s*•\s*الوقت\s+(.+)$/u,"Answered $1 of $2 • Score $3% • Time $4");
+  s=s.replace(/^✅\s*صرت معلّم مساعد في\s+(.+)$/u,"✅ You are now a co-teacher in $1");
+  s=s.replace(/^💡\s*تذكّر:\s*(.+)$/u,"💡 Remember: $1");
+  s=s.replace(/^مركزك الآن\s+#(\d+)\s*•\s*(\d+)\s*نقطة\s*•\s*المتقدم\s+(.+)$/u,"Your current rank is #$1 • $2 points • Leader: $3");
+  s=s.replace(/^مركزك الآن\s+#(\d+)\s*•\s*(\d+)\s*نقطة\s*•\s*أنت بالمقدمة\s*🔥$/u,"Your current rank is #$1 • $2 points • You are leading 🔥");
+  s=s.replace(/^رجّعنا آخر\s+(\d+)\s+رسالة$/u,"Restored the last $1 messages");
+  s=s.replace(/^☁️\s*تم حفظ الامتحان\.\s*الكود:\s*(.+)$/u,"☁️ Exam saved. Code: $1");
+  s=s.replace(/^✅\s*بدأ الامتحان:\s*(\d+)\s*أسئلة\s*•\s*(\d+)\s*علامة$/u,"✅ Exam started: $1 questions • $2 points");
+  s=s.replace(/^🏫\s*عملنالك صفك الأول تلقائيًا\s*•\s*الكود\s*(.+)$/u,"🏫 Your first class was created automatically • code $1");
+  s=s.replace(/^تمت إضافة\s*«(.+)»\s*✅$/u,"Added “$1” ✅");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب نص السؤال\.$/u,"Question $1: enter the question text.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب الخيارات الأربعة\.$/u,"Question $1: enter all four options.");
+  s=s.replace(/^السؤال\s+(\d+):\s*في خيارات مكررة\.$/u,"Question $1: some options are duplicated.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اختر الإجابة الصحيحة\.$/u,"Question $1: choose the correct answer.");
+  s=s.replace(/^السؤال\s+(\d+):\s*اكتب الإجابة الرقمية\.$/u,"Question $1: enter the numeric answer.");
+  s=s.replace(/^تم إخراج\s+(.+)\s+من الصف\.$/u,"Removed $1 from the class.");
+  s=s.replace(/^تم نقل الملكية إلى\s+(.+)\s*✅$/u,"Ownership transferred to $1 ✅");
+  s=s.replace(/^الكود:\s*(.+)$/u,"Code: $1");
+  s=s.replace(/^🎤\s*تعذر فهم الصوت\s*\((.+)\)\.\s*جرّب تحكي أوضح\.$/u,"🎤 Could not understand the voice input ($1). Try speaking more clearly.");
+  s=s.replace(/^✅\s*البرهان اكتمل:\s*(.+)\.$/u,"✅ Proof complete: $1.");
+  s=s.replace(/^(\d+)\s*علامات$/u,"$1 points");
+  s=s.replace(/^إجابتك:\s*(.+?)\s*•\s*العلامة:\s*(.+)$/u,"Your answer: $1 • Score: $2");
+  s=s.replace(/^الإجابة\/الشرح:\s*(.+)$/u,"Answer / explanation: $1");
+  s=s.replace(/^(\d+)\s*أسئلة$/u,"$1 questions");
+  s=s.replace(/^(.+?)\s*•\s*الصحيح:\s*(.+)$/u,"$1 • Correct: $2");
+  s=s.replace(/^هلا\s*👋\s*أنا\s+(.+?)\.\s*هسا مركزين على\s*«(.+?)»\.\s*اسألني عن الشرح أو المثال أو اطلب سؤال تدريب\.$/u,"Hi 👋 I'm $1. We're focusing on “$2” now. Ask me for an explanation, an example or a practice question.");
+  s=s.replace(/^(\d+)\s*نقطة$/u,"$1 point");
+  return uiExactTranslations.get(s.trim())||s;
+}
+function translateTextValue(arText){
+  const raw=latinDigits(arText);
+  if(currentUILanguage!=="en")return uiEnglishToArabic.get(raw.trim())||raw;
+  return window.ClassoraLocale?.t(uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw)) ?? (uiExactTranslations.get(raw.trim())||uiDynamicEnglish(raw));
+}
+function uiConfirm(ar,en){return confirm(currentUILanguage==="en"?window.ClassoraLocale.t(en):ar)}
+function uiPrompt(ar,en,value=""){return prompt(currentUILanguage==="en"?window.ClassoraLocale.t(en):ar,value)}
+
+// Track our last rendered value separately from text written by the application.
+const uiNodeTranslations=new WeakMap(),uiAttributeTranslations=new WeakMap();
+function translateElementNode(el){
+  if(!(el instanceof Element))return;
+  if(el.matches('script,style')||el.closest('[translate="no"],[contenteditable="true"]'))return;
+  const protectedRoot=el.closest('[data-no-translate]');
+  // Only opt known application UI into additional locales; keep names, messages,
+  // teacher-authored content and language-learning examples unchanged.
+  if(protectedRoot&&!(window.ClassoraLocale?.extended&&protectedRoot.matches('#classoraMobilePageNav,#classoraSettingsShortcuts,.learning-hub,.hub-shared-tools,#settingsAccountsBtn,.hub-dialog-body,.plus-dialog,.plus-toolbar,#manageSentAssignments')))return;
+  if(el.closest?.('#siteUpdatesList'))return;
+  for(const node of [...el.childNodes]){
+    if(node.nodeType!==Node.TEXT_NODE||el.matches('textarea'))continue;
+    const current=node.nodeValue,previous=uiNodeTranslations.get(node);
+    const source=previous&&current===previous.rendered?previous.source:current;
+    const lead=(source.match(/^\s*/)||[''])[0],trail=(source.match(/\s*$/)||[''])[0];
+    const core=latinDigits(source).trim(),next=core?lead+translateTextValue(core)+trail:source;
+    uiNodeTranslations.set(node,{source,rendered:next});if(current!==next)node.nodeValue=next;
+  }
+  const attributes=uiAttributeTranslations.get(el)||{};
+  for(const name of ['placeholder','aria-label','title','alt']){
+    if(!el.hasAttribute(name))continue;
+    const current=el.getAttribute(name),previous=attributes[name];
+    const source=previous&&current===previous.rendered?previous.source:current;
+    const next=currentUILanguage==='en'?(window.ClassoraLocale?.tFor?.(window.ClassoraLocale.language,uiPlaceholderTranslations.get(source)||translateTextValue(source)) ?? (uiPlaceholderTranslations.get(source)||translateTextValue(source))):(uiEnglishToArabic.get(source)||[...uiPlaceholderTranslations].find(([,en])=>en===source)?.[0]||source);
+    attributes[name]={source,rendered:next};if(current!==next)el.setAttribute(name,next);
+  }
+  uiAttributeTranslations.set(el,attributes);
+  if(el.matches('input[type="date"]')){el.lang=currentUILanguage==='en'?'en-US':'ar';el.dir='ltr'}
+}
+function translateSubtree(root=document.body){
+  translateElementNode(root);
+  root.querySelectorAll?.('*').forEach(translateElementNode);
+}
+
+function syncV99LanguageLabels(){
+ const en=currentUILanguage==="en";
+ const setText=(id,a,e)=>{const el=document.getElementById(id);if(el)el.textContent=en?e:a};
+ const englishSwitch=document.getElementById("authEnglishBtn"),arabicSwitch=document.getElementById("authArabicBtn");
+ if(englishSwitch)englishSwitch.textContent="English";
+ if(arabicSwitch)arabicSwitch.textContent=en?"Arabic":"العربية";
+ const setPlaceholder=(id,a,e)=>{const el=document.getElementById(id);if(el)el.placeholder=en?e:a};
+ setText("studentNameLabel","الاسم","Name");
+ setPlaceholder("studentNameInput","الاسم","Name");
+ setText("teacherIdentifierLabel","الاسم أو الإيميل","Name or email");
+ const teacherCreateName=document.querySelector('label[for="teacherCreateName"]');if(teacherCreateName)teacherCreateName.textContent=en?"Name":"الاسم";
+ setPlaceholder("teacherCreateName","الاسم","Name");
+ setText("authInstallAppBtn","📲 تحميل Classora على الهاتف","📲 Download Classora to this phone");
+ const lobbyText=document.querySelector("#installAppBtn .pwa-install-text");if(lobbyText)lobbyText.textContent=en?"Download":"تحميل على الهاتف";
+ const mobileLobby=document.querySelector("#classoraMobileLobbyBtn span");if(mobileLobby)mobileLobby.textContent=en?"Lobby":"اللوبي";
+ const mobileSettings=document.querySelector("#classoraMobileSettingsBtn span");if(mobileSettings)mobileSettings.textContent=en?"Settings":"الإعدادات";
+ const offline=document.getElementById("offlineLessonsLink");if(offline)offline.textContent=en?"Offline lessons":"الدروس دون إنترنت";
+ setText("privacySupportTitle","الخصوصية والدعم","Privacy & Support");
+ setText("privacySupportNote","راجع سياسة الخصوصية أو افتح صفحة الدعم العامة.","Review the privacy policy or open the public support page.");
+ setText("privacyPolicyLink","سياسة الخصوصية","Privacy Policy");
+ setText("termsOfUseLink","شروط الاستخدام","Terms of Use");
+ setText("publicSupportLink","صفحة الدعم","Support Page");
+ const prompts=[
+  ["اشرح الماضي البسيط","Explain Past Simple"],
+  ["اشرح الحموض والقواعد","Explain acids and bases"],
+  ["اشرح المضاف والمضاف إليه","Explain the Idafa construction"],
+  ["اشرح نظرية فيثاغورس","Explain the Pythagorean theorem"]
+ ];
+ [...document.querySelectorAll(".suggestions button[data-q]")].forEach((button,index)=>{
+  const pair=prompts[index];if(!pair)return;
+  button.dataset.q=en?pair[1]:pair[0];
+  button.textContent=en?pair[1]:pair[0];
+  button.lang=en?"en":"ar";
+ });
+ // Data-owned panels bypass automatic translation, so update their labels explicitly.
+ const taskArea=document.getElementById("classoraStudentTasks");
+ const taskTitle=taskArea?.querySelector("h2");
+ if(taskTitle)taskTitle.textContent=en?"Your assignments":"المطلوب منك";
+ const taskList=document.getElementById("classoraStudentTasksList");
+ if(taskList&&/^(جاري التحقق من وظائف صفوفك\.\.\.|Checking your class assignments\.\.\.)$/.test(taskList.textContent.trim()))
+   taskList.textContent=en?"Checking your class assignments...":"جاري التحقق من وظائف صفوفك...";
+ for(const [id,ar,enText] of [
+   ["classoraPromoCenter","إعلانات كلاسورا","Classora announcements"],
+   ["classoraMobilePageNav","التنقّل السريع","Quick navigation"],
+   ["classoraSettingsShortcuts","اختصارات الموقع","Site shortcuts"],
+   ["classoraTeacherDashboard","مساحة عمل المعلم","Teacher workspace"],
+   ["classoraStudentDashboard","لوحة تعليم الطالب","My learning dashboard"]
+ ]){const el=document.getElementById(id);if(el)el.setAttribute("aria-label",en?enText:ar)}
+ setText("manageSentAssignments","إدارة أو حذف الوظائف المرسلة","Manage / delete sent assignments");
+}
+const CLASSORA_PYTHAGORAS_EXPLANATIONS={"en":["The Pythagorean theorem applies only to right triangles. Legs a and b meet at a 90° angle; the longest side, c, is the hypotenuse. Hence a² + b² = c².","The square on side a has area a², the square on side b has area b², and the square on c has area c². The first two areas add up exactly to the third. The sand illustrates these areas.","If a = 3 and b = 4, then c² = 9 + 16 = 25, so c = 5.","To find a missing leg, subtract the known leg's square from c² and take the square root. For example, c = 13 and a = 5 give b = √(169 − 25) = 12.","Conversely, if the longest of three sides satisfies a² + b² = c², the triangle is right-angled. Examples: 3, 4, 5 and 5, 12, 13.","Use it in construction, geometry, mapping, coordinates, diagonal distances, 3D design and computer graphics.","Do not apply a² + b² = c² to non-right triangles. Such triangles need other rules, such as the cosine rule."],"es":["El teorema de Pitágoras se aplica solo a triángulos rectángulos. Los catetos a y b forman 90° y c es la hipotenusa, el lado más largo. Así, a² + b² = c².","Los cuadrados construidos sobre a, b y c tienen áreas a², b² y c². Las primeras dos áreas suman exactamente la tercera. La arena representa esas áreas.","Si a = 3 y b = 4, entonces c² = 9 + 16 = 25 y c = 5.","Para hallar un cateto, resta su otro cateto al cuadrado de c² y calcula la raíz. Por ejemplo, c = 13 y a = 5 dan b = √(169 − 25) = 12.","A la inversa, si los tres lados cumplen a² + b² = c² con c el mayor, el triángulo es rectángulo. Ejemplos: 3, 4, 5 y 5, 12, 13.","Se usa en construcción, geometría, mapas, coordenadas, distancias diagonales, diseño 3D e informática gráfica.","No uses esta fórmula en triángulos que no sean rectángulos. Para esos casos hay otras reglas, como la ley de cosenos."],"ko":["피타고라스 정리는 직각삼각형에만 적용됩니다. 두 직각변 a와 b가 90°를 이루고 가장 긴 변 c가 빗변입니다. 따라서 a² + b² = c²입니다.","a, b, c에 만든 정사각형의 넓이는 a², b², c²입니다. 처음 두 넓이의 합은 세 번째 넓이와 같습니다. 모래가 이 넓이를 보여 줍니다.","a = 3, b = 4이면 c² = 9 + 16 = 25이므로 c = 5입니다.","직각변 하나를 모른다면 c²에서 다른 직각변의 제곱을 뺀 후 제곱근을 구합니다. 예를 들어 c = 13, a = 5이면 b = √(169 − 25) = 12입니다.","반대로 가장 긴 변 c에 대해 a² + b² = c²라면 직각삼각형입니다. 예: 3, 4, 5와 5, 12, 13.","건축, 기하, 지도, 좌표, 대각선 거리, 3D 설계, 컴퓨터 그래픽 등에 사용됩니다.","직각삼각형이 아닌 경우에는 a² + b² = c²를 그대로 사용하지 마세요. 코사인 법칙 등 다른 공식을 사용해야 합니다."],"de":["Der Satz des Pythagoras gilt nur für rechtwinklige Dreiecke. Die Katheten a und b bilden 90°, c ist die längste Seite, die Hypotenuse. Es gilt a² + b² = c².","Die Quadrate über a, b und c haben die Flächen a², b² und c². Die ersten beiden ergeben genau die dritte. Der Sand stellt diese Flächen dar.","Für a = 3 und b = 4 gilt c² = 9 + 16 = 25, also c = 5.","Für eine unbekannte Kathete ziehst du das Quadrat der bekannten Kathete von c² ab und ziehst die Wurzel. Beispiel: c = 13, a = 5 ergibt b = √(169 − 25) = 12.","Umgekehrt ist ein Dreieck rechtwinklig, wenn die längste Seite c die Gleichung a² + b² = c² erfüllt. Beispiele: 3, 4, 5 und 5, 12, 13.","Anwendungen sind Bauwesen, Geometrie, Karten, Koordinaten, Diagonalen, 3D-Design und Computergrafik.","Für nicht rechtwinklige Dreiecke gilt die Formel nicht direkt. Dafür verwendet man beispielsweise den Kosinussatz."],"it":["Il teorema di Pitagora vale solo per triangoli rettangoli. I cateti a e b formano 90° e c è l'ipotenusa, il lato più lungo. Quindi a² + b² = c².","I quadrati sui lati a, b e c hanno aree a², b² e c². Le prime due aree sommate sono uguali alla terza. La sabbia rappresenta queste aree.","Se a = 3 e b = 4, allora c² = 9 + 16 = 25 e c = 5.","Per trovare un cateto, sottrai il quadrato dell'altro cateto da c² e calcola la radice. Per esempio, c = 13 e a = 5 danno b = √(169 − 25) = 12.","Viceversa, se il lato maggiore c soddisfa a² + b² = c², il triangolo è rettangolo. Esempi: 3, 4, 5 e 5, 12, 13.","Si usa in edilizia, geometria, mappe, coordinate, diagonali, progettazione 3D e grafica computerizzata.","Non applicare direttamente la formula ai triangoli non rettangoli: servono altre regole, come il teorema del coseno."],"hi":["पाइथागोरस प्रमेय केवल समकोण त्रिभुज पर लागू होता है। भुजाएँ a और b 90° का कोण बनाती हैं और c सबसे लंबी भुजा, कर्ण है। इसलिए a² + b² = c²।","a, b और c पर बने वर्गों के क्षेत्रफल a², b² और c² हैं। पहले दो क्षेत्रफलों का योग तीसरे के बराबर होता है। रेत इन्हीं क्षेत्रों को दर्शाती है।","यदि a = 3 और b = 4, तो c² = 9 + 16 = 25 और c = 5।","अज्ञात लंब भुजा पाने के लिए c² से दूसरी लंब भुजा का वर्ग घटाकर वर्गमूल लें। उदाहरण: c = 13, a = 5, तो b = √(169 − 25) = 12।","विलोम में, सबसे लंबी भुजा c के लिए a² + b² = c² हो, तो त्रिभुज समकोण है। उदाहरण: 3, 4, 5 और 5, 12, 13।","यह निर्माण, ज्यामिति, मानचित्र, निर्देशांक, विकर्ण दूरी, 3D डिज़ाइन और कंप्यूटर ग्राफिक्स में उपयोगी है।","गैर-समकोण त्रिभुज पर यह सूत्र सीधे नहीं लगता। उनके लिए कोसाइन नियम जैसे अन्य सूत्र चाहिए।"],"tr":["Pisagor Teoremi yalnızca dik üçgenlerde geçerlidir. Dik kenarlar a ve b, 90° açı yapar; en uzun kenar c hipotenüstür. Bu yüzden a² + b² = c².","a, b ve c kenarları üzerine kurulan karelerin alanları a², b² ve c²'dir. İlk iki alanın toplamı üçüncüsüne eşittir. Kum bu alanları gösterir.","a = 3 ve b = 4 ise c² = 9 + 16 = 25, dolayısıyla c = 5.","Bilinmeyen dik kenarı bulmak için c²'den diğer dik kenarın karesini çıkarıp karekök al. Örnek: c = 13, a = 5 ise b = √(169 − 25) = 12.","Tersine, en uzun kenar c için a² + b² = c² sağlanıyorsa üçgen diktir. Örnek: 3, 4, 5 ve 5, 12, 13.","İnşaat, geometri, harita, koordinat, köşegen uzaklığı, 3B tasarım ve bilgisayar grafiklerinde kullanılır.","Bu formülü dik olmayan üçgenlere doğrudan uygulama; kosinüs teoremi gibi başka kurallar gerekir."]};
+const originalPythagorasExplanation=document.getElementById("explainContent")?.innerHTML||"";
+function localizePythagorasExplanation(){
+ const element=document.getElementById("explainContent");if(!element)return;
+ const lang=window.ClassoraLocale?.language||'en';
+ if(lang==='ar'){element.innerHTML=originalPythagorasExplanation;element.setAttribute('data-no-translate','');return}
+ const p=CLASSORA_PYTHAGORAS_EXPLANATIONS[lang]||CLASSORA_PYTHAGORAS_EXPLANATIONS.en;
+ const titles=['What do the squares in the model mean?','3–4–5 Example','If one of the legs is unknown','The converse is useful too','Where is it used?','Important note'];
+ const t=value=>window.ClassoraLocale?.tFor?.(lang,value)||value;
+ const makeP=content=>{const el=document.createElement('p');el.textContent=content;return el.outerHTML};
+ let html=makeP(p[0])+'<div class="eq">a² + b² = c²</div>';
+ for(let i=1;i<p.length;i++){
+  html+='<h3>'+t(titles[i-1])+'</h3>';
+  if(i===2)html+='<div class="eq">3² + 4² = 9 + 16 = 25 = 5²</div>';
+  if(i===3)html+='<div class="eq">a = √(c² − b²) &nbsp;&nbsp; / &nbsp;&nbsp; b = √(c² − a²)</div>';
+  html+=makeP(p[i]);
+ }
+ element.innerHTML=html;element.setAttribute('data-no-translate','');
+}
+function applySiteLanguage(lang,save=true){
+  const selectedLanguage=window.ClassoraLocale.select(lang);
+  currentUILanguage=selectedLanguage==='ar'?'ar':'en';
+  document.documentElement.lang=selectedLanguage;
+  document.documentElement.dir=currentUILanguage==='en'?'ltr':'rtl';
+  document.body.classList.toggle('lang-en',currentUILanguage==='en');
+  document.title='Classora';
+  const firstName=String(window.PythagorasiUser?.displayName||'').trim().split(/\s+/)[0];if(firstName){const prefix=currentUILanguage==='en'?(window.ClassoraLocale?.tFor?.(selectedLanguage,"Welcome, ")||"Welcome, "):"أهلًا ";document.getElementById("lobbyGreeting").textContent=prefix+firstName}
+  if(save)localStorage.setItem('pythagorasi_language',selectedLanguage);
+  document.body.classList.remove('language-switching');void document.body.offsetWidth;document.body.classList.add('language-switching');
+  translateSubtree(document.body);
+  document.getElementById("authEnglishBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="en"));
+  document.getElementById("authArabicBtn")?.setAttribute("aria-pressed",String(currentUILanguage==="ar"));
+  try{refreshAIWelcome();updatePlaqueLanguage();updateModelChangeText();window.classoraLearningHub?.refresh();window.classoraLearningPlus?.refresh();window.classoraReturnNavigation?.refresh();window.classoraCurriculum?.refresh();window.classoraSubjectLabs?.refresh?.()}catch{};syncV99LanguageLabels();localizePythagorasExplanation();
+  try{updateAssistantLabels();updateClassoraNotificationSettings();renderChatFeatureControls();applyChatFeatures()}catch{}
+  try{applyAdminLanguage()}catch{}
+  try{updateConversationTools();if(chatModal.classList.contains("open")){renderSocialInbox();listenSupportChatInbox();if(activeChatPerson)renderConversationMessages(chatLastMessages)}}catch{}
+  try{
+    const frame=document.getElementById("periodicTableFrame");
+    if(frame?.contentWindow)frame.contentWindow.postMessage({type:"classora-language",lang:selectedLanguage},location.origin);
+  }catch{}
+  window.ClassoraLocale.syncControls();
+  translateSubtree(document.body);
+  setTimeout(()=>document.body.classList.remove('language-switching'),350);
+}
+document.addEventListener('click',event=>{
+  const button=event.target.closest?.('[data-classora-language]');
+  if(!button||button.id)return;
+  applySiteLanguage(button.dataset.classoraLanguage);
+  refreshSettingsUI();window.ClassoraLocale.syncControls();saveAccountPreferences();
+});
+document.getElementById("authEnglishBtn").addEventListener("click",()=>applySiteLanguage("en"));
+document.getElementById("authArabicBtn").addEventListener("click",()=>applySiteLanguage("ar"));
+const bilingualObserver=new MutationObserver(records=>{
+  for(const record of records){
+    record.addedNodes.forEach(n=>{
+      if(n.nodeType===Node.ELEMENT_NODE)translateSubtree(n);
+      else if(n.nodeType===Node.TEXT_NODE&&n.parentElement)translateElementNode(n.parentElement);
+    });
+    if(record.type==='characterData'&&record.target.parentElement)translateElementNode(record.target.parentElement);
+    if(record.type==='attributes')translateElementNode(record.target);
+  }
+});
+setTimeout(()=>{
+  applySiteLanguage(window.ClassoraLocale.language,false);
+  bilingualObserver.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["placeholder","aria-label","title","alt"]});
+},0);
+
+
+/* -------------------- V58 EMBEDDED SUBJECT PAGE ENHANCEMENT -------------------- */
+const periodicTableFrame=document.getElementById("periodicTableFrame");
+periodicTableFrame?.addEventListener("load",()=>{
+  try{periodicTableFrame.contentWindow?.postMessage({type:"classora-language",lang:window.ClassoraLocale.language},location.origin)}catch{}
+});
+window.addEventListener("message",event=>{
+  if(event.origin!==location.origin)return;
+  if(event.source!==periodicTableFrame?.contentWindow)return;
+  if(event.data?.type==="classora-subject-language"&&Object.hasOwn(window.ClassoraLocale.languages,event.data.lang)){applySiteLanguage(event.data.lang);}
+  if(event.data?.type==="classora-close-subject"&&event.data?.subject==="periodic-table"){
+    classoraReturnFromPeriodic();
+  }
+});
+let classoraPreviousHash=location.hash;
+window.addEventListener("hashchange",()=>{
+  const leftPeriodic=classoraPreviousHash==="#periodic-table"&&location.hash!=="#periodic-table";
+  classoraPreviousHash=location.hash;
+  if(leftPeriodic){classoraReturnFromPeriodic();return}
+  if(location.hash==="#periodic-table"){
+    document.getElementById("periodic-table")?.style.removeProperty("display");
+    try{periodicTableFrame?.contentWindow?.postMessage({type:"classora-language",lang:window.ClassoraLocale.language},location.origin)}catch{}
+  }else if(location.hash==="#platformLobby"){
+    showPlatformLobby();
+    classoraRestoreLobbyPosition();
+  }
+});
+
+/* -------------------- V14 SETTINGS / SOUND / MOTION -------------------- */
+const settingsModal=document.getElementById("settingsModal");
+let soundEnabled=localStorage.getItem("pythagorasi_sound")!=="off";
+let motionEnabled=localStorage.getItem("pythagorasi_motion")!=="off";
+let audioCtx=null;
+let lastTypingSound=0;
+
+function getAudioCtx(){
+  if(!soundEnabled)return null;
+  if(!audioCtx){
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(C)audioCtx=new C();
+  }
+  if(audioCtx?.state==="suspended")audioCtx.resume().catch(()=>{});
+  return audioCtx;
+}
+function tone(freq=440,duration=.07,volume=.035,type="sine",delay=0){
+  let ctx;try{ctx=getAudioCtx()}catch{return}if(!ctx)return;
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(.0001,ctx.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(Math.max(.001,volume),ctx.currentTime+delay+.008);
+  g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+delay+duration);
+  o.connect(g);g.connect(ctx.destination);
+  o.start(ctx.currentTime+delay);o.stop(ctx.currentTime+delay+duration+.02);
+}
+function soundFx(type){
+  if(!soundEnabled)return;
+  if(type==="click")tone(360,.045,.018,"sine");
+  else if(type==="type")tone(720,.025,.009,"square");
+  else if(type==="tick")tone(870,.055,.025,"square");
+  else if(type==="correct"){tone(520,.08,.035,"sine");tone(700,.1,.035,"sine",.07);tone(880,.12,.035,"sine",.15)}
+  else if(type==="wrong"){tone(270,.11,.04,"sawtooth");tone(190,.15,.035,"sawtooth",.09)}
+  else if(type==="win"){tone(523,.12,.04,"triangle");tone(659,.12,.04,"triangle",.11);tone(784,.17,.045,"triangle",.22);tone(1046,.23,.045,"triangle",.36)}
+  else if(type==="lose"){tone(330,.13,.035,"triangle");tone(260,.16,.035,"triangle",.12);tone(196,.22,.04,"triangle",.27)}
+  else if(type==="submit"){tone(440,.07,.025,"sine");tone(660,.12,.03,"sine",.07)}
+}
+function fxElement(el,kind="pop"){
+  if(!el||!motionEnabled)return;
+  const cls=kind==="win"?"fx-win":kind==="shake"?"fx-shake":"fx-pop";
+  el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);
+  setTimeout(()=>el.classList.remove(cls),800);
+}
+function applyMotionSetting(){
+  document.body.classList.toggle("reduce-motion",!motionEnabled);
+}
+applyMotionSetting();
+
+document.addEventListener("click",e=>{
+  const clickable=e.target.closest("button,.settings-photo-btn,.member-actions label,.lobby-action,.pythag-action-card");
+  if(clickable){
+    soundFx("click");
+    if(motionEnabled){
+      clickable.classList.remove("super-press");void clickable.offsetWidth;clickable.classList.add("super-press");
+      setTimeout(()=>clickable.classList.remove("super-press"),420);
+      const ripple=document.createElement("span");ripple.className="global-click-ripple";
+      ripple.style.left=`${e.clientX}px`;ripple.style.top=`${e.clientY}px`;
+      document.body.appendChild(ripple);setTimeout(()=>ripple.remove(),650);
+    }
+  }
+},true);
+document.addEventListener("keydown",e=>{
+  if(!soundEnabled||e.ctrlKey||e.metaKey||e.altKey||e.target.closest("#chatModal"))return;
+  if(!e.target.matches("input,textarea"))return;
+  const now=Date.now();if(now-lastTypingSound<55)return;
+  if(e.key.length===1||e.key==="Backspace"){lastTypingSound=now;soundFx("type")}
+},true);
+
+// Local status mirrors the 7-day Firestore rule; transaction/rules enforce the real limit.
+const CLASSORA_NAME_COOLDOWN_MS=7*24*60*60*1000;
+function classoraNameLastChangedMs(profile){
+  const stamp=profile?.displayNameChangedAt;
+  return typeof stamp?.toMillis==="function"?stamp.toMillis():
+    typeof stamp?.seconds==="number"?stamp.seconds*1000:0;
+}
+function classoraNameNextAllowedMs(profile){
+  const last=classoraNameLastChangedMs(profile);
+  return last>0?last+CLASSORA_NAME_COOLDOWN_MS:0;
+}
+function classoraRefreshNameCooldown(){
+  const note=document.getElementById("classoraNameCooldownNote");
+  const button=document.getElementById("saveDisplayNameBtn");
+  const field=document.getElementById("settingsDisplayName");
+  if(!note||!button||!field)return;
+  const until=classoraNameNextAllowedMs(window.PythagorasiUser);
+  const locked=until>Date.now()&&!isSuperAdminProfile();
+  button.disabled=locked;
+  field.readOnly=locked;
+  note.dataset.locked=String(locked);
+  const en=currentUILanguage==="en";
+  note.textContent=locked?
+    (en?window.ClassoraLocale.t("Name changes are limited to once every 7 days."):"تغيير الاسم متاح مرة كل 7 أيام فقط."):
+    (en?window.ClassoraLocale.t("You can change your display name once every 7 days."):"بتقدر تغيّر اسمك مرة كل 7 أيام.");
+}
+function refreshSettingsUI(){
+  const p=window.PythagorasiUser||{},name=p.displayName||"مستخدم";
+  document.getElementById("settingsCurrentName").textContent=name;
+  document.getElementById("settingsDisplayName").value=name;
+  document.getElementById("settingsLoginName").textContent=`اسم الدخول: ${p.loginName||p.originalLoginName||p.nameKey||name}`;
+  document.getElementById("settingsProfileId").textContent=p.profileId||"----------";
+  document.getElementById("settingsRememberedLogin").textContent=`تسجيل الدخول محفوظ لغاية: ${formatLoginExpiry(rememberedLoginExpiresAt())}`;
+  document.getElementById("settingsAIName").value="Classora Assistant";
+  const avatar=document.getElementById("settingsAvatar");
+  applyAvatar(avatar,p,name);
+  document.getElementById("settingsSoundToggle").checked=soundEnabled;
+  document.getElementById("settingsMotionToggle").checked=motionEnabled;
+  document.getElementById("settingsArabicBtn").classList.toggle("active",currentUILanguage==="ar");
+  document.getElementById("settingsEnglishBtn").classList.toggle("active",window.ClassoraLocale.language==="en");
+  window.ClassoraLocale.syncControls();
+  const isLight=document.body.classList.contains("light");
+  document.getElementById("settingsLightBtn").classList.toggle("active",isLight);
+  document.getElementById("settingsDarkBtn").classList.toggle("active",!isLight);
+  document.getElementById("settingsStatus").textContent="";
+  classoraRefreshNameCooldown();
+  document.getElementById("securityPhraseCurrentPassword")?.classList.toggle("hidden",!auth.currentUser?.providerData?.some(p=>p.providerId==="password"));
+  const secState=document.getElementById("securityPhraseState");
+  if(secState)secState.textContent=p.securityPhraseHash?(currentUILanguage==="en"?"Security phrase is configured ✅":"كلمة الأمان مفعّلة ✅"):(currentUILanguage==="en"?"Security phrase is not set yet.":"كلمة الأمان غير مفعّلة بعد.");
+  document.getElementById("teacherPasswordSettingsCard")?.classList.toggle("hidden",!isTeacherLikeProfile(p));
+  const teacherNameInput=document.getElementById("teacherLoginNameSettings");
+  if(teacherNameInput)teacherNameInput.value=p.loginName||p.displayName||"";
+  const shakeBtn=document.getElementById("settingsShakeSupportBtn");
+  if(shakeBtn)shakeBtn.textContent=localStorage.getItem("classora_shake_support")==="1"?"📳 هز الهاتف للدعم: مفعّل":"📳 تفعيل هز الهاتف لفتح الدعم";
+  updatePwaUI();
+}
+function openSettingsModal(){
+  refreshSettingsUI();
+  settingsModal.classList.add("open");
+}
+
+let securityReminderBusy=false;
+async function maybeShowSecurityReminder(uid){
+ const profile=window.PythagorasiUser;
+ if(securityReminderBusy||auth.currentUser?.uid!==uid||profile?.uid!==uid||profile.securityPhraseHash||profile.securityPhrasePromptSeenAt||profile.forcePasswordReset)return;
+ if(document.querySelector('.modal.open')){setTimeout(()=>maybeShowSecurityReminder(uid),2500);return}
+ securityReminderBusy=true;
+ try{
+  const claimed=await runTransaction(db,async tx=>{
+   const ref=doc(db,"users",uid),snapshot=await tx.get(ref);
+   if(!snapshot.exists()||snapshot.data().securityPhraseHash||snapshot.data().securityPhrasePromptSeenAt)return false;
+   tx.update(ref,{securityPhrasePromptSeenAt:serverTimestamp()});return true;
+  });
+  if(!claimed||auth.currentUser?.uid!==uid)return;
+  window.PythagorasiUser.securityPhrasePromptSeenAt=true;
+  document.getElementById("securityReminderTitle").textContent=chatText("🛡️ أضف كلمة أمان لحسابك","🛡️ Add a security phrase");
+  document.getElementById("securityReminderDescription").textContent=chatText("اختار عبارة بتتذكرها لتساعد الدعم يتحقق إن الحساب إلك. هذا التذكير بظهر مرة واحدة، وبتقدر تضيفها لاحقًا من الإعدادات.","Choose a memorable phrase to help support verify account ownership. This reminder appears once; you can also set it later in Settings.");
+  document.getElementById("securityReminderSetup").textContent=chatText("إضافة كلمة أمان","Set security phrase");
+  document.getElementById("securityReminderLater").textContent=chatText("لاحقًا","Later");
+  document.getElementById("securityReminderModal").classList.add("open");
+ }catch(err){console.warn("Security reminder unavailable",err.code||"unknown")}
+ finally{securityReminderBusy=false}
+}
+function dismissSecurityReminder(){document.getElementById("securityReminderModal").classList.remove("open")}
+document.getElementById("securityReminderLater").addEventListener("click",dismissSecurityReminder);
+document.getElementById("securityReminderSetup").addEventListener("click",()=>{dismissSecurityReminder();openSettingsModal();document.getElementById("securityPhraseSettingsCard").scrollIntoView({block:"center",behavior:"smooth"})});
+
+document.getElementById('saveAccountPasswordBtn').onclick=async()=>{
+ const user=auth.currentUser,old=document.getElementById('accountOldPassword'),next=document.getElementById('accountNewPassword'),confirm=document.getElementById('accountConfirmPassword'),btn=document.getElementById('saveAccountPasswordBtn');if(!user)return;
+ if(next.value.length<8||next.value!==confirm.value){showToast(chatText('اكتب كلمة سر من 8 أحرف على الأقل وتأكد من تطابقها.','Use at least 8 characters and matching passwords.'));return}btn.disabled=true;
+ try{if(user.providerData.some(p=>p.providerId==='password'))await reauthenticateWithCredential(user,EmailAuthProvider.credential(user.email,old.value));else await reauthenticateWithPopup(user,new GoogleAuthProvider());await updatePassword(user,next.value);old.value=next.value=confirm.value='';showToast(chatText('تم تغيير كلمة السر.','Password changed.'))}catch{showToast(chatText('تعذر تغيير كلمة السر. تحقق من بياناتك وأعد المحاولة.','Could not change password. Check your details and retry.'))}finally{btn.disabled=false}
+};
+function closeSettingsModal(){settingsModal.classList.remove("open")}
+document.getElementById("lobbySettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("labSettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("mobileLabSettingsBtn").addEventListener("click",openSettingsModal);
+document.getElementById("closeSettingsModal").addEventListener("click",closeSettingsModal);
+// Settings remain open until the user taps the visible close button.
+document.getElementById("copyProfileIdBtn").addEventListener("click",async()=>{
+  const id=String(window.PythagorasiUser?.profileId||"");
+  if(!/^\d{10}$/.test(id))return;
+  try{await navigator.clipboard.writeText(id);showToast(currentUILanguage==="en"?"Profile ID copied.":"تم نسخ Profile ID.")}
+  catch{showToast(`Profile ID: ${id}`)}
+});
+
+document.getElementById("settingsDarkBtn").addEventListener("click",()=>{applySiteTheme("dark");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsLightBtn").addEventListener("click",()=>{applySiteTheme("light");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsArabicBtn").addEventListener("click",()=>{applySiteLanguage("ar");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsEnglishBtn").addEventListener("click",()=>{applySiteLanguage("en");refreshSettingsUI();saveAccountPreferences()});
+document.getElementById("settingsOpenProfileBtn").addEventListener("click",()=>{closeSettingsModal();openProfileModal()});
+document.getElementById("settingsSoundToggle").addEventListener("change",e=>{
+  soundEnabled=e.target.checked;
+  localStorage.setItem("pythagorasi_sound",soundEnabled?"on":"off");
+  saveAccountPreferences();
+  if(soundEnabled)soundFx("correct");
+});
+document.getElementById("settingsMotionToggle").addEventListener("change",e=>{
+  motionEnabled=e.target.checked;
+  localStorage.setItem("pythagorasi_motion",motionEnabled?"on":"off");
+  applyMotionSetting();
+  saveAccountPreferences();
+});
+
+document.getElementById("saveDisplayNameBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const button=document.getElementById("saveDisplayNameBtn");
+  const name=document.getElementById("settingsDisplayName").value.trim().replace(/\s+/g," ");
+  const status=document.getElementById("settingsStatus");
+  const en=currentUILanguage==="en";
+  if(name.length<2||name.length>40){
+    status.textContent=en?"Use a name between 2 and 40 characters.":"اكتب اسمًا بين حرفين و40 حرفًا.";return;
+  }
+  if(name===window.PythagorasiUser.displayName){
+    status.textContent=en?"This is already your display name.":"هذا اسمك الحالي.";return;
+  }
+  button.disabled=true;
+  try{
+    const uid=auth.currentUser.uid,userRef=doc(db,"users",uid);
+    const oldName=window.PythagorasiUser.displayName;
+    const originalLoginName=window.PythagorasiUser.loginName||
+      window.PythagorasiUser.originalLoginName||oldName||name;
+    const adminChanging=isSuperAdminProfile();
+    await runTransaction(db,async tx=>{
+      const latest=await tx.get(userRef);
+      if(!latest.exists())throw new Error("name-profile-missing");
+      const nextAllowed=classoraNameNextAllowedMs(latest.data());
+      if(!adminChanging&&nextAllowed>Date.now())throw new Error("name-cooldown");
+      tx.update(userRef,{
+        displayName:name,originalLoginName,
+        displayNameChangedAt:serverTimestamp(),updatedAt:serverTimestamp()
+      });
+    });
+    let updated=null;
+    try{updated=await getDoc(userRef)}catch{}
+    window.PythagorasiUser={
+      ...window.PythagorasiUser,displayName:name,originalLoginName,
+      displayNameChangedAt:updated.data()?.displayNameChangedAt||{seconds:Math.floor(Date.now()/1000)}
+    };
+    activeProfile=window.PythagorasiUser;
+    document.getElementById("authDisplayName").textContent=name;
+    document.getElementById("lobbyProfileName").textContent=name;
+    document.getElementById("lobbyGreeting").textContent=
+      (en?"Welcome, ":"أهلًا ")+name.split(/\s+/)[0];
+    if(isStudentLike())try{await syncStudentMemberStats()}catch(e){console.warn("class stats sync",e)}
+    try{await syncPublicProfile(window.PythagorasiUser,auth.currentUser)}catch(e){console.warn("profile sync",e)}
+    refreshAIWelcome();refreshSettingsUI();
+    status.textContent=en?"Display name saved. You can change it again in 7 days.":
+      "تم تغيير الاسم. بتقدر تغيّره مرة ثانية بعد 7 أيام.";
+    soundFx("correct");
+  }catch(err){
+    console.error("weekly display-name change",err);
+    status.textContent=String(err?.message||"").includes("name-cooldown")?
+      (en?"You can only change your display name once every 7 days.":"تغيير الاسم متاح مرة كل 7 أيام فقط."):
+      (en?"Could not save your name. Please try again.":"تعذّر حفظ الاسم. جرّب مرة ثانية.");
+  }finally{
+    classoraRefreshNameCooldown();
+  }
+});
+
+
+document.getElementById("saveSecurityPhraseBtn").addEventListener("click",async()=>{
+  if(!auth.currentUser||!window.PythagorasiUser)return;
+  const a=document.getElementById("securityPhraseInput").value;
+  const b=document.getElementById("securityPhraseConfirm").value;
+  const status=document.getElementById("settingsStatus");
+  if(normalizeSecurityPhrase(a).length<8){status.textContent=chatText("اختار عبارة أمان من 8 أحرف أو أكثر.","Choose a security phrase of at least 8 characters.");return}
+  if(a!==b){status.textContent="كلمتا الأمان مش نفس بعض.";return}
+  try{
+    const currentUser=auth.currentUser,currentPassword=document.getElementById("securityPhraseCurrentPassword").value;
+    if(currentUser.providerData.some(p=>p.providerId==="password")){
+      if(!currentPassword){status.textContent=chatText("اكتب كلمة السر الحالية لتأكيد ملكية الحساب.","Enter your current password to confirm ownership.");return}
+      await reauthenticateWithCredential(currentUser,EmailAuthProvider.credential(currentUser.email,currentPassword));
+    }else{await reauthenticateWithPopup(currentUser,new GoogleAuthProvider())}
+    const hash=await securityPhraseHashV2(currentUser.uid,a);
+    await updateDoc(doc(db,"users",auth.currentUser.uid),{
+      securityPhraseHash:hash,securityPhraseVersion:2,
+      securityPhraseSetAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    });
+    window.PythagorasiUser={...window.PythagorasiUser,securityPhraseHash:hash,securityPhraseVersion:2};
+    document.getElementById("securityPhraseCurrentPassword").value="";
+    activeProfile=window.PythagorasiUser;
+    if(isTeacherLike())await saveTeacherLoginAliases(activeProfile,auth.currentUser);
+    else await saveStudentLoginAlias(activeProfile.loginName||activeProfile.displayName,auth.currentUser,auth.currentUser.email);
+    document.getElementById("securityPhraseInput").value="";
+    document.getElementById("securityPhraseConfirm").value="";
+    refreshSettingsUI();
+    status.textContent="تم حفظ كلمة الأمان بشكل مشفّر ✅";
+  }catch(err){console.error(err);status.textContent="تعذر حفظ كلمة الأمان."}
+});
+
+document.getElementById("enableTeacherPasswordBtn").addEventListener("click",async()=>{
   if(!auth.currentUser||!isTeacherLike())return;
   const loginName=document.getElementById("teacherLoginNameSettings").value.trim().replace(/\s+/g," ");
   const password=document.getElementById("teacherNewPasswordSettings").value;
