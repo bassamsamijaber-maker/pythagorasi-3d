@@ -386,3 +386,122 @@
    animation:none!important;
  }
 }
+/* v285: responsive study dashboard. Existing routes and saved themes remain authoritative. */
+html body:not([data-classora-theme="embroidery"]) #platformLobby {
+ --dashboard-purple:#9c83df;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero {
+ border-radius:24px!important;
+ padding:28px!important;
+ min-height:235px!important;
+ gap:20px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-orbit-art {
+ opacity:1!important;transform:scale(.9)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick {
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick .cl214-card {
+ min-height:112px!important;border-radius:20px!important;padding:20px!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick .cl214-card:nth-child(2) {
+ background:color-mix(in srgb,var(--cl283-paper) 92%,#a78bfa)!important;
+ border-color:color-mix(in srgb,var(--cl283-outline) 70%,#a78bfa)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick .cl214-card:nth-child(3) .cl214-card-graphic {
+ background:color-mix(in srgb,var(--cl283-paper) 80%,#f5b775)!important;
+}
+html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card:focus-visible,
+html body #classoraMobilePageNav button:focus-visible {
+ outline:3px solid #8b6bd2!important;outline-offset:3px!important;
+}
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby .cl214-hero {
+ background:linear-gradient(115deg,#e4f5ec,#d8f0e6)!important;border-color:#bfdfcf!important;
+}
+html body:is(.light,[data-classora-theme="morning"]) #platformLobby .cl214-hero .cl214-primary {
+ background:#12815d!important;color:#fff!important;border-color:#12815d!important;
+}
+/* Use the actual five navigation controls as a right rail on wide screens. */
+@media(min-width:1200px){
+ html body:not([data-classora-theme="embroidery"]) #platformLobby {
+ --cl260-ai:clamp(250px,23vw,340px);
+ --cl260-main:calc(100vw - var(--cl260-ai) - 224px - 3 * var(--cl260-g));
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .lobby-shell {
+ margin-right:calc(224px + var(--cl260-g))!important;
+ padding:24px 24px 48px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl250-left {
+ border-radius:24px!important;height:calc(100dvh - 2 * var(--cl260-g))!important;
+ border:1px solid var(--cl283-outline)!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl268-header {
+ border-radius:18px!important;width:100%!important;max-width:100%!important;
+ box-sizing:border-box!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"]):has(#platformLobby:not(.hidden)) #classoraMobilePageNav {
+ inset:auto!important;inset-inline:auto!important;inset-block:auto!important;
+ top:28px!important;right:24px!important;left:auto!important;bottom:28px!important;
+ transform:none!important;width:200px!important;max-width:200px!important;
+ height:calc(100dvh - 56px)!important;min-height:360px!important;max-height:none!important;
+ display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+ padding:28px 12px!important;gap:12px!important;border-radius:24px!important;
+ background:var(--cl283-paper)!important;border:1px solid var(--cl283-outline)!important;
+ box-shadow:0 8px 28px #16382f0a!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"]):has(#platformLobby:not(.hidden)) #classoraMobilePageNav::before {
+ content:"Classora";font:850 27px/1.5 system-ui,sans-serif;color:var(--cl283-heading);
+ display:block;padding:8px 0 32px;text-align:center;
+ }
+ html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"]):has(#platformLobby:not(.hidden)) #classoraMobilePageNav>button {
+ flex:0 0 58px!important;display:flex!important;flex-direction:row!important;
+ justify-content:flex-start!important;gap:14px!important;padding:12px 16px!important;
+ min-height:58px!important;height:58px!important;max-height:58px!important;
+ }
+ html body.classora-dock-enabled.classora-authenticated:not([data-classora-theme="embroidery"]):has(#platformLobby:not(.hidden)) #classoraMobilePageNav>button span {
+ font-size:14px!important;
+ }
+}
+@media(max-width:999px){
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .lobby-shell {
+ padding-inline:16px!important;padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero {
+ grid-template-columns:minmax(0,1.4fr) minmax(90px,.6fr)!important;
+ padding:22px 18px!important;min-height:210px!important;gap:8px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero h1 {
+ font-size:clamp(24px,5.8vw,34px)!important;line-height:1.35!important;letter-spacing:0!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-lead {
+ font-size:13px!important;line-height:1.7!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons {
+ display:flex!important;flex-wrap:wrap!important;gap:8px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-buttons button {
+ min-height:44px!important;padding:10px 12px!important;font-size:12px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-visual {
+ min-width:0!important;width:100%!important;overflow:hidden!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick {
+ gap:12px!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-quick .cl214-card {
+ padding:16px!important;min-height:140px!important;align-items:flex-start!important;
+ }
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-copy strong {font-size:16px!important;}
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-card-copy small {font-size:12px!important;line-height:1.6!important;}
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .hub-curriculum-subjects {
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;
+ }
+}
+@media(max-width:380px){
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero {grid-template-columns:1fr!important;}
+ html body:not([data-classora-theme="embroidery"]) #platformLobby .cl214-hero-visual {display:none!important;}
+}
+@media(prefers-reduced-motion:reduce){
+ html body #platformLobby .cl214-card {transition:none!important;transform:none!important;}
+}
