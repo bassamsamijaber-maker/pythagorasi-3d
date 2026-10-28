@@ -6,7 +6,11 @@ const icon=k=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[k]||icons.sp
 const text=(ar,en)=>'<span data-d-ar="'+ar+'" data-d-en="'+en+'">'+ar+'</span>';
 const button=(route,label,en,k,cls='')=>'<button type="button" data-d-route="'+route+'" class="'+cls+'">'+icon(k)+text(label,en)+'</button>';
 let dash,root,card,marker,active=true;
-function native(id){const el=$(id);if(el&&!el.disabled){el.click();return true}return false}
+function notify(message){
+ let n=$('cl286Notice');if(!n){n=document.createElement('div');n.id='cl286Notice';n.setAttribute('role','status');document.body.append(n)}
+ n.textContent=message;clearTimeout(notify.timer);notify.timer=setTimeout(()=>n.remove(),4500);
+}
+function native(id){const el=$(id);if(el&&!el.disabled){el.click();return true}notify((document.documentElement.lang||'ar').startsWith('ar')?'هذا القسم غير متاح لحسابك الآن. جرّب بعد اكتمال التحميل.':'This section is not available for your account yet. Try again once loading finishes.');return false}
 function grade(){const p=window.PythagorasiUser;const n=Number(p?.grade||p?.gradeLevel);return n>=7&&n<=12?n:7}
 function last(){try{return JSON.parse(localStorage.getItem('classora_last_topic_v112_'+window.PythagorasiUser?.uid)||'null')}catch{return null}}
 function closeAI(){if(!root.classList.contains('cl286-ai-open'))return;root.classList.remove('cl286-ai-open');$('cl286AssistantButton')?.focus()}
@@ -18,6 +22,7 @@ function positionAI(){
  else if(!active&&marker.parentNode&&card.parentNode!==marker.parentNode)marker.after(card);
 }
 function go(route){
+ if(route!=='ai'&&route!=='closeAI')root.classList.remove('cl286-ai-open');
  if(route==='search'){openSearch();return}
  if(route==='home'){active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();return}
  if(route==='ai'){root.classList.add('cl286-ai-open');positionAI();$('lobbyAIInput')?.focus();return}
@@ -26,11 +31,14 @@ function go(route){
  if(route==='subjects'){if(window.classoraCurriculum?.open)window.classoraCurriculum.open();else go('tools');return}
  if(route.startsWith('subject:')){if(window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(grade(),route.split(':')[1]);else go('subjects');return}
  if(route==='resume'){const l=last();if(l&&window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(l.grade,l.subject,l.topic);else go('subjects');return}
- if(route==='progress'){const fn=window.classoraLearningPlus?.progress;if(typeof fn==='function')fn();else go('tools');return}
+ if(route==='progress'){if(typeof window.classoraLearningPlus?.progress==='function')window.classoraLearningPlus.progress();else go('tools');return}
+ if(route==='challenge'){if(typeof window.classoraLearningBoost?.openChallenge==='function')window.classoraLearningBoost.openChallenge();else go('tools');return}
  const ids={search:'classoraGlassSearchBtn',notifications:'lobbyNotificationsBtn',profile:'lobbyProfileBtn',classes:'lobbyClassBtn',chat:'lobbyChatBtn',settings:'lobbySettingsBtn',exam:'lobbyExamBtn',live:'competitionBtn'};
  if(ids[route])native(ids[route]);
 }
 function openSearch(){
+ if(document.querySelector('.cl286-search-dialog[open]'))return;
+ let restoreFocus=true;
  const ar=(document.documentElement.lang||'ar').startsWith('ar');
  const dialog=document.createElement('dialog');dialog.className='cl286-search-dialog';dialog.dir=ar?'rtl':'ltr';
  const title=document.createElement('h2');title.textContent=ar?'ابحث في كلاسورا':'Search Classora';
@@ -38,15 +46,15 @@ function openSearch(){
  const close=document.createElement('button');close.type='button';close.textContent=ar?'إغلاق ✕':'Close ✕';close.addEventListener('click',()=>dialog.close());
  const list=document.createElement('div');
  const items=[['subject:math','الرياضيات','Mathematics'],['subject:science','العلوم','Science'],['subject:arabic','اللغة العربية','Arabic'],['subjects','كل المواد والدروس','All subjects and lessons'],['exam','الامتحانات','Exams'],['live','المسابقات','Competitions'],['classes','صفوفي','Classes'],['chat','الشات','Chat'],['settings','الإعدادات','Settings'],['ai','مساعد كلاسورا','Classora assistant']];
- function render(){list.replaceChildren();const q=input.value.trim().toLowerCase();for(const [route,a,e] of items){if(q&&!(`${a} ${e}`.toLowerCase().includes(q)))continue;const b=document.createElement('button');b.type='button';b.textContent=ar?a:e;b.addEventListener('click',()=>{dialog.close();go(route)});list.append(b)}if(!list.childElementCount){const p=document.createElement('p');p.textContent=ar?'ما لقينا نتيجة. جرّب اسم المادة.':'No results. Try a subject name.';list.append(p)}}
- input.addEventListener('input',render);dialog.addEventListener('close',()=>{dialog.remove();dash.querySelector('[data-d-route="search"]')?.focus()},{once:true});
+ function render(){list.replaceChildren();const q=input.value.trim().toLowerCase();for(const [route,a,e] of items){if(q&&!(`${a} ${e}`.toLowerCase().includes(q)))continue;const b=document.createElement('button');b.type='button';b.textContent=ar?a:e;b.addEventListener('click',()=>{restoreFocus=false;dialog.close();go(route)});list.append(b)}if(!list.childElementCount){const p=document.createElement('p');p.textContent=ar?'ما لقينا نتيجة. جرّب اسم المادة.':'No results. Try a subject name.';list.append(p)}}
+ input.addEventListener('input',render);dialog.addEventListener('close',()=>{dialog.remove();if(restoreFocus)dash.querySelector('[data-d-route="search"]')?.focus()},{once:true});
  dialog.append(close,title,input,list);document.body.append(dialog);render();dialog.showModal();input.focus();
 }
 function sync(){
  if(!dash)return;
  const ar=(document.documentElement.lang||'ar').startsWith('ar');dash.dir=ar?'rtl':'ltr';dash.lang=ar?'ar':'en';
  dash.querySelectorAll('[data-d-ar]').forEach(e=>{const v=ar?e.dataset.dAr:e.dataset.dEn;if(e.textContent!==v)e.textContent=v});
- dash.querySelectorAll('.cl286-icon').forEach(b=>b.setAttribute('aria-label',b.textContent.trim()));
+ dash.querySelectorAll('.cl286-icon,.cl286-search').forEach(b=>b.setAttribute('aria-label',b.textContent.trim()));
  const name=String(window.PythagorasiUser?.displayName||$('lobbyProfileName')?.textContent||'').trim().split(/\s+/)[0];
  $('cl286Name').textContent=name|| (ar?'أهلًا في كلاسورا':'Welcome to Classora');
  $('cl286User').textContent=name|| (ar?'حسابي':'My account');
@@ -64,7 +72,7 @@ function init(){
  <main class="cl286-main"><header class="cl286-top">${button('search','ابحث عن دروسك، مواضيع، أو أي شيء…','Search lessons and topics…','search','cl286-search')}${button('notifications','الإشعارات','Notifications','bell','cl286-icon')}${button('profile','حسابي','My account','users','cl286-icon')}<div class="cl286-mobile-brand">Classora</div></header>
  <div class="cl286-greeting"><h1>${text('أهلًا','Hello')} <span id="cl286Name"></span> 👋</h1><p>${text('جاهز لإنجاز جديد؟','Ready for a new achievement?')}</p></div>
  <section class="cl286-hero"><div><h2>${text('خطوة جديدة نحو التفوّق','One step closer to your goals')}</h2><p>${text('كل درس تقرأه اليوم هو استثمار في مستقبلك. اكتشف محتوى جديدًا، راجع دروسك، وحقّق أهدافك.','Learn something new, revisit your lessons, and work towards your goals.')}</p>${button('resume','أكمل تعلّمك','Continue learning','play','cl286-primary')}</div><div class="cl286-book" aria-hidden="true"></div></section>
- <section class="cl286-stats"><button data-d-route="progress" class="mint">${icon('book')}<span>${text('دروس بدأتها','Lessons started')}<b id="cl286Started">—</b></span></button><button data-d-route="progress" class="lavender">${icon('spark')}<span>${text('نقاطك','Your points')}<b id="cl286XP">—</b></span></button><button data-d-route="tools" class="peach">${icon('exam')}<span>${text('تحدّي اليوم','Daily challenge')}<b id="cl286Daily">—</b></span></button></section>
+ <section class="cl286-stats"><button data-d-route="progress" class="mint">${icon('book')}<span>${text('دروس بدأتها','Lessons started')}<b id="cl286Started">—</b></span></button><button data-d-route="progress" class="lavender">${icon('spark')}<span>${text('نقاطك','Your points')}<b id="cl286XP">—</b></span></button><button data-d-route="challenge" class="peach">${icon('exam')}<span>${text('تحدّي اليوم','Daily challenge')}<b id="cl286Daily">—</b></span></button></section>
  <div class="cl286-heading"><h2>${icon('book')}${text('موادي','My subjects')}</h2>${button('subjects','عرض الكل','View all','arrow','cl286-text')}</div>
  <section class="cl286-courses">${course('math','الرياضيات','Mathematics','π','mint')}${course('science','العلوم','Science',icon('flask'),'lavender')}${course('arabic','اللغة العربية','Arabic','ض','peach')}</section>
  <section class="cl286-bottom"><div class="cl286-resume"><h2>${icon('clock')}${text('تابع من حيث توقفت','Pick up where you left off')}</h2><button type="button" data-d-route="resume"><i>${icon('book')}</i><span><small>${text('رحلتك التعليمية','Your learning journey')}</small><b id="cl286Last"></b></span><i class="cl286-play">${icon('play')}</i></button></div><div class="cl286-live lavender"><div><h2>${text('مسابقة مباشرة','Live competition')}</h2><p>${text('اختبر معلوماتك ونافس زملاءك!','Test your knowledge with classmates!')}</p>${button('live','انضم الآن','Join now','users','cl286-primary')}</div><i>${icon('trophy')}</i></div></section>
@@ -76,7 +84,7 @@ function init(){
  root.append(dash);
  // Reuse the established book illustration rather than a flattened screenshot.
  const art=document.querySelector('.cl243-learning-art');if(art){const copy=art.cloneNode(true);copy.innerHTML=copy.innerHTML.replaceAll('cl243-','cl286-art-');dash.querySelector('.cl286-book').append(copy);}
- dash.addEventListener('click',e=>{const b=e.target.closest('[data-d-route]');if(b)go(b.dataset.dRoute)});
+ dash.addEventListener('click',e=>{const b=e.target.closest('[data-d-route]');if(!b)return;try{go(b.dataset.dRoute)}catch(error){console.error('Classora dashboard navigation',error);notify((document.documentElement.lang||'ar').startsWith('ar')?'تعذّر فتح القسم. حاول مرة أخرى.':'Unable to open this section. Please try again.')}});
  const back=document.createElement('button');back.id='cl286Back';back.type='button';back.textContent='← Classora';back.addEventListener('click',()=>go('home'));root.append(back);
  window.addEventListener('click',e=>{if(e.target.closest?.('#classoraMobileLobbyBtn,#returnLobbyBtn,#mobileReturnLobbyBtn'))queueMicrotask(()=>go('home'))},true);
  window.addEventListener('resize',()=>requestAnimationFrame(positionAI));
