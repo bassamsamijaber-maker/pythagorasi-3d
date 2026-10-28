@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v267-cloud-ai";
+const CACHE_NAME="classora-v285-responsive-dashboard";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
