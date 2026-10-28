@@ -9,7 +9,7 @@ let dash,root,card,marker,active=true;
 function native(id){const el=$(id);if(el&&!el.disabled){el.click();return true}return false}
 function grade(){const p=window.PythagorasiUser;const n=Number(p?.grade||p?.gradeLevel);return n>=7&&n<=12?n:7}
 function last(){try{return JSON.parse(localStorage.getItem('classora_last_topic_v112_'+window.PythagorasiUser?.uid)||'null')}catch{return null}}
-function closeAI(){root.classList.remove('cl286-ai-open');$('cl286AssistantButton')?.focus()}
+function closeAI(){if(!root.classList.contains('cl286-ai-open'))return;root.classList.remove('cl286-ai-open');$('cl286AssistantButton')?.focus()}
 function positionAI(){
  card=document.querySelector('#platformLobby .lobby-ai-card');if(!card)return;
  if(!marker){marker=document.createComment('native assistant location');card.before(marker)}
@@ -33,6 +33,7 @@ function sync(){
  if(!dash)return;
  const ar=(document.documentElement.lang||'ar').startsWith('ar');dash.dir=ar?'rtl':'ltr';dash.lang=ar?'ar':'en';
  dash.querySelectorAll('[data-d-ar]').forEach(e=>{const v=ar?e.dataset.dAr:e.dataset.dEn;if(e.textContent!==v)e.textContent=v});
+ dash.querySelectorAll('.cl286-icon').forEach(b=>b.setAttribute('aria-label',b.textContent.trim()));
  const name=String(window.PythagorasiUser?.displayName||$('lobbyProfileName')?.textContent||'').trim().split(/\s+/)[0];
  $('cl286Name').textContent=name|| (ar?'أهلًا في كلاسورا':'Welcome to Classora');
  $('cl286User').textContent=name|| (ar?'حسابي':'My account');

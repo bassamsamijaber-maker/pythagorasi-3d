@@ -95,6 +95,12 @@ function update(){
 }
 function reposition(){
  if(!card||!left||!host)return;
+ // The responsive home owns the same live assistant while its dashboard is active.
+ const dashboardHost=document.getElementById('cl286AIHost');
+ if(document.getElementById('platformLobby')?.classList.contains('cl286-active')&&dashboardHost){
+  if(card.parentElement!==dashboardHost)dashboardHost.append(card);
+  return;
+ }
  if(window.innerWidth>=1000){if(card.parentElement!==left)left.append(card)}
  else if(card.parentElement!==host)marker.after(card);
 }
