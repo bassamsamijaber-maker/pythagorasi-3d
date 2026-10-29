@@ -1,0 +1,91 @@
+/* One viewport-owned navigation; content changes without replacing the shell. */
+html body #cl290Navigation{display:block!important;position:fixed!important;inset:0!important;z-index:2147482000!important;pointer-events:none!important;transform:none!important;filter:none!important;backdrop-filter:none!important;contain:none!important;padding:0!important;margin:0!important;min-height:0!important;background:transparent!important;direction:rtl;font-family:Tajawal,Arial,sans-serif;color:var(--d-ink)}
+html body #cl290Navigation[hidden]{display:none!important}
+html body #cl290Navigation>*{pointer-events:auto}
+html body #cl290Navigation .cl286-rail{position:absolute!important;inset:24px 28px 24px auto!important;width:220px!important;height:auto!important;box-sizing:border-box;background:var(--d-page)!important;padding:16px 0 0 20px!important;overflow-y:auto!important;border-radius:0!important}
+html body.cl290-navigation :is(#cl281Sidebar,#classoraMobilePageNav){display:none!important}
+html body.cl288-page #platformLobby{pointer-events:none!important}
+html body.cl288-page :is(#classoraCurriculumModal,#classModal,#examModal,#competitionModal,#settingsModal,#chatModal,#profileModal).cl288-inline.open{animation:none!important;transform:none!important;translate:none!important}
+html body #cl290Navigation .cl286-rail nav button{min-height:48px;border-radius:14px;margin-bottom:5px;transition:background .18s,color .18s}
+html body #cl290Navigation .cl286-rail nav button.selected{box-shadow:inset -3px 0 var(--d-green)}
+@media(max-width:999px){
+ html body #cl290Navigation .cl286-rail{display:none!important}
+ html body #cl290Navigation .cl286-mobile-nav{position:absolute!important;display:flex!important;top:auto!important;left:10px!important;right:10px!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;transform:none!important;translate:none!important;margin:0!important;width:auto!important;height:auto!important;min-height:66px;box-sizing:border-box;box-shadow:0 6px 30px #0002;border:1px solid var(--d-line);background:var(--d-glass)}
+ html body #cl290Navigation .cl286-mobile-nav button{min-height:52px}
+ html body.classora-mobile-typing #cl290Navigation{display:none!important}
+}
+/* Illustrated topic cards, with distinct visual families and a clear reading order. */
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card{display:grid!important;grid-template-columns:106px minmax(0,1fr);gap:8px 18px!important;align-content:start;min-height:220px!important;padding:22px!important;position:relative;overflow:hidden;border-radius:22px!important}
+#classoraCurriculumModal .cv290-topic-art{grid-row:1/6;grid-column:1;align-self:center;display:grid;place-items:center;width:106px;min-height:142px;border-radius:24px;background:var(--d-soft);color:var(--d-green)}
+#classoraCurriculumModal .cv290-topic-art svg{width:100%;height:auto}
+#classoraCurriculumModal .curriculum-unit-section:nth-child(3n+2) .cv290-topic-art{background:var(--d-purple-soft);color:var(--d-purple)}
+#classoraCurriculumModal .curriculum-unit-section:nth-child(3n) .cv290-topic-art{background:var(--d-peach);color:var(--d-peach-ink)}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card>:not(.cv290-topic-art){grid-column:2;position:static!important;margin:0!important}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-status{justify-self:start;width:fit-content;font-size:11px!important;padding:5px 9px!important;border-radius:8px}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card small{display:block!important;font-size:13px!important}
+#classoraCurriculumModal .cv290-topic-cta{display:flex;align-items:center;justify-content:space-between;color:var(--d-green);font-weight:800;font-size:13px;padding-top:8px}
+#classoraCurriculumModal .curriculum-topic-card:hover .cv290-topic-art g{animation:cv290-float 1.8s ease-in-out infinite;transform-origin:center}
+@keyframes cv290-float{50%{transform:translateY(-4px) rotate(3deg)}}
+@media(max-width:1200px){#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-grid{grid-template-columns:1fr!important}}
+@media(max-width:480px){#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card{grid-template-columns:80px minmax(0,1fr);padding:16px!important;gap:8px 12px!important}#classoraCurriculumModal .cv290-topic-art{width:80px;min-height:120px;border-radius:18px}}
+/* Settings: editorial header, readable sections, and explicit control spacing. */
+html body #settingsModal .settings-modalbox{background:var(--d-page)!important;color:var(--d-ink)!important;padding:clamp(16px,3vw,36px)!important;box-sizing:border-box}
+html body #settingsModal .modalhead{padding:12px 0 24px!important;border-bottom:1px solid var(--d-line)!important;background:transparent!important;gap:16px}
+html body #settingsModal .modalhead h2{font-size:32px!important;color:var(--d-ink)!important;letter-spacing:-.5px}
+html body #settingsModal .subject-assistant-line{color:var(--d-muted)!important;line-height:1.8;font-size:14px!important;margin-top:8px}
+html body #settingsModal .settings-profile-row{padding:24px!important;margin:24px 0!important;border-radius:24px!important;background:linear-gradient(115deg,var(--d-hero-a),var(--d-hero-b))!important;border:1px solid var(--d-line)!important;gap:20px;color:var(--d-hero-ink)!important;box-shadow:none!important}
+html body #settingsModal .settings-profile-row :is(b,small,#settingsCurrentName){color:var(--d-hero-ink)!important}
+html body #settingsModal .settings-avatar{border:3px solid var(--d-paper)!important;box-shadow:0 8px 24px #0001;width:76px;height:76px;border-radius:24px}
+html body #settingsModal .settings-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px!important;align-items:start}
+html body #settingsModal .settings-card{padding:24px!important;background:var(--d-paper)!important;border:1px solid var(--d-line)!important;border-radius:22px!important;color:var(--d-ink)!important;box-shadow:none!important;min-width:0}
+html body #settingsModal .settings-card h3{display:flex;gap:10px;align-items:center;margin:0 0 18px!important;font-size:19px!important;color:var(--d-ink)!important}
+html body #settingsModal .settings-note{font-size:13px!important;line-height:1.9;color:var(--d-muted)!important;margin:10px 0!important}
+html body #settingsModal :is(input:not([type=checkbox]):not([type=file]),select){min-height:48px;border-radius:12px!important;background:var(--d-page)!important;color:var(--d-ink)!important;border:1px solid var(--d-line)!important;padding:12px!important;box-sizing:border-box;max-width:100%;margin-bottom:10px}
+html body #settingsModal :is(.exam-secondary,.settings-photo-btn,.settings-link-button){background:var(--d-soft)!important;color:var(--d-green)!important;border:1px solid var(--d-line)!important;border-radius:12px!important;min-height:44px;padding:10px 14px!important;white-space:normal}
+html body #settingsModal .settings-toggle{display:flex;align-items:center;gap:12px;min-height:48px;line-height:1.7;color:var(--d-ink)!important}
+html body #settingsModal .settings-danger-zone{margin-top:28px;padding:20px;border:1px solid var(--d-line);border-radius:18px}
+html body #settingsModal .cv290-settings-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 24px}
+html body #settingsModal .cv290-settings-tools input{flex:1 1 240px;margin:0!important}
+html body #settingsModal .cv290-settings-tools button{border:1px solid var(--d-line);background:var(--d-paper);color:var(--d-ink);border-radius:12px;padding:10px 16px;min-height:44px;font:700 14px Tajawal,Arial;cursor:pointer}
+html body #settingsModal .cv290-settings-tools button[aria-pressed=true]{background:var(--d-primary);color:var(--d-on-primary)}
+html body #settingsModal .cv290-filtered{display:none!important}
+html body #settingsModal .cv290-settings-empty{color:var(--d-muted);padding:20px;text-align:center}
+/* Chat uses the existing conversation, media, privacy and delivery behavior. */
+html body.cl288-page #chatModal.cl288-inline.open>.classora-chat-box{height:calc(100dvh - 40px)!important;min-height:0!important;max-height:calc(100dvh - 40px)!important;display:flex!important;flex-direction:column;overflow:hidden!important;background:var(--d-page)!important;padding:0!important}
+html body #chatModal .modalhead{flex:none;background:var(--d-page)!important;border-bottom:1px solid var(--d-line)!important;padding:16px 20px!important;color:var(--d-ink)!important}
+html body #chatModal .modalhead h2{font-size:25px!important;color:var(--d-ink)!important}
+html body #chatModal .subject-assistant-line{color:var(--d-muted)!important}
+html body #chatModal .classora-chat-layout{flex:1;min-height:0!important;height:auto!important;display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px!important;padding:18px 0 0!important;overflow:hidden}
+html body #chatModal :is(.chat-contacts-pane,.chat-thread-pane){border:1px solid var(--d-line)!important;border-radius:22px!important;background:var(--d-paper)!important;color:var(--d-ink)!important;min-height:0!important;height:100%!important;box-sizing:border-box;overflow:hidden}
+html body #chatModal .chat-contacts-pane{overflow-y:auto!important;padding:16px!important}
+html body #chatModal .chat-contact{padding:14px!important;min-height:72px!important;background:transparent!important;border:1px solid transparent!important;border-radius:16px!important;color:var(--d-ink)!important}
+html body #chatModal .chat-contact:hover,html body #chatModal .chat-contact.active{background:var(--d-soft)!important;border-color:var(--d-line)!important}
+html body #chatModal .chat-contact :is(b,.chat-contact-name){color:var(--d-ink)!important}html body #chatModal .chat-contact small{color:var(--d-muted)!important}
+html body #chatModal .chat-contact-avatar{border-radius:15px!important;background:var(--d-soft)!important;color:var(--d-green)!important}
+html body #chatModal .chat-contact-section-title{font-size:12px!important;letter-spacing:.3px;font-weight:800;color:var(--d-muted)!important;padding:20px 4px 10px!important}
+html body #chatModal :is(#chatPeopleSearch,#chatMessageSearch,#chatMessageInput){background:var(--d-page)!important;color:var(--d-ink)!important;border:1px solid var(--d-line)!important;border-radius:14px!important;min-height:44px;box-sizing:border-box}
+html body #chatModal :is(input,textarea)::placeholder{color:var(--d-muted)!important;opacity:1}
+html body #chatModal .chat-thread-head{background:var(--d-paper)!important;border-bottom:1px solid var(--d-line)!important;padding:16px!important;color:var(--d-ink)!important}
+html body #chatModal #chatThreadName{color:var(--d-ink)!important}html body #chatModal #chatThreadRole{color:var(--d-muted)!important}
+html body #chatModal #chatThreadActive:not(.hidden){display:flex;flex-direction:column;min-height:0;height:100%;overflow:hidden}
+html body #chatModal #chatMessages{flex:1;min-height:80px;overflow-y:auto!important;padding:24px!important;background:radial-gradient(circle at 1px 1px,var(--d-line) 1px,transparent 0) 0 0 / 24px 24px,var(--d-page)!important}
+html body #chatModal .chat-bubble{border:1px solid var(--d-line)!important;border-radius:18px!important;background:var(--d-paper)!important;color:var(--d-ink)!important;box-shadow:0 3px 10px #00000008!important;line-height:1.8!important;padding:12px 16px!important}
+html body #chatModal .chat-bubble.mine,html body #chatModal .chat-bubble.me,html body #chatModal .chat-message.me .chat-bubble,html body #chatModal .chat-message.mine .chat-bubble{background:var(--d-soft)!important;color:var(--d-ink)!important;border-color:var(--d-line)!important}
+html body #chatModal :is(.chat-compose,.chat-media-tools){flex:none;background:var(--d-paper)!important;padding:12px 16px!important;border-color:var(--d-line)!important}
+html body #chatModal #chatSendBtn{background:var(--d-primary)!important;color:var(--d-on-primary)!important;border:0!important;border-radius:14px!important;min-height:46px}
+html body #chatModal .exam-secondary{background:var(--d-soft)!important;color:var(--d-green)!important;border:1px solid var(--d-line)!important;border-radius:11px!important;min-height:40px}
+html body #chatModal .chat-thread-empty{color:var(--d-muted)!important;padding:36px;line-height:2;background:radial-gradient(ellipse,var(--d-soft),transparent 70%)}
+html body :is(#settingsModal,#chatModal) .close{background:var(--d-paper)!important;color:var(--d-ink)!important;border:1px solid var(--d-line)!important;border-radius:12px;min-width:44px;min-height:44px}
+html body :is(#settingsModal,#chatModal) [hidden],html body :is(#settingsModal,#chatModal) .hidden{display:none!important}
+@media(max-width:1100px){html body #chatModal .classora-chat-layout{grid-template-columns:240px minmax(0,1fr)}}
+@media(max-width:999px){html body.cl288-page #chatModal.cl288-inline.open>.classora-chat-box{height:calc(100dvh - 112px - env(safe-area-inset-bottom))!important;max-height:calc(100dvh - 112px - env(safe-area-inset-bottom))!important}}
+@media(max-width:700px){
+ html body #settingsModal .settings-grid{grid-template-columns:1fr!important;gap:14px!important}html body #settingsModal .settings-modalbox{padding:12px!important}html body #settingsModal .settings-card{padding:20px!important}html body #settingsModal .settings-profile-row{padding:20px!important;gap:14px;flex-wrap:wrap}
+ html body #chatModal .classora-chat-layout{grid-template-columns:minmax(0,1fr)!important;padding:10px 0 0!important;gap:0!important}html body #chatModal .modalhead{padding:12px!important}html body #chatModal .modalhead h2{font-size:20px!important}
+ html body #chatModal .chat-thread-pane{display:none}html body #chatModal.chat-thread-open .chat-contacts-pane{display:none}html body #chatModal.chat-thread-open .chat-thread-pane{display:flex}
+ html body #chatModal #chatMessages{padding:16px 12px!important}html body #chatModal .chat-bubble{max-width:90%!important;font-size:14px!important}
+ html body.classora-mobile-typing #chatModal.cl288-inline.open{inset:0!important;height:var(--chat-viewport-height,100dvh)!important;padding:4px!important}
+ html body.classora-mobile-typing #chatModal.cl288-inline.open>.classora-chat-box{height:calc(var(--chat-viewport-height,100dvh) - 8px)!important;max-height:calc(var(--chat-viewport-height,100dvh) - 8px)!important}
+}
+@media(prefers-reduced-motion:reduce){#classoraCurriculumModal .cv290-topic-art g{animation:none!important}}

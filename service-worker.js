@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v289-subject-design";
+const CACHE_NAME="classora-v290-premium-navigation";
 const APP_SHELL=[
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
@@ -157,9 +157,11 @@ const APP_SHELL=[
   "./assets/ph-lab.js?v=92",
   "./assets/learning-hub.js?v=190",
   "./assets/learning-hub.css?v=99",
-  "./assets/curriculum-v97.js?v=289",
+  "./assets/curriculum-v97.js?v=290",
   "./assets/curriculum-v97.css?v=110",
-  "./assets/classora-learning-design-v289.css?v=289",
+  "./assets/classora-learning-design-v289.css?v=290",
+  "./assets/classora-premium-v290.css?v=290",
+  "./assets/classora-settings-design-v290.js?v=290",
   "./offline.html",
 
   "./assets/chat-doodles.svg",

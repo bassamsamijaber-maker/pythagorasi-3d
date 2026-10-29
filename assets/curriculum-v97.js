@@ -663,6 +663,28 @@ export function mountCurriculum(api){
   if(state.subject==="geography")disposeGlobe=mountGlobe(body,lang(api));
   paintTopicCards()
  }
+ function topicArtwork(t){
+  const key=topicSection(t).key;
+  let kind=t.subject;
+  if(["math","geometry"].includes(kind))kind=/statistics|probability/.test(key)?"statistics":/function/.test(key)?"functions":/geometry|triangle|circle|angle|polygon|measure/.test(key)?"geometry":"algebra";
+  if(kind==="science")kind=key;
+  const drawings={
+   algebra:'<path d="M32 62h96M80 32v67M50 99h60M40 62l-15 25h30L40 62Zm80 0-15 25h30l-15-25Z"/><circle cx="80" cy="32" r="7"/><text x="66" y="54">x</text>',
+   geometry:'<path d="m37 100 25-69 62 69H37Zm0 0 56-24 31 24M62 31l31 45"/><path d="M43 84h12v16"/><circle cx="62" cy="31" r="4"/>',
+   functions:'<path d="M30 25v79h104M30 80q30-76 52-16t45-29"/><path d="M55 101v5m25-5v5m25-5v5"/><circle cx="82" cy="64" r="5"/>',
+   statistics:'<path d="M25 105h110"/><rect x="36" y="68" width="20" height="32" rx="5"/><rect x="69" y="42" width="20" height="58" rx="5"/><rect x="102" y="25" width="20" height="75" rx="5"/><path d="m37 49 34-24 35-8"/>',
+   chemistry:'<path d="M64 25h32M69 25v30l-27 43q-5 10 8 10h60q13 0 8-10L91 55V25M54 82h52"/><circle cx="71" cy="91" r="4"/><circle cx="88" cy="72" r="3"/><circle cx="105" cy="38" r="6"/>',
+   physics:'<ellipse cx="80" cy="66" rx="55" ry="20"/><ellipse cx="80" cy="66" rx="55" ry="20" transform="rotate(60 80 66)"/><ellipse cx="80" cy="66" rx="55" ry="20" transform="rotate(-60 80 66)"/><circle cx="80" cy="66" r="9"/>',
+   biology:'<path d="M49 24c76 25-15 61 62 86M111 24c-76 25 15 61-62 86M59 30h42M65 45h30M65 86h30M59 101h42"/>',
+   matter:'<path d="m36 94 17-24 22 12 18-37 32 49H36Z"/><circle cx="44" cy="34" r="12"/><path d="M30 107h100M118 24v18m-9-9h18"/>',
+   arabic:'<path d="M31 34q26-9 49 7 23-16 49-7v64q-26-9-49 7-23-16-49-7V34ZM80 41v64M42 51h22M42 63h22M96 51h20M96 63h20"/><text x="94" y="88">ض</text>',
+   english:'<rect x="30" y="32" width="100" height="70" rx="13"/><path d="m49 88 15-39 15 39M55 74h18M92 52h21M103 52v36"/>',
+   history:'<path d="m26 45 54-25 54 25H26ZM30 108h100M40 53v46m26-46v46m28-46v46m26-46v46M34 53h12m14 0h12m16 0h12m14 0h12"/>',
+   geography:'<circle cx="80" cy="62" r="39"/><ellipse cx="80" cy="62" rx="17" ry="39"/><path d="M41 62h78M48 41h64M48 83h64M62 112h36M80 101v11"/>'
+  };
+  const drawing=drawings[kind]||drawings.matter;
+  return '<span class="cv290-topic-art" aria-hidden="true"><svg viewBox="0 0 160 132" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle class="cv290-orbit" cx="80" cy="66" r="58" fill="currentColor" stroke="none" opacity=".07"/><g>'+drawing+'</g></svg></span>';
+ }
  function paintTopicCards(){
   const host=body.querySelector("#cv97Topics");if(!host)return;host.innerHTML="";
   const list=filteredTopics();
@@ -683,7 +705,7 @@ export function mountCurriculum(api){
     const p=progressFor(api,t.id),b=document.createElement("button");b.className="curriculum-topic-card";if(nativeSubject)b.dataset.noTranslate="";
     const nativeStatus=state.subject==="arabic"?(p.status==="done"?"مكتمل":p.status==="progress"?"قيد التعلم":"لم يبدأ"):state.subject==="english"?(p.status==="done"?"Completed":p.status==="progress"?"In progress":"Not started"):statusLabel(api,p.status);
     const topicPrefix=state.subject==="arabic"?"موضوع ":state.subject==="english"?"Topic ":txt(api,"موضوع ","Topic ");
-    b.innerHTML='<span class="curriculum-topic-status">'+nativeStatus+'</span><div class="curriculum-topic-number">'+topicPrefix+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(api,t))+'</small>';
+    b.innerHTML=topicArtwork(t)+'<span class="curriculum-topic-status">'+nativeStatus+'</span><div class="curriculum-topic-number">'+topicPrefix+(i+1)+(t.track?" • "+trackName(api,t.track):"")+'</div><b>'+esc(titleText(api,t))+'</b><small>'+esc(skillText(api,t))+'</small><span class="cv290-topic-cta">'+txt(api,"افتح الدرس","Open lesson")+' <span aria-hidden="true">↗</span></span>';
     b.onclick=function(){state.topic=t;state.view="lesson";state.showTranslation=false;state.editor=editorDefaults(t);touchTopic(api,t);render()};grid.appendChild(b);
    });
    const download=document.createElement("button");download.className="cl130-download";download.textContent=txt(api,"تنزيل الوحدة بدون إنترنت","Download unit for offline use");download.hidden=!!api.offline;download.onclick=async()=>{download.disabled=true;try{localStorage.setItem('classora_study_owner',learnerId());await downloadUnit({id:state.grade+':'+state.subject+':'+sec.key,grade:state.grade,subject:state.subject,title:[sec.ar,sec.en],topics:items.map(x=>x.t)},(n,total)=>{download.textContent=txt(api,"جاري التنزيل ","Downloading ")+Math.round(n/total*100)+'%'});download.textContent=txt(api,"تم التنزيل — افتح وحداتي","Downloaded — open my units");download.disabled=false;download.onclick=()=>{window.location.href='./study-offline.html'}}catch{download.textContent=txt(api,"تعذّر التنزيل؛ تحقق من الاتصال وحاول مجددًا","Download failed; check your connection and try again");download.disabled=false}};

@@ -4,7 +4,7 @@ function classes(){const set=new Set();return {contains:k=>set.has(k),add:k=>set
 let cleanup=0,observations=0;
 const nodes={};for(const id of ['classoraCurriculumModal','classModal','examModal','competitionModal','settingsModal','chatModal'])nodes[id]={classList:classes(),dataset:{},firstElementChild:{setAttribute(){},getAttribute(){return 'dialog'}},querySelector(){return {click(){cleanup++;nodes[id].classList.remove('open')}}}};
 const body={classList:classes(),dataset:{}};
-const context={$:id=>nodes[id],document:{body},dash:null,MutationObserver:class{observe(){observations++}}};vm.createContext(context);
+const context={$:id=>nodes[id],document:{body,querySelectorAll:()=>[]},navigation:null,dash:null,MutationObserver:class{observe(){observations++}}};vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('const pageRoutes='),source.indexOf('function go(')),context);
 context.preparePage('subjects');assert(!body.classList.contains('cl288-page'),'Preparing must not open a denied/unavailable section');
 nodes.classoraCurriculumModal.classList.add('open');context.syncPage();assert.equal(body.dataset.cl288Page,'subjects');

@@ -5,7 +5,7 @@ const icons={home:'<path d="m3 10 9-7 9 7v11H3z"/><path d="M9 21v-8h6v8"/>',book
 const icon=k=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[k]||icons.spark)+'</svg>';
 const text=(ar,en)=>'<span data-d-ar="'+ar+'" data-d-en="'+en+'">'+ar+'</span>';
 const button=(route,label,en,k,cls='')=>'<button type="button" data-d-route="'+route+'" class="'+cls+'">'+icon(k)+text(label,en)+'</button>';
-let dash,root,card,marker,active=true;
+let dash,root,card,marker,navigation,active=true;
 function notify(message){
  let n=$('cl286Notice');if(!n){n=document.createElement('div');n.id='cl286Notice';n.setAttribute('role','status');document.body.append(n)}
  n.textContent=message;clearTimeout(notify.timer);notify.timer=setTimeout(()=>n.remove(),4500);
@@ -22,14 +22,15 @@ function positionAI(){
  else if(!active&&marker.parentNode&&card.parentNode!==marker.parentNode)marker.after(card);
 }
 // Present existing sections as pages, retaining native handlers and cleanup.
-const pageRoutes={subjects:['classoraCurriculumModal','.classora-curriculum-close'],classes:['classModal','#closeClassModal'],exam:['examModal','#closeExamModal'],live:['competitionModal','#closeCompetitionModal'],settings:['settingsModal','#closeSettingsModal'],chat:['chatModal','#closeChatModal']};
+const pageRoutes={subjects:['classoraCurriculumModal','.classora-curriculum-close'],classes:['classModal','#closeClassModal'],exam:['examModal','#closeExamModal'],live:['competitionModal','#closeCompetitionModal'],settings:['settingsModal','#closeSettingsModal'],chat:['chatModal','#closeChatModal'],profile:['profileModal','#closeProfileModal']};
 let pageRoute=null;
+function syncNavigation(){if(navigation){navigation.hidden=!(active&&(!root.classList.contains('hidden')||pageRoute));document.body.classList.toggle('cl290-navigation',!navigation.hidden)}}
 function syncPage(){
  const entry=Object.entries(pageRoutes).find(([key,[id]])=>{const el=$(id);return el?.classList.contains('cl288-inline')&&el.classList.contains('open')});
- pageRoute=entry?.[0]||null;
+ pageRoute=entry?.[0]||null;syncNavigation();
  document.body.classList.toggle('cl288-page',!!pageRoute);
  if(pageRoute)document.body.dataset.cl288Page=pageRoute;else delete document.body.dataset.cl288Page;
- dash?.querySelectorAll('.cl286-rail nav button,.cl286-mobile-nav button').forEach(b=>{const selected=b.dataset.dRoute===(pageRoute||'home');b.classList.toggle('selected',selected);if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ document.querySelectorAll('#cl290Navigation .cl286-rail nav button,#cl290Navigation .cl286-mobile-nav button').forEach(b=>{const selected=b.dataset.dRoute===(pageRoute||'home');b.classList.toggle('selected',selected);if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
  for(const [key,[id]] of Object.entries(pageRoutes)){
   const el=$(id),box=el?.firstElementChild;
   if(!el||!box)continue;
@@ -53,10 +54,10 @@ function preparePage(route){
 function go(route){
  if(route!=='ai'&&route!=='closeAI')root.classList.remove('cl286-ai-open');
  if(route==='search'){openSearch();return}
- if(route==='home'){closePage();active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();return}
+ if(route==='home'){closePage();active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();syncNavigation();return}
  if(route==='ai'){root.classList.add('cl286-ai-open');positionAI();$('lobbyAIInput')?.focus();return}
  if(route==='closeAI'){closeAI();return}
- if(route==='tools'){closePage();active=false;root.classList.remove('cl286-active');positionAI();document.querySelector('#cl214-catalog')?.scrollIntoView();return}
+ if(route==='tools'){closePage();active=false;root.classList.remove('cl286-active');positionAI();syncNavigation();document.querySelector('#cl214-catalog')?.scrollIntoView();return}
  if(route==='subjects'){preparePage('subjects');if(window.classoraCurriculum?.open)window.classoraCurriculum.open();else go('tools');syncPage();return}
  if(route.startsWith('subject:')){preparePage('subjects');if(window.classoraCurriculum?.open)window.classoraCurriculum.open(route.split(':')[1]);else go('tools');syncPage();return}
  if(route==='resume'){preparePage('subjects');const l=last();if(l&&window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(l.grade,l.subject,l.topic);else go('subjects');syncPage();return}
@@ -82,7 +83,7 @@ function openSearch(){
 function sync(){
  if(!dash)return;
  const ar=(document.documentElement.lang||'ar').startsWith('ar');dash.dir=ar?'rtl':'ltr';dash.lang=ar?'ar':'en';
- dash.querySelectorAll('[data-d-ar]').forEach(e=>{const v=ar?e.dataset.dAr:e.dataset.dEn;if(e.textContent!==v)e.textContent=v});
+ document.querySelectorAll('#cl286Dashboard [data-d-ar],#cl290Navigation [data-d-ar]').forEach(e=>{const v=ar?e.dataset.dAr:e.dataset.dEn;if(e.textContent!==v)e.textContent=v});
  dash.querySelectorAll('.cl286-icon,.cl286-search').forEach(b=>b.setAttribute('aria-label',b.textContent.trim()));
  const name=String(window.PythagorasiUser?.displayName||$('lobbyProfileName')?.textContent||'').trim().split(/\s+/)[0];
  $('cl286Name').textContent=name|| (ar?'أهلًا في كلاسورا':'Welcome to Classora');
@@ -97,7 +98,7 @@ function init(){
  dash=document.createElement('section');dash.id='cl286Dashboard';dash.className='cl286';
  const course=(key,title,en,symbol,tone)=>'<button type="button" class="cl286-course '+tone+'" data-d-route="subject:'+key+'"><div class="cl286-course-top"><i>'+symbol+'</i><h3>'+text(title,en)+'</h3></div><p>'+text('دروس، شرح وتدريبات تفاعلية','Lessons and interactive practice')+'</p><div class="cl286-course-go">'+text('متابعة الدروس','Explore lessons')+icon('arrow')+'</div></button>';
  dash.innerHTML=`
- <aside class="cl286-rail"><div class="cl286-logo"><i></i><b>Classora</b></div><nav>${button('home','الرئيسية','Home','home','selected')}${button('subjects','موادي','Subjects','book')}${button('classes','صفوفي','Classes','users')}${button('exam','الامتحانات','Exams','exam')}${button('live','المسابقات','Competitions','trophy')}${button('settings','الإعدادات','Settings','settings')}</nav><button type="button" class="cl286-account" data-d-route="profile"><i>${icon('users')}</i><b id="cl286User"></b>${icon('arrow')}</button></aside>
+ <aside class="cl286-rail"><div class="cl286-logo"><i></i><b>Classora</b></div><nav>${button('home','الرئيسية','Home','home','selected')}${button('subjects','موادي','Subjects','book')}${button('classes','صفوفي','Classes','users')}${button('exam','الامتحانات','Exams','exam')}${button('live','المسابقات','Competitions','trophy')}${button('chat','الشات','Chat','chat')}${button('settings','الإعدادات','Settings','settings')}</nav><button type="button" class="cl286-account" data-d-route="profile"><i>${icon('users')}</i><b id="cl286User"></b>${icon('arrow')}</button></aside>
  <main class="cl286-main"><header class="cl286-top">${button('search','ابحث عن دروسك، مواضيع، أو أي شيء…','Search lessons and topics…','search','cl286-search')}${button('notifications','الإشعارات','Notifications','bell','cl286-icon')}${button('profile','حسابي','My account','users','cl286-icon')}<div class="cl286-mobile-brand">Classora</div></header>
  <div class="cl286-greeting"><h1>${text('أهلًا','Hello')} <span id="cl286Name"></span></h1><p>${text('جاهز لإنجاز جديد؟','Ready for a new achievement?')}</p></div>
  <section class="cl286-hero"><div><h2>${text('خطوة جديدة نحو التفوّق','One step closer to your goals')}</h2><p>${text('كل درس تقرأه اليوم هو استثمار في مستقبلك. اكتشف محتوى جديدًا، راجع دروسك، وحقّق أهدافك.','Learn something new, revisit your lessons, and work towards your goals.')}</p>${button('resume','أكمل تعلّمك','Continue learning','play','cl286-primary')}</div><div class="cl286-book" aria-hidden="true"></div></section>
@@ -111,9 +112,14 @@ function init(){
  <aside class="cl286-assistant"><div class="cl286-ai-intro"><i>${icon('spark')}</i><h2>${text('مساعد كلاسورا','Classora assistant')}</h2><p>${text('كيف أقدر أساعدك اليوم؟','How can I help you today?')}</p></div>${button('closeAI','إغلاق','Close','close','cl286-ai-close')}<div id="cl286AIHost"></div><div class="cl286-week"><h3>${text('خطوة صغيرة، كل يوم','A small step, every day')}</h3><p>${text('راجع درسًا، جرّب سؤالًا، وابنِ معرفتك على مهلك.','Review a lesson, try a question, and learn at your own pace.')}</p>${button('progress','شاهد تقدّمك','View your progress','clock','cl286-text')}</div></aside>
  <nav class="cl286-mobile-nav" aria-label="Main navigation">${button('home','الرئيسية','Home','home','selected')}${button('subjects','المواد','Subjects','book')}${button('classes','صفوفي','Classes','users')}${button('chat','الشات','Chat','chat')}${button('settings','الإعدادات','Settings','settings')}</nav>`;
  root.append(dash);
+ navigation=document.createElement('div');navigation.id='cl290Navigation';navigation.dir='rtl';
+ navigation.append(dash.querySelector('.cl286-rail'),dash.querySelector('.cl286-mobile-nav'));
+ document.body.append(navigation);
+ new MutationObserver(syncNavigation).observe(root,{attributes:true,attributeFilter:['class']});
  // Reuse the established book illustration rather than a flattened screenshot.
  const art=document.querySelector('.cl243-learning-art');if(art){const copy=art.cloneNode(true);copy.innerHTML=copy.innerHTML.replaceAll('cl243-','cl286-art-');dash.querySelector('.cl286-book').append(copy);}
- dash.addEventListener('click',e=>{const b=e.target.closest('[data-d-route]');if(!b)return;try{go(b.dataset.dRoute)}catch(error){console.error('Classora dashboard navigation',error);notify((document.documentElement.lang||'ar').startsWith('ar')?'تعذّر فتح القسم. حاول مرة أخرى.':'Unable to open this section. Please try again.')}});
+ const onAction=e=>{const b=e.target.closest('[data-d-route]');if(!b)return;try{go(b.dataset.dRoute)}catch(error){console.error('Classora dashboard navigation',error);notify((document.documentElement.lang||'ar').startsWith('ar')?'تعذّر فتح القسم. حاول مرة أخرى.':'Unable to open this section. Please try again.')}};
+ dash.addEventListener('click',onAction);navigation.addEventListener('click',onAction);
  const back=document.createElement('button');back.id='cl286Back';back.type='button';back.textContent='← Classora';back.addEventListener('click',()=>go('home'));root.append(back);
  window.addEventListener('click',e=>{if(e.target.closest?.('#classoraMobileLobbyBtn,#returnLobbyBtn,#mobileReturnLobbyBtn'))queueMicrotask(()=>go('home'))},true);
  window.addEventListener('resize',()=>requestAnimationFrame(positionAI));

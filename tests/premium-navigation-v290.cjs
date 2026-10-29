@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
+const js=fs.readFileSync('assets/classora-dashboard-v286.js','utf8');
+const context={navigation:{hidden:false},active:true,pageRoute:null,root:{classList:{contains:()=>false}},document:{body:{classList:{toggle(){}}}}};vm.createContext(context);vm.runInContext(js.slice(js.indexOf('function syncNavigation(){'),js.indexOf('function syncPage(){')),context);
+context.syncNavigation();assert.equal(context.navigation.hidden,false);
+context.root.classList.contains=()=>true;context.syncNavigation();assert.equal(context.navigation.hidden,true,'Navigation must hide with the lobby');
+context.pageRoute='subjects';context.syncNavigation();assert.equal(context.navigation.hidden,false,'Native section keeps the same navigation visible');
+context.active=false;context.syncNavigation();assert.equal(context.navigation.hidden,true,'Legacy tools retain their own navigation');
+assert(js.includes("document.body.append(navigation)"));assert(js.includes("navigation.addEventListener('click',onAction)"));assert(js.includes("profile:['profileModal','#closeProfileModal']"));
+const source=fs.readFileSync('assets/curriculum-v97.js','utf8');const c={topicSection:t=>({key:t.key})};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' function topicArtwork('),source.indexOf(' function paintTopicCards(')),c);
+const arts=['algebra','geometry','functions','statistics','chemistry','physics','biology','matter','arabic','english','history','geography'].map(k=>c.topicArtwork({subject:k,key:k}));assert.equal(new Set(arts).size,12);assert(arts.every(x=>x.includes('aria-hidden="true"')&&x.includes('viewBox="0 0 160 132"')));
+const css=fs.readFileSync('assets/classora-premium-v290.css','utf8');assert.equal((css.match(/\{/g)||[]).length,(css.match(/\}/g)||[]).length);assert(css.includes('#cl290Navigation[hidden]'));assert(css.includes('prefers-reduced-motion'));assert(css.includes('#chatModal .chat-bubble.mine'));assert(css.includes('html body :is(#settingsModal,#chatModal) .hidden{display:none!important}'));
+console.log('PASS: persistent navigation visibility, portal routing, profile section, twelve SVG illustration families, hidden states and reduced-motion support.');
