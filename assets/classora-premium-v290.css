@@ -89,3 +89,13 @@ html body :is(#settingsModal,#chatModal) [hidden],html body :is(#settingsModal,#
  html body.classora-mobile-typing #chatModal.cl288-inline.open>.classora-chat-box{height:calc(var(--chat-viewport-height,100dvh) - 8px)!important;max-height:calc(var(--chat-viewport-height,100dvh) - 8px)!important}
 }
 @media(prefers-reduced-motion:reduce){#classoraCurriculumModal .cv290-topic-art g{animation:none!important}}
+
+/* Retire the old dock despite older authenticated/tablet selectors with higher specificity. */
+html body.cl290-navigation #classoraMobilePageNav#classoraMobilePageNav,
+html body.cl290-navigation #cl281Sidebar#cl281Sidebar,
+html body.cl290-navigation #cl270Sidebar#cl270Sidebar{display:none!important;visibility:hidden!important;pointer-events:none!important}
+html body.cl290-navigation #cl290Navigation#cl290Navigation{visibility:visible!important;opacity:1!important}
+html body.cl288-page :is(#chatModal,#settingsModal,#classModal,#examModal,#competitionModal,#profileModal).cl288-inline.open{padding-inline:20px!important;margin-inline:0!important}
+@media(max-width:999px){html body.cl288-page :is(#chatModal,#settingsModal,#classModal,#examModal,#competitionModal,#profileModal).cl288-inline.open{padding-inline:12px!important}}
+#classoraCurriculumModal .cv290-topic-art svg text{stroke:none;fill:currentColor;font:700 13px Arial,Tajawal,sans-serif}
+#classoraCurriculumModal .cv289-subject-icon .cv290-topic-art{width:60px;min-height:60px;border-radius:18px}

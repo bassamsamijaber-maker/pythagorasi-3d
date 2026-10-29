@@ -17,7 +17,7 @@ import {mathTopic,mathSection,splitMathCurriculum,mathQuestion,mathLevelAllowed}
 import {mountMathLesson} from './math-studio-v119.js?v=213';
 /* Classora Curriculum V97 — grades 7-10, no Hebrew or civics. */
 const S={
- geometry:{ar:"هندسة",en:"Geometry",icon:"math"},
+ geometry:{ar:"هندسة",en:"Geometry",icon:"geometry"},
  math:{ar:"الرياضيات",en:"Mathematics",icon:"math"},
  science:{ar:"العلوم",en:"Science",icon:"science"},
  arabic:{ar:"العربي — قواعد",en:"Arabic Grammar",icon:"book"},
@@ -133,7 +133,8 @@ const AR_EXAMPLES={
 function svg(name){
  const p={
   school:'<path d="m3 10 9-6 9 6-9 6-9-6zM5 13v6m14-6v6M8 16v4h8v-4"/>',
-  math:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',
+  geometry:'<path d="M4 20V4l16 16H4zM4 15h5v5"/>',
+  math:'<path d="M3 7h7M6.5 3.5v7M15 5h6M15 9h6M4 16l6 6m0-6-6 6M15 19h7"/>',
   science:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/>',
   book:'<path d="M3 5q5-2 9 1 4-3 9-1v15q-5-2-9 1-4-3-9-1zM12 6v15"/>',
   language:'<path d="M4 5h10M9 3v2m-3 4c2 4 5 6 8 7M13 9c-1 3-4 6-8 8M15 20l3-8 3 8m-5-3h4"/>',
@@ -682,8 +683,36 @@ export function mountCurriculum(api){
    history:'<path d="m26 45 54-25 54 25H26ZM30 108h100M40 53v46m26-46v46m28-46v46m26-46v46M34 53h12m14 0h12m16 0h12m14 0h12"/>',
    geography:'<circle cx="80" cy="62" r="39"/><ellipse cx="80" cy="62" rx="17" ry="39"/><path d="M41 62h78M48 41h64M48 83h64M62 112h36M80 101v11"/>'
   };
-  const drawing=drawings[kind]||drawings.matter;
-  return '<span class="cv290-topic-art" aria-hidden="true"><svg viewBox="0 0 160 132" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle class="cv290-orbit" cx="80" cy="66" r="58" fill="currentColor" stroke="none" opacity=".07"/><g>'+drawing+'</g></svg></span>';
+  const title=String(t.title||''),seed=[...String(t.id||title||kind)].reduce((n,c)=>(n*31+c.codePointAt(0))>>>0,7),v=seed%5+2;
+  const label=(x,y,text)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle">'+esc(text)+'</text>';
+  let drawing=drawings[kind]||drawings.matter;
+  if(/فيثاغورس/.test(title))drawing='<path d="M48 81V36l60 45H48ZM48 81v24h60V81M48 36H24v45h24"/>'+label(36,61,'a')+label(79,98,'b')+label(89,48,'c');
+  else if(/دائر|Circle|قطر|مماس/i.test(title))drawing='<circle cx="80" cy="64" r="38"/><path d="M42 64h76M80 64l27-27M29 102h102"/>'+label(83,55,'r = '+v);
+  else if(/زاوي|Angle/i.test(title)){const angle=30+(seed%5)*20,x=35+80*Math.cos(angle*Math.PI/180),y=103-80*Math.sin(angle*Math.PI/180);drawing='<path d="M125 103H35L'+x.toFixed(1)+' '+y.toFixed(1)+'M62 103q0-16-9-22"/>'+label(85,83,angle+'°')}
+  else if(/مثلث|triangle/i.test(title))drawing='<path d="M25 104 80 '+(20+v*3)+' 136 104H25Z"/>'+label(80,121,'b = '+(v+3))+label(49,60,'a');
+  else if(/مربع|مستطيل|مساح|محيط/i.test(title))drawing='<rect x="30" y="35" width="100" height="65" rx="3"/><path d="M50 35v65m20-65v65m20-65v65m20-65v65M30 56h100m-100 22h100"/>'+label(80,24,'w = '+v)+label(80,120,'A = w × h');
+  else if(/حجم|مجسم|مكعب/i.test(title))drawing='<path d="m36 48 44-24 44 24v50l-44 24-44-24V48Zm0 0 44 25 44-25M80 73v49M80 24v49"/>'+label(80,16,'V');
+  else if(/كسور|كسر|Fraction/i.test(title))drawing='<rect x="25" y="35" width="110" height="60" rx="8"/><path d="M52 35v60m28-60v60m28-60v60"/><path d="M26 36h25v58H26z" fill="currentColor" opacity=".25"/>'+label(80,118,'1 / 4');
+  else if(/احتمال|Probability/i.test(title))drawing='<rect x="43" y="29" width="74" height="74" rx="16"/>'+Array.from({length:v},(_,i)=>'<circle cx="'+(59+(i%2)*40)+'" cy="'+(43+Math.floor(i/2)*22)+'" r="4" fill="currentColor"/>').join('');
+  else if(/نسب مئوية|percent/i.test(title))drawing=Array.from({length:25},(_,i)=>'<rect x="'+(32+i%5*20)+'" y="'+(17+Math.floor(i/5)*20)+'" width="16" height="16" rx="3"'+(i<v*4?' fill="currentColor" opacity=".45"':'')+'/>').join('');
+  else if(/معادل|جبر|قوى|جذور|powers|equation/i.test(title)){const formula=/تربيع/.test(title)?'x² + '+v+'x = 0':/قوس/.test(title)?v+'(x + 2)':/جذر/.test(title)?'√'+v*v+' = '+v:/قوى/.test(title)?v+'² = '+v*v:'x + '+v+' = '+(v+4);drawing='<rect x="20" y="26" width="120" height="77" rx="13"/><path d="M35 85h90"/>'+label(80,60,formula)+label(80,119,'x → ?')}
+  else if(kind==='functions'){const y=25+v*7;drawing='<path d="M25 20v89h110M30 '+(110-y)+'Q75 '+y+' 130 30"/>'+label(105,95,'y = f(x)')}
+  else if(kind==='statistics')drawing='<path d="M25 107h112"/>'+[0,1,2,3].map(i=>{const h=20+(seed>>i*3)%65;return '<rect x="'+(32+i*28)+'" y="'+(104-h)+'" width="19" height="'+h+'" rx="5"/>'}).join('');
+  else if(/خلية|cell/i.test(title))drawing='<ellipse cx="80" cy="66" rx="56" ry="39"/><ellipse cx="80" cy="66" rx="47" ry="31"/><circle cx="75" cy="61" r="14"/>'+[0,1,2,3].map(i=>'<ellipse cx="'+(43+i*21)+'" cy="'+(81-i%2*39)+'" rx="7" ry="4"/>').join('');
+  else if(/ذرة|أيون|روابط|atom|ion/i.test(title))drawing='<circle cx="80" cy="66" r="13"/><circle cx="80" cy="66" r="31"/><circle cx="80" cy="66" r="49"/>'+Array.from({length:v+1},(_,i)=>{const a=i*2*Math.PI/(v+1);return '<circle cx="'+(80+49*Math.cos(a)).toFixed(1)+'" cy="'+(66+49*Math.sin(a)).toFixed(1)+'" r="5" fill="currentColor"/>'}).join('');
+  else if(/كهرب|تيار|دارات|electric/i.test(title))drawing='<path d="M35 37h35m20 0h35v64H35V37M70 25v25m20-19v13"/><circle cx="80" cy="101" r="16"/><path d="m70 91 20 20m0-20-20 20"/>';
+  else if(/ضوء|light/i.test(title))drawing='<path d="m60 100 25-68 30 68H60ZM20 67h57m25 0 37-24m-34 32 34-2m-30 12 30 21"/>';
+  else if(/صوت|sound/i.test(title))drawing='<path d="m27 54 20-15v54L27 78H17V54h10Zm35-5q20 17 0 34m14-50q37 33 0 66m18-82q54 49 0 98"/>';
+  else if(/حركة|سرعة|تسارع|motion|speed/i.test(title))drawing='<path d="M20 105h120M32 83h95V59H63L50 43H33v40ZM20 56h-8m8 16H8"/><circle cx="51" cy="88" r="12"/><circle cx="111" cy="88" r="12"/>'+label(100,34,'v = '+v);
+  else if(/حمض|أحماض|قواعد|pH/i.test(title))drawing='<path d="M46 25v70q0 18 18 18t18-18V25M40 25h48M47 75h34"/><rect x="108" y="28" width="15" height="82" rx="5"/>'+label(65,64,'pH '+(seed%14));
+  else if(/طقس|مناخ|weather|climate/i.test(title))drawing='<circle cx="105" cy="40" r="19"/><path d="M31 76q-12-23 13-29 9-27 35-10 30-7 37 19 23 25-5 25H31ZM40 94l-6 15m33-15-6 15m33-15-6 15"/>';
+  else if(/بركان|صفائح|زلازل/i.test(title))drawing='<path d="m25 110 41-66 15 12 14-12 40 66H25ZM65 44l5-19m21 19 4-21M80 35V15"/><path d="m68 62-9 20 18-5 6 20"/>';
+  else if(kind==='arabic'||kind==='english'){const words=kind==='arabic'?title:title;const parts=String(words).split(/\s+/).slice(0,4);drawing='<path d="M80 53v22M35 75h90M35 75v15m90-15v15"/><rect x="19" y="18" width="122" height="34" rx="9"/>'+label(80,40,parts.slice(0,2).join(' ').slice(0,18))+'<rect x="13" y="90" width="61" height="27" rx="7"/><rect x="86" y="90" width="61" height="27" rx="7"/>'+label(43,108,parts[2]||'A')+label(116,108,parts[3]||'B')}
+  else if(kind==='history')drawing='<path d="M22 69h116"/>'+[0,1,2].map(i=>'<circle cx="'+(34+i*46)+'" cy="69" r="7"/><path d="M'+(34+i*46)+' 60V'+(i%2?95:35)+'"/>'+label(34+i*46,i%2?115:25,String(i+1))).join('');
+  // Distinct, deterministic detail placement also differentiates topics sharing a diagram type.
+  const detail='<path opacity=".22" d="M'+(12+seed%9)+' 14h'+(12+seed%19)+'M'+(125-seed%11)+' 121h'+(9+seed%15)+'"/>';
+
+  return '<span class="cv290-topic-art" aria-hidden="true"><svg viewBox="0 0 160 132" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle class="cv290-orbit" cx="80" cy="66" r="58" fill="currentColor" stroke="none" opacity=".07"/><g>'+drawing+detail+'</g></svg></span>';
  }
  function paintTopicCards(){
   const host=body.querySelector("#cv97Topics");if(!host)return;host.innerHTML="";

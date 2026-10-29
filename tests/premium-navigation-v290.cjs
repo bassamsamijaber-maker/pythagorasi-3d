@@ -1,12 +1,21 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
 const js=fs.readFileSync('assets/classora-dashboard-v286.js','utf8');
-const context={navigation:{hidden:false},active:true,pageRoute:null,root:{classList:{contains:()=>false}},document:{body:{classList:{toggle(){}}}}};vm.createContext(context);vm.runInContext(js.slice(js.indexOf('function syncNavigation(){'),js.indexOf('function syncPage(){')),context);
+const context={$:()=>null,navigation:{hidden:false},active:true,pageRoute:null,root:{classList:{contains:()=>false}},document:{body:{classList:{toggle(){}}}}};vm.createContext(context);vm.runInContext(js.slice(js.indexOf('function syncNavigation(){'),js.indexOf('function syncPage(){')),context);
 context.syncNavigation();assert.equal(context.navigation.hidden,false);
 context.root.classList.contains=()=>true;context.syncNavigation();assert.equal(context.navigation.hidden,true,'Navigation must hide with the lobby');
 context.pageRoute='subjects';context.syncNavigation();assert.equal(context.navigation.hidden,false,'Native section keeps the same navigation visible');
 context.active=false;context.syncNavigation();assert.equal(context.navigation.hidden,true,'Legacy tools retain their own navigation');
 assert(js.includes("document.body.append(navigation)"));assert(js.includes("navigation.addEventListener('click',onAction)"));assert(js.includes("profile:['profileModal','#closeProfileModal']"));
-const source=fs.readFileSync('assets/curriculum-v97.js','utf8');const c={topicSection:t=>({key:t.key})};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' function topicArtwork('),source.indexOf(' function paintTopicCards(')),c);
+const source=fs.readFileSync('assets/curriculum-v97.js','utf8');const c={esc:x=>String(x),topicSection:t=>({key:t.key})};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' function topicArtwork('),source.indexOf(' function paintTopicCards(')),c);
 const arts=['algebra','geometry','functions','statistics','chemistry','physics','biology','matter','arabic','english','history','geography'].map(k=>c.topicArtwork({subject:k,key:k}));assert.equal(new Set(arts).size,12);assert(arts.every(x=>x.includes('aria-hidden="true"')&&x.includes('viewBox="0 0 160 132"')));
 const css=fs.readFileSync('assets/classora-premium-v290.css','utf8');assert.equal((css.match(/\{/g)||[]).length,(css.match(/\}/g)||[]).length);assert(css.includes('#cl290Navigation[hidden]'));assert(css.includes('prefers-reduced-motion'));assert(css.includes('#chatModal .chat-bubble.mine'));assert(css.includes('html body :is(#settingsModal,#chatModal) .hidden{display:none!important}'));
 console.log('PASS: persistent navigation visibility, portal routing, profile section, twelve SVG illustration families, hidden states and reduced-motion support.');
+// The old authenticated/tablet dock has high-specificity CSS and may repaint after opening a modal.
+const style={value:'flex',priority:'important',getPropertyValue(){return this.value},getPropertyPriority(){return this.priority},setProperty(_,v,p){this.value=v;this.priority=p},removeProperty(){this.value='';this.priority=''}};
+context.$=()=>({style});context.active=true;context.pageRoute='chat';context.syncNavigation();assert.equal(style.value,'none');assert.equal(style.priority,'important');
+style.value='flex';context.syncNavigation();assert.equal(style.value,'none','Legacy repaint must be suppressed');
+context.active=false;context.syncNavigation();assert.equal(style.value,'flex','Leaving new shell restores previous state');
+style.value='none';context.syncNavigation();assert.equal(style.value,'none','Do not override authentication hiding once suppression is released');
+const titles=['نظرية فيثاغورس','مساحة المستطيل','حجم المكعب','أنواع الزوايا','معادلات مع أقواس','معادلات تربيعية','الكسور','الاحتمال','النسب المئوية','الذرة','الخلية','الكهرباء','الضوء','الصوت'];
+const rendered=titles.map((title,i)=>c.topicArtwork({subject:i<9?'math':'science',title,id:'example-'+i,key:'general'}));assert.equal(new Set(rendered).size,titles.length);
+console.log('PASS: old dock repaint suppression and safe restoration; topic-specific diagrams differ across example lessons.');

@@ -24,7 +24,15 @@ function positionAI(){
 // Present existing sections as pages, retaining native handlers and cleanup.
 const pageRoutes={subjects:['classoraCurriculumModal','.classora-curriculum-close'],classes:['classModal','#closeClassModal'],exam:['examModal','#closeExamModal'],live:['competitionModal','#closeCompetitionModal'],settings:['settingsModal','#closeSettingsModal'],chat:['chatModal','#closeChatModal'],profile:['profileModal','#closeProfileModal']};
 let pageRoute=null;
-function syncNavigation(){if(navigation){navigation.hidden=!(active&&(!root.classList.contains('hidden')||pageRoute));document.body.classList.toggle('cl290-navigation',!navigation.hidden)}}
+function syncNavigation(){
+ if(!navigation)return;
+ navigation.hidden=!(active&&(!root.classList.contains('hidden')||pageRoute));
+ document.body.classList.toggle('cl290-navigation',!navigation.hidden);
+ // Legacy dock stays mounted for its native click handlers, but cannot paint over the new shell.
+ const old=$('classoraMobilePageNav');
+ if(old){if(!navigation.hidden){if(!syncNavigation.previousDock)syncNavigation.previousDock=[old.style.getPropertyValue('display'),old.style.getPropertyPriority('display')];if(old.style.getPropertyValue('display')!=='none'||old.style.getPropertyPriority('display')!=='important')old.style.setProperty('display','none','important')}
+ else if(syncNavigation.previousDock){const [value,priority]=syncNavigation.previousDock;syncNavigation.previousDock=null;if(value)old.style.setProperty('display',value,priority);else old.style.removeProperty('display')}}
+}
 function syncPage(){
  const entry=Object.entries(pageRoutes).find(([key,[id]])=>{const el=$(id);return el?.classList.contains('cl288-inline')&&el.classList.contains('open')});
  pageRoute=entry?.[0]||null;syncNavigation();
@@ -115,6 +123,7 @@ function init(){
  navigation=document.createElement('div');navigation.id='cl290Navigation';navigation.dir='rtl';
  navigation.append(dash.querySelector('.cl286-rail'),dash.querySelector('.cl286-mobile-nav'));
  document.body.append(navigation);
+ const legacyDock=$('classoraMobilePageNav');if(legacyDock)new MutationObserver(syncNavigation).observe(legacyDock,{attributes:true,attributeFilter:['style','class']});
  new MutationObserver(syncNavigation).observe(root,{attributes:true,attributeFilter:['class']});
  // Reuse the established book illustration rather than a flattened screenshot.
  const art=document.querySelector('.cl243-learning-art');if(art){const copy=art.cloneNode(true);copy.innerHTML=copy.innerHTML.replaceAll('cl243-','cl286-art-');dash.querySelector('.cl286-book').append(copy);}
