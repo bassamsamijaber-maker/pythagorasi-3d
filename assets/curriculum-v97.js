@@ -571,21 +571,34 @@ export function mountCurriculum(api){
   topSub.textContent=state.grade?gradeLabel(state.grade):txt(api,"المنهاج الدراسي","Curriculum");
  }
  function renderGrades(){
-  body.innerHTML='<section class="curriculum-hero"><span class="curriculum-kicker">CLASSORA CURRICULUM</span><h2>'+txt(api,"اختار صفك","Choose your grade")+'</h2><p>'+txt(api,"المواد مرتبة حسب الصف، والعربي قواعد فقط والإنجليزي Grammar فقط. لا يوجد عبري أو مدنيات.","Subjects are organized by grade. Arabic is grammar-only and English is grammar-only. Hebrew and civics are excluded.")+'</p></section><div class="curriculum-grid" id="cv97Grades"></div>';
+  body.innerHTML='<section class="curriculum-hero"><span class="curriculum-kicker">CLASSORA CURRICULUM</span><h2>'+txt(api,"اختار صفك","Choose your grade")+'</h2><p>'+txt(api,"رحلتك للتعلّم تبدأ هون. اختار صفك لتكتشف موادك، الدروس، والتجارب التفاعلية.","Your learning journey starts here. Choose your grade to discover subjects, lessons, and interactive experiences.")+'</p></section><div class="curriculum-grid" id="cv97Grades"></div>';
   const host=body.querySelector("#cv97Grades");
   [7,8,9,10].forEach(function(g){
-   const b=document.createElement("button");b.className="curriculum-grade-card";b.innerHTML=svg("school")+'<b>'+txt(api,"الصف "+(g===7?"السابع":g===8?"الثامن":g===9?"التاسع":"العاشر"),"Grade "+g)+'</b><small>'+subjectList(g).length+" "+txt(api,"مواد","subjects")+'</small>';
+   const b=document.createElement("button");b.className="curriculum-grade-card";b.innerHTML='<span class="cv289-grade-number" aria-hidden="true">'+g+'</span>'+'<b>'+txt(api,"الصف "+(g===7?"السابع":g===8?"الثامن":g===9?"التاسع":"العاشر"),"Grade "+g)+'</b><small>'+subjectList(g).length+" "+txt(api,"مواد","subjects")+'</small>';
    b.onclick=function(){state.grade=g;rememberGrade(g);state.subject=preferredEntrySubject&&G[g]?.[preferredEntrySubject]?preferredEntrySubject:null;state.view=state.subject?"topics":"subjects";state.track="all";state.query="";render()};host.appendChild(b)
   });
  }
+ function gradeSwitcher(){
+  return '<nav class="cv289-grades" aria-label="'+txt(api,"اختيار الصف","Choose grade")+'">'+[7,8,9,10].map(g=>'<button type="button" data-grade="'+g+'" aria-pressed="'+(g===state.grade)+'">'+gradeLabel(g)+'</button>').join('')+'</nav>';
+ }
+ function bindGradeSwitcher(){
+  body.querySelectorAll('[data-grade]').forEach(b=>{b.onclick=()=>{state.grade=Number(b.dataset.grade);rememberGrade(state.grade);state.subject=null;state.topic=null;state.query="";state.track="all";state.view="subjects";render()}});
+ }
  function renderSubjects(){
-  const g=state.grade,subs=subjectList(g);
-  body.innerHTML=(state.subject==="geography"?globeMarkup(lang(api)):'')+'<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(g)+'</div></div><section class="curriculum-hero"><span class="curriculum-kicker">'+txt(api,"المواد","SUBJECTS")+'</span><h2>'+txt(api,"اختار المادة","Choose a subject")+'</h2><p>'+txt(api,"كل مادة تفتح المواضيع المناسبة لهذا الصف فقط.","Each subject shows only the topics assigned to this grade.")+'</p></section><div class="curriculum-grid" id="cv97Subjects"></div>';
+  const g=state.grade,subs=subjectList(g),count=subs.reduce((n,s)=>n+topicsFor(g,s).length,0);
+  body.innerHTML='<section class="curriculum-hero cv289-hero"><div><span class="curriculum-kicker">CLASSORA / '+gradeLabel(g)+'</span><h2>'+txt(api,"عالمك يبدأ بفكرة","Your world starts with an idea")+'</h2><p>'+txt(api,"اختار مادة تثير فضولك. افهم، جرّب، وتقدّم موضوعًا بعد موضوع.","Find a subject that sparks your curiosity. Understand, explore, and learn one topic at a time.")+'</p><div class="cv289-metrics"><span>'+subs.length+' '+txt(api,"مواد دراسية","subjects")+'</span><span>'+count+' '+txt(api,"موضوع للتعلّم","topics to explore")+'</span></div></div><div class="cv289-hero-art" aria-hidden="true">'+svg("book")+'<i>π</i><i>3D</i></div></section>'+gradeSwitcher()+'<div id="cv97Subjects" class="cv289-subjects"></div>';
   const host=body.querySelector("#cv97Subjects");
-  subs.forEach(function(s){
-   const count=topicsFor(g,s).length,b=document.createElement("button");b.className="curriculum-subject-card";b.innerHTML=svg(S[s].icon)+'<b>'+subjectName(api,s)+'</b><small>'+count+" "+txt(api,"موضوع","topics")+'</small>';
-   b.onclick=function(){state.subject=s;state.view="topics";state.track="all";render()};host.appendChild(b)
-  });
+  const groups=[{ar:"الرياضيات والعلوم",en:"Math & Science",keys:["math","geometry","science"]},{ar:"اللغات والتعبير",en:"Languages & Expression",keys:["arabic","english","hebrew"]},{ar:"الإنسان والعالم",en:"People & the World",keys:subs.filter(s=>!["math","geometry","science","arabic","english","hebrew"].includes(s))}];
+  groups.forEach(group=>{
+   const keys=group.keys.filter(s=>subs.includes(s));if(!keys.length)return;
+   const section=document.createElement('section');section.className='cv289-group';
+   section.innerHTML='<h3>'+txt(api,group.ar,group.en)+'</h3><div class="curriculum-grid"></div>';
+   keys.forEach(function(s){
+    const count=topicsFor(g,s).length,b=document.createElement("button");b.type="button";b.dataset.subject=s;b.className="curriculum-subject-card";
+    b.innerHTML='<span class="cv289-subject-icon">'+svg(S[s].icon)+'</span><span class="cv289-subject-copy"><b>'+subjectName(api,s)+'</b><small>'+count+' '+txt(api,"موضوع • شرح وتطبيق","topics · Learn & practice")+'</small></span><span class="cv289-enter">'+txt(api,"استكشف المادة","Explore subject")+' <span aria-hidden="true">↗</span></span>';
+    b.onclick=function(){state.subject=s;state.view="topics";state.track="all";state.query="";render()};section.querySelector('.curriculum-grid').appendChild(b)
+   });host.appendChild(section);
+  });bindGradeSwitcher();
  }
  function filteredTopics(){
   let list=topicsFor(state.grade,state.subject);
@@ -643,8 +656,8 @@ export function mountCurriculum(api){
   const extra=[];
   if(state.grade===10&&state.subject==="science")extra.push('<div class="curriculum-filter-row" id="cv97Track"><button data-track="all">'+txt(api,"الكل","All")+'</button><button data-track="physics">'+trackName(api,"physics")+'</button><button data-track="chemistry">'+trackName(api,"chemistry")+'</button><button data-track="biology">'+trackName(api,"biology")+'</button></div>');
   if(state.grade===10&&["math","geometry"].includes(state.subject))extra.push('<div class="curriculum-filter-row" id="cv97MathLevel"><button data-level="3">3 '+txt(api,"وحدات","units")+'</button><button data-level="4">4 '+txt(api,"وحدات","units")+'</button><button data-level="5">5 '+txt(api,"وحدات","units")+'</button></div>');
-  body.innerHTML=(state.subject==="geography"?globeMarkup(lang(api)):'')+'<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(state.grade)+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
-  const search=body.querySelector("#cv97Search");search.oninput=function(){state.query=search.value;paintTopicCards()};
+  body.innerHTML='<section class="curriculum-hero cv289-topic-hero"><span class="curriculum-kicker">'+gradeLabel(state.grade)+'</span><h2>'+subjectName(api,state.subject)+'</h2><p>'+txt(api,"خطوة خطوة، كل موضوع يفتح لك فكرة جديدة.","One topic at a time. A new idea with every lesson.")+'</p></section>'+gradeSwitcher()+(state.subject==="geography"?globeMarkup(lang(api)):'')+'<div class="curriculum-toolbar"><div class="curriculum-breadcrumb">'+gradeLabel(state.grade)+" / "+subjectName(api,state.subject)+'</div><input class="curriculum-search" id="cv97Search" placeholder="'+txt(api,"ابحث عن موضوع...","Search topics...")+'" value="'+esc(state.query)+'"></div>'+extra.join("")+'<div class="curriculum-topic-sections" id="cv97Topics"></div>';
+  bindGradeSwitcher();const search=body.querySelector("#cv97Search");search.setAttribute("aria-label",txt(api,"ابحث عن موضوع","Search topics"));search.oninput=function(){state.query=search.value;paintTopicCards()};
   body.querySelectorAll("#cv97Track button").forEach(function(b){b.classList.toggle("active",b.dataset.track===state.track);b.onclick=function(){state.track=b.dataset.track;renderTopics()}});
   body.querySelectorAll("#cv97MathLevel button").forEach(function(b){b.classList.toggle("active",b.dataset.level===state.mathLevel);b.onclick=function(){state.mathLevel=b.dataset.level;renderTopics()}});
   if(state.subject==="geography")disposeGlobe=mountGlobe(body,lang(api));
@@ -1461,7 +1474,7 @@ export function mountCurriculum(api){
   const opts=host.querySelector(".curriculum-mini-options"),feed=host.querySelector(".curriculum-feedback");
   q.options.forEach(function(opt){const b=document.createElement("button");b.textContent=opt;b.onclick=function(){opts.querySelectorAll("button").forEach(function(x){x.disabled=true;if(x.textContent===q.answer)x.classList.add("correct")});const ok=opt===q.answer;b.classList.add(ok?"correct":"wrong");feed.textContent=answerFeedback(q,opt,lang(api));recordLearningAttempt(t,ok,{question:q,selected:opt})};opts.appendChild(b)})
  }
- function render(){disposeGlobe?.();disposeGlobe=null;modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
+ function render(){disposeGlobe?.();disposeGlobe=null;modal.classList.toggle("studio-open",state.view==="lesson"&&["math","geometry","arabic","english","history","geography"].includes(state.topic?.subject));disposeLesson?.();disposeLesson=null;modal.dataset.subject=state.subject||"";modal.dataset.view=state.view;document.dispatchEvent(new window.Event("classora:math-context"));modal.classList.toggle("lesson-open",state.view==="lesson");setTop();if(state.view==="grades")renderGrades();else if(state.view==="subjects")renderSubjects();else if(state.view==="topics")renderTopics();else renderLesson()}
  function recordExam(exam,pct){
   if(!exam||!exam.curriculumTopicId)return;
   let t=null;outer:for(const gr of [7,8,9,10]){for(const s of subjectList(gr)){t=topicsFor(gr,s).find(function(x){return x.id===exam.curriculumTopicId});if(t)break outer}}
