@@ -43,3 +43,24 @@ html body:not(.light):not([data-classora-theme="morning"]) #cl286Dashboard .peac
 #cl286Dashboard .cl286-rail nav button:hover,#cl286Dashboard .cl286-mobile-nav button:hover{background:var(--d-soft)}
 #cl286Dashboard .cl286-rail nav button.selected,#cl286Dashboard .cl286-mobile-nav button.selected{background:var(--d-soft);color:var(--d-green)}
 #cl286Notice{position:fixed;inset-inline:20px;bottom:110px;margin:auto;max-width:480px;padding:16px;border-radius:14px;background:var(--d-paper);color:var(--d-ink);border:1px solid var(--d-line);box-shadow:0 8px 35px #0003;z-index:2147483647;font:600 15px/1.6 Tajawal,Arial,sans-serif;text-align:center}
+
+/* v288: native sections become full content pages beside the same navigation. */
+html body.cl288-page #platformLobby{display:block!important;background:var(--d-page)!important}
+html body.cl288-page #cl286Dashboard{min-height:0!important;padding:0!important;display:block!important;background:transparent!important}
+html body.cl288-page #cl286Dashboard :is(.cl286-main,.cl286-assistant){display:none!important}
+html body.cl288-page #cl286Dashboard .cl286-rail{position:fixed!important;top:24px!important;right:28px!important;left:auto!important;width:220px!important;height:calc(100dvh - 48px)!important;background:var(--d-page)!important;z-index:2147482000!important;padding:16px 0 0 20px!important;overflow-y:auto}
+html body.cl288-page :is(#classoraCurriculumModal,#classModal,#examModal,#competitionModal,#settingsModal,#chatModal).cl288-inline.open{
+ position:fixed!important;inset:0 276px 0 0!important;width:auto!important;height:100dvh!important;max-width:none!important;max-height:none!important;padding:20px!important;margin:0!important;background:var(--d-page)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;display:block!important;overflow:auto!important;z-index:2147481000!important;
+}
+html body.cl288-page .cl288-inline.open>:is(.modalbox,.classora-curriculum-shell){
+ position:relative!important;inset:auto!important;transform:none!important;translate:none!important;width:100%!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:calc(100dvh - 40px)!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;
+}
+html body.cl288-page .cl288-inline .classora-curriculum-body{height:auto!important;max-height:none!important;overflow:visible!important}
+html body.cl288-page .cl288-inline .classora-curriculum-top{position:sticky!important;top:0!important;z-index:12}
+html body.cl288-page #classoraMobilePageNav{display:none!important}
+@media(max-width:999px){
+ html body.cl288-page #cl286Dashboard .cl286-rail{display:none!important}
+ html body.cl288-page :is(#classoraCurriculumModal,#classModal,#examModal,#competitionModal,#settingsModal,#chatModal).cl288-inline.open{inset:0 0 calc(88px + env(safe-area-inset-bottom)) 0!important;height:calc(100dvh - 88px - env(safe-area-inset-bottom))!important;padding:12px!important}
+ html body.cl288-page .cl288-inline.open>:is(.modalbox,.classora-curriculum-shell){min-height:calc(100dvh - 112px - env(safe-area-inset-bottom))!important}
+ html body.cl288-page #cl286Dashboard .cl286-mobile-nav{z-index:2147482000!important}
+}

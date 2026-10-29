@@ -21,20 +21,49 @@ function positionAI(){
  if(active&&host&&card.parentNode!==host)host.append(card);
  else if(!active&&marker.parentNode&&card.parentNode!==marker.parentNode)marker.after(card);
 }
+// Present existing sections as pages, retaining native handlers and cleanup.
+const pageRoutes={subjects:['classoraCurriculumModal','.classora-curriculum-close'],classes:['classModal','#closeClassModal'],exam:['examModal','#closeExamModal'],live:['competitionModal','#closeCompetitionModal'],settings:['settingsModal','#closeSettingsModal'],chat:['chatModal','#closeChatModal']};
+let pageRoute=null;
+function syncPage(){
+ const entry=Object.entries(pageRoutes).find(([key,[id]])=>{const el=$(id);return el?.classList.contains('cl288-inline')&&el.classList.contains('open')});
+ pageRoute=entry?.[0]||null;
+ document.body.classList.toggle('cl288-page',!!pageRoute);
+ if(pageRoute)document.body.dataset.cl288Page=pageRoute;else delete document.body.dataset.cl288Page;
+ dash?.querySelectorAll('.cl286-rail nav button,.cl286-mobile-nav button').forEach(b=>{const selected=b.dataset.dRoute===(pageRoute||'home');b.classList.toggle('selected',selected);if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ for(const [key,[id]] of Object.entries(pageRoutes)){
+  const el=$(id),box=el?.firstElementChild;
+  if(!el||!box)continue;
+  if(el.classList.contains('cl288-inline')&&el.classList.contains('open')){box.setAttribute('aria-modal','false');if(box.getAttribute('role')==='dialog')box.setAttribute('role','region')}
+ }
+}
+function closePage(except){
+ for(const [key,[id,selector]] of Object.entries(pageRoutes)){
+  const el=$(id);if(key===except||!el?.classList.contains('cl288-inline')||!el.classList.contains('open'))continue;
+  el.querySelector(selector)?.click();
+ }
+ syncPage();
+}
+function preparePage(route){
+ const spec=pageRoutes[route];if(!spec)return;
+ closePage(route);
+ const el=$(spec[0]);if(!el)return;
+ el.classList.add('cl288-inline');
+ if(!el.dataset.cl288Observed){new MutationObserver(syncPage).observe(el,{attributes:true,attributeFilter:['class']});el.dataset.cl288Observed='1'}
+}
 function go(route){
  if(route!=='ai'&&route!=='closeAI')root.classList.remove('cl286-ai-open');
  if(route==='search'){openSearch();return}
- if(route==='home'){active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();return}
+ if(route==='home'){closePage();active=true;root.classList.add('cl286-active');positionAI();root.scrollTo({top:0});sync();return}
  if(route==='ai'){root.classList.add('cl286-ai-open');positionAI();$('lobbyAIInput')?.focus();return}
  if(route==='closeAI'){closeAI();return}
- if(route==='tools'){active=false;root.classList.remove('cl286-active');positionAI();document.querySelector('#cl214-catalog')?.scrollIntoView();return}
- if(route==='subjects'){if(window.classoraCurriculum?.open)window.classoraCurriculum.open();else go('tools');return}
- if(route.startsWith('subject:')){if(window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(grade(),route.split(':')[1]);else go('subjects');return}
- if(route==='resume'){const l=last();if(l&&window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(l.grade,l.subject,l.topic);else go('subjects');return}
+ if(route==='tools'){closePage();active=false;root.classList.remove('cl286-active');positionAI();document.querySelector('#cl214-catalog')?.scrollIntoView();return}
+ if(route==='subjects'){preparePage('subjects');if(window.classoraCurriculum?.open)window.classoraCurriculum.open();else go('tools');syncPage();return}
+ if(route.startsWith('subject:')){preparePage('subjects');if(window.classoraCurriculum?.open)window.classoraCurriculum.open(route.split(':')[1]);else go('tools');syncPage();return}
+ if(route==='resume'){preparePage('subjects');const l=last();if(l&&window.classoraCurriculum?.openAt)window.classoraCurriculum.openAt(l.grade,l.subject,l.topic);else go('subjects');syncPage();return}
  if(route==='progress'){if(typeof window.classoraLearningPlus?.progress==='function')window.classoraLearningPlus.progress();else go('tools');return}
  if(route==='challenge'){if(typeof window.classoraLearningBoost?.openChallenge==='function')window.classoraLearningBoost.openChallenge();else go('tools');return}
  const ids={search:'classoraGlassSearchBtn',notifications:'lobbyNotificationsBtn',profile:'lobbyProfileBtn',classes:'lobbyClassBtn',chat:'lobbyChatBtn',settings:'lobbySettingsBtn',exam:'lobbyExamBtn',live:'competitionBtn'};
- if(ids[route])native(ids[route]);
+ if(ids[route]){preparePage(route);native(ids[route]);syncPage();}
 }
 function openSearch(){
  if(document.querySelector('.cl286-search-dialog[open]'))return;

@@ -515,6 +515,7 @@ function editorDefaults(t){
 export function mountCurriculum(api){
  configureLearningMemory(api);
  let disposeLesson=null,disposeGlobe=null;
+ let preferredEntrySubject=null;
  let state={view:"grades",grade:null,subject:null,topic:null,track:"all",mathLevel:"5",query:"",showTranslation:false,editor:null};
  const gradeLabel=g=>txt(api,"الصف "+({7:"السابع",8:"الثامن",9:"التاسع",10:"العاشر"}[g]||g),"Grade "+g);
  function rememberGrade(g){
@@ -543,7 +544,7 @@ export function mountCurriculum(api){
   modal.classList.add("open");
   return true;
  }
- function open(){suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
+ function open(subject=""){preferredEntrySubject=Object.prototype.hasOwnProperty.call(S,subject)?subject:null;suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
  function openAt(grade,subject,topicRef=""){
   suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");
   const g=Number(grade);state.grade=G[g]?g:7;rememberGrade(state.grade);state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
@@ -574,7 +575,7 @@ export function mountCurriculum(api){
   const host=body.querySelector("#cv97Grades");
   [7,8,9,10].forEach(function(g){
    const b=document.createElement("button");b.className="curriculum-grade-card";b.innerHTML=svg("school")+'<b>'+txt(api,"الصف "+(g===7?"السابع":g===8?"الثامن":g===9?"التاسع":"العاشر"),"Grade "+g)+'</b><small>'+subjectList(g).length+" "+txt(api,"مواد","subjects")+'</small>';
-   b.onclick=function(){state.grade=g;rememberGrade(g);state.view="subjects";render()};host.appendChild(b)
+   b.onclick=function(){state.grade=g;rememberGrade(g);state.subject=preferredEntrySubject&&G[g]?.[preferredEntrySubject]?preferredEntrySubject:null;state.view=state.subject?"topics":"subjects";state.track="all";state.query="";render()};host.appendChild(b)
   });
  }
  function renderSubjects(){

@@ -1,0 +1,23 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync('assets/classora-dashboard-v286.js','utf8');
+function classes(){const set=new Set();return {contains:k=>set.has(k),add:k=>set.add(k),remove:k=>set.delete(k),toggle(k,on){on?set.add(k):set.delete(k)}}}
+let cleanup=0,observations=0;
+const nodes={};for(const id of ['classoraCurriculumModal','classModal','examModal','competitionModal','settingsModal','chatModal'])nodes[id]={classList:classes(),dataset:{},firstElementChild:{setAttribute(){},getAttribute(){return 'dialog'}},querySelector(){return {click(){cleanup++;nodes[id].classList.remove('open')}}}};
+const body={classList:classes(),dataset:{}};
+const context={$:id=>nodes[id],document:{body},dash:null,MutationObserver:class{observe(){observations++}}};vm.createContext(context);
+vm.runInContext(source.slice(source.indexOf('const pageRoutes='),source.indexOf('function go(')),context);
+context.preparePage('subjects');assert(!body.classList.contains('cl288-page'),'Preparing must not open a denied/unavailable section');
+nodes.classoraCurriculumModal.classList.add('open');context.syncPage();assert.equal(body.dataset.cl288Page,'subjects');
+context.preparePage('settings');assert.equal(cleanup,1,'Switch must invoke native lesson cleanup');assert(!body.classList.contains('cl288-page'));
+nodes.settingsModal.classList.add('open');context.syncPage();assert.equal(body.dataset.cl288Page,'settings');
+context.preparePage('settings');assert.equal(cleanup,1);assert.equal(observations,2,'Observe each native section only once');
+context.closePage();assert.equal(cleanup,2);assert(!body.classList.contains('cl288-page'));
+const curriculum=fs.readFileSync('assets/curriculum-v97.js','utf8');
+const start=curriculum.indexOf('function open(subject=');const end=curriculum.indexOf('\n',start);
+const state={};const c={state,preferredEntrySubject:null,S:{math:{},science:{}},G:{7:{math:[]},8:{math:[],science:[]}},modal:{style:{removeProperty(){}},removeAttribute(){},classList:classes()},render(){},rememberGrade(g){c.saved=g}};vm.createContext(c);vm.runInContext(curriculum.slice(start,end),c);
+c.open();assert.equal(state.view,'grades');assert.equal(state.grade,null);
+c.g=8;const handler=curriculum.match(/b.onclick=function\(\)\{state.grade=g;rememberGrade\(g\);([^]*?)\};host.appendChild\(b\)/)[1];
+vm.runInContext('state.grade=g;rememberGrade(g);'+handler,c);assert.equal(state.view,'subjects');
+c.open('math');assert.equal(state.view,'grades');vm.runInContext('state.grade=g;rememberGrade(g);'+handler,c);assert.equal(state.view,'topics');assert.equal(state.subject,'math');assert.equal(c.saved,8);
+c.open('unknown');vm.runInContext(handler,c);assert.equal(state.view,'subjects');
+console.log('PASS: native cleanup, denied-open behavior, section switching, grade-first curriculum and subject shortcuts.');
