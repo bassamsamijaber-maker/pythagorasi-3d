@@ -1,5 +1,7 @@
-const CACHE_NAME="classora-v291-single-navigation";
+const CACHE_NAME="classora-v292-unified-themes";
 const APP_SHELL=[
+  "./assets/classora-unified-v292.css?v=292",
+  "./assets/classora-grade-settings-v292.js?v=292",
   "./assets/classora-basic-conversation-v254.js?v=254",
   "./assets/classora-premium-v243.css?v=247",
   "./assets/classora-math-tutor-v247.js?v=249",
