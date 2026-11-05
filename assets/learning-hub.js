@@ -270,10 +270,10 @@ export function mountLearningHub(api){
  }
  function makeCurriculumShelf(){
   const section=node("section","hub-curriculum-shelf"),head=node("div","hub-curriculum-head");
-  const copy=node("div");copy.append(node("span","hub-kicker","CLASSORA / "+L("المنهاج الدراسي","CURRICULUM")),node("h2","",L("اختار صفك، وبعدها المادة","Choose your grade, then a subject")),node("p","hub-muted",L("سابع لحد عاشر. العربي قواعد فقط، والإنجليزي Grammar فقط. كل موضوع فيه شرح وتدريب وامتحان ومسابقة.","Grades 7–10. Arabic is grammar-only and English is grammar-only. Every topic has learning, practice, an exam and live competition.")));
+  const copy=node("div");copy.append(node("span","hub-kicker","CLASSORA / "+L("المنهاج الدراسي","CURRICULUM")),node("h2","",L("اختار المادة وابدأ التعلّم","Choose a subject and start learning")),node("p","hub-muted",L("سابع لحد عاشر. العربي قواعد فقط، والإنجليزي Grammar فقط. كل موضوع فيه شرح وتدريب وامتحان ومسابقة.","Grades 7–10. Arabic is grammar-only and English is grammar-only. Every topic has learning, practice, an exam and live competition.")));
   const grades=node("div","hub-grade-tabs");
   [7,8,9,10].forEach(g=>{const b=button(gradeText(g),()=>chooseGrade(g),"hub-grade-button");b.classList.toggle("active",g===selectedGrade);b.setAttribute("aria-pressed",String(g===selectedGrade));b.title=gradeText(g);grades.append(b)});
-  head.append(copy,grades);section.append(head);
+  head.append(copy);section.append(head);
   const grid=node("div","hub-curriculum-subjects");
   const keys=Object.keys(CURRICULUM_DATA[selectedGrade]||{}).filter(s=>CURRICULUM_SUBJECTS[s]&&(selected==="all"||selected===s));
   keys.forEach(s=>{

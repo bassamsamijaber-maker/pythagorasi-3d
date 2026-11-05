@@ -20,12 +20,14 @@ const preview={
 original:'<svg viewBox="0 0 64 50" fill="none" aria-hidden="true"><rect x="2" y="3" width="60" height="44" rx="9" fill="#0d2231" stroke="#589c84"/><path d="M10 13h42M10 20h28" stroke="#67deb0" stroke-width="4" stroke-linecap="round"/><rect x="10" y="28" width="19" height="11" rx="3" fill="#173b45"/><rect x="34" y="28" width="19" height="11" rx="3" fill="#173b45"/></svg>',
 morning:'<svg viewBox="0 0 64 50" fill="none" aria-hidden="true"><rect x="2" y="3" width="60" height="44" rx="9" fill="#fff" stroke="#c3d8d2"/><path d="M10 13h42M10 20h28" stroke="#36bd8b" stroke-width="4" stroke-linecap="round"/><rect x="10" y="28" width="19" height="11" rx="3" fill="#e4f4ef"/><rect x="34" y="28" width="19" height="11" rx="3" fill="#e4f4ef"/></svg>',
 };
+preview.sand=preview.morning.replaceAll('#fff','#fffdf7').replaceAll('#36bd8b','#52643d').replaceAll('#e4f4ef','#e9eddd');
+const sandNames={ar:'رمال وزيتون',en:'Sand & olive',es:'Arena y oliva',ko:'모래와 올리브',de:'Sand und Olive',it:'Sabbia e oliva',hi:'रेत और जैतून',tr:'Kum ve zeytin'};for(const [key,value] of Object.entries(txt))value.push(sandNames[key]);
 const lang=()=>{const val=(document.documentElement.lang||'ar').toLowerCase().split('-')[0];return txt[val]||txt.ar};
-const valid=v=>['original','morning'].includes(v);
+const valid=v=>['original','morning','sand'].includes(v);
 function getTheme(){let v='original';try{v=localStorage.getItem(KEY)||'original'}catch{}if(!valid(v)){v='original';try{localStorage.setItem(KEY,v)}catch{}}return v}
 let ownsLight=false;
 function apply(){const v=getTheme(),body=document.body;if(!body)return;
- if(v==='morning'){if(!body.classList.contains('light')){body.classList.add('light');ownsLight=true}}
+ if(v==='morning'||v==='sand'){if(!body.classList.contains('light')){body.classList.add('light');ownsLight=true}}
  else if(ownsLight){body.classList.remove('light');ownsLight=false}
  if(body.dataset.classoraTheme!==v)body.dataset.classoraTheme=v;
  document.querySelectorAll('#classoraAppearanceSettings [data-cl-theme]').forEach(b=>{const selected=b.dataset.clTheme===v;if(b.getAttribute('aria-pressed')!==String(selected))b.setAttribute('aria-pressed',String(selected))});
@@ -39,7 +41,7 @@ function mount(){const root=document.getElementById('settingsModal');if(!root)re
  const title=document.createElement('div');title.className='cl-appearance-head';title.innerHTML=settingIcon+'<h3 id="classoraAppearanceHeading"></h3>';pane.append(title);
  const desc=document.createElement('p');desc.className='cl-appearance-desc';pane.append(desc);
  const choices=document.createElement('div');choices.className='cl-appearance-options';pane.append(choices);
- for(const name of ['original','morning']){const button=document.createElement('button');button.type='button';button.className='cl-appearance-choice';button.dataset.clTheme=name;button.setAttribute('aria-pressed','false');button.innerHTML=preview[name]+'<span></span>';button.addEventListener('click',()=>choose(name));choices.append(button)}
+ for(const name of ['original','morning','sand']){const button=document.createElement('button');button.type='button';button.className='cl-appearance-choice';button.dataset.clTheme=name;button.setAttribute('aria-pressed','false');button.innerHTML=preview[name]+'<span></span>';button.addEventListener('click',()=>choose(name));choices.append(button)}
  const note=document.createElement('p');note.className='cl-appearance-note';pane.append(note);
  }
  const profile=dialog.querySelector('.settings-profile-row')||dialog.querySelector('.settings-grid'),head=dialog.querySelector('.modalhead');

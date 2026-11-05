@@ -1,0 +1,30 @@
+/* Shared palette for the existing dashboard, nested screens and learning tools. */
+html body:not(.light):not([data-classora-theme=morning]):not([data-classora-theme=sand]){--d-ink:#edf4ff;--d-muted:#afc1d5;--d-line:#385069;--d-green:#73d8d1;--d-page:#101927;--d-paper:#192637;--d-soft:#213d46;--d-primary:#73d8d1;--d-on-primary:#102c32;--d-purple:#a6c5ff;--d-purple-soft:#293950;--d-purple-line:#536d95;--d-peach:#463529;--d-peach-ink:#f0c295;--d-hero-a:#203f4d;--d-hero-b:#19323e;--d-hero-ink:#edf4ff;--d-ai-user:#214349;--d-ai-bot:#233244;--d-glass:#192637f5}
+html body:is(.light,[data-classora-theme=morning]){color-scheme:light;--d-ink:#1f3249;--d-muted:#536a81;--d-line:#c9d7e4;--d-green:#137b80;--d-page:#f4f7fc;--d-paper:#ffffff;--d-soft:#e3f3f2;--d-primary:#137b80;--d-on-primary:#ffffff;--d-purple:#286cb6;--d-purple-soft:#e7f0ff;--d-purple-line:#b5cce8;--d-peach:#fff0dd;--d-peach-ink:#91591f;--d-hero-a:#d6efee;--d-hero-b:#e5eef9;--d-hero-ink:#1f3249;--d-ai-user:#e3f3f2;--d-ai-bot:#edf2f9;--d-glass:#fffffff5}
+html body[data-classora-theme=sand]{color-scheme:light;--d-ink:#303827;--d-muted:#626651;--d-line:#d4d7c3;--d-green:#52643d;--d-page:#f6f2e9;--d-paper:#fffdf7;--d-soft:#e9eddd;--d-primary:#52643d;--d-on-primary:#ffffff;--d-purple:#526c70;--d-purple-soft:#e5edec;--d-purple-line:#b6c9c7;--d-peach:#f6e9d8;--d-peach-ink:#80532a;--d-hero-a:#e6ebd7;--d-hero-b:#f3e7d4;--d-hero-ink:#303827;--d-ai-user:#e9eddd;--d-ai-bot:#f1eadb;--d-glass:#fffdf7f5}
+html body,html body #platformLobby{--ui-paper:var(--d-paper);--ui-paper-alt:var(--d-page);--ui-text:var(--d-ink);--ui-muted:var(--d-muted);--ui-accent:var(--d-green);--ui-edge:var(--d-line);--ui-inverse:var(--d-on-primary);--cl243-paper:var(--d-paper);--cl243-ink:var(--d-ink);--cl243-muted:var(--d-muted);--cl243-accent:var(--d-green);--hub-panel:var(--d-paper);--hub-text:var(--d-ink);--hub-muted:var(--d-muted);--hub-border:var(--d-line);--hub-mint:var(--d-green)}
+html body :is(.modalbox,.settings-card,.classora-curriculum-shell,.curriculum-lesson-main,.curriculum-lesson-side){background:var(--d-paper)!important;color:var(--d-ink)!important;border-color:var(--d-line)!important}
+html body :is(#classModal,#examModal,#competitionModal,#settingsModal,#chatModal,#classoraCurriculumModal){color:var(--d-ink)}
+html body :is(.modalbox,.classora-curriculum-shell) :is(h1,h2,h3,h4,label){color:var(--d-ink)!important}
+html body :is(.modalbox,.classora-curriculum-shell) :is(.muted,.hint,.subject-assistant-line){color:var(--d-muted)!important}
+html body :is(.modalbox,.classora-curriculum-shell) :is(input:not([type=checkbox]):not([type=radio]):not([type=color]):not([type=range]),select,textarea){background:var(--d-page)!important;color:var(--d-ink)!important;border-color:var(--d-line)!important;max-width:100%;box-sizing:border-box}
+html body :is(.modalbox,.classora-curriculum-shell) :is(input,textarea)::placeholder{color:var(--d-muted)!important;opacity:1}
+html body :is(.curriculum-tabs,.curriculum-filter-row,.hub-subject-tabs,.class-tabs,.chat-tabs,.settings-tabs,.cv290-settings-tools) button{background:var(--d-paper)!important;color:var(--d-ink)!important;border:1px solid var(--d-line)!important;border-radius:12px;min-height:44px}
+html body :is(.curriculum-tabs,.curriculum-filter-row,.hub-subject-tabs,.class-tabs,.chat-tabs,.settings-tabs,.cv290-settings-tools) button:is(.active,[aria-selected=true],[aria-pressed=true]){background:var(--d-primary)!important;color:var(--d-on-primary)!important;border-color:var(--d-primary)!important}
+html body :is(.modalbox,.classora-curriculum-shell) :is(button,a,input,select,textarea):focus-visible{outline:3px solid var(--d-green)!important;outline-offset:3px}
+#classoraAppearanceSettings .cl-appearance-options{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px}
+html body #classoraAppearanceSettings .cl-appearance-choice{background:var(--d-paper)!important;color:var(--d-ink)!important;border:2px solid var(--d-line)!important;border-radius:16px}
+html body #classoraAppearanceSettings .cl-appearance-choice[aria-pressed=true]{background:var(--d-soft)!important;border-color:var(--d-green)!important}
+#classoraStudyGradeSettings label{display:block;margin:8px 0 12px;line-height:1.7}#classoraStudyGradeSettings select{width:100%;min-height:48px;font:inherit;border:1px solid var(--d-line);border-radius:12px;padding:10px}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card{grid-template-columns:minmax(0,1fr)!important;padding:18px!important;gap:12px!important;min-width:0!important}
+#classoraCurriculumModal .cv290-topic-art{grid-column:1!important;grid-row:auto!important;width:100%!important;min-height:115px;max-height:130px;border-radius:15px}
+#classoraCurriculumModal .cv290-topic-art svg{width:100px;height:110px}
+#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card>:not(.cv290-topic-art){grid-column:1!important}
+#classoraCurriculumModal .curriculum-topic-card:nth-child(3n+2) .cv290-topic-art{color:var(--d-purple);background:var(--d-purple-soft)}
+#classoraCurriculumModal .curriculum-topic-card:nth-child(3n) .cv290-topic-art{color:var(--d-peach-ink);background:var(--d-peach)}
+#classoraCurriculumModal .curriculum-topic-card:hover .cv290-topic-art g{animation:none!important}
+@media(max-width:1200px){#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){#classoraAppearanceSettings .cl-appearance-options{grid-template-columns:1fr!important}#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card{padding:12px!important}#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-card b{font-size:16px!important}html body .modalbox :is(input,select,textarea){font-size:16px!important}}
+@media(max-width:360px){#classoraCurriculumModal:not(.lesson-open) .curriculum-topic-grid{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){#classoraCurriculumModal .curriculum-topic-card{transition:none!important}}

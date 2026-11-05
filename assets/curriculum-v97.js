@@ -545,7 +545,7 @@ export function mountCurriculum(api){
   modal.classList.add("open");
   return true;
  }
- function open(subject=""){preferredEntrySubject=Object.prototype.hasOwnProperty.call(S,subject)?subject:null;suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");state.view="grades";state.grade=null;state.subject=null;state.topic=null;modal.classList.add("open");render()}
+ function open(subject=""){let grade=8;try{grade=Number(localStorage.getItem('classora_curriculum_grade')||8)}catch{}openAt(G[grade]?grade:8,subject)}
  function openAt(grade,subject,topicRef=""){
   suspendedForPeriodic=false;modal.style.removeProperty("display");modal.removeAttribute("aria-hidden");
   const g=Number(grade);state.grade=G[g]?g:7;rememberGrade(state.grade);state.subject=subject&&G[state.grade]?.[subject]?subject:null;state.topic=null;state.track="all";state.query="";state.showTranslation=false;state.editor=null;
@@ -579,9 +579,7 @@ export function mountCurriculum(api){
    b.onclick=function(){state.grade=g;rememberGrade(g);state.subject=preferredEntrySubject&&G[g]?.[preferredEntrySubject]?preferredEntrySubject:null;state.view=state.subject?"topics":"subjects";state.track="all";state.query="";render()};host.appendChild(b)
   });
  }
- function gradeSwitcher(){
-  return '<nav class="cv289-grades" aria-label="'+txt(api,"اختيار الصف","Choose grade")+'">'+[7,8,9,10].map(g=>'<button type="button" data-grade="'+g+'" aria-pressed="'+(g===state.grade)+'">'+gradeLabel(g)+'</button>').join('')+'</nav>';
- }
+ function gradeSwitcher(){return '';}
  function bindGradeSwitcher(){
   body.querySelectorAll('[data-grade]').forEach(b=>{b.onclick=()=>{state.grade=Number(b.dataset.grade);rememberGrade(state.grade);state.subject=null;state.topic=null;state.query="";state.track="all";state.view="subjects";render()}});
  }
