@@ -584,20 +584,16 @@ export function mountCurriculum(api){
   body.querySelectorAll('[data-grade]').forEach(b=>{b.onclick=()=>{state.grade=Number(b.dataset.grade);rememberGrade(state.grade);state.subject=null;state.topic=null;state.query="";state.track="all";state.view="subjects";render()}});
  }
  function renderSubjects(){
-  const g=state.grade,subs=subjectList(g),count=subs.reduce((n,s)=>n+topicsFor(g,s).length,0);
-  body.innerHTML='<section class="curriculum-hero cv289-hero"><div><span class="curriculum-kicker">CLASSORA / '+gradeLabel(g)+'</span><h2>'+txt(api,"عالمك يبدأ بفكرة","Your world starts with an idea")+'</h2><p>'+txt(api,"اختار مادة تثير فضولك. افهم، جرّب، وتقدّم موضوعًا بعد موضوع.","Find a subject that sparks your curiosity. Understand, explore, and learn one topic at a time.")+'</p><div class="cv289-metrics"><span>'+subs.length+' '+txt(api,"مواد دراسية","subjects")+'</span><span>'+count+' '+txt(api,"موضوع للتعلّم","topics to explore")+'</span></div></div><div class="cv289-hero-art" aria-hidden="true">'+svg("book")+'<i>π</i><i>3D</i></div></section>'+gradeSwitcher()+'<div id="cv97Subjects" class="cv289-subjects"></div>';
-  const host=body.querySelector("#cv97Subjects");
-  const groups=[{ar:"الرياضيات والعلوم",en:"Math & Science",keys:["math","geometry","science"]},{ar:"اللغات والتعبير",en:"Languages & Expression",keys:["arabic","english","hebrew"]},{ar:"الإنسان والعالم",en:"People & the World",keys:subs.filter(s=>!["math","geometry","science","arabic","english","hebrew"].includes(s))}];
-  groups.forEach(group=>{
-   const keys=group.keys.filter(s=>subs.includes(s));if(!keys.length)return;
-   const section=document.createElement('section');section.className='cv289-group';
-   section.innerHTML='<h3>'+txt(api,group.ar,group.en)+'</h3><div class="curriculum-grid"></div>';
-   keys.forEach(function(s){
-    const count=topicsFor(g,s).length,b=document.createElement("button");b.type="button";b.dataset.subject=s;b.className="curriculum-subject-card";
-    b.innerHTML='<span class="cv289-subject-icon">'+svg(S[s].icon)+'</span><span class="cv289-subject-copy"><b>'+subjectName(api,s)+'</b><small>'+count+' '+txt(api,"موضوع • شرح وتطبيق","topics · Learn & practice")+'</small></span><span class="cv289-enter">'+txt(api,"استكشف المادة","Explore subject")+' <span aria-hidden="true">↗</span></span>';
-    b.onclick=function(){state.subject=s;state.view="topics";state.track="all";state.query="";render()};section.querySelector('.curriculum-grid').appendChild(b)
-   });host.appendChild(section);
-  });bindGradeSwitcher();
+  const g=state.grade,subs=subjectList(g);
+  body.innerHTML='<section class="curriculum-hero cv289-hero"><div><span class="curriculum-kicker">'+txt(api,"مساحتك للتعلّم","Your learning space")+'</span><h2>'+txt(api,"موادي","My subjects")+'</h2><p>'+txt(api,"مادة تختارها، وفكرة جديدة تتعلّمها.","Choose a subject. Discover a new idea.")+'</p></div></section><div class="curriculum-toolbar"><input class="curriculum-search" id="cv294SubjectSearch" aria-label="'+txt(api,"ابحث عن مادة","Search subjects")+'" placeholder="'+txt(api,"ابحث عن مادة…","Search subjects…")+'"></div><div id="cv97Subjects" class="cv294-subjects curriculum-grid"></div>';
+  const host=body.querySelector('#cv97Subjects');
+  const marks={math:'π',geometry:'∠',science:'H₂O',arabic:'ض',english:'Aa',geography:'N',history:'II',hebrew:'א'};
+  const descriptions={math:['جبر، هندسة وإحصاء','Algebra, geometry and statistics'],geometry:['أشكال، زوايا ومساحات','Shapes, angles and areas'],science:['تجارب، اكتشاف وفهم','Experiment, discover, understand'],arabic:['قواعد وتطبيقات','Grammar and practice'],english:['أتقن القواعد وطبّق ما تعلّمته','Grammar and practice'],geography:['الأرض والبيئة','Earth and environment'],history:['أحداث وحضارات','Events and civilizations'],hebrew:['قواعد وتطبيقات','Grammar and practice']};
+  subs.forEach(function(s){const b=document.createElement('button');b.type='button';b.dataset.subject=s;b.className='curriculum-subject-card';const d=descriptions[s]||['شرح وتدريب','Learn and practice'];
+   b.innerHTML='<span class="cv294-art">'+svg(S[s].icon)+'<span aria-hidden="true">'+(marks[s]||'')+'</span></span><span class="cv289-subject-copy"><b>'+subjectName(api,s)+'</b><small>'+txt(api,...d)+'</small></span><span class="cv289-enter">'+txt(api,"استكشف الدروس","Explore lessons")+' <span aria-hidden="true">←</span></span>';
+   b.onclick=function(){state.subject=s;state.view='topics';state.track='all';state.query='';render()};host.appendChild(b)
+  });
+  body.querySelector('#cv294SubjectSearch').oninput=function(e){const q=e.target.value.trim().toLocaleLowerCase();host.querySelectorAll('[data-subject]').forEach(card=>{card.hidden=!subjectName(api,card.dataset.subject).toLocaleLowerCase().includes(q)})};
  }
  function filteredTopics(){
   let list=topicsFor(state.grade,state.subject);
