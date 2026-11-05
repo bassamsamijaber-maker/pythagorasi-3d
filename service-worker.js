@@ -1,4 +1,4 @@
-const CACHE_NAME="classora-v293-consistent-shell";
+const CACHE_NAME="classora-v294-approved-preview";
 const APP_SHELL=[
   "./assets/classora-shell-repair-v293.css?v=293",
   "./assets/classora-unified-v292.css?v=292",
