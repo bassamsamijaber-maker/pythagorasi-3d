@@ -1,5 +1,6 @@
-const CACHE_NAME="classora-v292-unified-themes";
+const CACHE_NAME="classora-v293-consistent-shell";
 const APP_SHELL=[
+  "./assets/classora-shell-repair-v293.css?v=293",
   "./assets/classora-unified-v292.css?v=292",
   "./assets/classora-grade-settings-v292.js?v=292",
   "./assets/classora-basic-conversation-v254.js?v=254",
