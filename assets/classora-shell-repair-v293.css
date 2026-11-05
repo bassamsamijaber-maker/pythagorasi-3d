@@ -51,3 +51,44 @@ html body #classoraCurriculumModal .curriculum-unit-section{padding:20px!importa
 }
 @media(max-width:700px){html body #settingsModal .settings-grid{grid-template-columns:1fr!important}html body #chatModal .classora-chat-layout{grid-template-columns:minmax(0,1fr)!important}html body.cl288-page .cl288-inline.open :is(.profile-card,.live-card,.exam-card,.settings-card){padding:16px!important}html body #classoraCurriculumModal .cv289-hero h2{font-size:24px!important}}
 @media(prefers-reduced-motion:reduce){html body #cl290Navigation button{transition:none!important}}
+/* Approved preview geometry. Scoped to inner pages: the lobby is untouched. */
+html body.cl288-page #cl290Navigation .cl286-rail{inset:0 0 0 auto!important;width:180px!important;height:100dvh!important;border-radius:0!important;border:0!important;border-inline-end:1px solid var(--d-line)!important;padding:26px 14px!important;box-shadow:none!important}
+html body.cl288-page #cl290Navigation .cl286-logo{font-size:23px!important;margin-bottom:30px!important}
+html body.cl288-page #cl290Navigation .cl286-rail nav{gap:5px!important}
+html body.cl288-page #cl290Navigation .cl286-rail nav button{font-family:Tahoma,Arial,sans-serif!important;font-size:13px!important;font-weight:500!important;border-radius:11px!important;min-height:46px!important}
+html body.cl288-page :is(#classoraCurriculumModal,#classModal,#examModal,#competitionModal,#settingsModal,#chatModal,#profileModal).cl288-inline.open{inset:0 180px 0 0!important;padding:30px!important;font-family:Tahoma,Arial,sans-serif!important;line-height:1.7!important}
+html body.cl288-page .cl288-inline.open :is(button,input,select,textarea){font-family:inherit!important}
+html body.cl288-page .cl288-inline.open h2{font-weight:700!important;letter-spacing:0!important}
+html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-hero{display:block!important;padding:0!important;border:0!important;background:transparent!important;border-radius:0!important;margin:0 0 22px!important;overflow:visible!important}
+html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-hero h2{font-size:28px!important;color:var(--d-ink)!important;margin:6px 0 10px!important}
+html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-hero p{font-size:13px!important;color:var(--d-muted)!important;opacity:1!important;margin:0!important}
+html body.cl288-page #classoraCurriculumModal .curriculum-kicker{font-size:12px!important;color:var(--d-green)!important;letter-spacing:0!important}
+html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-subject-card{min-height:0!important;gap:0!important;padding:19px!important;border-radius:17px!important;background:var(--d-paper)!important;box-shadow:none!important;text-align:start!important}
+html body.cl288-page #classoraCurriculumModal [data-subject]{--tile-color:var(--d-green);--tile-tint:var(--d-soft)}
+html body.cl288-page #classoraCurriculumModal [data-subject=science],html body.cl288-page #classoraCurriculumModal [data-subject=geography]{--tile-color:var(--d-purple);--tile-tint:var(--d-purple-soft)}
+html body.cl288-page #classoraCurriculumModal [data-subject=arabic],html body.cl288-page #classoraCurriculumModal [data-subject=history]{--tile-color:var(--d-peach-ink);--tile-tint:var(--d-peach)}
+html body.cl288-page #classoraCurriculumModal .cv294-art{display:flex;align-items:center;justify-content:space-between;width:100%;height:108px;padding:18px;margin-bottom:18px;box-sizing:border-box;border-radius:12px;background:var(--tile-tint);color:var(--tile-color)}
+html body.cl288-page #classoraCurriculumModal .cv294-art svg{width:42px!important;height:42px!important;stroke:currentColor!important;fill:none!important}
+html body.cl288-page #classoraCurriculumModal .cv294-art>span{font:32px Georgia,serif;opacity:.65}
+html body.cl288-page #classoraCurriculumModal .cv289-subject-copy{gap:8px!important;min-height:64px}
+html body.cl288-page #classoraCurriculumModal .cv289-subject-copy b{font-size:17px!important;font-weight:700!important}
+html body.cl288-page #classoraCurriculumModal .cv289-subject-copy small{font-size:12px!important;color:var(--d-muted)!important}
+html body.cl288-page #classoraCurriculumModal .cv289-enter{font-size:12px!important;color:var(--tile-color)!important;padding-top:13px!important;margin-top:17px!important;font-weight:500!important}
+html body.cl288-page #classoraCurriculumModal .curriculum-subject-card[hidden]{display:none!important}
+html body.cl288-page #classoraCurriculumModal .curriculum-unit-section{border:0!important;padding:0!important;background:transparent!important;margin:0 0 25px!important}
+html body.cl288-page #classoraCurriculumModal .curriculum-topic-card{background:var(--d-paper)!important;border-radius:17px!important;padding:19px!important}
+html body.cl288-page #classoraCurriculumModal .curriculum-topic-card b{font-size:17px!important}
+html body.cl288-page #classoraCurriculumModal .cv290-topic-art{height:108px!important;min-height:108px!important;border-radius:12px!important}
+html body.cl288-page :is(#classModal,#examModal,#competitionModal,#settingsModal) :is(.myclasses-main-card,.myclasses-join-card,.myclasses-assignments-card,.profile-card,.live-card,.exam-card,.settings-card){background:var(--d-paper)!important;border:1px solid var(--d-line)!important;border-radius:16px!important;box-shadow:none!important;padding:20px!important;color:var(--d-ink)!important}
+html body.cl288-page #classModal .myclasses-hero{background:var(--d-soft)!important;border:0!important;border-radius:18px!important;padding:24px!important;margin:0 0 20px!important;color:var(--d-ink)!important}
+html body.cl288-page #classModal .myclasses-layout{gap:16px!important}
+html body.cl288-page #classModal .myclasses-assignments-card{margin-top:16px!important}
+html body.cl288-page #competitionModal .live-home-grid{gap:16px!important;align-items:start!important}
+html body.cl288-page #competitionModal .live-hero{border:0!important;padding:0!important;background:transparent!important;text-align:start!important}
+html body.cl288-page #competitionModal .live-card{min-height:0!important}
+html body.cl288-page #settingsModal .settings-grid{gap:14px!important}
+html body.cl288-page #settingsModal .settings-card h3{font-size:17px!important}
+html body.cl288-page #chatModal .chat-contacts-pane{width:auto!important;background:var(--d-paper)!important}
+@media(max-width:999px){html body.cl288-page :is(#classoraCurriculumModal,#classModal,#examModal,#competitionModal,#settingsModal,#chatModal,#profileModal).cl288-inline.open{inset:0 0 calc(88px + env(safe-area-inset-bottom)) 0!important;padding:20px!important}html body.cl288-page #cl290Navigation .cl286-rail{display:none!important}}
+@media(max-width:700px){html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}html body.cl288-page #classoraCurriculumModal:not(.lesson-open) .curriculum-subject-card{padding:13px!important}html body.cl288-page #classoraCurriculumModal .cv294-art{height:82px;padding:12px}html body.cl288-page #classoraCurriculumModal .cv294-art svg{width:29px!important;height:29px!important}html body.cl288-page #classoraCurriculumModal .cv294-art>span{font-size:24px}html body.cl288-page #classoraCurriculumModal .cv289-subject-copy b{font-size:16px!important}}
