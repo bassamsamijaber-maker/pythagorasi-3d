@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1322">
+<title>Classora | معاينة الاشتراكات التجريبية</title>
+<style>
+:root{color-scheme:dark;--bg:#08121f;--card:#121e2d;--panel:#18283a;--line:#314054;--txt:#f1f5fc;--muted:#a6b6cb;--mint:#43d7b8;--gold:#efc778;--blue:#63b7f7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% -10%,#193b51 0%,transparent 54%),var(--bg);color:var(--txt);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}a{color:inherit}.wrap{max-width:1100px;margin:auto;padding:24px}.head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:26px}.brand{font-size:22px;letter-spacing:.1px;font-weight:900}.brandmark{width:36px;height:36px;display:inline-grid;place-items:center;background:linear-gradient(145deg,#18bba5,#277cae);border-radius:12px;margin-inline-end:10px;color:#fff}.mini{color:var(--muted);font-size:12px}.test{background:#403015;border:1px solid #856728;color:#ffde88;padding:6px 11px;border-radius:99px;font-size:12px}.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;margin-bottom:24px}.hero h1{font-size:clamp(27px,4vw,43px);line-height:1.2;margin:9px 0 12px}.hero p{color:var(--muted);max-width:650px}.hero-graphic{background:linear-gradient(145deg,#263d5a,#15263a);border:1px solid #406385;border-radius:26px;min-height:190px;display:grid;place-items:center;text-align:center;padding:20px}.hero-graphic strong{font-size:34px;color:var(--gold)}.hero-graphic span{display:block;font-size:14px;color:#d6e3ef}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.tab,.switch button,.pill{border:1px solid var(--line);background:#132337;color:var(--txt);border-radius:12px;padding:10px 17px}.tab[aria-selected=true],.switch button[aria-pressed=true]{background:#21445d;border-color:#4ca3cb}.layout{display:grid;grid-template-columns:1fr 330px;align-items:start;gap:18px}.box{background:var(--card);border:1px solid var(--line);border-radius:23px;padding:20px}.box h2{font-size:22px;margin:0 0 6px}.box h3{font-size:16px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}.switch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.switch button{flex:1}.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.plan{border:1px solid #34506a;background:linear-gradient(160deg,#1b3045,#121d2e);padding:19px;border-radius:19px;text-align:right;color:var(--txt);min-height:190px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}.plan.picked{border:2px solid #deb96b;box-shadow:0 0 0 2px #ecc87922}.plan strong{font-size:24px}.plan small{color:var(--muted)}.plan .price{font-size:26px;font-weight:800;color:#e6f0ff}.plan.premium .price{color:var(--gold)}.tag{color:#b8ebff;background:#153950;padding:2px 9px;border-radius:7px;font-size:12px}.premium .tag{color:#ffe0a0;background:#4b3620}.list{margin:13px 0;padding-inline-start:22px;color:#d8e6f5}.list li{margin:7px 0}.summary{position:sticky;top:14px}.line{display:flex;justify-content:space-between;gap:12px;margin:12px 0}.line strong{white-space:nowrap}.sumtotal{font-size:27px;font-weight:900;color:var(--mint)}.cta{width:100%;background:linear-gradient(110deg,#36c8b2,#328fc7);color:#071621;border:0;border-radius:13px;font-weight:800;padding:12px 16px;margin:12px 0 5px}.ghost{background:transparent;border:1px solid var(--line);border-radius:11px;padding:10px;color:var(--txt)}.muted{color:var(--muted)}.warning{color:#ffd394;font-size:13px}.small{font-size:12px}.panel{display:none}.panel.active{display:block}.lock-demo{background:#1a2d3d;border:1px solid #3a5971;border-radius:17px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.lock-demo strong{font-size:16px}input[type="number"],input[type="text"]{width:100%;padding:11px 13px;border-radius:10px;border:1px solid #49617a;background:#0c1a29;color:#fff}.inputlabel{display:block;margin:10px 0 5px;font-size:13px}.range{margin-top:14px}.notice{background:#1b2b38;border:1px solid #486275;color:#c8e4fa;padding:12px;border-radius:12px;font-size:13px;margin-top:15px}.payform{min-height:460px;min-width:312px;background:#e9edf4;border-radius:15px;overflow:hidden}.payform:not(.active){display:none}.placeholder{padding:45px 25px;text-align:center;background:var(--panel);border:1px dashed #57728e;border-radius:12px;color:#cbd8e7}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.chip{background:#22354a;color:#c2e8fe;border-radius:12px;padding:12px}.footer{margin:30px 0 10px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px}#inline-wrap{display:none}.status{padding:8px 11px;background:#21443a;border-radius:10px;color:#91e7c3;font-size:13px}#paddle-error{color:#ffbdac;min-height:20px;font-size:13px}.review-data{display:grid;gap:10px}.review-data .line{border-bottom:1px solid #314054;padding-bottom:7px}.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:#4f3c1c;color:#ffd98f;border-radius:50px;font-size:12px}.wide{width:100%}
+@media(max-width:780px){.hero,.layout{grid-template-columns:1fr}.wrap{padding:17px}.summary{position:static}.plans{grid-template-columns:repeat(2,minmax(0,1fr))}.plan{min-height:180px;padding:13px}.plan strong{font-size:19px}.plan .price{font-size:22px}}@media(max-width:370px){.plans{grid-template-columns:1fr}.hero-graphic{min-height:130px}.payform{min-width:0}}
+</style>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+<header class="head"><div class="brand"><span class="brandmark">C</span>Classora <span class="mini">Subscriptions Lab</span></div><span class="test">SANDBOX · تجربة فقط</span></header>
+<section class="hero"><div><div class="badge">★ PLUS & PREMIUM</div><h1>تعلم بطريقتك، واختر التجربة اللي بتناسبك.</h1><p>معاينة مستقلة لصفحات اشتراكات Classora: طالب، معلم، صف، ومدرسة. تصفّح الخطط والمقاعد والدفع التجريبي بدون تغيير حسابك الحقيقي.</p></div><div class="hero-graphic"><div><strong>CLASSORA</strong><span>Premium learning, your way.</span><p>✦ تخصيص · تنظيم · أدوات الصف</p></div></div></section>
+<nav class="tabs" aria-label="صفحات التجربة"><button class="tab" data-page="plans" aria-selected="true">الاشتراكات</button><button class="tab" data-page="upgrade">ترقية المميزات</button><button class="tab" data-page="checkout">الدفع داخل الموقع</button><button class="tab" data-page="manage">إدارة الاشتراك</button></nav>
+<div class="layout">
+<main>
+<section class="panel active box" id="page-plans"><h2>اختر خطة Classora</h2><p class="sub">اختر نوع الحساب والمدة، وشوف السعر النهائي التجريبي.</p><div class="switch" id="roles"><button data-role="student" aria-pressed="true">طالب</button><button data-role="teacher">معلم</button><button data-role="class">صف</button><button data-role="school">مدرسة</button></div><div class="switch" id="periods"><button data-period="monthly" aria-pressed="true">شهري</button><button data-period="annual">سنوي · توفير 20%</button></div><div class="plans"><button class="plan picked" data-tier="plus"><span class="tag">PLUS</span><strong>Classora Plus</strong><span class="price" id="plus-price">₪9.90</span><small id="plus-blurb">تخصيص وأدوات دراسة محسّنة</small></button><button class="plan premium" data-tier="premium"><span class="tag">★ PREMIUM</span><strong>Classora Premium</strong><span class="price" id="premium-price">₪19.90</span><small id="premium-blurb">كل Plus + ميزات حصرية</small></button></div>
+<div class="range" id="seats-wrap" hidden><label class="inputlabel" for="seats">عدد المقاعد المشمولة (اختر عدد المستفيدين، مش كل أعضاء الصف أو المدرسة)</label><input id="seats" type="number" min="1" max="1000" value="35"/><p class="sub" id="seats-hint">السعر الأساسي يشمل 35 طالبًا، وبعدها ₪5 لكل مقعد إضافي شهريًا.</p></div>
+<h3>الميزات الرئيسية</h3><ul class="list" id="feature-list"></ul>
+<p class="notice">طالب Free يقدر يدرس، يحل امتحانات ووظائف المعلم، ويستخدم الشات الأساسي بدون شراء اشتراك. لا يوجد حد استخدام مربوط بهذه المعاينة.</p></section>
+<section class="panel box" id="page-upgrade"><h2>صفحة Upgrade</h2><p class="sub">معاينة الرسالة التي تظهر لمن يفتح ميزة تحتاج خطة أعلى.</p><div class="lock-demo"><div><span class="badge">🔒 Premium</span><h3>تحميل الدروس للدراسة بدون إنترنت</h3><p class="sub">التنزيل والأوضاع غير المتصلة ميزة Premium، لكن فتح الدرس عبر الإنترنت مجاني.</p></div><button class="ghost" id="upgrade-button">ترقية</button></div><h3>ميزة Plus</h3><div class="lock-demo"><div><span class="tag">PLUS</span><h3>إطارات الملف الشخصي ومجلدات الشات</h3><p class="sub">خيارات أكثر لتخصيص واجهتك وتنظيم محادثاتك.</p></div><button class="ghost" id="upgrade-plus">ترقية</button></div></section>
+<section class="panel box" id="page-checkout"><h2>الدفع التجريبي داخل Classora</h2><p class="sub">الصفحة داخل موقعنا، ونموذج البطاقة الآمن يظهر من Paddle عند إدخال رمز Sandbox المخصص للواجهة.</p><div id="paddle-setup"><label class="inputlabel" for="client-token">Paddle client-side token (Sandbox فقط)</label><input id="client-token" type="text" dir="ltr" autocomplete="off" spellcheck="false" placeholder="test_..."><p class="small muted">هذا الرمز من Client-side tokens، وليس API key سريًا. لا ترسل مفتاح API خاص بالخادم.</p><button class="cta" id="start-paddle">افتح نموذج الدفع التجريبي</button><div id="paddle-error" role="alert"></div></div><div id="inline-wrap"><div class="checkout-container payform active" aria-label="Paddle Sandbox inline checkout"></div><button class="ghost wide" id="close-checkout">رجوع لاختيار خطة أخرى</button></div><div class="notice">Sandbox فقط: لا يتم سحب أموال حقيقية، ولا تتفعّل أي صلاحيات بالحساب من هذه الصفحة. يجب إضافة Firebase Webhooks آمنة قبل التشغيل الفعلي.</div></section>
+<section class="panel box" id="page-manage"><h2>إدارة الاشتراك</h2><p class="sub">عرض واجهة الحساب المتوقعة — بدون تعديل أي اشتراك حقيقي.</p><div class="chip">حالة المعاينة: <strong id="fake-status">Premium · نشط (تجريبي)</strong></div><div class="review-data"><div class="line"><span>خطة المستخدم</span><strong id="fake-plan">Premium</strong></div><div class="line"><span>دورة الفوترة</span><strong id="fake-period">شهري</strong></div><div class="line"><span>المقاعد الإضافية</span><strong id="fake-seats">0</strong></div></div><button class="ghost wide" id="change-plan">تغيير الخطة</button><button class="ghost wide" id="cancel-demo">معاينة إلغاء التجديد</button><div class="notice" id="cancel-notice" hidden>تم إظهار شكل الإلغاء التجريبي فقط. بالنسخة النهائية يظل الاشتراك فعّالًا حتى نهاية الفترة المدفوعة.</div><p class="sub">عند التنفيذ النهائي سنعرض الفواتير، تجديد الاشتراك، وتبديل المقاعد الذي يبدأ من فترة الاشتراك الشهرية التالية.</p></section>
+</main>
+<aside class="box summary"><h2>ملخص الطلب</h2><p class="sub">معاينة بالشيكل؛ Paddle يحسب التحويلات والضرائب الفعلية داخل نموذج الدفع.</p><div class="line"><span>نوع الحساب</span><strong id="summary-role">طالب</strong></div><div class="line"><span>الخطة</span><strong id="summary-tier">Plus</strong></div><div class="line"><span>الفوترة</span><strong id="summary-period">شهريًا</strong></div><div class="line"><span>المقاعد الإضافية</span><strong id="summary-seats">0</strong></div><hr style="border:0;border-top:1px solid var(--line)"><div class="line"><span>الإجمالي الأساسي</span><strong class="sumtotal" id="summary-total">₪9.90</strong></div><p class="small muted" id="summary-note">السعر المعروض قبل أي ضريبة/تحويل.</p><button class="cta" id="goto-checkout">المتابعة للدفع التجريبي ←</button><button class="ghost wide" id="goto-plans">مقارنة الخطط</button><p class="warning">⚠︎ تجربة فقط. الدفع والتفعيل الحقيقيان غير متاحين.</p></aside></div>
+<footer class="footer">© Classora · Subscription preview branch · الأسعار والخطط للتجربة فقط · لا تدخّل أي بطاقة حقيقية إذا لم تكن داخل Paddle Sandbox الرسمي.</footer>
+</div>
+<script>
+"use strict";
+const CATALOG = {
+ student_plus:{monthly:["pri_01m52gdcxvavyvxm20syewn02p",9.90],annual:["pri_01m52gktppwtkyzpw6ra3b5gzp",95]},
+ student_premium:{monthly:["pri_01m52gsd66av9fh42t98gn2xv9",19.90],annual:["pri_01m52gvc6w6q0v9d85v6grfz0x",191]},
+ teacher_plus:{monthly:["pri_01m52h0nth9qp5g4x2rp755rw2",24.90],annual:["pri_01m52h21bkhnc9n0daf7zfz077",239]},
+ teacher_premium:{monthly:["pri_01m52hmfdzpq8ed58thdb7nfkm",44.90],annual:["pri_01m52hnshxabs88wkr3yyw5t3p",431]},
+ class_plus:{monthly:["pri_01m52htxwk9cxa9vzq1d47ntan",129],annual:["pri_01m52hwb8eswkwn1h0q6cn6qwj",1238]},
+ class_premium:{monthly:["pri_01m52j00j9jn00bd78215tzz4j",199],annual:["pri_01m52j122szjmbhxbp3h5per73",1910]},
+ school_plus:{monthly:["pri_01m52j311477jbe7a595msjfv1",449],annual:["pri_01m52j3z465tkzrvsfdc4dcrv2",4310]},
+ school_premium:{monthly:["pri_01m52j6p5yq3pz27axxzxfmf0n",799],annual:["pri_01m52j824aa3zwbqcfwe6dagzz",7670]},
+ extra_student_seat:{monthly:["pri_01m52jggg0jqp9y2sm1zk5d6h4",5],annual:["pri_01m52jkc683jdqd6m5k2fkc9vt",48]},
+ extra_teacher_seat:{monthly:["pri_01m52jmvhpay4tp09cnkjnhgb1",10],annual:["pri_01m52jnxxw1x6v5xznr7vsz57c",96]}
+};
+const roles={student:"طالب",teacher:"معلم",class:"صف",school:"مدرسة"};
+const features={
+ student:{plus:["20 لونًا وثيمات جاهزة","ملاحظات سريعة ومجلدات للشات","وضع تركيز ومظهر ستريك مميز","تخصيص ملف شخصي إضافي"],premium:["كل ميزات Plus","تصميم موقع احترافي وحفظ 10 ثيمات","تقويم الدراسة ومركز الإنجازات","مكتبة شخصية منظمة وتنزيل دروس بدون إنترنت","شارة ذهبية وخلفيات شات حصرية"]},
+ teacher:{plus:["20 امتحانًا و15 مسابقة يوميًا","بنك 300 سؤال و15 قالب امتحان","مقارنة نتائج امتحانين","تخصيص هوية الصف وتقارير موسعة"],premium:["كل ميزات Plus","نماذج امتحانات A وB وC","مركز الجدولة وكشوف العلامات","تحليل الصفوف ومصمم الشهادات","ثيمات وملف شخصي ومحادثات Premium"]},
+ class:{plus:["35 مقعد Plus للطلاب الذين يختارهم المعلم","اختيار الطلاب المستفيدين من اشتراك الصف","كل ميزات Student Plus للمقاعد المشمولة"],premium:["35 مقعد Premium للطلاب المختارين","كل مزايا Student Premium للمقاعد المشمولة","تنزيل الدروس والعمل دون اتصال للمشتركين"]},
+ school:{plus:["55 مقعد Plus للمعلمين المختارين","لوحة توزيع مقاعد المعلمين فقط","مزايا Teacher Plus للمشمولين"],premium:["55 مقعد Premium للمعلمين المختارين","مزايا Teacher Premium للمشمولين","لا تمنح المدرسة اشتراكات للطلاب"]}
+};
+const state={role:"student",tier:"plus",period:"monthly",seats:35,paddleReady:false,paddleOpened:false,clientToken:""};
+const by=id=>document.getElementById(id);
+const curr=n=>"₪"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const selected=()=>CATALOG[state.role+"_"+state.tier][state.period];
+const baseline=()=>state.role==="class"?35:state.role==="school"?55:0;
+const extra=()=>Math.max(0,state.seats-baseline());
+const addon=()=>state.role==="class"?"extra_student_seat":"extra_teacher_seat";
+function items(){const items=[{priceId:selected()[0],quantity:1}];if(extra()>0&&baseline())items.push({priceId:CATALOG[addon()][state.period][0],quantity:extra()});return items;}
+function total(){return selected()[1]+(baseline()?extra()*CATALOG[addon()][state.period][1]:0);}
+function show(page){for(const el of document.querySelectorAll(".panel"))el.classList.toggle("active",el.id==="page-"+page);for(const el of document.querySelectorAll(".tab"))el.setAttribute("aria-selected",String(el.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});}
+function render(){
+ by("plus-price").textContent=curr(CATALOG[state.role+"_plus"][state.period][1]);
+ by("premium-price").textContent=curr(CATALOG[state.role+"_premium"][state.period][1]);
+ document.querySelectorAll("[data-role]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.role===state.role)));
+ document.querySelectorAll("[data-period]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.period===state.period)));
+ document.querySelectorAll("[data-tier]").forEach(b=>b.classList.toggle("picked",b.dataset.tier===state.tier));
+ by("seats-wrap").hidden=!baseline();
+ if(baseline()){by("seats").min=baseline();by("seats").value=state.seats;by("seats-hint").textContent="السعر الأساسي يشمل "+baseline()+" "+(state.role==="class"?"طالبًا، وكل طالب إضافي ₪5 شهريًا أو ₪48 سنويًا.":"معلمًا، وكل معلم إضافي ₪10 شهريًا أو ₪96 سنويًا.");}
+ by("feature-list").replaceChildren(...features[state.role][state.tier].map(t=>{const el=document.createElement("li");el.textContent=t;return el;}));
+ by("summary-role").textContent=roles[state.role];by("summary-tier").textContent=state.tier==="premium"?"Premium":"Plus";by("summary-period").textContent=state.period==="annual"?"سنويًا":"شهريًا";by("summary-seats").textContent=String(extra());by("summary-total").textContent=curr(total());
+ by("fake-plan").textContent=roles[state.role]+" "+(state.tier==="premium"?"Premium":"Plus");by("fake-period").textContent=state.period==="annual"?"سنوي":"شهري";by("fake-seats").textContent=String(extra());
+ by("summary-note").textContent=state.period==="annual"?"دفعة سنوية واحدة، قبل الضريبة أو التحويل النهائي.":"شهريًا، قبل الضريبة أو التحويل النهائي.";
+}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.page)));
+document.querySelectorAll("[data-role]").forEach(b=>b.addEventListener("click",()=>{state.role=b.dataset.role;state.seats=baseline();render()}));
+document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{state.period=b.dataset.period;render()}));
+document.querySelectorAll("[data-tier]").forEach(b=>b.addEventListener("click",()=>{state.tier=b.dataset.tier;render()}));
+by("seats").addEventListener("change",()=>{const v=Number(by("seats").value);state.seats=Number.isFinite(v)?Math.min(1000,Math.max(baseline(),Math.floor(v))):baseline();render()});
+by("goto-checkout").addEventListener("click",()=>show("checkout"));by("goto-plans").addEventListener("click",()=>show("plans"));
+by("upgrade-button").addEventListener("click",()=>{state.tier="premium";render();show("plans")});
+by("upgrade-plus").addEventListener("click",()=>{state.tier="plus";render();show("plans")});
+by("change-plan").addEventListener("click",()=>show("plans"));
+by("cancel-demo").addEventListener("click",()=>{by("cancel-notice").hidden=false;by("fake-status").textContent="تجديد ملغى في المعاينة فقط";});
+by("close-checkout").addEventListener("click",()=>{by("inline-wrap").style.display="none";by("paddle-setup").style.display="block";show("plans");});
+by("start-paddle").addEventListener("click",()=>{
+ const token=by("client-token").value.trim(),err=by("paddle-error");err.textContent="";
+ if(!/^test_[A-Za-z0-9_-]{8,}$/.test(token)){err.textContent="أدخل Client-side token تجريبي يبدأ بـ test_ (لا تستخدم API key).";return;}
+ if(!window.Paddle){err.textContent="تعذّر تحميل Paddle.js. تحقق من الإنترنت أو الحماية في المتصفح.";return;}
+ if(state.paddleReady&&state.clientToken!==token){err.textContent="لتغيير الرمز، أعد تحميل الصفحة أولًا.";return;}
+ try{
+  if(!state.paddleReady){window.Paddle.Environment.set("sandbox");window.Paddle.Initialize({token,checkout:{settings:{displayMode:"inline",variant:"one-page",frameTarget:"checkout-container",frameInitialHeight:"450",frameStyle:"width:100%;min-width:312px;background-color:transparent;border:0;",theme:"light"}}});state.paddleReady=true;state.clientToken=token;}
+  by("inline-wrap").style.display="block";by("paddle-setup").style.display="none";window.Paddle.Checkout.open({items:items()});
+ }catch(e){err.textContent="لم يتم فتح نموذج Paddle: "+(e&&e.message?e.message:String(e));by("inline-wrap").style.display="none";by("paddle-setup").style.display="block";}
+});
+render();
+</script>
+</body>
+</html>
